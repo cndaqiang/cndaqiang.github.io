@@ -1,0 +1,106 @@
+I"<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#静态自洽" id="markdown-toc-静态自洽">静态自洽</a>    <ul>
+      <li><a href="#说明" id="markdown-toc-说明">说明</a></li>
+      <li><a href="#参数" id="markdown-toc-参数">参数：</a>        <ul>
+          <li><a href="#通用参数" id="markdown-toc-通用参数">通用参数</a></li>
+          <li><a href="#静态自洽参数" id="markdown-toc-静态自洽参数">静态自洽参数</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#案例" id="markdown-toc-案例">案例</a>    <ul>
+      <li><a href="#计算fcc结构的al的dos" id="markdown-toc-计算fcc结构的al的dos">计算fcc结构的Al的DOS</a></li>
+      <li><a href="#计算dos" id="markdown-toc-计算dos">计算DOS</a>        <ul>
+          <li><a href="#一步计算dos自洽服务器性能优秀" id="markdown-toc-一步计算dos自洽服务器性能优秀">一步计算DOS(自洽)(服务器性能优秀)</a></li>
+          <li><a href="#两步计算dos结构优化静态自恰非自恰dos" id="markdown-toc-两步计算dos结构优化静态自恰非自恰dos">两步计算DOS(结构优化+静态自恰+非自恰DOS)</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>VASP主要计算流程:结构优化、静态自洽、非自洽计算
+<br />别忘记<strong><code class="highlighter-rouge">cp CONTCAR POSCAR</code></strong></p>
+
+<h1 id="参考">参考</h1>
+<p><a href="http://blog.csdn.net/kyang_823/article/details/59110848">VASP 结构优化、静态自洽、非自洽计算</a>
+<br /><a href="http://blog.sciencenet.cn/blog-567091-675253.html">【整理自好友lpf文章】用VASP计算能量态密度（DOS）和能带</a></p>
+<h1 id="静态自洽">静态自洽</h1>
+<h2 id="说明">说明</h2>
+<p><strong>静态</strong>：原子位置保持不动，不再进行原子迟豫
+<br /><strong>自洽</strong>：电子再进行自洽计算；
+<br />因此，静态自洽计算是在结构优化的基础上，在体系能量达到较低,体系较稳定的情况下固定原子的位置坐标，再对体系中的电子进行调整，以达到体系的最低能量。
+<br /><br />静态自洽计算前先进行结构优化<code class="highlighter-rouge">cp CONTCAR POSCAR</code>,通过<strong>电子自洽计算完整地计算出体系基态下费米能级(E-fermi)、电子的波函数(WAVECAR)、电荷密度(CHG)等信息</strong>，可以直接分析原子间的键合作用，也可以在非自洽之后进一步分析晶体的电子结构和材料的相关性质。</p>
+
+<h2 id="参数">参数：</h2>
+<h3 id="通用参数">通用参数</h3>
+<ul>
+  <li>SYSTEM=注释</li>
+  <li>ISATART ICHARGE</li>
+  <li>ISMEAR SIGMA(与结构，K点有关)</li>
+  <li>ISPIN(与体系有关) MAGMOM(可选)</li>
+  <li>ENCUT 多个结构进行对比时,需要统一ENCUT</li>
+  <li>PREC 精度等</li>
+</ul>
+
+<p>可保持默认参数,需要高精度等情况时,参考<a href="https://cndaqiang.github.io/2018/01/21/vasp-input/#ibrion-nfree-nsw-isif">VASP输入文件总结</a>和官方<strong><a href="http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html">manual</a></strong>等各种资料</p>
+
+<h3 id="静态自洽参数">静态自洽参数</h3>
+<p><strong>下面参数保持默认</strong>,计算结果不合理需要改动时再更改</p>
+<ul>
+  <li>NSW=0 默认就是0 不再进行原子迟豫</li>
+  <li>NSW = 0,NSW=1,ISIF = 0,IBRION = -1这些都是等价的,只需设置一个NSW=0即可
+<br />NSW,ISIF,IBRION不写入INICAR,就默认是NSW=0,不优化</li>
+  <li>LWAVE=.TRUE 默认就是.TRUE 输出波函数(WAVECAR)</li>
+  <li>LCHARGE=.TRUE  默认就是.TRUE 输出电荷密度(CHG和CHGCAR)</li>
+  <li>EDIFF 电子收敛标准</li>
+  <li>NELM 电子优化(SCF)最大计算步数(默认60)</li>
+  <li>NELMIN 电子优化的最小步数。默认为2，一般不设置</li>
+</ul>
+
+<h1 id="案例">案例</h1>
+<p>结构优化-&gt;<code class="highlighter-rouge">cp CONTCAR POSCAR</code>-&gt;修改INCAR和其他输入文件-&gt;静态自洽计算</p>
+
+<h2 id="计算fcc结构的al的dos">计算fcc结构的Al的DOS</h2>
+<p>参考<a href="http://blog.sciencenet.cn/blog-567091-675253.html">【整理自好友lpf文章】用VASP计算能量态密度（DOS）和能带</a>
+计算fcc结构的Al的DOS主要分两步：一、静态自洽计算；二、非自洽计算<br />
+这里只记录静态自洽输入<br />
+INCAR</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SYSTEM=Al-fcc
+ISTART=0;
+ISMEAR=1;SIGMA=0.2
+PREC=Accurate
+IBRION=2#默认NSW=0，此处定义IBRION=2无意义
+EDIFF=1e-5
+ENCUT=250.0
+</code></pre></div></div>
+<p>KPOINTS<br />
+Auto,M,9x9x9,0 0 0</p>
+
+<h2 id="计算dos">计算DOS</h2>
+<p>参考<a href="http://www.bigbrosci.cn/newsitem/278032803">大师兄科研网-Learn VASP The Hard Way （Ex38）：DOS计算（二）</a><br /></p>
+<h3 id="一步计算dos自洽服务器性能优秀">一步计算DOS(自洽)(服务器性能优秀)</h3>
+<p>INCAR</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ISMEAR = -5
+LORBIT = 11
+</code></pre></div></div>
+<p>高密度的K点</p>
+<h3 id="两步计算dos结构优化静态自恰非自恰dos">两步计算DOS(结构优化+静态自恰+非自恰DOS)</h3>
+<p>若结构优化已产生波函数,以及第一步自恰产生了WAVECAR,应该ISTART=1(此时不设置就默认是1)节约时间</p>
+<ul>
+  <li>第一步(自洽)：
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ISMEAR = -5
+LCHARG = .TRUE.
+</code></pre></div>    </div>
+    <p>稍微低密度的K点</p>
+  </li>
+  <li>第二步(非自洽)：
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ISMEAR = -5
+ICHARGE = 11
+LORBIT = 11
+</code></pre></div>    </div>
+    <p>高密度的K点</p>
+  </li>
+</ul>
+:ET

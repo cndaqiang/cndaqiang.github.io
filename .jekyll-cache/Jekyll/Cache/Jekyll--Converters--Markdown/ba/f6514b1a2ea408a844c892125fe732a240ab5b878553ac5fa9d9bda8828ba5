@@ -1,0 +1,46 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#安装功能" id="markdown-toc-安装功能">安装功能</a>    <ul>
+      <li><a href="#添加功能" id="markdown-toc-添加功能">添加功能</a></li>
+    </ul>
+  </li>
+  <li><a href="#开启服务" id="markdown-toc-开启服务">开启服务</a></li>
+  <li><a href="#远程连接" id="markdown-toc-远程连接">远程连接</a></li>
+  <li><a href="#自定义ssh的终端" id="markdown-toc-自定义ssh的终端">自定义ssh的终端</a></li>
+</ul>
+
+<p>远程连win10，调用win10的bash进行计算</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://www.cnblogs.com/sparkdev/p/10166061.html">Windows 支持 OpenSSH 了！</a></p>
+
+<h2 id="安装功能">安装功能</h2>
+
+<p>设置》应用》管理可选应用
+<img src="/uploads/2019/06/ssh1.jpg" alt="" /></p>
+<h3 id="添加功能">添加功能</h3>
+<p>安装OpenSSH服务器
+<img src="/uploads/2019/06/ssh2.jpg" alt="" /></p>
+
+<h2 id="开启服务">开启服务</h2>
+
+<p>启动这两个服务，并设为开机启动，则win10开机后就会启动</p>
+
+<p><img src="/uploads/2019/06/ssh3.png" alt="" /></p>
+
+<h2 id="远程连接">远程连接</h2>
+<p>使用ssh协议连接就好了，账户密码就是win10的账户密码<br />
+如我的</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>地址：电脑ip
+端口：22
+账户：cnxxxx@outlook.com
+密码：xxxxxxxx
+</code></pre></div></div>
+
+<h2 id="自定义ssh的终端">自定义ssh的终端</h2>
+<p>默认是cmd，可以修改注册表指定<br />
+注册表位置<code class="highlighter-rouge">HKEY_LOCAL_MACHINE\SOFTWARE\OpenSSH</code>，添加一个DefaultShell项<br />
+项的值可以为PowerShell，<code class="highlighter-rouge">C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</code><br />
+也可为bash，<code class="highlighter-rouge">C:\Windows\System32\bash.exe</code>，如图
+<img src="/uploads/2019/06/ssh4.jpg" alt="" /></p>
+:ET

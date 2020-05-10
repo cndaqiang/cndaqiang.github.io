@@ -1,0 +1,164 @@
+I"9<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#相关文件" id="markdown-toc-相关文件">相关文件</a>    <ul>
+      <li><a href="#划分comm" id="markdown-toc-划分comm">划分COMM</a></li>
+    </ul>
+  </li>
+  <li><a href="#框架" id="markdown-toc-框架">框架</a>    <ul>
+      <li><a href="#intra和inter是processor-mesh的不同方向" id="markdown-toc-intra和inter是processor-mesh的不同方向">intra和inter是processor mesh的不同方向</a></li>
+      <li><a href="#代码示例" id="markdown-toc-代码示例">代码示例</a></li>
+      <li><a href="#qe中主要使用的comm" id="markdown-toc-qe中主要使用的comm">QE中主要使用的comm</a></li>
+    </ul>
+  </li>
+  <li><a href="#划分流程" id="markdown-toc-划分流程">划分流程</a>    <ul>
+      <li><a href="#mp_startup-划分的主入口控制中心" id="markdown-toc-mp_startup-划分的主入口控制中心"><strong>mp_startup</strong> 划分的主入口，控制中心</a>        <ul>
+          <li><a href="#mp_world_start-初始化mpi环境" id="markdown-toc-mp_world_start-初始化mpi环境"><strong>mp_world_start</strong> 初始化MPI环境</a></li>
+          <li><a href="#get_command_line-读入并行输入参数" id="markdown-toc-get_command_line-读入并行输入参数"><strong>get_command_line()</strong> 读入并行输入参数</a></li>
+          <li><a href="#mp_start_images--nimage_-world_comm--image并行环境" id="markdown-toc-mp_start_images--nimage_-world_comm--image并行环境"><strong>mp_start_images ( nimage_, world_comm )</strong> image并行环境</a></li>
+          <li><a href="#mp_start_pools-npool_-intra_image_comm--k点并行" id="markdown-toc-mp_start_pools-npool_-intra_image_comm--k点并行"><strong>mp_start_pools( npool_, intra_image_comm )</strong> k点并行</a></li>
+          <li><a href="#mp_start_bands--nband_-ntg_-nyfft_-intra_pool_comm--进一步划分pool" id="markdown-toc-mp_start_bands--nband_-ntg_-nyfft_-intra_pool_comm--进一步划分pool"><strong>mp_start_bands ( nband_, ntg_, nyfft_, intra_pool_comm )</strong> 进一步划分pool</a></li>
+          <li><a href="#mp_start_exx--nband_-ntg_-intra_pool_comm--进一步划分pool" id="markdown-toc-mp_start_exx--nband_-ntg_-intra_pool_comm--进一步划分pool"><strong>mp_start_exx ( nband_, ntg_, intra_pool_comm )</strong> 进一步划分pool</a></li>
+        </ul>
+      </li>
+      <li><a href="#fft_type_allocate-desc-at-bg-gcutm-comm-fft_fact-nyfft--划分fft网格" id="markdown-toc-fft_type_allocate-desc-at-bg-gcutm-comm-fft_fact-nyfft--划分fft网格"><strong>fft_type_allocate( desc, at, bg, gcutm, comm, fft_fact, nyfft  )</strong>划分FFT网格</a></li>
+    </ul>
+  </li>
+  <li><a href="#应用" id="markdown-toc-应用">应用</a></li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/QEF/q-e.git">q-e code</a><br />
+<a href="https://www.quantum-espresso.org/resources/developers-manual">DEVELOPERS’ MANUAL</a></p>
+
+<h2 id="相关文件">相关文件</h2>
+<h3 id="划分comm">划分COMM</h3>
+<ul>
+  <li><code class="highlighter-rouge">PW/src/pwscf.f90 -&gt; PROGRAM pwscf</code>主程序开始调用<code class="highlighter-rouge">CALL mp_startup ( start_images=.true.)</code></li>
+  <li><code class="highlighter-rouge">Modules/mp_global.f90 -&gt; mp_startup</code>并行划分的集中站点，调用一系列的划分函数</li>
+  <li><code class="highlighter-rouge">Modules/command_line_options.f90 -&gt; get_command_line</code>从命令行中读入并行划分方案</li>
+  <li><code class="highlighter-rouge">Modules/mp_world.f90 -&gt; mp_world_start/mp_world_end</code>初始化MPI环境,终止环境</li>
+  <li><code class="highlighter-rouge">Modules/mp_images.f90 -&gt; mp_start_images</code> 初始化image并行</li>
+  <li><code class="highlighter-rouge">Modules/mp_pools.f90 -&gt; mp_start_pools</code> 初始化k点平行</li>
+  <li><code class="highlighter-rouge">Modules/mp_bands.f90 -&gt; mp_start_bands</code> 注意:都是对pool的划分</li>
+  <li><code class="highlighter-rouge">Modules/mp_exx.f90 -&gt; mp_start_exx</code>     注意:都是对pool的划分</li>
+</ul>
+
+<h2 id="框架">框架</h2>
+<h3 id="intra和inter是processor-mesh的不同方向">intra和inter是processor mesh的不同方向</h3>
+<ul>
+  <li><code class="highlighter-rouge">intra_AAA_comm</code> 是图中的处理器mesh的列，processor在物理(主板)上相邻，共<code class="highlighter-rouge">naaa_</code>个
+<br />会对此一维列processor继续化成更更小的2维mesh, <code class="highlighter-rouge">intra_BBB_comm,inter_BBB_comm</code></li>
+  <li><code class="highlighter-rouge">inter_AAA_comm</code> 是图中的处理器mesh的行，用于同步通信</li>
+  <li>processor mesh图
+<img src="/uploads/2020/04/mp_2dmesh.jpg" alt="" /></li>
+  <li><code class="highlighter-rouge">inter_BBB_comm</code>和<code class="highlighter-rouge">intra_BBB_comm</code>都是对父COMM的<code class="highlighter-rouge">intra_AAA</code>进行的划分
+<br /> BBB processor mesh同上图,共<code class="highlighter-rouge">nbbb_</code>列</li>
+  <li>一共划分<code class="highlighter-rouge">nbbb_ (e.g. nimage_/npool_/nband_)</code>个<code class="highlighter-rouge">intra_BBB_comm</code>,每个进行一组计算</li>
+  <li>所有<code class="highlighter-rouge">intra_BBB_comm</code> 中编号相同的process构成一个<code class="highlighter-rouge">inter_BBB_comm</code>,i.e.图中一行</li>
+  <li><code class="highlighter-rouge">nbbb_ = 1</code>时: 只划分一个子COMM(<code class="highlighter-rouge">intra_BBB_comm</code>)
+<br /> 只有一个<code class="highlighter-rouge">intra_BBB_comm</code>和父COMM<code class="highlighter-rouge">intra_AAA</code>各属性一样
+<br /> 有很多个<code class="highlighter-rouge">inter_BBB_comm</code>， 每个<code class="highlighter-rouge">inter_BBB_comm</code>里面只有一个process</li>
+  <li>如果父子都不设置并行(i.e. nbbb_ = naaa_ =1 )那么
+<br />各个层次的<code class="highlighter-rouge">inter_AAA_comm</code>,``inter_BBB_comm`里面包含的processor也相同，都是上面processor mesh图的每一行
+<br />intra也相同，都是上面processor mesh图中的一列</li>
+</ul>
+
+<h3 id="代码示例">代码示例</h3>
+<p>变量</p>
+<ul>
+  <li><code class="highlighter-rouge">nBBB (e.g. nimage)</code> 划分的<code class="highlighter-rouge">intra_BBB_comm</code>数量,i.e.列数</li>
+  <li><code class="highlighter-rouge">nproc_BBB (e.g. nproc_image)</code>每个<code class="highlighter-rouge">intra_BBB_comm</code>内有几个processor,i.e.行数</li>
+  <li><code class="highlighter-rouge">me_BBB (e.g. me_image)</code> 我(processor)在<code class="highlighter-rouge">intra_BBB_comm</code>的顺序，相同的processor处在同一个<code class="highlighter-rouge">inter_BBB_comm</code>, i.e.同一行</li>
+  <li><code class="highlighter-rouge">root_BBB (e.g. root_image)</code> 各自<code class="highlighter-rouge">intra_BBB_comm</code>中的root processor,i.e.第一行</li>
+  <li><code class="highlighter-rouge">my_BBB_id (e.g. my_image_id)</code> 我是第几个image，相同的处在同一个<code class="highlighter-rouge">intra_BBB_comm</code>,i.e.列数</li>
+  <li><code class="highlighter-rouge">inter_BBB_comm (e.g. inter_image_comm)</code> 子comm,i.e.各行</li>
+  <li><code class="highlighter-rouge">intra_BBB_comm (e.g. intra_image_comm)</code> 子comm, 物理顺序排部的processor，会继续分给下级并行,i.e.各列</li>
+</ul>
+
+<p><img src="/uploads/2020/04/mp_image.png" alt="" /></p>
+
+<h3 id="qe中主要使用的comm">QE中主要使用的comm</h3>
+
+<p><img src="/uploads/2020/04/mp_comm.png" alt="" /></p>
+
+<h2 id="划分流程">划分流程</h2>
+<h3 id="mp_startup-划分的主入口控制中心"><strong>mp_startup</strong> 划分的主入口，控制中心</h3>
+<p>File:<code class="highlighter-rouge">Modules/mp_global.f90</code>
+划分的主入口，控制中心</p>
+
+<h4 id="mp_world_start-初始化mpi环境"><strong>mp_world_start</strong> 初始化MPI环境</h4>
+<p>File:<code class="highlighter-rouge">Modules/mp_world.f90</code><br />
+初始化MPI环境,如<code class="highlighter-rouge">MPI_Initialized</code></p>
+
+<h4 id="get_command_line-读入并行输入参数"><strong>get_command_line()</strong> 读入并行输入参数</h4>
+<p>File:<code class="highlighter-rouge">Modules/command_line_options.f90</code><br />
+输入示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 16 pw.x -i input.in -ni 4
+</code></pre></div></div>
+<p>更多参数</p>
+
+<p>|  输入参数   |  含义  |  存储变量=默认值   |  示例(我使用过的)   |
+| — | — | — | — |
+| <code class="highlighter-rouge">-i</code>, <code class="highlighter-rouge">-in</code>, <code class="highlighter-rouge">-inp</code>, <code class="highlighter-rouge">-input</code>    |  输入文件名   |   <code class="highlighter-rouge">input_file_=" "</code>  |   <code class="highlighter-rouge">-i input.in</code>  |
+|  <code class="highlighter-rouge">-ni</code>, <code class="highlighter-rouge">-nimage</code>, <code class="highlighter-rouge">-nimages</code>, <code class="highlighter-rouge">-npot</code>   |  image并行数   |   <code class="highlighter-rouge">nimage_=1</code>  |   <code class="highlighter-rouge">-ni 5</code>  |
+|  <code class="highlighter-rouge">-nk</code>, <code class="highlighter-rouge">-npool</code>, <code class="highlighter-rouge">-npools</code>   |  k点并行   |  <code class="highlighter-rouge">npool_=1</code>   |  <code class="highlighter-rouge">-npool 3</code>   |
+|  <code class="highlighter-rouge">-nb</code>, <code class="highlighter-rouge">-nband</code>, <code class="highlighter-rouge">-nbgrp</code>, <code class="highlighter-rouge">-nband_group</code>   |     |  ` nband_=1<code class="highlighter-rouge">   |     |
+|   </code>-nt<code class="highlighter-rouge">, </code>-ntg<code class="highlighter-rouge">, </code>-ntask_groups<code class="highlighter-rouge">, </code>-nyfft<code class="highlighter-rouge">  |  fft高维网格并行,在</code>intra_bgrp_comm<code class="highlighter-rouge">内划分 &lt;br&gt; meta-GGA和CG等方法不适用  &lt;br&gt;fftCPU网格,y方向有</code>nyfft<code class="highlighter-rouge">个processor，ｚ方向有nzfft=nproc/nyfft个processor&lt;by&gt; 编译参数　</code>ZCOMPACT<code class="highlighter-rouge">　控制cpu按照y还是z方向分配|  </code>ntg_=1<code class="highlighter-rouge"> ,</code>nyfft_=1<code class="highlighter-rouge"> 读入后 </code>nyfft_= ntg_=输入<code class="highlighter-rouge">   |  </code>-nt 2<code class="highlighter-rouge">   |
+| </code>-nd<code class="highlighter-rouge">, </code>-ndiag<code class="highlighter-rouge">, </code>-northo<code class="highlighter-rouge">, </code>-nproc_diag<code class="highlighter-rouge">, </code>-nproc_ortho<code class="highlighter-rouge">    |   FFT网格并行  |  </code>ndiag_=0`   |     |</p>
+
+<h4 id="mp_start_images--nimage_-world_comm--image并行环境"><strong>mp_start_images ( nimage_, world_comm )</strong> image并行环境</h4>
+<p>File:<code class="highlighter-rouge">Modules/mp_images.f90</code><br />
+image并行环境</p>
+<ul>
+  <li>inter_image_comm image之间，可用于image并行时等待其他图像计算,i-pi&amp;TDDFT计算时用到</li>
+  <li>intra_image_comm 几个pwscf在一个image中计算(NEB)，<strong>一般只在一个image中进行一个计算(manypw,NEB,TDPW+ipi)</strong></li>
+</ul>
+
+<h4 id="mp_start_pools-npool_-intra_image_comm--k点并行"><strong>mp_start_pools( npool_, intra_image_comm )</strong> k点并行</h4>
+<p>File:<code class="highlighter-rouge">Modules/mp_pools.f90</code><br /></p>
+<ul>
+  <li>inter_pool_comm</li>
+  <li>intra_pool_comm 几个k点在一个pool中计算</li>
+</ul>
+
+<h4 id="mp_start_bands--nband_-ntg_-nyfft_-intra_pool_comm--进一步划分pool"><strong>mp_start_bands ( nband_, ntg_, nyfft_, intra_pool_comm )</strong> 进一步划分pool</h4>
+<p>File:<code class="highlighter-rouge">Modules/mp_bands.f90</code><br /></p>
+<ul>
+  <li>inter_bgrp_comm</li>
+  <li>intra_bgrp_comm 共有nband_个</li>
+  <li><code class="highlighter-rouge">ntask_groups = ntg_ ;nyfft = nyfft_</code></li>
+</ul>
+
+<h4 id="mp_start_exx--nband_-ntg_-intra_pool_comm--进一步划分pool"><strong>mp_start_exx ( nband_, ntg_, intra_pool_comm )</strong> 进一步划分pool</h4>
+<p>File:<code class="highlighter-rouge">Modules/mp_exx.f90</code><br />
+<strong>和bands的comm划分方案是相同的</strong></p>
+<ul>
+  <li>inter_egrp_comm 等价 inter_bgrp_comm</li>
+  <li>intra_egrp_comm 等价 intra_bgrp_comm 共有nband_个</li>
+  <li><code class="highlighter-rouge">ntask_groups = ntg_</code></li>
+</ul>
+
+<h3 id="fft_type_allocate-desc-at-bg-gcutm-comm-fft_fact-nyfft--划分fft网格"><strong>fft_type_allocate( desc, at, bg, gcutm, comm, fft_fact, nyfft  )</strong>划分FFT网格</h3>
+<p>File:<code class="highlighter-rouge">FFTXlib/fft_types.f90</code>
+把fft网格进一步划分，在同一个<code class="highlighter-rouge">intra_bgrp_comm</code>内划分，并行的信息保留在FFT网格结构体dfft中<br /></p>
+<ul>
+  <li><code class="highlighter-rouge">desc%comm</code>  父级COMM,即<code class="highlighter-rouge">intra_bgrp_comm</code></li>
+  <li><code class="highlighter-rouge">desc%comm3</code> 之间inter,同color, <code class="highlighter-rouge">color = MOD( mype, nyfft )</code></li>
+  <li><code class="highlighter-rouge">desc%comm2</code> 内部intra,同key，<code class="highlighter-rouge">key   = mype / nyfft</code></li>
+</ul>
+
+<p>详情参考<a href="/2020/04/07/qe-mesh/">QE代码阅读: PW and grids</a></p>
+
+<h2 id="应用">应用</h2>
+<ul>
+  <li>通常只划分image和pool并行comm</li>
+  <li>同一个pool内,xk等很多属性都存储，都相同<br />
+通常在pool内的计算不需要并行通信(大家都有这些变量),只需在<code class="highlighter-rouge">inter_pool_comm</code>通信计算<br />
+如在<code class="highlighter-rouge">PW/src/data_structure.f90</code>计算最大波函数截断能，就只<code class="highlighter-rouge">CALL mp_max (gkcut, inter_pool_comm )</code></li>
+  <li>一个pool内通常不继续划分<code class="highlighter-rouge">intra_bgrp_comm</code>,即一个pool内只有一个<code class="highlighter-rouge">intra_bgrp_comm</code>，负责所有平面波<strong>G</strong>的计算</li>
+</ul>
+
+:ET

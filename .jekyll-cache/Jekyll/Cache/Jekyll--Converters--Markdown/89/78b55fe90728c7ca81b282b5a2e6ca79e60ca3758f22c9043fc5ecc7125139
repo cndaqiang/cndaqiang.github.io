@@ -1,0 +1,9 @@
+I"<ul id="markdown-toc">
+  <li><a href="#2020-02-24-ubuntu建议安装slurm作业系统---ubuntu-1804mint-19-单机安装slurm" id="markdown-toc-2020-02-24-ubuntu建议安装slurm作业系统---ubuntu-1804mint-19-单机安装slurm">2020-02-24: Ubuntu建议安装Slurm作业系统 <br /> -&gt;Ubuntu 18.04/Mint 19 单机安装Slurm</a></li>
+</ul>
+<h1 id="2020-02-24-ubuntu建议安装slurm作业系统---ubuntu-1804mint-19-单机安装slurm">2020-02-24: Ubuntu建议安装Slurm作业系统 <br /> -&gt;<a href="/2020/01/24/slurm/">Ubuntu 18.04/Mint 19 单机安装Slurm</a></h1>
+<p>尝试在组里的服务器运行vasp，需要使用提交任务脚本，不允许在登陆节点直接运算，师兄给了一个pbs的脚本。<br />
+还是现在自己服务器上安装pbs看看<br />
+<strong>建议ubuntu还是使用apt安装吧</strong>，放弃编译，直接编译后，很多运行脚本的语法都是为RedHat/Centos编写的。<br />
+想到组里的服务器是RedHat，把我的服务器由ubuntu重装为centos<br /></p>
+:ET

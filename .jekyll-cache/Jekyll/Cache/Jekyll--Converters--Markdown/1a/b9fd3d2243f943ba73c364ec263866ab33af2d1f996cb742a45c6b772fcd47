@@ -1,0 +1,357 @@
+I"NU<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#简介" id="markdown-toc-简介">简介</a></li>
+  <li><a href="#html文件" id="markdown-toc-html文件">HTML文件</a>    <ul>
+      <li><a href="#html语法" id="markdown-toc-html语法">HTML语法</a>        <ul>
+          <li><a href="#标签" id="markdown-toc-标签">标签</a></li>
+          <li><a href="#标签属性" id="markdown-toc-标签属性">标签属性</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#常用标签" id="markdown-toc-常用标签">常用标签</a>    <ul>
+      <li><a href="#1-表单-form" id="markdown-toc-1-表单-form">1. 表单 <code class="highlighter-rouge">&lt;form&gt;</code></a>        <ul>
+          <li><a href="#11-常用定义" id="markdown-toc-11-常用定义">1.1 常用定义</a></li>
+          <li><a href="#12-文本输入-typetext" id="markdown-toc-12-文本输入-typetext">1.2 文本输入 type=text</a></li>
+          <li><a href="#13-密码-typepassword" id="markdown-toc-13-密码-typepassword">1.3 密码 type=password</a></li>
+          <li><a href="#14-单选按钮-typeradio" id="markdown-toc-14-单选按钮-typeradio">1.4 单选按钮 type=radio</a></li>
+          <li><a href="#15-复选框-typecheckbox" id="markdown-toc-15-复选框-typecheckbox">1.5 复选框 type=checkbox</a></li>
+          <li><a href="#16-下拉列表" id="markdown-toc-16-下拉列表">1.6 下拉列表</a>            <ul>
+              <li><a href="#单选下拉列表" id="markdown-toc-单选下拉列表">单选下拉列表</a></li>
+            </ul>
+          </li>
+          <li><a href="#复选下拉列表" id="markdown-toc-复选下拉列表">复选下拉列表</a></li>
+          <li><a href="#17-提交按钮-typesubmit" id="markdown-toc-17-提交按钮-typesubmit">1.7 提交按钮 type=”submit”</a></li>
+          <li><a href="#18示例" id="markdown-toc-18示例">1.8示例</a></li>
+          <li><a href="#更多的需要再学" id="markdown-toc-更多的需要再学">更多的需要再学</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#css" id="markdown-toc-css">CSS</a>    <ul>
+      <li><a href="#css-的创建" id="markdown-toc-css-的创建">CSS 的创建</a>        <ul>
+          <li><a href="#外部样式表" id="markdown-toc-外部样式表">外部样式表</a></li>
+          <li><a href="#内部样式表" id="markdown-toc-内部样式表">内部样式表</a></li>
+          <li><a href="#内联样式" id="markdown-toc-内联样式">内联样式</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://www.w3school.com.cn/index.html">HTML 教程 - w3school 在线教程</a></p>
+
+<p><a href="http://www.runoob.com/html/html-tutorial.html">HTML 教程-菜鸟教程</a></p>
+
+<p><a href="http://www.aweb.cc/doc/html5/index.html">W3C HTML5 中文手册</a></p>
+
+<p><a href="https://zh.wikipedia.org/wiki/HTML">维基百科-HTML</a></p>
+
+<p><a href="http://www.dreamdu.com/xhtml/">HTML教程,XHTML教程</a></p>
+
+<h2 id="简介">简介</h2>
+<blockquote>
+  <p><strong>超文本标记语言</strong>（英语：<strong>H</strong>yper<strong>T</strong>ext <strong>M</strong>arkup <strong>L</strong>anguage，简称：<strong>HTML</strong>）是一种用于创建网页的标准标记语言。</p>
+</blockquote>
+
+<p>html 是标记语言，不是编程语言，由浏览器翻译标记的内容</p>
+
+<h2 id="html文件">HTML文件</h2>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-4494c25557a6236e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="from wiki" /></p>
+
+<p>使用文本编辑器创建编辑创建*.html或者*.htm文件，使用浏览器预览</p>
+
+<h3 id="html语法">HTML语法</h3>
+<p><code class="highlighter-rouge">&lt;标签名 标签属性&gt;内容&lt;/标签名&gt;</code></p>
+
+<p>示例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="c">&lt;!--我代表注释--&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+	<span class="c">&lt;!--head标签内可包含关于文档的信息，例如网站标题，作者，语言，css等，浏览器不会向用户显示这些头部信息--&gt;</span>
+		<span class="nt">&lt;title&gt;</span>网站标题<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	<span class="c">&lt;!--body标签内是文档的主体，也是用户能看到的部分，文档的所有内容（比如文本、图像、颜色、图形等等--&gt;</span>
+		<span class="nt">&lt;h1&gt;</span>hello word !<span class="nt">&lt;/h1&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+
+</code></pre></div></div>
+
+<h4 id="标签">标签</h4>
+<p>html语言，使用标签(元素)与浏览器就行交流，传递网页布局，编码，作者，字体格式、图片视频链接、注释等信息，还具有传达给搜索引擎网页的脉络关键词等功能。标签有开始和结束，即生效范围，以<code class="highlighter-rouge">&lt;head&gt;</code>标签为例，<code class="highlighter-rouge">&lt;head&gt;</code>和<code class="highlighter-rouge">&lt;/head&gt;</code>之间为head标签的管辖范围，里面包含关于文档的信息。浏览器不会向用户显示这些头部信息。标签之间可以嵌套，例如下面这些标签可用在 head内部：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;base&gt;, &lt;link&gt;, &lt;meta&gt;, &lt;script&gt;, &lt;style&gt;, 以及 &lt;title&gt;
+</code></pre></div></div>
+
+<p>另html标签不区分大小写，w3c推荐小写</p>
+
+<p><strong>必要的标签</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">!</span><span class="na">DOCTYPE</span><span class="nt">&gt;</span> 声明是文档中的第一个成分，位于 <span class="nt">&lt;html&gt;</span> 标签之前。该标签告知浏览器文档所使用的 HTML 规范
+
+<span class="nt">&lt;html&gt;</span> 元素告知浏览器这是一个 HTML 文档
+
+<span class="nt">&lt;head&gt;</span> 元素可包含关于文档的信息。浏览器不会向用户显示这些头部信息（"head information"）。下面这些标签可用在 head 部分：<span class="nt">&lt;base&gt;</span>, <span class="nt">&lt;link&gt;</span>, <span class="nt">&lt;meta&gt;</span>, <span class="nt">&lt;script&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span><span class="p">,</span> <span class="err">以及</span> <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="err">。</span>
+
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span> <span class="err">元素定义文档的主体。其中包含文档的所有内容（比如文本、图像、颜色、图形等等）。</span>
+
+<span class="o">&lt;!--</span><span class="p">...</span><span class="o">--&gt;</span> <span class="err">标签注释标签用于在源文档中插入注释。注释会被浏览器忽略。可使用注释对的代码进行解释，这样做有助于以后的时间对代码的编辑。</span>
+
+</code></pre></div></div>
+
+<p>更多的标签可参见<a href="http://www.aweb.cc/doc/html5/index.html">W3C HTML5 中文手册</a></p>
+
+<h4 id="标签属性">标签属性</h4>
+<p>HTML 标签拥有属性。可以在每个标签的参考页中找到相应的特殊属性。
+例如: <code class="highlighter-rouge">&lt;a&gt;</code>标签定义超链接，它用于从一个页面连接到另一个页面。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a href="https://www.w3.org/"&gt;W3C&lt;/a&gt;
+</code></pre></div></div>
+<p>href属性表示链接向https://www.w3.org/，当然<a>还有其他的属性，可在<a href="http://www.aweb.cc/doc/html5/index.html">W3C HTML5 中文手册</a>中<code class="highlighter-rouge">&lt;a&gt;</code>标签页查询</a></p>
+
+<p>HTML 元素还有<strong>事件属性</strong>，这些属性在浏览器中触发行为，比如当用户单击一个 HTML 元素时启动一段 JavaScript。其详细参数也可以在<a href="http://www.aweb.cc/doc/html5/index.html">W3C HTML5 中文手册</a>中查询到。</p>
+
+<h2 id="常用标签">常用标签</h2>
+
+<h3 id="1-表单-form">1. 表单 <code class="highlighter-rouge">&lt;form&gt;</code></h3>
+<p>收集用户输入的信息</p>
+<h4 id="11-常用定义">1.1 常用定义</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form&gt;
+&lt;input type="类型" name="表单元素名" value="表单元素值"&gt;
+&lt;/form&gt;
+</code></pre></div></div>
+<h4 id="12-文本输入-typetext">1.2 文本输入 type=text</h4>
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form&gt;
+&lt;input type="text" name="Name"&gt;
+&lt;/form&gt;
+&lt;!--值为输入内容--&gt;
+</code></pre></div></div>
+<h4 id="13-密码-typepassword">1.3 密码 type=password</h4>
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form&gt;
+&lt;input type="password" name="Pwd"&gt;
+&lt;/form&gt;
+&lt;!--值为输入内容--&gt;
+</code></pre></div></div>
+<h4 id="14-单选按钮-typeradio">1.4 单选按钮 type=radio</h4>
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form&gt;
+&lt;input type="radio" name="sex" value="male"&gt;male&lt;br&gt;
+&lt;input type="radio" name="sex" value="female"&gt;female&lt;br&gt;
+&lt;/form&gt;
+&lt;!--值为输入内容--&gt;
+</code></pre></div></div>
+<h4 id="15-复选框-typecheckbox">1.5 复选框 type=checkbox</h4>
+<p>name后为数组
+例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form&gt;
+&lt;input type="checkbox" name="like[]" value="HTML"&gt;HTML&lt;br&gt;
+&lt;input type="checkbox" name="like[]" value="C++"&gt;C++&lt;br&gt;
+&lt;/form&gt;
+&lt;!--值为输入内容--&gt;
+</code></pre></div></div>
+<h4 id="16-下拉列表">1.6 下拉列表</h4>
+<h5 id="单选下拉列表">单选下拉列表</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form&gt;
+&lt;select name="复选框名"&gt;
+&lt;option value="值"&gt;网页显示内容&lt;/option&gt;
+&lt;option value="值"&gt;网页显示内容&lt;/option&gt;
+&lt;option value="值" selected&gt;网页显示内容&lt;/option&gt;
+&lt;!--selected对应项为默认选项，可不写，则默认为第一个--&gt;
+&lt;/select&gt;
+&lt;/form&gt;
+</code></pre></div></div>
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form&gt;
+手机&lt;br&gt;
+	&lt;select name="phone"&gt;
+	&lt;option value="apple"&gt;Apple&lt;/option&gt;
+	&lt;option value="xiaomi"&gt;Xiaomi&lt;/option&gt;
+	&lt;option value="piexl" selected&gt;Piexl&lt;/option&gt;
+	&lt;/select&gt;
+&lt;/form&gt;
+</code></pre></div></div>
+<h4 id="复选下拉列表">复选下拉列表</h4>
+<p>与单选相比，多了multiple=”multiple” name=”复选框名[]”，选择名变成了数组，就像复选框的原理一样</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;select multiple="multiple" name="复选框名[]"&gt;
+</code></pre></div></div>
+<h4 id="17-提交按钮-typesubmit">1.7 提交按钮 type=”submit”</h4>
+<p>当用户单击确认按钮时，表单的内容会被传送到另一个文件。表单的动作属性定义了目的文件的文件名。由动作属性定义的这个文件通常会对接收到的输入数据进行相关的处理。
+例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form name="input" action="html_action.php" method="get"&gt;
+&lt;--!其他内容--&gt;
+&lt;input type="submit" value="提交"&gt;&lt;br&gt;
+&lt;/form&gt;
+&lt;!--提交后，把参数传递给html_action.php--&gt;
+</code></pre></div></div>
+<h4 id="18示例">1.8示例</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form name="input" action="html_action.php" method="get"&gt;
+	&lt;!--文本域--&gt;
+	Name &lt;input type="text" name="Name"&gt;&lt;br&gt;
+	&lt;!--密码--&gt;
+	Password &lt;input type="password" name="Password"&gt;&lt;br&gt;
+	&lt;!--单选--&gt;
+	性别&lt;br&gt;
+	&lt;input type="radio" name="sex" value="male"&gt;Male &lt;br&gt;
+	&lt;input type="radio" name="sex" value="femal"&gt;Femal &lt;br&gt;
+	&lt;!--复选--&gt;
+	操作系统&lt;br&gt;
+	&lt;input type="checkbox" name="OS" value="IOS"&gt;IOS&lt;br&gt;
+	&lt;input type="checkbox" name="OS" value="Android"&gt;Android&lt;br&gt;
+	&lt;!--下拉列表--&gt;
+	手机&lt;br&gt;
+	&lt;select name="phone"&gt;
+	&lt;option value="apple"&gt;Apple&lt;/option&gt;
+	&lt;option value="xiaomi"&gt;Xiaomi&lt;/option&gt;
+	&lt;option value="piexl" selected&gt;Piexl&lt;/option&gt;
+	&lt;/select&gt;
+	&lt;/br&gt;
+	&lt;!--提交--&gt;
+	&lt;input type="submit" value="提交"&gt;&lt;br&gt;
+	&lt;/form&gt;
+</code></pre></div></div>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-e23c75ea7b52d852.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+<h4 id="更多的需要再学">更多的需要再学</h4>
+
+<p>有机会继续写</p>
+<h2 id="css">CSS</h2>
+<blockquote>
+  <p><strong>层叠样式表</strong>（英语：Cascading Style Sheets，简写 <strong>CSS</strong>），又称串样式列表、级联样式表、串接样式表、层叠样式表、階層式樣式表，一种用来为结构化文档（如 HTML文档或 XML应用）添加样式（字体、间距和颜色等）的计算机语言。</p>
+</blockquote>
+
+<p><strong>简单的说就是规定了html文件中某标签内部的内容的字体、间距和颜色等样式，将文件的内容与显示分隔开来。</strong></p>
+
+<h3 id="css-的创建">CSS 的创建</h3>
+<blockquote>
+  <p>CSS 信息可以来自：
+ <strong>作者样式</strong></p>
+  <ul>
+    <li>作者可以在他的 HTML 文件中确定一个外来的、独立的 CSS 文件（<strong>外部样式表</strong>）</li>
+    <li>作者可以将 CSS 信息包含在 HTML 文件内（<strong>内部样式表</strong>）</li>
+    <li>作者可以在一个 HTML 标签内结合 CSS 指令（<strong>内联样式</strong>），</li>
+  </ul>
+
+  <p><strong>自定样式</strong>
+读者可以在他的浏览器内设立一个 CSS 文件。这个 CSS 文件可以用在所有的 HTML 文件上。假如作者的 CSS 文件与读者的相冲突，那么读者可以选择一个</p>
+
+  <p><strong>浏览器样式</strong>
+假如外部没有特别指定一个样式的话，一般浏览器自己有一个内在的样式</p>
+</blockquote>
+
+<p><strong>我们在编写html文件的过程中使用的就是作者样式</strong></p>
+
+<p>优先级 外部样式表 &lt; 内部样式表 &lt; 内联样式表</p>
+
+<p>例</p>
+
+<p>Index.html文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"./style.css"</span>  <span class="nt">/&gt;</span>  
+		<span class="c">&lt;!--引用外部样式style.css文件，文件位于./style.css即index同目录(./)下--&gt;</span>		
+        <span class="nt">&lt;title&gt;</span>biaoti<span class="nt">&lt;/title&gt;</span> 
+                <span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+                       <span class="nt">body</span> <span class="nt">p</span> <span class="p">{</span><span class="nl">color</span><span class="p">:</span> <span class="no">red</span><span class="p">}</span>
+                        
+                <span class="nt">&lt;/style&gt;</span>    
+		<span class="c">&lt;!-- style内规定了body内的p内的字体颜色为red--&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+                  外部样式表规定body内部的字体为yellow
+				  <span class="nt">&lt;p&gt;</span> 内部样式表改了body内部p内的字体为red <span class="nt">&lt;/p&gt;</span>
+				  <span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">"color: blue"</span><span class="nt">&gt;</span>内联样式表改了p的字体为blue <span class="nt">&lt;/p&gt;</span>
+				  <span class="c">&lt;!-- style后“内部规定了p内的字体为blue--&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p>style.css文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>body{color: yellow}
+&lt;!-- body内的p内的字体颜色为red--&gt;
+</code></pre></div></div>
+
+<p>效果如图</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-a56c6e2db0e25ac7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<p>由上述例子我们可以看到，CSS的位置和他们的优先级。</p>
+<h4 id="外部样式表">外部样式表</h4>
+<blockquote>
+  <p>当样式需要应用于很多页面时，外部样式表将是理想的选择。在使用外部样式表的情况下，你可以通过改变一个文件来改变整个站点的外观。每个页面使用 <link /> 标签链接到样式表。<link /> 标签在（html文档的）头部：</p>
+</blockquote>
+
+<p><strong>格式</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;head&gt;
+&lt;link rel="stylesheet" type="text/css" href="mystyle.css" /&gt;
+&lt;/head&gt;
+</code></pre></div></div>
+<p>浏览器会从文件 mystyle.css 中读到样式声明，并根据它来格式文档,mystyle.css也可为指向某文件的网页链接(例https://assets-cdn.github.com/assets/frameworks-77c3b874f32e71b14cded5a120f42f5c7288fa52e0a37f2d5919fbd8bcfca63c.css）只要浏览器能get到就行，推荐以css为拓展名</p>
+
+<p><strong>css文件书写语法</strong></p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-4e4e3de77aa7618a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<p>即</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>标签1 { 声明1;声明2;...声明N;}
+标签2 { 声明1;声明2;...声明N;}
+标签3 { 声明1;声明2;...声明N;}
+...
+</code></pre></div></div>
+<p>标签即为html标签，表明之后声明的生效范围，声明是指标签内范围的具体格式，声明一般为<code class="highlighter-rouge">属性:值</code>，当值有多个字符串时用引号”括起来值的所有单词。
+示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>body{color: yellow}
+</code></pre></div></div>
+<p>就表明标签body内部所有字体的颜色为yellow，更多标签和声明参见
+<a href="http://www.jianshu.com/p/c9dd22cfc434">[转载&amp;修改]20170907html学习(三)css样式表</a>
+<a href="https://www.google.com.hk/search?newwindow=1&amp;safe=strict&amp;q=CSS+%E6%89%8B%E5%86%8C&amp;oq=CSS+%E6%89%8B%E5%86%8C&amp;gs_l=psy-ab.3..35i39k1l2.125857.126171.0.127508.3.3.0.0.0.0.392.392.3-1.1.0..1..0...1.1.64.psy-ab..2.1.391.TSOyWqcSTyY">CSS 手册</a>
+或者搜索css样式大全之类的关键词
+<strong>更多高级书写语法</strong></p>
+<ol>
+  <li><code class="highlighter-rouge">标签1 标签2 {声明}</code>
+表示生效范围为标签1内的标签2内的内容格式</li>
+  <li><code class="highlighter-rouge">标签1，标签2，标签3{声明}</code>
+表示标签1，2，3内的内容格式都为声明的格式</li>
+</ol>
+
+<p>有时间继续写</p>
+
+<h4 id="内部样式表">内部样式表</h4>
+<blockquote>
+  <p>当单个文档需要特殊的样式时，就应该使用内部样式表。可以使用<code class="highlighter-rouge"> &lt;style&gt;</code> 标签在html文档head标签内定义</p>
+</blockquote>
+
+<p><strong>格式</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;head&gt;
+&lt;style type="text/css"&gt;
+规则
+&lt;/style&gt;
+&lt;/head&gt;
+</code></pre></div></div>
+<p><strong>规则书写语法</strong>
+同css文件书写语法</p>
+
+<h4 id="内联样式">内联样式</h4>
+<p>仅需要在一个标签内上应用一次时，使用内联样式例
+<strong>格式</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;标签 style="声明1;声明2;...声明N;"&gt;标签内部的内容&lt;/标签&gt;
+</code></pre></div></div>
+<p><strong>声明语法</strong>
+同css文件书写语法中的声明语法一样<code class="highlighter-rouge">属性:值</code></p>
+
+<h2 id="备注">备注</h2>
+<ol>
+  <li>建议多在网页上，右键查看源代码，可以查看相关网站的html内容,chrome浏览器，f12还可查看与html搭配的各种元素，有的网站还可看到css文件</li>
+  <li>chrome在F12查看源代码时可以，再选择element，可以更改源代码查看效果，应用把表单类型password改为text，可查看浏览器自动填充密码</li>
+</ol>
+:ET

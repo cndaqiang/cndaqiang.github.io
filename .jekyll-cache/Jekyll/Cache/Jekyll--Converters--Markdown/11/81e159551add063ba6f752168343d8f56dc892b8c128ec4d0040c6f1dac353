@@ -1,0 +1,179 @@
+I"�><ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#文件" id="markdown-toc-文件">文件</a></li>
+  <li><a href="#buffer的使用" id="markdown-toc-buffer的使用">buffer的使用</a>    <ul>
+      <li><a href="#使用" id="markdown-toc-使用">使用</a></li>
+      <li><a href="#open_buffer创建打开buffer" id="markdown-toc-open_buffer创建打开buffer"><code class="highlighter-rouge">open_buffer</code>创建/打开buffer</a>        <ul>
+          <li><a href="#save_buffer保存到buffer" id="markdown-toc-save_buffer保存到buffer"><code class="highlighter-rouge">save_buffer</code>保存到buffer</a></li>
+          <li><a href="#get_buffer读取数据" id="markdown-toc-get_buffer读取数据"><code class="highlighter-rouge">get_buffer</code>读取数据</a></li>
+          <li><a href="#close_buffer关闭buffer" id="markdown-toc-close_buffer关闭buffer"><code class="highlighter-rouge">close_buffer</code>关闭buffer</a></li>
+          <li><a href="#综合示例" id="markdown-toc-综合示例">综合示例</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#其他文件" id="markdown-toc-其他文件">其他文件</a>    <ul>
+      <li><a href="#close_files关闭打开的buffer" id="markdown-toc-close_files关闭打开的buffer"><code class="highlighter-rouge">close_files</code>关闭打开的buffer</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/QEF/q-e.git">q-e code</a><br /></p>
+
+<h2 id="文件">文件</h2>
+<p>File:<code class="highlighter-rouge">PW/src/buffers.f90</code><br />
+File:<code class="highlighter-rouge">Modules/io_files.f90</code> 文件的unit</p>
+
+<h2 id="buffer的使用">buffer的使用</h2>
+<p>为每个processor创建一个文件(或内存buffer)，用与读取和存储变量<br />
+如,当使用4个processor运行时,存储的波函数文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pwscf.wfc1  pwscf.wfc2  pwscf.wfc3  pwscf.wfc4 
+</code></pre></div></div>
+<h3 id="使用">使用</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>USE buffers,  ONLY : open_buffer, save_buffer, get_buffer,close_buffer
+</code></pre></div></div>
+
+<h3 id="open_buffer创建打开buffer"><code class="highlighter-rouge">open_buffer</code>创建/打开buffer</h3>
+<p>命令</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open_buffer (unit, extension, nword, io_level, exst, exst_file, direc)
+</code></pre></div></div>
+<p>可用于创建新的buffer，也可以打开旧的buffer，读取旧的数据<br />
+参数解释</p>
+<ul>
+  <li><code class="highlighter-rouge">unit</code> 文件的unit号，buffer的标识</li>
+  <li><code class="highlighter-rouge">extension</code>，若保存能到文件，文件名为<code class="highlighter-rouge">pwscf.extension.node</code></li>
+  <li><code class="highlighter-rouge">nword</code>,一个buffer里面保存了一段一段的数据，一段的长度是nword个DCOMPLEX,<br />
+如，波函数的一段就存储了该processor处理的单个k点的所有波函数<code class="highlighter-rouge">nwordwfc  = nbnd*npwx*npol</code><br />
+where,<code class="highlighter-rouge">nbnd能带数 * npwx平面波数 * npol(Non-clinear spin)</code></li>
+  <li><code class="highlighter-rouge">io_level</code>,<code class="highlighter-rouge">io_level&gt;0</code>保存到文件,<code class="highlighter-rouge">io_level=0</code>保存到内存<br />
+<code class="highlighter-rouge">io_level</code>由输入参数<code class="highlighter-rouge">disk_io</code>决定
+    <blockquote>
+      <ul>
+        <li>‘high’,<code class="highlighter-rouge">io_level = 2</code>
+   <br />        save all data to disk at each SCF step</li>
+        <li>
+          <p>‘medium’,<code class="highlighter-rouge">io_level = 1</code> 
+   <br />         save wavefunctions at each SCF step unless
+   <br />         there is a single k-point per process (in which
+   <br />         case the behavior is the same as ‘low’)</p>
+        </li>
+        <li>
+          <p>‘low’,<code class="highlighter-rouge">io_level = 0</code>
+   <br />         store wfc in memory, save only at the end</p>
+        </li>
+        <li>‘none’,<code class="highlighter-rouge">io_level = -1</code>
+   <br />         do not save anything, not even at the end
+   <br />         (‘scf’, ‘nscf’, ‘bands’ calculations; some data
+   <br />         may be written anyway for other calculations)</li>
+      </ul>
+    </blockquote>
+  </li>
+  <li><code class="highlighter-rouge">exst</code>，内存(<code class="highlighter-rouge">io_level=0</code>)/文件(<code class="highlighter-rouge">io_level&gt;0</code>)是否存在<code class="highlighter-rouge">pwscf.extension.node</code>文件</li>
+  <li><code class="highlighter-rouge">exst_file</code> 若目录中存在这个文件<code class="highlighter-rouge">pwscf.extension.node</code>，返回<code class="highlighter-rouge">T</code><br />可选，废弃的参数，无论保存到内存还是文件，只检查是否存在<code class="highlighter-rouge">pwscf.extension.node</code>文件<br />
+<code class="highlighter-rouge">LOGICAL, INTENT(OUT), OPTIONAL :: exst_file</code></li>
+  <li><code class="highlighter-rouge">direc</code>保存文件路径,文件<code class="highlighter-rouge">direc/pwscf.extension.node</code><br />
+<code class="highlighter-rouge">CHARACTER(LEN=*), INTENT(IN), OPTIONAL :: direc</code></li>
+</ul>
+
+<p>示例,<code class="highlighter-rouge">wfcinit.f90</code>中打开buffer文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open_buffer( iunwfc, 'wfc', nwordwfc, io_level, exst_mem, exst_file )
+</code></pre></div></div>
+
+<h4 id="save_buffer保存到buffer"><code class="highlighter-rouge">save_buffer</code>保存到buffer</h4>
+<p>命令</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>save_buffer( vect, nword, unit, nrec )
+</code></pre></div></div>
+<p>参数解释</p>
+<ul>
+  <li>保存<code class="highlighter-rouge">COMPLEX(DP) vect</code>中的数据</li>
+  <li>保存数据长度<code class="highlighter-rouge">nword</code>，待保存原始数据<code class="highlighter-rouge">vect(1:nword)</code>,<strong>必须和open_buffer的一样，不然会报错</strong></li>
+  <li>文件/buffer编号<code class="highlighter-rouge">unit</code></li>
+  <li>保存到buffer中的第<code class="highlighter-rouge">(nrec-1)*nword+1</code>到<code class="highlighter-rouge">(nerc)*nword</code>段<br />
+在波函数的部分，一般按照一个k点一个k点的保存，<code class="highlighter-rouge">nrec</code>取k点编号<code class="highlighter-rouge">ik</code><br />
+当只有一个k点时,不(无须)进行保存操作</li>
+</ul>
+
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     IF ( nks &gt; 1 .OR. (io_level &gt; 1) .OR. lelfield ) &amp;
+         CALL save_buffer ( evc, nwordwfc, iunwfc, ik )
+</code></pre></div></div>
+<h4 id="get_buffer读取数据"><code class="highlighter-rouge">get_buffer</code>读取数据</h4>
+<p>命令</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>get_buffer( vect, nword, unit, nrec )
+</code></pre></div></div>
+<p>参数解释</p>
+<ul>
+  <li>存到<code class="highlighter-rouge">COMPLEX(DP) vect</code>中去</li>
+  <li>提取<code class="highlighter-rouge">nword</code>长度，保存到<code class="highlighter-rouge">vect(1:nword)</code>,<strong>必须和open_buffer的一样，不然会报错</strong></li>
+  <li>文件编号<code class="highlighter-rouge">unit</code></li>
+  <li>提取第<code class="highlighter-rouge">(nrec-1)*nword+1</code>到<code class="highlighter-rouge">(nerc)*nword</code>段的数据<br />
+在波函数的部分，一般按照一个k点一个k点的存储，<code class="highlighter-rouge">nrec</code>取k点编号<code class="highlighter-rouge">ik</code><br />
+当只有一个k点时,不(无须)进行读取操作</li>
+</ul>
+
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF (nks &gt; 1) CALL get_buffer(evc, nwordwfc, iunwfc, ik)
+</code></pre></div></div>
+
+<h4 id="close_buffer关闭buffer"><code class="highlighter-rouge">close_buffer</code>关闭buffer</h4>
+<p>命令</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>close_buffer ( unit, status )
+</code></pre></div></div>
+<p>参数解释</p>
+<ul>
+  <li><code class="highlighter-rouge">unit</code>编号</li>
+  <li><code class="highlighter-rouge">status</code>
+    <ul>
+      <li><code class="highlighter-rouge">status="keep"</code>,关闭buffer后保存到文件</li>
+      <li><code class="highlighter-rouge">status="delet"</code>关闭buffer后，删除buffer/文件</li>
+    </ul>
+  </li>
+  <li>关闭后，内存中的buffer会被deallocate掉</li>
+</ul>
+
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  IF ( lflag .AND. (io_level &lt;= 0) ) THEN
+     CALL close_buffer ( iunwfc, 'DELETE' )
+  ELSE
+     CALL close_buffer ( iunwfc, 'KEEP' )
+  END IF
+</code></pre></div></div>
+
+<h4 id="综合示例">综合示例</h4>
+<p>打开文件，若存在，读取数据，若不存在保存数据</p>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">q_data</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="o">=</span><span class="mf">0.0_dp</span><span class="w">
+  </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">q_i</span><span class="p">,</span><span class="n">q_unit</span><span class="o">=</span><span class="mi">12306</span><span class="w">
+  </span><span class="kt">LOGICAL</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">q_exst</span><span class="p">,</span><span class="n">q_exst_file</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">open_buffer</span><span class="p">(</span><span class="n">q_unit</span><span class="p">,</span><span class="s2">"qdata"</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">q_exst</span><span class="p">,</span><span class="n">q_exst_file</span><span class="p">)</span><span class="w">
+  </span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"CNQ: q_exst_file"</span><span class="p">,</span><span class="n">q_exst_file</span><span class="w">
+  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">q_exst_file</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+      </span><span class="k">DO</span><span class="w"> </span><span class="n">q_i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="w">
+         </span><span class="k">CALL</span><span class="w"> </span><span class="n">get_buffer</span><span class="p">(</span><span class="w"> </span><span class="n">q_data</span><span class="p">((</span><span class="n">q_i</span><span class="mi">-1</span><span class="p">)</span><span class="o">*</span><span class="mi">10+1</span><span class="p">),</span><span class="mi">10</span><span class="p">,</span><span class="n">q_unit</span><span class="p">,</span><span class="n">q_i</span><span class="p">)</span><span class="w">
+      </span><span class="k">ENDDO</span><span class="w">
+      </span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"CNQ:q_data read from old data"</span><span class="p">,</span><span class="n">q_data</span><span class="w">
+   </span><span class="k">ELSE</span><span class="w">
+      </span><span class="k">DO</span><span class="w"> </span><span class="n">q_i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="w">
+         </span><span class="n">q_data</span><span class="p">(((</span><span class="n">q_i</span><span class="mi">-1</span><span class="p">)</span><span class="o">*</span><span class="mi">10+1</span><span class="p">):</span><span class="n">q_i</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0_dp</span><span class="o">*</span><span class="n">q_i</span><span class="w">
+         </span><span class="k">CALL</span><span class="w"> </span><span class="n">save_buffer</span><span class="p">(</span><span class="w"> </span><span class="n">q_data</span><span class="p">((</span><span class="n">q_i</span><span class="mi">-1</span><span class="p">)</span><span class="o">*</span><span class="mi">10+1</span><span class="p">),</span><span class="mi">10</span><span class="p">,</span><span class="n">q_unit</span><span class="p">,</span><span class="n">q_i</span><span class="p">)</span><span class="w">
+      </span><span class="k">ENDDO</span><span class="w">
+      </span><span class="n">q_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_dp</span><span class="w">
+      </span><span class="k">DO</span><span class="w"> </span><span class="n">q_i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="w">
+         </span><span class="k">CALL</span><span class="w"> </span><span class="n">get_buffer</span><span class="p">(</span><span class="w"> </span><span class="n">q_data</span><span class="p">((</span><span class="n">q_i</span><span class="mi">-1</span><span class="p">)</span><span class="o">*</span><span class="mi">10+1</span><span class="p">),</span><span class="mi">10</span><span class="p">,</span><span class="n">q_unit</span><span class="p">,</span><span class="n">q_i</span><span class="p">)</span><span class="w">
+      </span><span class="k">ENDDO</span><span class="w">
+      </span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"CNQ:q_data read from save data"</span><span class="p">,</span><span class="n">q_data</span><span class="w">
+   </span><span class="k">ENDIF</span><span class="w">
+   </span><span class="k">CALL</span><span class="w"> </span><span class="n">close_buffer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">q_unit</span><span class="p">,</span><span class="w"> </span><span class="s2">"KEEP"</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="其他文件">其他文件</h2>
+<h3 id="close_files关闭打开的buffer"><code class="highlighter-rouge">close_files</code>关闭打开的buffer</h3>
+<p>File:<code class="highlighter-rouge">PW/src/close_files.f90</code><br />
+关闭打开的buffer,如wfc</p>
+
+:ET

@@ -1,0 +1,185 @@
+I"C&<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#编译" id="markdown-toc-编译">编译</a>    <ul>
+      <li><a href="#依赖" id="markdown-toc-依赖">依赖</a></li>
+      <li><a href="#编译-1" id="markdown-toc-编译-1">编译</a></li>
+      <li><a href="#配置" id="markdown-toc-配置">配置</a>        <ul>
+          <li><a href="#使用systemctl管理程序" id="markdown-toc-使用systemctl管理程序">使用<code class="highlighter-rouge">systemctl</code>管理程序</a></li>
+          <li><a href="#配置文件" id="markdown-toc-配置文件">配置文件</a></li>
+          <li><a href="#添加防火墙端口" id="markdown-toc-添加防火墙端口">添加防火墙端口</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#跳过散列检测" id="markdown-toc-跳过散列检测">跳过散列检测</a></li>
+  <li><a href="#自动添加种子" id="markdown-toc-自动添加种子">自动添加种子</a></li>
+</ul>
+
+<p>路由器的usb2.0挂pt太慢了，为充分利用千兆网，换了千兆小主机挂pt了</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/superlukia/transmission-2.92_skiphashcheck">superlukia/transmission-2.92_skiphashcheck</a><br />
+<a href="https://www.jianshu.com/p/551ed5464e81">源码编译安装Transmission 2.93（debian 7)</a><br />
+<a href="https://forum.odroid.com/viewtopic.php?t=23992">Ubuntu 16.04 and transmission 2.92</a><br />
+<a href="https://www.jianshu.com/p/2ec5d16db02b">ubuntu开放指定端口</a><br />
+<a href="https://bugzilla.redhat.com/show_bug.cgi?id=1468077">Bug 1468077 - Transmission-gtk: Update to support openssl 1.1 (rather than the compat package)</a><br />
+得益于大佬<a href="https://github.com/superlukia">superlukia</a>对transmission的修改，可以跳过transmission的散列检测</p>
+
+<h2 id="环境">环境</h2>
+<p>Ubuntu 16.04.5 LTS<br />
+小主机:</p>
+<ul>
+  <li>Intel(R) Atom(TM) CPU N270   @ 1.60GHz</li>
+  <li>内存： 2G ddr2</li>
+</ul>
+
+<h2 id="编译">编译</h2>
+<h3 id="依赖">依赖</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update
+sudo apt-get install libcurl4-openssl-dev
+apt-get install libevent-dev
+sudo apt-get install zlib1g
+sudo apt-get install zlib1g.dev
+sudo apt install libssh-dev
+sudo apt-get install intltool
+</code></pre></div></div>
+<h3 id="编译-1">编译</h3>
+<p>下载</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/cndaqiang/transmission-2.92_skiphashcheck/archive/master.zip
+unzip master.zip
+cd transmission-2.92_skiphashcheck-master/
+</code></pre></div></div>
+<p>检查</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure
+</code></pre></div></div>
+<p>编译，安装</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make
+sudo su
+make install
+</code></pre></div></div>
+
+<p><strong>Ubuntu 18.04 由于openssl版本为1.1</strong>,transmission-2.9x支持到1.0,直接编译会报错</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crypto-utils-openssl.c: In function ‘tr_dh_new’:
+crypto-utils-openssl.c:244:29: error: dereferencing pointer to incomplete type ‘DH {aka struct dh_st}’
+   if (!check_pointer (handle-&gt;p = BN_bin2bn (prime_num, prime_num_length, NULL)) ||
+                             ^
+crypto-utils-openssl.c:92:56: note: in definition of macro ‘check_pointer’
+ #define check_pointer(pointer) check_openssl_pointer ((pointer), __FILE__, __LINE__)
+                                                        ^~~~~~~
+Makefile:1249: recipe for target 'crypto-utils-openssl.o' failed
+make[1]: *** [crypto-utils-openssl.o] Error 1
+make[1]: Leaving directory '/home/oem/test/transmission-2.92_skiphashcheck-master/libtransmission'
+Makefile:507: recipe for target 'all-recursive' failed
+make: *** [all-recursive] Error 1
+</code></pre></div></div>
+<p>下载<a href="/web/file/2019/0001-transmission-build-against-openssl-1.1.0.patch">0001-transmission-build-against-openssl-1.1.0.patch</a>,传到编译目录</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">oem@boy:~/test/transmission-2.92_skiphashcheck-master$ patch -p0 &lt; 0001-transmission-build-against-openssl-1.1.0.patch
+can't find file to patch at input line 15
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+</span><span class="gd">--------------------------
+</span><span class="err">|From</span> 1108498d2a1a9c47931f41b04f248616b29383d6 Mon Sep 17 00:00:00 2001
+<span class="err">|From:</span> Sebastian Andrzej Siewior &lt;sebastian@breakpoint.cc&gt;
+<span class="err">|Date:</span> Mon, 5 Sep 2016 21:49:07 +0000
+<span class="err">|Subject:</span> [PATCH] transmission: build against openssl 1.1.0
+<span class="err">|</span>
+|Signed-off-by: Sebastian Andrzej Siewior &lt;sebastian@breakpoint.cc&gt;
+<span class="err">|---</span>
+| libtransmission/crypto-utils-openssl.c | 73 ++++++++++++++++++++++++++++++++--
+<span class="err">|</span> 1 file changed, 69 insertions(+), 4 deletions(-)
+<span class="err">|</span>
+|diff --git a/libtransmission/crypto-utils-openssl.c b/libtransmission/crypto-utils-openssl.c
+<span class="err">|index</span> 77a628bea..16a37b205 100644
+<span class="err">|---</span> a/libtransmission/crypto-utils-openssl.c
+<span class="err">|+++</span> b/libtransmission/crypto-utils-openssl.c
+<span class="gd">--------------------------
+</span><span class="p">File to patch: libtransmission/crypto-utils-openssl.c
+patching file libtransmission/crypto-utils-openssl.c
+</span></code></pre></div></div>
+<p>之后就可以make了</p>
+
+<h3 id="配置">配置</h3>
+<h4 id="使用systemctl管理程序">使用<code class="highlighter-rouge">systemctl</code>管理程序</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/systemd/system/transmission.service
+</code></pre></div></div>
+<p>填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=Transmission BitTorrent Daemon
+After=network.target
+
+[Service]
+User=root
+LimitNOFILE=100000
+ExecStart=/usr/local/bin/transmission-daemon -f --log-error -g /usr/local/share/transmission
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+<p>控制命令</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#查看状态
+systemctl status transmission.service
+#重新载入配置信息
+systemctl daemon-reload
+#启动
+systemctl start transmission.service
+#关闭
+systemctl stop transmission.service
+#添加到开机启动
+systemctl enable transmission.service
+#关闭开开机启动
+systemctl disable transmission.service
+</code></pre></div></div>
+
+<h4 id="配置文件">配置文件</h4>
+<p>关闭<code class="highlighter-rouge">transmission</code>后在修改配置文件<br />
+生成初始配置</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl daemon-reload
+systemctl start transmission.service
+systemctl stop transmission.service
+</code></pre></div></div>
+<p>配置相关目录</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/share/transmission
+</code></pre></div></div>
+<p>修改</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /usr/local/share/transmission/settings.json
+</code></pre></div></div>
+<p>其中,设置rpc网页访问</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    "rpc-authentication-required": false,
+    "rpc-bind-address": "0.0.0.0",
+    "rpc-enabled": true,
+    "rpc-password": "123456", #密码，填入明文，启动后会自动转成密文
+    "rpc-port": 9091,         #端口
+    "rpc-url": "/transmission/",
+    "rpc-username": "root",   #用户名，rpc用户名和密码与系统用户名密码不一样
+    "rpc-whitelist": "192.168.1.*,127.0.0.1",  #允许访问的ip
+    "rpc-whitelist-enabled": true,
+</code></pre></div></div>
+<p>之后</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl start transmission.service
+</code></pre></div></div>
+<p>就可以通过<code class="highlighter-rouge">http://ip:9091</code>来访问transmission,然后通过网页配置了</p>
+
+<h4 id="添加防火墙端口">添加防火墙端口</h4>
+<p>临时生效，其中51413是transmission的Peer listen port</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -I INPUT -p tcp --dport 51413 -j ACCEPT
+iptables-save
+</code></pre></div></div>
+<p>永久生效</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install iptables-persistent
+sudo netfilter-persistent save
+sudo netfilter-persistent reload
+</code></pre></div></div>
+
+<h2 id="跳过散列检测">跳过散列检测</h2>
+<p>在网页访问时，在任何一个种子上，右键<code class="highlighter-rouge">Ask tracker for more peers</code><br />
+就会跳过当前的检测</p>
+
+<h2 id="自动添加种子">自动添加种子</h2>
+<p>种子多时，网页版经常卡，设置watch目录，自动添加种子<br />
+<a href="https://blog.whsir.com/post-1182.html">Transmission2.92配置文件参数中文解释</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    "watch-dir": "/home/data/zhongzi",
+    "watch-dir-enabled": true
+</code></pre></div></div>
+<p><strong>注：每行以<code class="highlighter-rouge">,</code>结尾,最后一行无符号</strong></p>
+:ET

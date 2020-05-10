@@ -1,0 +1,239 @@
+I"�*<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#示例" id="markdown-toc-示例">示例</a>    <ul>
+      <li><a href="#结构优化" id="markdown-toc-结构优化">结构优化</a>        <ul>
+          <li><a href="#graphane-relax" id="markdown-toc-graphane-relax">Graphane relax</a></li>
+          <li><a href="#hcp-zinc-vc-relax" id="markdown-toc-hcp-zinc-vc-relax">hcp-Zinc vc-relax</a></li>
+        </ul>
+      </li>
+      <li><a href="#md分子动力学略" id="markdown-toc-md分子动力学略">MD分子动力学[略]</a></li>
+      <li><a href="#neb计算" id="markdown-toc-neb计算">NEB计算</a>        <ul>
+          <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+          <li><a href="#hcn-转换为-cnh-的过程" id="markdown-toc-hcn-转换为-cnh-的过程">HCN 转换为 CNH 的过程</a></li>
+          <li><a href="#计算输出" id="markdown-toc-计算输出">计算输出</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#附录" id="markdown-toc-附录">附录</a>    <ul>
+      <li><a href="#xcrysden-help" id="markdown-toc-xcrysden-help">xcrysden help</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>本学习教程内容主要来自互联网，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://github.com/cndaqiang/LearnQE">LearnQE@cndaqiang</a></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://qe2019.ijs.si/">Summer School on Advanced Materials and Molecular Modelling</a><br />
+<a href="https://gitlab.com/QEF/material-for-ljubljana-qe-summer-school">GitLab for qe2019</a><br /></p>
+
+<h2 id="示例">示例</h2>
+<h3 id="结构优化">结构优化</h3>
+<h4 id="graphane-relax">Graphane relax</h4>
+<p>relax计算<code class="highlighter-rouge">    calculation = 'relax',</code>,添加<code class="highlighter-rouge">&amp;IONS</code>原子收敛参数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;IONS
+!都有默认值
+		!ion_dynamics="bfgs" !relax: bfgs,damp ; md: verlet langevin, langevin-smc....
+/
+</code></pre></div></div>
+<p>运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-2/example1.relax
+mpirun -np 4 pw.x -i pw.graphane.relax.in | tee graphane.relax.out
+xcrysden  --pwo graphane.relax.out 
+</code></pre></div></div>
+<p>xcrysden打开后，可以选择<code class="highlighter-rouge">Display All Coordinates as Animation</code>，<br />
+然后显示不同原子步的结构，分别测量，C-H键长变化:0.9851Ang-&gt;1.1083Ang</p>
+<h4 id="hcp-zinc-vc-relax">hcp-Zinc vc-relax</h4>
+<p>vc-relax,变cell结构优化，要加上<code class="highlighter-rouge">&amp;CELL</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &amp;IONS
+ /
+ &amp;CELL
+ /
+</code></pre></div></div>
+<p>运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.Zn.vc-relax.in | tee Zn.vc-relax.out
+xcrysden --pwo  Zn.vc-relax.out
+</code></pre></div></div>
+
+<h3 id="md分子动力学略">MD分子动力学[略]</h3>
+<p>与结构优化类似，添加步长dt和总步数nstep,</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;CONTROL
+	  calculation="md" !scf nscf 
+      nstep=68
+      dt=4
+/
+&amp;IONS
+!tempw起始温度
+!		tempw = 0.1
+!系综，verlet(NVE)
+		ion_dynamics="verlet"
+/
+&amp;CELL
+/
+
+</code></pre></div></div>
+
+<h3 id="neb计算">NEB计算</h3>
+<p>输入文件结构示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BEGIN
+
+BEGIN_PATH_INPUT
+&amp;PATH
+nstep_path = 200 !最大步数
+num_of_images = 7
+!默认pwscf_1 pwscf_N仅计算一次，只有2-N1共N-2个image参与后续的迭代
+!设置first_last_opt = .True. 1,N也参与迭代
+!first_last_opt = .False.
+/
+END_PATH_INPUT
+
+BEGIN_ENGINE_INPUT
+!各个图像的计算参数，把pw.x的输入复制过来，
+!仅不包含原子结构ATOMIC_POSITIONS，其他的如晶格参数，赝势依旧在此处填写
+&amp;CONTROL
+pseudo_dir = './'
+/
+&amp;SYSTEM
+  ibrav = 0
+  A =    1.00000000000000
+  nat = 3
+  ntyp = 3
+
+  ecutwfc = 30 
+!  	kinetic energy cutoff (Ry) for wavefunctions
+  ecutrho = 200 !4*ecutwfc
+
+/
+&amp;ELECTRONS
+/
+
+CELL_PARAMETERS {alat}
+  20.0000000000000000   0.0000000000000000   0.0000000000000000
+   0.0000000000000000  20.0000000000000000   0.0000000000000000
+   0.0000000000000000   0.0000000000000000  20.0000000000000000
+ATOMIC_SPECIES
+  C 12.0107 C_ONCV_PBE_fr.upf
+  N 14.0067 N_ONCV_PBE_fr.upf
+  H 1.00794 H_ONCV_PBE_fr.upf
+K_POINTS {automatic}
+1 1 1  0 0 0
+
+BEGIN_POSITIONS
+!初始IMAGE，终止IMAGE
+FIRST_IMAGE
+ATOMIC_POSITIONS {crystal}
+  C   0.4999025166406645 0.5000000000000000 0.5000000000000000
+  N   0.5578501003511457 0.5000000000000000 0.5000000000000000
+  H   0.4462473830081877 0.5000000000000000 0.5000000000000000 
+LAST_IMAGE
+ATOMIC_POSITIONS {crystal}
+  C   0.5000000000000000 0.5000000000000000 0.4414141678546500
+  N   0.5000000000000000 0.5000000000000000 0.5001920800889998
+  H   0.5000000000000000 0.5000000000000000 0.5503937520563474
+END_POSITIONS
+   
+END_ENGINE_INPUT
+END
+</code></pre></div></div>
+<h4 id="运行">运行</h4>
+<ul>
+  <li>默认的计算方式,创建pwscf_[1-N],然后分别进入到相应的文件夹进行计算<br />
+可以看到开始时只有pwscf_1中有输出，随后其他文件夹内以此出现输出文件
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 neb.x -i neb.in | tee neb.out
+</code></pre></div>    </div>
+  </li>
+  <li>使用image并行(-ni n)，可以同时开始好几个pwscf_的计算，如下，有四个image同时计算<br />
+<strong>image并行的image数量小于等于neb的image-2</strong>,因为初始和最终的image不参与后续的计算<br />
+如果设置<code class="highlighter-rouge">first_last_opt = .True.</code>，初始，最终的image也参与计算，此时image并行的image数量小于等于neb的image
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 neb.x -ni 4  -i neb.in | tee neb.out
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>xcrysden 可以根据neb.in生成变化动图，如下例</p>
+
+<h4 id="hcn-转换为-cnh-的过程">HCN 转换为 CNH 的过程</h4>
+<p>工作路径</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-2/example3.neb/HCN_CNH
+</code></pre></div></div>
+<p>之前使用VASP+VTST的计算结果<a href="https://github.com/cndaqiang/DFT-EXERCISES">DFT-EXERCISES</a>中的6.5节<br />
+<img src="/uploads/2020/03/neb.gif" alt="" /></p>
+
+<h4 id="计算输出">计算输出</h4>
+<p>运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EXEC=/public/home/chendq/soft/intel17/qe-6.4.1/bin/neb.x
+srun --mpi=pmi2 $EXEC -ni 5 -i neb.in | tee result
+</code></pre></div></div>
+<p><strong>下面的输出，是我中途kill了neb.x的结果，不是最终收敛的结果</strong></p>
+<ul>
+  <li>neb.dat 是输入neb.in中的<code class="highlighter-rouge">&amp;PATH</code>的备份</li>
+  <li>pw_1.in pw_2.in 是neb.in中的初态，末态scf计算的参数和坐标</li>
+  <li>pwscf_i 各个image的运行目录，与正常的scf计算相同，<code class="highlighter-rouge">pwscf_i/PW.out</code>是标准输出</li>
+  <li>pwscf.int ??</li>
+  <li>pwscf.dat中[反应坐标，相对能量，error]与标准输出中的一致,用于画反应势能面
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    image        energy (eV)        error (eV/A)        frozen
+
+       1       -455.0343548            3.837393            T
+       2       -454.1570363           17.615266            F
+       3       -453.7100989           11.466074            F
+       4       -453.2121126            3.452926            F
+       5       -453.9481453            0.191098            F
+       6       -453.7209844           14.164421            F
+       7       -454.3738303            3.409830            T
+</code></pre></div>    </div>
+  </li>
+  <li>pwscf.pathI 每次迭代的反应路径</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C_ONCV_PBE_fr.upf  pwscf.dat     pwscf.path26  pwscf.path46
+H_ONCV_PBE_fr.upf  pwscf.int     pwscf.path27  pwscf.path47
+neb.dat            pwscf.path    pwscf.path28  pwscf.path48
+neb.in             pwscf.path0   pwscf.path29  pwscf.path49
+N_ONCV_PBE_fr.upf  pwscf.path1   pwscf.path3   pwscf.path5
+out.1_0            pwscf.path10  pwscf.path30  pwscf.path50
+out.2_0            pwscf.path11  pwscf.path31  pwscf.path51
+out.3_0            pwscf.path12  pwscf.path32  pwscf.path52
+out.4_0            pwscf.path13  pwscf.path33  pwscf.path53
+out.5_0            pwscf.path14  pwscf.path34  pwscf.path54
+out.6_0            pwscf.path15  pwscf.path35  pwscf.path55
+pw_1.in            pwscf.path16  pwscf.path36  pwscf.path6
+pw_2.in            pwscf.path17  pwscf.path37  pwscf.path7
+pwscf_1            pwscf.path18  pwscf.path38  pwscf.path8
+pwscf_2            pwscf.path19  pwscf.path39  pwscf.path9
+pwscf_3            pwscf.path2   pwscf.path4   pwscf.xyz
+pwscf_4            pwscf.path20  pwscf.path40  result
+pwscf_5            pwscf.path21  pwscf.path41  run-qe-sslab.sh
+pwscf_6            pwscf.path22  pwscf.path42  run-qe-sslab.sh.e1010102
+pwscf_7            pwscf.path23  pwscf.path43  run-qe-sslab.sh.o1010102
+pwscf.axsf         pwscf.path24  pwscf.path44
+pwscf.crd          pwscf.path25  pwscf.path45
+</code></pre></div></div>
+<p><strong>结果等待SSLAB中</strong></p>
+
+<h2 id="附录">附录</h2>
+<h3 id="xcrysden-help">xcrysden help</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       --xsf file
+           Load structure from XCrySDen's-Structure-File (XSF) formatted file.
+
+       --cube file
+       --gXX_cube file
+       --g98_cube file
+           Load  structure  from  Gaussian cube file. The cube file should be produced with the Cube=Cards option. Only scalar cube files are supported, that
+           is, Cube=(Cards,Density) or Cube=(Cards,Orbitals) or Cube=(Cards,Potential). Refer to GAUSSIAN manual for the meaning of this keywords.
+
+       --pwi
+       --pw_inp file
+           Load structure from pw.x input file. pw.x is a  pseudopotential  planewave  program  of  the  Quantum-ESPRESSO  distribution  (http://www.quantum-
+           espresso.org/).
+
+       --pwo
+       --pw_out file
+           Load  structure  from  pw.x  output  file.  pw.x  is a pseudopotential planewave program of the Quantum-ESPRESSO distribution (http://www.quantum-
+           espresso.org/).
+
+       -s script
+       --script script
+           Load script from file containing Tcl script.
+</code></pre></div></div>
+:ET

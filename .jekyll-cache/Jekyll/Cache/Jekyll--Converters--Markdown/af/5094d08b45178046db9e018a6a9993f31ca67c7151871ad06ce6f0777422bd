@@ -1,0 +1,231 @@
+I"�'<ul id="markdown-toc">
+  <li><a href="#一些函数" id="markdown-toc-一些函数">一些函数</a>    <ul>
+      <li><a href="#print" id="markdown-toc-print">print</a>        <ul>
+          <li><a href="#输出字符串列表等" id="markdown-toc-输出字符串列表等">输出字符串，列表等</a></li>
+          <li><a href="#格式化输出" id="markdown-toc-格式化输出">格式化输出</a></li>
+        </ul>
+      </li>
+      <li><a href="#format" id="markdown-toc-format">format</a></li>
+    </ul>
+  </li>
+  <li><a href="#文件操作" id="markdown-toc-文件操作">文件操作</a>    <ul>
+      <li><a href="#文件读写" id="markdown-toc-文件读写">文件读写</a>        <ul>
+          <li><a href="#打开文件" id="markdown-toc-打开文件">打开文件</a></li>
+          <li><a href="#关闭文件" id="markdown-toc-关闭文件">关闭文件</a></li>
+          <li><a href="#写入数据" id="markdown-toc-写入数据">写入数据</a></li>
+          <li><a href="#读取数据" id="markdown-toc-读取数据">读取数据</a></li>
+          <li><a href="#读写位置" id="markdown-toc-读写位置">读写位置</a></li>
+          <li><a href="#判断文件是否读至结尾" id="markdown-toc-判断文件是否读至结尾">判断文件是否读至结尾</a></li>
+        </ul>
+      </li>
+      <li><a href="#文件重命名删除" id="markdown-toc-文件重命名删除">文件重命名删除</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="一些函数">一些函数</h1>
+
+<h2 id="print">print</h2>
+<h3 id="输出字符串列表等">输出字符串，列表等</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print('hello')
+print(str1,str2,str3)  #连接输出，中间以空格隔开
+print(list)
+</code></pre></div></div>
+<p>print每执行一次，输出后最后默认加一个回车，可以print(str1,edn=’结束内容’)，指定输出后的内容</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; print('a');print('b')
+a
+b 
+&gt;&gt;&gt; print('a',end='');print('b')
+ab
+&gt;&gt;&gt; print('a',end=' ');print('b')
+a b
+</code></pre></div></div>
+
+<h3 id="格式化输出">格式化输出</h3>
+<ul>
+  <li>%s — 字符串</li>
+  <li>%d — dec十进制</li>
+  <li>%x — hex 十六进制</li>
+  <li>%d — dec 十进制</li>
+  <li>%o — oct 八进制</li>
+  <li>%f — 浮点数</li>
+  <li>%m.nf — 整数部分m个，不够补空格，小数部分n个</li>
+</ul>
+
+<p><strong>更多格式先略</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; print('%x' %23)
+17
+&gt;&gt;&gt; str='hello,%d,%x,%o' %(45,45,45)
+&gt;&gt;&gt; print(str)
+hello,45,2d,55
+</code></pre></div></div>
+<h2 id="format">format</h2>
+<p>Python2.6 开始，新增了一种格式化字符串的函数 str.format()<br />
+基本语法是通过<code class="highlighter-rouge">{}</code>和<code class="highlighter-rouge">:</code>来代替以前的%<br />
+用于<code class="highlighter-rouge">print(str.format())</code>格式化输出很好
+<br />以下语法摘自参考<a href="http://www.runoob.com">菜鸟教程</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt;"{} {}".format("hello", "world")    # 不设置指定位置，按默认顺序
+'hello world'
+ 
+&gt;&gt;&gt; "{0} {1}".format("hello", "world")  # 设置指定位置
+'hello world'
+ 
+&gt;&gt;&gt; "{1} {0} {1}".format("hello", "world")  # 设置指定位置
+'world hello world'
+</code></pre></div></div>
+<p>也可设置参数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("网站名：{name}, 地址 {url}".format(name="菜鸟教程", url="www.runoob.com"))
+ 
+# 通过字典设置参数
+site = {"name": "菜鸟教程", "url": "www.runoob.com"}
+print("网站名：{name}, 地址 {url}".format(**site))
+ 
+# 通过列表索引设置参数
+my_list = ['菜鸟教程', 'www.runoob.com']
+print("网站名：{0[0]}, 地址 {0[1]}".format(my_list))  # "0" 是必须的
+</code></pre></div></div>
+<p>数字格式<br />
+<img src="/uploads/2018/02/pasted_image001.png" alt="" />
+进制<br />
+<img src="/uploads/2018/02/pasted_image002.png" alt="" /></p>
+
+<p><br /><br /><br /><br /></p>
+
+<h1 id="文件操作">文件操作</h1>
+<h2 id="文件读写">文件读写</h2>
+<p>推荐使用with打开,这样在遇到文件读写IOError时会自动调用f.close(),保证文件正常关闭</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>with open(文件名,模式) as f:
+	print(f.read())
+</code></pre></div></div>
+<h3 id="打开文件">打开文件</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open(文件名,模式)
+#如
+f=open('../test.txt','w')
+</code></pre></div></div>
+<ul>
+  <li>文件名使用字符串，支持绝对路径相对路径</li>
+  <li>模式(引自传智播客)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">访问模式</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">r</td>
+<td style="text-align:left">以只读方式打开文件。文件的指针将会放在文件的开头。这是默认模式。</td>
+</tr>
+<tr>
+<td style="text-align:center">w</td>
+<td style="text-align:left">打开一个文件只用于写入。如果该文件已存在则将其<b>覆盖</b>。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td style="text-align:left">打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</td>
+</tr>
+<tr>
+<td style="text-align:center">---</td>
+<td style="text-align:left">-----------</td>
+</tr>
+<tr>
+<td style="text-align:center">rb</td>
+<td style="text-align:left">以二进制格式打开一个文件用于只读。文件指针将会放在文件的开头。这是默认模式。</td>
+</tr>
+<tr>
+<td style="text-align:center">wb</td>
+<td style="text-align:left">以二进制格式打开一个文件只用于写入。如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">ab</td>
+<td style="text-align:left">以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</td>
+</tr>
+<tr>
+<td style="text-align:center">---</td>
+<td style="text-align:left">-----------</td>
+</tr>
+<tr>
+<td style="text-align:center">r+</td>
+<td style="text-align:left">打开一个文件用于读写。文件指针将会放在文件的开头。</td>
+</tr>
+<tr>
+<td style="text-align:center">w+</td>
+<td style="text-align:left">打开一个文件用于读写。如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">a+</td>
+<td style="text-align:left">打开一个文件用于读写。如果该文件已存在，文件指针将会放在文件的结尾。文件打开时会是追加模式。如果该文件不存在，创建新文件用于读写。</td>
+</tr>
+<tr>
+<td style="text-align:center">---</td>
+<td style="text-align:left">-----------</td>
+</tr>
+<tr>
+<td style="text-align:center">rb+</td>
+<td style="text-align:left">以二进制格式打开一个文件用于读写。文件指针将会放在文件的开头。</td>
+</tr>
+<tr>
+<td style="text-align:center">wb+</td>
+<td style="text-align:left">以二进制格式打开一个文件用于读写。如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">ab+</td>
+<td style="text-align:left">以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写。</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="关闭文件">关闭文件</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f.close()
+</code></pre></div></div>
+<h3 id="写入数据">写入数据</h3>
+<p>写入后文件中的光标自动移位</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f = open('test.txt', 'w')
+f.write('hello world, i am here!')
+f.close()
+</code></pre></div></div>
+<h3 id="读取数据">读取数据</h3>
+<p>读取后文件中的光标自动移位</p>
+<ul>
+  <li>read(N) 读取N个字符，无N读取所有</li>
+  <li>readlines() <strong>一次性读取，每行为一个字符串组成list</strong></li>
+  <li>readline() 读取一行，返回字符串
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f = open('test.txt', 'r')
+con=f.read()
+f.close()
+</code></pre></div>    </div>
+    <p>大文件时，逐行读取然后复制写入</p>
+    <h3 id="读写位置">读写位置</h3>
+  </li>
+  <li>tell()</li>
+  <li>seek(offset,from)
+<br />seek偏移量
+<br />from:起始位置:0文件开头１当前位置２文件末尾
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#统计行数，并移至开头
+f=open(inputfile)
+rownum=len(f.readlines())
+ierror=f.seek(0,0)
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="判断文件是否读至结尾">判断文件是否读至结尾</h3>
+<p><a href="https://www.cnblogs.com/summerkiki/p/4472043.html">python中判断readline读到文件末尾</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    line=f.readline()
+    if not line:      #等价于if line == "":
+        break
+</code></pre></div></div>
+
+<h2 id="文件重命名删除">文件重命名删除</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import os
+os.rename("old_name","new_name")
+os.remove("name")
+os.mkdir("目录名")
+os.getcwd() #获取当前路径
+os.chdir("路径")
+os.listdir("路径")　#ls
+os.rmdir("目录名")　#rmdir
+</code></pre></div></div>
+:ET

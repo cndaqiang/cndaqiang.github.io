@@ -1,0 +1,61 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: cndaqiang
+brief-intro: Web Linux DFT
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://cndaqiang.github.io" # the base hostname & protocol for your site
+
+permalink: /:year/:month/:day/:title/
+
+# other links
+twitter_username: cndaqiang
+facebook_username: daqiang.chen.12
+github_username:  cndaqiang
+email: who@cndaqiang.ac.cn
+weibo_username: 
+zhihu_username: cndaqiang
+jianshu_username: 5d47905688d0
+linkedIn_username: 
+dribbble_username:
+
+description_footer: 本站记录我的学习笔记！
+
+# comments
+# 多说，disqus，来必力
+# 
+duoshuo_shortname: #hygblog
+disqus_shortname: #cndaqiang-github-io
+City_uid: MTAyMC80MDQ4OC8xNzAxNQ==
+
+# statistic analysis 统计代码
+# 百度统计 id，将统计代码替换为自己的百度统计id，即
+# hm.src = "//hm.baidu.com/hm.js?xxxxxxxxxxxx";
+# xxxxx字符串
+baidu_tongji_id: 8ba332e6517ae0ba8a13339285d97bb3
+google_analytics_id: UA-109057291-1 # google 分析追踪id
+
+# Build settings
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# port
+# port: 1234
+
+# url
+category_dir: category/
+tag_dir: tag/
+
+# excerpt
+excerpt_separator: "\n\n\n\n"
+# paginate
+plugins: [jekyll-paginate]
+paginate: 6

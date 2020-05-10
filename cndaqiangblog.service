@@ -1,0 +1,21 @@
+[Unit]
+Description=cndaqiang blog service
+Documentation=https://cndaqiang.github.io
+After=network.target nss-lookup.target
+Wants=network-online.target
+
+[Service]
+# If the version of systemd is 240 or above, then uncommenting Type=exec and commenting out Type=simple
+#Type=exec
+Type=simple
+# Runs as cndaqiang or add CAP_NET_BIND_SERVICE ability can bind 1 to 1024 port.
+User=cndaqiang
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_NET_RAW
+NoNewPrivileges=yes
+ExecStart= /usr/local/bin/jekyll s -s /home/cndaqiang/code/cndaqiang.github.io
+#Restart=on-failure
+# Don't restart in the case of configuration error
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+I"g
+<p>国内通过https/http访问Github page网页暂时存在问题，原博客<a href="https://cndaqiang.github.io/archive/">https://cndaqiang.github.io/archive/</a>无法访问<br />
+现迁移到<del>coding page</del>,coding真难用，迁到gitee</p>
+<ul>
+  <li><a href="https://cndaqiang.gitee.io">https://cndaqiang.gitee.io</a></li>
+  <li><del><a href="http://r3ku95.coding-pages.com">http://r3ku95.coding-pages.com</a></del></li>
+  <li><del><a href="http://blog.cndaqiang.ac.cn/">http://blog.cndaqiang.ac.cn/</a></del></li>
+  <li><del><a href="https://blog.cndaqiang.ac.cn/">https://blog.cndaqiang.ac.cn/</a></del></li>
+</ul>
+
+<p>gitee支持从github同步代码赞,点击仓库名后的转圈按钮即可，但是每次网页的构建都要自己点一遍
+<img src="/uploads/2020/03/gitee.png" alt="" /></p>
+
+<p><img src="/uploads/2020/03/https.png" alt="" /></p>
+:ET

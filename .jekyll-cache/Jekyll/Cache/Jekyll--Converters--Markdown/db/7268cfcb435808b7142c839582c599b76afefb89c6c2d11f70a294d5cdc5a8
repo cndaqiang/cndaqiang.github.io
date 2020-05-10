@@ -1,0 +1,191 @@
+I"t<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#octopus-快速上手" id="markdown-toc-octopus-快速上手">Octopus 快速上手</a></li>
+  <li><a href="#inp文件" id="markdown-toc-inp文件">inp文件</a>    <ul>
+      <li><a href="#文件格式" id="markdown-toc-文件格式">文件格式</a></li>
+      <li><a href="#示例" id="markdown-toc-示例">示例</a></li>
+      <li><a href="#周期性示例" id="markdown-toc-周期性示例">周期性示例</a></li>
+      <li><a href="#td-计算示例" id="markdown-toc-td-计算示例">td 计算示例</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>octopus-8.4快速上手记录<br />
+短期内应该不会用octopus了，记录免忘记<br />
+不得不说octopus官方的教程写的真是太好了</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://octopus-code.org/wiki/Tutorial:Getting_started">octopus-Tutorial</a></p>
+
+<p><a href="/2018/12/21/gcc-octopus8/"> Gcc OPENMPI 编译octopus-8 遇到的问题和解决方案</a></p>
+
+<p><a href="/2018/09/15/gun-openmpi-octopus-7.1/"> centos6.5 Gcc Openmpi 编译octopus-7.1 </a></p>
+
+<h2 id="octopus-快速上手">Octopus 快速上手</h2>
+<p>octopus有原子坐标既可以运行<br />
+如，新建<code class="highlighter-rouge">inp</code>填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>%Coordinates
+'H'  |0 | 0 | 0
+%
+</code></pre></div></div>
+<p>然后</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 核数 octopus
+</code></pre></div></div>
+<p>就可以了，octopsu会提供赝势等等参数<br /></p>
+
+<p>运算之后，生成<code class="highlighter-rouge">exec   restart   static</code><br />
+<code class="highlighter-rouge">static</code>里面包含计算结果和输出文件</p>
+
+<h2 id="inp文件">inp文件</h2>
+<h3 id="文件格式">文件格式</h3>
+<ul>
+  <li>可以在inp中自定义变量，变量名区分大小写，并进行相关数学计算<a href="https://octopus-code.org/wiki/Manual:Input_file#Mathematical_expressions">Mathematical expressions</a></li>
+  <li>计算参数不区分大小写，不区分顺序</li>
+  <li>注释<code class="highlighter-rouge">#</code>开头</li>
+  <li>可以用 <code class="highlighter-rouge">include 文件名</code> 把其他文件放到inp文件中</li>
+</ul>
+
+<h3 id="示例">示例</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CalculationMode = gs #计算方式 gs:基态(默认) td:时间依赖 unocc:非自洽计算  
+UnitsOutput =  eV_Angstrom  #默认atomic原子单位制(能量是Hartree)
+
+Nitrogen_mass=14.0 #可以在inp文件中定义变量，支持+-*/sqrt()等多种数学运算
+	#更多数学运算https://octopus-code.org/wiki/Manual:Input_file#Mathematical_expressions
+
+
+%Species  #元素描述block
+ 'N' | species_pseudo | set | standard | lmax | 1 | lloc | 0 | mass | Nitrogen_mass
+#原素名 | 性质1 | 值 | 性质2 | 值
+#赝势 species_pseudo | set默认就是用系统的 | standard
+#     species_pseudo | file | `赝势文件名，支持 .psf(SIESTA),.upf,.fhi,.cpi,.xml,.hgh`  
+# 更多参考https://octopus-code.org/doc/8.4/html/vars.php?section=System&amp;name=Species
+#lmax: The maximum angular-momentum channel that will be used for the pseudopotential.
+#lloc: The angular-momentum channel of the pseudopotential to be considered local.
+%
+
+
+XYZCoordinates = 'N.xyz'
+ExtraStates = 1
+
+%Occupations
+ 2|1|1|1
+%
+
+BoxShape = sphere
+
+Radius = 5.0*angstrom
+#Spacing = 0.18*angstrom  #时空间网格大小
+
+#参数也可以通过环境变量设置
+#设置linux变量
+#```
+#export OCT_PARSE_ENV=1 #开启从环境读入功能
+#export OCT_Spacing=0.18*angstrom  #以OCT_开头设置参数
+#```
+
+Output = wfs + density + elf + potential
+#默认只产生info，显示能量，特征值，等，其他信息，设置输出
+#wfs wavefunction ; elf : the electron localization function  ;potential : the Kohn-Sham potential
+#dos : 态密度
+
+OutputFormat = cube + xcrysden + dx + axis_x + plane_z
+#输出文件格式，用于给不同的软件(vislt,gunplot , xcrysden,UCSF(density.dx))打开
+#https://octopus-code.org/wiki/Tutorial:Visualization
+
+#octopus目录中有很多小程序可以用
+
+#支持 include 文件
+</code></pre></div></div>
+
+<h3 id="周期性示例">周期性示例</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CalculationMode = gs
+
+PeriodicDimensions = 3
+Spacing = 0.5 
+
+%LatticeVectors
+0.0 | 0.5 | 0.5
+0.5 | 0.0 | 0.5
+0.5 | 0.5 | 0.0
+%
+
+a=10.18
+%LatticeParameters
+ a | a | a
+%
+
+%ReducedCoordinates
+ "Si" | 0.0 | 0.0 | 0.0 
+ "Si" | 1/4 | 1/4 | 1/4 
+%
+
+nk=2
+
+%KPointsGrid
+  nk |  nk |  nk  #第一行：倒空间每个方向k点数量，na | nb | nc 总数na*nb*nc Monk-Pack网格
+ 0.5 | 0.5 | 0.5  #之后的为K点的移位
+ 0.5 | 0.0 | 0.0
+ 0.0 | 0.5 | 0.0
+ 0.0 | 0.0 | 0.5
+%
+
+KPointsUseSymmetries = yes
+
+ExtraStates = 1
+Output = dos
+</code></pre></div></div>
+
+<h3 id="td-计算示例">td 计算示例</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CalculationMode = td #gs
+UnitsOutput = eV_Angstrom
+
+Radius = 3.5*angstrom
+Spacing = 0.18*angstrom
+
+CH = 1.097*angstrom
+%Coordinates
+  "C" |           0 |          0 |           0
+  "H" |  CH/sqrt(3) | CH/sqrt(3) |  CH/sqrt(3)
+  "H" | -CH/sqrt(3) |-CH/sqrt(3) |  CH/sqrt(3)
+  "H" |  CH/sqrt(3) |-CH/sqrt(3) | -CH/sqrt(3)
+  "H" | -CH/sqrt(3) | CH/sqrt(3) | -CH/sqrt(3)
+%
+
+Tf = 1/eV
+dt = 0.002/eV
+
+TDPropagator = aetrs
+TDMaxSteps = Tf/dt  #总步数
+TDTimeStep = dt     #步长
+
+FromScratch = yes
+ 
+amplitude = 1*eV/angstrom
+omega = 18.0*eV
+tau0 = 0.5/eV
+t0 = tau0
+
+%TDExternalFields
+  electric_field | 1 | 0 | 0 | omega | "envelope_cos"
+#  电场/磁场/矢量势/标量势/ f(x,y,z) | nx | ny | nz 场的极化方向(nx,ny,nz) | omega | g(t) 字符型，定义在%TDFunctions中 |[ 相位phase(t) ]
+# 外场 = f(x,y,z)*cos(w*t+phase(t))*g(t)
+# f(x,y,z) : electric field, magnetic field, vector_potential
+# g(t)与phase(t) 都是字符串，字符串内容随意，定义式在%TDFunctions中
+#phase(t) 不设置时默认为0
+%
+ 
+%TDFunctions
+  "envelope_cos" | tdf_cosinoidal | amplitude | tau0 | t0
+# %TDExternalFields中g(t),phase(t) | 函数名:tdf_cw,tdf_gaussian,tdf_cosinoidal,...来自文件，自定义 | 相关参数
+# https://octopus-code.org/doc/8.4/html/vars.php?section=Time-Dependent&amp;name=TDFunctions
+
+%
+
+TDOutput = laser + multipoles
+#TD输出
+#laser: If set, outputs the laser field to the file td.general/laser. On by default if TDExternalFields is set.
+#multipoles: Outputs the (electric) multipole moments of the density to the file td.general/multipoles. This is required to, e.g., calculate optical absorption spectra of finite systems. The maximum value of l can be set with the variable TDMultipoleLmax.
+</code></pre></div></div>
+<p>td计算输文件<code class="highlighter-rouge">td.general</code>里面包含<code class="highlighter-rouge">TDOutput</code>设定的文件</p>
+:ET

@@ -1,0 +1,61 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#下载安装" id="markdown-toc-下载安装">下载安装</a></li>
+  <li><a href="#发布到网站" id="markdown-toc-发布到网站">发布到网站</a></li>
+  <li><a href="#gitbook语法" id="markdown-toc-gitbook语法">gitbook语法</a></li>
+  <li><a href="#输出pdf" id="markdown-toc-输出pdf">输出pdf</a></li>
+</ul>
+
+<p>工具都差不多了，博客准备停更，开始搞学习了<br />
+总记得以前在哪里写过gitbook的上手教程，找不到了，重拾gitbook记录<br />
+gitbook网速慢，在线的markdown写书私有仓库太贵，本地搭建<br />
+有些资料适合写成书籍/目录的形式<br />
+<strong>可以在wsl中直接输入<code class="highlighter-rouge">cmd.exe</code>进入windows环境，目前从这里调用npm还有问题，待解决</strong></p>
+
+<h2 id="参考">参考</h2>
+
+<p><a href="https://www.jianshu.com/p/fae87fef8ad0">npm更换成淘宝镜像源以及cnpm</a>
+<a href="https://www.jianshu.com/p/a109b2baa519">私有GitBook服务部署说明</a></p>
+
+<h2 id="下载安装">下载安装</h2>
+<p>本文环境windows
+下载<a href="https://nodejs.org/">https://nodejs.org/</a>安装
+<br />在cmd中</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm --version
+#更改淘宝 NPM 镜像，下载速度应该加快
+npm config set registry https://registry.npm.taobao.org
+cd 书籍目录
+gitbook init #仅在创建的时候初始化一次
+</code></pre></div></div>
+<p>网页访问,默认端口<code class="highlighter-rouge">4000</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gitbook serve [--port 4002]
+</code></pre></div></div>
+
+<p>不支持实时修改网页呈现，修改后，网页就终止了</p>
+
+<h2 id="发布到网站">发布到网站</h2>
+<p><code class="highlighter-rouge">_book</code>目录中的网页没有gitbook也可以访问，可以放到网站目录里去，目前发现不能自动跳转</p>
+
+<h2 id="gitbook语法">gitbook语法</h2>
+<p><code class="highlighter-rouge">SUMMRY.md</code>中存储文章结构<br />
+如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Summary
+
+* [Introduction](README.md)
+  * [test](t.md)
+  * [hello](hello.md)
+    * [1](1.md)
+    * [2]()
+    * [3]()
+</code></pre></div></div>
+
+<h2 id="输出pdf">输出pdf</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gitbook pdf
+</code></pre></div></div>
+<p>貌似需要先安装calibre和phantomjs<br />
+而且输出的pdf也丑<br />
+先不管啦，不得不更改的时候再来吧<br />
+也许有用吧
+<a href="https://github.com/zhilidali/gitbook/blob/master/04%E9%85%8D%E7%BD%AE%E4%B9%A6%E7%B1%8D.md">04配置书籍.md</a>
+<a href="https://www.chenwang.net/2016/01/20/gitbook-中文书籍生成pdf的方法，修正中文字体大小不一的/">修正中文 gitbook pdf 书籍字体大小不一的问题</a></p>
+:ET

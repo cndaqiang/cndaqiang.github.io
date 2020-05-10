@@ -1,0 +1,166 @@
+I"$<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#numpy" id="markdown-toc-numpy">Numpy</a>    <ul>
+      <li><a href="#创建矩阵" id="markdown-toc-创建矩阵">创建矩阵</a>        <ul>
+          <li><a href="#nparray" id="markdown-toc-nparray">np.array()</a></li>
+          <li><a href="#未初始化的数组numpyemptyshape-dtype--float-order--c" id="markdown-toc-未初始化的数组numpyemptyshape-dtype--float-order--c">未初始化的数组<code class="highlighter-rouge">numpy.empty(shape, dtype = float, order = 'C')</code></a></li>
+          <li><a href="#全0数组numpyzerosshape-dtype--float-order--c" id="markdown-toc-全0数组numpyzerosshape-dtype--float-order--c">全0数组<code class="highlighter-rouge">numpy.zeros(shape, dtype = float, order = 'C')</code></a></li>
+          <li><a href="#全1数组numpyonesshape-dtype--none-order--c" id="markdown-toc-全1数组numpyonesshape-dtype--none-order--c">全1数组<code class="highlighter-rouge">numpy.ones(shape, dtype = None, order = 'C')</code></a></li>
+          <li><a href="#等差累加数组numpyarangestart-stop-step-dtype" id="markdown-toc-等差累加数组numpyarangestart-stop-step-dtype">等差(累加)数组<code class="highlighter-rouge">numpy.arange(start, stop, step, dtype)</code></a></li>
+          <li><a href="#等差均分数组nplinspacestart-stop-num50-endpointtrue-retstepfalse-dtypenone" id="markdown-toc-等差均分数组nplinspacestart-stop-num50-endpointtrue-retstepfalse-dtypenone">等差(均分)数组<code class="highlighter-rouge">np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)</code></a></li>
+          <li><a href="#等比数组nplogspacestart-stop-num50-endpointtrue-base100-dtypenone" id="markdown-toc-等比数组nplogspacestart-stop-num50-endpointtrue-base100-dtypenone">等比数组<code class="highlighter-rouge">np.logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None)</code></a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>仅记录使用到的，后续使用再补充</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+import pandas as pd
+</code></pre></div></div>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://www.runoob.com/numpy/numpy-tutorial.html">NumPy 教程</a></p>
+
+<h2 id="numpy">Numpy</h2>
+<h3 id="创建矩阵">创建矩阵</h3>
+<h4 id="nparray">np.array()</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.array([1,2,3,4])
+array([1, 2, 3, 4])
+&gt;&gt;&gt; np.array([[1,2],[3,4]])
+array([[1, 2],
+       [3, 4]])
+&gt;&gt;&gt; b=np.array([[1,2],[3,4]])
+&gt;&gt;&gt; b[0,1] #b[m,n,l], m,n,l层数依次向内
+2
+</code></pre></div></div>
+<p>np.array([],后面还有很多属性)，略</p>
+
+<h4 id="未初始化的数组numpyemptyshape-dtype--float-order--c">未初始化的数组<code class="highlighter-rouge">numpy.empty(shape, dtype = float, order = 'C')</code></h4>
+<p><code class="highlighter-rouge">np.empty([维度] [,dtype=类型缺省float] )</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.empty([3,2],dtype=float)
+array([[1., 0.],
+       [2., 0.],
+       [3., 0.]])
+</code></pre></div></div>
+<h4 id="全0数组numpyzerosshape-dtype--float-order--c">全0数组<code class="highlighter-rouge">numpy.zeros(shape, dtype = float, order = 'C')</code></h4>
+<h4 id="全1数组numpyonesshape-dtype--none-order--c">全1数组<code class="highlighter-rouge">numpy.ones(shape, dtype = None, order = 'C')</code></h4>
+
+<h4 id="等差累加数组numpyarangestart-stop-step-dtype">等差(累加)数组<code class="highlighter-rouge">numpy.arange(start, stop, step, dtype)</code></h4>
+<p>注意终止值不包含</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">start</code></td>
+      <td style="text-align: left">起始值，默认为<code class="highlighter-rouge">0</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">stop</code></td>
+      <td style="text-align: left"><strong>终止值（不包含）</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">step</code></td>
+      <td style="text-align: left">步长，默认为<code class="highlighter-rouge">1</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">dtype</code></td>
+      <td style="text-align: left">返回<code class="highlighter-rouge">ndarray</code>的数据类型，如果没有提供，则会使用输入数据的类型。</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.arange(0,1,0.5)
+array([0. , 0.5])
+</code></pre></div></div>
+
+<h4 id="等差均分数组nplinspacestart-stop-num50-endpointtrue-retstepfalse-dtypenone">等差(均分)数组<code class="highlighter-rouge">np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)</code></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">start</code></td>
+      <td style="text-align: left">序列的起始值</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">stop</code></td>
+      <td style="text-align: left"><strong>序列的终止值，默认包含，如果<code class="highlighter-rouge">endpoint</code>为<code class="highlighter-rouge">true</code>，该值包含于数列中</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">num</code></td>
+      <td style="text-align: left">要生成的等步长的样本数量，默认为<code class="highlighter-rouge">50</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">endpoint</code></td>
+      <td style="text-align: left">该值为 <code class="highlighter-rouge">true</code> 时，数列中中包含<code class="highlighter-rouge">stop</code>值，反之不包含，默认是True。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">retstep</code></td>
+      <td style="text-align: left">如果为 True 时，生成的数组中会显示间距，反之不显示。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">dtype</code></td>
+      <td style="text-align: left"><code class="highlighter-rouge">ndarray</code> 的数据类型</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.linspace(0,1,3)
+array([0. , 0.5, 1. ])
+</code></pre></div></div>
+
+<h4 id="等比数组nplogspacestart-stop-num50-endpointtrue-base100-dtypenone">等比数组<code class="highlighter-rouge">np.logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None)</code></h4>
+<p>产生<code class="highlighter-rouge">[base**start,...,base**end]</code>类型的数组,python中用<code class="highlighter-rouge">**</code>表示幂级数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.logspace(3,5,4,base=2)
+array([ 8.        , 12.69920842, 20.1587368 , 32.        ])
+#[2^3,...,2^5]
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">start</code></td>
+      <td style="text-align: left">序列的起始值为：base ** start</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">stop</code></td>
+      <td style="text-align: left">序列的终止值为：base ** stop。如果<code class="highlighter-rouge">endpoint</code>为<code class="highlighter-rouge">true</code>，该值包含于数列中</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">num</code></td>
+      <td style="text-align: left">要生成的等步长的样本数量，默认为<code class="highlighter-rouge">50</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">endpoint</code></td>
+      <td style="text-align: left">该值为 <code class="highlighter-rouge">true</code> 时，数列中中包含<code class="highlighter-rouge">stop</code>值，反之不包含，默认是True。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">base</code></td>
+      <td style="text-align: left">对数 log 的底数。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">dtype</code></td>
+      <td style="text-align: left"><code class="highlighter-rouge">ndarray</code> 的数据类型</td>
+    </tr>
+  </tbody>
+</table>
+:ET

@@ -1,0 +1,175 @@
+I"�$<ul id="markdown-toc">
+  <li><a href="#注意" id="markdown-toc-注意">注意</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#虚拟主机" id="markdown-toc-虚拟主机">虚拟主机</a>    <ul>
+      <li><a href="#基于ip" id="markdown-toc-基于ip">基于ip</a></li>
+      <li><a href="#基于域名" id="markdown-toc-基于域名">基于域名</a></li>
+      <li><a href="#基于端口" id="markdown-toc-基于端口">基于端口</a></li>
+      <li><a href="#ip域名端口的组合" id="markdown-toc-ip域名端口的组合">IP，域名，端口的组合</a></li>
+    </ul>
+  </li>
+  <li><a href="#实例" id="markdown-toc-实例">实例</a>    <ul>
+      <li><a href="#一个域名访问一个网页" id="markdown-toc-一个域名访问一个网页">一个域名访问一个网页</a></li>
+      <li><a href="#域名关键字-访问不同的网页" id="markdown-toc-域名关键字-访问不同的网页">域名/关键字 访问不同的网页</a></li>
+      <li><a href="#apache反向代理-一个域名反向代理多个discuz站" id="markdown-toc-apache反向代理-一个域名反向代理多个discuz站">apache反向代理 一个域名反向代理多个discuz站</a>        <ul>
+          <li><a href="#参考-1" id="markdown-toc-参考-1">参考</a></li>
+          <li><a href="#案例环境" id="markdown-toc-案例环境">案例环境</a></li>
+          <li><a href="#实现" id="markdown-toc-实现">实现</a></li>
+          <li><a href="#问题" id="markdown-toc-问题">问题</a></li>
+          <li><a href="#一种方案" id="markdown-toc-一种方案">一种方案</a></li>
+          <li><a href="#暂时发现这些" id="markdown-toc-暂时发现这些">暂时发现这些</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="注意">注意</h2>
+<p>目录必须存在，不然重启apache会失败，即使是log目录</p>
+<h2 id="参考">参考</h2>
+<p><a href="http://10240214.blog.51cto.com/6634068/1177701">如何配置Apache虚拟主机？（基于IP、基于端口、基于域名）</a></p>
+<h2 id="环境">环境</h2>
+<p>ubuntu16.04
+apache2</p>
+<h2 id="虚拟主机">虚拟主机</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ServerName  主机名/域名
+ServerAdmin  管理员邮箱
+DocumentRoot 网站目录
+ErrorLog 日志目录
+CustomLog 日志目录
+Deny from 阻止访问IP
+</code></pre></div></div>
+<h3 id="基于ip">基于ip</h3>
+<p>需有多个ip</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost IP1:80&gt;
+        ServerName  a.com
+        ServerAdmin  webmaster@localhost
+        DocumentRoot /home/data/www/a
+        ErrorLog /home/data/log/a_error.log
+        CustomLog /home/data/log/a_access.log combined
+&lt;/Virtualhost&gt;
+&lt;VirtualHost IP2:80&gt;
+        ServerName b.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /home/data/www/b
+        ErrorLog /home/data/log/b_error.log
+        CustomLog /home/data/log/b_access.log combined
+&lt;/Virtualhost&gt;
+</code></pre></div></div>
+<h3 id="基于域名">基于域名</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:80&gt;
+        ServerName a.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /home/data/www/a
+        ErrorLog /home/data/log/a_error.log
+        CustomLog /home/data/log/a_access.log combined
+&lt;/Virtualhost&gt;
+&lt;VirtualHost *:80&gt;
+        ServerName b.com
+		ServerAdmin webmaster@localhost
+        DocumentRoot /home/data/www/b
+        ErrorLog /home/data/log/b_error.log
+        CustomLog /home/data/log/b_access.log combined
+&lt;/Virtualhost&gt;
+</code></pre></div></div>
+<h3 id="基于端口">基于端口</h3>
+<p>需要开启端口监听配置</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Listen 80
+Listen 8080
+</code></pre></div></div>
+<p>网站配置</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost IP:80&gt;
+        ServerName a.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /home/data/www/a
+        ErrorLog /home/data/log/a_error.log
+        CustomLog /home/data/log/a_access.log combined
+&lt;/Virtualhost&gt;
+&lt;VirtualHost IP:8080&gt;
+        ServerName b.com
+		ServerAdmin webmaster@localhost
+        DocumentRoot /home/data/www/b
+        ErrorLog /home/data/log/b_error.log
+        CustomLog /home/data/log/b_access.log combined
+&lt;/Virtualhost&gt;
+</code></pre></div></div>
+<h3 id="ip域名端口的组合">IP，域名，端口的组合</h3>
+<p>解析的时候 一个域名对应一个IP
+所以 虚拟主机一个IP只能对应一个ServerName，一个IP/ServerName可以对应多个端口</p>
+<h2 id="实例">实例</h2>
+<h3 id="一个域名访问一个网页">一个域名访问一个网页</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:80&gt;
+    Servername  php.gac.cn
+	DocumentRoot /var/www/html/php
+#网站的目录设置为/var/www/html/php访问时用http://php.gac.cn
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+<h3 id="域名关键字-访问不同的网页">域名/关键字 访问不同的网页</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost *:80&gt;
+    Servername  php.gac.cn
+	DocumentRoot /var/www/html/php
+#网站的目录设置为/var/www/html/php访问时用http://php.gac.cn
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+<p>在<code class="highlighter-rouge">/var/www/html/php</code>目录下新建php1，php2目录，在每个目录里放上网页，则可通过<code class="highlighter-rouge">http://php.gac.cn/php1</code>,<code class="highlighter-rouge">http://php.gac.cn/php2</code>访问两个网页
+好像还有其他语法可以实现不同关键字访问不同网页，并不涉及目录</p>
+
+<h3 id="apache反向代理-一个域名反向代理多个discuz站">apache反向代理 一个域名反向代理多个discuz站</h3>
+<h4 id="参考-1">参考</h4>
+<p><a href="/2017/09/27/apache-proxy/">Ubuntu Apache 反向代理</a></p>
+<h4 id="案例环境">案例环境</h4>
+<p>反向代理服务器 :Centos apache
+discuz站所在服务器: Ubuntu apache</p>
+<h4 id="实现">实现</h4>
+<p>通过http://www.domain.cn/xxx，访问Ubuntu里面里面已存在的不同的discuz网站</p>
+<h4 id="问题">问题</h4>
+<p>discuz会根据访问的域名如http://xxx.cn生成返回的html网页中的连接，所以访问discuz的连接必须是http://www.domain.cn/xxx，而在公网上www.domain.cn指向的是反向代理服务器 （Centos ）</p>
+<h4 id="一种方案">一种方案</h4>
+<p><strong>反向代理服务器 （Centos apache)配置</strong>
+apache配置文件填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+&lt;VirtualHost *:80&gt;
+    Servername  www.domain.cn
+        ProxyRequests Off
+#zx站
+        ProxyPass /zx/ http://www.domain.cn/zx/
+        ProxyPassReverse /zx/  http://www.domain.cn/zx/
+#hjl站
+        ProxyPass /hjl/ http://www.domain.cn/hjl/
+        ProxyPassReverse /hjl/  http://www.domain.cn/hjl/
+       &lt;Proxy *&gt;
+           Order Deny,Allow
+           Allow from all
+        &lt;/Proxy&gt;
+&lt;/VirtualHost&gt;
+</code></pre></div></div>
+<p>因为在公网上www.domain.cn指向代理服务器(centos)，所以为了让代理服务器(centos)将www.domain.cn解析为discuz所在的服务器(ubuntu)，在代理服务器(centos)中添加hosts</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo discuz所在的服务器(ubuntu)ip www.domain.cn &gt;&gt; /etc/hosts
+</code></pre></div></div>
+<p><strong>discuz所在的服务器(ubuntu,apache)配置</strong>
+apache配置文件填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#proxy
+&lt;VirtualHost *:80&gt;
+        ServerName  www.domain.cn
+        DocumentRoot /var/www
+        ErrorLog /var/data/log/proxy.log
+        CustomLog /var/data/log/proxy.log combined
+&lt;/Virtualhost&gt;
+</code></pre></div></div>
+<p>将zx站的目录放在/var/www/zx目录下，hjl站的目录放在/var/www/hjl目录下</p>
+
+<p>这样当访问http://www.domain.cn/zx/（对公网来说www.domain.cn指向代理服务器）时，代理服务器会自动请求http://www.domain.cn/zx/(对代理服务器来说www.domain.cn指向disucz站点服务器)，discuz返回的网页里面所有的连接也都是http://www.domain.cn/zx/开头的，可以持续访问。
+<strong>discuz操作</strong>
+zx站和hjl站的域名都是www.domain.cn，他们的cookies保存如果都在根目录就会冲突，将zx站默认cookies目录设置为/zx/,hjl站默认cookie目录设置为/hjl/就不会冲突</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi discuz目录/config/config_global.php
+</code></pre></div></div>
+
+<p>把<code class="highlighter-rouge">$_config['cookie']['cookiepath'] = '';</code>更改为<code class="highlighter-rouge">$_config['cookie']['cookiepath'] = '/xxx/';</code>
+xxx代表zx或hjl</p>
+
+<p>discuz控制面板里也把相应的连接设置为http://www.domain.cn/xxx/</p>
+
+<h4 id="暂时发现这些">暂时发现这些</h4>
+:ET

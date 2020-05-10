@@ -1,0 +1,93 @@
+I"d<ul id="markdown-toc">
+  <li><a href="#常用命令" id="markdown-toc-常用命令">常用命令</a></li>
+  <li><a href="#下载" id="markdown-toc-下载">下载</a></li>
+  <li><a href="#查看已有环境" id="markdown-toc-查看已有环境">查看已有环境</a></li>
+  <li><a href="#创建环境" id="markdown-toc-创建环境">创建环境</a></li>
+  <li><a href="#配置环境" id="markdown-toc-配置环境">配置环境</a></li>
+  <li><a href="#其他软件包" id="markdown-toc-其他软件包">其他软件包</a></li>
+  <li><a href="#更换仓库" id="markdown-toc-更换仓库">更换仓库</a></li>
+</ul>
+
+<h2 id="常用命令">常用命令</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>激活环境
+source activate python37 # for Linux &amp; Mac
+退出环境
+source deactivate python37 # for Linux &amp; Mac
+</code></pre></div></div>
+
+<h2 id="下载">下载</h2>
+<p>下载后，直接运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://repo.anaconda.com/archive/Anaconda2-2019.03-Linux-x86_64.sh
+./Anaconda2-2019.03-Linux-x86_64.sh
+</code></pre></div></div>
+<p>安装后，添加PATH</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=/home/cndaqiang/anaconda2/bin:$PATH
+</code></pre></div></div>
+<p>自定义模块</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PYTHONPATH="${PYTHONPATH}:${HOME}/MyTools/TDAP/py/module"
+</code></pre></div></div>
+
+<h2 id="查看已有环境">查看已有环境</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ $ conda info --env
+# conda environments:
+#
+base                  *  /Users/cndaqiang/anaconda3
+python27                 /Users/cndaqiang/anaconda3/envs/python27
+</code></pre></div></div>
+
+<h2 id="创建环境">创建环境</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>创建环境
+conda create --name python37 python=3.7
+激活环境
+source activate python37 # for Linux &amp; Mac
+退出环境
+source deactivate python37 # for Linux &amp; Mac
+删除环境
+conda remove --name python37 --all
+</code></pre></div></div>
+<h2 id="配置环境">配置环境</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>指定环境按照程序包
+conda install -n python37 numpy
+更新
+conda update -n python37 numpy
+删除
+conda remove -n python37 numpy
+</code></pre></div></div>
+<p>也可以进入环境后</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python -m pip install 
+</code></pre></div></div>
+
+<h2 id="其他软件包">其他软件包</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda install -n python37 numpy
+conda install -n python37 matplotlib
+conda install -n python37 pandas
+conda install -n python37 scipy
+#自动输入脚本
+echo y  | conda install -n python37 numpy
+echo y  | conda install -n  python37 numpy
+echo y  | conda install -n  python37 matplotlib
+echo y  | conda install -n  python37 pandas
+echo y  | conda install -n  python37 scipy
+</code></pre></div></div>
+
+<h2 id="更换仓库">更换仓库</h2>
+<p><a href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">清华-Anaconda 镜像使用帮助</a><br />
+<code class="highlighter-rouge">vi ~/.condarc</code>
+填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>channels:
+  - defaults
+show_channel_urls: true
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+</code></pre></div></div>
+:ET

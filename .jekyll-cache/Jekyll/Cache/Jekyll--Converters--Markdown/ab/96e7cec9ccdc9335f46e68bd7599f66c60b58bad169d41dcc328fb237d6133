@@ -1,0 +1,3 @@
+I"F
+<p>编译vasp方法类似,编译环境的安装参考<a href="/2018/01/15/intel-mpi-vasp/">Intel Parallel Studio XE 编译VASP</a>,只需要安装Intel Parallel Studio XE即可,安装运行遇到的其他问题和本文相关命令的解释见<a href="/2018/01/15/intel-mpi-vasp/">Intel Parallel Studio XE 编译VASP</a></p>
+:ET

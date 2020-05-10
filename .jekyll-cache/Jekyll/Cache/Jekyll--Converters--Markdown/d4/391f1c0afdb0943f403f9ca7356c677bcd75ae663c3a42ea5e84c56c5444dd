@@ -1,0 +1,432 @@
+I"l�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#iosys" id="markdown-toc-iosys"><strong>iosys()</strong></a></li>
+  <li><a href="#setup" id="markdown-toc-setup"><strong>setup()</strong></a>    <ul>
+      <li><a href="#具体设置" id="markdown-toc-具体设置">具体设置</a></li>
+    </ul>
+  </li>
+  <li><a href="#init_run" id="markdown-toc-init_run"><strong>init_run()</strong></a>    <ul>
+      <li><a href="#call-pre_init" id="markdown-toc-call-pre_init"><code class="highlighter-rouge">CALL pre_init()</code></a></li>
+      <li><a href="#data_structure-gamma_only-" id="markdown-toc-data_structure-gamma_only-"><strong><code class="highlighter-rouge">data_structure( gamma_only )</code></strong></a></li>
+      <li><a href="#call-summary" id="markdown-toc-call-summary"><code class="highlighter-rouge">CALL summary()</code></a></li>
+      <li><a href="#call-memory_report" id="markdown-toc-call-memory_report"><code class="highlighter-rouge">CALL memory_report()</code></a></li>
+      <li><a href="#call-allocate_fft" id="markdown-toc-call-allocate_fft"><strong><code class="highlighter-rouge">CALL allocate_fft()</code></strong></a></li>
+      <li><a href="#ggenggens产生倒格式和fft-indices索引" id="markdown-toc-ggenggens产生倒格式和fft-indices索引"><strong><code class="highlighter-rouge">ggen</code>&amp;<code class="highlighter-rouge">ggens</code>产生倒格式和fft indices(索引)</strong></a></li>
+      <li><a href="#x略" id="markdown-toc-x略">[x]略</a></li>
+      <li><a href="#call-gshells--lmovecell-" id="markdown-toc-call-gshells--lmovecell-"><code class="highlighter-rouge">CALL gshells ( lmovecell )</code></a></li>
+      <li><a href="#x略-1" id="markdown-toc-x略-1">[x]略</a></li>
+      <li><a href="#call-allocate_nlpot" id="markdown-toc-call-allocate_nlpot"><strong><code class="highlighter-rouge">CALL allocate_nlpot()</code></strong></a></li>
+      <li><a href="#x-略-allocatepaw势能" id="markdown-toc-x-略-allocatepaw势能">[x] 略 ALLOCATEPAW势能</a></li>
+      <li><a href="#call-allocate_locpot" id="markdown-toc-call-allocate_locpot"><code class="highlighter-rouge">CALL allocate_locpot()</code></a></li>
+      <li><a href="#call-allocate_wfc" id="markdown-toc-call-allocate_wfc"><strong><code class="highlighter-rouge">CALL allocate_wfc()</code></strong></a></li>
+      <li><a href="#略" id="markdown-toc-略">略</a></li>
+      <li><a href="#call-openfil" id="markdown-toc-call-openfil"><strong><code class="highlighter-rouge">CALL openfil()</code></strong></a></li>
+      <li><a href="#call-hinit0" id="markdown-toc-call-hinit0"><code class="highlighter-rouge">CALL hinit0()</code></a></li>
+      <li><a href="#call-potinit" id="markdown-toc-call-potinit"><code class="highlighter-rouge">CALL potinit()</code></a></li>
+      <li><a href="#call-newd" id="markdown-toc-call-newd"><code class="highlighter-rouge">CALL newd()</code></a></li>
+      <li><a href="#call-wfcinit" id="markdown-toc-call-wfcinit"><strong><code class="highlighter-rouge">CALL wfcinit()</code></strong></a></li>
+      <li><a href="#略-1" id="markdown-toc-略-1">略</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/QEF/q-e.git">q-e code</a><br /></p>
+
+<h2 id="iosys"><strong>iosys()</strong></h2>
+<p>File:<code class="highlighter-rouge">PW/src/input.f90</code><br />
+<strong>复制变量设置参数</strong>，如<code class="highlighter-rouge">nat_=nat</code><br />
+<strong>复制变量，设置计算参数</strong>,如根据计算模式`calculation=”scf/md/…“等设置参数,设置是否进行某些计算参数<br /></p>
+
+<ul class="task-list">
+  <li>
+    <p>初始化原子信息，</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />一群参数设置…</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />…</p>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="highlighter-rouge">CALL read_cards_pw ( psfile, tau_format )</code>读入原子位置,速度,质量,赝势文件名<br />
+File:本文件, i.e.<code class="highlighter-rouge">PW/src/input.f90</code><br />
+读入各个元素的质量，赝势文件名，标签<br />
+读入各个原子的位置，种类，外力，是否固定位置,初始速度</li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">cell_base_init</code><em>设置晶格常数，晶格矢量, 倒格失</em><br />
+File:<code class="highlighter-rouge">Modules/cell_base.f90</code><br />
+详细的晶格参数变量含义见常用变量表</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="highlighter-rouge">init_start_k</code>确定k点模式<br />
+读入k点设置要求: 手动/自动, 如过是自动模式，不会去设置k点坐标和nks,后面会在setup()中设置，此处仅是确定算参数</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><strong><code class="highlighter-rouge">CALL readpp ( input_dft, .TRUE., ecutwfc_pp, ecutrho_pp )</code>读入赝势PP</strong><br />
+File:<code class="highlighter-rouge">Modules/read_pseudo.f90</code><br />
+读入赝势PP,转<a href="/2020/04/05/qe-upf/">QE代码阅读: 赝势</a></p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="highlighter-rouge">  CALL set_cutoff ( ecutwfc, ecutrho, ecutwfc_pp, ecutrho_pp )</code>设置(读入)截断能
+<br />设置截断能<code class="highlighter-rouge">ecutrho</code>和<code class="highlighter-rouge">ecutwfc</code>记录倍数关系<code class="highlighter-rouge">dual = ecutrho / ecutwfc</code></p>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />DFT+D参数</li>
+</ul>
+
+<h2 id="setup"><strong>setup()</strong></h2>
+<p>File:<code class="highlighter-rouge">PW/src/setup.f90</code></p>
+
+<p>程序中的注释: This routine is called at the beginning of the calculation and</p>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />1) determines various parameters of the calculation: 
+<br />           <code class="highlighter-rouge">zv    </code>    charge of each atomic type 
+<br />           <code class="highlighter-rouge">nelec </code>    total number of electrons (if not given in input) 
+<br />           <code class="highlighter-rouge">nbnd  </code>    total number of bands (if not given in input) 
+<br />           <code class="highlighter-rouge">nbndx </code>    max number of bands used in iterative diagonalization 
+<br />           <code class="highlighter-rouge">tpiba </code>    2 pi / a (a = lattice parameter) 
+<br />           <code class="highlighter-rouge">tpiba2</code>    square of tpiba 
+<br />           <code class="highlighter-rouge">gcutm </code>    cut-off in g space for charge/potentials 
+<br />           <code class="highlighter-rouge">gcutms</code>    cut-off in g space for smooth charge 
+<br />           <code class="highlighter-rouge">ethr  </code>    convergence threshold for iterative diagonalization</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />2) finds actual crystal symmetry: 
+<br />           <code class="highlighter-rouge">s     </code>    symmetry matrices in the direct lattice vectors basis 
+<br />           <code class="highlighter-rouge">nsym  </code>    number of crystal symmetry operations 
+<br />           <code class="highlighter-rouge">nrot  </code>    number of lattice symmetry operations 
+<br />           <code class="highlighter-rouge">ft    </code>    fractionary translations 
+<br />           <code class="highlighter-rouge">irt   </code>    for each atom gives the corresponding symmetric 
+<br />           <code class="highlighter-rouge">invsym</code>    if true the system has inversion symmetry</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />3) generates k-points corresponding to the actual crystal symmetry</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />4) calculates various quantities used in magnetic, spin-orbit, PAW 
+<br />           electric-field, LDA+U calculations, and for parallelism</li>
+</ul>
+
+<h3 id="具体设置">具体设置</h3>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />判断赝势类型　US, PAW, …
+<br /> 对于超软和PAW, 有些计算还没有支持，要检查报错,
+<br /> TDPW的加S支持超软和PAW,我存疑，使用NC最靠谱</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />离子电荷 <code class="highlighter-rouge">zv(1:ntyp) = upf(1:ntyp)%zp</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />电子电荷 <code class="highlighter-rouge">nelec = ionic_charge - tot_charge</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />磁性: 是否计算磁性<code class="highlighter-rouge">domag</code>,初始磁性<code class="highlighter-rouge">starting_magnetization</code>,
+<br /><code class="highlighter-rouge">nspin</code>,自旋上下电子数<code class="highlighter-rouge">nelup</code>,<code class="highlighter-rouge">neldw</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">nbnd</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />scf计算精度,<code class="highlighter-rouge">ethr</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />原子波函数,set number of atomic wavefunctions
+<br /> <code class="highlighter-rouge">natomwfc = n_atom_wfc( nat, ityp, noncolin )</code>
+<br /> 用于初始化波函数，<code class="highlighter-rouge">if natomwfc &gt; nbnd ; wfc_init random ; else wfc_init from atomic wfcs</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />最大对角化bands数,<code class="highlighter-rouge">nbndx = nbnd;IF ( isolve == 0 ) nbndx = david * nbnd</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />倒空间单位
+<br />  倒格矢单位 <code class="highlighter-rouge">tpiba  = 2.D0 * pi / alat </code>
+<br />  <code class="highlighter-rouge">tpiba2 = tpiba**2 </code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />G矢量截断,<code class="highlighter-rouge">gcutm,gcutw,gcutms</code>,具体含义见<a href="/2020/04/07/qe-mesh/">QE代码阅读: PW and grids</a>
+<br />  <code class="highlighter-rouge">gcutm = dual * ecutwfc / tpiba2 = (ecutrho/ecutwfc) * ecutwfc / tpiba2 = ecutrho / tpiba2</code> cut-off in g space for charge/potentials
+<br />  <code class="highlighter-rouge">gcutw = ecutwfc / tpiba2 </code> ,ecutwfc是输入参数<code class="highlighter-rouge">kinetic energy cutoff (Ry) for wavefunctions</code>,因为<code class="highlighter-rouge">( (g+k)*tpiba )^2 &lt; ecutwfc , i.e. (g+k)^2 &lt; gcutw </code>
+<br />  <code class="highlighter-rouge">gcutms = 4.D0 * ecutwfc / tpiba2</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />寻找对称性</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />产生k点</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />LDA+U
+<br /> <code class="highlighter-rouge">CALL init_lda_plus_u ( upf(1:ntyp)%psd, noncolin )</code></li>
+</ul>
+
+<h2 id="init_run"><strong>init_run()</strong></h2>
+<p>File:<code class="highlighter-rouge">PW/src/init_run.f90</code>
+<strong>初始化物理量</strong></p>
+<ul class="task-list">
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL pre_init()</code>
+<br /> File:本文件
+<br /> 设置beta函数数量:<code class="highlighter-rouge">2*l+1</code>
+<br /> 各元素的lm组合/beta函数<code class="highlighter-rouge">do nt =1,nsp ; nh (nt) = sum_{l} 2*l + 1 = sum_{nb = 1, upf(nt)%nbeta}  2 * upf(nt)%lll(nb) + 1 </code>
+<br /> <code class="highlighter-rouge">nspnhm = MAXVAL (nh (1:nsp))</code>最大lm组合
+<br /> <code class="highlighter-rouge">nbetam = MAXVAL (upf(:)%nbeta)</code>最大的l
+<br /> 所有原子的beta函数数量之和<code class="highlighter-rouge">do na = 1, nat ; nkb = nkb + nh (nt=ityp(na))</code> 
+<br /> USPP还会设置uspp的beta函数只和nkbus，同nkb</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><strong><code class="highlighter-rouge">CALL data_structure( gamma_only )</code></strong>
+<br /> File:<code class="highlighter-rouge">PW/src/data_structure.f90</code>
+<br /> 计算fft网格点的波函数截断能<code class="highlighter-rouge">|k+G|^2</code>
+<br /> 初始化波函数和电荷密度的FFT数据网格点: ` dffts;dfftp<code class="highlighter-rouge">
+&lt;br&gt; 计算每个processor负责的平面波G数,并ALLOCATE倒格失</code>g<code class="highlighter-rouge">及相关变量
+&lt;br&gt; 主要使用</code>FFTXlib/fft_types.f90 -&gt; fft_type_init`
+<br /> 详见<a href="/2020/04/07/qe-mesh/">QE代码阅读: PW and grids</a></p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL summary()</code>
+<br /> File:<code class="highlighter-rouge">PW/src/summary.f90</code>
+<br /> summary信息: 电子,精度,泛函,晶格,倒格失,赝势信息,原子位置,U,k点,fft网格</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="highlighter-rouge">CALL memory_report()</code>
+<br /> File:<code class="highlighter-rouge">PW/src/memory_report.f90</code>
+<br /> 输出内存可能的占用空寂难</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL allocate_fft()</code>
+<br />File: <code class="highlighter-rouge">PW/src/allocate_fft.f90</code>
+<br />给G- and R- 空间ALLOCATE 变量,如rho,v等</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />初始化电荷、势场、波函数等</p>
+  </li>
+</ul>
+
+<h3 id="call-pre_init"><code class="highlighter-rouge">CALL pre_init()</code></h3>
+<p><br /><br /></p>
+
+<h3 id="data_structure-gamma_only-"><strong><code class="highlighter-rouge">data_structure( gamma_only )</code></strong></h3>
+<p>File:<code class="highlighter-rouge">PW/src/data_structure.f90</code><br />
+后续更新，见<a href="/2020/04/07/qe-mesh/">QE代码阅读: PW and grids</a></p>
+
+<p><br /><br /></p>
+
+<h3 id="call-summary"><code class="highlighter-rouge">CALL summary()</code></h3>
+<p>File:<code class="highlighter-rouge">PW/src/summary.f90</code><br /> 
+没啥好说的，就是基本信息<br />
+赝势还包含各个赝势的radial grid数,beta函数，类型,MD5,作者等信息<br />
+FFT会介绍使用的网格点数
+<br /><br /></p>
+
+<h3 id="call-memory_report"><code class="highlighter-rouge">CALL memory_report()</code></h3>
+
+<p><br /><br /></p>
+
+<h3 id="call-allocate_fft"><strong><code class="highlighter-rouge">CALL allocate_fft()</code></strong></h3>
+<p>File: <code class="highlighter-rouge">PW/src/allocate_fft.f90</code><br />
+初始化一些给fft使用的变量,比如密度(<code class="highlighter-rouge">rho</code>),势能,波函数(如<code class="highlighter-rouge">psic</code>就是给fft使用的波函数,注<code class="highlighter-rouge">evc</code>是演化的波函数,不在这里allocate)<br /></p>
+
+<p>更详细的参考<a href="/2020/04/07/qe-mesh/">QE代码阅读: PW and grids</a>中<strong>allocate_fft()为FFT继续分配变量</strong>部分
+<br /><br /></p>
+
+<h3 id="ggenggens产生倒格式和fft-indices索引"><strong><code class="highlighter-rouge">ggen</code>&amp;<code class="highlighter-rouge">ggens</code>产生倒格式和fft indices(索引)</strong></h3>
+<p>File:<code class="highlighter-rouge">Modules/recvec_subs.f90</code><br />
+生成各个processor计算的G点坐标<code class="highlighter-rouge">g</code>,mill指数等<br />
+更详细的参考<a href="/2020/04/07/qe-mesh/">QE代码阅读: PW and grids</a>中<strong><code class="highlighter-rouge">ggen</code>&amp;<code class="highlighter-rouge">ggens</code>产生倒格式和fft索引</strong>部分</p>
+
+<p><br /><br /></p>
+
+<h3 id="x略">[x]略</h3>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">do_comp_esm</span><span class="p">)</span><span class="w"> </span><span class="k">CALL</span><span class="w"> </span><span class="n">esm_init</span><span class="p">()</span><span class="w">
+  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">do_cutoff_2D</span><span class="p">)</span><span class="w"> </span><span class="k">CALL</span><span class="w"> </span><span class="n">cutoff_fact</span><span class="p">()</span><span class="w">
+</span></code></pre></div></div>
+
+<p><br /><br /></p>
+
+<h3 id="call-gshells--lmovecell-"><code class="highlighter-rouge">CALL gshells ( lmovecell )</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/recvec.f90</code><br /></p>
+
+<ul>
+  <li>是否是变胞vc计算，lmovecell</li>
+  <li>统计有<code class="highlighter-rouge">ngl</code>个<code class="highlighter-rouge">|G|^2</code>取值,本处理器处理的第<code class="highlighter-rouge">ig</code>个G点，是第几个shell,<code class="highlighter-rouge">igtongl (ig) =igl</code>,第<code class="highlighter-rouge">igl</code>个<code class="highlighter-rouge">|G|^2</code>是<code class="highlighter-rouge">gl(igl)</code></li>
+</ul>
+
+<p><br /><br /></p>
+
+<h3 id="x略-1">[x]略</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  CALL sym_rho_init (gamma_only )
+</code></pre></div></div>
+
+<p><br /><br /></p>
+
+<h3 id="call-allocate_nlpot"><strong><code class="highlighter-rouge">CALL allocate_nlpot()</code></strong></h3>
+<p>File:<code class="highlighter-rouge">PW/src/allocate_nlpot.f90</code><br />
+ALLOCATE非局域势能</p>
+<ul>
+  <li>计算平面波数<strong><code class="highlighter-rouge">npwx</code>大小，这是将来对角化、波函数单k点每个cpu上的最大的平面波数</strong><br />
+与所有处理器中的<code class="highlighter-rouge">dffts%nwl</code>的最大值对应，在Parallelization info时输出了,
+<img src="/uploads/2020/04/npwx.png" alt="" /><br />
+使用<code class="highlighter-rouge">ecutwfc</code>计算的G点,<script type="math/tex">gkcut = \left \| \sqrt{G_{ecutwfc}} + k_{max}  \right \|^{2}</script><br /></li>
+  <li>allocate变量，如动能<code class="highlighter-rouge">g2kin(npwx)</code></li>
+  <li>还有allocate好多这种维度的变量<code class="highlighter-rouge">indv( nhm, nsp)</code>,<code class="highlighter-rouge">vkb( npwx,  nkb)</code>,等非局域势能需要的变量</li>
+</ul>
+
+<p><br /><br /></p>
+
+<h3 id="x-略-allocatepaw势能">[x] 略 ALLOCATEPAW势能</h3>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">okpaw</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+     </span><span class="k">CALL</span><span class="w"> </span><span class="n">allocate_paw_internals</span><span class="p">()</span><span class="w">
+     </span><span class="k">CALL</span><span class="w"> </span><span class="n">paw_init_onecenter</span><span class="p">()</span><span class="w">
+  </span><span class="k">ENDIF</span><span class="w">
+</span></code></pre></div></div>
+
+<p><br /><br /></p>
+
+<h3 id="call-allocate_locpot"><code class="highlighter-rouge">CALL allocate_locpot()</code></h3>
+<p>File:<code class="highlighter-rouge">PW/src/allocate_locpot.f90</code><br />
+ALLOCATE局域势能变量</p>
+<ul>
+  <li><code class="highlighter-rouge">allocate (vloc( ngl, ntyp))</code></li>
+  <li><code class="highlighter-rouge">allocate (strf( ngm, ntyp))</code></li>
+  <li><code class="highlighter-rouge">allocate( eigts1(-dfftp%nr1:dfftp%nr1,nat) )</code></li>
+  <li><code class="highlighter-rouge">allocate( eigts2(-dfftp%nr2:dfftp%nr2,nat) )</code></li>
+  <li><code class="highlighter-rouge">allocate( eigts3(-dfftp%nr3:dfftp%nr3,nat) )</code></li>
+</ul>
+
+<p><br /><br /></p>
+
+<h3 id="call-allocate_wfc"><strong><code class="highlighter-rouge">CALL allocate_wfc()</code></strong></h3>
+<p>File:<code class="highlighter-rouge">PW/src/allocate_wfc.f90</code><br />
+ALLOCATE对角化使用的波函数<code class="highlighter-rouge">evc</code>等参数</p>
+<ul>
+  <li><code class="highlighter-rouge">ALLOCATE( evc( npwx*npol, nbnd ) )</code></li>
+  <li><code class="highlighter-rouge">ALLOCATE( swfcatom( npwx*npol, natomwfc) )</code></li>
+  <li><code class="highlighter-rouge">ALLOCATE( wfcU(npwx*npol, nwfcU) )</code></li>
+</ul>
+
+<p><br /><br /></p>
+
+<h3 id="略">略</h3>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">CALL</span><span class="w"> </span><span class="n">allocate_bp_efield</span><span class="p">()</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">bp_global_map</span><span class="p">()</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="k">call</span><span class="w"> </span><span class="n">plugin_initbase</span><span class="p">()</span><span class="w">    </span><span class="c1">!==== 空白</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="p">(</span><span class="w"> </span><span class="n">et</span><span class="p">(</span><span class="w"> </span><span class="n">nbnd</span><span class="p">,</span><span class="w"> </span><span class="n">nkstot</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">wg</span><span class="p">(</span><span class="w"> </span><span class="n">nbnd</span><span class="p">,</span><span class="w"> </span><span class="n">nkstot</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">btype</span><span class="p">(</span><span class="w"> </span><span class="n">nbnd</span><span class="p">,</span><span class="w"> </span><span class="n">nkstot</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="n">et</span><span class="p">(:,:)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.D0</span><span class="w">
+  </span><span class="n">wg</span><span class="p">(:,:)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.D0</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="n">btype</span><span class="p">(:,:)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"CNQ:ts_vdw"</span><span class="p">,</span><span class="n">ts_vdw</span><span class="w">  </span><span class="c1">!==此处为F</span><span class="w">
+  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">ts_vdw</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+     </span><span class="k">CALL</span><span class="w"> </span><span class="n">tsvdw_initialize</span><span class="p">()</span><span class="w">
+     </span><span class="k">CALL</span><span class="w"> </span><span class="n">set_h_ainv</span><span class="p">()</span><span class="w">
+  </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+</span></code></pre></div></div>
+
+<p><br /><br /></p>
+
+<h3 id="call-openfil"><strong><code class="highlighter-rouge">CALL openfil()</code></strong></h3>
+<p>File:<code class="highlighter-rouge">PW/src/openfil.f90</code><br /></p>
+<ul>
+  <li><strong>计算一个k点的所有波函数的大小<code class="highlighter-rouge">nwordwfc  = nbnd*npwx*npol</code>用于后面的波函数buffer读写</strong>
+    <blockquote>
+      <p>nwordwfc is the record length (IN COMPLEX WORDS)
+<br /> for the direct-access file containing wavefunctions
+<br /> nwordatwfc/nwordwfcU as above for atomic/U-manifold wavefunctions</p>
+    </blockquote>
+    <ul>
+      <li><code class="highlighter-rouge">nwordwfc  = nbnd*npwx*npol</code></li>
+      <li><code class="highlighter-rouge">nwordatwfc= npwx*natomwfc*npol</code></li>
+      <li><code class="highlighter-rouge">nwordwfcU = npwx*nwfcU*npol</code></li>
+    </ul>
+  </li>
+  <li>为自洽计算：打开一些文件/buffer，LDA的buffer,如电场文件的buffer
+    <div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CALL</span><span class="w"> </span><span class="n">open_buffer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iunhub</span><span class="p">,</span><span class="w"> </span><span class="s1">'hub'</span><span class="p">,</span><span class="w">    </span><span class="n">nwordwfcU</span><span class="p">,</span><span class="w"> </span><span class="n">io_level</span><span class="p">,</span><span class="w"> </span><span class="n">exst</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">open_buffer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">iunsat</span><span class="p">,</span><span class="w"> </span><span class="s1">'satwfc'</span><span class="p">,</span><span class="w"> </span><span class="n">nwordatwfc</span><span class="p">,</span><span class="w"> </span><span class="n">io_level</span><span class="p">,</span><span class="w"> </span><span class="n">exst</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">open_buffer</span><span class="p">(</span><span class="w"> </span><span class="n">iunefield</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s1">'ewfc'</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nwordwfc</span><span class="p">,</span><span class="w"> </span><span class="n">io_level</span><span class="p">,</span><span class="w"> </span><span class="n">exst</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">open_buffer</span><span class="p">(</span><span class="w"> </span><span class="n">iunefieldm</span><span class="p">,</span><span class="w"> </span><span class="s1">'ewfcm'</span><span class="p">,</span><span class="w"> </span><span class="n">nwordwfc</span><span class="p">,</span><span class="w"> </span><span class="n">io_level</span><span class="p">,</span><span class="w"> </span><span class="n">exst</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">open_buffer</span><span class="p">(</span><span class="w"> </span><span class="n">iunefieldp</span><span class="p">,</span><span class="w"> </span><span class="s1">'ewfcp'</span><span class="p">,</span><span class="w"> </span><span class="n">nwordwfc</span><span class="p">,</span><span class="w"> </span><span class="n">io_level</span><span class="p">,</span><span class="w"> </span><span class="n">exst</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /><br /></p>
+
+<h3 id="call-hinit0"><code class="highlighter-rouge">CALL hinit0()</code></h3>
+<p>File:<code class="highlighter-rouge">PW/src/hinit0.f90</code></p>
+<blockquote>
+  <p>… hamiltonian initialization: 
+<br />  … atomic position independent initialization for nonlocal PP,
+<br /> V_nl(r)
+<br />  … structure factors, local potential, core charge</p>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">struc_fact</code>
+File:<code class="highlighter-rouge">PW/src/struct_fact.f90</code><br />
+计算结构因子<code class="highlighter-rouge">strf</code>,后续的ewald求和用的到<br />
+    <ul>
+      <li>赵明文老师在固体物理中讲的结构因子定义为<script type="math/tex">s_G=\sum_{j=1}^{s}f_j \exp(-i \overrightarrow{r_j} \cdot \overrightarrow{G} )</script>, where <script type="math/tex">f_j</script> 是原子结构因子，求和对原胞中所有原子求和<br /></li>
+      <li>QE中，元素<code class="highlighter-rouge">itype</code>,在<code class="highlighter-rouge">ing</code>G点上的，<code class="highlighter-rouge">strf (ing, int) </code>为<script type="math/tex">s_G=\sum_{j=1}^{s} \exp(-i \overrightarrow{r_j} \cdot \overrightarrow{G} )</script><br />
+ 求和仅对同一元素，还未乘上<script type="math/tex">f_j</script>,未对所有元素求和<br /></li>
+      <li>根据<strong>潘聪. 分子模拟中静电力计算方法的研究[D].吉林大学,2017.</strong>提到文献中一般定义的结构因子<script type="math/tex">s_G= \sum_{j=1}^{s} z_j \cdot \exp(i \overrightarrow{r_j} \cdot \overrightarrow{G} )</script>,where <script type="math/tex">z_j</script>为核电荷数，这或许就是QE在计算ewald能时<code class="highlighter-rouge">rhon = rhon + zv (nt) * CONJG(strf (ng, nt) )</code>的原因<br /><br /><br /></li>
+      <li>此处还计算了<code class="highlighter-rouge">eigts1(n1,j)=exp(-i*bg1*r_j*r'_n1)</code>, i.e. <script type="math/tex">exp(-i\cdot b_1 \cdot r_j \cdot r')</script>, where,b倒格式，<code class="highlighter-rouge">r'</code>FFT网格点，<code class="highlighter-rouge">r_j</code>原子坐标，同理<code class="highlighter-rouge">eigts2,eigts3</code>
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL struc_fact( nat, tau, nsp, ityp, ngm, g, bg, &amp;
+             dfftp%nr1, dfftp%nr2, dfftp%nr3, strf, eigts1, eigts2, eigts3 )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">CALL setlocal()</code>
+设置local势能<code class="highlighter-rouge">vltot</code>
+    <blockquote>
+      <p>calculate the total local potential</p>
+    </blockquote>
+  </li>
+  <li><code class="highlighter-rouge">CALL set_rhoc()</code>
+设置芯电荷密度<code class="highlighter-rouge">rho_core,rhog_core</code>
+    <blockquote>
+      <p>calculate the core charge (if any) for the nonlinear core correction</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><br /><br /></p>
+
+<h3 id="call-potinit"><code class="highlighter-rouge">CALL potinit()</code></h3>
+<p>File:<code class="highlighter-rouge">PW/src/potinit.f90</code></p>
+
+<p>初始化电荷密度rho,势能<code class="highlighter-rouge">vrs,v</code>，具体方法等待继续入。<br /></p>
+
+<ul>
+  <li>初始化密度<code class="highlighter-rouge">rho</code>
+    <ul>
+      <li>初始化倒空间的电荷密度<code class="highlighter-rouge">rho%of_g</code>
+        <blockquote>
+          <p>… This routine initializes the self consistent potential in the array
+<br />  … <code class="highlighter-rouge">vr</code>. There are three possible cases:
+<br /> 
+<br />  … a) the code is restarting from a broken run:
+<br />  …    read rho from data stored during the previous run
+<br />  … b) the code is performing a non-scf calculation following a scf     one:
+<br />  …    read rho from the file produced by the scf calculation
+<br />  … c) the code starts a new calculation:
+<br />  …    calculate rho as a sum of atomic charges
+<br />  … In all cases the scf potential is recalculated and saved in vr</p>
+        </blockquote>
+      </li>
+      <li>验证密度是否合理<code class="highlighter-rouge">charge = omega*REAL( rho%of_g(1,1) )</code>，证明见<a href="/2020/04/07/qe-mesh/#电荷密度rho的fft的空间网格">QE代码阅读: PW and grids</a></li>
+      <li>把g空间的密度转到r空间<code class="highlighter-rouge">rho%of_r</code>中
+  <br /><code class="highlighter-rouge">CALL rho_g2r (dfftp, rho%of_g, rho%of_r)</code></li>
+      <li>其他密度<code class="highlighter-rouge">rho%kin_g, rho%kin_r</code></li>
+    </ul>
+  </li>
+  <li>计算势能<code class="highlighter-rouge">v</code></li>
+  <li>计算势能<code class="highlighter-rouge">vrs</code></li>
+</ul>
+
+<p><br /><br /></p>
+
+<h3 id="call-newd"><code class="highlighter-rouge">CALL newd()</code></h3>
+<p>File:<code class="highlighter-rouge">PW/src/newd.f90</code><br />
+略,缺少pseudo和pw的进一步知识</p>
+
+<p><br /><br /></p>
+
+<h3 id="call-wfcinit"><strong><code class="highlighter-rouge">CALL wfcinit()</code></strong></h3>
+<p>File:<code class="highlighter-rouge">PW/src/wfcinit.f90</code><br />
+从atomic或random初始化波函数，打开wfc的buffer并<code class="highlighter-rouge">save_buffer</code></p>
+
+<p><br /><br /></p>
+
+<h3 id="略-1">略</h3>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">IF</span><span class="p">(</span><span class="n">use_wannier</span><span class="p">)</span><span class="w"> </span><span class="k">CALL</span><span class="w"> </span><span class="n">wannier_init</span><span class="p">()</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+</span><span class="cp">#if defined(__MPI)</span><span class="w">
+  </span><span class="c1">! Cleanup PAW arrays that are only used for init</span><span class="w">
+  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">okpaw</span><span class="p">)</span><span class="w"> </span><span class="k">CALL</span><span class="w"> </span><span class="n">paw_post_init</span><span class="p">()</span><span class="w"> </span><span class="c1">! only parallel!</span><span class="w">
+</span><span class="cp">#endif</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"CNQ:lmd"</span><span class="p">,</span><span class="n">lmd</span><span class="c1">!=== 此处为T</span><span class="w">
+  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lmd</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">CALL</span><span class="w"> </span><span class="n">allocate_dyn_vars</span><span class="p">()</span><span class="w">
+</span></code></pre></div></div>
+
+<p><br /><br /></p>
+:ET

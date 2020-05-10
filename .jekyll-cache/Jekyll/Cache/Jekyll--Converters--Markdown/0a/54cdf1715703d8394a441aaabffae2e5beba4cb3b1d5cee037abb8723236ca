@@ -1,0 +1,101 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#前提" id="markdown-toc-前提">前提</a></li>
+  <li><a href="#环境变量设置" id="markdown-toc-环境变量设置">环境变量设置</a></li>
+  <li><a href="#libgridxc" id="markdown-toc-libgridxc">libgridxc</a></li>
+  <li><a href="#xmlf90" id="markdown-toc-xmlf90">xmlf90</a></li>
+  <li><a href="#atom" id="markdown-toc-atom">atom</a></li>
+  <li><a href="#附录" id="markdown-toc-附录">附录</a></li>
+</ul>
+
+<p>gcc编译赝势产生程序atom<br /></p>
+
+<h2 id="前提">前提</h2>
+<p>假设已经编译好了GCC，OPENMPI，LIBXC<br />
+此文环境</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(GCC) 4.8.4
+(Open MPI) 1.10.3  (不用也可以)
+libxc-3.0.0 (不用也可以)
+</code></pre></div></div>
+<p>相关环境安装方法:<br />
+<a href="/2018/09/15/gun-openmpi-octopus-4.1.2">centos6.5 gcc Openmpi 编译octopus-4.1.2</a><br />
+<a href="/2018/09/12/gun-openmpi-siesta">gcc Openmpi 编译siesta</a><br />
+编译文件<br />
+下载 <code class="highlighter-rouge">atom-4.2.7-100.tgz  libgridxc-0.8.4.tgz  xmlf90-1.5.4.tar.gz</code></p>
+
+<h2 id="环境变量设置">环境变量设置</h2>
+<p>编译前前执行环境变量设置</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GCCDIR=/opt/software/gcc-4.8.4-release
+MPIDIR=/opt/software/openmpi
+LIBXC_ROOT=/opt/lib/libxc-3.0.0
+export PATH=$GCCDIR/bin:$PATH
+export LD_LIBRARY_PATH=$GCCDIR/lib64:$LD_LIBRARY_PATH
+export PATH=$MPIDIR/bin:$PATH
+export LD_LIBRARY_PATH=$MPIDIR/lib:$LD_LIBRARY_PATH
+export PATH=$LIBXC_ROOT/bin:$PATH
+export LD_LIBRARY_PATH=$LIBX_ROOT/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+
+<h2 id="libgridxc">libgridxc</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd libgridxc-0.8.4/
+mkdir Gfortran
+cd Gfortran/
+cp ../extra/fortran.mk .
+../src/config.sh
+</code></pre></div></div>
+<p>修改文件<code class="highlighter-rouge">vi makefile</code>添加LIBXC环境</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LIBXC_ROOT=/opt/lib/libxc-3.0.0
+</code></pre></div></div>
+<p>修改文件<code class="highlighter-rouge">vi build.sh</code>添加编译环境变量</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GCCDIR=/opt/software/gcc-4.8.4-release
+MPIDIR=/opt/software/openmpi
+LIBXC_ROOT=/opt/lib/libxc-3.0.0
+export PATH=$GCCDIR/bin:$PATH
+export LD_LIBRARY_PATH=$GCCDIR/lib64:$LD_LIBRARY_PATH
+export PATH=$MPIDIR/bin:$PATH
+export LD_LIBRARY_PATH=$MPIDIR/lib:$LD_LIBRARY_PATH
+export PATH=$LIBXC_ROOT/bin:$PATH
+export LD_LIBRARY_PATH=$LIBX_ROOT/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+<p>编译，若无MPI环境，<code class="highlighter-rouge">WITH_MPI</code>不用添加，若无LIBXC环环境，<code class="highlighter-rouge">WITH_LIBXC</code>不用添加</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WITH_LIBXC=1  WITH_MPI=1  sh build.sh
+</code></pre></div></div>
+<p>记下当前目录，如<code class="highlighter-rouge">/home/cndaqiang/work/compile-atom/atom_generate/libgridxc-0.8.4/Gfortran</code></p>
+
+<h2 id="xmlf90">xmlf90</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd xmlf90-1.5.4/
+mkdir Gfortran
+./configure --prefix=$(pwd)/Gfortran
+make -j4
+make install
+</code></pre></div></div>
+<p>记下安装目录，<code class="highlighter-rouge">/home/cndaqiang/work/compile-atom/atom_generate/xmlf90-1.5.4/Gfortran</code></p>
+
+<h2 id="atom">atom</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp arch.make.sample arch.make
+vi arch.make
+</code></pre></div></div>
+<p>添加如下，若无libxc可不添加<code class="highlighter-rouge">LIBXC_ROOT</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LIBXC_ROOT=/opt/lib/libxc-3.0.0
+XMLF90_ROOT=/home/cndaqiang/work/compile-atom/atom_generate/xmlf90-1.5.4/Gfortran
+GRIDXC_ROOT=/home/cndaqiang/work/compile-atom/atom_generate/libgridxc-0.8.4/Gfortran
+</code></pre></div></div>
+<p>编译<code class="highlighter-rouge">make</code>
+之后在，当前文件夹下生成可执行文件<code class="highlighter-rouge">atm</code></p>
+
+<h2 id="附录">附录</h2>
+<p>算盘下编译环境</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GCCDIR=/opt/software/gcc-4.8.4-release
+MPIDIR=/opt/software/openmpi
+LIBXC_ROOT=/opt/lib/libxc-3.0.0
+export PATH=$GCCDIR/bin:$PATH
+export LD_LIBRARY_PATH=$GCCDIR/lib64:$LD_LIBRARY_PATH
+export PATH=$MPIDIR/bin:$PATH
+export LD_LIBRARY_PATH=$MPIDIR/lib:$LD_LIBRARY_PATH
+export PATH=$LIBXC_ROOT/bin:$PATH
+export LD_LIBRARY_PATH=$LIBX_ROOT/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+
+:ET

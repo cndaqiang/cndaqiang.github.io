@@ -1,0 +1,56 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a>    <ul>
+      <li><a href="#添加用户" id="markdown-toc-添加用户">添加用户</a></li>
+      <li><a href="#加入sudo用户组" id="markdown-toc-加入sudo用户组">加入sudo用户组</a></li>
+      <li><a href="#测试" id="markdown-toc-测试">测试</a></li>
+      <li><a href="#创建家目录选" id="markdown-toc-创建家目录选">创建家目录(选)</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="参考">参考</h1>
+<p><a href="http://topspeedsnail.com/ubuntu-add-sudo-user/">Ubuntu创建sudo用户</a></p>
+
+<h2 id="添加用户">添加用户</h2>
+<p>给人使用的用户</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ubuntu@ubuntushixi:~$ sudo adduser --home /home/cndaqiang cndaqiang
+Adding user `cndaqiang' ...
+Adding new group `cndaqiang' (1001) ...
+Adding new user `cndaqiang' (1001) with group `cndaqiang' ...
+Creating home directory `/home/cndaqiang' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+Changing the user information for cndaqiang
+Enter the new value, or press ENTER for the default
+Full Name []: cndaqiang
+Room Number []:
+Work Phone []:
+Home Phone []:
+Other []:
+Is the information correct? [Y/n] y
+ubuntu@ubuntushixi:~$
+</code></pre></div></div>
+<p>方案二，非人用？</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo su
+useradd -d 用户家目录 -M 用户名
+passwd 用户名
+</code></pre></div></div>
+
+<h2 id="加入sudo用户组">加入sudo用户组</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#ubuntu方式
+sudo usermod -aG sudo 用户名
+#Centos 方式
+usermod -aG wheel cndaqiang
+</code></pre></div></div>
+<h2 id="测试">测试</h2>
+<p>切换用户测试</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>su -l 用户名
+sudo apt-get update
+</code></pre></div></div>
+<h2 id="创建家目录选">创建家目录(选)</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo mkdir 用户家目录
+sudo chown 用户名:用户组 用户家目录
+</code></pre></div></div>
+:ET

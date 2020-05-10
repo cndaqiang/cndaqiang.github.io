@@ -1,0 +1,163 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a>    <ul>
+      <li><a href="#查看硬盘" id="markdown-toc-查看硬盘">查看硬盘</a>        <ul>
+          <li><a href="#查看方法一" id="markdown-toc-查看方法一">查看方法一</a>            <ul>
+              <li><a href="#查看dev下面的设备文件" id="markdown-toc-查看dev下面的设备文件">查看/dev下面的设备文件</a></li>
+            </ul>
+          </li>
+          <li><a href="#通过sudo-fdisk--l也可以查看" id="markdown-toc-通过sudo-fdisk--l也可以查看">通过<code class="highlighter-rouge">sudo fdisk -l</code>也可以查看</a></li>
+        </ul>
+      </li>
+      <li><a href="#新建分区" id="markdown-toc-新建分区">新建分区</a></li>
+      <li><a href="#格式化" id="markdown-toc-格式化">格式化</a></li>
+      <li><a href="#挂载" id="markdown-toc-挂载">挂载</a>        <ul>
+          <li><a href="#创建目录并挂载" id="markdown-toc-创建目录并挂载">创建目录并挂载</a></li>
+          <li><a href="#开机自动挂载" id="markdown-toc-开机自动挂载">开机自动挂载</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#后续" id="markdown-toc-后续">后续</a>    <ul>
+      <li><a href="#将gpt分区格式化为mbr" id="markdown-toc-将gpt分区格式化为mbr">将GPT分区格式化为MBR</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://huifeng.me/2016/04/19/new-disk-mount-to-Ubuntu/">为 Ubuntu 加载新硬盘</a>
+<a href="https://gist.github.com/1292765944/387215102522dbbac233b2580e646c8c">ubuntu 添加新硬盘</a></p>
+<h2 id="环境">环境</h2>
+<p>Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-87-generic x86_64)</p>
+<h2 id="操作">操作</h2>
+<h3 id="查看硬盘">查看硬盘</h3>
+<h4 id="查看方法一">查看方法一</h4>
+<h5 id="查看dev下面的设备文件">查看/dev下面的设备文件</h5>
+<blockquote>
+  <p>Linux 硬盘识别：
+2.6 kernel以后,linux会将识别到的硬件设备,在/dev/下建立相应的设备文件.
+如:
+sda 表示第1块SCSI硬盘，第二块是sdb，以此类推
+hda 表示第1块IDE硬盘(即连接在第1个IDE接口的Master口上)
+scd0 表示第1个USB光驱.
+当添加了新硬盘后,在/dev目录下会有相应的设备文件产生.cciss的硬盘是个例外,它的
+设备文件在/dev/cciss/目录下.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ll -h /dev/sd*
+brw-rw---- 1 root disk 8,  0 10月 11 09:20 /dev/sda
+brw-rw---- 1 root disk 8,  1 10月 11 09:20 /dev/sda1
+brw-rw---- 1 root disk 8,  2 10月 11 09:20 /dev/sda2
+brw-rw---- 1 root disk 8,  5 10月 11 09:20 /dev/sda5
+brw-rw---- 1 root disk 8, 16 10月 11 09:20 /dev/sdb
+</code></pre></div></div>
+<p>我们可以看到新sdb硬盘没有建立分区</p>
+
+<h4 id="通过sudo-fdisk--l也可以查看">通过<code class="highlighter-rouge">sudo fdisk -l</code>也可以查看</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo fdisk -l
+Disk /dev/sdb: 40 GiB, 42949672960 bytes, 83886080 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sda: 10 GiB, 10737418240 bytes, 20971520 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x6e488164
+
+Device     Boot   Start      End  Sectors  Size Id Type
+/dev/sda1  *       2048   999423   997376  487M 83 Linux
+/dev/sda2       1001470 20969471 19968002  9.5G  5 Extended
+/dev/sda5       1001472 20969471 19968000  9.5G 8e Linux LVM
+</code></pre></div></div>
+
+<p>可看到sda1已分区，sdb未分区</p>
+<h3 id="新建分区">新建分区</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo fdisk /dev/sdb
+</code></pre></div></div>
+<p>之后进入command状态，大概是这么操作的：</p>
+<ul>
+  <li>输入 m 查看帮助</li>
+  <li>输入 p 查看 /dev/sdb 分区的状态</li>
+  <li>输入 n 创建sdb这块硬盘的分区</li>
+  <li>选 p primary =&gt;输入　p</li>
+  <li>Partition number =&gt;分一个区所以输入　1</li>
+  <li>其他的默认回车即可</li>
+  <li>最后输入 w 保存并退出 Command 状态。</li>
+</ul>
+
+<p>操作示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Command (m for help): n
+# n创建分区
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): p
+# p(primary主分区） e(extended拓展分区)
+Partition number (1-4, default 1): 1
+# 分区号
+First sector (2048-83886079, default 2048): 
+# 默认
+Last sector, +sectors or +size{K,M,G,T,P} (2048-83886079, default 83886079): 
+# 大小，可自定义，保持默认
+Created a new partition 1 of type 'Linux' and of size 40 GiB.
+
+Command (m for help): p
+# 查看分区情况
+Disk /dev/sdb: 40 GiB, 42949672960 bytes, 83886080 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xbb6c1792
+
+Device     Boot Start      End  Sectors Size Id Type
+/dev/sdb1        2048 83886079 83884032  40G 83 Linux
+
+Command (m for help): w
+# 保存
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+</code></pre></div></div>
+<p>在通过查看命令即可查看，新增的硬盘</p>
+<h3 id="格式化">格式化</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo mkfs.ext4 /dev/sdb1
+</code></pre></div></div>
+
+<p>ext4为分区格式</p>
+
+<h3 id="挂载">挂载</h3>
+<h4 id="创建目录并挂载">创建目录并挂载</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo mkdir /home/data
+sudo mount /dev/sdb1 /home/data
+</code></pre></div></div>
+<h4 id="开机自动挂载">开机自动挂载</h4>
+<p>查看sdb1的UUID</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo blkid
+</code></pre></div></div>
+<p>添加UUID到<code class="highlighter-rouge">/etc/fstab</code>
+添加<code class="highlighter-rouge">UUID=63295b70-daec-4253-b659-821f51200be9 /home/data ext4 defaults,errors=remount-ro    0       1</code>到<code class="highlighter-rouge">/etc/fstab</code>
+其中UUID后面跟sdb1的UUID
+重启</p>
+<h2 id="后续">后续</h2>
+<p>如果涉及新硬盘的权限问题，可以通过chown，chmod命令调整权限</p>
+
+<h3 id="将gpt分区格式化为mbr">将GPT分区格式化为MBR</h3>
+<p>参考<a href="https://blog.csdn.net/zougen/article/details/79552056">Linux下GPT格式磁盘重新格式化为MBR格式</a><br />
+使用<code class="highlighter-rouge">parted</code>命令</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parted /dev/vdb
+(parted)mktable
+New disk label type? msdos              #分区格式MBR分区被称作msdos，其它分区aix, amiga, bsd, dvh, gpt, mac, msdos, pc98, sun, loop
+Warning: The existing disk label on /dev/vdb will be destroyed and all data on
+this disk will be lost. Do you want to continue?
+Yes/No?Yes
+</code></pre></div></div>
+<p>之后再使用fdisk格式化具体格式</p>
+:ET

@@ -1,0 +1,575 @@
+I"�w<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#注意" id="markdown-toc-注意">注意</a></li>
+  <li><a href="#pwscf" id="markdown-toc-pwscf">PWscf</a></li>
+  <li><a href="#pp模块" id="markdown-toc-pp模块">PP模块</a></li>
+  <li><a href="#pwscfsave文件夹" id="markdown-toc-pwscfsave文件夹">pwscf.save文件夹</a></li>
+  <li><a href="#示例" id="markdown-toc-示例">示例</a>    <ul>
+      <li><a href="#苯分子的scf计算和轨道psiikiband2展示" id="markdown-toc-苯分子的scf计算和轨道psiikiband2展示">苯分子的scf计算和轨道<code class="highlighter-rouge">|psi(ik,iband)|^2</code>展示</a></li>
+      <li><a href="#石墨烯dos和能带" id="markdown-toc-石墨烯dos和能带">石墨烯DOS和能带</a>        <ul>
+          <li><a href="#dos计算scfpwx-nscfpwx-dosx" id="markdown-toc-dos计算scfpwx-nscfpwx-dosx">DOS计算scf(pw.x)-&gt;nscf(pw.x)-&gt;dos.x</a></li>
+          <li><a href="#能带计算scfpwx-bandspwx-bandsx" id="markdown-toc-能带计算scfpwx-bandspwx-bandsx">能带计算scf(pw.x)-&gt;bands(pw.x)-&gt;bands.x</a></li>
+        </ul>
+      </li>
+      <li><a href="#si状态方程" id="markdown-toc-si状态方程">Si状态方程</a>        <ul>
+          <li><a href="#状态方程evx" id="markdown-toc-状态方程evx">状态方程ev.x</a></li>
+        </ul>
+      </li>
+      <li><a href="#al金属体系" id="markdown-toc-al金属体系">Al金属体系</a>        <ul>
+          <li><a href="#scf计算" id="markdown-toc-scf计算">scf计算</a></li>
+          <li><a href="#电荷密度" id="markdown-toc-电荷密度">电荷密度</a></li>
+        </ul>
+      </li>
+      <li><a href="#fe磁性材料" id="markdown-toc-fe磁性材料">Fe磁性材料</a>        <ul>
+          <li><a href="#铁磁fm反铁磁afm计算" id="markdown-toc-铁磁fm反铁磁afm计算">铁磁FM，反铁磁AFM计算</a></li>
+          <li><a href="#dos" id="markdown-toc-dos">DOS</a></li>
+          <li><a href="#pdos-projwfcx" id="markdown-toc-pdos-projwfcx">PDOS projwfc.x</a></li>
+        </ul>
+      </li>
+      <li><a href="#feo-dftu" id="markdown-toc-feo-dftu">FeO DFT+U</a>        <ul>
+          <li><a href="#不加u" id="markdown-toc-不加u">不加U</a></li>
+          <li><a href="#加u" id="markdown-toc-加u">加U</a></li>
+          <li><a href="#加u--starting_ns_eigenvaluemispinityp" id="markdown-toc-加u--starting_ns_eigenvaluemispinityp">加U &amp; starting_ns_eigenvalue(m,ispin,ityp)</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>本学习教程内容主要来自互联网，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://github.com/cndaqiang/LearnQE">LearnQE@cndaqiang</a></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://qe2019.ijs.si/">Summer School on Advanced Materials and Molecular Modelling</a><br />
+<a href="https://gitlab.com/QEF/material-for-ljubljana-qe-summer-school">GitLab for qe2019</a><br /></p>
+
+<h2 id="注意">注意</h2>
+<ul>
+  <li>每个模块下面都有Example和Manual，如<code class="highlighter-rouge">PP/Doc/user_guide.pdf</code></li>
+  <li>默认赝势路径设置<code class="highlighter-rouge">export ESPRESSO_PSEUDO=/home/cndaqiang/ONCVPSP/abinit</code></li>
+  <li>默认outdir<code class="highlighter-rouge">export ESPRESSO_TMPDIR=</code></li>
+  <li><strong>USPP, it is typically needed to set ecutrho &gt; 4×ecutwfc (it should be at least 8 to 12 times larger)</strong></li>
+</ul>
+
+<h2 id="pwscf">PWscf</h2>
+<ul>
+  <li>Molecule/Cluster 体系要设置<code class="highlighter-rouge">assume_isolated</code>参数</li>
+  <li>k点较多(&gt;100)时，设置<code class="highlighter-rouge">verbosity='high'</code>输出更多信息</li>
+  <li>同一元素有多种磁矩时，要使用不同的标签(Fe1,Fe2)，因为<strong>初始磁矩和ntyp对应，<code class="highlighter-rouge">starting_magnetization(1:ntyp)</code></strong></li>
+</ul>
+
+<h2 id="pp模块">PP模块</h2>
+<p>可执行程序</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/tdpw2.0/q-e-qe-6.4.1-devel-1.0/PP/src$ ls *.x
+average.x         fs.x             plotband.x  projwfc.x       wannier_ham.x
+bands.x           initial_state.x  plotproj.x  pw2bgw.x        wannier_plot.x
+dos.x             molecularpdos.x  plotrho.x   pw2critic.x     wfck2r.x
+epsilon.x         open_grid.x      pmw.x       pw2gw.x
+fermi_proj.x      pawplot.x        ppacf.x     pw2wannier90.x
+fermi_velocity.x  plan_avg.x       pp.x        sumpdos.x
+</code></pre></div></div>
+<p>pp.x,后处理pw.x和cp.x的计算结果，<strong>计算一些物理性质用于画图</strong>，图形有1D,2D,3D类型,可以指定输出格式(如xsf),输出可以被下列程序处理</p>
+<ul>
+  <li>Gnuplot (1D or 2D plots),</li>
+  <li>by code plotrho.x that comes with PostProc and produces PostScript 2D plots,</li>
+  <li>by advanced plotting software XCrySDen and gOpenMol (3D plots).</li>
+</ul>
+
+<p>也可以输出其他运算(如pw.x -&gt; pp.x -&gt; average.x)需要的输入<br />
+处理的性质有</p>
+<ul>
+  <li>charge density</li>
+  <li>spin polarization</li>
+  <li>various potentials</li>
+  <li>local density of states at EF</li>
+  <li>local density of electronic entropy</li>
+  <li>STM images</li>
+  <li>selected squared wavefunction</li>
+  <li>ELF (electron localization function)</li>
+  <li>RDG (reduced density gradient)</li>
+  <li>integrated local density of states</li>
+</ul>
+
+<h2 id="pwscfsave文件夹">pwscf.save文件夹</h2>
+<ul>
+  <li>
+    <p>scf计算，输出文件pwscf.save：
+<br /> 1. wfc波函数, dw自旋down,up自旋up,若用scf的结果计算pdos有用
+<br /> <code class="highlighter-rouge">wfcdw[1-nkstot].dat  wfcup[1-nkstot].dat</code>
+<br /> <strong>2. 电荷密度，很有用，仅在scf计算，nscf不计算</strong>，nscf,pdos等后处理需要
+<br /> <code class="highlighter-rouge">charge-density.dat</code>
+<br /> <strong>3. 计算参数和输出,nscf需要从这里读入原子结构</strong>
+<br /> <code class="highlighter-rouge">data-file-schema.xml</code>
+<br /> 4. 赝势
+<br /> <code class="highlighter-rouge">Fe_ONCV_PBE_sr.upf</code></p>
+  </li>
+  <li>nscf计算时，<strong>.in文件中的原子位置会被忽略,但是得有这个选项卡</strong>
+    <blockquote>
+      <p>Specified atomic positions will be IGNORED and those from the previous scf calculation will be used instead !!!</p>
+    </blockquote>
+  </li>
+  <li>nscf计算，输入文件pwscf.save:
+<br /><code class="highlighter-rouge">charge-density.dat</code> <strong>来自scf计算</strong>
+<br /><code class="highlighter-rouge">data-file-schema.xml</code> 来自nscf或scf计算，读入结构参数等信息,算完覆盖
+<br /> 修改其中的<code class="highlighter-rouge">&lt;output&gt;</code>选项卡，便可调节原子结构等参数进行测试(瞎算)
+<img src="/uploads/2020/03/xml.png" alt="" /></li>
+  <li>
+    <p>nscf计算,输出文件pwscf.save：
+<br /> <strong>1. pdos 需要读入，有用</strong>
+<br /> <code class="highlighter-rouge">wfcdw[1-nkstot].dat  wfcup[1-nkstot].dat</code>
+<br /> <strong>2. 计算参数和输出,nscf需要从这里读入原子结构</strong>
+<br /> <code class="highlighter-rouge">data-file-schema.xml</code>
+<br /> 3. 赝势
+<br /> <code class="highlighter-rouge">Fe_ONCV_PBE_sr.upf</code></p>
+  </li>
+  <li>
+    <p>pdos输入需要pwscf.save:
+<br /><code class="highlighter-rouge">charge-density.dat</code> <strong>来自scf计算</strong>
+<br /><code class="highlighter-rouge">wfcdw[1-nkstot].dat  wfcup[1-nkstot].dat</code> 来自nscf或scf计算(即scf和nscf的结果都可以用于计算pdos)
+<br /><code class="highlighter-rouge">data-file-schema.xml</code> 来自nscf或scf计算，读入结构参数等信息</p>
+  </li>
+  <li>pdos输出pwscf.save:
+<br /><code class="highlighter-rouge">atomic_proj.xml</code></li>
+</ul>
+
+<h2 id="示例">示例</h2>
+<h3 id="苯分子的scf计算和轨道psiikiband2展示">苯分子的scf计算和轨道<code class="highlighter-rouge">|psi(ik,iband)|^2</code>展示</h3>
+
+<p>工作路径</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-1/example1.benzene
+</code></pre></div></div>
+<p>SCF计算</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.benzene.scf.in | tee pw.out
+</code></pre></div></div>
+<p>PP处理</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pp.x -i pp.benzene.psi2.in | tee pp.out
+</code></pre></div></div>
+<p>PP仅需要<code class="highlighter-rouge">outdir/prefix.save</code>文件夹中的内容，其他SCF计算输出不需要存在，<br />
+<code class="highlighter-rouge">cp AAA.save BBB.save</code>后，在pp.in中设置<code class="highlighter-rouge">prefix    =  'BBB'</code>也可以</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &amp;INPUTPP
+    !输入数据outdir/prefix.save
+    prefix    =  'test',
+    !outdir    =  '/tmp',
+
+    !处理保存到filplot_XXX，用于后续处理
+    filplot   =  'pp.psi2',
+
+    !plot_num,画图的物理量，更多选项INPUT_PP.html
+    plot_num  =  7,
+    !不同的plot_num对应不同参数，下面为plot_num = 7，画psi^2时的选项
+    !plot_num = 7 输出 filplot_KXXX_BXXX, K k点, B band.
+    kpoint    =  1,  !自旋
+    kband(1)  =  1,  !画band [kband(1),kband(2)]
+    kband(2)  =  16,  
+    lsign     =  .true.,  !if true and k point is Gamma, plot |psi|^2 sign(psi)
+ /
+
+!可以不指定PLOT namelist，就不会输出额外的图形数据
+!从INPUTPP的输出后续处理
+&amp;PLOT
+   fileout       =  '.xsf', !拓展名
+   iflag         =  3, !图形维度
+   nfile         =  1, !输入文件数量
+   output_format =  5, !输出文件格式,5 =&gt; format suitable for XCRYSDEN  (2D or user-supplied 3D region)
+   weight(1)     =  1.0, !各输入文件权重
+/
+
+</code></pre></div></div>
+<p>使用xcrysden打开xsf格式</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcrysden --xsf pp.psi2_K001_B001.xsf
+</code></pre></div></div>
+<p>选定绘图数据:<br />
+选择xcrysden的<strong>Tools/Data Grid</strong>选项,可以查看输入文件包含的数据量，可以分别指定权重，然后点<strong>OK</strong><br />
+(此处只有一个数据)<br />
+下面开始调节画图,设置Isovalue，点击<strong>Submit</strong>
+<img src="/uploads/2020/03/3dgrid.png" alt="" />
+<strong>批量绘图</strong><br />
+<strong>File/Save Current State</strong>或<code class="highlighter-rouge">ctrl+u</code>,保存操作到<code class="highlighter-rouge">state.xcrysden</code><br />
+使用已保存的操作打开新文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcrysden --xsf pp.psi2_K001_B002.xsf --script state.xcrysden 
+</code></pre></div></div>
+<p>直接保存成图片格式,下面脚本会自动打开xcrysden画图，可以用于批处理</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcrysden --xsf pp.psi2_K001_B002.xsf --script state.xcrysden --print 2.png
+</code></pre></div></div>
+<p>笔记本上显示的居然是这样的,应该是对xcrysden窗口的截图，分辨率等原因使得调节窗口覆盖了显示窗口，截图出错
+等待后续解决方案
+<img src="/uploads/2020/03/fenbian.png" alt="" />
+<br />xsf格式也可以用VESTA打开，更美观
+<img src="/uploads/2020/03/vesta.png" alt="" /></p>
+
+<h3 id="石墨烯dos和能带">石墨烯DOS和能带</h3>
+<p>工作路径</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-1/example2.graphene
+</code></pre></div></div>
+<h4 id="dos计算scfpwx-nscfpwx-dosx">DOS计算scf(pw.x)-&gt;nscf(pw.x)-&gt;dos.x</h4>
+<p>SCF计算</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.graphene.scf.in | tee scf.out
+</code></pre></div></div>
+<p>nscf计算/DOS计算 <code class="highlighter-rouge">calculation = 'nscf'</code> <br />
+设置<code class="highlighter-rouge">occupations='tetrahedra'</code>,这同VASP等DFT程序一样，算DOS采用Blochl修正的四面体方法，但是此方法不能用来算力学性质</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.graphene.nscf.in | tee nscf.out
+</code></pre></div></div>
+<p>DOS后处理，可视化dos.x</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dos.x -i dos.graphene.in | tee dos.out
+./dos.py
+</code></pre></div></div>
+<p>同pp.x一样，默认会从<code class="highlighter-rouge">otudir/prefix.save</code>中读取数据进行处理pw.x<br />
+scf的计算结果也可以用来处理</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &amp;DOS
+    prefix = 'pwscf',
+    ! otudir = '/tmp'
+    !这几个保持默认就好了，算法上的选择
+    !bz_sum
+    !ngauss
+    !degauss
+    !能量区间和步长
+    !Emin
+    !Emax
+    !DeltaE
+    !保存到fildos
+    fildos = 'graphene.dos'
+ /
+</code></pre></div></div>
+<p>虽然ncsf和scf的结果都可以用来画DOS，但区别还是有的，如图<br />
+scf(kpoints 9x9x1 smearing)<br />
+nscf(kpoints 12x12x1 tetrahedra)<br />
+<img src="/uploads/2020/03/dos.png" alt="" /></p>
+
+<h4 id="能带计算scfpwx-bandspwx-bandsx">能带计算scf(pw.x)-&gt;bands(pw.x)-&gt;bands.x</h4>
+<p>SCF计算</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.graphene.scf.in | tee scf.out
+</code></pre></div></div>
+<p>能带计算<code class="highlighter-rouge">calculation = 'nscf'</code> <br />
+<strong>k点路径的选择</strong><br />
+xcrystal打开pwscf结构,<strong>Tools/k-path Selection</strong><br />
+左键旋转，右键选中高对称点，<strong>OK</strong>,保存格式选择pwscf<br />
+pw.x计算bands时的k点设置示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>K_POINTS {crystal_b}
+3!高对称点数
+   0.0000000000     0.0000000000     0.0000000000     40 !此k点到下一k点的点数
+   0.6666666667    -0.3333333333     0.0000000000     20
+   0.5000000000    -0.5000000000     0.0000000000     0
+</code></pre></div></div>
+<p>计算</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.graphene.bands.in | tee pw.bands.out
+</code></pre></div></div>
+<p>能带后处理，可视化bands.x</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bands.x -i bands.graphene.in | tee bands.out
+</code></pre></div></div>
+<p>输出文件</p>
+<ul>
+  <li>graphene.bands.dat.gnu # 距离 EIG \n …</li>
+  <li>graphene.bands.dat     # kx,ky,kz \n EIG[1:nband]</li>
+</ul>
+
+<p>使用py对graphene.bands.dat.gnu画图</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./bands.py
+</code></pre></div></div>
+<p>bands.graphene.in</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &amp;BANDS
+    !读取outdir/pwscf
+    prefix  = 'pwscf'
+    ! otudir  = '/tmp/'
+    !输出文件filband
+    filband = 'graphene.bands.dat'
+    !spin_component = 1/2 !1 up, 2 down
+    !lsigma #noncollinear case
+    !
+    !If lp = .true. matrix elements of the momentum operator p between conduction and valence bands
+    !              are computed and written to file specified in filp
+    !lp
+    !filp
+    
+    lsym = .true.,
+    !no_overlap 
+    ! plot_2d  2D格式 kx,ky,Energy
+    !firstk
+    !lastk
+ /
+</code></pre></div></div>
+<p><img src="/uploads/2020/03/bands.png" alt="" /></p>
+
+<p>另外也可以使用<code class="highlighter-rouge">plotband.x</code>处理graphene.bands.dat得到的结果和graphene.bands.dat.gnu类似</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:example2.graphene$ plotband.x 
+     Input file &gt; graphene.bands.dat
+Reading    8 bands at     48 k-points
+Range:  -18.9560   14.6190eV  Emin, Emax &gt; -18.9560   14.6190
+high-symmetry point:  0.0000 0.0000 0.0000   x coordinate   0.0000
+high-symmetry point:  0.3333 0.5774 0.0000   x coordinate   0.6667
+high-symmetry point:  0.0000 0.5774 0.0000   x coordinate   1.0000
+high-symmetry point:  0.0000 0.0000 0.0000   x coordinate   1.5773
+output file (gnuplot/xmgr) &gt; plotband.dat.gnu        
+bands in gnuplot/xmgr format written to file plotband.dat.gnu   
+output file (ps) &gt; 回车
+stopping ...
+
+</code></pre></div></div>
+
+<h3 id="si状态方程">Si状态方程</h3>
+<p>工作路径</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-1/example3.Si
+</code></pre></div></div>
+<h4 id="状态方程evx">状态方程ev.x</h4>
+<p>使用PW/tools/ev.x可以计算状态方程，直接运行，输入相应参数，数据文件两列[a,E]</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:example3.Si/ex3.alat/reference$ ev.x
+     Lattice parameter or Volume are in (au, Ang) &gt; au
+     Enter type of bravais lattice (fcc, bcc, sc, noncubic) &gt; fcc
+     Enter type of equation of state :
+     1=birch1, 2=birch2, 3=keane, 4=murnaghan &gt; 1
+     Input file &gt; Etot-vs-alat.dat
+     Output file &gt; out.dat
+     Beware: file out.dat will be overwritten
+cndaqiang@girl:example3.Si/ex3.alat/reference$ head out.dat
+# equation of state: birch 1st order.  chisq =   0.5913D-07
+# a0 = 10.2786 a.u., k0 =  915 kbar, dk0 =  3.96 d2k0 =  0.000 emin =  -15.80790
+# a0 =  5.43921 Ang, k0 =  91.5 GPa,  V0 =   271.48 (a.u.)^3,  V0 =   40.23 A^3 
+
+#########################################################################
+# Lat.Par       E_calc        E_fit       E_diff    Pressure      Enthalpy
+# a.u.            Ry           Ry            Ry        GPa           Ry
+#########################################################################
+  9.70000     -15.77943     -15.77927    -0.00016      22.46      -15.43108
+  9.80000     -15.78874     -15.78890     0.00016      17.39      -15.51061
+</code></pre></div></div>
+
+<h3 id="al金属体系">Al金属体系</h3>
+<p>工作路径</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-1/example4.Al
+</code></pre></div></div>
+<h4 id="scf计算">scf计算</h4>
+<p>金属体系因为费米面的原因，要计算得准确，<strong>相比半导体需要增加K点密度，并选择合适的degauss,smearing</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    occupations = 'smearing',
+    smearing = 'm-v',
+    degauss = 0.01
+</code></pre></div></div>
+<p>如<a href="http://qe2019.ijs.si/">Summer School on Advanced Materials and Molecular Modelling</a>的结果<br />
+<img src="/uploads/2020/03/qe2019al.png" alt="" /></p>
+
+<h4 id="电荷密度">电荷密度</h4>
+<p>scf计算</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:example4.Al/ex2.chdens$ mpirun -np 4 pw.x -i pw.al.scf.in | tee scf.out
+</code></pre></div></div>
+<p>PP计算,xcrysden查看，查看方法与前面的查看xsf格式相同</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pp.x -i pp.charge.in 
+xcrysden --xsf chargedensity.xsf 
+</code></pre></div></div>
+<p>PP输出文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUTPP
+    prefix="pwscf"
+    !filplot = "chargedensity"  !输出用于后续处理，不必须输出
+    plot_num = 17
+    !plot_num = 17 价电子 all-electron valence charge density
+    !can be performed for PAW calculations only
+    !requires a very dense real-space grid!
+    !plot_num = 21 全电子 all-electron charge density (valence+core).
+    !spin_component = 0  !0 All, 1 up, 2 down
+/
+&amp;PLOT
+    nfile = 1 
+    weight(1)     =  1.0, !各输入文件权重
+    iflag  = 3 
+    weight(1) = 1.0
+    output_format = 5 !6 cube, 5xsf
+    !fileout = 'chargedensity.cube' 
+    fileout = 'chargedensity.xsf' 
+/
+
+</code></pre></div></div>
+<p>铝原子较大可能会覆盖电荷的显示，把原子半径调小就看见了<br />
+<img src="/uploads/2020/03/chargedensity.png" alt="" /></p>
+
+<p>这次vesta打开chargedensity.xsf没有自动显示电荷密度，不知道是不是数值太小，可以<strong>Utilities/2D Data Display</strong>查看
+把PP的<code class="highlighter-rouge">&amp;PLOT</code>调整可绘制cube格式，vesta都支持xsf和cube格式</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    output_format = 6
+    fileout = 'chargedensity.cube' 
+</code></pre></div></div>
+
+<h3 id="fe磁性材料">Fe磁性材料</h3>
+<p><strong>Iron has two remarkable features: it is magnetic and it requires an Ultrasoft PP (USPP) since its localized 3d atomic states are very hard.</strong>
+若不用USPP，ectoff要取很高<br />
+Fe是金属材料，也要设置smearing<br />
+工作路径</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-1/example5.Fe
+</code></pre></div></div>
+<h4 id="铁磁fm反铁磁afm计算">铁磁FM，反铁磁AFM计算</h4>
+<ul>
+  <li><strong>计算反铁磁，要构建超胞，并指定不同的初始磁矩，还要使用不同的标签(Fe1,Fe2)</strong>,<br />
+因为初始磁矩和ntyp对应，<code class="highlighter-rouge">starting_magnetization(1:ntyp)</code>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;SYSTEM
+
+  ntyp = 2, !设置两种类型
+  starting_magnetization(1) =  0.6
+  starting_magnetization(2) = -0.6
+ !...
+/
+ATOMIC_SPECIES
+ Fe1  1.  Fe_ONCV_PBE_sr.upf
+ Fe2  1.  Fe_ONCV_PBE_sr.upf
+!...
+</code></pre></div>    </div>
+    <p>分别运行</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.fe_fm.scf.in | tee fm.out
+mpirun -np 4 pw.x -i pw.fe_afm.scf.in | tee afm.out
+</code></pre></div>    </div>
+    <p>检查磁性和能量，可以看到fm总能量/原子数更低</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:example5.Fe$ grep magnetization fm.out | tail -2
+   total magnetization       =      1.853765 Bohr mag/cell
+   absolute magnetization    =      1.863940 Bohr mag/cell
+cndaqiang@girl:example5.Fe$ grep ! fm.out 
+!    total energy              =    -240.27909971 Ry
+cndaqiang@girl:example5.Fe$ grep magnetization afm.out | tail -2
+   total magnetization       =     -0.000295 Bohr mag/cell
+   absolute magnetization    =      0.008622 Bohr mag/cell
+cndaqiang@girl:example5.Fe$ grep ! afm.out 
+!    total energy              =    -480.47700464 Ry
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="dos">DOS</h4>
+<p><strong>nscf算DOS时，占据方式为<code class="highlighter-rouge">occupations = 'tetrahedra'</code>，不用设置<code class="highlighter-rouge">smearing</code>等参数</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.fe_fm.scf.in | tee fm.out
+mpirun -np 4 pw.x -i pw.fe_fm.nscf.in | tee fmnscf.out
+dos.x -i dos.in 
+./dos_nspin.py #画图
+</code></pre></div></div>
+<p>可以对比同样的k点(12x12x12)使用scf和nscf的结果分别画的dos，nscf的结果更平滑
+<img src="/uploads/2020/03/fedos.png" alt="" /></p>
+
+<h4 id="pdos-projwfcx">PDOS projwfc.x</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.fe_fm.scf.in | tee fm.out
+mpirun -np 4 pw.x -i pw.fe_fm.nscf.in | tee fmnscf.out
+projwfc.x -i pdos.in 
+./pdos_nspin.py  #画图
+</code></pre></div></div>
+<p>生成类似<code class="highlighter-rouge">fe.pdos.pdos_atm#1(Fe)_wfc#1(s)</code>文件名的数据文件<br />
+文件结构(nspin=2时加倍):</p>
+<ul>
+  <li>s<br />
+ldos(S) pdos(S)</li>
+  <li>p<br />
+ldos(p) pdos: px py pz</li>
+  <li>d<br />
+ldos(d) pdos:dz2	dxz	dyz	dxy	dx2-y2</li>
+</ul>
+
+<p><strong>LDOS: s, p, d, f轨道的态密度</strong><br />
+<strong>PDOS: s, p, d, f轨道的投影态密度</strong><br />
+projwfc.x的输入文件和dos.x输入类似</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;PROJWFC
+    filpdos = 'fe.pdos' !pdos是filpdos，dos是fildos
+    Emin = 8.0
+    Emax = 25.0,
+    DeltaE = 0.1
+/
+
+</code></pre></div></div>
+<p><img src="/uploads/2020/03/fepdos.png" alt="" /></p>
+
+<h3 id="feo-dftu">FeO DFT+U</h3>
+<p><strong>QE仅支持特定元素+U</strong>
+<br />从<code class="highlighter-rouge">/Modules/set_hubbard_n.f90</code>我们可以看到支持的元素和加U轨道的主量子数n
+<br />从<code class="highlighter-rouge">/Modules/set_hubbard_l.f90</code>我们可以看到支持的元素和加U轨道的轨道量子数l
+<br />对于Fe,n=3,l=2,即3d轨道加U
+<br />如果所要加U的元素不再QE支持范围内，可以改代码支持</p>
+<blockquote>
+  <p>DFT+U (formerly known as LDA+U) currently works only for a few selected elements. Modify Modules/set_hubbard_l.f90 and PW/src/tabd.f90 if you plan to use DFT+U with an element that is not configured there.</p>
+</blockquote>
+
+<p>赝势的选取很影响结果,如左边<code class="highlighter-rouge">Fe_ONCV_PBE_fr.upf</code>算得FeO为导体,右边<code class="highlighter-rouge">Fe.pbesol-spn-kjpaw_psl.0.2.1.UPF</code>算的FeO为半导体<br />
+<img src="/uploads/2020/03/psedo.png" alt="" />
+而使用<code class="highlighter-rouge">Fe.pbesol-spn-kjpaw_psl.1.0.0.UPF</code>，直接报错<br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     axis vectors are left-handed
+               file Fe.pbesol-spn-kjpaw_psl.1.0.0.UPF: wavefunction(s)  3P 3D renormalized
+               file Fe.pbesol-spn-kjpaw_psl.1.0.0.UPF: wavefunction(s)  3P 3D renormalized
+           3          10
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     Error in routine set_dft_from_name (1):
+      conflicting values for igcx
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+     stopping ...
+</code></pre></div></div>
+<p>因此之后的计算采用推荐的赝势</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Fe1  55.845  Fe.pbesol-spn-kjpaw_psl.0.2.1.UPF
+Fe2  55.845  Fe.pbesol-spn-kjpaw_psl.0.2.1.UPF
+O     16.0   O.pbesol-n-kjpaw_psl.0.1.UPF
+</code></pre></div></div>
+<p>工作路径</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-2/example4.functionals/ex1.DFT+U
+</code></pre></div></div>
+
+<h4 id="不加u">不加U</h4>
+<p>虽然FeO实验是半导体，但是计算是导体，所以SCF计算要设置smearing<br />
+反铁磁材料，所以建超胞，Fe标签不同，用于指定不同的初始磁矩</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.FeO.scf.in | tee scf.out
+mpirun -np 4 pw.x -i pw.FeO.nscf.in | tee nscf.out
+projwfc.x -i projwfc.FeO.in
+./pdos_nspin.py
+</code></pre></div></div>
+<h4 id="加u">加U</h4>
+<p>添加U值在scf和nscf的计算中，参数相同</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    lda_plus_u = .true.,
+    !+U的类型
+    lda_plus_u_kind = 0, 
+    !   0   simplified version of Cococcioni and de Gironcoli,
+    !   PRB 71, 035105 (2005), using Hubbard_U
+    !   1   rotationally invariant scheme of Liechtenstein et al.,
+    !   using Hubbard_U and Hubbard_J
+
+    !U_projection_type轨道的选择方式
+    U_projection_type = 'atomic',
+    !Hubbard_U(i), i=1,ntyp 仅对需要的元素+U值， 
+    !U值可根据Timrov, N. Marzari, M. Cococcioni, PRB 98, 085127 (2018)计算
+    Hubbard_U(1) = 5.2
+    Hubbard_U(2) = 5.2
+</code></pre></div></div>
+<p>执行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.FeO.scfU.in | tee scfU.out
+mpirun -np 4 pw.x -i pw.FeO.nscfU.in | tee nscfU.out
+projwfc.x -i projwfc.FeO.in
+./pdos_nspin.py
+</code></pre></div></div>
+<p>加U后算出来的仍是导体，根据<a href="http://qe2019.ijs.si/">Summer School on Advanced Materials and Molecular Modelling</a>，优化到了局域最小值<br />
+通过设置<code class="highlighter-rouge">starting_ns_eigenvalue(m,ispin,ityp)</code>，计算出全局最小值</p>
+
+<h4 id="加u--starting_ns_eigenvaluemispinityp">加U &amp; starting_ns_eigenvalue(m,ispin,ityp)</h4>
+<p>在scf时添加，尽在第一个scf初始迭代时生效</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    starting_ns_eigenvalue(5,2,1) = 1.0
+    starting_ns_eigenvalue(5,1,2) = 1.0
+</code></pre></div></div>
+<p>选择5,2,1与5,1,2的原因是,根据scf+U的屏幕输出，在第一个scf内，atom1的spin2的第5个本征值(0.296)是非简并的(前面四个都是2重简并)<br />
+atom2同理</p>
+<blockquote>
+  <p>Why 5-th state? Because it is the one which is non-degenerate and if occupied fully could lead to an insulating result.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     iteration #  1     ecut=    30.00 Ry     beta= 0.30
+......
+atom    1   Tr[ns(na)] (up, down, total) =   5.00636  1.09500  6.10136
+   spin  1
+    eigenvalues: 
+  1.000  1.000  1.002  1.002  1.002
+......
+   spin  2
+    eigenvalues: 
+  0.129  0.129  0.270  0.270  0.296
+......
+</code></pre></div></div>
+
+<p>在输出会有这样的语句提示<code class="highlighter-rouge"> Modify starting ns matrices according to input values </code>，然后修改values
+其余不变</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.FeO.scfUns.in | tee scfUns.out
+mpirun -np 4 pw.x -i pw.FeO.nscfU.in | tee nscfU.out
+projwfc.x -i projwfc.FeO.in
+./pdos_nspin.py
+</code></pre></div></div>
+
+<p>三种情况的DOS，+U与starting_ns_eigenvalue可以算得半导体的情况
+<img src="/uploads/2020/03/udos.png" alt="" /></p>
+
+<p>通过比较能量，调整之后能量是更低了一些
+-735.172(+U &amp; starting_ns_eigenvalue ) &lt; -734.99424361(+U)</p>
+
+:ET

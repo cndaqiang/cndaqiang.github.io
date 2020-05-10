@@ -1,0 +1,52 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#四行回车前是摘要内容后面是主要内容" id="markdown-toc-四行回车前是摘要内容后面是主要内容">四行回车前是摘要内容，后面是主要内容</a></li>
+  <li><a href="#在jekyll中显示数学公式" id="markdown-toc-在jekyll中显示数学公式">在jekyll中显示数学公式</a></li>
+  <li><a href="#代码高亮" id="markdown-toc-代码高亮">代码高亮</a></li>
+  <li><a href="#标题" id="markdown-toc-标题">标题</a></li>
+</ul>
+<p>这两行代码为产生目录使用，就是在网页左端，根据# ## 确定</p>
+
+<p>文章头部注明 layout(布局)、title(标题)、date、categories分类、tags标签、author作者(可选)、mathjax数学工具(可选)</p>
+
+<h2 id="四行回车前是摘要内容后面是主要内容">四行回车前是摘要内容，后面是主要内容</h2>
+
+<h2 id="在jekyll中显示数学公式">在jekyll中显示数学公式</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>行间公式
+
+$$ y=\sin(x)*\sum{\cos(x) } $$
+
+行内公式$  y=\sum_{a}^{b}\cos(x)dx $
+</code></pre></div></div>
+<p>的效果如下<br />
+行间公式</p>
+
+<script type="math/tex; mode=display">y=\sin(x)*\sum{\cos(x) }</script>
+
+<p>行内公式$  y=\sum_{a}^{b}\cos(x)dx $</p>
+
+<p><br />如果考虑回车并没有体现出行的区别
+<br />公式可用MathType打印，复制成Tex模式</p>
+
+<h2 id="代码高亮">代码高亮</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~~~fortran(或```fortran)
+代码内容
+~~~(或```)
+</code></pre></div></div>
+<p>如</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CALL</span><span class="w"> </span><span class="n">printhello</span><span class="p">()</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="标题">标题</h2>
+<p>标题的大小由<code class="highlighter-rouge">#</code>的数量决定<br />
+标题生成的目录由相对关系生成，即</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## 1
+## 2
+# 3
+## 3.1
+## 3.2
+# 4
+### 4.1
+## 4.2
+</code></pre></div></div>
+:ET

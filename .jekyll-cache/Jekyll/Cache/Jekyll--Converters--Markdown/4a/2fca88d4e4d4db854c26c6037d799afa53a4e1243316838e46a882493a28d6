@@ -1,0 +1,1689 @@
+I"M�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#物理背景" id="markdown-toc-物理背景">物理背景</a>    <ul>
+      <li><a href="#pw-and-grids-方法" id="markdown-toc-pw-and-grids-方法">PW and grids 方法</a></li>
+      <li><a href="#r-g-空间的fft变换" id="markdown-toc-r-g-空间的fft变换">R-/G-空间的FFT变换</a></li>
+      <li><a href="#r-g-空间的fft变换应用-电荷密度nrng" id="markdown-toc-r-g-空间的fft变换应用-电荷密度nrng">R-/G-空间的FFT变换应用: 电荷密度<strong>n(r)&amp;n(G)</strong></a></li>
+      <li><a href="#qe中的fft变换" id="markdown-toc-qe中的fft变换">QE中的FFT变换</a>        <ul>
+          <li><a href="#qe中的两种fft网格" id="markdown-toc-qe中的两种fft网格">QE中的两种FFT网格</a></li>
+          <li><a href="#ecutrhoecutwfc决定fft大网格大点阵大棋盘nr1xnr2xnr3x平行六面体" id="markdown-toc-ecutrhoecutwfc决定fft大网格大点阵大棋盘nr1xnr2xnr3x平行六面体"><code class="highlighter-rouge">ecutrho</code>&amp;<code class="highlighter-rouge">ecutwfc</code>决定FFT大网格(大点阵/大棋盘)<code class="highlighter-rouge">nr1x*nr2x*nr3x</code>(平行六面体)</a></li>
+          <li><a href="#fft网格与sticks网格" id="markdown-toc-fft网格与sticks网格">FFT网格与sticks网格</a></li>
+          <li><a href="#wave和rho截断gkcutgcut决定大网格中的激活区域g2gcutgkcut椭球形" id="markdown-toc-wave和rho截断gkcutgcut决定大网格中的激活区域g2gcutgkcut椭球形">wave和rho截断<code class="highlighter-rouge">gkcut</code>&amp;<code class="highlighter-rouge">gcut</code>决定大网格中的激活区域<code class="highlighter-rouge">|G^2|&lt;gcut/gkcut</code>(椭球形)</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#相关文件" id="markdown-toc-相关文件">相关文件</a>    <ul>
+      <li><a href="#fft模块库" id="markdown-toc-fft模块库">FFT模块库</a></li>
+      <li><a href="#fft网格的辅助属性" id="markdown-toc-fft网格的辅助属性">FFT网格的辅助属性</a></li>
+    </ul>
+  </li>
+  <li><a href="#fft结构体定义" id="markdown-toc-fft结构体定义">fft结构体定义</a>    <ul>
+      <li><a href="#fft-dimensions-数据网格" id="markdown-toc-fft-dimensions-数据网格">FFT dimensions <strong>数据网格</strong></a></li>
+      <li><a href="#communicators-and-processor-coordinates-cpu网格" id="markdown-toc-communicators-and-processor-coordinates-cpu网格">communicators and processor coordinates <strong>CPU网格</strong></a></li>
+      <li><a href="#fft-distributed-data-dimensions-and-indices" id="markdown-toc-fft-distributed-data-dimensions-and-indices">FFT distributed data dimensions and indices</a>        <ul>
+          <li><a href="#task-group-alltoall-communication-layout" id="markdown-toc-task-group-alltoall-communication-layout">task group ALLTOALL communication layout</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#module-gvectgvecs说明" id="markdown-toc-module-gvectgvecs说明">MODULE <code class="highlighter-rouge">gvect</code>,<code class="highlighter-rouge">gvecs</code>说明</a>    <ul>
+      <li><a href="#gvectecurhodfftpvsgvecs-4ecutwfcdffts" id="markdown-toc-gvectecurhodfftpvsgvecs-4ecutwfcdffts"><code class="highlighter-rouge">gvect(ecurho,dfftp)</code>vs<code class="highlighter-rouge">gvecs (4*ecutwfc,dffts)</code></a></li>
+      <li><a href="#gvect-中更多的变量" id="markdown-toc-gvect-中更多的变量">gvect 中更多的变量</a></li>
+    </ul>
+  </li>
+  <li><a href="#module-gvecw" id="markdown-toc-module-gvecw"><code class="highlighter-rouge">MODULE gvecw</code></a></li>
+  <li><a href="#sticks_map结构体定义" id="markdown-toc-sticks_map结构体定义"><code class="highlighter-rouge">sticks_map</code>结构体定义</a></li>
+  <li><a href="#初始化流程data_structure初始化入口" id="markdown-toc-初始化流程data_structure初始化入口">初始化流程:<code class="highlighter-rouge">data_structure</code>初始化入口</a>    <ul>
+      <li><a href="#计算dffts与dfftp截断能" id="markdown-toc-计算dffts与dfftp截断能">计算<code class="highlighter-rouge">dffts</code>与<code class="highlighter-rouge">dfftp</code>截断能</a></li>
+      <li><a href="#fft_type_init被调用两次初始化两个fft网格dfftsdfftpsticks网格smap" id="markdown-toc-fft_type_init被调用两次初始化两个fft网格dfftsdfftpsticks网格smap"><code class="highlighter-rouge">fft_type_init</code>被调用两次，初始化两个FFT网格<code class="highlighter-rouge">dffts,dfftp</code>,sticks网格<code class="highlighter-rouge">smap</code></a>        <ul>
+          <li><a href="#根据persrhowave计算gkcutandgcut" id="markdown-toc-根据persrhowave计算gkcutandgcut">根据<code class="highlighter-rouge">pers="rho"/"wave"</code>计算<code class="highlighter-rouge">gkcut</code>and<code class="highlighter-rouge">gcut</code></a></li>
+          <li><a href="#fft_type_allocate" id="markdown-toc-fft_type_allocate">fft_type_allocate</a>            <ul>
+              <li><a href="#划分并行cpu网格" id="markdown-toc-划分并行cpu网格">划分并行CPU网格</a></li>
+              <li><a href="#realspace_grid_init计算fft网格" id="markdown-toc-realspace_grid_init计算fft网格"><code class="highlighter-rouge">realspace_grid_init</code>计算FFT网格</a></li>
+            </ul>
+          </li>
+          <li><a href="#sticks_map_allocate-由fft网格建立sticks网格" id="markdown-toc-sticks_map_allocate-由fft网格建立sticks网格"><code class="highlighter-rouge">sticks_map_allocate</code> 由FFT网格建立sticks网格</a></li>
+          <li><a href="#初始化变量用于后续计算" id="markdown-toc-初始化变量用于后续计算">初始化变量,用于后续计算</a></li>
+          <li><a href="#get_sticks建立sticks与cpu网格间的联系" id="markdown-toc-get_sticks建立sticks与cpu网格间的联系"><code class="highlighter-rouge">get_sticks</code>建立sticks与CPU网格间的联系</a>            <ul>
+              <li><a href="#sticks_map_set统计各个sticks上的g点数sti1i2" id="markdown-toc-sticks_map_set统计各个sticks上的g点数sti1i2"><code class="highlighter-rouge">sticks_map_set</code>统计各个sticks上的G点数:st(i1,i2)</a></li>
+              <li><a href="#sticks_map_index把二维的sticks索引变为一维索引" id="markdown-toc-sticks_map_index把二维的sticks索引变为一维索引"><code class="highlighter-rouge">sticks_map_index</code>把二维的sticks索引变为一维索引</a></li>
+              <li><a href="#sticks_sort_new对一维sticks索引排序" id="markdown-toc-sticks_sort_new对一维sticks索引排序"><code class="highlighter-rouge">sticks_sort_new</code>对一维sticks索引排序</a></li>
+              <li><a href="#分配sticks到cpu网格点上" id="markdown-toc-分配sticks到cpu网格点上">分配sticks到CPU网格点上</a></li>
+            </ul>
+          </li>
+          <li><a href="#fft_type_set-设置fft网格" id="markdown-toc-fft_type_set-设置fft网格">fft_type_set 设置FFT网格</a>            <ul>
+              <li><a href="#descnr1pdescnr2pdescnr3p" id="markdown-toc-descnr1pdescnr2pdescnr3p"><code class="highlighter-rouge">desc%nr1p，desc%nr2p，desc%nr3p</code></a></li>
+              <li><a href="#descnnp---nr1x--nr2x用于估算" id="markdown-toc-descnnp---nr1x--nr2x用于估算"><code class="highlighter-rouge">desc%nnp  = nr1x * nr2x</code>用于估算</a></li>
+              <li><a href="#descngldescnwl" id="markdown-toc-descngldescnwl"><code class="highlighter-rouge">desc%ngl</code>&amp;<code class="highlighter-rouge">desc%nwl</code></a></li>
+              <li><a href="#sticks格点i1i2与fft格点m1m2关系" id="markdown-toc-sticks格点i1i2与fft格点m1m2关系">sticks格点<code class="highlighter-rouge">(i1,i2)</code>与FFT格点<code class="highlighter-rouge">(m1,m2)</code>关系</a></li>
+              <li><a href="#fft网格的一维编号indm" id="markdown-toc-fft网格的一维编号indm">FFT网格的一维编号indm</a></li>
+              <li><a href="#fft格点的yz截面xm1与cpu网格py行的关系" id="markdown-toc-fft格点的yz截面xm1与cpu网格py行的关系">FFT格点的YZ截面<code class="highlighter-rouge">X(m1)</code>与CPU网格<code class="highlighter-rouge">py</code>行的关系</a></li>
+              <li><a href="#fft的格点m1m2与processor对应关系" id="markdown-toc-fft的格点m1m2与processor对应关系">FFT的格点<code class="highlighter-rouge">(m1,m2)</code>与processor对应关系</a></li>
+              <li><a href="#剩下就是近似值的估计" id="markdown-toc-剩下就是近似值的估计">剩下就是近似值的估计</a></li>
+            </ul>
+          </li>
+          <li><a href="#本processor处理的g点dfftngwdfftngm" id="markdown-toc-本processor处理的g点dfftngwdfftngm">本processor处理的G点<code class="highlighter-rouge">dfft%ngw</code>&amp;<code class="highlighter-rouge">dfft%ngm</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#fft_base_info" id="markdown-toc-fft_base_info"><code class="highlighter-rouge">fft_base_info</code></a></li>
+      <li><a href="#gvect_init--gvecs_init-统计n_gallocateg" id="markdown-toc-gvect_init--gvecs_init-统计n_gallocateg"><code class="highlighter-rouge">gvect_init</code> &amp; <code class="highlighter-rouge">gvecs_init</code> 统计<script type="math/tex">N_{G}</script>,<strong>ALLOCATE(g)</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#allocate_fft为fft继续分配变量" id="markdown-toc-allocate_fft为fft继续分配变量"><code class="highlighter-rouge">allocate_fft()</code>为FFT继续分配变量</a>    <ul>
+      <li><a href="#module-scf中fft相关的变量定义" id="markdown-toc-module-scf中fft相关的变量定义"><code class="highlighter-rouge">MODULE scf</code>中fft相关的变量定义</a>        <ul>
+          <li><a href="#scf_type结构体" id="markdown-toc-scf_type结构体"><code class="highlighter-rouge">scf_type</code>结构体</a></li>
+          <li><a href="#电荷密度rho的fft的空间网格" id="markdown-toc-电荷密度rho的fft的空间网格"><strong>电荷密度rho的FFT的空间网格:</strong><br /></a></li>
+          <li><a href="#其他变量" id="markdown-toc-其他变量">其他变量</a></li>
+        </ul>
+      </li>
+      <li><a href="#wavefunctions中定义的变量" id="markdown-toc-wavefunctions中定义的变量"><code class="highlighter-rouge">wavefunctions</code>中定义的变量</a></li>
+      <li><a href="#noncollin_module" id="markdown-toc-noncollin_module"><code class="highlighter-rouge">noncollin_module</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#ggenggens产生倒格式和fft索引" id="markdown-toc-ggenggens产生倒格式和fft索引"><code class="highlighter-rouge">ggen</code>&amp;<code class="highlighter-rouge">ggens</code>产生倒格式和fft索引</a>    <ul>
+      <li><a href="#ggen生成gcutm允许的g点" id="markdown-toc-ggen生成gcutm允许的g点"><code class="highlighter-rouge">ggen</code>生成<code class="highlighter-rouge">gcutm</code>允许的G点</a></li>
+      <li><a href="#ggens" id="markdown-toc-ggens">ggens</a></li>
+    </ul>
+  </li>
+  <li><a href="#附录" id="markdown-toc-附录">附录</a>    <ul>
+      <li><a href="#图a" id="markdown-toc-图a">图A</a>        <ul>
+          <li><a href="#图a-1" id="markdown-toc-图a-1">图A-1</a></li>
+          <li><a href="#图a-2" id="markdown-toc-图a-2">图A-2</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/QEF/q-e.git">q-e code</a><br />
+<a href="https://books.google.com/books?id=v1YhAwAAQBAJ">Martin, R. M., &amp; Martin, R. M. (2004). Electronic structure: basic theory and practical methods. Cambridge university press.</a></p>
+
+<h2 id="物理背景">物理背景</h2>
+<h3 id="pw-and-grids-方法">PW and grids 方法</h3>
+<p>PW基组和网格点是两种求解薛定谔(or kohn-sham etc.， 以下统称为薛定谔)方程的方法</p>
+<ul>
+  <li>PW基组类似表象的思想，在PW表象下，进行矩阵对角化求解</li>
+  <li>grids方法，把实空间划分成网格点，使用有限元的思想在实空间网格点上解二阶微分方程<script type="math/tex">- \frac{1}{2} \bigtriangledown \psi (r) + V(r) = E \psi (r)</script>
+<br /> 适合有限体系</li>
+</ul>
+
+<p>在QE等<em>现代化</em>的电子结构计算程序中，这两种方法结合使用，先把倒空间下面的波函数变换到实空间，计算电荷密度<strong>n(r)</strong>，然后IFFT变换到倒空间得到<strong>n(G)</strong></p>
+
+<p>n(r)和n(G)用于计算能量的不同部分</p>
+
+<h3 id="r-g-空间的fft变换">R-/G-空间的FFT变换</h3>
+
+<center> 
+
+$$ | G_{m} &gt; = e^{ i {G}_{m}r }$$ 
+
+$$ f(r)= \sum_{m} c_{m} | G_{m} &gt; $$
+
+</center>
+<p>where <script type="math/tex">c_m</script>是G-空间的函数，或者矩阵,<br />
+<script type="math/tex">f(r)</script> 是R-空间的函数,离散坐标<script type="math/tex">r_n</script> 上的值<script type="math/tex">f(r_n)</script> 也可以构成矩阵 <br />
+由<a href="/2019/04/06/Fortran-math/">Fortran 科学计算</a>得, <script type="math/tex">r_n</script>和<script type="math/tex">c_m</script> 数量相同，i.e. <script type="math/tex">N_{R} = N_{G}</script>
+<br /><br />
+根据<script type="math/tex">\frac{1}{2} \left |  G_{max}  \right | ^{2} \leqslant  E_{cutoff}</script>，可以用截断能设置<strong>G</strong>的数量 <script type="math/tex">N_{G}</script>,<br /></p>
+
+<p>以一维体系为例,由于dG等于倒格基矢b,根据<a href="/2019/04/06/Fortran-math/">Fortran 科学计算</a>，由下面的推导可得:</p>
+<ul>
+  <li><strong><script type="math/tex">r_n</script> 最大值为正格基失a,与截断能无关</strong></li>
+  <li><strong>网格点的数目<script type="math/tex">N_G</script>与截断能的设置有关</strong></li>
+</ul>
+
+<center>
+$$
+R_{max} \cdot dG = 2\pi 
+$$
+
+$$
+dG = b
+$$
+
+$$
+R_{max} = \frac{2\pi}{b} = a
+$$
+
+$$
+N_{G} = \frac{ G_{cutoff}}{dG} =  G_{cutoff} \cdot a \cdot 2\pi
+$$
+
+</center>
+
+<p>如QE程序中使用G截断能<code class="highlighter-rouge">gcutm＝ecutrho/tpiba2</code>, 计算的FFT网格边界:<script type="math/tex">N_G^{dfftp}</script> , <code class="highlighter-rouge">dfftp%nr1,dfftp%nr2,dfftp%nr3 </code>, x,y,z三个方向<br />
+实际计算中通常 R-/G-空间网格点数相同<script type="math/tex">N_{R} = N_{G} = N</script>，而且构成平行六面体网格<br />
+这个网格点数通常比计算薛定谔方程采用的基组要大<br /></p>
+
+<h3 id="r-g-空间的fft变换应用-电荷密度nrng">R-/G-空间的FFT变换应用: 电荷密度<strong>n(r)&amp;n(G)</strong></h3>
+<p>对于PW basis {<strong>G</strong>}, 我们是在倒空间解的薛定谔(or kohn-sham etc.)方程，得到波函数 <br /></p>
+<center> $$ \psi _{i,\overrightarrow{k} } = \sum_{m} c_{i,m}( \overrightarrow{k} ) | G_{m} &gt; $$ </center>
+
+<p>其中的<script type="math/tex">c_{i,m}</script> 是波函数在平面波表象下的矩阵元，即在G-空间(倒空间)网格点上的波函数，我们在计算时需要得到R-空间(实空间)的电荷密度<strong>n(r)</strong>或其在倒空间下的形式<strong>n(G)</strong>.<br />
+根据 <a href="https://books.google.com/books?id=v1YhAwAAQBAJ">Martin, R. M., &amp; Martin, R. M. (2004). Electronic structure: basic theory and practical methods. Cambridge university press.</a><br /></p>
+<ul>
+  <li>方法一:使用(12.30)和(12.31)进行计算，但是计算量是<strong>N*N</strong>的数量级
+<img src="/uploads/2020/04/pwbasis_grids.png" alt="" /></li>
+  <li>方法二:把每个波函数<script type="math/tex">\psi _{i,\overrightarrow{k} }</script> 用FFT变换到时空间网格(一个原胞内)，计算电荷密度<strong>n(r)</strong>，然后IFFT变换到倒空间得到<strong>n(G)</strong><br />
+FFT算法的计算量<strong>N*log(N)</strong></li>
+</ul>
+
+<h3 id="qe中的fft变换">QE中的FFT变换</h3>
+
+<h4 id="qe中的两种fft网格">QE中的两种FFT网格</h4>
+<p>在QE程序中，有两种fft网格:<code class="highlighter-rouge">dffts</code>和<code class="highlighter-rouge">dfftp</code>
+两种网格的用途暂时没看到。QE输入参数中说:<br /></p>
+<ul>
+  <li>网格<code class="highlighter-rouge">dffts</code><br />
+输入参数<code class="highlighter-rouge">nr1s*nr2s*nr3s</code>可以指定大小,或者由<code class="highlighter-rouge">４*ecutwfc</code>计算<br />
+s代表smooth<br />
+    <blockquote>
+      <p>Three-dimensional mesh for wavefunction FFT and for the smooth part of charge density ( smooth grid ).<br />
+Coincides with nr1, nr2, nr3 if ecutrho = 4 * ecutwfc ( default )</p>
+    </blockquote>
+  </li>
+  <li>网格<code class="highlighter-rouge">dfftp</code><br />
+输入参数<code class="highlighter-rouge">nr1*nr2*nr3</code>可以指定大小，或者由<code class="highlighter-rouge">ecutrho</code>计算<br />
+p代表potential <br />
+    <blockquote>
+      <p>Three-dimensional FFT mesh (hard grid) for charge density (and scf potential).</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>总结:</p>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">dffts</code>和<code class="highlighter-rouge">dfftp</code>分别根据<code class="highlighter-rouge">4*ecutwfc</code>和<code class="highlighter-rouge">ecutrho</code>初始化大FFT网格空间<code class="highlighter-rouge">nr1*nr2*nr3</code>。<br />
+sticks与FFT网格一一对应,如<strong>图:fft网格和sticks</strong><br />
+FFT大网格对应的sticks大网格,如<strong>图:fft网格和sticks</strong>和<strong>图:ffts与fftp在sticks中的位置和他们各自的激活区域</strong>中的<strong>矩形</strong>区域</p>
+  </li>
+  <li>两种网格都有各自的波函数截断<code class="highlighter-rouge">gkcut</code>,密度/势能截断<code class="highlighter-rouge">gcut</code>,有各自的<code class="highlighter-rouge">nr1=gcut*a</code><br /></li>
+  <li>
+    <p>由于他们的截断能定义不同,所以有效的G点/FFT网格点/sticks(<code class="highlighter-rouge">|G|^2 &lt; gcut/gkcut</code>)不同<br />
+如<strong>图:ffts与fftp在sticks中的位置和他们各自的激活区域</strong>中的<strong>椭圆型</strong>区域,<code class="highlighter-rouge">gcut/gkcut</code>决定了椭圆的尺寸</p>
+  </li>
+  <li>
+    <p>同一套网格内wave和rho计算的有效G点/FFT网格点/sticks点数也不同，但是都是在<code class="highlighter-rouge">nr1xnr2xnr3</code>以内分布的<br />
+如<strong>图:ffts与fftp在sticks中的位置和他们各自的激活区域</strong>中的<strong>椭圆</strong>是在<strong>矩形</strong>的内部</p>
+  </li>
+  <li>这两种网格唯一的联系是，共用一套sticks,在倒空间中的相同的G点/sticks/FFT网格点分配的processor相同<br /></li>
+  <li>
+    <p><strong>重叠的sticks性质<code class="highlighter-rouge">sticks%xxxx</code>相同,在FFT网格中的性质<code class="highlighter-rouge">dfft%xxx</code>可能不同</strong><br />
+即<strong>图:ffts与fftp在sticks中的位置和他们各自的激活区域</strong>中重叠的区域的sticks索引/编号相同，处理相应sticks的processor也相同</p>
+  </li>
+  <li>sticks索引/编号的优先原则:<br />
+    <ul>
+      <li>1)先编<code class="highlighter-rouge">dffts</code>的格点,再编<code class="highlighter-rouge">dfftp</code>的格点,i.e. <code class="highlighter-rouge">File:PW/src/data_structure.f90 -&gt; CALL fft_type_init</code><br /></li>
+      <li>2)同一个dfft内,先编wave的格点(<code class="highlighter-rouge">|G|^2 &lt; gkcut</code>),再rho的格点<code class="highlighter-rouge">(|G|^2 &lt; gcut</code>), i.e.<code class="highlighter-rouge">FFTXlib/fft_types.f90  -&gt; CALL CALL get_sticks</code><br /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /> <strong><center>图:dffts与dfftp网格</center></strong>
+<img src="/uploads/2020/04/dfftsvsdfftp.jpg" alt="" /></p>
+
+<h4 id="ecutrhoecutwfc决定fft大网格大点阵大棋盘nr1xnr2xnr3x平行六面体"><code class="highlighter-rouge">ecutrho</code>&amp;<code class="highlighter-rouge">ecutwfc</code>决定FFT大网格(大点阵/大棋盘)<code class="highlighter-rouge">nr1x*nr2x*nr3x</code>(平行六面体)</h4>
+<p>根据<strong>图:dffts与dfftp网格</strong>与<strong>图:ffts与fftp在sticks中的位置和他们各自的激活区域</strong></p>
+<ul>
+  <li>QE默认<code class="highlighter-rouge">ecutrho=4*ecutwfc</code>,对于USPP等情况,QE建议:<code class="highlighter-rouge">ecutrho =8 to 12 times ecutwfc</code></li>
+  <li>在单k点,<code class="highlighter-rouge">ecutrho=4*ecutwfc</code>情况下, <code class="highlighter-rouge">gcut</code>一样,<code class="highlighter-rouge">dffts</code>与<code class="highlighter-rouge">dfftp</code>就是完全一样的</li>
+  <li>多k点,<code class="highlighter-rouge">ecutrho=4*ecutwfc</code>情况下,<code class="highlighter-rouge">gcut</code>一样大,<code class="highlighter-rouge">dffts</code>的<code class="highlighter-rouge">gkcut</code>比<code class="highlighter-rouge">dfftp</code>小</li>
+  <li><code class="highlighter-rouge">ecutrho&gt;4*ecutwfc</code>情况下,<code class="highlighter-rouge">dffts</code>的<code class="highlighter-rouge">gcut</code>比<code class="highlighter-rouge">dfftp</code>小</li>
+  <li><code class="highlighter-rouge">ecutrho&lt;4*ecutwfc</code>情况下,可以计算,<code class="highlighter-rouge">dffts</code>的<code class="highlighter-rouge">gcut</code>比<code class="highlighter-rouge">dfftp</code>大,dfftp初始化时,几乎都是复制<code class="highlighter-rouge">dffts</code>之前的初始化信息</li>
+  <li>(<code class="highlighter-rouge">gcut</code>大的,棋盘更大，因为格点就是{<strong>G</strong>}矢量格点，因此在倒空间中<code class="highlighter-rouge">gcut</code>小的格点是大<code class="highlighter-rouge">gcut</code>的子集)</li>
+</ul>
+
+<p><strong>nr1x的计算方法:</strong><br />
+以一维体系举例:根据<a href="/2020/04/05/qe-pwscf/">QE代码阅读: pwscf框架</a>中正倒晶格的单位</p>
+
+<script type="math/tex; mode=display">a1 \cdot b1 = 1</script>
+
+<p>所以在<code class="highlighter-rouge">fft_type_allocate</code>，利用下式，由<code class="highlighter-rouge">gcut</code>计算FFT网格点数<code class="highlighter-rouge">nr1</code></p>
+
+<script type="math/tex; mode=display">a1\cdot G_{cut} = Nr1_{G}</script>
+
+<p>为了优化计算，会调整数量得到最佳的数量，<code class="highlighter-rouge">dfftp%nr1x,dfftp%nr2x,dfftp%nr3x </code>，且<code class="highlighter-rouge">nrix &gt;= nri</code><br /></p>
+
+<h4 id="fft网格与sticks网格">FFT网格与sticks网格</h4>
+<p>QE在<code class="highlighter-rouge">sticks_map_allocate</code>中还会把FFT网格的XY面上的坐标点<code class="highlighter-rouge">(m1,m2)</code>点,换到sticks网格<code class="highlighter-rouge">(i1,i2)</code>点
+<br />sticks指激活的G点的在XY面上的坐标<code class="highlighter-rouge">(i1,i2)</code>,sticks是二维的,不是所有激活的G点<code class="highlighter-rouge">(i1,i2,i3)</code></p>
+<ul>
+  <li>FFT网格的边界: <script type="math/tex">m_{min} = 1</script> and <script type="math/tex">m_{max} = N_{G}</script></li>
+  <li>sticks网格的边界: <script type="math/tex">i_{min} = -\frac{ (N_{G} - 1)}{2}</script> and <script type="math/tex">i_{max} = \frac{ (N_{G} - 1)}{2}</script></li>
+</ul>
+
+<p>如<strong>图:fft网格和sticks</strong>:<code class="highlighter-rouge">FFTXlib/fft_types.f90 -&gt; fft_type_set(...)</code>
+<br /> <strong><center>图:fft网格和sticks</center></strong>
+<img src="/uploads/2020/04/fft_sticks.jpg" alt="" /></p>
+
+<h4 id="wave和rho截断gkcutgcut决定大网格中的激活区域g2gcutgkcut椭球形">wave和rho截断<code class="highlighter-rouge">gkcut</code>&amp;<code class="highlighter-rouge">gcut</code>决定大网格中的激活区域<code class="highlighter-rouge">|G^2|&lt;gcut/gkcut</code>(椭球形)</h4>
+<p>激活区域的XY面截图如上<strong>图:fft网格和sticks</strong><br />
+wave和rho使用的G点分别根据<code class="highlighter-rouge">gkcut</code>&amp;<code class="highlighter-rouge">gcut</code>计算:</p>
+<ul>
+  <li>wave截断<code class="highlighter-rouge">gkcut</code></li>
+  <li>rho截断<code class="highlighter-rouge">gcut</code></li>
+</ul>
+
+<p><strong><center>图:ffts与fftp在sticks中的位置和他们各自的激活区域</center></strong>
+<img src="/uploads/2020/04/sticksall.jpg" alt="" /></p>
+
+<p><strong>两个激活区域的功能暂时不明</strong><br />
+<strong>两套FFT网格功能暂时不明</strong></p>
+
+<h2 id="相关文件">相关文件</h2>
+<h3 id="fft模块库">FFT模块库</h3>
+<ul>
+  <li><code class="highlighter-rouge">FFTXlib/*</code> FFT模块库文件夹</li>
+  <li><code class="highlighter-rouge">FFTXlib/fft_types.f90 - TYPE fft_type_descriptor</code> FFT结构体定义,初始化<code class="highlighter-rouge">wave -&gt; dffts; rho -&gt; dfftp</code>的结构体定义</li>
+  <li><code class="highlighter-rouge">FFTXlib/stick_base.f90- TYPE sticks_map</code>  sticks结构体定义,初始化</li>
+  <li><code class="highlighter-rouge">Modules/fft_base.f90</code>定义变量dfft和sticks,各种fft网格定义<code class="highlighter-rouge">TYPE ( fft_type_descriptor ) :: dffts,dfftp,dfftb,dfft3d</code> <br />sticks 定义 <code class="highlighter-rouge">TYPE (sticks_map) :: smap</code></li>
+</ul>
+
+<h3 id="fft网格的辅助属性">FFT网格的辅助属性</h3>
+<ul>
+  <li><code class="highlighter-rouge">Modules/recvec.f90</code>,截断能的定义,rho G点在处理器上的分布,包含<code class="highlighter-rouge">gvect_init</code>&amp;<code class="highlighter-rouge">gvecs_init</code>,及一系列参数，见下</li>
+</ul>
+
+<h2 id="fft结构体定义">fft结构体定义</h2>
+<p>参考自<code class="highlighter-rouge">FFTXlib/fft_types.f90 - TYPE fft_type_descriptor</code></p>
+
+<p>跟scalapack计算一样<a href="/2019/04/06/Fortran-math/">Fortran 科学计算</a>,表象下的力学量/波函数矩阵数据分布式存储在并行cpu网格,DESC变量存储了并行分布信息<br />
+我们也是把大量的fft网格数据分布式存储到并行cpu网格中去,fft结构体就是记录这个分配关系的DESC变量(就是fft_type_descriptor结构体)</p>
+
+<h3 id="fft-dimensions-数据网格">FFT dimensions <strong>数据网格</strong></h3>
+<p>如<strong>图:fft网格和sticks</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=初值]</th>
+      <th>注释</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER</td>
+      <td>nr1    = 0</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nr2    = 0</td>
+      <td>effective FFT dimensions of the 3D grid (global)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nr3    = 0</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nr1x   = 0</td>
+      <td>FFT grids leading dimensions</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nr2x   = 0</td>
+      <td>dimensions of the arrays for the 3D grid (global)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nr3x   = 0</td>
+      <td>may differ from nr1 ,nr2 ,nr3 in order to boost performances</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>注fft网格 <code class="highlighter-rouge">nr1*nr2*nr3</code>; 为了加速，使用的<code class="highlighter-rouge">nr1x*nr2x*nr3x</code>可能与nr1,nr2,nr3不一样,通常<code class="highlighter-rouge">nr1x&gt;=nr1</code><br />
+网格由输入参数<code class="highlighter-rouge">4*ecutoff</code>、<code class="highlighter-rouge">ecutrho</code>指定,或由输入参数<code class="highlighter-rouge">nr1s,nr2s,nr3s</code>、<code class="highlighter-rouge">nr1,nr2,nr3</code>指定</p>
+
+<h3 id="communicators-and-processor-coordinates-cpu网格">communicators and processor coordinates <strong>CPU网格</strong></h3>
+
+<blockquote>
+  <p>Parallel layout: in reciprocal space data are organized in columns (sticks) along
+                               the third direction and distributed across nproc processors. <br />
+                               In real space data are distributed in blocks comprising sections
+                               of the Y and Z directions and complete rows in the X direction in   <br />
+                               a matrix of  nproc2 x nproc3  processors.  <br />
+                               nproc = nproc2 x nproc3 and additional communicators are introduced
+                               for data redistribution across matrix columns and rows.</p>
+</blockquote>
+
+<p>在程序<code class="highlighter-rouge">fft_type_allocate</code>中,把一维的cpu链(<code class="highlighter-rouge">dfft%comm</code>,i.e.<code class="highlighter-rouge">intra_bgrp_comm</code>)分成二维网格<code class="highlighter-rouge">Y*Z</code>,<br />
+Y方向长度由输入参数<code class="highlighter-rouge">-nyfft</code>(<code class="highlighter-rouge">-nt</code>, <code class="highlighter-rouge">-ntg</code>, <code class="highlighter-rouge">-ntask_groups</code>, <code class="highlighter-rouge">-nyfft</code>)指定,默认为1<br />
+沿Y方向的一列为一个<code class="highlighter-rouge">dfft%comm2</code>,沿Z方向的为<code class="highlighter-rouge">dfft%comm3</code>
+<br /> <strong>划分方式如下图fft:CPU二维并行网格</strong>
+<br /> meta-GGA和CG等方法不适用<code class="highlighter-rouge">-nyfft</code>参数
+<br /><code class="highlighter-rouge">nyfft</code>决定Y方向的comm有几个processor,i.e.<code class="highlighter-rouge">%proc2 = nyfft</code>
+<br /><code class="highlighter-rouge">nzfft</code>决定Z方向的comm有几个processor,i.e.<code class="highlighter-rouge">%proc3 = nzfft = %proc/nyfft</code>
+<br /> 编译参数<code class="highlighter-rouge">-DZCOMPACT</code>控制<code class="highlighter-rouge">intra_bgrp_comm</code>内的cpu是按照Y还是Z方向的comm分布形成网格</p>
+
+<p><strong><center>图fft:CPU二维并行网格</center></strong>
+<img src="/uploads/2020/04/yzfft.jpg" alt="" /></p>
+
+<p><strong><center>CPU二维并行网格comm</center></strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=初值]</th>
+      <th>注释</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LOGICAL</td>
+      <td>lpara  = .FALSE.</td>
+      <td>.TRUE. if parallel FFT is active <br />   是否并行计算fft<br />当一个band comm内processor大于1时为T</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>lgamma = .FALSE.</td>
+      <td>.TRUE. if the grid has Gamma symmetry  <br />   只有设置<code class="highlighter-rouge">K_POINTS gamma</code>才为T,默认1x1x1是F</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>root   = 0</td>
+      <td>root processor</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>comm   = MPI_COMM_NULL</td>
+      <td>communicator for the main fft group     <br />  整个processor mesh , i.e. <code class="highlighter-rouge">intra_bgrp_comm</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>comm2  = MPI_COMM_NULL</td>
+      <td>communicator for the fft group along the second direction     <br />   processor mesh 中 Y 方向的一组processor</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>comm3  = MPI_COMM_NULL</td>
+      <td>communicator for the fft group along the third direction     <br />   processor mesh 中 Z 方向的一组processor</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nproc  = 1</td>
+      <td>number of processor in the main fft group     <br /> CPU的一维链网格processor总数</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nproc2 = 1</td>
+      <td>number of processor in the fft group along the second direction  <br /> CPU二维网格,</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nproc3 = 1</td>
+      <td>number of processor in the fft group along the third direction</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>mype   = 0</td>
+      <td>my processor id (starting from 0) in the fft main communicator  <br />我的一维rank pu - 1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>mype2  = 0</td>
+      <td>my processor id (starting from 0) in the fft communicator along the second direction (nproc2)<br />我的py坐标-1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>mype3  = 0</td>
+      <td>my processor id (starting from 0) in the fft communicator along the third direction (nproc3) <br />我的pz坐标-1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>iproc(:,:) <br /> iproc2(:) <br /> iproc3(:)    <br />     subcommunicators proc mapping (starting from 1) <br /><code class="highlighter-rouge">desc%iproc(desc%nproc2,desc%nproc3)</code><br /><code class="highlighter-rouge"> desc%iproc2(desc%nproc)</code><br /><code class="highlighter-rouge">desc%iproc3(desc%nproc)</code></td>
+      <td><code class="highlighter-rouge">pu=iproc(py,pz)</code>是二维CPU网格中(py,pz)对应的processor在一维网格comm中的序号(rank pu)<br /><code class="highlighter-rouge">py = iproc2(pu)</code>指在一维comm中的rank pu的processor放到二维CPU网格中的Y坐标<br />i.e.所在comm2的中的rank<br /><code class="highlighter-rouge">pz=iproc3(pu)</code>一维comm中rank pu的processor在二维网格中的pz坐标,i.e. 放到comm3中的rank</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="fft-distributed-data-dimensions-and-indices">FFT distributed data dimensions and indices</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=初值]</th>
+      <th>注释</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER</td>
+      <td>my_nr3p = 0</td>
+      <td>size of the “Z” section for this processor = nr3p( mype3 + 1 )    <code class="highlighter-rouge">~</code> nr3/nproc3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>my_nr2p = 0</td>
+      <td>size of the “Y” section for this processor = nr2p( mype2 + 1 )    <code class="highlighter-rouge">~</code> nr2/nproc2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>my_i0r3p = 0</td>
+      <td>offset of the first “Z” element of this proc in the nproc3 group = i0r3p( mype3 + 1 )</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>my_i0r2p = 0</td>
+      <td>offset of the first “Y” element of this proc in the nproc2 group = i0r2p( mype2 + 1 )</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nr3p(:)</td>
+      <td>size of the “Z” section of each processor in the nproc3 group along Z</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nr3p_offset(:)</td>
+      <td>offset of the “Z” section of each processor in the nproc3 group along Z</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nr2p(:)</td>
+      <td>size of the “Y” section of each processor in the nproc2 group along Y</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nr2p_offset(:)</td>
+      <td>offset of the “Y” section of each processor in the nproc2 group along Y</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nr1p(:)</td>
+      <td>number of active “X” values ( potential ) for a given proc in the nproc2 group</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nr1w(:)</td>
+      <td>number of active “X” values ( wave func ) for a given proc in the nproc2 group</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nr1w_tg</td>
+      <td>total number of active “X” values ( wave func ). used in task group ffts</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>i0r3p(:)</td>
+      <td>offset of the first “Z” element of each proc in the nproc3 group (starting from 0)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>i0r2p(:)</td>
+      <td>offset of the first “Y” element of each proc in the nproc2 group (starting from 0)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>ir1p(:)</td>
+      <td>if &gt;0 ir1p(m1) is the incremental index of the active ( potential ) X value of this proc</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>indp(:,:)</td>
+      <td>is the inverse of ir1p</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>ir1w(:)</td>
+      <td>if &gt;0 ir1w(m1) is the incremental index of the active ( wave func ) X value of this proc</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>indw(:,:)</td>
+      <td>is the inverse of ir1w</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>ir1w_tg(:)</td>
+      <td>if &gt;0 ir1w_tg(m1) is the incremental index of the active ( wfc ) X value in task group</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>indw_tg(:)</td>
+      <td>is the inverse of ir1w_tg</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nst</td>
+      <td>total number of sticks ( potential )</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nsp(:)</td>
+      <td>number of sticks per processor ( potential ) using proc index starting from 1  <br />… that is on proc mype -&gt; nsp( mype + 1 )</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nsp_offset(:,:)</td>
+      <td>offset of sticks per processor ( potential )</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nsw(:)</td>
+      <td>number of sticks per processor ( wave func ) using proc index as above</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nsw_offset(:,:)</td>
+      <td>offset of sticks per processor ( wave func )</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nsw_tg(:)</td>
+      <td>number of sticks per processor ( wave func ) using proc index as above. task group version</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>ngl(:)</td>
+      <td>per proc. no. of non zero charge density/potential components   <br /> ngl(1:intra_bgrp_comm内处理器数量)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nwl(:)</td>
+      <td>per proc. no. of non zero wave function plane components</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>ngm</td>
+      <td>my no. of non zero charge density/potential components   <br />ngm = dfftp%ngl( dfftp%mype + 1 ) <br />with gamma sym.(gamma_only)  <br />  ngm = ( dfftp%ngl( dfftp%mype + 1 ) + 1 ) / 2  <br />  在<code class="highlighter-rouge">data_structure</code>中计算，每个processor不一样</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>ngw</td>
+      <td>my no. of non zero wave function plane components   <br /> ngw = dffts%nwl( dffts%mype + 1 ) <br /> with gamma sym.  <br /> ngw = ( dffts%nwl( dffts%mype + 1 ) + 1 ) / 2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>iplp(:)</td>
+      <td>if &gt; 0 is the iproc2 processor owning the active “X” value ( potential )</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>iplw(:)</td>
+      <td>if &gt; 0 is the iproc2 processor owning the active “X” value ( wave func )</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nnp    = 0</td>
+      <td>number of 0 and non 0 sticks in a plane ( <code class="highlighter-rouge">~</code>nr1<code class="highlighter-rouge">*</code>nr2/nproc )</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nnr    = 0</td>
+      <td>local number of FFT grid elements  ( <code class="highlighter-rouge">~</code>nr1<code class="highlighter-rouge">*</code>nr2<code class="highlighter-rouge">*</code>nr3/nproc )  <br />  size of the arrays allocated for the FFT, local to each processor:  <br /> in parallel execution may differ from nr1x<code class="highlighter-rouge">*</code>nr2x<code class="highlighter-rouge">*</code>nr3x <br />   Not to be confused either with nr1<code class="highlighter-rouge">*</code>nr2<code class="highlighter-rouge">*</code>nr3  <br />每个处理器负责的最大时空间网格点,用于初始化R空间的电荷密度<code class="highlighter-rouge">rho%of_r( dfftp%nnr, nspin)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nnr_tg = 0</td>
+      <td>local number of grid elements for task group FFT ( <code class="highlighter-rouge">~</code>nr1<code class="highlighter-rouge">*</code>nr2<code class="highlighter-rouge">*</code>nr3/proc3 )</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>iss(:)</td>
+      <td>index of the first rho stick on each proc</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>isind(:)</td>
+      <td>for each position in the plane indicate the stick index</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>ismap(:)</td>
+      <td>for each stick in the plane indicate the position</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nl(:)</td>
+      <td>position of the G vec in the FFT grid</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>nlm(:)</td>
+      <td>with gamma sym. position of -G vec in the FFT grid</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="task-group-alltoall-communication-layout">task group ALLTOALL communication layout</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=初值]</th>
+      <th>注释</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>tg_snd(:)</td>
+      <td>number of elements to be sent in task group redistribution</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>tg_rcv(:)</td>
+      <td>number of elements to be received in task group redistribution</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>tg_sdsp(:)</td>
+      <td>send displacement for task group A2A communication</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, ALLOCATABLE</td>
+      <td>tg_rdsp(:)</td>
+      <td>receive displacement for task group A2A communicattion</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>has_task_groups = .FALSE.</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>CHARACTER(len=12)</td>
+      <td>rho_clock_label  = ‘ ‘</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>CHARACTER(len=12)</td>
+      <td>wave_clock_label = ‘ ‘</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>grid_id</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="module-gvectgvecs说明">MODULE <code class="highlighter-rouge">gvect</code>,<code class="highlighter-rouge">gvecs</code>说明</h2>
+<p>File:<code class="highlighter-rouge">Modules/recvec.f90</code></p>
+
+<h3 id="gvectecurhodfftpvsgvecs-4ecutwfcdffts"><code class="highlighter-rouge">gvect(ecurho,dfftp)</code>vs<code class="highlighter-rouge">gvecs (4*ecutwfc,dffts)</code></h3>
+
+<p><code class="highlighter-rouge">gvect</code>中的变量都是在由<code class="highlighter-rouge">ecurho</code>决定的FFT网格<code class="highlighter-rouge">dfftp</code>中的rho G点的<br />
+<code class="highlighter-rouge">gvecs</code>中的变量都是在由<code class="highlighter-rouge">4*ecutwfc</code>决定的FFT网格<code class="highlighter-rouge">dffts</code>的rho G点的在CPU上的分布初始化的,即<br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ngm_ = dfftp%ngl( dfftp%mype + 1 ) !dfftp网格中,本处理器处理的rho sticks上的G点数
+ngs_ = dffts%ngl( dffts%mype + 1 ) !dffts网格中,本处理器处理的rho sticks上的G点数 
+call gvect_init ( ngm_ , intra_bgrp_comm )
+call gvecs_init ( ngs_ , intra_bgrp_comm )
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>说明</th>
+      <th>gvect</th>
+      <th>gvecs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>位置,均为 <code class="highlighter-rouge">Modules/recvec.f90</code></td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>MODULE</td>
+      <td><code class="highlighter-rouge">gvect</code></td>
+      <td><code class="highlighter-rouge">gvecs</code></td>
+    </tr>
+    <tr>
+      <td>锁定的FFT网格</td>
+      <td><code class="highlighter-rouge">dfftp</code></td>
+      <td><code class="highlighter-rouge">dffts</code></td>
+    </tr>
+    <tr>
+      <td>comm ，均为<code class="highlighter-rouge">comm intra_bgrp_comm</code></td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>在FFT网格中,每个处理器负责的rho G矢量数 ,local</td>
+      <td><code class="highlighter-rouge">ngm</code></td>
+      <td><code class="highlighter-rouge">ngms</code></td>
+    </tr>
+    <tr>
+      <td>在FFT网格中,全部处理器负责的rho G矢量数的最大值,max</td>
+      <td><code class="highlighter-rouge">ngmx</code></td>
+      <td><code class="highlighter-rouge">ngsx</code></td>
+    </tr>
+    <tr>
+      <td>在FFT网格中,全部处理器负责的rho G矢量数的加和,global</td>
+      <td><code class="highlighter-rouge">ngm_g</code></td>
+      <td><code class="highlighter-rouge">ngms_g</code></td>
+    </tr>
+    <tr>
+      <td>?? number of G-vector shells</td>
+      <td><code class="highlighter-rouge">ngl</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>FFT网格的 rho cutoff energy</td>
+      <td><code class="highlighter-rouge">ecutrho</code></td>
+      <td><code class="highlighter-rouge">ecuts=4*ecutwfc</code></td>
+    </tr>
+    <tr>
+      <td>FFT网格的 rho G截断 <script type="math/tex">gcut = |G|^2</script> <code class="highlighter-rouge">= ecutoff/(2 /pi/a)^2</code></td>
+      <td><code class="highlighter-rouge">gcutm</code><br /> <code class="highlighter-rouge">=ecutrho/(2 pi/a)^2 </code></td>
+      <td><code class="highlighter-rouge">gcutms</code><br /> <code class="highlighter-rouge">= ecuts/(2 pi/a)^2</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">dffts</code>与<code class="highlighter-rouge">dfftp</code>之间的联系<code class="highlighter-rouge">dual</code> <br /><code class="highlighter-rouge">dual=ecutrho/ecutwfc</code>  <br /> 默认  <code class="highlighter-rouge">ecutrho  = 4*ecutwfc</code>  <br />   USPP <code class="highlighter-rouge">= (8~12)*ecutwfc</code> <br /> PAW <code class="highlighter-rouge">= 4*ecutwfc</code></td>
+      <td> </td>
+      <td><code class="highlighter-rouge">dual</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">doublegrid</code>     <br />  true if smooth and dense grid differ doublegrid = (dual &gt; 4)<br />USPP等情况为T</td>
+      <td> </td>
+      <td><code class="highlighter-rouge">LOGICAL :: doublegrid</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /><strong>gvect中还定义了很多变量，比如计算动能的倒格失<code class="highlighter-rouge">g(:,:)</code></strong>，见下表,<strong>gvecs在QE-6.4.1中目前仅定义上面7个变量</strong></p>
+
+<h3 id="gvect-中更多的变量">gvect 中更多的变量</h3>
+
+<p>需要再继续补充</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>说明</th>
+      <th>gvect</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">G</code></td>
+      <td><code class="highlighter-rouge">g(:,:)</code></td>
+      <td><code class="highlighter-rouge">g(3, ngm)</code>，分布式分布, 是包含了所有的G格式<br />g物理上是与k无关的,但是每个processor在不同的k点处理的npw序列不同<br />(即<script type="math/tex">G_{m}</script>的m取值范围不同,因此还有角标k)，<br /> 所以要转换一下igk_k<br />如<code class="highlighter-rouge">k+G</code>的计算<code class="highlighter-rouge"> xk(1,ik) + g( 1, igk_k(1:npw,ik) )</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">|G|^2</code></td>
+      <td><code class="highlighter-rouge"> gg(:) </code></td>
+      <td><code class="highlighter-rouge">gg(ngm)</code> <br /> <code class="highlighter-rouge">gg(i)=g(1,i)**2 + g(2,i)**2 + g(3,i)**2</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">G=0</code></td>
+      <td><code class="highlighter-rouge">gstart</code></td>
+      <td>如果gamma点(G=0)在本处理器,<code class="highlighter-rouge">gstart=2</code>,ELSE,<code class="highlighter-rouge">gstart=1</code></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="module-gvecw"><code class="highlighter-rouge">MODULE gvecw</code></h2>
+<p>File:<code class="highlighter-rouge">Modules/gvecw.f90</code><br /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>变量</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">ecutwfc</code></td>
+      <td>输入参数<code class="highlighter-rouge">ecutwfc</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">gcutw</code></td>
+      <td><code class="highlighter-rouge">gcutw = ecutwfc / tpiba2</code></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="sticks_map结构体定义"><code class="highlighter-rouge">sticks_map</code>结构体定义</h2>
+<p>File:<code class="highlighter-rouge">FFTXlib/stick_base.f90</code><br />
+定义在<strong>表:sticks_map结构体定义</strong>中,里面的相关变量，解释如下:</p>
+
+<p>由建立过程<strong>图:sticks_map_allocate创建sticks网格</strong></p>
+<ul>
+  <li><code class="highlighter-rouge">lb</code> sticks界限</li>
+  <li><code class="highlighter-rouge">ub</code> sticks界限</li>
+</ul>
+
+<p>二维:sticks<code class="highlighter-rouge">(i1,i2)</code>,根据<strong>图:sticks的一维形式</strong>,<code class="highlighter-rouge">(i1,i2)</code>与其一维编号<code class="highlighter-rouge">ind</code>之间的转换关系为</p>
+
+<ul>
+  <li><code class="highlighter-rouge">ind = smap%indmap(i1,i2)</code></li>
+  <li><code class="highlighter-rouge">i1 =  smap%ist(ind,1)</code></li>
+  <li><code class="highlighter-rouge">i2 =  smap%ist(ind,2)</code></li>
+</ul>
+
+<p>按照sitcks上的G点排名,第<code class="highlighter-rouge">ni</code>名对应的一维编号是<code class="highlighter-rouge">ind = smap%idx(ni)</code>,如<strong>图:sticks的一维形式</strong></p>
+
+<p>最终建立的sticks如<strong>图:ffts与fftp在sticks中的位置和他们各自的激活区域</strong></p>
+
+<p>根据<strong>组图:负责sticks的processor</strong>,把sticks空间中<code class="highlighter-rouge">i1</code>相同的sticks们<code class="highlighter-rouge">(i1,:)</code>作为单元分配给CPU网格中的一行(<code class="highlighter-rouge">py</code>相同的cpu们,i.e. comm3)<br />
+在同一行,又把<code class="highlighter-rouge">(i1,i2)</code>分到该行各个processor上<br />
+最后的结果就是sticks<code class="highlighter-rouge">(i1,i2)</code>被rank <code class="highlighter-rouge">pu = smap%stown(i1,i2)</code>的processor处理</p>
+
+<p><strong><center>表:sticks_map结构体定义</center></strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量</th>
+      <th>注释        <br />(备注)</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">LOGICAL</code></td>
+      <td><code class="highlighter-rouge">lgamma=.false.</code></td>
+      <td>if .true. the map has gamma symmetry</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">LOGICAL</code></td>
+      <td><code class="highlighter-rouge">lpara=.false.</code></td>
+      <td>if .true. the map is set for parallel and serial, if .false. only serial  <br /> <code class="highlighter-rouge">lpara =  nproc &gt; 1</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER</code></td>
+      <td><code class="highlighter-rouge">mype=0</code></td>
+      <td>my task id (starting from 0)     <br />     同dfft</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER</code></td>
+      <td><code class="highlighter-rouge">nproc=1</code></td>
+      <td>number of task (as nproc in fft_type_descriptor)     <br />      同dfft</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER</code></td>
+      <td><code class="highlighter-rouge">nyfft=1</code></td>
+      <td>number processors in y-direction (as nproc2 in fft_type_descriptor)     <br />    同dfft</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER, ALLOCATABLE</code></td>
+      <td><code class="highlighter-rouge">iproc(:,:)</code></td>
+      <td>the processor index (as in fft_type_descriptor)     <br /> 同dfft,<code class="highlighter-rouge">N(Y,Z)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER, ALLOCATABLE</code></td>
+      <td><code class="highlighter-rouge">iproc2(:)</code></td>
+      <td>the Y group processor index (as in fft_type_descriptor)     <br /> 同dfft,<code class="highlighter-rouge">Z(N)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER</code></td>
+      <td><code class="highlighter-rouge">comm     = MPI_COMM_NULL</code></td>
+      <td>communicator of the fft gruop    <br />   总CPU网格(dfft%comm)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER</code></td>
+      <td><code class="highlighter-rouge">nstx=0</code></td>
+      <td>a safe maximum number of sticks on the map   <br /> sticks的最大数量 <br /> <code class="highlighter-rouge">nstx = (ub(1)-lb(1)+1)*(ub(2)-lb(2)+1)</code>  <br />  <script type="math/tex">N_{GX} \cdot N_{GY}</script></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER</code></td>
+      <td><code class="highlighter-rouge">lb(3)=0</code></td>
+      <td>map’s lower bounds <br /> <code class="highlighter-rouge">lb    = - ub</code>    <br />   <script type="math/tex">G_{min} = -\frac{ (N_{G} - 1)}{2}</script></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER</code></td>
+      <td><code class="highlighter-rouge">ub(3)=0</code></td>
+      <td>map’s upper bounds  <br /> <code class="highlighter-rouge">ub(1) = ( nr1 - 1 ) / 2</code>  <br />   <script type="math/tex">G_{max} = \frac{ (N_{G} - 1)}{2}</script></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER, ALLOCATABLE</code></td>
+      <td><code class="highlighter-rouge">idx(:)</code></td>
+      <td>the index of each stick  <br />  <code class="highlighter-rouge">smap%idx( nstx )</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER, ALLOCATABLE</code></td>
+      <td><code class="highlighter-rouge">ist(:,:)</code></td>
+      <td>the cartesian coordinates of each stick   <br />  <code class="highlighter-rouge">smap%ist( nstx , 2)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER, ALLOCATABLE</code></td>
+      <td><code class="highlighter-rouge">stown(:,:)</code></td>
+      <td>the owner of each stick     <br /> <code class="highlighter-rouge">smap%stown ( lb(1):ub(1), lb(2):ub(2) )</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER, ALLOCATABLE</code></td>
+      <td><code class="highlighter-rouge">indmap(:,:)</code></td>
+      <td>the index of each stick (represented on the map)   <br />   <code class="highlighter-rouge">smap%indmap ( lb(1):ub(1), lb(2):ub(2) )</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">REAL(DP)</code></td>
+      <td><code class="highlighter-rouge">bg(3,3)</code></td>
+      <td>base vectors, the generators of the mapped space     <br />  就是倒格失<code class="highlighter-rouge">bg</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="初始化流程data_structure初始化入口">初始化流程:<code class="highlighter-rouge">data_structure</code>初始化入口</h2>
+<p>File: <code class="highlighter-rouge">PW/src/data_structure.f90</code><br />
+被<code class="highlighter-rouge">PW/src/init_run.f90 -&gt; init_run()</code>调用<code class="highlighter-rouge">CALL data_structure( gamma_only )</code><br />
+在结构优化结束后，会重新生成网格点,k矢量，进行最后一次计算，会再次通过<code class="highlighter-rouge">init_run()</code>调用本入口<br />
+fft网格初始化入口: 初始化fft网格和sticks</p>
+
+<h3 id="计算dffts与dfftp截断能">计算<code class="highlighter-rouge">dffts</code>与<code class="highlighter-rouge">dfftp</code>截断能</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th><script type="math/tex">G_{cut}</script></th>
+      <th>dffs</th>
+      <th>dfftp</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">gkcut</code></td>
+      <td><code class="highlighter-rouge">gkcut = max{sqrt(|k|^2)}</code>,<br />then<code class="highlighter-rouge">gkcut = (sqrt (gcutw) + gkcut)**2</code>,<br />即 <script type="math/tex">\left | \sqrt{G_{ecutwfc}} + k_{max}  \right |^{2}</script></td>
+      <td><code class="highlighter-rouge">gcutm/4.0</code>,无须计算</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">gcut</code></td>
+      <td><code class="highlighter-rouge">gcutms</code>无须计算</td>
+      <td><code class="highlighter-rouge">gcutm</code>无须计算</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>注:网格点的截断能<code class="highlighter-rouge">gcutm,gcutms</code>已经在<code class="highlighter-rouge">PW/src/setup.f90 -&gt; setup()</code>以及<code class="highlighter-rouge">iosys()</code>中计算过了，如图:dffts与dfftp网格</strong></p>
+<ul>
+  <li><code class="highlighter-rouge">gcutw = ecutwfc / tpiba2</code></li>
+  <li><code class="highlighter-rouge">gcutms=4.D0 * ecutwfc / tpiba2</code></li>
+  <li><code class="highlighter-rouge">gcutm=ecutrho/tpiba2</code></li>
+</ul>
+
+<h3 id="fft_type_init被调用两次初始化两个fft网格dfftsdfftpsticks网格smap"><code class="highlighter-rouge">fft_type_init</code>被调用两次，初始化两个FFT网格<code class="highlighter-rouge">dffts,dfftp</code>,sticks网格<code class="highlighter-rouge">smap</code></h3>
+<p>File:<code class="highlighter-rouge">PW/src/data_structure.f90</code></p>
+
+<p>可以看到在<code class="highlighter-rouge">fft_type_init</code>执行后,<code class="highlighter-rouge">dffts</code>与<code class="highlighter-rouge">dfftp</code>实际使用的<code class="highlighter-rouge">gkcut</code>和<code class="highlighter-rouge">gcut</code>就是上表</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!=== dffts
+  CALL fft_type_init( dffts, smap, "wave", gamma_only, lpara, intra_bgrp_comm,&amp;
+       at, bg, gkcut, gcutms/gkcut, fft_fact=fft_fact, nyfft=nyfft )
+       !For "wave"   gkcut = gcut_in &lt;-&gt;  gkcut
+       !             gcut  = gkcut * dual &lt;-&gt; gkcut * (gcutms/gkcut) = gcutms
+!===dfftp
+  CALL fft_type_init( dfftp, smap, "rho" , gamma_only, lpara, intra_bgrp_comm,&amp;
+       at, bg, gcutm , 4.d0, fft_fact=fft_fact, nyfft=nyfft )
+       !For "rho"         gcut  = gcut_in &lt;-&gt; gcutm
+       !                  gkcut = gcut / dual = gcutm / 4.0
+</code></pre></div></div>
+
+<p><strong>流程:</strong><br /></p>
+<ul>
+  <li>计算截断能<code class="highlighter-rouge">gcut</code>(rho) and <code class="highlighter-rouge">gkcut</code>(wave)</li>
+  <li>初始化FFT网格<code class="highlighter-rouge">call fft_type_allocate(...)</code><br />
+<code class="highlighter-rouge">CALL fft_type_allocate( dfft, at, bg, gcut, comm, fft_fact=fft_fact, nyfft=nyfft )</code>
+    <ul>
+      <li>设置二维CPU网格,整个cpu网格的父并行信息(desc%comm=comm=intra_bgrp_comm)<br />
+ Y方向有<code class="highlighter-rouge">nyfft=desc%nproc2</code>个处理器,Z方向有<code class="highlighter-rouge">nzfft=desc%nproc3</code>个处理器.</li>
+      <li><code class="highlighter-rouge">call realspace_grid_init(...)</code>, 计算三维数据网格维度<code class="highlighter-rouge">nr1,nr2,nr3</code>,i.e. <script type="math/tex">{N_G} = a \cdot G_{cut}</script></li>
+      <li><code class="highlighter-rouge">ALLOCATE(dfft%xxxx)</code>,并赋初值</li>
+    </ul>
+  </li>
+  <li>初始化stick<code class="highlighter-rouge">call sticks_map_allocate(...)</code><br />
+<code class="highlighter-rouge">CALL sticks_map_allocate( smap, lgamma, dfft%lpara, dfft%nproc2, dfft%iproc, dfft%iproc2, dfft%nr1, dfft%nr2, dfft%nr3, bg, dfft%comm )</code><br />
+File:<code class="highlighter-rouge">FFTXlib/stick_base.f90</code><br />
+   初始化sticks,计算sticks的上下限,复制<code class="highlighter-rouge">dfft%</code>的并行参数到<code class="highlighter-rouge">smap%</code><br />
+   因为<code class="highlighter-rouge">dffts</code>和<code class="highlighter-rouge">dfftp</code>,使用同一个smap,所以第二次初始化会保留上次初始化的信息，在后面新增加数据
+    <ul>
+      <li>在<code class="highlighter-rouge">fft_type_init( dffts, smap, ...,...)</code>情况首次初始化<code class="highlighter-rouge">smap</code>,初始化操作有:<br />
+复制<code class="highlighter-rouge">dfft</code>的并行信息到<code class="highlighter-rouge">smap%comm, smap%mype, smap%nproc</code>,<code class="highlighter-rouge">comm</code>为<code class="highlighter-rouge">intra_bgrp_comm</code><br />
+传入的所有dfft参量<code class="highlighter-rouge">nyfft</code>等<br />
+计算<code class="highlighter-rouge">%lb,%up</code>,<script type="math/tex">G_{max} = \frac{ (N_{G} - 1)}{2}</script> and <script type="math/tex">G_{min} = -\frac{ (N_{G} - 1)}{2}</script> <br />
+计算<code class="highlighter-rouge">%nstx</code>,<code class="highlighter-rouge">nstx = (ub(1)-lb(1)+1)*(ub(2)-lb(2)+1)</code>,所有的非ALLOCATE变量都确定<br />
+ALLOCATE(smap%stown ,smap%indmap,smap%idx,smap%ist),均初始为0<br />
+程序<code class="highlighter-rouge">RETURN</code>后,会有其他程序继续设置这些变量</li>
+      <li>在<code class="highlighter-rouge">fft_type_init( dfftp, smap, ...,...)</code>情况会检测到<code class="highlighter-rouge">smap</code>已初始化(被wave) <br />
+若<code class="highlighter-rouge">ecutrho &lt;= 4*ecutwfc</code> 不操作<br />
+若<code class="highlighter-rouge">ecutrho &gt;  4*ecutwfc</code>, i.e. <script type="math/tex">N_G^{n} > N_G^{Wave}</script>，重新初始化<br />
+重新初始化操作:备份<code class="highlighter-rouge">smap%stown ,smap%indmap,smap%idx,smap%ist </code><br />
+<code class="highlighter-rouge">DEALLOCATE</code>,then,<code class="highlighter-rouge">ALLOCATE</code><br />
+恢复旧备份,此时<code class="highlighter-rouge">smap%stown ,smap%indmap,smap%idx,smap%ist </code><br />
+为上一次<code class="highlighter-rouge">fft_type_init( dffts, smap, "wave",...)</code>完全执行后的结果</li>
+    </ul>
+  </li>
+  <li>根据<code class="highlighter-rouge">smap</code>中<code class="highlighter-rouge">%nproc,%up,%down</code>变量ALLOCATE<code class="highlighter-rouge">nstp, nstpw, sstp, sstpw, st, stw</code>用于后续计算</li>
+  <li>建立sticks与CPU网格间的联系<code class="highlighter-rouge">get_sticks</code><br />
+File:<code class="highlighter-rouge">FFTXlib/stick_base.f90</code><br />
+按照顺序( [dffts:gkcut -&gt; gcut] -&gt; [dfftp:gkcut -&gt; gcut])初始化sticks
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL get_sticks(  smap, gkcut,...)
+CALL get_sticks(  smap, gcut,...)
+</code></pre></div>    </div>
+    <p>把<code class="highlighter-rouge">sticks%</code>的性质及整个sticks网络创建完成</p>
+  </li>
+  <li>fft_type_set(dfft,smap%xxx,…)
+根据<code class="highlighter-rouge">smap%</code>等和<code class="highlighter-rouge">get_sticks</code>得到的变量，设置<code class="highlighter-rouge">dfft%</code>属性,建立FFT格点和sticks格点和CPU格点间的关系<br />
+全局信息和局域信息,我(processor)处理的格点有</li>
+</ul>
+
+<h4 id="根据persrhowave计算gkcutandgcut">根据<code class="highlighter-rouge">pers="rho"/"wave"</code>计算<code class="highlighter-rouge">gkcut</code>and<code class="highlighter-rouge">gcut</code></h4>
+<p><br /><br /><br /></p>
+
+<h4 id="fft_type_allocate">fft_type_allocate</h4>
+
+<h5 id="划分并行cpu网格">划分并行CPU网格</h5>
+<p>File:<code class="highlighter-rouge">本文件</code><br />
+如<strong>图:fft_type_allocate划分CPU网格</strong>,将comm(i.e. <code class="highlighter-rouge">intra_bgrp_comm</code>,共dfft%nrpoc个processor)划分为<code class="highlighter-rouge">nyfft*nzfft=dfft%nrpoc2*dfft%nrproc3</code>的processor网格</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL fft_type_allocate( dfft, at, bg, gcut, comm, fft_fact=fft_fact, nyfft=nyfft )
+</code></pre></div></div>
+<p><strong>注意:<code class="highlighter-rouge">%mype,%mype2,%mype2</code>的起始坐标是0,因此后面常常用<code class="highlighter-rouge">var(dfft%mype+1)</code>表示相应cpu的性质</strong><br />
+<strong><center>图:fft_type_allocate划分CPU网格</center></strong>
+<img src="/uploads/2020/04/fft_type_init1.jpg" alt="" /></p>
+
+<p><br /><br /><br /></p>
+
+<h5 id="realspace_grid_init计算fft网格"><code class="highlighter-rouge">realspace_grid_init</code>计算FFT网格</h5>
+<p>File:<code class="highlighter-rouge">本文件</code><br />
+计算网格大小<code class="highlighter-rouge">nr1*nr2*nr3</code>,并计算最优的<code class="highlighter-rouge">nr1x*nr2x*nr3x</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL realspace_grid_init( desc, at, bg, gcutm, fft_fact )
+</code></pre></div></div>
+
+<p><strong><center>图:realspace_grid_init划分FFT网格</center></strong>
+<img src="/uploads/2020/04/realspace_grid_init.png" alt="" /></p>
+
+<p><br /><br /><br /></p>
+
+<h4 id="sticks_map_allocate-由fft网格建立sticks网格"><code class="highlighter-rouge">sticks_map_allocate</code> 由FFT网格建立sticks网格</h4>
+<p>File:<code class="highlighter-rouge">FFTXlib/stick_base.f90</code><br />
+创建sticks网格,复制<code class="highlighter-rouge">dfft%</code>并行参数，如<strong>图:sticks_map_allocate创建sticks网格</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     CALL sticks_map_allocate( smap, lgamma, dfft%lpara, dfft%nproc2, &amp;
+          dfft%iproc, dfft%iproc2, dfft%nr1, dfft%nr2, dfft%nr3, bg, dfft%comm )
+</code></pre></div></div>
+<p><strong><center>图:sticks_map_allocate创建sticks网格</center></strong>
+<img src="/uploads/2020/04/sticks_map_allocate.png" alt="" /></p>
+
+<p><br /><br /><br /></p>
+
+<h4 id="初始化变量用于后续计算">初始化变量,用于后续计算</h4>
+
+<p>根据<code class="highlighter-rouge">gckut</code>和<code class="highlighter-rouge">gcut</code>对应两套sticks:wave and rho,两次初始化smap,定义不同的变量,如<strong>表:wave&amp;rho’s sticks辅助变量表</strong>,方便后续计算<br /></p>
+
+<p>wave和rho都有sticks，表格中的sticks是相应列的sticks,如<code class="highlighter-rouge">stw(i1,i2)</code>是处理wave sticks<code class="highlighter-rouge">(i1,i2)</code>的processor一维编号</p>
+
+<p><strong><center>表:wave&amp;rho's sticks辅助变量表</center></strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>含义</th>
+      <th>wave sticks</th>
+      <th>rho sticks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><script type="math/tex">G_{cutoff}</script></td>
+      <td><code class="highlighter-rouge">gckut</code></td>
+      <td><code class="highlighter-rouge">gcut</code></td>
+    </tr>
+    <tr>
+      <td>总sticks数量</td>
+      <td><code class="highlighter-rouge">nstw</code></td>
+      <td><code class="highlighter-rouge">nst</code></td>
+    </tr>
+    <tr>
+      <td>sticks格点(i1,i2)上的G点数(中间变量)</td>
+      <td><code class="highlighter-rouge">stw(i1,i2)</code></td>
+      <td><code class="highlighter-rouge">st(i1,i2)</code></td>
+    </tr>
+    <tr>
+      <td>sticks格点(i1,i2)被哪个cpu处理(最终结果)，一维编号</td>
+      <td><code class="highlighter-rouge">stw(i1,i2)</code></td>
+      <td><code class="highlighter-rouge">st(i1,i2)</code></td>
+    </tr>
+    <tr>
+      <td>一维pu处理器处理的sticks上的G点总数</td>
+      <td><code class="highlighter-rouge">sstpw(pu)</code></td>
+      <td><code class="highlighter-rouge">sstp(pu)</code></td>
+    </tr>
+    <tr>
+      <td>一维pu处理器处理的sticks上的sticks总数</td>
+      <td><code class="highlighter-rouge">nstpw(pu)</code></td>
+      <td><code class="highlighter-rouge">nstp(pu)</code></td>
+    </tr>
+    <tr>
+      <td>我(processor)处理的G点总数<br /><code class="highlighter-rouge">ngw=sstpw(smap%mype+1)</code><br /><code class="highlighter-rouge">ngm=sstp(smap%mype+1)</code></td>
+      <td><code class="highlighter-rouge">ngw</code></td>
+      <td><code class="highlighter-rouge">ngm</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /><br /><br />
+<br /><br /><br /></p>
+
+<h4 id="get_sticks建立sticks与cpu网格间的联系"><code class="highlighter-rouge">get_sticks</code>建立sticks与CPU网格间的联系</h4>
+<p>File:<code class="highlighter-rouge">FFTXlib/stick_base.f90</code><br />
+sticks指<code class="highlighter-rouge">(i1,i2)</code>对应的网格点上，存在i3使得<br />
+<script type="math/tex">% <![CDATA[
+\left |  G(i1,i2,i3)  \right | ^{2} = \left |  i1\cdot b1+i2\cdot b2+i3\cdot b3)  \right | ^{2} <= G_{cutoff} %]]></script><br />
+则<code class="highlighter-rouge">(i2,i3)</code>是对应<script type="math/tex">G_{cutoff}</script>上的sticks.<br />
+使用<strong>表:wave&amp;rho’s sticks辅助变量表</strong>中的<script type="math/tex">G_{cutoff}</script>初始化两次<code class="highlighter-rouge">smap</code>,计算表中的变量<br />
+第二次初始化会备份第一次的结果,在此基础上继续创建sticks索引/分配cpu(<code class="highlighter-rouge">%stown</code>)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     CALL get_sticks(  smap, gkcut, nstpw, sstpw, stw, nstw, ngw )
+     CALL get_sticks(  smap, gcut,  nstp, sstp, st, nst, ngm )
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h5 id="sticks_map_set统计各个sticks上的g点数sti1i2"><code class="highlighter-rouge">sticks_map_set</code>统计各个sticks上的G点数:st(i1,i2)</h5>
+<p>File:<code class="highlighter-rouge">FFTXlib/stick_base.f90</code><br />
+见<strong>图:sticks &amp; sticks_map_set</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL sticks_map_set( smap%lgamma, smap%ub, smap%lb, smap%bg, gcut, st, smap%comm )
+</code></pre></div></div>
+<p><strong><center>图:sticks &amp; sticks_map_set</center></strong>
+<img src="/uploads/2020/04/get_sticks_1.jpg" alt="" />
+<br /><br /></p>
+
+<h5 id="sticks_map_index把二维的sticks索引变为一维索引"><code class="highlighter-rouge">sticks_map_index</code>把二维的sticks索引变为一维索引</h5>
+<p>File:<code class="highlighter-rouge">FFTXlib/stick_base.f90</code><br />
+建立sticks的一维索引<code class="highlighter-rouge">ind</code>,以及ind上的G点数<code class="highlighter-rouge">ngc(ind)</code>,如<strong>图:sticks的一维形式</strong><br /></p>
+<ul>
+  <li><code class="highlighter-rouge">ind = smap%indmap(i1,i2)</code></li>
+  <li><code class="highlighter-rouge">i1 =  smap%ist(ind,1)</code></li>
+  <li><code class="highlighter-rouge">i2 =  smap%ist(ind,2)</code></li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      CALL sticks_map_index( smap%ub, smap%lb, st, smap%ist(:,1), smap%ist(:,2), ngc, smap%indmap )
+</code></pre></div></div>
+<p><br /><br /></p>
+
+<h5 id="sticks_sort_new对一维sticks索引排序"><code class="highlighter-rouge">sticks_sort_new</code>对一维sticks索引排序</h5>
+<p>File:<code class="highlighter-rouge">FFTXlib/stick_base.f90</code><br />
+按照sticks上面的G点数量,对ind排序,存到<code class="highlighter-rouge">smap%idx</code>中去，调整了ngc<br />
+G点第<code class="highlighter-rouge">ni</code>多的sticks是<code class="highlighter-rouge">ind = smap%idx(ni)</code>,上面有<code class="highlighter-rouge">ngc(smap%idx(ni))</code>个G点<br />
+如<strong>图:sticks的一维形式</strong><br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL sticks_sort_new( smap%nproc&gt;1, ngc, SIZE(smap%idx), smap%idx )
+</code></pre></div></div>
+
+<p><strong><center>图:sticks的一维形式</center></strong>
+<img src="/uploads/2020/04/get_sticks_2.jpg" alt="" />
+<br /><br /></p>
+
+<h5 id="分配sticks到cpu网格点上">分配sticks到CPU网格点上</h5>
+<p>File:<code class="highlighter-rouge">FFTXlib/stick_base.f90</code><br />
+把sticks空间中<code class="highlighter-rouge">i1</code>相同的sticks,以下称为<code class="highlighter-rouge">YZ截面</code>或<code class="highlighter-rouge">X(i1)</code><br />
+<code class="highlighter-rouge">X(i1)</code>作为单元分配给CPU网格中的一行(<code class="highlighter-rouge">py</code>相同的cpu们,i.e. comm3)<br />
+在同一行,又把<code class="highlighter-rouge">X(i1)</code>变成<code class="highlighter-rouge">(i1,i2)</code>分到各个processor上<br />
+<strong>注:分配的时候不是顺序分配的，而是负载分配的，优先分给计算量最少的cpu行上最少的processor</strong><br />
+最后的结果就是sticks<code class="highlighter-rouge">(i1,i2)</code>被rank <code class="highlighter-rouge">pu = smap%stown(i1,i2)</code>的processor处理</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      CALL sticks_dist_new( smap%lgamma, smap%mype, smap%nproc, smap%nyfft, smap%iproc, smap%iproc2, &amp;
+                            smap%ub, smap%lb, smap%idx, &amp;
+                            smap%ist(:,1), smap%ist(:,2), ngc, SIZE(smap%idx), nstp, sstp, smap%stown, ng )
+</code></pre></div></div>
+
+<p><strong><center>组图:负责sticks的processor</center></strong>
+<img src="/uploads/2020/04/get_sticks_3.jpg" alt="" />
+<img src="/uploads/2020/04/get_sticks_4.jpg" alt="" />
+<img src="/uploads/2020/04/get_sticks_5.jpg" alt="" />
+<img src="/uploads/2020/04/dfftsvsdfftp.jpg" alt="" />
+<br /><br /></p>
+
+<h4 id="fft_type_set-设置fft网格">fft_type_set 设置FFT网格</h4>
+<p>File:<code class="highlighter-rouge">FFTXlib/fft_types.f90</code><br />
+前面有FFT网格和sticks关系,sticks与CPU网格关系,现在要整合起来，把<code class="highlighter-rouge">dfft%</code>的所有定义计算出来赋值</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     CALL fft_type_set( dfft, nst, smap%ub, smap%lb, smap%idx, &amp;
+          smap%ist(:,1), smap%ist(:,2), nstp, nstpw, sstp, sstpw, st, stw )
+</code></pre></div></div>
+<p>下面的<code class="highlighter-rouge">desc</code>就是<code class="highlighter-rouge">dfft</code>
+<br /></p>
+
+<h5 id="descnr1pdescnr2pdescnr3p"><code class="highlighter-rouge">desc%nr1p，desc%nr2p，desc%nr3p</code></h5>
+<ul>
+  <li><code class="highlighter-rouge">desc%nr1p(p1)</code>,where <code class="highlighter-rouge">p1 =1,desc%proc1</code></li>
+  <li><code class="highlighter-rouge">desc%nr2p(p2)</code>,where <code class="highlighter-rouge">p2 =1,desc%proc2</code></li>
+  <li><code class="highlighter-rouge">desc%nr3p(p3)</code>,where <code class="highlighter-rouge">p3 =1,desc%proc3</code></li>
+</ul>
+
+<p><code class="highlighter-rouge">desc%nr1p</code>是根据<code class="highlighter-rouge">smap%stown</code>计算的，和sticks的分布一致的，与真实的YZ截面在processor间的分布一致，是真实分布</p>
+
+<p>把<code class="highlighter-rouge">nr2,nr3</code>分别分成<code class="highlighter-rouge">desc%nproc2,desc%nproc3</code>份(<strong>此是估算,并不对应真实processor分配</strong>), 每一份有多少个<code class="highlighter-rouge">desc%nr2p，desc%nr3p</code></p>
+
+<p>程序的开头只计算了<code class="highlighter-rouge">desc%nr2p，desc%nr3p</code>,<code class="highlighter-rouge">desc%nr1p</code>是后面计算的</p>
+
+<p><br /><br /><br /></p>
+
+<h5 id="descnnp---nr1x--nr2x用于估算"><code class="highlighter-rouge">desc%nnp  = nr1x * nr2x</code>用于估算</h5>
+
+<h5 id="descngldescnwl"><code class="highlighter-rouge">desc%ngl</code>&amp;<code class="highlighter-rouge">desc%nwl</code></h5>
+
+<ul>
+  <li><code class="highlighter-rouge">desc%ngl( 1:desc%nproc )  = ngp( 1:desc%nproc ) </code> rank pu 处理器 处理的 rho sticks的G点数</li>
+  <li><code class="highlighter-rouge">desc%nwl( 1:desc%nproc )  = ngpw( 1:desc%nproc )</code> rank pu 处理器 处理的 wave sticks的G点数</li>
+</ul>
+
+<h5 id="sticks格点i1i2与fft格点m1m2关系">sticks格点<code class="highlighter-rouge">(i1,i2)</code>与FFT格点<code class="highlighter-rouge">(m1,m2)</code>关系</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m1 = i1 + 1; IF ( m1 &lt; 1 ) m1 = m1 + nr1   !=== 把倒空间中的负坐标，变换到０~nr1上来， -2,-1,0,1,2 =&gt; 5,6,1,2,3 或 4,5,1,2,3， 两种可能都出现了
+m2 = i2 + 1; IF ( m2 &lt; 1 ) m2 = m2 + nr2   !=== 把倒空间中的负坐标，变换到０~nr1上来， -2,-1,0,1,2 =&gt; 5,6,1,2,3 或 4,5,1,2,3， 两种可能都出现了
+</code></pre></div></div>
+
+<h5 id="fft网格的一维编号indm">FFT网格的一维编号indm</h5>
+<p><code class="highlighter-rouge">indm = m1 + ( m2 - 1 ) * nr1x</code>
+<code class="highlighter-rouge">desc%isind(indm)</code>的中间含义:</p>
+<ul>
+  <li><code class="highlighter-rouge">desc%isind(indm) &gt; 0</code>,本wave格点由processor <code class="highlighter-rouge">desc%isind(indm)</code>负责</li>
+  <li><code class="highlighter-rouge">desc%isind(indm) &lt; 0</code>,本rho且非wave格点由processor <code class="highlighter-rouge">-1*desc%isind(indm)</code>负责</li>
+  <li><code class="highlighter-rouge">desc%isind(indm) = 0</code>,本格点是无效格点,不对应有效sticks,超过截断能<code class="highlighter-rouge">gcut</code></li>
+</ul>
+
+<p><br /><br /><br /></p>
+
+<h5 id="fft格点的yz截面xm1与cpu网格py行的关系">FFT格点的YZ截面<code class="highlighter-rouge">X(m1)</code>与CPU网格<code class="highlighter-rouge">py</code>行的关系</h5>
+<p>FFT网格的YZ截面同sticks的YZ截面一样被同一组<code class="highlighter-rouge">py</code>处理器处理<br />
+FFT的有效截面指有效格点<code class="highlighter-rouge">(m1,m2)</code>的截面X(m1),有效FFT格点<code class="highlighter-rouge">(m1,m2)</code>对应有效的sticks<code class="highlighter-rouge">(i1,i2)</code></p>
+
+<p>对于FFT的格点的YZ截面X(m1)的性质</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>说明</th>
+      <th>wave格点的截面X(m1)</th>
+      <th>rho格点的截面X(m1)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>对应的sticks</td>
+      <td><code class="highlighter-rouge">gkcut</code>确定的wave sticks</td>
+      <td><code class="highlighter-rouge">gcut</code>对应的rho sticks</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">m1</code>被处理器”py=mype2+1”们处理 <br />if <code class="highlighter-rouge">=0</code>,我是无效截面</td>
+      <td><code class="highlighter-rouge">py=desc%iplw(m1)</code></td>
+      <td><code class="highlighter-rouge">py=desc%iplp(m1)</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">m1</code>是第几个有效截面 <br /> if <code class="highlighter-rouge">=0</code>,我是无效截面</td>
+      <td><code class="highlighter-rouge">desc%ir1w_tg(m1)</code></td>
+      <td>无此变量<br /> <del><code class="highlighter-rouge">desc%ir1p_tg(m1)</code></del></td>
+    </tr>
+    <tr>
+      <td>共有有效截面多少个</td>
+      <td><code class="highlighter-rouge">desc%nr1w_tg</code></td>
+      <td>无此变量<br /><del><code class="highlighter-rouge">desc%nr1p_tg</code></del></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">m1</code>是本<strong>py处理器们</strong>处理的第几个截面<br />if <code class="highlighter-rouge">&gt;0</code>是我们处理的,else 不是</td>
+      <td><code class="highlighter-rouge">desc%ir1w(m1)</code></td>
+      <td>desc%ir1p(m1)</td>
+    </tr>
+    <tr>
+      <td>本<strong>py处理器们</strong>共处理截面数</td>
+      <td><code class="highlighter-rouge">desc%nr1w(py)</code></td>
+      <td><code class="highlighter-rouge">desc%nr1p(py)</code></td>
+    </tr>
+    <tr>
+      <td>本<strong>py处理器们</strong>处理的第u个截面是</td>
+      <td><code class="highlighter-rouge">m1=desc%indw(u,py)</code></td>
+      <td><code class="highlighter-rouge">m1=desc%indp(u,py)</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /><br /><br /></p>
+
+<h5 id="fft的格点m1m2与processor对应关系">FFT的格点<code class="highlighter-rouge">(m1,m2)</code>与processor对应关系</h5>
+
+<ul>
+  <li>真实格点的二维坐标<code class="highlighter-rouge">(m1,m2)</code>与一维坐标间的关系<code class="highlighter-rouge">indm = m1 + ( m2 - 1 ) * nr1x</code></li>
+  <li>新格点ind_new对应的真实格点是<code class="highlighter-rouge">indm = desc%ismap(ind_mew)</code></li>
+  <li>indm是本处理器处理的第<code class="highlighter-rouge">desc%isind(indm)</code>个格点,local</li>
+</ul>
+
+<p><img src="/uploads/2020/04/ismap.png" alt="" /></p>
+
+<h5 id="剩下就是近似值的估计">剩下就是近似值的估计</h5>
+<p>详见File:<code class="highlighter-rouge">FFTXlib/fft_types.f90</code></p>
+<ul>
+  <li><code class="highlighter-rouge">desc%nnr</code></li>
+  <li><code class="highlighter-rouge">desc%nnr_tg</code></li>
+  <li><code class="highlighter-rouge">desc%tg_snd</code></li>
+  <li><code class="highlighter-rouge">desc%tg_rcv</code></li>
+  <li><code class="highlighter-rouge">desc%tg_sdsp</code></li>
+  <li><code class="highlighter-rouge">desc%tg_rdsp</code></li>
+</ul>
+
+<h4 id="本processor处理的g点dfftngwdfftngm">本processor处理的G点<code class="highlighter-rouge">dfft%ngw</code>&amp;<code class="highlighter-rouge">dfft%ngm</code></h4>
+<ul>
+  <li><code class="highlighter-rouge">dfft%ngw = dfft%nwl( dfft%mype + 1 )</code> !== 来自fft_type_set的sstpw的赋值, 返回本处理器计算的G点数</li>
+  <li><code class="highlighter-rouge">dfft%ngm = dfft%ngl( dfft%mype + 1 )</code> !== 来自fft_type_set的sstp 的赋值, 返回本处理器计算的G点数</li>
+</ul>
+
+<h3 id="fft_base_info"><code class="highlighter-rouge">fft_base_info</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/fft_base.f90</code><br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL fft_base_info( ionode, stdout )
+</code></pre></div></div>
+<p>如</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     Parallelization info
+     --------------------
+     sticks:   dense  smooth     PW     G-vecs:    dense   smooth      PW
+     Min          26      20      7                  312      208      39
+     Max          32      25      8                  334      231      54
+     Sum         225     177     61                 2553     1743     365
+</code></pre></div></div>
+
+<p><strong>就是输出<code class="highlighter-rouge">"dfftp%nsp,dffts%nsp,dffts%nsw,dfftp%ngl,dffts%ngl,dffts%nwl</code></strong></p>
+
+<p>左侧是sticks数量分别是:</p>
+<ul>
+  <li><code class="highlighter-rouge">dfftp</code>用<code class="highlighter-rouge">ecutrho</code>计算的sticks</li>
+  <li><code class="highlighter-rouge">dffts</code>用<code class="highlighter-rouge">4*ecuwfc</code>计算的sticks</li>
+  <li><code class="highlighter-rouge">dffts</code>用 <script type="math/tex">\left \| \sqrt{ecutwfc} + k_{max}  \right \|^{2}</script> 计算的sticks</li>
+</ul>
+
+<p>右侧是G点数量</p>
+<ul>
+  <li><code class="highlighter-rouge">dfftp</code>用<code class="highlighter-rouge">ecutrho</code>计算的G点数</li>
+  <li><code class="highlighter-rouge">dffts</code>用<code class="highlighter-rouge">4*ecuwfc</code>计算的G点数</li>
+  <li><code class="highlighter-rouge">dffts</code>用 <script type="math/tex">\left \| \sqrt{ecutwfc} + k_{max}  \right \|^{2}</script> 计算的G点数</li>
+</ul>
+
+<h3 id="gvect_init--gvecs_init-统计n_gallocateg"><code class="highlighter-rouge">gvect_init</code> &amp; <code class="highlighter-rouge">gvecs_init</code> 统计<script type="math/tex">N_{G}</script>,<strong>ALLOCATE(g)</strong></h3>
+<p>File:<code class="highlighter-rouge">Modules/recvec.f90</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ngm_ = dfftp%ngl( dfftp%mype + 1 ) !dfftp网格中,本处理器处理的rho sticks上的G点数
+ngs_ = dffts%ngl( dffts%mype + 1 ) !dffts网格中,本处理器处理的rho sticks上的G点数 
+call gvect_init ( ngm_ , intra_bgrp_comm )
+call gvecs_init ( ngs_ , intra_bgrp_comm )
+</code></pre></div></div>
+
+<p>利用ngm/ngs计算对于各自的FFT网格，每个processor分到的rho的<strong>G</strong>数量,以及最大、总共的数量<br />
+在前面gvect(ecurho,dfftp) vs gvecs (4*ecutwfc,dffts) 介绍过了</p>
+<ul>
+  <li><code class="highlighter-rouge">gvect</code> - <code class="highlighter-rouge">fftp</code>: <code class="highlighter-rouge">ngm,ngmx,ngm_g</code>, 分别代表 local,max,total</li>
+  <li><code class="highlighter-rouge">gvecs</code> - <code class="highlighter-rouge">ffts</code>: <code class="highlighter-rouge">ngms,ngsx,ngms_g</code></li>
+</ul>
+
+<p><strong><code class="highlighter-rouge">gvect_init</code>还要ALLOCATE很多内存，如计算动能的倒格失<code class="highlighter-rouge">ALLOCATE( g(3, ngm) )</code></strong></p>
+
+<ul>
+  <li><code class="highlighter-rouge">ALLOCATE( gg(ngm) ) </code></li>
+  <li><code class="highlighter-rouge">ALLOCATE( g(3, ngm) ) </code></li>
+  <li><code class="highlighter-rouge">ALLOCATE( mill(3, ngm) ) </code></li>
+  <li><code class="highlighter-rouge">ALLOCATE( ig_l2g(ngm) ) </code></li>
+  <li><code class="highlighter-rouge">ALLOCATE( igtongl(ngm) ) </code></li>
+</ul>
+
+<h2 id="allocate_fft为fft继续分配变量"><code class="highlighter-rouge">allocate_fft()</code>为FFT继续分配变量</h2>
+<p>File: <code class="highlighter-rouge">PW/src/allocate_fft.f90</code><br />
+初始化fft相关的变量,在<code class="highlighter-rouge">init_run()</code>中调用<code class="highlighter-rouge">CALL allocate_fft()</code></p>
+
+<p>初始化下面提到的变量，这些变量，将会在<code class="highlighter-rouge">init_run</code>中<code class="highlighter-rouge">call hinit0(), call potinit()</code>等中初始化</p>
+
+<h3 id="module-scf中fft相关的变量定义"><code class="highlighter-rouge">MODULE scf</code>中fft相关的变量定义</h3>
+<p>File:<code class="highlighter-rouge">PW/src/scf_mod.f90</code></p>
+
+<h4 id="scf_type结构体"><code class="highlighter-rouge">scf_type</code>结构体</h4>
+<p>定义密度和势能，以<code class="highlighter-rouge">rho%</code>举例</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>ALLOCATE(变量)</th>
+      <th>被指</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>REAL(DP)</td>
+      <td><code class="highlighter-rouge">rho%of_r( dfftp%nnr, nspin)</code></td>
+      <td>the charge density in R-space</td>
+    </tr>
+    <tr>
+      <td>COMPLEX(DP)</td>
+      <td><code class="highlighter-rouge">rho%of_g( ngm, nspin )</code></td>
+      <td>the charge density in G-space</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>IF(dft_is_meta() .or. lxdm) <br /><code class="highlighter-rouge">rho%kin_r( dfftp%nnr, nspin)</code> <br /> ELSE <br /><code class="highlighter-rouge">rho%kin_r(1,1)</code></td>
+      <td>the kinetic energy density in R-space</td>
+    </tr>
+    <tr>
+      <td>COMPLEX(DP)</td>
+      <td>IF(dft_is_meta() .or. lxdm) <br /><code class="highlighter-rouge">rho%kin_g( ngm, nspin )</code>      <br /> ELSE <br /><code class="highlighter-rouge">rho%kin_g(1,1)</code></td>
+      <td>the kinetic energy density in G-space</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td><code class="highlighter-rouge">rho%ns(2*Hubbard_lmax+1,2*Hubbard_lmax+1,nspin,nat)</code></td>
+      <td>the LDA+U occupation matrix</td>
+    </tr>
+    <tr>
+      <td>COMPLEX(DP)</td>
+      <td><code class="highlighter-rouge">rho%ns_nc(2*Hubbard_lmax+1,2*Hubbard_lmax+1,nspin,nat)</code></td>
+      <td>—       noncollinear case</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td><code class="highlighter-rouge">rho%bec(nhm*(nhm+1)</code>/2,nat,nspin)`</td>
+      <td>the PAW hamiltonian elements</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="highlighter-rouge">scf_type</code> 定义的变量</p>
+<ul>
+  <li><code class="highlighter-rouge">rho </code>  自洽使用的电荷密度，the charge density and its other components</li>
+  <li><code class="highlighter-rouge">v   </code>  the scf potential</li>
+  <li><code class="highlighter-rouge">vnew</code>  used to correct the forces</li>
+</ul>
+
+<h4 id="电荷密度rho的fft的空间网格"><strong>电荷密度rho的FFT的空间网格:</strong><br /></h4>
+<p><script type="math/tex">r_m = m_1/N_1 \cdot a_1 + m_2/N_2 \cdot a_2 + m_3/N_3 \cdot a_3</script>的取值为原胞内,单位是<code class="highlighter-rouge">alat</code><br />
+<script type="math/tex">G_n = n_1\cdot b_1 + n_2 \cdot b_2 + n_3 \cdot b_3</script>的取值为倒空间网格点,单位是<code class="highlighter-rouge">thiba=2pi/alat</code><br />
+<strong><code class="highlighter-rouge">rho%of_r</code>和<code class="highlighter-rouge">rho%of_g</code>的单位分别是<code class="highlighter-rouge">1/omega</code>,<code class="highlighter-rouge">omega/(2pi^3)</code></strong><br />
+根据<code class="highlighter-rouge">PW/src/potinit.f90</code>及<code class="highlighter-rouge">Modules/fft_rho.f90</code>中对<code class="highlighter-rouge">rho%of_r</code>和<code class="highlighter-rouge">rho%of_g</code>的转换，</p>
+
+<center>
+$$
+\rho (r_m) = \sum_{G_n} \rho (G_n) \cdot \exp (i G_n \cdot r_m)
+$$
+
+$$
+\rho (G_n) = \sum_{r_n} \rho (r_m) \cdot \exp (-i G_m \cdot r_n)
+$$
+
+$$\Omega \cdot \rho (G_n = 0) = \Omega \cdot \sum_{r_n} = N_{cell} $$
+
+</center>
+<p>where, <script type="math/tex">N_{cell}</script>是原胞中的电子数在程序中用于判断，电子数是否正常</p>
+
+<h4 id="其他变量">其他变量</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">REAL(DP), ALLOCATABLE</code>
+    <ul>
+      <li><code class="highlighter-rouge">vltot( dfftp%nnr)</code>        the local potential in real space</li>
+      <li><code class="highlighter-rouge">vrs( dfftp%nnr, nspin)</code>   the total pot. in real space (smooth grid)</li>
+      <li><code class="highlighter-rouge">rho_core( dfftp%nnr)</code>    the core charge in real space</li>
+      <li>IF ( dft_is_meta() )  <code class="highlighter-rouge">kedtau(dffts%nnr,nspin)</code> <br /> ELSE <code class="highlighter-rouge">kedtau(1,nspin)</code>     position dependent kinetic energy enhancement factor</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">COMPLEX(DP), ALLOCATABLE</code>
+    <ul>
+      <li><code class="highlighter-rouge">rhog_core( ngm )</code>  the core charge in reciprocal space</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="wavefunctions中定义的变量"><code class="highlighter-rouge">wavefunctions</code>中定义的变量</h3>
+<p>File:<code class="highlighter-rouge">Modules/wavefunctions.f90</code><br /></p>
+<ul>
+  <li><code class="highlighter-rouge">COMPLEX(DP) , ALLOCATABLE, TARGET</code>
+    <ul>
+      <li><code class="highlighter-rouge">psic( dfftp%nnr)</code>    additional memory for FFT</li>
+      <li><code class="highlighter-rouge">psic_nc( dfftp%nnr, npol)</code>    as above for the noncolinear case</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="noncollin_module"><code class="highlighter-rouge">noncollin_module</code></h3>
+<p>File:<code class="highlighter-rouge">/Modules/noncol.f90</code></p>
+
+<p>一些情况，还会初始化noncol中的变量,<strong>暂时略过了</strong></p>
+
+<h2 id="ggenggens产生倒格式和fft索引"><code class="highlighter-rouge">ggen</code>&amp;<code class="highlighter-rouge">ggens</code>产生倒格式和fft索引</h2>
+<p>File:<code class="highlighter-rouge">Modules/recvec_subs.f90</code><br />
+在<code class="highlighter-rouge">init_run</code>中会产生fft的倒格矢。</p>
+<h3 id="ggen生成gcutm允许的g点"><code class="highlighter-rouge">ggen</code>生成<code class="highlighter-rouge">gcutm</code>允许的G点</h3>
+<p>File:<code class="highlighter-rouge">Modules/recvec_subs.f90</code><br /></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CALL</span><span class="w"> </span><span class="n">ggen</span><span class="p">(</span><span class="w"> </span><span class="n">dfftp</span><span class="p">,</span><span class="w"> </span><span class="n">gamma_only</span><span class="p">,</span><span class="w"> </span><span class="n">at</span><span class="p">,</span><span class="w"> </span><span class="n">bg</span><span class="p">,</span><span class="w"> </span><span class="n">gcutm</span><span class="p">,</span><span class="w"> </span><span class="n">ngm_g</span><span class="p">,</span><span class="w"> </span><span class="n">ngm</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="n">gg</span><span class="p">,</span><span class="w"> </span><span class="n">mill</span><span class="p">,</span><span class="w"> </span><span class="n">ig_l2g</span><span class="p">,</span><span class="w"> </span><span class="n">gstart</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p>返回<strong>使用<code class="highlighter-rouge">gcutm==ecutrho/(2 pi/a)^2</code>计算的G点网格点</strong></p>
+<ul>
+  <li><code class="highlighter-rouge">gcutm</code>本processor处理的G点数，之前已计算过，会与之前的对比，不同则error
+<br />在程序执行中有很多临时作用</li>
+  <li><code class="highlighter-rouge">g(1:3, local_i) = i * bg (:, 1) + j * bg (:, 2) + k * bg (:, 3)</code>本处理器处理的G点<code class="highlighter-rouge">(/i,j,k/)</code>的坐标
+<br />**<code class="highlighter-rouge">local_i</code>是我处理的G点的局域编号<code class="highlighter-rouge">local_i = 1, ngm</code></li>
+  <li><code class="highlighter-rouge">gg(local_i) = sum(g(1:3, local_i)**2)</code>G点的模 <script type="math/tex">\| G \|^2</script> ,local</li>
+  <li><code class="highlighter-rouge">CALL fft_set_nl( dfftp, at, g, mill )</code><br />
+ File:<code class="highlighter-rouge">FFTXlib/fft_ggen.f90</code><br />
+ 根据G点坐标计算米勒指数<code class="highlighter-rouge">mile</code>
+    <ul>
+      <li><code class="highlighter-rouge">mill (3,local_i)</code>就是G点<code class="highlighter-rouge">(/n1,n2,n3/) = (/i,j,k/)</code>的坐标 <br />
+<script type="math/tex">mill_1(ig)=G(ig) \cdot at_1 = i(ig)</script>, since <script type="math/tex">bg_m\cdot  at_n = \delta_{mn}</script></li>
+      <li><code class="highlighter-rouge">dfft%nl (ig)</code>G在dfftp的G点三维网格中的一维顺序<br />
+<code class="highlighter-rouge">dfft%nl (ng) = 1 + n3 + ( dfft%isind ( 1 + n1 + n2*dfft%nr1x) - 1) * dfft%nr3x</code><br />
+where,<code class="highlighter-rouge">isind ( 1 + n1 + n2*dfft%nr1x)</code> 返回fft网格点<code class="highlighter-rouge">(n1,n2)</code>是本processor处理的第几个网格点</li>
+      <li><code class="highlighter-rouge">ig_l2g( ig ) = global_i</code>,我的第<code class="highlighter-rouge">ig</code>(<code class="highlighter-rouge">ig=1,ngm</code>)个G点坐标，<br />
+ 是<code class="highlighter-rouge">gcutm</code>允许的全局G点坐标中的第<code class="highlighter-rouge">global_i</code>(<code class="highlighter-rouge">global_i=1,ngm_m</code>)个G点</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="ggens">ggens</h3>
+<p>File:<code class="highlighter-rouge">Modules/recvec_subs.f90</code><br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL ggens( dffts, gamma_only, at, g, gg, mill, gcutms, ngms )
+</code></pre></div></div>
+<p>利用<code class="highlighter-rouge">g</code>仅设置<code class="highlighter-rouge">dffts%nl</code>,根据<code class="highlighter-rouge">gg</code>&amp;<code class="highlighter-rouge">gctums</code>判断之前计算的ngms是不是一致</p>
+
+<h2 id="附录">附录</h2>
+
+<h3 id="图a">图A</h3>
+<h4 id="图a-1">图A-1</h4>
+<p><img src="/uploads/2020/04/sticks1.png" alt="" /></p>
+
+<h4 id="图a-2">图A-2</h4>
+<p>图片过大，在新窗口打开<a href="/uploads/2020/04/dffts_dfftp.png">dffts_dfftp.png</a></p>
+:ET

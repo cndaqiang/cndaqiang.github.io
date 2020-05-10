@@ -1,0 +1,33 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#app-下载测试" id="markdown-toc-app-下载测试">App 下载测试</a>    <ul>
+      <li><a href="#psiphon" id="markdown-toc-psiphon">psiphon</a></li>
+      <li><a href="#红叶加速器" id="markdown-toc-红叶加速器">红叶加速器</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="app-下载测试">App 下载测试</h1>
+<h2 id="psiphon">psiphon</h2>
+<ul>
+  <li>
+    <p><a href="itms-services://?action=download-manifest&amp;url=https://cndaqiang.github.io/web/iosapp/psiphon/psiphon.plist">App Store原版</a>
+ <br />此版本为appstore原版，直接使用我的apple id 从appstore下载</p>
+  </li>
+  <li>
+    <p><a href="itms-services://?action=download-manifest&amp;url=https://cndaqiang.github.io/web/iosapp/psiphon/psiphon_noplist.plist">修改版</a>
+ <br /> 此版本为原版删除内部的iTunesMetadata.plist文件，去除自动更新和我的id信息</p>
+  </li>
+</ul>
+
+<h2 id="红叶加速器">红叶加速器</h2>
+<ul>
+  <li>
+    <p><a href="itms-services://?action=download-manifest&amp;url=https://cndaqiang.github.io/web/iosapp/redye/redye.plist">App Store原版</a>
+ <br />此版本为appstore原版，直接使用我的apple id 从appstore下载</p>
+  </li>
+  <li>
+    <p><a href="itms-services://?action=download-manifest&amp;url=https://cndaqiang.github.io/web/iosapp/redye/redye_noplist.plist">修改版</a>
+ <br /> 此版本为原版删除内部的iTunesMetadata.plist文件，去除自动更新和我的id信息</p>
+  </li>
+</ul>
+:ET

@@ -1,0 +1,27 @@
+I""<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#bash图形化操作" id="markdown-toc-bash图形化操作">Bash图形化操作</a></li>
+  <li><a href="#示例运行p4vasp" id="markdown-toc-示例运行p4vasp">示例运行p4vasp</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://my.oschina.net/u/3375733/blog/1510095">在新版Windows10中启用 Linux Bash 环境（并安装图形化界面）</a></p>
+
+<h2 id="bash图形化操作">Bash图形化操作</h2>
+<p>win10下载<a href="https://sourceforge.net/projects/xming/?source=typ_redirect">windows版本Xming</a>安装打开一路默认退出
+<br /> <strong>打开Xming</strong>
+<br /><br />bash运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update
+sudo apt install  x11-apps
+</code></pre></div></div>
+<p><br />
+图形化运行程序命令</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DISPLAY=:0 命令
+</code></pre></div></div>
+<h2 id="示例运行p4vasp">示例运行p4vasp</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install p4vasp
+DISPLAY=:0 p4v
+</code></pre></div></div>
+<p>如图
+<img src="/uploads/2018/01/bashp4vasp.JPG" alt="" /></p>
+:ET

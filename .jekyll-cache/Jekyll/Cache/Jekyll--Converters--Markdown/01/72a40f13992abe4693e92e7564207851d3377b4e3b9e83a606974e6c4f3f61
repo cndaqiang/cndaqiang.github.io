@@ -1,0 +1,64 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a>    <ul>
+      <li><a href="#硬盘挂载" id="markdown-toc-硬盘挂载">硬盘挂载</a></li>
+      <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+      <li><a href="#配置" id="markdown-toc-配置">配置</a></li>
+      <li><a href="#外网访问" id="markdown-toc-外网访问">外网访问</a></li>
+      <li><a href="#启动" id="markdown-toc-启动">启动</a></li>
+      <li><a href="#拓展" id="markdown-toc-拓展">拓展</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="环境">环境</h2>
+<p>CHAOS CALMER (15.05.1, r48532)</p>
+<h2 id="参考">参考</h2>
+<p><a href="http://bt.byr.cn/forums.php?action=viewtopic&amp;forumid=9&amp;topicid=7422">byr [个人经验]NAS+Transmission配置</a><br />
+<a href="http://www.xuebuyuan.com/1814574.html">TP-LINK WR703N 刷OpenWrt并设置pppoe联网、安装LUCI、添加新用户、挂载USB设备、配置ftp服务、借由transmission实现脱机下载(续)</a></p>
+<h2 id="操作">操作</h2>
+<h3 id="硬盘挂载">硬盘挂载</h3>
+<p>参考<a href="http://www.jianshu.com/p/adff41e500d8">openwrt 挂载U盘/硬盘+交换分区</a></p>
+<h3 id="安装">安装</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update  #更新
+opkg install libartnet libopus luci-app-transmission luci-i18n-transmission-zh-cn transmission-cli transmission-daemon transmission-remote transmission-web 
+</code></pre></div></div>
+<h3 id="配置">配置</h3>
+<p>网页端配置
+<br />LuCI–&gt;服务–&gt;transmission 
+<br />可进入配置页面 
+<br />配置如图
+<img src="/uploads/2017/09/tr1.png" alt="" /></p>
+<h3 id="外网访问">外网访问</h3>
+<p><strong>开启下载peer端口</strong>
+<br />将transmission配置页面的peer端口，默认51413添加防火墙端口
+<br />LuCI-&gt;网络-&gt;防火墙-&gt;Traffic Rules添加一个协议为TCP+UDP的51413的端口
+<img src="/uploads/2017/09/tr2.webp" alt="" /></p>
+
+<p>或者ssh后输入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -I INPUT -p udp --dport 51413 -j ACCEPT
+iptables -I INPUT -p tcp --dport 51413 -j ACCEPT
+</code></pre></div></div>
+<p><strong>外网管理</strong>
+<br />防火墙，添加转发规则到192.168.1.1的transmission管理端口，
+<img src="/uploads/2017/09/tr3.webp" alt="" /></p>
+
+<p>还要在rcp白名单里添加ip，推荐挂vpn或者ssh隧道连上路由器后用内网ip管理</p>
+
+<h3 id="启动">启动</h3>
+<p>启动，Luci配置页面里勾选启用，保存应用也可启动</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>transmission-daemon 
+</code></pre></div></div>
+<p>关闭命令,并不能彻底关闭，会自动重启，彻底关闭需要在Luci配置页面里不勾选启用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>killall transmission-daemon 
+</code></pre></div></div>
+<p><strong>开机启动</strong>
+<br />Luci –&gt;系统–&gt;启动项–&gt;
+<br />本地启动脚本中加入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(sleep 16 ;   transmission-daemon)&amp;
+</code></pre></div></div>
+
+<h3 id="拓展">拓展</h3>
+<p><a href="http://www.jianshu.com/p/7a8daf7cec4c">transmission禁用ipv4的尝试</a></p>
+:ET

@@ -1,0 +1,1095 @@
+I"��<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#说明" id="markdown-toc-说明">说明</a>    <ul>
+      <li><a href="#path路径" id="markdown-toc-path路径">path路径</a></li>
+      <li><a href="#标点符号" id="markdown-toc-标点符号">标点符号</a></li>
+      <li><a href="#辅助命令" id="markdown-toc-辅助命令">辅助命令</a>        <ul>
+          <li><a href="#clc-类似于linux的clear-清空界面" id="markdown-toc-clc-类似于linux的clear-清空界面"><code class="highlighter-rouge">clc</code> 类似于linux的<code class="highlighter-rouge">clear</code> 清空界面</a></li>
+          <li><a href="#clf-清空图形" id="markdown-toc-clf-清空图形"><code class="highlighter-rouge">clf</code> 清空图形</a></li>
+          <li><a href="#clear-清空变量" id="markdown-toc-clear-清空变量">clear 清空变量</a></li>
+          <li><a href="#save-保存变量" id="markdown-toc-save-保存变量">save 保存变量</a></li>
+          <li><a href="#load-导入变量" id="markdown-toc-load-导入变量">load 导入变量</a></li>
+          <li><a href="#who-查看是否存在变量" id="markdown-toc-who-查看是否存在变量">who 查看是否存在变量</a></li>
+          <li><a href="#whos-查看变量信息" id="markdown-toc-whos-查看变量信息">whos 查看变量信息</a></li>
+          <li><a href="#显示精度" id="markdown-toc-显示精度">显示精度</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#变量" id="markdown-toc-变量">变量</a>    <ul>
+      <li><a href="#数值" id="markdown-toc-数值">数值</a>        <ul>
+          <li><a href="#数值类型" id="markdown-toc-数值类型">数值类型</a></li>
+        </ul>
+      </li>
+      <li><a href="#变量-1" id="markdown-toc-变量-1">变量</a>        <ul>
+          <li><a href="#系统变量" id="markdown-toc-系统变量">系统变量</a></li>
+        </ul>
+      </li>
+      <li><a href="#矩阵" id="markdown-toc-矩阵">矩阵</a>        <ul>
+          <li><a href="#定义" id="markdown-toc-定义">定义</a></li>
+          <li><a href="#调用赋值amn" id="markdown-toc-调用赋值amn">调用、赋值<code class="highlighter-rouge">A(m,n)</code></a></li>
+          <li><a href="#矩阵生成" id="markdown-toc-矩阵生成">矩阵生成</a>            <ul>
+              <li><a href="#等差等比数列" id="markdown-toc-等差等比数列">等差，等比数列</a></li>
+              <li><a href="#特殊矩阵" id="markdown-toc-特殊矩阵">特殊矩阵</a></li>
+              <li><a href="#对角线矩阵" id="markdown-toc-对角线矩阵">对角线矩阵</a></li>
+              <li><a href="#稀疏矩阵" id="markdown-toc-稀疏矩阵">稀疏矩阵</a></li>
+              <li><a href="#magic魔方矩阵magicn" id="markdown-toc-magic魔方矩阵magicn">magic魔方矩阵,<code class="highlighter-rouge">magic(n)</code></a></li>
+              <li><a href="#范得蒙矩阵vandera" id="markdown-toc-范得蒙矩阵vandera">范得蒙矩阵<code class="highlighter-rouge">vander(a)</code></a></li>
+              <li><a href="#希尔伯特矩阵" id="markdown-toc-希尔伯特矩阵">希尔伯特矩阵</a></li>
+              <li><a href="#托普利兹矩阵" id="markdown-toc-托普利兹矩阵">托普利兹矩阵</a></li>
+            </ul>
+          </li>
+          <li><a href="#矩阵函数" id="markdown-toc-矩阵函数">矩阵函数</a>            <ul>
+              <li><a href="#下三角矩阵trilak上三角矩阵triuak" id="markdown-toc-下三角矩阵trilak上三角矩阵triuak">下三角矩阵tril(A[,k])，上三角矩阵triu(A[,k])</a></li>
+              <li><a href="#转置x非共轭转置x共轭转置" id="markdown-toc-转置x非共轭转置x共轭转置">转置：<code class="highlighter-rouge">x.'</code>非共轭转置，<code class="highlighter-rouge">x'</code>共轭转置</a></li>
+              <li><a href="#翻转-fliplrx左右翻转-flipudx上下翻转flipdimxdim按维度翻转" id="markdown-toc-翻转-fliplrx左右翻转-flipudx上下翻转flipdimxdim按维度翻转">翻转 :<code class="highlighter-rouge">fliplr(x)</code>左右翻转， <code class="highlighter-rouge">flipud(x)</code>上下翻转,<code class="highlighter-rouge">flipdim(x,dim)</code>按维度翻转</a></li>
+              <li><a href="#旋转" id="markdown-toc-旋转">旋转</a></li>
+              <li><a href="#逆-invx" id="markdown-toc-逆-invx">逆 <code class="highlighter-rouge">inv(x)</code></a></li>
+              <li><a href="#行列式detx" id="markdown-toc-行列式detx">行列式<code class="highlighter-rouge">det(x)</code></a></li>
+              <li><a href="#迹tracex对角线元素之和" id="markdown-toc-迹tracex对角线元素之和">迹<code class="highlighter-rouge">trace(x)</code>对角线元素之和</a></li>
+              <li><a href="#秩rankx" id="markdown-toc-秩rankx">秩<code class="highlighter-rouge">rank(x)</code></a></li>
+              <li><a href="#特征值特征向量" id="markdown-toc-特征值特征向量">特征值，特征向量</a></li>
+              <li><a href="#范数" id="markdown-toc-范数">范数</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#字符串字符串与string型" id="markdown-toc-字符串字符串与string型">字符串<code class="highlighter-rouge">'字符串'</code>与<code class="highlighter-rouge">"string型"</code></a>        <ul>
+          <li><a href="#字符串-字符char型构成的数组用单引号" id="markdown-toc-字符串-字符char型构成的数组用单引号"><strong>字符串</strong> ，字符char型构成的数组，用单引号<code class="highlighter-rouge">'</code></a></li>
+          <li><a href="#string型用双引号" id="markdown-toc-string型用双引号">string型,用双引号<code class="highlighter-rouge">"</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#结构体" id="markdown-toc-结构体">结构体</a>        <ul>
+          <li><a href="#定义-1" id="markdown-toc-定义-1">定义</a></li>
+          <li><a href="#使用" id="markdown-toc-使用">使用</a></li>
+        </ul>
+      </li>
+      <li><a href="#cell" id="markdown-toc-cell">cell</a>        <ul>
+          <li><a href="#定义-2" id="markdown-toc-定义-2">定义</a></li>
+          <li><a href="#使用-1" id="markdown-toc-使用-1">使用</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#格式化输入输出" id="markdown-toc-格式化输入输出">格式化输入输出</a>    <ul>
+      <li><a href="#格式化输出" id="markdown-toc-格式化输出">格式化输出</a>        <ul>
+          <li><a href="#disp字符数组直接显示在命令行" id="markdown-toc-disp字符数组直接显示在命令行">disp(‘字符数组’)直接显示在命令行</a></li>
+          <li><a href="#error错误信息-提示错误信息并终止程序" id="markdown-toc-error错误信息-提示错误信息并终止程序"><code class="highlighter-rouge">error('错误信息')</code> 提示错误信息，并终止程序</a></li>
+          <li><a href="#warning错误信息提示错误信息继续运行" id="markdown-toc-warning错误信息提示错误信息继续运行"><code class="highlighter-rouge">warning('错误信息')</code>提示错误信息，继续运行</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#条件" id="markdown-toc-条件">条件</a>    <ul>
+      <li><a href="#if-else-end" id="markdown-toc-if-else-end">if-else-end</a></li>
+      <li><a href="#swith" id="markdown-toc-swith">swith</a></li>
+      <li><a href="#try-catch-捕获运行是否发生错误" id="markdown-toc-try-catch-捕获运行是否发生错误">try-catch 捕获运行是否发生错误</a></li>
+    </ul>
+  </li>
+  <li><a href="#循环" id="markdown-toc-循环">循环</a>    <ul>
+      <li><a href="#for" id="markdown-toc-for">for</a></li>
+      <li><a href="#while" id="markdown-toc-while">while</a></li>
+      <li><a href="#循环调节" id="markdown-toc-循环调节">循环调节</a>        <ul>
+          <li><a href="#continue进入下一个循环" id="markdown-toc-continue进入下一个循环"><code class="highlighter-rouge">continue</code>进入下一个循环</a></li>
+          <li><a href="#break终止循环" id="markdown-toc-break终止循环"><code class="highlighter-rouge">break</code>终止循环</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#函数" id="markdown-toc-函数">函数</a>    <ul>
+      <li><a href="#自定义函数function" id="markdown-toc-自定义函数function">自定义函数<code class="highlighter-rouge">function</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#文件读写" id="markdown-toc-文件读写">文件读写</a></li>
+  <li><a href="#数学" id="markdown-toc-数学">数学</a>    <ul>
+      <li><a href="#基础计算" id="markdown-toc-基础计算">基础计算</a></li>
+      <li><a href="#逻辑关系" id="markdown-toc-逻辑关系">逻辑关系</a>        <ul>
+          <li><a href="#逻辑函数" id="markdown-toc-逻辑函数">逻辑函数</a></li>
+        </ul>
+      </li>
+      <li><a href="#数学函数" id="markdown-toc-数学函数">数学函数</a>        <ul>
+          <li><a href="#指数函数" id="markdown-toc-指数函数">指数函数</a></li>
+          <li><a href="#对数" id="markdown-toc-对数">对数</a></li>
+        </ul>
+      </li>
+      <li><a href="#线性方程组" id="markdown-toc-线性方程组">线性方程组</a></li>
+      <li><a href="#求导" id="markdown-toc-求导">求导</a></li>
+      <li><a href="#积分" id="markdown-toc-积分">积分</a></li>
+    </ul>
+  </li>
+  <li><a href="#绘图" id="markdown-toc-绘图">绘图</a>    <ul>
+      <li><a href="#画板操作" id="markdown-toc-画板操作">画板操作</a>        <ul>
+          <li><a href="#画板分隔subplotxyz" id="markdown-toc-画板分隔subplotxyz">画板分隔<code class="highlighter-rouge">subplot(x,y,z)</code></a></li>
+          <li><a href="#切换绘图窗口-figuren" id="markdown-toc-切换绘图窗口-figuren">切换绘图窗口 <code class="highlighter-rouge">figure([n])</code></a></li>
+          <li><a href="#关闭活动画图窗口closen" id="markdown-toc-关闭活动画图窗口closen">关闭活动画图窗口<code class="highlighter-rouge">close([n])</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#图形操作" id="markdown-toc-图形操作">图形操作</a>        <ul>
+          <li><a href="#在本图上继续画图-hold-on-取消hold-off" id="markdown-toc-在本图上继续画图-hold-on-取消hold-off">在本图上继续画图 hold on, 取消hold off</a></li>
+          <li><a href="#title标题" id="markdown-toc-title标题">title标题</a></li>
+          <li><a href="#legend图例" id="markdown-toc-legend图例">legend图例</a></li>
+          <li><a href="#字体风格" id="markdown-toc-字体风格">字体风格</a></li>
+          <li><a href="#坐标轴" id="markdown-toc-坐标轴">坐标轴</a>            <ul>
+              <li><a href="#坐标轴log增量semilogyx-semilogy--恒纵坐标刻度是10n" id="markdown-toc-坐标轴log增量semilogyx-semilogy--恒纵坐标刻度是10n">坐标轴log增量semilogyx, semilogy  恒纵坐标刻度是10^n</a></li>
+            </ul>
+          </li>
+          <li><a href="#通过gca设置图形的参数" id="markdown-toc-通过gca设置图形的参数">通过gca设置图形的参数</a></li>
+        </ul>
+      </li>
+      <li><a href="#保存图像" id="markdown-toc-保存图像">保存图像</a></li>
+      <li><a href="#坐标" id="markdown-toc-坐标">坐标</a></li>
+      <li><a href="#二维图" id="markdown-toc-二维图">二维图</a>        <ul>
+          <li><a href="#plot-直角坐标" id="markdown-toc-plot-直角坐标">plot 直角坐标</a></li>
+          <li><a href="#line-用直线连接二维三维之间的点" id="markdown-toc-line-用直线连接二维三维之间的点">line 用直线连接二维三维之间的点</a></li>
+          <li><a href="#bar条形图" id="markdown-toc-bar条形图">bar条形图</a></li>
+          <li><a href="#pir-饼图" id="markdown-toc-pir-饼图">pir 饼图</a></li>
+          <li><a href="#hist直方图" id="markdown-toc-hist直方图">hist直方图</a></li>
+          <li><a href="#scatter散点图" id="markdown-toc-scatter散点图">scatter散点图</a></li>
+          <li><a href="#polar-极坐标" id="markdown-toc-polar-极坐标">polar 极坐标</a></li>
+          <li><a href="#plotyy-两个y坐标轴标度" id="markdown-toc-plotyy-两个y坐标轴标度">plotyy 两个y坐标轴标度</a></li>
+          <li><a href="#counter-等高线" id="markdown-toc-counter-等高线">counter 等高线</a>            <ul>
+              <li><a href="#clabel-添加高度标签" id="markdown-toc-clabel-添加高度标签">clabel 添加高度标签</a></li>
+            </ul>
+          </li>
+          <li><a href="#曲线标记样式" id="markdown-toc-曲线标记样式">曲线,标记样式</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#文件读写-1" id="markdown-toc-文件读写-1">文件读写</a>    <ul>
+      <li><a href="#读入" id="markdown-toc-读入">读入</a>        <ul>
+          <li><a href="#按格式读入textscan" id="markdown-toc-按格式读入textscan">按格式读入<code class="highlighter-rouge">textscan</code></a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#有趣" id="markdown-toc-有趣">有趣</a>    <ul>
+      <li><a href="#eval字符数组执行字符数组对应的命令" id="markdown-toc-eval字符数组执行字符数组对应的命令">eval(字符数组)，执行字符数组对应的命令</a></li>
+    </ul>
+  </li>
+  <li><a href="#统计分析" id="markdown-toc-统计分析">统计分析</a></li>
+  <li><a href="#other" id="markdown-toc-other">other</a></li>
+</ul>
+
+<p>为了水学分，选了一个matlab的课，把常用的命令记录下来，方便做作业<br /></p>
+
+<h2 id="参考">参考</h2>
+
+<p><a href="https://blog.csdn.net/benniaofei18/article/details/79537852">Matlab中disp、fprintf和sprintf有什么区别？</a><br /></p>
+
+<h2 id="说明">说明</h2>
+
+<ul>
+  <li>可以在终端直接执行,命令后以<code class="highlighter-rouge">;</code>结尾不会输出到屏幕，也可以使用m文件</li>
+  <li>同行书写，用<code class="highlighter-rouge">;</code>代表换行</li>
+  <li>变量名区分大小写,字母数字下划线</li>
+  <li>变量无需定义，随用随赋值，新创建，赋值为新数据=删除旧变量并重新定义赋值</li>
+  <li>注释<code class="highlighter-rouge">%开头</code>，多行注释<code class="highlighter-rouge">??</code>，m文件开头的注释，<code class="highlighter-rouge">help 文件名</code>时，会显示文件开头的注释，函数文件<code class="highlighter-rouge">function</code>行后面的注释会在<code class="highlighter-rouge">help 函数名</code>后显示</li>
+  <li>代码节用<code class="highlighter-rouge">%%</code>和空格开头,可用于单独调试某一段代码</li>
+  <li>函数(变量)也可函数(矩阵)，返回一组值</li>
+  <li>函数，默认传址调用，单独书写成一个文件，文件名和函数名一样</li>
+  <li>所有变量默认<code class="highlighter-rouge">double</code>类型</li>
+  <li><code class="highlighter-rouge">!</code>开头执行系统命令</li>
+  <li><code class="highlighter-rouge">[矩阵]'</code>单引号表示转置</li>
+</ul>
+
+<h3 id="path路径">path路径</h3>
+
+<p>设置path（搜索路径）<code class="highlighter-rouge">path(path1，'new_path'，path2)</code>，等价于bash的<code class="highlighter-rouge">PATH=PATH1:$PATH:PATH2</code>
+输入命令后，matlab的搜索方式</p>
+
+<ul>
+  <li>（1）检查该命令是不是一个变量。</li>
+  <li>（2）检查该命令是不是一个内部函数。</li>
+  <li>（3）检查该命令是否当前目录下的M文件。</li>
+  <li>（4）检查该命令是否MATLAB搜索路径中其他目录下的M文件。</li>
+</ul>
+
+<h3 id="标点符号">标点符号</h3>
+
+<p><img src="/uploads/2019/03/fuhao.jpg" alt="" /></p>
+
+<h3 id="辅助命令">辅助命令</h3>
+<p>help
+lookfor
+tab模糊查询</p>
+
+<h4 id="clc-类似于linux的clear-清空界面"><code class="highlighter-rouge">clc</code> 类似于linux的<code class="highlighter-rouge">clear</code> 清空界面</h4>
+
+<h4 id="clf-清空图形"><code class="highlighter-rouge">clf</code> 清空图形</h4>
+
+<h4 id="clear-清空变量">clear 清空变量</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>clear x y z %清除x,y,z 中间是空格不是,
+clear  %清楚所有变量
+</code></pre></div></div>
+<h4 id="save-保存变量">save 保存变量</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>save 文件名 [变量名表，空格分隔，不是，] [-append] [-ascii]
+</code></pre></div></div>
+<p>变量名不指定，保存所有变量<br />
+保存文件默认为xxx.mat 文件名无需写mat<br />
+<code class="highlighter-rouge">-append</code>追加变量，已存在相同变量名则覆盖<br />
+<code class="highlighter-rouge">-ascii</code>选项使文件以ASCII格式处理，省略该选项时文件将以二进制格式处理</p>
+
+<h4 id="load-导入变量">load 导入变量</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>save 文件名 [变量名表，空格分隔，不是，] 
+</code></pre></div></div>
+<p>全导入或导入指定变量</p>
+
+<h4 id="who-查看是否存在变量">who 查看是否存在变量</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>who [变量表]
+</code></pre></div></div>
+<h4 id="whos-查看变量信息">whos 查看变量信息</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>whos [变量表]
+》whos
+  Name      Size            Bytes  Class     Attributes
+
+  a         1x3                24  double              
+  b         1x1                 8  double      
+</code></pre></div></div>
+
+<h4 id="显示精度">显示精度</h4>
+<p>默认是双精度存储计算，只显示format形式，更改显示形式
+<img src="/uploads/2019/03/format.jpg" alt="" /></p>
+
+<h2 id="变量">变量</h2>
+<h3 id="数值">数值</h3>
+<h4 id="数值类型">数值类型</h4>
+
+<p><strong>在未加说明与特殊定义时，MATLAB对所有数值按照双精度浮点数类型进行存储和操作</strong><br /></p>
+
+<p>复数<code class="highlighter-rouge">y=complex(a,b)</code>或`y=a+b*i)<br /></p>
+
+<p>单精度浮点类型不能与整数类型进行算术运算</p>
+
+<p><img src="/uploads/2019/03/mat1.jpg" alt="" /></p>
+
+<h3 id="变量-1">变量</h3>
+
+<h4 id="系统变量">系统变量</h4>
+<p>不能清除</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>i, j：虚数单位。
+inf：无穷大。
+realmax：最大正实数。
+realmin：最小正实数。
+ans：没有给定变量值，系统默认采用ans。
+eps：可作为一个容许误差。如eps=2^(-42)。
+NaN：表示不定值。由Inf/Inf或者0/0得到。
+nargin：函数输入参数个数。
+nargout：函数输出的参数个数
+lasterr：存放最新的错误信息
+lastwar：存放最新的警告信息
+</code></pre></div></div>
+
+<h3 id="矩阵">矩阵</h3>
+
+<h4 id="定义">定义</h4>
+<p><code class="highlighter-rouge">,</code>或空格分开同行元素，<code class="highlighter-rouge">;</code>分开行，也可将其他矩阵用于元素构造新矩阵</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>》x=[1,2,3;4,5,6;7,8,9]
+
+x =
+
+     1     2     3
+     4     5     6
+     7     8     9
+</code></pre></div></div>
+<h4 id="调用赋值amn">调用、赋值<code class="highlighter-rouge">A(m,n)</code></h4>
+<ul>
+  <li>A([a,b,c],[d,e]) 操作/提取A矩阵的a,b,c行，d,e列元素</li>
+  <li>A(end,end)最后一个元素</li>
+  <li>A(-2,-2)倒数第2行，倒数第2列</li>
+  <li>A(:,m:n) 逗号两边是维度，一个<code class="highlighter-rouge">:</code>表示所有行，<code class="highlighter-rouge">m:n</code>表示m到n列</li>
+  <li>A(n) 按列存储，第n个元素,与Fortran一样</li>
+  <li>A([一维数列]) 操作/提取一维数列n对应A(n)元素</li>
+  <li>A(范围)=[] 删除矩阵元素，维度变化</li>
+  <li>A(范围)=0 赋值0</li>
+  <li>若，原矩阵该范围内之前不存在元素，操作后，自动拓展矩阵，未指定元素赋0,即</li>
+  <li>使用条件提取特定值，如若<code class="highlighter-rouge">ResponseTime{Condition}{1}矩阵元==one</code>，即被试编号是one，则提取被试相应的数据<br /> ` OneResponseTime{Condition}=ResponseTime{Condition}{2}(ResponseTime{Condition}{1}==one);<code class="highlighter-rouge">
+</code>``
+》x=[1,2;3,4]</li>
+</ul>
+
+<p>x =</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 1     2
+ 3     4
+</code></pre></div></div>
+
+<p>》x(3,3)=1</p>
+
+<p>x =</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 1     2     0
+ 3     4     0
+ 0     0     1 ```
+</code></pre></div></div>
+
+<h4 id="矩阵生成">矩阵生成</h4>
+
+<h5 id="等差等比数列">等差，等比数列</h5>
+<p>等差数列[按差值]<code class="highlighter-rouge">start[:差值]:end</code> 差值默认为1</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>》x=1:0.2:2
+
+x =
+
+    1.0000    1.2000    1.4000    1.6000    1.8000    2.0000
+
+》x=1:2
+
+x =
+
+     1     2
+</code></pre></div></div>
+<p>等差数列[按总点数]，<code class="highlighter-rouge">linspace(start,end[,总点数]) </code>总点数默认100</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>》linspace(1,2,5)
+
+ans =
+
+    1.0000    1.2500    1.5000    1.7500    2.0000
+</code></pre></div></div>
+<p>等比数列,<code class="highlighter-rouge">an=a0*x^n</code>，<code class="highlighter-rouge">logspace(start,end[,总点数])</code>点数默认50</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>logspace(1,2,5)
+
+ans =
+
+   10.0000   17.7828   31.6228   56.2341  100.0000
+
+》17.7828/10*17.7828
+
+ans =
+
+   31.6228
+</code></pre></div></div>
+<h5 id="特殊矩阵">特殊矩阵</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>一下的N或m,n或m,n,p也可用size(A)已存在矩阵来替代
+ones(N) NxN全1矩阵
+ones(m,n) mxn全1矩阵
+ones(m,n,p) mxnxp 全1
+ones(size(A)) 与A维度相同，全1
+zeros(N) 全0
+zeros(m,n) 全0
+zeros(m,n,p) 全0
+rand(N) 0-1随机数
+rand(m,n) 0-1随机数
+rand(m,n,p) 0-1随机数
+randn(维度)：产生符合均值为0，方差为1的标准正态分布
+
+eye(N) NxN单位矩阵
+eye(m,n) mxn对角线1
+</code></pre></div></div>
+
+<h5 id="对角线矩阵">对角线矩阵</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x =
+
+     1     2     3
+
+》diag(x,0)  %或diag(x)
+
+ans =
+
+     1     0     0
+     0     2     0
+     0     0     3
+
+》diag(x,1)
+
+ans =
+
+     0     1     0     0
+     0     0     2     0
+     0     0     0     3
+     0     0     0     0
+
+》diag(x,-1)
+
+ans =
+
+     0     0     0     0
+     1     0     0     0
+     0     2     0     0
+     0     0     3     0
+</code></pre></div></div>
+
+<h5 id="稀疏矩阵">稀疏矩阵</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A=sparse(S)将矩阵S转化为稀疏存储方式的矩阵A，当矩阵S是稀疏存储方式时，则函数调用相当于A=S；
+A=sparse(m,n)：生成一个m*n的所有元素都是0的稀疏矩阵A。 
+A=sparse(u,v,S): u,v,S是3个等长的向量。S是要建立的稀疏矩阵的非0元素，u(i)、v(i)分别是S(i)的行和列下标，该函数建立一个max(u)行、max(v)列并以S为稀疏元素的稀疏矩阵。
+S=sparse(i,j,s,m,n)：其中i 和j 分别是矩阵非零元素的行和列指标向量，s是非零元素值向量，m，n 分别是矩阵的行数和列数
+》A
+
+A =
+
+     1     2     0     0
+     0     0     3     4
+     0     0     0     0
+
+》S=sparse(A)
+
+S =
+
+   (1,1)        1
+   (1,2)        2
+   (2,3)        3
+   (2,4)        4
+%S的存储方式和一般矩阵不同
+%恢复一般存储方式
+S+0或full(S)
+</code></pre></div></div>
+<h5 id="magic魔方矩阵magicn">magic魔方矩阵,<code class="highlighter-rouge">magic(n)</code></h5>
+<p>对于n阶魔方阵，其元素由1,2,3,…,n<em>n共n</em>n个整数组成</p>
+
+<h5 id="范得蒙矩阵vandera">范得蒙矩阵<code class="highlighter-rouge">vander(a)</code></h5>
+<p>范得蒙(Vandermonde)矩阵是指最后一列全为1，倒数第二列为一个指定的向量，其他各列是其后列与倒数第二列的点乘积,即 a的斐波那契次方构成</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+》a=[1 2 3 4 5];
+》vander(a)
+
+ans =
+
+     1     1     1     1     1
+    16     8     4     2     1
+    81    27     9     3     1
+   256    64    16     4     1
+   625   125    25     5     1
+</code></pre></div></div>
+
+<h5 id="希尔伯特矩阵">希尔伯特矩阵</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hill(n)   %n阶希尔伯特矩阵
+invhill(n) %n阶希尔伯特矩阵的逆
+</code></pre></div></div>
+<h5 id="托普利兹矩阵">托普利兹矩阵</h5>
+<p>托普利兹(Toeplitz)矩阵 除第一行第一列外，其他每个元素都与左上角的元素相同。生成托普利兹矩阵的函数是toeplitz(x,y)，它生成一个以向量x为第一列，以向量y为第一行的托普利兹矩阵。toeplitz(x)用向量x生成一个对称的托普利兹矩阵<br />
+x,y向量，第一个元素需相同</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>》x=[1 2 3 4];
+》y=[1 20 30];
+》toeplitz(x,y)
+
+ans =
+
+     1    20    30
+     2     1    20
+     3     2     1
+     4     3     2
+</code></pre></div></div>
+
+<h4 id="矩阵函数">矩阵函数</h4>
+<ul>
+  <li>size(x)查看矩阵x维度,返回维度数组
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>》a
+a =
+   1     2     3
+》h=size(a)
+h =
+   1     3
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>length(x)返回就是size(x)的第二个维度大小，即一维矩阵长度，mxn二维矩阵的n</p>
+  </li>
+  <li>reshape(x,维度) 按照新维度排列矩阵，不改变x，如<code class="highlighter-rouge">A(3,2)=1;B=resphape(A,1,6)</code></li>
+</ul>
+
+<h5 id="下三角矩阵trilak上三角矩阵triuak">下三角矩阵tril(A[,k])，上三角矩阵triu(A[,k])</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a =
+
+     1     1     1
+     1     1     1
+     1     1     1
+
+》tril(a)
+
+ans =
+
+     1     0     0
+     1     1     0
+     1     1     1
+
+》triu(a,1)
+
+ans =
+
+     0     1     1
+     0     0     1
+     0     0     0
+</code></pre></div></div>
+<h5 id="转置x非共轭转置x共轭转置">转置：<code class="highlighter-rouge">x.'</code>非共轭转置，<code class="highlighter-rouge">x'</code>共轭转置</h5>
+
+<h5 id="翻转-fliplrx左右翻转-flipudx上下翻转flipdimxdim按维度翻转">翻转 :<code class="highlighter-rouge">fliplr(x)</code>左右翻转， <code class="highlighter-rouge">flipud(x)</code>上下翻转,<code class="highlighter-rouge">flipdim(x,dim)</code>按维度翻转</h5>
+<h5 id="旋转">旋转</h5>
+<p><code class="highlighter-rouge">B=rot90(A)</code>:矩阵B是矩阵A沿逆时针方向旋转90度得到的。<br />
+<code class="highlighter-rouge">B=rot90(A,k)</code>:矩阵B是矩阵A沿逆时针方向旋转<code class="highlighter-rouge">k*90</code>度得到的(要想顺时针旋转，k取-1)</p>
+
+<h5 id="逆-invx">逆 <code class="highlighter-rouge">inv(x)</code></h5>
+<p>伪逆是对于不可逆矩阵来说的。对于可逆矩阵来说，伪逆和逆结果一样，对于不可能逆矩阵，是采用最小二乘的方法求一个近似的逆<br />
+可逆：方阵+满秩
+如果矩阵A不是一个方阵，或者A是一个非满秩的方阵时，矩阵A没有逆矩阵，但可以找到一个与A的转置矩阵A’同型的矩阵B，使得：ABA=A，BAB=B 此时称矩阵B为矩阵A的伪逆，也称为广义逆矩阵。在MATLAB中，求一个矩阵伪逆的函数是pinv(A)。当一个矩阵不是满秩的时候,如果要求逆,只能用伪逆函数来求。</p>
+
+<h5 id="行列式detx">行列式<code class="highlighter-rouge">det(x)</code></h5>
+
+<h5 id="迹tracex对角线元素之和">迹<code class="highlighter-rouge">trace(x)</code>对角线元素之和</h5>
+
+<h5 id="秩rankx">秩<code class="highlighter-rouge">rank(x)</code></h5>
+
+<h5 id="特征值特征向量">特征值，特征向量</h5>
+<p>Ax=ax 特征值an，特征向量xn</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eig(A) 特征值
+[a,x]=eig(A) 特征值a，特征向量x
+</code></pre></div></div>
+
+<h5 id="范数">范数</h5>
+
+<p>了解了范数再来弹</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>norm
+</code></pre></div></div>
+
+<h3 id="字符串字符串与string型">字符串<code class="highlighter-rouge">'字符串'</code>与<code class="highlighter-rouge">"string型"</code></h3>
+
+<h4 id="字符串-字符char型构成的数组用单引号"><strong>字符串</strong> ，字符char型构成的数组，用单引号<code class="highlighter-rouge">'</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>》a='string';
+》whos a
+  Name      Size            Bytes  Class    Attributes
+
+  a         1x6                12  char      
+</code></pre></div></div>
+<p>使用<code class="highlighter-rouge">cd</code>切换目录时，只能<code class="highlighter-rouge">cd '目录'</code></p>
+
+<p>很多命令/函数的输入都用<code class="highlighter-rouge">'字符数组'</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> %将变量a保存到file文件
+ save ('file','a')
+ %将xi保存到
+ save (['data',num2str(i)],['x',num2str(i)])
+</code></pre></div></div>
+<p>关于num2str可以按照格式转成字符串</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>num2str(T,'%2.1f\n')]
+</code></pre></div></div>
+
+<h4 id="string型用双引号">string型,用双引号<code class="highlighter-rouge">"</code></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>》a="tring";
+》whos a
+  Name      Size            Bytes  Class     Attributes
+
+  a         1x1               158  string              
+</code></pre></div></div>
+
+<p>函数略</p>
+
+<h3 id="结构体">结构体</h3>
+<h4 id="定义-1">定义</h4>
+<p>直接定义</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>》xiaoming.matrix=[1:10];
+》xiaoming.grad=123;
+》xiaoming
+
+xiaoming = 
+
+  包含以下字段的 struct:
+
+    matrix: [1 2 3 4 5 6 7 8 9 10]
+      grad: 123
+</code></pre></div></div>
+<p>struct创建，可以同时创建n个<code class="highlighter-rouge">student(n)</code>但只有第n个会被赋值</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>》student(2)=struct('matrix',[1:10],'grad',123);
+》student(1)
+
+ans = 
+
+  包含以下字段的 struct:
+
+    matrix: []
+      grad: []
+
+》student(2)
+
+ans = 
+
+  包含以下字段的 struct:
+
+    matrix: [1 2 3 4 5 6 7 8 9 10]
+      grad: 123
+</code></pre></div></div>
+<p>使用<code class="highlighter-rouge">repmat</code>创建复制内容相同的结构体</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 》student=repmat(struct('matrix',[1:10],'grad',123),2,3);
+》student
+
+student = 
+
+  包含以下字段的 2×3 struct 数组:
+
+    matrix
+    grad
+
+》student(1,3)
+
+ans = 
+
+  包含以下字段的 struct:
+
+    matrix: [1 2 3 4 5 6 7 8 9 10]
+      grad: 123
+</code></pre></div></div>
+<h4 id="使用">使用</h4>
+
+<h3 id="cell">cell</h3>
+<h4 id="定义-2">定义</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a={元素}
+</code></pre></div></div>
+<h4 id="使用-1">使用</h4>
+<p>cell的维度也可以是多维</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a{m,n}
+cell里面有cell
+a{m,n}{p,q}
+</code></pre></div></div>
+
+<h2 id="格式化输入输出">格式化输入输出</h2>
+<h3 id="格式化输出">格式化输出</h3>
+<h4 id="disp字符数组直接显示在命令行">disp(‘字符数组’)直接显示在命令行</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>disp(['6.全体学生IQ和GPA的相关系数为：', num2str(IQCorr(1,2))])
+</code></pre></div></div>
+
+<p>sprintf和fprintf都用来生成格式化的字符串，当然也可以直接接受没有格式的字符串
+Sprintf是s(tring)print f(ormat)，也就是直接生成带格式的字符串的，通常并不直接用来显示在命令行</p>
+
+<p>Fprintf是f(ile)printf(ormat)，可以用来直接进行文件的写入，如果不指定文件的fid那么直接输出到命令行</p>
+
+<h4 id="error错误信息-提示错误信息并终止程序"><code class="highlighter-rouge">error('错误信息')</code> 提示错误信息，并终止程序</h4>
+
+<h4 id="warning错误信息提示错误信息继续运行"><code class="highlighter-rouge">warning('错误信息')</code>提示错误信息，继续运行</h4>
+
+<h2 id="条件">条件</h2>
+
+<h3 id="if-else-end">if-else-end</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if 条件
+	命令
+elseif 条件
+	命令
+else
+	命令
+end
+</code></pre></div></div>
+<p><code class="highlighter-rouge">elseif else</code>可不写</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if a==5; b=5;end
+</code></pre></div></div>
+
+<h3 id="swith">swith</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>switch num %num可以是变量，表达式，但结果要是标量或字符向量
+case value1
+命令
+case value2
+命令
+otherwise
+命令
+end
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">otherwise</code>可以忽略</p>
+
+<h3 id="try-catch-捕获运行是否发生错误">try-catch 捕获运行是否发生错误</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>try
+命令1
+catch
+命令2
+end
+</code></pre></div></div>
+
+<p>如果命令1执行报错，程序运行错误，执行命令2<br /></p>
+
+<p>比如提取矩阵超过范围，执行语句不存在</p>
+
+<h2 id="循环">循环</h2>
+
+<h3 id="for">for</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for x=array
+命令
+end
+</code></pre></div></div>
+
+<p>可以中途改变x的取值，不影响运行</p>
+
+<h3 id="while">while</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while 条件
+命令
+end
+</code></pre></div></div>
+
+<h3 id="循环调节">循环调节</h3>
+
+<h4 id="continue进入下一个循环"><code class="highlighter-rouge">continue</code>进入下一个循环</h4>
+
+<h4 id="break终止循环"><code class="highlighter-rouge">break</code>终止循环</h4>
+
+<h2 id="函数">函数</h2>
+
+<p>函数传址调用</p>
+
+<h3 id="自定义函数function">自定义函数<code class="highlighter-rouge">function</code></h3>
+
+<p>一个函数写一个文件，函数名和文件名一致<br />
+<code class="highlighter-rouge">help 函数名</code> 会返回函数体之前的注释</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function [输出变量]=函数名(输入变量)
+%注释行start
+%。。。help 函数名时，会显示这部分注释
+%注释行end
+	函数体
+end
+</code></pre></div></div>
+<p>使用<code class="highlighter-rouge">return</code>可以提前返回，跳出函数</p>
+
+<p>可以缺省输入，输出</p>
+
+<p>也可以在m文件中定义function，本文件内调用</p>
+
+<h2 id="文件读写">文件读写</h2>
+
+<h2 id="数学">数学</h2>
+
+<h3 id="基础计算">基础计算</h3>
+
+<p><code class="highlighter-rouge">＋（加）、－（减）、*（乘）、^（乘方）、’（转置）</code><br /></p>
+
+<p>对于矩阵a,b<code class="highlighter-rouge">a/b（a除以b）、a\b（a被b除）</code><br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eye(size(x))/x == inv(x)
+A\B等效于inv(A)*B
+B/A等效于B*inv(A)
+</code></pre></div></div>
+<p>对于标量a,b <code class="highlighter-rouge">a/b==b\a</code></p>
+
+<p><code class="highlighter-rouge">.*</code>点乘,元素相乘，<code class="highlighter-rouge">.\</code> ` ./<code class="highlighter-rouge">  点除，元素相除，</code>.^`点乘方</p>
+
+<h3 id="逻辑关系">逻辑关系</h3>
+<p>关系成立返回1，否则0，可以比较变量和矩阵</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;（小于）、&lt;=（小于或等于）、&gt;（大于）、&gt;=（大于或等于）、==（等于）、~=（不等于）
+</code></pre></div></div>
+<p>矩阵逻辑返回矩阵</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;(与)、|(或)和~(非) 可以判断矩阵
+A&amp;&amp;B 不支持判断矩阵，首先判断A的逻辑值，如果A的值为假，就可以判断整个表达式的值为假，就不需要再判断B的值
+"|"与“||”同理
+</code></pre></div></div>
+<h4 id="逻辑函数">逻辑函数</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find(x非0) x中大于1的元素位置
+find(x&gt;1) x&gt;1的矩阵中非0元素，即x中大于1的元素位置
+</code></pre></div></div>
+<p><img src="/uploads/2019/03/luoji.jpg" alt="" /></p>
+
+<h3 id="数学函数">数学函数</h3>
+<p>假如x为向量，则表示对向量中的每个元素进行操作后得到的新向量</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>abs(x)绝对值
+sqrt(x)开方
+sign(x)符号函数，返回0，1，-1
+exp(x)：e^x
+log(x)：ln(x)
+log2(x)
+log10(x)
+pow2(n)==2^n
+real(x) 实部
+image(x) 虚部 
+</code></pre></div></div>
+<p>取整</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>round(x)：四舍五入，与他距离最近的整数
+fix(x)：只保留整数部分
+floor(x)：向负无穷取整
+ceil(x)：向正无穷取整
+</code></pre></div></div>
+<p>取余</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>求x除以y的余数，Fortran中是mod(y,x)
+
+rem(x,y)
+返回的是x-n.*y,其中的n = fix(x./y),fix舍去小数部分，向0取整
+
+mod(x,y)：
+命令返回的是x-n.*y，n=floor(x./y)，向负无穷取整
+
+当x和y的正负号一样的时候，两个函数结果是等同的      当x和y的符号不同时，rem函数结果的符号和x的一样，而mod和y一样
+</code></pre></div></div>
+
+<h4 id="指数函数">指数函数</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>exp(n)=e^2
+5^2=5x5
+</code></pre></div></div>
+
+<h4 id="对数">对数</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>log(x)：求x以e为底的对数，即自然对数。如果x为向量，则对其中的每个元素都求自然对数。
+log2(x)：求x以2为底的对数。如果x为向量，则对其中的每个元素都求以2为底的对数。
+log10(x)：求x以10为底的对数。如果x为向量，则对其中的每个元素都求以10为底的对数
+</code></pre></div></div>
+
+<h3 id="线性方程组">线性方程组</h3>
+
+<h3 id="求导">求导</h3>
+
+<h3 id="积分">积分</h3>
+
+<h2 id="绘图">绘图</h2>
+<h3 id="画板操作">画板操作</h3>
+<h4 id="画板分隔subplotxyz">画板分隔<code class="highlighter-rouge">subplot(x,y,z)</code></h4>
+<p>将绘图窗口分隔成<code class="highlighter-rouge">x*y</code>个画板，活动画板为第z个画板（从左到右，从上到下）</p>
+
+<h4 id="切换绘图窗口-figuren">切换绘图窗口 <code class="highlighter-rouge">figure([n])</code></h4>
+<p>切换到绘图窗口n，若不存在则新建,缺省n，自动创建</p>
+
+<h4 id="关闭活动画图窗口closen">关闭活动画图窗口<code class="highlighter-rouge">close([n])</code></h4>
+<p>关闭绘图窗口n，缺省n，关闭当前活动窗口</p>
+
+<h3 id="图形操作">图形操作</h3>
+<h4 id="在本图上继续画图-hold-on-取消hold-off">在本图上继续画图 hold on, 取消hold off</h4>
+<h4 id="title标题">title标题</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>titlename=['T = ',num2str(T,'%2.1f\n'),'系统磁矩']
+title(titlename);
+</code></pre></div></div>
+<h4 id="legend图例">legend图例</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>legend('y=sin(x)','y=cos(x)')
+legend('y=sin(x)','y=cos(x)','Location','位置')
+%位置如下图
+legendoff %清除图例
+</code></pre></div></div>
+<p><img src="/uploads/2019/03/legend.jpg" alt="" /></p>
+
+<h4 id="字体风格">字体风格</h4>
+<p>在显示到图上时控制显示格式</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>title('\fontname{宋体} \bf \fontsize{20} no 字体^{上标}_{下标}\beta')
+legend('\fontname{宋体} \bf \fontsize{20} no 字体^{上标}_{下标}\beta')
+</code></pre></div></div>
+<p><img src="/uploads/2019/03/zi.jpg" alt="" /></p>
+
+<h4 id="坐标轴">坐标轴</h4>
+
+<p>坐标轴范围</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>axis equal 
+axis([xmin xmax ymin ymax])：设置坐标轴的范围，指 定当前坐标轴x轴和y轴的范围，其中xmin为x轴下界，而 xmax为x轴的上届，而ymin和ymax分别为y轴的下界和 上界。
+axis([xmin xmax ymin ymax zmin zmax])：设置x、y 和z坐标轴的范围，其中xmin和xmax为x轴下界和上届， ymin和ymax分别为y轴的下界和上界，zmin和zmax分别 为z轴的下界和上界。 
+xlim([xmin xmax])：仅设置x轴的范围
+ylim([ymin ymax])：仅设置y轴的范围。
+</code></pre></div></div>
+<p>指定坐标轴lable</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set(gca,'xtick',[1 2 3 4]); % 故意为了只是显示4个刻度值,下方的设置才有效
+%设置x标签
+set(gca,'xticklabel',{'字符串长度6+干扰','字符串长度9+干扰','字符串长度6+安静','字符串长度9+安静'});
+%注意{ }
+</code></pre></div></div>
+<h5 id="坐标轴log增量semilogyx-semilogy--恒纵坐标刻度是10n">坐标轴log增量semilogyx, semilogy  恒纵坐标刻度是10^n</h5>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>semilogy(y)
+semilogy(x,y)
+</code></pre></div></div>
+
+<h4 id="通过gca设置图形的参数">通过gca设置图形的参数</h4>
+
+<p>gca返回一个“结构体”，是当前绘图面板的所有参数的值，通过<code class="highlighter-rouge">get(gca)</code>可以看到可以设置的参数，修改gca内部参数的值，即可修改当前图形</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>get(gca)
+                       ALim: [0 1]
+                   ALimMode: 'auto'
+     ActivePositionProperty: 'position'
+          AmbientLightColor: [1 1 1]
+               BeingDeleted: 'off'
+                        Box: 'on'
+                   BoxStyle: 'back'
+                 BusyAction: 'queue'
+              ButtonDownFcn: ''
+                       CLim: [0 1]
+                   CLimMode: 'auto'
+             CameraPosition: [2 0.5706 19.6202]
+         CameraPositionMode: 'auto'
+               CameraTarget: [2 0.5706 0
+               %略略略略
+                 FontName: 'Times New Roman'
+                 FontSize: 10
+%略略略略
+set(gca,参数，值)
+set(gca, 'FontSize',20)
+</code></pre></div></div>
+
+<h3 id="保存图像">保存图像</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pngname=['up.',num2str(T,'%2.1f\n'),'.png'];
+saveas(gcf,pngname)
+</code></pre></div></div>
+
+<h3 id="坐标">坐标</h3>
+
+<p>####　meshgrid 绘制网格</p>
+
+<p>[xx,yy]=meshgrid(x,y)</p>
+
+<h3 id="二维图">二维图</h3>
+
+<h4 id="plot-直角坐标">plot 直角坐标</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot(y) 
+plot(x,y) %x,y亦可为矩阵
+plot(x,y,线形描述)  %也可以画图后，用画图面板调
+</code></pre></div></div>
+
+<p>多维曲线</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot(x1,y1,[线形,]x2,y2,[线形,]...)
+plot(X,Y) %X,Y是通维矩阵，可以是一维X，多维Y，也可以是多维X和多维Y
+</code></pre></div></div>
+
+<h4 id="line-用直线连接二维三维之间的点">line 用直线连接二维三维之间的点</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>line(x,y) %必须有x,y，即至少两个参量，表示一个二维点，
+line(x,y,z)
+line(x,y,z,线形)
+</code></pre></div></div>
+
+<h4 id="bar条形图">bar条形图</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bar(y)
+bar(x,y)
+</code></pre></div></div>
+<h4 id="pir-饼图">pir 饼图</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pie(x)
+</code></pre></div></div>
+<h4 id="hist直方图">hist直方图</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hist(y)
+hist(y,x) %直方图中心为x中的各值
+</code></pre></div></div>
+<h4 id="scatter散点图">scatter散点图</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scatter(x,y)
+</code></pre></div></div>
+<h4 id="polar-极坐标">polar 极坐标</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>polar(角度,半径)
+polar(角度,半径,线形)
+</code></pre></div></div>
+
+<h4 id="plotyy-两个y坐标轴标度">plotyy 两个y坐标轴标度</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plotyy(x1,y1,x2,y2)
+plotyy(x1,y1,x2,y2,fun) %
+plotyy(x1,y1,x2,y2,fun1,fun2)
+%fun可以为plot和semilogy等绘图函数,如
+plotyy(x1,y1,x2,y2,@plot,@semilogy)
+</code></pre></div></div>
+
+<h4 id="counter-等高线">counter 等高线</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>contour(z) ：把矩阵z中的值作为一个二维函数 的值，等高曲线在一个平面内，平面的高度v由 MATLAB自动选取，绘制等高线。
+contour(x,y,z)：(x,y)是平面z=0上点的坐标矩 阵，z为相应点的高度值矩阵，绘制等高线。 
+contour(z,n)：画出矩阵z的n条等高线。  contour(x,y,z,n) ：画出矩阵z的n条等高线。 contour(z,v) ：在指定的高度v上画出等高线
+</code></pre></div></div>
+
+<h5 id="clabel-添加高度标签">clabel 添加高度标签</h5>
+
+<h4 id="曲线标记样式">曲线,标记样式</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot(x,y,'style')
+plot(x,sin(x),'gsquare--')
+%画error bar只显示bar部分
+errorbar(MeanResponse,VarResponse,'linestyle', 'none')
+%线宽，点大小
+plot(x,sin(x),'gsquare--','LineWidth',4,'MarkerSize',10)
+</code></pre></div></div>
+<p><img src="/uploads/2019/03/line.jpg" alt="" />
+<img src="/uploads/2019/03/point.jpg" alt="" />
+<img src="/uploads/2019/03/color.jpg" alt="" /></p>
+
+<h2 id="文件读写-1">文件读写</h2>
+<h3 id="读入">读入</h3>
+<h4 id="按格式读入textscan">按格式读入<code class="highlighter-rouge">textscan</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>filename='RightRatio.dat';
+RightRatioID = fopen(filename);
+RightRatio=textscan(RightRatioID,'%d%f%f%f%f','HeaderLines',1);
+%'HeaderLines',从第1+1行读取
+%MATLAB文件中的行号从0开始
+% %d整数%f实数
+fclose(RightRatioID);
+</code></pre></div></div>
+
+<h2 id="有趣">有趣</h2>
+
+<h3 id="eval字符数组执行字符数组对应的命令">eval(字符数组)，执行字符数组对应的命令</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eval(['x=100'])
+eval(['x','=',num2str(y)])
+</code></pre></div></div>
+
+<h2 id="统计分析">统计分析</h2>
+
+<p><a href="/web/file/2019/第九章.ppt">第九章.ppt</a></p>
+
+<p><a href="/web/file/2019/第19章 回归分析.ppt">第19章 回归分析.ppt</a></p>
+
+<p>p值计算</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>%设置统计参数
+alpha = 0.05;%显著水平 
+tail = 'both'; 
+vartype = 'equal'; 
+disp('1.	语音干扰是否会显著影响被试的反应时和正确率')
+[h,p,muci,stats] = ttest2(AverageResponseTime{2},AverageResponseTime{4},alpha,tail,vartype);
+disp(['字符长度为6时:语音干扰与安静情况下，被试反应时的p值 p=', num2str(p)])
+</code></pre></div></div>
+
+<p>预测分析</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>%% 请对IQ&amp;GPA.csv 中的数据进行如下分析
+%clear
+%=====读入数据
+filename='IQ&amp;GPA.csv';
+IQData=csvread(filename, 1, 0);
+%%=== 6.	请绘制全体学生IQ和GPA的散点图并计算相关系数
+figure(4)
+scatter(IQData(:,1),IQData(:,2),'*');
+title('全体学生IQ和GPA的散点图')
+ xlabel('IQ (z score)');ylabel('GPA');
+IQCorr=corrcoef(IQData(:,1),IQData(:,2));
+disp(['6.全体学生IQ和GPA的相关系数为：', num2str(IQCorr(1,2))])
+%% 
+disp(' ')
+disp(' ')
+%===7.	请回答：IQ能否预测学生的GPA。（可利用多种数据分析方法以及相关的图、表来辅证）
+%此处参考[包寒吴霜-多层线性模型（HLM）及其自由度问题](https://zhuanlan.zhihu.com/p/50048784)
+%
+figure(5)
+clf(5)
+for school=1:3 %[1:3]
+    oneIQ=[];
+    oneGPA=[];
+    oneIQ=IQData(IQData(:,3)==school,1);
+    oneGPA=IQData(IQData(:,3)==school,2);
+    %各学校散点图
+    subplot(1,3,school)
+    scatter(oneIQ,oneGPA,'*');
+    titlename=['学校',num2str(school),' 学生IQ和GPA的散点图'];
+    title(titlename)
+    xlabel('IQ (z score)');ylabel('GPA');
+    hold on
+    %回归分析
+    %排序
+    [oneIQSort, id] = sort(oneIQ);
+    oneGPASort=oneGPA(id);%列矩阵
+    oneIQSort=oneIQSort;%列矩阵
+    xdata = [ones(size(oneIQSort)), oneIQSort];
+    %regress分析
+    b1 = regress(oneGPASort, xdata); 
+    yhat1 = xdata*b1;
+    plot(oneIQSort, yhat1, 'b--','linewidth',1)
+    %robustfit分析
+    b2 = robustfit(oneIQSort,oneGPASort); 
+    yhat2 = xdata*b2; 
+    plot(oneIQSort, yhat2, 'linewidth', 1)
+    legend('原始数据','regress回归直线','robustfit回归直线')
+
+    
+    %相关系数
+    oneIQCorr=corrcoef(oneIQ,oneGPA);
+    disp(['7.学校',num2str(school),'学生IQ和GPA的相关系数为：', num2str(oneIQCorr(1,2))]) 
+end
+</code></pre></div></div>
+
+<h2 id="other">other</h2>
+
+<p>采集数据，若是正态分布可以进行检验，</p>
+
+<p>非正态分布，进行置换</p>
+:ET

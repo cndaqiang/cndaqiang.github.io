@@ -1,0 +1,846 @@
+I"��<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#说明" id="markdown-toc-说明">说明</a>    <ul>
+      <li><a href="#总览" id="markdown-toc-总览">总览</a></li>
+      <li><a href="#manual中的一些关键词解释" id="markdown-toc-manual中的一些关键词解释">manual中的一些关键词解释</a>        <ul>
+          <li><a href="#scalapack" id="markdown-toc-scalapack">ScaLapack</a>            <ul>
+              <li><a href="#locclocr" id="markdown-toc-locclocr"><code class="highlighter-rouge">LOCc</code>,<code class="highlighter-rouge">LOCr</code></a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#在代码中解释" id="markdown-toc-在代码中解释">在代码中解释</a>    <ul>
+      <li><a href="#blas基础功能" id="markdown-toc-blas基础功能">BLAS基础功能</a></li>
+      <li><a href="#driver-routines" id="markdown-toc-driver-routines">Driver Routines</a>        <ul>
+          <li><a href="#线性方程组--axb" id="markdown-toc-线性方程组--axb">线性方程组 | AX=B</a></li>
+          <li><a href="#最小二乘问题--llslinear-leqat-squares-problems" id="markdown-toc-最小二乘问题--llslinear-leqat-squares-problems">最小二乘问题 | LLS(Linear Leqat squares problems)</a></li>
+          <li><a href="#标准本征值问题axex" id="markdown-toc-标准本征值问题axex">标准本征值问题AX=EX</a>            <ul>
+              <li><a href="#对称本征值问题sepsymmetric-eigenproblems" id="markdown-toc-对称本征值问题sepsymmetric-eigenproblems">对称本征值问题|SEP(Symmetric eigenproblems)</a></li>
+              <li><a href="#非对称本征值问题nepnonsymmetric-eigenproblems" id="markdown-toc-非对称本征值问题nepnonsymmetric-eigenproblems">非对称本征值问题|NEP(Nonsymmetric eigenproblems)</a></li>
+              <li><a href="#奇异值问题svdsingular-value-decomposion" id="markdown-toc-奇异值问题svdsingular-value-decomposion">奇异值问题|SVD(Singular value decomposion)</a></li>
+            </ul>
+          </li>
+          <li><a href="#广义的本征值问题--generalized-eigenvalue-problems" id="markdown-toc-广义的本征值问题--generalized-eigenvalue-problems">广义的本征值问题 | Generalized eigenvalue problems</a></li>
+          <li><a href="#广义对称的本征值问题gsep-generalized-symmetric-definite-eigenproblems" id="markdown-toc-广义对称的本征值问题gsep-generalized-symmetric-definite-eigenproblems">广义对称的本征值问题|<strong>GSEP</strong> Generalized symmetric-definite eigenproblems</a>            <ul>
+              <li><a href="#广义非对称的本征值问题gnep-generalized-nonsymmetric--eigenproblems" id="markdown-toc-广义非对称的本征值问题gnep-generalized-nonsymmetric--eigenproblems">广义非对称的本征值问题|<strong>GNEP</strong> Generalized nonsymmetric  eigenproblems</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#computational-routines" id="markdown-toc-computational-routines">Computational Routines</a>        <ul>
+          <li><a href="#facrotize分解-trf" id="markdown-toc-facrotize分解-trf">Facrotize分解(-TRF)</a></li>
+        </ul>
+      </li>
+      <li><a href="#scalapack有与lapack相同的函数" id="markdown-toc-scalapack有与lapack相同的函数">Scalapack有与Lapack相同的函数</a>        <ul>
+          <li><a href="#lu分解求逆" id="markdown-toc-lu分解求逆">LU分解求逆</a>            <ul>
+              <li><a href="#原理" id="markdown-toc-原理">原理</a></li>
+              <li><a href="#lu分解pgetrf" id="markdown-toc-lu分解pgetrf">LU分解<code class="highlighter-rouge">p?getrf</code></a></li>
+              <li><a href="#求逆pgetri" id="markdown-toc-求逆pgetri">求逆<code class="highlighter-rouge">p?getri</code></a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#报错" id="markdown-toc-报错">报错</a>    <ul>
+      <li><a href="#parameter-number---10-had-an-illegal-value" id="markdown-toc-parameter-number---10-had-an-illegal-value"><code class="highlighter-rouge">parameter number   10 had an illegal value</code></a></li>
+      <li><a href="#----0----2--on-entry-to-pdgetrf-parameter-number--601-had-an-illegal-value" id="markdown-toc-----0----2--on-entry-to-pdgetrf-parameter-number--601-had-an-illegal-value"><code class="highlighter-rouge">{    0,    2}:  On entry to PDGETRF parameter number  601 had an illegal value</code></a></li>
+      <li><a href="#pblas-error-illegal-descaimb_--0-其实还是输入参数顺序写错了给了错的参数" id="markdown-toc-pblas-error-illegal-descaimb_--0-其实还是输入参数顺序写错了给了错的参数"><code class="highlighter-rouge">PBLAS ERROR 'Illegal DESCA[IMB_] = 0</code> 其实还是输入参数顺序写错了，给了错的参数</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>不知啥时候能填完</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://homepage.ntu.edu.tw/~wttsai/fortran/ppt/9.Linear_Algebra_Computation.pdf">9. Linear Algebra Computation</a>
+<br /><a href="http://homepage.ntu.edu.tw/~wttsai/fortran/BLAS_LAPACK/BLAS%20Quick%20Reference%20Guide.pdf">BLAS Quick Reference Guide</a>
+<br /><a href="http://homepage.ntu.edu.tw/~wttsai/fortran/BLAS_LAPACK/LAPACK%20Quick%20Reference%20Guide.pdf">LAPACK Quick Reference Guide</a>
+<br /><a href="http://homepage.ntu.edu.tw/~wttsai/fortran/BLAS_LAPACK/LAPACK%20Quick%20Reference%20Guide%20to%20Driver%20Routines.pdf">LAPACK Quick Reference Guide to Driver Routines</a>
+<br /><a href="http://homepage.ntu.edu.tw/~wttsai/fortran/BLAS_LAPACK/Preliminary%20LAPACK%20Users%20Guide.pdf">Preliminary LAPACK Users’ Guide</a>
+<br />看此文前必须提前看过：<a href="/2019/04/06/Fortran-math">Fortran 科学计算</a>
+<br />Demmel J , 德梅尔, Demmel, et al. 应用数值线性代数[M]. 人民邮电出版社, 2007.</p>
+
+<h2 id="说明">说明</h2>
+<h3 id="总览">总览</h3>
+<ul>
+  <li>关于BLAS, Lapack, ScaLapack的更多介绍见<a href="/2019/04/06/Fortran-math">Fortran 科学计算</a></li>
+  <li>调用函数<code class="highlighter-rouge">call [P]XYYZZZ()</code>
+<br />Scalapack在名称前多个P 
+<br />X数据类型.  S: real, D: real(dp), C: complex, Z: complex(dp)
+<br />YY矩阵类型. GE普通矩阵, PO对称正定矩阵, SY对称非正定矩阵
+<br />ZZZ功能/运算</li>
+  <li>BLAS，Lapack, ScaLapack会根据矩阵的类型有不同的输入输出参数, 从而提高效率</li>
+  <li>同一个功能可能由不同的函数YYY实现, 不同的YYY执行速度和附加功能有差异</li>
+  <li>BLAS 提供基础的矩阵向量乘除运算功能</li>
+  <li>Lapack和ScaLapack提供<code class="highlighter-rouge">Driver Routines</code>和<code class="highlighter-rouge">Computational Routine</code>等丰富的线代功能</li>
+  <li><code class="highlighter-rouge">Driver Routines</code>一个函数就可以解决线代标准问题: 
+<br /> a. 线性方程组 $ Ax=B $
+<br /> b. 最小二乘问题(LLS) $ ||Ax - b ||_2  $
+<br /> c. 特征值问题  $ Ax = \lambda x $ 以及 量化中的 $ HC=SCE $等
+<br /> d. 奇异值问题(SVD)</li>
+  <li><code class="highlighter-rouge">Computational Routine</code> 通过组合解决不同的线代问题
+<br />上一个函数的输出作为下一个函数的输入</li>
+  <li>解决问题: 
+<br /> 确定线代问题的求解过程
+<br /> 查找函数<a href="http://homepage.ntu.edu.tw/~wttsai/fortran/BLAS_LAPACK/BLAS%20Quick%20Reference%20Guide.pdf">BLAS Quick Reference Guide</a>, <a href="http://homepage.ntu.edu.tw/~wttsai/fortran/BLAS_LAPACK/LAPACK%20Quick%20Reference%20Guide.pdf">LAPACK Quick Reference Guide</a>,Scalapack可以查找Lapack然后加P
+<br /> 检索用法如<a href="https://scc.ustc.edu.cn/zlsc/tc4600/intel/2017.0.098/mkl/common/mklman_f/index.htm">Developer Reference for Intel® Math Kernel Library 2017 - Fortran</a></li>
+  <li>有些限制比如矩阵的大小，或者函数适合的环境在这些manual里面是没说的，比如带状矩阵的存储计算条件，需要自己去看Scalapack的源代码，注释里面说的很详细</li>
+  <li><strong><code class="highlighter-rouge">scalapack-2.0.2/TESTING/LIN</code>源码目录的测试程序是最好的学习资源</strong></li>
+</ul>
+
+<h3 id="manual中的一些关键词解释">manual中的一些关键词解释</h3>
+<p>各个函数的源码中有对输入参数的解释，解释中包含了一些默认的名词没有解释，此处解释</p>
+
+<ul>
+  <li>incx INTEGER. Specifies the increment for the elements of x.
+<br /><code class="highlighter-rouge">X(1,1+incx,1+2*incx,....,1+n*incx)</code>，向量的取样间隔</li>
+  <li>SVD (singular value problems) 奇异值</li>
+  <li>p.s.d <code class="highlighter-rouge">PO</code> symmetric postive-define 对称正定矩阵(s.p.d) A=A^T,任意x!=0有 <code class="highlighter-rouge">x^T*A*x&gt;0</code>
+  <br />   如重叠矩阵:<code class="highlighter-rouge">x^TSx=&lt;x|x&gt; &gt;0</code></li>
+</ul>
+
+<h4 id="scalapack">ScaLapack</h4>
+
+<ul>
+  <li>M_A 总矩阵A(M,N)的行</li>
+  <li>N_A 总矩阵A(M,N)的列</li>
+  <li>MB_A=4 !M block 分块矩阵的行为MB</li>
+  <li>NB_A=4 !N block           列  NB
+<br /><img src="/uploads/2019/04/scalapack1.jpg" alt="" /></li>
+  <li>RSRC_A=0 !矩阵被分开后，获得第一个行分块的node</li>
+  <li>CSRC_A=0 !                        列</li>
+  <li>LLD_A 局域矩阵的lld(Fortran:行数)</li>
+  <li>IA,JA  A(IA:IA+M-1,JA:JA+K-1), Fortran 一般 IA=JA=1</li>
+  <li>LCM(least common multiple)最小公倍数</li>
+  <li>lOCc 局域矩阵分到总矩阵的几<strong>列</strong>，不是几个块，可以用来分配空间</li>
+  <li>LOCr 局域矩阵分到总矩阵的几<strong>行</strong>，不是几个块</li>
+</ul>
+
+<h6 id="locclocr"><code class="highlighter-rouge">LOCc</code>,<code class="highlighter-rouge">LOCr</code></h6>
+<p>示例</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="n">LWORK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOCr</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="nb">MOD</span><span class="p">(</span><span class="n">IA</span><span class="mi">-1</span><span class="p">,</span><span class="n">MB_A</span><span class="p">))</span><span class="o">*</span><span class="n">NB_A</span><span class="err">.</span><span class="w"> </span><span class="n">WORK</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">keep</span><span class="w"> </span><span class="err">...</span><span class="w">
+  </span><span class="n">LIWORK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOCc</span><span class="p">(</span><span class="w"> </span><span class="n">N_A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">MOD</span><span class="p">(</span><span class="n">JA</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">NB_A</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">NB_A</span><span class="w"> </span><span class="err">...</span><span class="w">
+</span></code></pre></div></div>
+<p>含义</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The values of LOCr() and LOCc() may be determined via a call to the
+ScaLAPACK tool function, NUMROC:
+        LOCr( M ) = NUMROC( M, MB_A, MYROW, RSRC_A, NPROW ),
+        LOCc( N ) = NUMROC( N, NB_A, MYCOL, CSRC_A, NPCOL ).
+An upper bound for these quantities may be computed by:
+        LOCr( M ) &lt;= ceil( ceil(M/MB_A)/NPROW )*MB_A
+        LOCc( N ) &lt;= ceil( ceil(N/NB_A)/NPCOL )*NB_A
+</code></pre></div></div>
+<p>调用</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">    </span><span class="c1">!声明变量时添加</span><span class="w">
+    </span><span class="kt">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="k">EXTERNAL</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">numroc</span><span class="w">
+    
+    </span><span class="c1">!直接调用,不需要ScaLapack初始化就可以调用</span><span class="w">
+    </span><span class="n">nn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">numroc</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">rsrc</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w">
+    </span><span class="c1">! NUMROC( N, NB, IPROC, ISRCPROC, NPROCS )</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="在代码中解释">在代码中解释</h2>
+<p>读入数据，数据H原子的scf中由五条轨道(NAOs)作为基组得到的H,S: <a href="/web/file/2019/H.data">H.data</a> <a href="/web/file/2019/S.data">S.data</a></p>
+
+<p>下载代码<a href="/web/file/2019/main.f90">main.f90</a><br />
+编译运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python27) cndaqiang@win10:~/code/TDAP/Fortran/scalapack/Lapack&gt; make
+gfortran -c -g -O2 -ffree-line-length-none     main.f90
+gfortran  -g -O2 -ffree-line-length-none  -o test main.o      /mnt/d/CODE/soft/OPENMPI_1.10.3-GCC-4.8.5-opensuse/scalapack/lib/libreflapack.a /mnt/d/CODE/soft/OPENMPI_1.10.3-GCC-4.8.5-opensuse/scalapack/lib/libtmg.a /mnt/d/CODE/soft/OPENMPI_1.10.3-GCC-4.8.5-opensuse/scalapack/lib/librefblas.a
+./test
+</code></pre></div></div>
+
+<p>下面代码和文字交叉出现，看代码直接下载<a href="/web/file/2019/main.f90">main.f90</a></p>
+
+<p>创建变量</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">program</span><span class="w"> </span><span class="n">main</span><span class="err">.</span><span class="n">f90</span><span class="w">
+    </span><span class="k">implicit</span><span class="w"> </span><span class="k">none</span><span class="w">
+    </span><span class="kt">INTEGER</span><span class="p">,</span><span class="k">parameter</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">dp</span><span class="o">=</span><span class="mi">8</span><span class="w">
+    </span><span class="kt">REAL</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="k">allocatable</span><span class="w">    </span><span class="p">::</span><span class="w">  </span><span class="n">H</span><span class="p">(:,:),</span><span class="n">S</span><span class="p">(:,:),</span><span class="n">C</span><span class="p">(:,:),</span><span class="n">E</span><span class="p">(:),</span><span class="n">B</span><span class="p">(:),</span><span class="n">A</span><span class="p">(:,:),</span><span class="n">X</span><span class="p">(:),</span><span class="n">Y</span><span class="p">(:),</span><span class="n">work</span><span class="p">(:),</span><span class="n">iwork</span><span class="p">(:),</span><span class="n">wr</span><span class="p">(:),</span><span class="n">wi</span><span class="p">(:),</span><span class="n">vs</span><span class="p">(:,:)</span><span class="w">
+    </span><span class="kt">INTEGER</span><span class="p">,</span><span class="k">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">ipiv</span><span class="p">(:)</span><span class="w">
+    </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">INFO</span><span class="p">,</span><span class="n">NRHS</span><span class="p">,</span><span class="n">incx</span><span class="p">,</span><span class="n">lwork</span><span class="p">,</span><span class="n">liwork</span><span class="p">,</span><span class="n">sdim</span><span class="p">,</span><span class="n">ldvs</span><span class="w">
+    </span><span class="kt">LOGICAL</span><span class="p">,</span><span class="k">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="k">select</span><span class="p">(:,:),</span><span class="n">bwork</span><span class="p">(:)</span><span class="w">
+    
+    </span><span class="n">m</span><span class="o">=</span><span class="mi">5</span><span class="w">
+    </span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="w">
+    </span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">H</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="n">S</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">),</span><span class="n">B</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="n">C</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">))</span><span class="w">
+    </span><span class="n">H</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">reshape</span><span class="p">((/</span><span class="w">  </span><span class="mf">-0.42400401342556060</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-0.40143227390650277</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-6.9120337961858791E-006</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+</span><span class="p">&amp;</span><span class="w">                   </span><span class="mf">8.6134463450626697E-010</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-6.9147694707777760E-006</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-0.40143227390650238</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+</span><span class="p">&amp;</span><span class="w">                   </span><span class="mf">-0.29964623883643193</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-8.9726936647882560E-006</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">4.9061116280668671E-010</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+</span><span class="p">&amp;</span><span class="w">                   </span><span class="mf">-8.9740202969982782E-006</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-6.9120337962066958E-006</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-8.9726936648298894E-006</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+</span><span class="p">&amp;</span><span class="w">                   </span><span class="mf">0.80413378049744566</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-1.8838840210033680E-010</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-3.8197224985613721E-007</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+</span><span class="p">&amp;</span><span class="w">                   </span><span class="mf">8.5924509174439834E-010</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">4.8774366490089704E-010</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-1.8838840210033680E-010</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+</span><span class="p">&amp;</span><span class="w">                   </span><span class="mf">0.80417210170273057</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">1.5203947981790279E-011</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-6.9147694707755170E-006</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+</span><span class="p">&amp;</span><span class="w">                   </span><span class="mf">-8.9740202969951222E-006</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-3.8197224985613721E-007</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">1.5203950672231617E-011</span><span class="w"> </span><span class="p">,&amp;</span><span class="w">
+</span><span class="p">&amp;</span><span class="w">                   </span><span class="mf">0.80413378335169927</span><span class="p">/),(/</span><span class="n">m</span><span class="p">,</span><span class="n">k</span><span class="p">/))</span><span class="w">
+    </span><span class="n">S</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">reshape</span><span class="p">(</span><span class="w"> </span><span class="p">(/</span><span class="mf">1.0000000107623999</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.95479507666315644</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">5.3953328491069285E-013</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.95479507666315644</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.99999999999886702</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">6.3781864686742656E-013</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">1.0000000364970107</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-5.3953328491104808E-013</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-6.3781864686711637E-013</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">1.0000000364970068</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+    </span><span class="p">&amp;</span><span class="w">               </span><span class="mf">1.0000000364970110</span><span class="p">/),(/</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">/))</span><span class="w">
+   
+    </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">reshape</span><span class="p">(</span><span class="w"> </span><span class="p">(/</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">/),(/</span><span class="mi">5</span><span class="p">/))</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"H is ------------------"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">H</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"S is ------------------"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">S</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"B is ------------------"</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">B</span><span class="w"> 
+</span></code></pre></div></div>
+
+<h3 id="blas基础功能">BLAS基础功能</h3>
+<p>功能速查<a href="http://homepage.ntu.edu.tw/~wttsai/fortran/BLAS_LAPACK/BLAS%20Quick%20Reference%20Guide.pdf">BLAS Quick Reference Guide</a>，或如图
+<img src="/uploads/2019/08/blas.png" alt="" /></p>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!********************************</span><span class="w">
+</span><span class="c1">!GEMV 矩阵向量乘</span><span class="w">
+</span><span class="c1">!********************************</span><span class="w">
+</span><span class="c1">!call dgemv(trans, m, n, alpha, a, lda, x, incx, beta, y, incy)</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">),</span><span class="n">Y</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w">
+    </span><span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="o">=</span><span class="n">B</span><span class="w">
+    </span><span class="n">X</span><span class="p">(</span><span class="n">n</span><span class="mi">+1</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">=</span><span class="n">B</span><span class="w">
+    </span><span class="n">Y</span><span class="o">=</span><span class="mi">0</span><span class="w">
+    </span><span class="n">incx</span><span class="o">=</span><span class="mi">1</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">dgemv</span><span class="p">(</span><span class="s1">'N'</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="mf">1.0_dp</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">incx</span><span class="p">,</span><span class="mf">1.0_dp</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!X(incx,incx+n-1)</span><span class="w">
+    </span><span class="c1">!Y(incy,incy+m-1)</span><span class="w">
+    </span><span class="c1">!incx 向量的初始元素</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"H*B is --------------------"</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">Y</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span><span class="w">
+</span><span class="c1">!********************************</span><span class="w">
+</span><span class="c1">!SYMV 对称矩阵*向量</span><span class="w">
+</span><span class="c1">!********************************</span><span class="w">
+</span><span class="c1">!针对A是特殊的对称矩阵时</span><span class="w">
+</span><span class="c1">!参数和GESV不同</span><span class="w">
+</span><span class="c1">!call dsymv(uplo, n, alpha, a, lda, x, incx, beta, y, incy)</span><span class="w">
+</span><span class="c1">!y := alpha*A*x + beta*y,</span><span class="w">
+</span><span class="c1">!uplo </span><span class="w">
+</span><span class="c1">!   If uplo = 'U' or 'u', then the upper triangular part of the array a is used.</span><span class="w">
+</span><span class="c1">!   If uplo = 'L' or 'l', then the low triangular part of the array a is used.</span><span class="w">
+</span><span class="c1">!https://scc.ustc.edu.cn/zlsc/tc4600/intel/2017.0.098/mkl/common/mklman_f/index.htm#GUID-2EB693ED-69F3-48C7-B100-31F030797DDD.htm</span><span class="w">
+
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">X</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">),</span><span class="n">Y</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w">
+    </span><span class="n">X</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="o">=</span><span class="n">B</span><span class="w">
+    </span><span class="n">X</span><span class="p">(</span><span class="n">n</span><span class="mi">+1</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">=</span><span class="n">B</span><span class="w">
+    </span><span class="n">incx</span><span class="o">=</span><span class="mi">2</span><span class="w">
+    </span><span class="c1">!X(1,1+incx,1+2*incx,....,1+n*incx)`,向量的取样间隔</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">dsymv</span><span class="p">(</span><span class="s1">'U'</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="mf">1.0_dp</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">incx</span><span class="p">,</span><span class="mf">0.0_dp</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"H*[B,B](1:2:2n) symv is --------------"</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">Y</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">!********************************</span><span class="w">
+</span><span class="c1">!GEMM 矩阵乘</span><span class="w">
+</span><span class="c1">!********************************</span><span class="w">
+</span><span class="c1">!DGEMM</span><span class="w">
+</span><span class="c1">!D:double precision</span><span class="w">
+</span><span class="c1">!GE:general matrix</span><span class="w">
+</span><span class="c1">!MM:matrix-matrix</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DGEMM</span><span class="p">(</span><span class="s1">'N'</span><span class="p">,</span><span class="s1">'N'</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mf">1.0_dp</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mf">0.0_dp</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">m</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!C=alpha*OP(H)*OP(S)+beta*C</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"*********DGEMM***********"</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"H*S is ------------------"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">C</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">
+
+</span></code></pre></div></div>
+<p><img src="/uploads/2019/08/gemm.jpg" alt="" /></p>
+
+<h3 id="driver-routines">Driver Routines</h3>
+<p>功能速查<a href="http://homepage.ntu.edu.tw/~wttsai/fortran/BLAS_LAPACK/LAPACK%20Quick%20Reference%20Guide.pdf">LAPACK Quick Reference Guide</a></p>
+
+<p>Driver Routines 使用来解绝特定问题(如HC=SCE)的程序</p>
+
+<p>Computational Routines 完成特定的计算任务比如LU分解</p>
+
+<p>可以理解Driver Routines调用Computational Routines完成特定问题</p>
+
+<h4 id="线性方程组--axb">线性方程组 | AX=B</h4>
+<p>$ AX=B $ 线性问题,B可为矩阵或向量</p>
+
+<ul>
+  <li><code class="highlighter-rouge">-SV  </code> simple,LU分解求解,B是标量</li>
+  <li><code class="highlighter-rouge">-SVX </code> expert,LU分解，比-SV提供更多的功能，比如误差分析等</li>
+  <li><code class="highlighter-rouge">-SM </code> B是矢量</li>
+  <li><code class="highlighter-rouge">-TRSM</code> B(m,n) Solves a triangular matrix equation.</li>
+  <li><code class="highlighter-rouge">-TRSVB(m)</code> Solves a system of linear equations whose coefficients are in a triangular matrix.</li>
+  <li>等</li>
+</ul>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">    </span><span class="k">allocate</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">),</span><span class="n">X</span><span class="p">(</span><span class="n">m</span><span class="p">),</span><span class="n">ipiv</span><span class="p">(</span><span class="n">m</span><span class="p">))</span><span class="w">
+    </span><span class="n">A</span><span class="o">=</span><span class="n">H</span><span class="w">
+    </span><span class="n">X</span><span class="o">=</span><span class="n">B</span><span class="w">
+    </span><span class="n">NRHS</span><span class="o">=</span><span class="mi">1</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DGESV</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">NRHS</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ipiv</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!Hx=X,结果保存到X中，</span><span class="w">
+    </span><span class="c1">!A LU分解后保存到A中</span><span class="w">
+    </span><span class="c1">!     A的上三角是U</span><span class="w">
+    </span><span class="c1">!     A的下三角(不包括对角线)是L</span><span class="w">
+    </span><span class="c1">!     MATLAB  [l,u,p]=lu(H)</span><span class="w">
+    </span><span class="c1">!m: A(m,m)</span><span class="w">
+    </span><span class="c1">!NRHS=1: X是一维的,若为AX=C(m,:)时，NRHS=m</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"H LU is ------------------"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s2">"            "</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"root of HX=B(-GESV) is ----------"</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">X</span><span class="w">
+    
+    </span><span class="n">A</span><span class="o">=</span><span class="n">H</span><span class="w">
+    </span><span class="n">X</span><span class="o">=</span><span class="n">B</span><span class="w">
+    </span><span class="n">NRHS</span><span class="o">=</span><span class="mi">1</span><span class="w">
+    </span><span class="n">lwork</span><span class="o">=</span><span class="mi">1</span><span class="c1">!INTEGER. The size of the work array; lwork ≥ 1.</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">work</span><span class="p">(</span><span class="n">lwork</span><span class="p">))</span><span class="c1">!work is a workspace array, dimension at least max(1,lwork).</span><span class="w">
+    </span><span class="c1">!call dsysv( uplo, n, nrhs, a, lda, ipiv, b, ldb, work, lwork, info )</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DSYSV</span><span class="p">(</span><span class="s1">'U'</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">NRHS</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ipiv</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">work</span><span class="p">,</span><span class="n">lwork</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">work</span><span class="p">)</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"root of HX=B(-SYSV) is ----------"</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">X</span><span class="w">
+
+    </span><span class="n">A</span><span class="o">=</span><span class="n">H</span><span class="w">
+    </span><span class="n">C</span><span class="o">=</span><span class="n">S</span><span class="w">
+    </span><span class="n">NRHS</span><span class="o">=</span><span class="n">m</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DGESV</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">NRHS</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ipiv</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"root of HX=C is ----------"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">C</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">ipiv</span><span class="p">)</span><span class="w">    
+    
+</span></code></pre></div></div>
+
+<p><img src="/uploads/2019/08/gesv.jpg" alt="" /></p>
+
+<h4 id="最小二乘问题--llslinear-leqat-squares-problems">最小二乘问题 | LLS(Linear Leqat squares problems)</h4>
+<p>$ ||Ax-b||_2 $</p>
+
+<p>找到X使得 $ ||Ax-b||_2 $ 最小</p>
+<ul>
+  <li><code class="highlighter-rouge">-LS </code> 使用LU或QR分解计算</li>
+  <li><code class="highlighter-rouge">-LSX</code></li>
+  <li><code class="highlighter-rouge">-LSS</code>  SVD奇异值分解</li>
+  <li>等</li>
+</ul>
+
+<p>QR分解 设 A(m,n). 则存在一个单位列正交矩阵 Q(M,n) (即 Q∗Q = I ) 和一个上三角矩阵 R ∈Cn×n, 使得A=Q*R</p>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!call dgels(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info)</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">),</span><span class="n">X</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w">
+    </span><span class="n">A</span><span class="o">=</span><span class="n">H</span><span class="w">
+    </span><span class="n">X</span><span class="o">=</span><span class="n">B</span><span class="w">
+    </span><span class="n">NRHS</span><span class="o">=</span><span class="mi">1</span><span class="w">
+    </span><span class="n">lwork</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">NRHS</span><span class="p">)</span><span class="w"> </span><span class="c1">!The size of the work array; must be at least min (m, n)+max(1, m, n, nrhs).</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">work</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">lwork</span><span class="p">)))</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DGELS</span><span class="p">(</span><span class="s1">'N'</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">NRHS</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">work</span><span class="p">,</span><span class="n">lwork</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!返回值A与MATLAB X=qr(H)返回值一样</span><span class="w">
+    </span><span class="c1">!A的右上角与[Q,R]=qr(H)中的R一样,暂时不知道QR分解的下矩阵是什么</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">work</span><span class="p">)</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"H QR is ------------------"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">    
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"min(||AH-B||2), when X is (-GELS)"</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">X</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">X</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="标准本征值问题axex">标准本征值问题AX=EX</h4>
+<h5 id="对称本征值问题sepsymmetric-eigenproblems">对称本征值问题|SEP(Symmetric eigenproblems)</h5>
+<p>$ Ax=Ex $ 
+$ A=A^T(real) $   $ A=A^H(complex) $</p>
+
+<ul>
+  <li><code class="highlighter-rouge">-SYEV </code> simple,L U 分解</li>
+  <li><code class="highlighter-rouge">-SYEVX</code>  expert,比-EV提供更多的功能，比如误差分析等</li>
+  <li><code class="highlighter-rouge">-SYEVD</code>  不同的算法而已;根据测试EVR最快,EVD次之,SIESTA采用的EVD</li>
+  <li><code class="highlighter-rouge">-SYEVR</code>  不同的算法而已;测试<a href="https://www.netlib.org/lapack/lug/node71.html">LAPACK Benchmark</a></li>
+  <li><code class="highlighter-rouge">-SYEVX</code>  不同的算法而已;如图
+<br /><img src="/uploads/2019/08/img255.gif" alt="Figure 3.2: Timings of driver routines for computing all eigenvalues and eigenvectors of a dense symmetric matrix. The upper graph shows times in seconds on an IBM Power3. The lower graph shows times relative to the fastest routine DSYEVR, which appears as a horizontal line at 1." /></li>
+</ul>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!call dsyev(jobz, uplo, n, a, lda, w, work, lwork, info)</span><span class="w">
+</span><span class="c1">!jobz = 'N', then only eigenvalues are computed.</span><span class="w">
+</span><span class="c1">!jobz = 'V', then eigenvalues and eigenvectors are computed.</span><span class="w">
+</span><span class="c1">!uplo="U" or "L", 分解存储A的方式</span><span class="w">
+</span><span class="c1">!work is a workspace array, its dimension max(1, lwork).    </span><span class="w">
+</span><span class="c1">!lwork ≥ max(1, 3n-1).</span><span class="w">
+</span><span class="c1">!w本征值Array, size at least max(1, n)</span><span class="w">
+</span><span class="c1">!若jobz='V',A存储本征矢量,一列是一个本征矢,A(i,:)的本征值为w(i)</span><span class="w">
+</span><span class="c1">!若jobz='N',A存储A的L/U(uplo='L'/'U')会被用于计算，并无意义，不是LU分解</span><span class="w">
+</span><span class="c1">!MATLAB中lu(H),[l,u]=lu(H),[l,u,p]=lu(H)的结果不一样</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">),</span><span class="n">E</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w">
+    </span><span class="n">A</span><span class="o">=</span><span class="n">H</span><span class="w">
+    </span><span class="n">E</span><span class="o">=</span><span class="mi">0</span><span class="w">
+    </span><span class="n">lwork</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="o">*</span><span class="n">n</span><span class="mi">-1</span><span class="p">)</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">work</span><span class="p">(</span><span class="n">lwork</span><span class="p">))</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DSYEV</span><span class="p">(</span><span class="s1">'V'</span><span class="p">,</span><span class="s1">'U'</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">E</span><span class="p">,</span><span class="n">work</span><span class="p">,</span><span class="n">lwork</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">work</span><span class="p">)</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"HX=wX; w is ------------------"</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">E</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"HX=wX; vectors is ------------------"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">
+    </span><span class="c1">!H=U*U^T;U*U^T*X=EX</span><span class="w">
+    </span><span class="c1">!C=U^T*U;Cy=Ey, y=U^T*X</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">E</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h5 id="非对称本征值问题nepnonsymmetric-eigenproblems">非对称本征值问题|NEP(Nonsymmetric eigenproblems)</h5>
+<p>$ Ax=Ex $ $ A=QTQ^T(real) $  $  A=QTQ^H(complex) $
+<br />Q幺正矩阵,T上三角矩阵</p>
+
+<ul>
+  <li><code class="highlighter-rouge">-GEES </code> simple Schur因子</li>
+  <li><code class="highlighter-rouge">-GEESX</code>  expert,比-GEES提供更多的功能，比如误差分析等</li>
+  <li><code class="highlighter-rouge">-GEEV </code> 本征值本征矢</li>
+  <li><code class="highlighter-rouge">-GEEVX</code>  expert</li>
+  <li>等</li>
+</ul>
+
+<p>程序遇到问题，先搁置</p>
+
+<h5 id="奇异值问题svdsingular-value-decomposion">奇异值问题|SVD(Singular value decomposion)</h5>
+
+<p>暂时还不懂</p>
+<ul>
+  <li><code class="highlighter-rouge">-GESVD</code></li>
+</ul>
+
+<h4 id="广义的本征值问题--generalized-eigenvalue-problems">广义的本征值问题 | Generalized eigenvalue problems</h4>
+<h4 id="广义对称的本征值问题gsep-generalized-symmetric-definite-eigenproblems">广义对称的本征值问题|<strong>GSEP</strong> Generalized symmetric-definite eigenproblems</h4>
+
+<p><script type="math/tex">AX=EBX</script>
+<script type="math/tex">ABX=EX</script>
+<script type="math/tex">BAX=EX</script></p>
+
+<p>其中A,B是对称的或哈密顿量 ， <strong>B是正定的</strong></p>
+
+<ul>
+  <li><code class="highlighter-rouge">-SYGV</code></li>
+  <li><code class="highlighter-rouge">-HEGV</code></li>
+  <li><code class="highlighter-rouge">-SPGV</code></li>
+  <li><code class="highlighter-rouge">-HPGV</code></li>
+</ul>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!call dsygv(itype, jobz, uplo, n, a, lda, b, ldb, w, work, lwork, info)</span><span class="w">
+</span><span class="c1">!itype</span><span class="w">
+</span><span class="c1">! itype = 1, the problem type is A*x = lambda*B*x;</span><span class="w">
+</span><span class="c1">! itype = 2, the problem type is A*B*x = lambda*x;</span><span class="w">
+</span><span class="c1">! itype = 3, the problem type is B*A*x = lambda*x.</span><span class="w">
+</span><span class="c1">! jobz = 'N' or 'U'</span><span class="w">
+</span><span class="c1">! B输入矩阵和输出本征矢量</span><span class="w">
+
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">),</span><span class="n">E</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w">
+    </span><span class="n">A</span><span class="o">=</span><span class="n">H</span><span class="w">
+    </span><span class="n">C</span><span class="o">=</span><span class="n">S</span><span class="w">
+    </span><span class="n">E</span><span class="o">=</span><span class="mi">0</span><span class="w">
+    </span><span class="n">lwork</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="o">*</span><span class="n">n</span><span class="mi">-1</span><span class="p">)</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">work</span><span class="p">(</span><span class="n">lwork</span><span class="p">))</span><span class="w"> 
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DSYGV</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">'V'</span><span class="p">,</span><span class="s1">'U'</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">E</span><span class="p">,</span><span class="n">work</span><span class="p">,</span><span class="n">lwork</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!算完后，A被覆盖了一堆中间数据</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"HC=SCE; E is ------------------"</span><span class="w">    
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">E</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"HC=SCE; C is ------------------"</span><span class="w">  
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">C</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">   
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">work</span><span class="p">)</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">E</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h5 id="广义非对称的本征值问题gnep-generalized-nonsymmetric--eigenproblems">广义非对称的本征值问题|<strong>GNEP</strong> Generalized nonsymmetric  eigenproblems</h5>
+
+<ul>
+  <li><code class="highlighter-rouge">-GEES  </code></li>
+  <li><code class="highlighter-rouge">-GEESX </code></li>
+  <li><code class="highlighter-rouge">-GEEV  </code></li>
+  <li><code class="highlighter-rouge">-GEEVX </code></li>
+</ul>
+
+<p>暂时懒得看了</p>
+
+<h3 id="computational-routines">Computational Routines</h3>
+<p>自己组合Computational Routines来解决一个问题，如分解，变为三角阵
+<br />通常的过程,先分解(factorize -TRF)再处理,如求逆(-TRI)、求GSEP(-SYGST)等
+<br />通过这些程序，我们也可以一步步实现分解(LU,chol,QR…),解决线性方程,LLS,SVD,(广义)本征值问题
+<br />下面为几个示例</p>
+
+<h4 id="facrotize分解-trf">Facrotize分解(-TRF)</h4>
+<p>不同类型的矩阵分解结果不同，如<a href="https://scc.ustc.edu.cn/zlsc/tc4600/intel/2017.0.098/mkl/common/mklman_f/index.htm#GUID-2EB693ED-69F3-48C7-B100-31F030797DDD.htm">Routines for Matrix Factorization</a></p>
+
+<ul>
+  <li>通常的矩阵GE：LU分解 <code class="highlighter-rouge">-GETRF</code> $ A=PLU $</li>
+  <li>正定对称矩阵PO：Cholesky 分解 <code class="highlighter-rouge">-POTRF</code> $ A=U^TU $ or $ LL^T $</li>
+  <li>对称非正定矩阵SY：系统非正定分解  <code class="highlighter-rouge">-SYTRF</code> $ A=P^TU^TDUP $ or $ PLDL^TP^T $</li>
+</ul>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!******</span><span class="w">
+</span><span class="c1">!LU分解</span><span class="w">
+</span><span class="c1">!******</span><span class="w">
+</span><span class="c1">!call dgetrf( m, n, a, lda, ipiv, info )</span><span class="w">
+</span><span class="c1">!返回值A,ipiv可用于后续计算</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">),</span><span class="n">E</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w">
+    </span><span class="n">A</span><span class="o">=</span><span class="n">H</span><span class="w">
+    </span><span class="n">E</span><span class="o">=</span><span class="n">B</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">ipiv</span><span class="p">(</span><span class="n">m</span><span class="p">))</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DGETRF</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ipiv</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"lu(H) is ------------------"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">
+</span><span class="c1">!LU分解求HX=B示例    </span><span class="w">
+</span><span class="c1">!call dgetrs( trans, n, nrhs, a, lda, ipiv, b, ldb, info )</span><span class="w">
+</span><span class="c1">!Solves a system of linear equations with an LU-factored square coefficient matrix, with multiple right-hand sides.</span><span class="w">
+</span><span class="c1">!ldbINTEGER. The leading dimension of b; ldb ≥ max(1, n)</span><span class="w">
+</span><span class="c1">!**ipiv 是-GETRF的返回值**</span><span class="w">
+</span><span class="c1">!**A也是-GERTF的LU分解后的矩阵***</span><span class="w">
+</span><span class="c1">!ipiv Array, size at least max(1, n). The ipiv array, as returned by ?getrf.</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DGETRS</span><span class="p">(</span><span class="s1">'N'</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ipiv</span><span class="p">,</span><span class="n">E</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"use lu(H) to solve HX=B, X is "</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">E</span><span class="w">
+</span><span class="c1">!计算之后，不会改变A和ipiv的值</span><span class="w">
+
+</span><span class="c1">!LU分解求逆A^-1示例</span><span class="w">
+</span><span class="c1">! invert using factorization</span><span class="w">
+</span><span class="c1">!call dgetri( n, a, lda, ipiv, work, lwork, info )</span><span class="w">
+    </span><span class="n">lwork</span><span class="o">=</span><span class="n">n</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">work</span><span class="p">(</span><span class="n">lwork</span><span class="p">))</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DGETRI</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ipiv</span><span class="p">,</span><span class="n">work</span><span class="p">,</span><span class="n">lwork</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"use lu(H) to get H^-1:"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">      
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">work</span><span class="p">)</span><span class="w">    
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">ipiv</span><span class="p">)</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">E</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">!**********************    </span><span class="w">
+</span><span class="c1">!Cholesky factorization</span><span class="w">
+</span><span class="c1">!**********************  </span><span class="w">
+</span><span class="c1">!call dpotrf( uplo, n, a, lda, info ) </span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">),</span><span class="n">E</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="w">
+    </span><span class="n">A</span><span class="o">=</span><span class="n">H</span><span class="w">
+    </span><span class="n">C</span><span class="o">=</span><span class="n">S</span><span class="w">
+    </span><span class="n">E</span><span class="o">=</span><span class="n">B</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DPOTRF</span><span class="p">(</span><span class="s1">'U'</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!上部分变为U,下三角部分不变</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"chol(S) is: -----------"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">C</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">
+</span><span class="c1">!chol分解求HX=B示例    </span><span class="w">
+</span><span class="c1">!call dpotrs( uplo, n, nrhs, a, lda, b, ldb, info )</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DPOTRS</span><span class="p">(</span><span class="s1">'U'</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">E</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"use chol(S) to solve SX=B, X is "</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">E</span><span class="w">    
+</span><span class="c1">!chol分解求逆A^-1示例</span><span class="w">
+</span><span class="c1">!call dpotri( uplo, n, a, lda, info )  </span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DPOTRI</span><span class="p">(</span><span class="s1">'U'</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!结果inv(C)也是对称的，所以，C的上三角矩阵是逆，下三角依旧没变</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"use chol(S) to get S^-1:"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">C</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">   
+</span><span class="c1">!chol分解求广义本征值HC=SCE示例</span><span class="w">
+
+
+    </span><span class="n">A</span><span class="o">=</span><span class="n">H</span><span class="w">
+    </span><span class="n">C</span><span class="o">=</span><span class="n">S</span><span class="w">
+    </span><span class="n">E</span><span class="o">=</span><span class="mf">0.0_dp</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"use chol(S) to solve HC=SCE"</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"    HC=SCE(-POTRF): 1. S=U^T*U,y=UC"</span><span class="w">
+</span><span class="c1">!***</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DPOTRF</span><span class="p">(</span><span class="s1">'U'</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!C=U*U^T,仅改变C的上三角</span><span class="w">
+</span><span class="c1">!***</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"    HC=SCE(-SYGST): 2. tmpC=inv(U^-T)*H*inv(U)"</span><span class="w">
+</span><span class="c1">!call dsygst(itype, uplo, n, a, lda, b, ldb, info)</span><span class="w">
+</span><span class="c1">!The routine reduces real symmetric-definite generalized eigenproblems</span><span class="w">
+</span><span class="c1">!A*z = λ*B*z, A*B*z = λ*z, or B*A*z = λ*z</span><span class="w">
+</span><span class="c1">!itype=1,     2,              3</span><span class="w">
+</span><span class="c1">!to the standard form C*y = λ*y. </span><span class="w">
+</span><span class="c1">!Here A is a real symmetric matrix, </span><span class="w">
+</span><span class="c1">!and B is a real symmetric positive-definite matrix. </span><span class="w">
+</span><span class="c1">!Before calling this routine, call ?potrf to compute the Cholesky factorization: B = UT*U or B = L*LT.</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DSYGST</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">'U'</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!A=inv(U^T)*A*inv(U)，仅改变A的上三角</span><span class="w">
+</span><span class="c1">!***</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"    HC=SCE(-SYEV?): 3. tmpCy=Ey(本征值问题)"</span><span class="w">
+</span><span class="c1">!call dsyevd(jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info)</span><span class="w">
+    </span><span class="n">lwork</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">work</span><span class="p">(</span><span class="n">lwork</span><span class="p">))</span><span class="w">
+    </span><span class="n">liwork</span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="o">*</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="w">
+    </span><span class="k">allocate</span><span class="p">(</span><span class="n">iwork</span><span class="p">(</span><span class="n">liwork</span><span class="p">))</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DSYEVD</span><span class="p">(</span><span class="s1">'V'</span><span class="p">,</span><span class="s1">'U'</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">E</span><span class="p">,</span><span class="n">work</span><span class="p">,</span><span class="n">lwork</span><span class="p">,</span><span class="n">iwork</span><span class="p">,</span><span class="n">liwork</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!y保存到A中了</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"    HC=SCE(-SYEV?):    E is:"</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="w"> </span><span class="n">E</span><span class="w">
+</span><span class="c1">!***</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"    HC=SCE(-SYEV?): 4. y=UC,(线性方程问题)"</span><span class="w">
+    </span><span class="c1">!可选方案很多，</span><span class="w">
+    </span><span class="c1">!a. inv(U)*y</span><span class="w">
+    </span><span class="c1">!因为U已经上三角了</span><span class="w">
+    </span><span class="c1">!b. Dirver routines解方程  -TRSM(B(m,n), -TRSV(B(n)) </span><span class="w">
+    </span><span class="c1">!c. Computational routines  -TRTRS    </span><span class="w">
+</span><span class="c1">!call dtrsm(side, uplo, transa, diag, m, n, alpha, a, lda, b, ldb) B=AX</span><span class="w">
+</span><span class="c1">!call dtrtrs( uplo, trans, diag, n, nrhs, a, lda, b, ldb, info )</span><span class="w">
+</span><span class="c1">!AX=B结果输出到B</span><span class="w">
+</span><span class="c1">![Fortran使用Scalapack求解HC=SCE](/2019/08/04/HC_SCE)此文采用的TRSM</span><span class="w">
+</span><span class="c1">!此处采用TRTRS</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">DTRTRS</span><span class="p">(</span><span class="s1">'U'</span><span class="p">,</span><span class="s1">'N'</span><span class="p">,</span><span class="s1">'N'</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"    HC=SCE(-TRTRS):    C is:"</span><span class="w">
+    </span><span class="k">do</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"            "</span><span class="p">,</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,:)</span><span class="w">
+    </span><span class="k">enddo</span><span class="w">   
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">work</span><span class="p">,</span><span class="n">iwork</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!释放内存结束程序</span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">)</span><span class="w">
+</span><span class="k">end</span><span class="w"> </span><span class="k">program</span><span class="w">    
+</span></code></pre></div></div>
+
+<p>除了上述之外，还有很多的computational routines
+<br />先这样吧,补充相关知识后再回来补充</p>
+
+<h3 id="scalapack有与lapack相同的函数">Scalapack有与Lapack相同的函数</h3>
+<p>示例:<br />
+求解HC=SCE问题: <a href="/2019/08/04/HC_SCE">Fortran使用Scalapack求解HC=SCE</a><br /></p>
+<h4 id="lu分解求逆">LU分解求逆</h4>
+<h5 id="原理">原理</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A=L*U
+inv(A)*L*U=E
+inv(A)*L=inv(U)
+求解线性方程组得到inv(A)
+</code></pre></div></div>
+
+<h5 id="lu分解pgetrf">LU分解<code class="highlighter-rouge">p?getrf</code></h5>
+<p><img src="/uploads/2019/08/LU.jpg" alt="" /></p>
+<h5 id="求逆pgetri">求逆<code class="highlighter-rouge">p?getri</code></h5>
+<blockquote>
+  <p><a href="https://scc.ustc.edu.cn/zlsc/tc4600/intel/2017.0.098/mkl/common/mklman_f/index.htm#GUID-2EB693ED-69F3-48C7-B100-31F030797DDD.htm">p?getri</a>
+:Computes the inverse of a LU-factored distributed matrix.</p>
+</blockquote>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">program</span><span class="w"> </span><span class="n">HC_SCE</span><span class="w">
+    </span><span class="k">use</span><span class="w"> </span><span class="n">m_mpi_my</span><span class="w">
+    </span><span class="k">implicit</span><span class="w"> </span><span class="k">none</span><span class="w">
+    
+    </span><span class="kt">INTEGER</span><span class="p">,</span><span class="k">parameter</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">dp</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span><span class="n">DLEN_</span><span class="o">=</span><span class="mi">9</span><span class="w">
+    </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="k">allocatable</span><span class="w">    </span><span class="p">::</span><span class="w">  </span><span class="n">S</span><span class="p">(:,:),</span><span class="n">B</span><span class="p">(:,:)</span><span class="w">
+    </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="k">allocatable</span><span class="w">    </span><span class="p">::</span><span class="w">  </span><span class="n">H_2d</span><span class="p">(:,:),</span><span class="n">S_2d</span><span class="p">(:,:),</span><span class="n">C_2d</span><span class="p">(:,:),</span><span class="n">E_2d</span><span class="p">(:)</span><span class="w">
+    </span><span class="kt">REAL</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w">    </span><span class="p">::</span><span class="w"> </span><span class="n">Hall</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span><span class="w">
+    </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="n">lm</span><span class="p">,</span><span class="n">ln</span><span class="p">,</span><span class="n">blocksize</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="w">
+    </span><span class="c1">!矩阵H_aux(m,m), local H(lm,m)</span><span class="w">
+    </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">work</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span><span class="n">iwork</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span><span class="n">ipiv</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w">
+    </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">lwork</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span><span class="n">liwork</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span><span class="n">rsrc</span><span class="p">,</span><span class="n">nn</span><span class="w">    
+    
+    </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">ICTXT</span><span class="p">,</span><span class="n">ICTXT_2d</span><span class="p">,</span><span class="n">NPROW</span><span class="p">,</span><span class="n">NPCOL</span><span class="p">,</span><span class="n">myROW</span><span class="p">,</span><span class="n">myCOL</span><span class="p">,</span><span class="n">LOCr</span><span class="p">,</span><span class="n">LOCc</span><span class="w">
+    </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">DESCH</span><span class="p">(</span><span class="n">DLEN_</span><span class="p">),</span><span class="n">DESCH_2d</span><span class="p">(</span><span class="n">DLEN_</span><span class="p">),</span><span class="n">DESCE</span><span class="p">(</span><span class="n">DLEN_</span><span class="p">),</span><span class="n">INFO</span><span class="p">,</span><span class="n">DSCALE</span><span class="w">
+    </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">ICTXT_1d</span><span class="p">,</span><span class="n">ICTXT_3d</span><span class="p">,</span><span class="n">ICTXT_4d</span><span class="w">
+    </span><span class="kt">CHARACTER</span><span class="o">*</span><span class="mi">2</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">numchar</span><span class="w">
+    </span><span class="kt">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="k">EXTERNAL</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">numroc</span><span class="w">
+    
+    
+    </span><span class="k">call</span><span class="w"> </span><span class="n">mpi_start</span><span class="p">()</span><span class="w">
+    </span><span class="n">rsrc</span><span class="o">=</span><span class="mi">0</span><span class="w">  
+
+</span><span class="c1">!********************************************************************************   </span><span class="w">
+</span><span class="c1">!1D网格计算</span><span class="w">
+</span><span class="c1">!********************************************************************************</span><span class="w">
+</span><span class="c1">!**************************</span><span class="w">
+</span><span class="c1">!处理器grid</span><span class="w">
+</span><span class="c1">!**************************</span><span class="w">
+          </span><span class="n">NPCOL</span><span class="o">=</span><span class="mi">4</span><span class="w">
+          </span><span class="n">NPROW</span><span class="o">=</span><span class="mi">1</span><span class="w">
+          </span><span class="k">CALL</span><span class="w"> </span><span class="n">BLACS_GET</span><span class="p">(</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">ICTXT</span><span class="w"> </span><span class="p">)</span><span class="w"> 
+          
+          </span><span class="k">call</span><span class="w"> </span><span class="n">blacs_gridinit</span><span class="p">(</span><span class="n">ICTXT</span><span class="p">,</span><span class="s1">'C'</span><span class="p">,</span><span class="n">NPROW</span><span class="p">,</span><span class="n">NPCOL</span><span class="p">)</span><span class="w">
+          </span><span class="k">call</span><span class="w"> </span><span class="n">blacs_gridinfo</span><span class="p">(</span><span class="n">ICTXT</span><span class="p">,</span><span class="n">NPROW</span><span class="p">,</span><span class="n">NPCOL</span><span class="p">,</span><span class="n">myROW</span><span class="p">,</span><span class="n">myCOL</span><span class="p">)</span><span class="w">
+
+    </span><span class="c1">!write(*,*) node,NPROW,NPCOL,myROW,mycol</span><span class="w">
+</span><span class="c1">!**************************</span><span class="w">
+</span><span class="c1">!数据网格</span><span class="w">
+</span><span class="c1">!读入数据S</span><span class="w">
+</span><span class="c1">!**************************</span><span class="w">
+       </span><span class="n">m</span><span class="o">=</span><span class="mi">5</span><span class="w">
+       </span><span class="n">lm</span><span class="o">=</span><span class="mi">1</span><span class="w">
+       </span><span class="k">if</span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="ow">.eq.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">lm</span><span class="o">=</span><span class="mi">2</span><span class="w">
+       </span><span class="k">allocate</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">lm</span><span class="p">),</span><span class="n">B</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">lm</span><span class="p">))</span><span class="w">
+       </span><span class="n">blocksize</span><span class="o">=</span><span class="mi">1</span><span class="w">
+       </span><span class="k">call</span><span class="w"> </span><span class="n">DESCINIT</span><span class="p">(</span><span class="n">DESCH</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">blocksize</span><span class="p">,</span><span class="n">blocksize</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">ICTXT</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">INFO</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!   !call DESCINIT(DESCH,5,5,1,1,0,0,ICTXT,lm,INFO)</span><span class="w">
+ 
+</span><span class="c1">!数据处理</span><span class="w">
+       </span><span class="k">data</span><span class="w"> </span><span class="n">Hall</span><span class="w"> </span><span class="p">/</span><span class="mf">1.0000000107623999</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.95479507666315644</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">5.3953328491069285E-013</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.95479507666315644</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.99999999999886702</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">6.3781864686742656E-013</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">1.0000000364970107</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">-5.3953328491104808E-013</span><span class="p">,</span><span class="w"> </span><span class="mf">-6.3781864686711637E-013</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">1.0000000364970068</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0000000000000000</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0000000364970110</span><span class="p">/</span><span class="w">
+       </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="w">
+       </span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="w">  
+           </span><span class="k">if</span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="ow">.eq.</span><span class="w"> </span><span class="nb">mod</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">np</span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">S</span><span class="p">(:,</span><span class="n">i</span><span class="p">/</span><span class="n">np</span><span class="mi">+1</span><span class="p">)</span><span class="o">=</span><span class="nb">cmplx</span><span class="p">(</span><span class="n">Hall</span><span class="p">(</span><span class="n">j</span><span class="p">:</span><span class="n">j</span><span class="mi">+4</span><span class="p">))</span><span class="w">   </span><span class="c1">!DO i=1,lm</span><span class="w">
+           </span><span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="mi">+5</span><span class="w">
+       </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w"> 
+    
+       </span><span class="k">if</span><span class="p">(</span><span class="n">IOnode</span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"A is : -------------------------------"</span><span class="w">
+       </span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="w">  
+           </span><span class="k">if</span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="ow">.eq.</span><span class="w"> </span><span class="nb">mod</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">np</span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s2">":"</span><span class="p">,</span><span class="kt">real</span><span class="p">(</span><span class="n">S</span><span class="p">(:,</span><span class="n">i</span><span class="p">/</span><span class="n">np</span><span class="mi">+1</span><span class="p">))</span><span class="w">   </span><span class="c1">!DO i=1,lm</span><span class="w">
+           </span><span class="k">call</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">           </span><span class="c1">!    write(*,*) node,i,":",S(i,:) </span><span class="w">
+       </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w"> 
+    
+    
+    
+</span><span class="c1">!****************************</span><span class="w">
+</span><span class="c1">!循环测试mkl内存问题</span><span class="w">
+
+ 
+    </span><span class="n">B</span><span class="o">=</span><span class="n">S</span><span class="w">
+ </span><span class="c1">!  !进行PLU分解,B的右上角变为U矩阵，下部分存L的绝对部分(对角线是1不用存储)，P矩阵是单位矩阵</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">pzgetrf</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">DESCH</span><span class="p">,</span><span class="w"> </span><span class="n">ipiv</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!ipiv INTEGER Array of size LOCr(m_a)+ mb_a.</span><span class="w">
+
+    </span><span class="k">if</span><span class="p">(</span><span class="n">IOnode</span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"LUA' is : -------------------------------"</span><span class="w">
+    </span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="w">  
+        </span><span class="k">if</span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="ow">.eq.</span><span class="w"> </span><span class="nb">mod</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">np</span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s2">":"</span><span class="p">,</span><span class="kt">real</span><span class="p">(</span><span class="n">B</span><span class="p">(:,</span><span class="n">i</span><span class="p">/</span><span class="n">np</span><span class="mi">+1</span><span class="p">))</span><span class="w">   </span><span class="c1">!DO i=1,lm</span><span class="w">
+        </span><span class="k">call</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">           </span><span class="c1">!    write(*,*) node,i,":",S(i,:) </span><span class="w">
+    </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w"> 
+    
+    
+   </span><span class="c1">!lwork=LOCr(n+mod(ia-1,mb_a))*nb_a.</span><span class="w">
+   </span><span class="c1">!     =LOCr(m)*blocksize</span><span class="w">
+   </span><span class="c1">!     =NUMROC( M, MB_A, MYROW, RSRC_A, NPROW )*blocksize</span><span class="w">
+   
+    </span><span class="n">LOCr</span><span class="o">=</span><span class="n">numroc</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">blocksize</span><span class="p">,</span><span class="n">myROW</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">NPROW</span><span class="p">)</span><span class="w">
+    </span><span class="n">LOCc</span><span class="o">=</span><span class="n">numroc</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">blocksize</span><span class="p">,</span><span class="n">myCOl</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">NPCOL</span><span class="p">)</span><span class="w">
+    </span><span class="n">lwork</span><span class="o">=</span><span class="n">LOCr</span><span class="o">*</span><span class="n">blocksize</span><span class="w">
+   </span><span class="c1">!liwork=LOCc(n_a + mod(ja-1,nb_a)) + </span><span class="w">
+   </span><span class="c1">!        max(ceil(ceil(LOCr(m_a)/mb_a)/(lcm/NPROW)),nb_a)</span><span class="w">
+   </span><span class="c1">!      =LOCc(m)+max(ceil(ceil(LOCr(m)/blocksize)/(lcm/NPROW)),blocksize)</span><span class="w">
+   </span><span class="c1">!      =LOCC(m)+max(ceil(LOCr(m)/(4)),blocksize)</span><span class="w">
+   </span><span class="c1">!      = NUMROC( m, NB_A, MYCOL, CSRC_A, NPCOL )</span><span class="w">
+     </span><span class="c1">!liwork=LOCc + max(ceiling(ceiling(1.0*LOCr/blocksize)/4.0),blocksize)</span><span class="w">
+     </span><span class="c1">!这样算的liwork还是小，不如直接liwork=LOCc+LOCr</span><span class="w">
+    </span><span class="n">liwork</span><span class="o">=</span><span class="n">LOCc</span><span class="o">+</span><span class="n">LOCr</span><span class="w">
+     
+    </span><span class="k">call</span><span class="w"> </span><span class="n">pzgetri</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">DESCH</span><span class="p">,</span><span class="w"> </span><span class="n">ipiv</span><span class="p">,</span><span class="w"> </span><span class="n">work</span><span class="p">,</span><span class="w"> </span><span class="n">lwork</span><span class="p">,</span><span class="w"> </span><span class="n">iwork</span><span class="p">,</span><span class="w"> </span><span class="n">liwork</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="p">)</span><span class="w">
+    </span><span class="c1">!pzgetri利用pzgetrf分解的LU求逆</span><span class="w">
+ </span><span class="c1">!  !call pzgetri(n, a, ia, ja, desca, ipiv, work, lwork, iwork, liwork, info)</span><span class="w">
+ </span><span class="c1">!  !ipiv Array of size LOCr(m_a)+ mb_a.</span><span class="w">
+ </span><span class="c1">!  !lwork≥LOCr(n+mod(ia-1,mb_a))*nb_a.</span><span class="w">
+ </span><span class="c1">!  !(local or global) INTEGER. The size of the array iwork.</span><span class="w">
+ </span><span class="c1">!  !The minimal value liwork of is determined by the following code:</span><span class="w">
+ </span><span class="c1">!  !</span><span class="w">
+ </span><span class="c1">!  !if NPROW == NPCOL then</span><span class="w">
+ </span><span class="c1">!  ! liwork = LOCc(n_a + mod(ja-1,nb_a))+ nb_a </span><span class="w">
+    </span><span class="c1">!else </span><span class="w">
+    </span><span class="c1">! liwork = LOCc(n_a + mod(ja-1,nb_a)) + </span><span class="w">
+    </span><span class="c1">!max(ceil(ceil(LOCr(m_a)/mb_a)/(lcm/NPROW)),nb_a)</span><span class="w">
+    </span><span class="c1">!LOCc(m)+max(ceil(LOCr(m)/(lcm/NPROW)),nb_a)</span><span class="w">
+    </span><span class="c1">!numroc(m,blocksize,myCOL,0,NPCOL)+ceil(numroc(m)/4.0)</span><span class="w">
+    </span><span class="c1">!end if</span><span class="w">
+    </span><span class="c1">!where lcm is the least common multiple of process rows and columns (NPROW and NPCOL).</span><span class="w">
+    </span><span class="c1">!LCM最小公倍数</span><span class="w">
+    </span><span class="c1">!**************************</span><span class="w">
+    </span><span class="c1">!**注：LOCr与LoCc是一个Scalapack的函数，</span><span class="w">
+    </span><span class="c1">! *  The values of LOCr() and LOCc() may be determined via a call to the</span><span class="w">
+    </span><span class="c1">! *  ScaLAPACK tool function, NUMROC:</span><span class="w">
+    </span><span class="c1">! *          LOCr( M ) = NUMROC( M, MB_A, MYROW, RSRC_A, NPROW ),</span><span class="w">
+    </span><span class="c1">! *          LOCc( N ) = NUMROC( N, NB_A, MYCOL, CSRC_A, NPCOL ).</span><span class="w">
+    </span><span class="c1">! *  An upper bound for these quantities may be computed by:</span><span class="w">
+    </span><span class="c1">! *          LOCr( M ) &lt;= ceil( ceil(M/MB_A)/NPROW )*MB_A</span><span class="w">
+    </span><span class="c1">! *          LOCc( N ) &lt;= ceil( ceil(N/NB_A)/NPCOL )*NB_A</span><span class="w">
+    
+    </span><span class="k">if</span><span class="p">(</span><span class="n">IOnode</span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"invA is : -------------------------------"</span><span class="w">
+    </span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="w">  
+        </span><span class="k">if</span><span class="p">(</span><span class="n">node</span><span class="w"> </span><span class="ow">.eq.</span><span class="w"> </span><span class="nb">mod</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">np</span><span class="p">)</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s2">":"</span><span class="p">,</span><span class="kt">real</span><span class="p">(</span><span class="n">B</span><span class="p">(:,</span><span class="n">i</span><span class="p">/</span><span class="n">np</span><span class="mi">+1</span><span class="p">))</span><span class="w">   </span><span class="c1">!DO i=1,lm</span><span class="w">
+        </span><span class="k">call</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">           </span><span class="c1">!    write(*,*) node,i,":",S(i,:) </span><span class="w">
+    </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w"> 
+        
+    </span><span class="k">CALL</span><span class="w"> </span><span class="n">BLACS_GRIDEXIT</span><span class="p">(</span><span class="w"> </span><span class="n">ICTXT</span><span class="w"> </span><span class="p">)</span><span class="w"> 
+ </span><span class="c1">!   </span><span class="w">
+    </span><span class="k">deallocate</span><span class="p">(</span><span class="n">S</span><span class="p">,</span><span class="n">B</span><span class="p">)</span><span class="w">
+    </span><span class="k">call</span><span class="w"> </span><span class="n">mpi_end</span><span class="p">()</span><span class="w">
+</span><span class="k">end</span><span class="w"> </span><span class="k">program</span><span class="w"> </span><span class="n">HC_SCE</span><span class="w">
+</span></code></pre></div></div>
+
+<p>结果
+<img src="/uploads/2019/08/inv.jpg" alt="" />
+使用MATLAB验证</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt; A
+
+A =
+
+   1.000000000000000   0.954795062541962                   0   0.000000000000540                   0
+   0.954795062541962   1.000000000000000                   0   0.000000000000638                   0
+                   0                   0   1.000000000000000                   0                   0
+  -0.000000000000540  -0.000000000000638                   0   1.000000000000000                   0
+                   0                   0                   0                   0   1.000000000000000
+
+&gt;&gt; [l,u,p]=lu(A);
+&gt;&gt; u'
+
+ans =
+
+   1.000000000000000                   0                   0                   0                   0
+   0.954795062541962   0.088366388545492                   0                   0                   0
+                   0                   0   1.000000000000000                   0                   0
+   0.000000000000540   0.000000000000123                   0   1.000000000000000                   0
+                   0                   0                   0                   0   1.000000000000000
+
+&gt;&gt; l'
+
+ans =
+
+   1.000000000000000   0.954795062541962                   0  -0.000000000000540                   0
+                   0   1.000000000000000                   0  -0.000000000001388                   0
+                   0                   0   1.000000000000000                   0                   0
+                   0                   0                   0   1.000000000000000                   0
+                   0                   0                   0                   0   1.000000000000000
+&gt;&gt; inv(A)
+
+ans =
+
+  11.316519962623509 -10.804957385470471                   0   0.000000000000786                   0
+ -10.804957385470471  11.316519962623509                   0  -0.000000000001388                   0
+                   0                   0   1.000000000000000                   0                   0
+  -0.000000000000786   0.000000000001388                   0   1.000000000000000                   0
+                   0                   0                   0                   0   1.000000000000000
+
+</code></pre></div></div>
+<p>可以看到<code class="highlighter-rouge">pzgetrf</code>将矩阵LU分解，并将LU存储到原矩阵中</p>
+
+<h2 id="报错">报错</h2>
+<h3 id="parameter-number---10-had-an-illegal-value"><code class="highlighter-rouge">parameter number   10 had an illegal value</code></h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{    0,    3}:  On entry to PZGETRI parameter number   10 had an illegal value
+{    0,    2}:  On entry to PZGETRI parameter number   10 had an illegal value
+{    0,    1}:  On entry to PZGETRI parameter number   10 had an illegal value
+{    0,    0}:  On entry to PZGETRI parameter number   10 had an illegal value
+</code></pre></div></div>
+<p>第10个输入参数不合理</p>
+
+<h3 id="----0----2--on-entry-to-pdgetrf-parameter-number--601-had-an-illegal-value"><code class="highlighter-rouge">{    0,    2}:  On entry to PDGETRF parameter number  601 had an illegal value</code></h3>
+<p>基本上都是输入参数不合理<br />
+虽然有时候能算的出来，其他情况就算不不出来了<br />
+可能因为某些输入变量没有赋值，算出来是残存内存的意外</p>
+
+<h3 id="pblas-error-illegal-descaimb_--0-其实还是输入参数顺序写错了给了错的参数"><code class="highlighter-rouge">PBLAS ERROR 'Illegal DESCA[IMB_] = 0</code> 其实还是输入参数顺序写错了，给了错的参数</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 ./test 10
+PBLAS ERROR 'Illegal DESCA[IMB_] = 0, DESCA[IMB_] must be at least 1'
+from {0,3}, pnum=3, Contxt=0, in routine 'PDGEMM'.
+
+PBLAS ERROR 'Illegal DESCA[MB_] = 0, DESCA[MB_] must be at least 1'
+from {0,3}, pnum=3, Contxt=0, in routine 'PDGEMM'.
+
+PBLAS ERROR 'Illegal DESCA[RSRC_] = 1023, DESCA[RSRC_] must be either -1, or &gt;= 0 and &lt; 1'
+from {0,3}, pnum=3, Contxt=0, in routine 'PDGEMM'.
+
+PBLAS ERROR 'Illegal DESCB[IMB_] = 0, DESCB[IMB_] must be at least 1'
+from {0,3}, pnum=3, Contxt=0, in routine 'PDGEMM'.
+
+PBLAS ERROR 'Illegal DESCB[MB_] = 0, DESCB[MB_] must be at least 1'
+from {0,3}, pnum=3, Contxt=0, in routine 'PDGEMM'.
+</code></pre></div></div>
+:ET

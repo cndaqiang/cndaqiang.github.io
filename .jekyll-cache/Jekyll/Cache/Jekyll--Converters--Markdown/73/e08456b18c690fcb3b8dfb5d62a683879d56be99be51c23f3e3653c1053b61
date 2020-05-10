@@ -1,0 +1,138 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#环境" id="markdown-toc-环境">环境：</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+  <li><a href="#配置-shadowsocks" id="markdown-toc-配置-shadowsocks">配置 Shadowsocks</a></li>
+  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+  <li><a href="#客户端" id="markdown-toc-客户端">客户端</a></li>
+  <li><a href="#可选操作" id="markdown-toc-可选操作">可选操作</a>    <ul>
+      <li><a href="#添加开机启动" id="markdown-toc-添加开机启动">添加开机启动</a></li>
+      <li><a href="#支持ipv6" id="markdown-toc-支持ipv6">支持ipv6</a></li>
+    </ul>
+  </li>
+  <li><a href="#遇到的问题" id="markdown-toc-遇到的问题">遇到的问题</a>    <ul>
+      <li><a href="#ss-安装了也配置了启动服务也没问题但是在电脑或者手机连接上直接超时了这可能是防火墙的问题" id="markdown-toc-ss-安装了也配置了启动服务也没问题但是在电脑或者手机连接上直接超时了这可能是防火墙的问题">SS 安装了也配置了，启动服务也没问题，但是在电脑或者手机连接上直接超时了。这可能是防火墙的问题</a></li>
+      <li><a href="#卸载" id="markdown-toc-卸载">卸载</a></li>
+      <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="环境">环境：</h2>
+<p>Ubuntu 17.04 32bit  虚拟机</p>
+
+<p>Ubuntu 14.04 64bit  vps</p>
+<h1 id="安装">安装</h1>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chen@ubuntu:~$ sudo su
+root@ubuntu:/home/chen# apt-get update
+root@ubuntu:/home/chen# apt-get install python-pip
+root@ubuntu:/home/chen# apt-get update
+root@ubuntu:/home/chen# apt-get install shadowsocks
+# 安装加密方式
+root@ubuntu:/home/chen# apt-get install python-m2crypto
+# 启动 8388为端口  passwd为密码 aes-256-cfb为加密方式可选择可选择"bf-cfb","aes-256-cfb","des-cfb","rc4-md5",等等
+root@ubuntu:/home/chen#  ssserver -p 8388 -k passwd -m aes-256-cfb  -d start
+# 停止
+root@ubuntu:/home/chen# ssserver -p 8388 -k passwd -m aes-256-cfb  -d stop 
+</code></pre></div></div>
+<p>到这里已经可以使用ss客户端连接了，更多参数设置如下</p>
+<h1 id="配置-shadowsocks">配置 Shadowsocks</h1>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ubuntu:/home/chen# vi /etc/shadowsocks.json
+</code></pre></div></div>
+<p>单用户认证填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "server":"my_server_ip",
+    "server_port":8388,
+    "local_address": "127.0.0.1",
+    "local_port：":1080,
+    "password":"mypassword",
+    "timeout":300,
+    "method":"rc4-md5",
+    "fast_open": false
+}
+</code></pre></div></div>
+<p>多账号认证填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "server":"my_server_ip",
+    "port_password":{
+    	"8388":"mypassword",
+    	"8389":"mypassword",
+        "8390":"mypassword"
+    },
+    "timeout":300,
+    "method":"rc4-md5",
+    "fast_open": false
+}
+</code></pre></div></div>
+<blockquote>
+  <ul>
+    <li>server：服务器IP地址</li>
+    <li>server_port：SS服务指定端口</li>
+    <li>local_address：本地服务地址，默认127.0.0.1</li>
+    <li>local_port：本地服务端口，常用1080</li>
+    <li>password：SS服务密码，禁止使用默认密码mypassword</li>
+    <li>timeout：服务超时，单位秒s</li>
+    <li>method：加密方式，默认aes-256-cfb</li>
+    <li>fast_open：<a href="https://github.com/shadowsocks/shadowsocks/wiki/TCP-Fast-Open">TCP Fast Open</a> ,true or false</li>
+  </ul>
+
+</blockquote>
+
+<h1 id="运行">运行</h1>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#运行
+root@ubuntu:/home/chen# ssserver -c /etc/shadowsocks.json -d start
+#关闭
+root@ubuntu:/home/chen# ssserver -c /etc/shadowsocks.json -d stop
+
+</code></pre></div></div>
+<p>如果ubuntu在路由器下面，路由器添加防火墙转发到虚拟机的8388端口即可</p>
+<h1 id="客户端">客户端</h1>
+<p><strong>IOS:</strong> <a href="https://itunes.apple.com/cn/app/wingy-http-s-socks5-proxy-utility/id1178584911?mt=8#">Wing</a></p>
+
+<p>其他平台很多，更多介绍<a href="https://www.gitbook.com/book/lollogit/help/details">SS使用教程</a></p>
+<h1 id="可选操作">可选操作</h1>
+<h2 id="添加开机启动">添加开机启动</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ubuntu:/etc/init.d# cd /etc/init.d
+root@ubuntu:/etc/init.d# vi Shadowsocks
+</code></pre></div></div>
+<p>填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+ssserver <span class="nt">-c</span> /etc/shadowsocks.json <span class="nt">-d</span> start
+</code></pre></div></div>
+<p>添加执行权限</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ubuntu:/etc/init.d# chmod 755 Shadowsocks 
+root@ubuntu:/etc/init.d# update-rc.d Shadowsocks defaults 95
+chen@ubuntu:/etc/init.d$ sudo update-rc.d Shadowsocks defaults 95
+</code></pre></div></div>
+<h2 id="支持ipv6">支持ipv6</h2>
+<p>将shadowsocks.json文件中</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> "server":"my_server_ip",
+</code></pre></div></div>
+<p>更改为</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"server":"::", 
+</code></pre></div></div>
+
+<h1 id="遇到的问题">遇到的问题</h1>
+<h2 id="ss-安装了也配置了启动服务也没问题但是在电脑或者手机连接上直接超时了这可能是防火墙的问题">SS 安装了也配置了，启动服务也没问题，但是在电脑或者手机连接上直接超时了。这可能是防火墙的问题</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ubuntu:/home/chen# apt install firewalld
+root@ubuntu:/home/chen# firewall-cmd --zone=public --add-port=8388/tcp --permanent
+root@ubuntu:/home/chen# firewall-cmd --zone=public --add-port=8388/udp --permanent
+</code></pre></div></div>
+
+<h2 id="卸载">卸载</h2>
+<p>最近好像流行ssr，卸载了ss，安装ssr
+卸载</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip uninstall shadowsocks
+</code></pre></div></div>
+<p>安装ssr教程<a href="/2017/09/28/ubuntu1604-ssr/">ubuntu 16.04 安装python版ssr</a></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://xfabs.github.io/2016/08/02/shadowsocks/">Shadowsocks 安装与配置教程</a></p>
+
+<p><a href="http://www.jianshu.com/p/a061ad8158f4">Ubuntu下搭建ss服务器</a></p>
+
+<p><a href="https://segmentfault.com/a/1190000006128950">[Linux — 在Ubuntu服务器上搭建SS服务](https://segmentfault.com/a/1190000006128950)</a></p>
+
+<p><a href="http://blog.csdn.net/hcx25909/article/details/9068497">Ubuntu下添加开机启动脚本</a></p>
+
+<p><a href="http://go2think.com/ss-ipv6/">Shadowsocks支持IPv6配置</a></p>
+:ET

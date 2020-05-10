@@ -1,0 +1,196 @@
+I"p*<ul id="markdown-toc">
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a>    <ul>
+      <li><a href="#修改discuz配置文件" id="markdown-toc-修改discuz配置文件">修改discuz配置文件</a>        <ul>
+          <li><a href="#cookies后台sql" id="markdown-toc-cookies后台sql">cookies，后台sql</a></li>
+          <li><a href="#ucenter访问地址" id="markdown-toc-ucenter访问地址">ucenter访问地址</a></li>
+        </ul>
+      </li>
+      <li><a href="#数据库修改" id="markdown-toc-数据库修改">数据库修改</a>        <ul>
+          <li><a href="#搜索" id="markdown-toc-搜索">搜索</a></li>
+          <li><a href="#修改" id="markdown-toc-修改">修改</a></li>
+          <li><a href="#遇到的问题一次全替换不可以需要分部分替换更新缓存再替换再更新" id="markdown-toc-遇到的问题一次全替换不可以需要分部分替换更新缓存再替换再更新">遇到的问题，一次全替换不可以，需要分部分替换，更新缓存，再替换，再更新</a>            <ul>
+              <li><a href="#失败-下载数据库后编辑器搜索netstunet全部替换cndaqiangonline" id="markdown-toc-失败-下载数据库后编辑器搜索netstunet全部替换cndaqiangonline">[失败] 下载数据库后，编辑器搜索netstu.net全部替换cndaqiang.online</a></li>
+              <li><a href="#失败-sql中一次输入全部sql替换命令" id="markdown-toc-失败-sql中一次输入全部sql替换命令">[失败] sql中一次输入全部sql替换命令</a></li>
+              <li><a href="#目前正常-修改一部分sql更新缓存再修改部分sql更新缓存" id="markdown-toc-目前正常-修改一部分sql更新缓存再修改部分sql更新缓存">[目前正常] 修改一部分sql，更新缓存，再修改部分sql，更新缓存</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#不知道为什么要按照顺序执行sql" id="markdown-toc-不知道为什么要按照顺序执行sql">不知道为什么，要按照顺序执行sql？</a></li>
+    </ul>
+  </li>
+  <li><a href="#其他问题" id="markdown-toc-其他问题">其他问题</a></li>
+</ul>
+
+<p>网站进行了搬家，想试试更换域名，目前更换后，没发现什么问题，但是还有个疑问</p>
+
+<p>网站进行了搬家，想试试更换域名</p>
+
+<h2 id="环境">环境</h2>
+<p>discuz x3.1</p>
+<h2 id="参考">参考</h2>
+<p><a href="http://www.discuz.net/thread-3528253-1-1.html">discuz! X3 更改域名全程记录 （修改域名的方法）</a></p>
+<h2 id="操作">操作</h2>
+<h3 id="修改discuz配置文件">修改discuz配置文件</h3>
+<h4 id="cookies后台sql">cookies，后台sql</h4>
+<p>把<code class="highlighter-rouge">config/config_global.php</code>  和 <code class="highlighter-rouge">config_global_default.php</code> 中的内容相应都修改</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$_config['cookie']['cookiedomain'] = '.new.com';
+
+$_config['admincp']['runquery']                        = 1;                // 是否允许后台运行 SQL 语句 1=是 0=否[安全]
+</code></pre></div></div>
+<p>发现之前的论坛内容中<code class="highlighter-rouge">$_config['cookie']['cookiedomain'] =</code>值为空，所以没有更改</p>
+<h4 id="ucenter访问地址">ucenter访问地址</h4>
+<p>修改<code class="highlighter-rouge">config/config_ucenter.php</code>内域名为新域名
+使用<code class="highlighter-rouge">http://新域名/admin.php</code> 登录后台管理面板</p>
+<blockquote>
+  <p>以下内容和数据库有重复，可在最后更新</p>
+
+  <p>1.后台==&gt;全局==&gt;站点信息==&gt;网站url</p>
+
+  <p>2.后台==&gt;全局==&gt;域名设置==&gt;应用域名==&gt;论坛和根域名设置手机版访问设置：— 手机发帖来源自定义:</p>
+
+  <p>3.后台==&gt;界面==&gt;导航==&gt;链接里面使用了绝对地址需要修改为新域名</p>
+
+  <p>4.后台==&gt;运营==&gt;关联连接，没有设置就不用修改，在这里主要涉及优化  （站点宣传广告、友情链接）</p>
+
+  <p>5.后台==&gt;云平台==&gt;同步站点信息   后台—工具—去平台诊断工具 （可能要手动设置IP）</p>
+
+  <p>6.后台==&gt;站长==&gt;ucernter设置==&gt;ucenter访问地址[灰色无法修改，通过编辑<code class="highlighter-rouge">config/config_ucenter.php</code>修改]</p>
+
+  <p>7.ucenter==&gt;应用管理==&gt;应用的主urlBBS导航—顶部、底部  （版规网址要更新），论坛格子广告，贴间广告，列表广告全部要更新。</p>
+</blockquote>
+
+<h3 id="数据库修改">数据库修改</h3>
+<p>搜索数据库中涉及到的旧域名内容，使用sql命令替换</p>
+<h4 id="搜索">搜索</h4>
+<p>phpmyadmin登录后搜索<code class="highlighter-rouge">netstu.net</code>，找到对应的表，字段</p>
+<h4 id="修改">修改</h4>
+<p>修改方法一:在网站后台&gt;站长&gt;数据库&gt;升级&gt;执行sql替换命令</p>
+
+<p>修改方法二:phpmyadmin网页&gt;选中要修改数据库&gt;sql&gt;输入sql替换命令
+sql替换命令</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE 表名 SET 字段=REPLACE(字段,'旧内容','新内容');
+</code></pre></div></div>
+<p>然后更新缓存</p>
+<h4 id="遇到的问题一次全替换不可以需要分部分替换更新缓存再替换再更新">遇到的问题，一次全替换不可以，需要分部分替换，更新缓存，再替换，再更新</h4>
+
+<p><strong>必须执行完一段sql，更新，再执行另一端</strong></p>
+
+<hr />
+<p>下面是一次实际操作</p>
+<h5 id="失败-下载数据库后编辑器搜索netstunet全部替换cndaqiangonline">[失败] 下载数据库后，编辑器搜索netstu.net全部替换cndaqiang.online</h5>
+<p>不应该全部替换netstu.net后，更新缓存就解决了吗？
+可是这样，主页直接就残缺，显示不正常了，猜测是主页模板有问题</p>
+<h5 id="失败-sql中一次输入全部sql替换命令">[失败] sql中一次输入全部sql替换命令</h5>
+<p>主页同样残缺，显示不正常了</p>
+<h5 id="目前正常-修改一部分sql更新缓存再修改部分sql更新缓存">[目前正常] 修改一部分sql，更新缓存，再修改部分sql，更新缓存</h5>
+
+<hr />
+<p>无关紧要的先更新</p>
+
+<hr />
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE pre_common_pluginvar SET value=REPLACE(value,'old.com','new.com');
+
+UPDATE pre_common_member_field_home SET blockposition=REPLACE(blockposition,'old.com','new.com');
+
+UPDATE pre_ucenter_notelist SET postdata=REPLACE(postdata,'old.com','new.com');
+UPDATE pre_forum_post SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_common_nav SET url=REPLACE(url,'old.com','new.com');
+
+UPDATE pre_common_setting SET svalue=REPLACE(svalue,'old.com','new.com');
+
+UPDATE pre_ucenter_applications SET url=REPLACE(url,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_0 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_1 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_2 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_3 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_4 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_5 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_6 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_7 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_8 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_9 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_lists SET subject=REPLACE(subject,'old.com','new.com');
+</code></pre></div></div>
+<p>网站后台&gt;工具&gt;更新缓存</p>
+
+<hr />
+<p>2 模块更新
+这部分对应论坛首页，校区公共通知等模块</p>
+
+<hr />
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE pre_common_block SET summary=REPLACE(summary,'old.com','new.com');
+UPDATE pre_common_block SET param=REPLACE(param,'old.com','new.com');
+</code></pre></div></div>
+<hr />
+<p>网站后台&gt;工具&gt;更新缓存</p>
+
+<hr />
+<p>3 模块？
+该部分需在之前的sql命令执行后再执行，不然论坛主页就乱了，替换回来也无法修复</p>
+
+<hr />
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE pre_common_syscache SET data=REPLACE(data,'old.com','new.com');
+</code></pre></div></div>
+<hr />
+<p>网站后台&gt;工具&gt;更新缓存</p>
+
+<hr />
+<p>4 缓存</p>
+
+<hr />
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE pre_common_block_item SET fields=REPLACE(fields,'old.com','new.com');
+</code></pre></div></div>
+<hr />
+<p>网站后台&gt;工具&gt;更新缓存
+执行之后，论坛主页很多内容不显示了，等待10分钟，刷新出板块，60分刷出排行榜，应该属于刷新时间</p>
+
+<hr />
+
+<p><strong>等论坛正常后再进行之后的替换</strong></p>
+
+<p>5 之后，又搜索数据库进行的更新</p>
+
+<hr />
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE pre_common_advertisement SET code=REPLACE(code,'old.com','new.com');
+
+UPDATE pre_common_member_field_forum SET sightml=REPLACE(sightml,'old.com','new.com');
+
+UPDATE pre_common_member_field_home SET spacecss=REPLACE(spacecss,'old.com','new.com');
+
+UPDATE pre_forum_optionvalue1 SET description=REPLACE(description,'old.com','new.com');
+
+UPDATE pre_common_advertisement SET parameters=REPLACE(parameters,'old.com','new.com');
+
+UPDATE pre_forum_optionvalue1 SET jjff=REPLACE(jjff,'old.com','new.com');
+
+UPDATE pre_forum_postcache SET comment=REPLACE(comment,'old.com','new.com');
+UPDATE pre_forum_typeoptionvar SET value=REPLACE(value,'old.com','new.com');
+
+UPDATE pre_home_blogfield SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_home_comment SET message=REPLACE(message,'old.com','new.com');
+</code></pre></div></div>
+<h3 id="不知道为什么要按照顺序执行sql">不知道为什么，要按照顺序执行sql？</h3>
+
+<h2 id="其他问题">其他问题</h2>
+<blockquote>
+  <p>其他人的问题
+后台登陆不了，被自动退出请把<code class="highlighter-rouge">config/config_global.php</code>中的<code class="highlighter-rouge">$_config['admincp']['checkip'] = 1;</code>修改为<code class="highlighter-rouge">$_config['admincp']['checkip'] = 0;</code></p>
+</blockquote>
+:ET

@@ -1,0 +1,71 @@
+I"F<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a>    <ul>
+      <li><a href="#修改php上传限制" id="markdown-toc-修改php上传限制">修改php上传限制</a></li>
+      <li><a href="#修改phpmyadmin配置" id="markdown-toc-修改phpmyadmin配置">修改phpMyAdmin配置</a>        <ul>
+          <li><a href="#修改配置文件" id="markdown-toc-修改配置文件">修改配置文件</a></li>
+          <li><a href="#修改importphp" id="markdown-toc-修改importphp">修改import.php</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://blog.sina.com.cn/s/blog_575b2c5001019odj.html">Ubuntu中增加apache上传文件大小限制(突破Aapache默认2M上传限制)</a></p>
+
+<p><a href="http://www.edbiji.com/doccenter/showdoc/25/nav/216.html">解决phpmyadmin上传文件大小限制的配置方法</a></p>
+
+<p><a href="http://www.jquerycn.cn/a_25213">如何突破php上传文件大小限制</a></p>
+
+<p><a href="http://www.jianshu.com/p/00e6999b9b3b">phpmyadmin导入sql文件大小限制</a></p>
+<h2 id="环境">环境</h2>
+<p>Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-87-generic x86_64)
+Apache/2.4.18 (Ubuntu)
+PHP 版本： 5.6.31</p>
+<h2 id="操作">操作</h2>
+<h3 id="修改php上传限制">修改php上传限制</h3>
+<p>修改php目录下php.ini</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /etc/php/apache2/php.ini
+</code></pre></div></div>
+<p>由于环境服务器上php是ppa安装的目录有所不同，实际操作为，因服务器而定</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo vi /etc/php/5.6/apache2/php.ini
+</code></pre></div></div>
+<p>修改下列设置为自定义值</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>upload_max_filesize = 100M 
+memory_limit = 256M 
+post_max_size = 100M
+</code></pre></div></div>
+<p>重启apache</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo /etc/init.d/apache2 restart
+</code></pre></div></div>
+<h3 id="修改phpmyadmin配置">修改phpMyAdmin配置</h3>
+<p>进入phpMyAdmin配置目录，如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /var/www/html/phpMyAdmin
+</code></pre></div></div>
+<h4 id="修改配置文件">修改配置文件</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo vi ./libraries/config.default.php 
+</code></pre></div></div>
+<blockquote>
+  <p>有教程中文件为<code class="highlighter-rouge">./config.inc.php</code></p>
+</blockquote>
+
+<p>修改<code class="highlighter-rouge">cfg['ExecTimeLimit']</code>，默认为300，修改为0</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cfg['ExecTimeLimit'] = 0;
+</code></pre></div></div>
+<h4 id="修改importphp">修改import.php</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo vi import.php
+</code></pre></div></div>
+<p>将 $memory_limit设置为<code class="highlighter-rouge">100*1024*1024</code>，可自定义</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (empty($memory_limit)) {
+    $memory_limit = 100 * 1024 * 1024;
+}
+// In case no memory limit we work on 10MB chunks
+if ($memory_limit == -1) {
+    $memory_limit = 100 * 1024 * 1024;
+}
+</code></pre></div></div>
+
+<p>自此可导入成功</p>
+:ET

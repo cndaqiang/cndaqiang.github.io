@@ -1,0 +1,42 @@
+I"	<ul id="markdown-toc">
+  <li><a href="#安装intel-parallel-studio-xe" id="markdown-toc-安装intel-parallel-studio-xe">安装Intel Parallel Studio XE</a></li>
+  <li><a href="#编译siesta" id="markdown-toc-编译siesta">编译siesta</a></li>
+  <li><a href="#测试" id="markdown-toc-测试">测试</a></li>
+</ul>
+
+<p>编译vasp方法类似,编译环境的安装参考<a href="/2018/01/15/intel-mpi-vasp/">Intel Parallel Studio XE 编译VASP</a>,只需要安装Intel Parallel Studio XE即可,安装运行遇到的其他问题和本文相关命令的解释见<a href="/2018/01/15/intel-mpi-vasp/">Intel Parallel Studio XE 编译VASP</a></p>
+
+<h2 id="安装intel-parallel-studio-xe">安装Intel Parallel Studio XE</h2>
+<p>略</p>
+<h2 id="编译siesta">编译siesta</h2>
+<p>下载后</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>siesta-4.1-b1-intel/Obj$ cd Obj
+siesta-4.1-b1-intel/Obj$ ../Src/obj_setup.sh 
+ *** Compilation setup done. 
+ *** Remember to copy an arch.make file or run configure as:
+    ../Src/configure [configure_options]
+#制定编译器,生成arch.make
+siesta-4.1-b1-intel/Obj$ ../Src/configure --enable-mpi FC=ifort CC=ifort MPIFC=mpiifort
+</code></pre></div></div>
+<p>修改arch.make设置mkl数学库</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MKL_PATH   = /opt/intel/compilers_and_libraries_2018.0.128/linux/mkl/lib/intel64
+BLAS_LIBS=-L$(MKL_PATH) -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lmkl_blacs_intelmpi_lp64 -lmkl_scalapack_lp64
+LAPACK_LIBS=
+BLACS_LIBS=
+SCALAPACK_LIBS=
+</code></pre></div></div>
+<p>然后</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make
+</code></pre></div></div>
+<h2 id="测试">测试</h2>
+<p>以siesta-4.1为例,根目录有<code class="highlighter-rouge">Tests</code>文件夹,里面有示例
+<br />修改Tests/test.mk
+<br />设置并行核数和siesta地址</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MPI=mpirun -np 2
+SIESTA=&lt;siesta的编译目录&gt;/Obj/siesta
+</code></pre></div></div>
+<p>进如Tests内的任一示例目录</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make
+</code></pre></div></div>
+<p>结果分析</p>
+:ET

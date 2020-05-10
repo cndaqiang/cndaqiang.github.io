@@ -1,0 +1,404 @@
+I"�S<ul id="markdown-toc">
+  <li><a href="#概念" id="markdown-toc-概念">概念</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+  <li><a href="#镜像操作" id="markdown-toc-镜像操作">镜像操作</a>    <ul>
+      <li><a href="#拉取镜像" id="markdown-toc-拉取镜像">拉取镜像</a></li>
+      <li><a href="#查看镜像docker-image-ls" id="markdown-toc-查看镜像docker-image-ls">查看镜像<code class="highlighter-rouge">docker image ls</code></a></li>
+      <li><a href="#删除镜像docker-image-rm-image-id" id="markdown-toc-删除镜像docker-image-rm-image-id">删除镜像<code class="highlighter-rouge">docker image rm IMAGE ID</code></a></li>
+      <li><a href="#由容器创建镜像-docker-commit--m-提交注释-容器名id-镜像名" id="markdown-toc-由容器创建镜像-docker-commit--m-提交注释-容器名id-镜像名">由容器创建镜像 <code class="highlighter-rouge">docker commit -m "提交注释" 容器名/ID 镜像名</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#容器" id="markdown-toc-容器">容器</a>    <ul>
+      <li><a href="#创建容器" id="markdown-toc-创建容器">创建容器</a></li>
+      <li><a href="#查看容器docker-ps--a" id="markdown-toc-查看容器docker-ps--a">查看容器<code class="highlighter-rouge">docker ps [-a]</code></a></li>
+      <li><a href="#启动已有容器" id="markdown-toc-启动已有容器">启动已有容器</a></li>
+      <li><a href="#在已启动的容器中在打开其他程序增加接口" id="markdown-toc-在已启动的容器中在打开其他程序增加接口">在已启动的容器中在打开其他程序/增加接口</a></li>
+      <li><a href="#关闭容器-docker-container-stop-容器名containerid" id="markdown-toc-关闭容器-docker-container-stop-容器名containerid">关闭容器 <code class="highlighter-rouge">docker container stop 容器名/ContainerID</code></a></li>
+      <li><a href="#删除容器-docker-rm--容器名containerid" id="markdown-toc-删除容器-docker-rm--容器名containerid">删除容器 <code class="highlighter-rouge">docker rm  容器名/ContainerID</code></a></li>
+      <li><a href="#更多参数" id="markdown-toc-更多参数">更多参数</a></li>
+    </ul>
+  </li>
+  <li><a href="#示例" id="markdown-toc-示例">示例</a>    <ul>
+      <li><a href="#创建支持ssh服务的容器" id="markdown-toc-创建支持ssh服务的容器">创建支持ssh服务的容器</a></li>
+      <li><a href="#ubuntu-vnc-docker" id="markdown-toc-ubuntu-vnc-docker">ubuntu-vnc Docker</a></li>
+      <li><a href="#gitlab" id="markdown-toc-gitlab">gitLAB</a>        <ul>
+          <li><a href="#安装-1" id="markdown-toc-安装-1">安装</a></li>
+          <li><a href="#配置" id="markdown-toc-配置">配置</a>            <ul>
+              <li><a href="#恢复其他gitlab" id="markdown-toc-恢复其他gitlab"><strong>恢复其他gitlab</strong></a></li>
+              <li><a href="#新建gitlab" id="markdown-toc-新建gitlab"><strong>新建gitlab</strong></a></li>
+            </ul>
+          </li>
+          <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+          <li><a href="#管理员配置" id="markdown-toc-管理员配置">管理员配置</a></li>
+          <li><a href="#使用" id="markdown-toc-使用">使用</a></li>
+        </ul>
+      </li>
+      <li><a href="#docker-panfilerunariangaria2实现离线下载及在线播放" id="markdown-toc-docker-panfilerunariangaria2实现离线下载及在线播放">Docker-Pan：Filerun+AriaNg+Aria2实现离线下载及在线播放</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="概念">概念</h2>
+<p><strong>镜像</strong>模板<br />
+<strong>容器</strong></p>
+
+<h2 id="安装">安装</h2>
+<p><strong>ubuntu</strong> <br />
+参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/">Docker Community Edition 镜像使用帮助</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get remove docker docker-engine docker.io
+sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+$ sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+#注，当在mint上安装时，lsb_release -cs返回的时mint的版本名，要替换成对应版本的ubuntu的版本名，如mint19应该改为
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   bionic \
+   stable"
+sudo apt-get update
+sudo apt-get install docker-ce
+</code></pre></div></div>
+<p>查看版本</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~$ docker -v
+Docker version 19.03.5, build 633a0ea838
+</code></pre></div></div>
+<p><strong>Windows&amp;Mac</strong><br />
+直接下载安装包即可<a href="https://mirrors.tuna.tsinghua.edu.cn/docker-ce/">Docker CE</a></p>
+
+<h2 id="镜像操作">镜像操作</h2>
+<h3 id="拉取镜像">拉取镜像</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull centos
+</code></pre></div></div>
+<p>具体版本/Tag<code class="highlighter-rouge">：Tag</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull centos:7
+</code></pre></div></div>
+<p>更多版本/Tag<a href="https://hub.docker.com/_/centos?tab=tags">Centos Docker Official Images</a></p>
+<h3 id="查看镜像docker-image-ls">查看镜像<code class="highlighter-rouge">docker image ls</code></h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos              latest              470671670cac        7 days ago          237MB
+centos              7                   5e35e350aded        2 months ago        203MB
+</code></pre></div></div>
+<h3 id="删除镜像docker-image-rm-image-id">删除镜像<code class="highlighter-rouge">docker image rm IMAGE ID</code></h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker image rm 470671670cac
+</code></pre></div></div>
+<p>也可以</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#强制删除
+docker rmi -f  ID
+#强制删除所有 
+docker rmi -f $(docker images -q)
+</code></pre></div></div>
+<h3 id="由容器创建镜像-docker-commit--m-提交注释-容器名id-镜像名">由容器创建镜像 <code class="highlighter-rouge">docker commit -m "提交注释" 容器名/ID 镜像名</code></h3>
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker commit -m "ssh" centos-ssh issh
+sha256:321056ae417c60c48eb19fc3ea813be76d62ff71d48d5837cdba79b2f7c19a99
+root@girl:/home/cndaqiang# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+issh                latest              321056ae417c        5 seconds ago       306MB
+centos              7                   5e35e350aded        2 months ago        203MB
+</code></pre></div></div>
+
+<h2 id="容器">容器</h2>
+<h3 id="创建容器">创建容器</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run 各种参数 --name 容器名 镜像名[:Tag] docker启动后执行的程序
+</code></pre></div></div>
+<p>如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker run -i -t --name centosInit centos:7 bash
+[root@d8cfb1467e4b /]# 
+[root@d8cfb1467e4b /]# exit #退出容器
+exit
+</code></pre></div></div>
+
+<h3 id="查看容器docker-ps--a">查看容器<code class="highlighter-rouge">docker ps [-a]</code></h3>
+<p><code class="highlighter-rouge">-a</code>显示所有容器，不<code class="highlighter-rouge">-a</code>仅显示在运行的容器</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+d8cfb1467e4b        centos:7            "bash"              2 minutes ago       Exited (1) 56 seconds ago                       centosInit
+</code></pre></div></div>
+
+<h3 id="启动已有容器">启动已有容器</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker start -i centosInit
+[root@d8cfb1467e4b /]# 
+</code></pre></div></div>
+<h3 id="在已启动的容器中在打开其他程序增加接口">在已启动的容器中在打开其他程序/增加接口</h3>
+<p>可用于调试</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker exec  -it centosInit bash
+[root@d8cfb1467e4b /]# 
+</code></pre></div></div>
+
+<h3 id="关闭容器-docker-container-stop-容器名containerid">关闭容器 <code class="highlighter-rouge">docker container stop 容器名/ContainerID</code></h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker container stop centosInit
+docker container stop d8cfb1467e4b
+</code></pre></div></div>
+
+<h3 id="删除容器-docker-rm--容器名containerid">删除容器 <code class="highlighter-rouge">docker rm  容器名/ContainerID</code></h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                       PORTS               NAMES
+d8cfb1467e4b        centos:7            "bash"              13 minutes ago      Exited (137) 4 minutes ago                       centosInit
+root@girl:/home/cndaqiang# docker rm centosInit
+centosInit
+root@girl:/home/cndaqiang# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</code></pre></div></div>
+
+<h3 id="更多参数">更多参数</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>参数</th>
+      <th>含义</th>
+      <th>示例</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">-i     </code></td>
+      <td>可以输入进行交互</td>
+      <td><code class="highlighter-rouge"> -i</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-t     </code></td>
+      <td>终端交互</td>
+      <td><code class="highlighter-rouge">-t</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-d     </code></td>
+      <td>容器启动后在后台运行</td>
+      <td><code class="highlighter-rouge">-d</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-p  主机端口:容器端口   </code></td>
+      <td>映射主机端口到容器端口</td>
+      <td><code class="highlighter-rouge">-p 26122:22</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-v  主机目录:容器目录</code></td>
+      <td>映射本地文件夹到容器目录</td>
+      <td><code class="highlighter-rouge">-v /Users/cndaqiang:/home/data </code>, <code class="highlighter-rouge">-v /f/docker/tdpwGo/home:/home/data</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-h</code></td>
+      <td>容器内部的hostname</td>
+      <td><code class="highlighter-rouge"> -h "tdpwGo" </code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-e</code></td>
+      <td>环境变量</td>
+      <td><code class="highlighter-rouge">-e HELLO=NO</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">--restart always</code></td>
+      <td>docker启动后自动启动</td>
+      <td><code class="highlighter-rouge">--restart always</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-m </code></td>
+      <td>限制可用内存</td>
+      <td><code class="highlighter-rouge">-m 50g</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">--cpus</code></td>
+      <td>限制使用的核数</td>
+      <td><code class="highlighter-rouge">--cpus 40</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">–-name  </code></td>
+      <td>指定容器名称</td>
+      <td><code class="highlighter-rouge">--name centosInit</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">镜像名 </code></td>
+      <td>指定使用镜像</td>
+      <td><code class="highlighter-rouge">centos:7</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">可执行应用/命令 </code></td>
+      <td>指定容器启动使用的应用</td>
+      <td><code class="highlighter-rouge">bash</code>， <code class="highlighter-rouge">/usr/sbin/sshd -D</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="highlighter-rouge">-e</code>环境变量示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker run -ti -e HELLO=NO --name envtest centos:7 bash
+[root@cf308377b45c /]# echo $HELLO
+NO
+[root@cf308377b45c /]# exit
+exit
+</code></pre></div></div>
+
+<h2 id="示例">示例</h2>
+<h3 id="创建支持ssh服务的容器">创建支持ssh服务的容器</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -ti --name centos-ssh centos:7 bash
+yum install openssh-server -y
+ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
+ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
+ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
+ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key
+#修改配置
+vi /etc/ssh/sshd_config
+#取消注释
+38 PermitRootLogin yes
+63 PasswordAuthentication yes
+
+#设置免密登陆
+ssh-keygen
+#填入用户id_rsa.pub
+vi ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+</code></pre></div></div>
+<p>把容器转为镜像</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker commit -m "ssh" centos-ssh issh
+sha256:321056ae417c60c48eb19fc3ea813be76d62ff71d48d5837cdba79b2f7c19a99
+root@girl:/home/cndaqiang# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+issh                latest              321056ae417c        5 seconds ago       306MB
+centos              7                   5e35e350aded        2 months ago        203MB
+</code></pre></div></div>
+<p>用镜像重新创造容器，并默认后台启动sshd,做好端口映射</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@girl:/home/cndaqiang# docker run -d -p 20022:22 --name centos-ssh2 issh /usr/sbin/sshd -D 
+73ece08750f87c84f5c5d8bbf9b0ffb35f55354d5c1bfff687e1f579dc6c4c7b
+</code></pre></div></div>
+<p>连接</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~$ ssh root@127.0.0.1 -p 20022
+The authenticity of host '[127.0.0.1]:20022 ([127.0.0.1]:20022)' can't be established.
+ECDSA key fingerprint is SHA256:nOPDU94OeHYRT4tT1JKLNHanbMaSrpqg49WBb+p+p1I.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '[127.0.0.1]:20022' (ECDSA) to the list of known hosts.
+[root@73ece08750f8 ~]# 
+</code></pre></div></div>
+
+<h3 id="ubuntu-vnc-docker">ubuntu-vnc Docker</h3>
+<p>项目地址：https://hub.docker.com/r/dorowu/ubuntu-desktop-lxde-vnc</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull dorowu/ubuntu-desktop-lxde-vnc
+</code></pre></div></div>
+<p>启动</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -dti --name ubuntu-vnc \
+        -p 10080:80 -e HTTP_PASSWORD=password \
+        -p 15900:5900       \
+        -v /dev/shm:/dev/shm \
+        -v /Users/cndaqiang:/home/data \
+        dorowu/ubuntu-desktop-lxde-vnc
+</code></pre></div></div>
+<p>网页账户root，密码password</p>
+
+<h3 id="gitlab">gitLAB</h3>
+<p>参考
+<a href="https://blog.csdn.net/felix_yujing/article/details/52139070">使用docker运行gitlab服务</a></p>
+<h4 id="安装-1">安装</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo docker pull gitlab/gitlab-ce
+</code></pre></div></div>
+<p>启动</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dir=$PWD/gitlab
+mkdir $dir
+mkdir $dir/config
+mkdir $dir/data
+mkdir $dir/log
+
+docker run -d --name gitlab \
+		--restart always \
+		-p 622:22 -p 680:680 -p 688:80 \
+		-v $dir/config:/etc/gitlab    \
+		-v $dir/data:/var/opt/gitlab  \
+		-v $dir/log:/var/log/gitlab   \
+		gitlab/gitlab-ce
+</code></pre></div></div>
+<p>访问<code class="highlighter-rouge">http://ip:688</code>
+第一次启动速度有点慢
+<img src="/uploads/2020/01/gitlab1.png" alt="image" /></p>
+<h4 id="配置">配置</h4>
+<p><strong>等待正常启动后</strong>然后关闭容器</p>
+
+<h5 id="恢复其他gitlab"><strong>恢复其他gitlab</strong></h5>
+
+<p>此时可以选择删除当前gitlab数据，把之前gitlab的数据覆盖到相应路径，则恢复了之前的gitlab</p>
+
+<h5 id="新建gitlab"><strong>新建gitlab</strong></h5>
+
+<p>修改配置文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config/gitlab.rb
+</code></pre></div></div>
+<p>取消注释/修改</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#external_url 'http://10.127.6.47:680'
+external_url 'http://girl:680'
+#external_url决定网页上显示的路径，图片等的网址前缀，并不影响访问
+#域名先不填了
+gitlab_rails['gitlab_ssh_host'] = 'girl'
+#这个影响的是网页上显示ssh的ip,不影响访问，这里只能填域名/ip，不能代端口，若不填就会如图
+#访问的端口，可选  80-&gt; 680
+nginx['listen_port'] = 680
+</code></pre></div></div>
+<p><img src="/uploads/2020/01/gitlab2.png" alt="image" /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gitlab_rails['gitlab_email_from'] = 'gitcndaqiang@sina.com'
+gitlab_rails['gitlab_email_display_name'] = 'GitLAB-cndaqiang'
+gitlab_rails['gitlab_shell_ssh_port'] = 622
+gitlab_rails['smtp_enable'] = true
+gitlab_rails['smtp_address'] = "smtp.sina.com"
+gitlab_rails['smtp_port'] = 25
+gitlab_rails['smtp_user_name'] = "gitcndaqiang"
+gitlab_rails['smtp_password'] = "2608ddwpasswd2ab"
+gitlab_rails['smtp_domain'] = "sina.com"
+gitlab_rails['smtp_authentication'] = "login"
+gitlab_rails['smtp_enable_starttls_auto'] = true
+</code></pre></div></div>
+<p>启动容器即可
+<strong>以后只要容器相同，把数据拷贝过去就行了</strong></p>
+
+<h4 id="备注">备注</h4>
+
+<p>找回密码可以验证邮箱设置是否合适
+<img src="/uploads/2020/01/gitlab3.png" alt="image" />
+<strong>config文件夹下面的文件的权限不要改动</strong>，尤其是ssh的，只有设置为<code class="highlighter-rouge">600/400</code>才能正常的clone和push</p>
+
+<p>gitlab的wiki上传附件报错<code class="highlighter-rouge">Server responded with 0 code.</code>,域名端口等配置错误，修正后解决</p>
+<h4 id="管理员配置">管理员配置</h4>
+<p>root网页登陆，在setting里面禁止Sign-up restrictions（注册功能）</p>
+<h4 id="使用">使用</h4>
+<p>在网页上新建Group，新建Project</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd existing_folder
+git init
+git remote add origin ssh://git@10.127.6.47:622/mycode/tdqe.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+</code></pre></div></div>
+<p>由于我已经有其他仓库了，实际执行为</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add girl ssh://git@girl:622/mycode/tdqe.git
+#gir解析向10.127.6.47
+git push -u girl master
+</code></pre></div></div>
+<p>再做个内网映射就可以了</p>
+
+<p>配置git/设置默认仓库</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config -e
+</code></pre></div></div>
+
+<h3 id="docker-panfilerunariangaria2实现离线下载及在线播放">Docker-Pan：Filerun+AriaNg+Aria2实现离线下载及在线播放</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull jaegerdocker/pan
+</code></pre></div></div>
+<p>启动</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run  -dti --name=cnqpan \
+            -p 690:80 -p 698:6800 \
+             -v /home/data/public/pandir/www:/var/www/html/system/data/default_home_folder \
+             -v /data/public/pandir/data:/home/data \
+             jaegerdocker/pan
+</code></pre></div></div>
+<p>设置权限777，不然不能读写，迷？？？</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod 777 /data/public/pandir/data
+chmod 777 /home/data/public/pandir/www
+</code></pre></div></div>
+
+<p>访问</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#Filerun
+http://192.168.1.125:690
+#ariaNg
+http://192.168.1.125:690/dweb
+</code></pre></div></div>
+<p>修改aira的端口为刚才映射的698端口
+<img src="/uploads/2020/01/gitlab4.png" alt="image" /></p>
+:ET

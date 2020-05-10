@@ -1,0 +1,48 @@
+<div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev/{{ page.url }}">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io/{{ page.url }}">gitee</a>,
+        <a href="https://cndaqiang.github.io/{{ page.url }}">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="{{ site.baseurl }}/" class="brand">{{ site.title }}</a>
+        <small>{{site.brief-intro}}</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    {% if page.url == '/' %}
+                    <a class="active" href="{{site.baseurl}}/">
+                        {% else %}
+                    <a href="{{site.baseurl}}/">
+                    {% endif %}
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                {% for my_page in site.pages %}
+                    {% if my_page.type == 'page' %}
+                    <li>
+                        {% if my_page.url == page.url %}
+                        <a class="active" href="{{ my_page.url | prepend: site.baseurl }}">
+                            {% else %}
+                        <a href="{{ my_page.url | prepend: site.baseurl }}">
+                        {% endif %}
+                            <i class="fa fa-{{my_page.icon}}"></i>{{ my_page.title }}
+                        </a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+</header>

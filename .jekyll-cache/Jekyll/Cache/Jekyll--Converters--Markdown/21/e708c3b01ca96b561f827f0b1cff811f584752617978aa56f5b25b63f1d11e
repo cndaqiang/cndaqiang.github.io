@@ -1,0 +1,7 @@
+I"½
+<p>Error: Invalid character in name at (1)<br />
+/usr/include/stdc-predef.h:2.3:<br />
+	Included at c_pointer.F90:1:<br />
+	   This file is part of the GNU C Library.<br />
+   1<br /></p>
+:ET

@@ -1,0 +1,30 @@
+I"t<ul id="markdown-toc">
+  <li><a href="#ios环境" id="markdown-toc-ios环境">ios环境</a>    <ul>
+      <li><a href="#ios-gmail同步通讯录" id="markdown-toc-ios-gmail同步通讯录">ios gmail同步通讯录</a></li>
+      <li><a href="#实际操作" id="markdown-toc-实际操作">实际操作</a></li>
+      <li><a href="#日历同理" id="markdown-toc-日历同理">日历同理</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>全平台同步通讯录
+通讯录日历各个平台都支持google，outlook登陆，所以选择这两个账户作为通讯录同步账户，又发现在ios11上Gmail同步的通讯录支持设置农历生日（在google contacts上还是看不到农历生日)，outlook不支持，遂最终使用gmail同步</p>
+
+<h1 id="ios环境">ios环境</h1>
+<p>IOS 11.1.1
+gmail</p>
+
+<h2 id="ios-gmail同步通讯录">ios gmail同步通讯录</h2>
+<p>设置&gt;账户与密码&gt;添加谷歌账户&gt;同步通讯录
+<br /><strong>设置&gt;通讯录&gt;默认账户&gt;Gmail</strong></p>
+
+<p>默认账户设置为Gmail才能同步新建联系人，新建联系人后在通讯录页面下拉刷新，便会逐步同步</p>
+
+<h2 id="实际操作">实际操作</h2>
+<p>由于之前小米，outlook，qq同步助手用过很多通讯录软件，通讯录很乱，使用csv，vcard等方式导入没有头像，而且gmail查找重复联系人没有那么完美，
+<br />于是依次同步各个账号到本地，再同步到qq同步助手，进行合并重复联系人等操作
+<br />最后再设置gmail同步后且默认账户后，在从qq同步助手下载,刷新后，慢慢上传即可</p>
+
+<h2 id="日历同理">日历同理</h2>
+
+:ET

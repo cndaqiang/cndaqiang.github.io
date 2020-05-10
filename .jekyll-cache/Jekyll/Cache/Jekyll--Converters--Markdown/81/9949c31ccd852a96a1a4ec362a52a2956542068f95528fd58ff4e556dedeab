@@ -1,0 +1,307 @@
+I"�<<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#read_input_file读入输入文件" id="markdown-toc-read_input_file读入输入文件"><strong>read_input_file</strong>读入输入文件</a>    <ul>
+      <li><a href="#read_namelists" id="markdown-toc-read_namelists"><code class="highlighter-rouge">read_namelists</code></a></li>
+      <li><a href="#read_cards" id="markdown-toc-read_cards"><code class="highlighter-rouge">read_cards</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#input_parameters中的变量" id="markdown-toc-input_parameters中的变量"><code class="highlighter-rouge">input_parameters</code>中的变量</a></li>
+  <li><a href="#control_flags中的变量" id="markdown-toc-control_flags中的变量"><code class="highlighter-rouge">control_flags</code>中的变量</a></li>
+  <li><a href="#constants常量" id="markdown-toc-constants常量"><code class="highlighter-rouge">constants</code>常量</a></li>
+  <li><a href="#常用变量表" id="markdown-toc-常用变量表">常用变量表</a>    <ul>
+      <li><a href="#晶格相关cell_base" id="markdown-toc-晶格相关cell_base">晶格相关cell_base</a></li>
+      <li><a href="#原子相关ions_base" id="markdown-toc-原子相关ions_base">原子相关ions_base</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/QEF/q-e.git">q-e code</a><br /></p>
+
+<h2 id="read_input_file读入输入文件"><strong>read_input_file</strong>读入输入文件</h2>
+<p>File:<code class="highlighter-rouge">Modules/read_input.f90</code><br />
+<strong>读入输入文件，设置<code class="highlighter-rouge">MODULE input_parameters</code>中的变量(NAMELIST,CARD)</strong></p>
+
+<ul class="task-list">
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />MODULE read_input</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><strong><code class="highlighter-rouge">SUBROUTINE read_input_file( prog, input_file_ )</code></strong><br />
+    调用的模式如PWscf的”PW”, manypwscf的”PW”,i-PI的”PW+iP”i,neb的”PW”,manycp的”CP”<br /> 对于电子结构计算都是按照”PW”的模式读入</p>
+
+    <ul class="task-list">
+      <li class="task-list-item">
+        <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">ierr = open_input_file( input_file_, xmlinput )</code> 打开输入文件</p>
+      </li>
+      <li class="task-list-item">
+        <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL read_namelists( prog, qestdin )</code> 读入NAMELIST型变量<code class="highlighter-rouge">&amp;NAMELIST ... /</code><br /></p>
+
+        <p>File:<code class="highlighter-rouge">Modules/read_namelists.f90</code><br /></p>
+
+        <p>有读入顺序，使用Fortran语法读入<code class="highlighter-rouge">READ( unit_loc, NAMELIST, iostat = ios )</code></p>
+
+        <p>“PW+ipi”相比”PW”只是多读了一个<code class="highlighter-rouge">&amp;INOS /</code>而已，无用的NAMELIST会warning</p>
+      </li>
+      <li class="task-list-item">
+        <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL read_cards ( prog(1:2), qestdin )</code> 读入CARD型变量<br /></p>
+
+        <p>File:<code class="highlighter-rouge">Modules/read_cards.f90</code><br /></p>
+
+        <p>此处可以看到,对于pwscf,manypwscf,ipi,neb计算都按照PW读入卡片</p>
+      </li>
+    </ul>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><strong>END SUBROUTINE read_input_file</strong></p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />END MODULE read_input</p>
+  </li>
+</ul>
+
+<h3 id="read_namelists"><code class="highlighter-rouge">read_namelists</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/read_namelists.f90</code>&lt;br
+主要读入<code class="highlighter-rouge">MODULE input_parameters</code>中的NAMELIST(<code class="highlighter-rouge">&amp; /</code>)型变量变量<br />
+以<code class="highlighter-rouge">control</code>NAMELIST为例</p>
+<ul>
+  <li><code class="highlighter-rouge">CALL control_defaults( prog )</code>默认值　</li>
+  <li><strong><code class="highlighter-rouge">READ( unit_loc, control, iostat = ios )</code>读入输入文件</strong></li>
+  <li><code class="highlighter-rouge">CALL check_namelist_read(ios, unit_loc, "control")</code>检查问题</li>
+  <li><code class="highlighter-rouge">CALL control_bcast( )</code>广播变量</li>
+  <li><code class="highlighter-rouge">CALL control_checkin( prog )</code>检查输入值是否在指定区间</li>
+  <li><code class="highlighter-rouge">CALL fixval( prog )</code>计算一些值</li>
+</ul>
+
+<p>其他的NAMELIST如system,electrons,ions,cell,这些NAMELIST中<strong>还定义很多变量，他们可能并没有出现在QE的手册里面</strong>，可能是debug的参数,可以进行设置计算。</p>
+
+<h3 id="read_cards"><code class="highlighter-rouge">read_cards</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/read_cards.f90</code><br /></p>
+
+<ul>
+  <li>设置默认值</li>
+  <li>跳过<code class="highlighter-rouge">#,!</code>来头行，录入有效信息</li>
+  <li>读入选项卡</li>
+</ul>
+
+<h2 id="input_parameters中的变量"><code class="highlighter-rouge">input_parameters</code>中的变量</h2>
+<p>File:<code class="highlighter-rouge">Modules/input_parameters.f90</code><br />
+存储输入参数的变量表,变量名和输入名基本上都是一样的</p>
+
+<h2 id="control_flags中的变量"><code class="highlighter-rouge">control_flags</code>中的变量</h2>
+<p>File:<code class="highlighter-rouge">Modules/control_flags.f90</code><br />
+很多程序都用<code class="highlighter-rouge">control_flags</code>中的变量, <strong>控制整个计算执行的基本参数</strong>。<br />
+在正式计算前被定义个使用，<code class="highlighter-rouge">iosys()</code>和<code class="highlighter-rouge">setup()</code>中被具体设置</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">io_level = 1</code>, 控制buffer保存到内存还是文件,由<code class="highlighter-rouge">disk_io</code>输入参数控制       ! variable controlling the amount of I/O to file
+<br /> io_level &gt; 1打开文件,否则,打开内存缓冲区</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">smallmem      = .FALSE. </code> the memory per task is small
+由<code class="highlighter-rouge">&amp;CONTROL</code>中的<code class="highlighter-rouge">memory='small', 'default', 'large'</code>决定，采用不同的算法，官方手册中没有写<br />
+<code class="highlighter-rouge">smallmem = ( TRIM( memory ) == 'small' )</code></p>
+  </li>
+</ul>
+
+<h2 id="constants常量"><code class="highlighter-rouge">constants</code>常量</h2>
+<p>File:<code class="highlighter-rouge">Modules/constants.f90</code></p>
+
+<ul>
+  <li>
+    <p>… Mathematical constants</p>
+
+    <ul>
+      <li>pi     = 3.14159265358979323846_DP</li>
+      <li>tpi    = 2.0_DP * pi</li>
+      <li>fpi    = 4.0_DP * pi</li>
+      <li>sqrtpi = 1.77245385090551602729_DP</li>
+      <li>sqrtpm1= 1.0_DP / sqrtpi</li>
+      <li>sqrt2  = 1.41421356237309504880_DP</li>
+    </ul>
+  </li>
+  <li>… Physical constants, SI (NIST CODATA 2006), Web Version 5.1
+  http://physics.nist.gov/constants
+    <ul>
+      <li>H_PLANCK_SI      = 6.62606896E-34_DP  - J s</li>
+      <li>K_BOLTZMANN_SI   = 1.3806504E-23_DP   - J K^-1</li>
+      <li>ELECTRON_SI      = 1.602176487E-19_DP - C</li>
+      <li>ELECTRONVOLT_SI  = 1.602176487E-19_DP - J</li>
+      <li>ELECTRONMASS_SI  = 9.10938215E-31_DP  - Kg</li>
+      <li>HARTREE_SI       = 4.35974394E-18_DP  - J</li>
+      <li>RYDBERG_SI       = HARTREE_SI/2.0_DP  - J</li>
+      <li>BOHR_RADIUS_SI   = 0.52917720859E-10_DP ! m</li>
+      <li>AMU_SI           = 1.660538782E-27_DP - Kg</li>
+      <li>C_SI             = 2.99792458E+8_DP   - m sec^-1</li>
+      <li>MUNOUGHT_SI      = fpi*1.0E-7_DP      - N A^-2</li>
+      <li>EPSNOUGHT_SI     = 1.0_DP / (MUNOUGHT_SI * &amp;
+                                                 C_SI**2) ! F m^-1</li>
+    </ul>
+  </li>
+  <li>
+    <p>… Physical constants, atomic units:
+  … AU for “Hartree” atomic units (e = m = hbar = 1)
+  … RY for “Rydberg” atomic units (e^2=2, m=1/2, hbar=1)</p>
+
+    <ul>
+      <li>K_BOLTZMANN_AU   = K_BOLTZMANN_SI / HARTREE_SI</li>
+      <li>K_BOLTZMANN_RY   = K_BOLTZMANN_SI / RYDBERG_SI</li>
+    </ul>
+  </li>
+  <li>… Unit conversion factors: energy and masses
+    <ul>
+      <li>AUTOEV           = HARTREE_SI / ELECTRONVOLT_SI</li>
+      <li>RYTOEV           = AUTOEV / 2.0_DP</li>
+      <li>AMU_AU           = AMU_SI / ELECTRONMASS_SI</li>
+      <li>AMU_RY           = AMU_AU / 2.0_DP</li>
+    </ul>
+  </li>
+  <li>… Unit conversion factors: atomic unit of time, in s and ps
+    <ul>
+      <li>AU_SEC           = H_PLANCK_SI/tpi/HARTREE_SI</li>
+      <li>AU_PS            = AU_SEC * 1.0E+12_DP</li>
+    </ul>
+  </li>
+  <li>… Unit conversion factors: pressure (1 Pa = 1 J/m^3, 1GPa = 10 Kbar )
+    <ul>
+      <li>AU_GPA           = HARTREE_SI / BOHR_RADIUS_SI ** 3 &amp;
+                                      / 1.0E+9_DP</li>
+      <li>RY_KBAR          = 10.0_DP * AU_GPA / 2.0_DP</li>
+    </ul>
+  </li>
+  <li>… Unit conversion factors: 1 debye = 10^-18 esu*cm</li>
+  <li>…                                  = 3.3356409519*10^-30 C*m</li>
+  <li>…                                  = 0.208194346 e*A</li>
+  <li>… ( 1 esu = (0.1/c) Am, c=299792458 m/s)
+    <ul>
+      <li>DEBYE_SI         = 3.3356409519_DP * 1.0E-30_DP ! C*m</li>
+      <li>AU_DEBYE         = ELECTRON_SI * BOHR_RADIUS_SI / &amp;
+                                      DEBYE_SI</li>
+      <li>eV_to_kelvin = ELECTRONVOLT_SI / K_BOLTZMANN_SI</li>
+      <li>ry_to_kelvin = RYDBERG_SI / K_BOLTZMANN_SI</li>
+    </ul>
+  </li>
+  <li>.. Unit conversion factors: Energy to wavelength
+    <ul>
+      <li>EVTONM = 1E+9_DP * H_PLANCK_SI * C_SI / &amp;
+                            &amp;ELECTRONVOLT_SI</li>
+      <li>RYTONM = 1E+9_DP * H_PLANCK_SI * C_SI / RYDBERG_SI</li>
+    </ul>
+  </li>
+  <li>Speed of light in atomic units
+    <ul>
+      <li>C_AU             = C_SI / BOHR_RADIUS_SI * AU_SEC</li>
+    </ul>
+  </li>
+  <li>… zero up to a given accuracy
+    <ul>
+      <li>eps4  = 1.0E-4_DP</li>
+      <li>eps6  = 1.0E-6_DP</li>
+      <li>eps8  = 1.0E-8_DP</li>
+      <li>eps12 = 1.0E-12_DP</li>
+      <li>eps14 = 1.0E-14_DP</li>
+      <li>eps16 = 1.0E-16_DP</li>
+      <li>eps24 = 1.0E-24_DP</li>
+      <li>
+        <p>eps32 = 1.0E-32_DP</p>
+      </li>
+      <li>
+        <p>gsmall = 1.0E-12_DP</p>
+      </li>
+      <li>e2 = 2.0_DP     - the square of the electron charge</li>
+      <li>degspin = 2.0_DP ! the number of spins per level</li>
+    </ul>
+  </li>
+  <li>
+    <p>!!!!! COMPATIBIILITY</p>
+
+    <ul>
+      <li>BOHR_RADIUS_CM = BOHR_RADIUS_SI * 100.0_DP</li>
+      <li>BOHR_RADIUS_ANGS = BOHR_RADIUS_CM * 1.0E8_DP</li>
+      <li>ANGSTROM_AU = 1.0_DP/BOHR_RADIUS_ANGS</li>
+      <li>DIP_DEBYE = AU_DEBYE</li>
+      <li>AU_TERAHERTZ  = AU_PS</li>
+      <li>AU_TO_OHMCMM1 = 46000.0_DP ! (ohm cm)^-1</li>
+      <li>RY_TO_THZ = 1.0_DP / AU_TERAHERTZ / FPI</li>
+      <li>RY_TO_GHZ = RY_TO_THZ*1000.0_DP</li>
+      <li>RY_TO_CMM1 = 1.E+10_DP * RY_TO_THZ / C_SI
+  !</li>
+      <li>AVOGADRO = 6.02214129D+23</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="常用变量表">常用变量表</h2>
+
+<h3 id="晶格相关cell_base">晶格相关cell_base</h3>
+<p>File:<code class="highlighter-rouge">Modules/cell_base.f90</code><br />
+使用:<code class="highlighter-rouge">USE cell_base,  ONLY : at</code><br />
+单位换算</p>
+<ul>
+  <li><code class="highlighter-rouge">1 Ang = 1.8897261 Bohr</code></li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>输入参数</th>
+      <th>含义</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge"> REAL(DP) :: alat = 0.0_DP </code></td>
+      <td><code class="highlighter-rouge">alat</code>晶格常数 晶格缩放系数, <code class="highlighter-rouge">at</code>的长度单位</td>
+      <td><strong>程序中单位是Bohr</strong> ,输入文件A,单位是Ang</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge"> REAL(DP) :: at(3,3) = RESHAPE( (/ 0.0_DP /), (/ 3, 3 /), (/ 0.0_DP /) ) </code></td>
+      <td>原胞晶格, 单位是<code class="highlighter-rouge">实际长度/alat</code></td>
+      <td><strong>程序中数值单位是1</strong>, 等于输入的<code class="highlighter-rouge">at[Ang]/A[Ang]</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge"> REAl(DP) :: omega = 0.0_DP  </code></td>
+      <td>原胞体积</td>
+      <td>单位<code class="highlighter-rouge">Bohr^3</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge"> REAL(DP) :: tpiba  = 0.0_DP, tpiba2 = 0.0_DP  </code></td>
+      <td><code class="highlighter-rouge">tpiba = 2pi/alat </code>, <code class="highlighter-rouge">tpiba2=tpiba^2</code>, <code class="highlighter-rouge">tpiba</code>是倒格失单位</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge"> REAL(DP) :: bg(3,3) = RESHAPE( (/ 0.0_DP /), (/ 3, 3 /), (/ 0.0_DP /) )  </code></td>
+      <td>倒格失, 单位是<code class="highlighter-rouge">实际长度/thiba</code></td>
+      <td><strong>程序中数值单位是1</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>相关推导:
+<code class="highlighter-rouge">at_real,bg_real</code>分别表示实际的晶格矢量, 倒格失<br />
+<code class="highlighter-rouge">at,bg</code>分别是”相对”的晶格矢量, 倒格失
+=&gt; <code class="highlighter-rouge">at_real*bg_real=2*PI</code><br />
+=&gt; <code class="highlighter-rouge">at*(alat)*bg*(thiba)=2*PI</code><br />
+=&gt; <code class="highlighter-rouge">thiba = 2*PI/alat</code></p>
+
+<p>The lattice parameter alat = A (in ANGSTROM )</p>
+
+<h3 id="原子相关ions_base">原子相关ions_base</h3>
+<p>File:<code class="highlighter-rouge">Modules/ions_base.f90</code></p>
+
+<ul>
+  <li><code class="highlighter-rouge">nsp   </code>          元素数,i.e. ntype, number of species</li>
+  <li><code class="highlighter-rouge">na(is)</code>          元素is有多少种原子,number of atoms of species is</li>
+  <li><code class="highlighter-rouge">nax   </code>          max number of atoms of a given species</li>
+  <li><code class="highlighter-rouge">nat   </code>          输入参数原子数nat, total number of atoms of all species</li>
+  <li><code class="highlighter-rouge">ityp( i )</code>       元素类型,1…ntype, the type of i-th atom in stdin</li>
+  <li><code class="highlighter-rouge">atm( j )</code>        <code class="highlighter-rouge">CHARACTER(LEN=3)</code>,name of the type of the j-th atomic specie</li>
+  <li><code class="highlighter-rouge">tau( 1:3, i )</code>   position of the i-th atom</li>
+</ul>
+
+:ET

@@ -1,0 +1,18 @@
+I"L<ul id="markdown-toc">
+  <li><a href="#python-enumerate用法总结" id="markdown-toc-python-enumerate用法总结">python enumerate用法总结</a></li>
+</ul>
+
+<p>放一些杂七杂八的用法</p>
+
+<p>##</p>
+<h3 id="python-enumerate用法总结">python enumerate用法总结</h3>
+<p><a href="https://blog.csdn.net/churximi/article/details/51648388">python enumerate用法总结</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; for i,name in enumerate( ('x','y','z') ):
+...  print i, name
+...
+0 x
+1 y
+2 z
+</code></pre></div></div>
+
+:ET

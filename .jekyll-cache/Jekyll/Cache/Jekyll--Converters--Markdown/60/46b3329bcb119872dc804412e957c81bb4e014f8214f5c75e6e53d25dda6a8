@@ -1,0 +1,74 @@
+I"}<ul id="markdown-toc">
+  <li><a href="#此文章作废请阅读dft学习笔记" id="markdown-toc-此文章作废请阅读dft学习笔记">此文章作废,请阅读DFT学习笔记</a>    <ul>
+      <li><a href="#名词结构" id="markdown-toc-名词结构">名词结构</a>        <ul>
+          <li><a href="#dft密度泛函理论" id="markdown-toc-dft密度泛函理论">DFT密度泛函理论</a></li>
+          <li><a href="#其他名词" id="markdown-toc-其他名词">其他名词</a>            <ul>
+              <li><a href="#量子化学计算方法" id="markdown-toc-量子化学计算方法">量子化学计算方法</a></li>
+              <li><a href="#第一性原理" id="markdown-toc-第一性原理">第一性原理</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#技能点" id="markdown-toc-技能点">技能点</a>        <ul>
+          <li><a href="#数学" id="markdown-toc-数学">数学</a>            <ul>
+              <li><a href="#泛函变分法" id="markdown-toc-泛函变分法">泛函&amp;变分法</a></li>
+            </ul>
+          </li>
+          <li><a href="#物理" id="markdown-toc-物理">物理</a>            <ul>
+              <li><a href="#量子力学" id="markdown-toc-量子力学">量子力学</a></li>
+              <li><a href="#固体物理" id="markdown-toc-固体物理">固体物理</a></li>
+              <li><a href="#分析力学" id="markdown-toc-分析力学">分析力学</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+    </ul>
+  </li>
+</ul>
+<p>不认真的看了几天，大体理出了一些思路
+接下来就是先把 DFT密度泛函理论结构树一些推导整理出来，先接受，然后看应用例子
+之后便是建立数学物理基础技能库，用于自行推导理解</p>
+
+<h1 id="此文章作废请阅读dft学习笔记">此文章作废,请阅读<a href="/2018/01/04/dft-ji-lu/">DFT学习笔记</a></h1>
+
+<h2 id="名词结构">名词结构</h2>
+<h3 id="dft密度泛函理论">DFT密度泛函理论</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>源于 Thomson fermi模型（无交换作用的粒子，密度决定性质)
+**理论基础依据:HK定理一，二**
+├─多电子体系求解 He+Hn+Hee+Hen
+│  └─伯恩奥本海默近似
+│                 ├─H=T+V+U
+│                 ├─E=&lt;ψ|Η|ψ&gt;=T+V+U
+│                 └─泛函E(n(r))=T(n)+U(n)+Exc(n)+V(n)
+│                       ├─T动能，**科恩沈九方程**求出
+│                       ├─U电子间相互作用能，可表达
+│                       ├─**Exc(n)关联能，近似**
+│                       |                  └─局域LDA
+│                       └─V(n)外势能(原子核势)，可表达
+├─求解复杂，布洛赫定理
+</code></pre></div></div>
+
+<h3 id="其他名词">其他名词</h3>
+<h4 id="量子化学计算方法">量子化学计算方法</h4>
+<p><img src="/uploads/2017/10/1bcee41d1041d05903c70a1d8ecbe033.png" alt="" /></p>
+<h4 id="第一性原理">第一性原理</h4>
+<p>又叫第一原理</p>
+
+<h2 id="技能点">技能点</h2>
+<h3 id="数学">数学</h3>
+<h4 id="泛函变分法">泛函&amp;变分法</h4>
+<h3 id="物理">物理</h3>
+<h4 id="量子力学">量子力学</h4>
+<p>薛定谔，波动方程</p>
+<h4 id="固体物理">固体物理</h4>
+<p>伯恩奥本海默近似，单电子近似，分子轨道计算，布洛赫定理，</p>
+<h4 id="分析力学">分析力学</h4>
+<p>变分法</p>
+
+<h2 id="参考">参考</h2>
+<p>各类ppt，doc
+博硕论文
+书《密度泛函理论-李健，周勇》</p>
+
+:ET

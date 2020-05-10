@@ -1,0 +1,167 @@
+I"�-<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#相关文件" id="markdown-toc-相关文件">相关文件</a></li>
+  <li><a href="#代码结构" id="markdown-toc-代码结构">代码结构</a>    <ul>
+      <li><a href="#重要的函数" id="markdown-toc-重要的函数">重要的函数</a></li>
+    </ul>
+  </li>
+  <li><a href="#pwscf" id="markdown-toc-pwscf"><strong>pwscf</strong></a>    <ul>
+      <li><a href="#mp_startup" id="markdown-toc-mp_startup"><strong>mp_startup</strong></a></li>
+      <li><a href="#read_input_file" id="markdown-toc-read_input_file"><strong>read_input_file</strong></a></li>
+      <li><a href="#run_pwscf" id="markdown-toc-run_pwscf"><strong>run_pwscf</strong></a></li>
+      <li><a href="#结束计算" id="markdown-toc-结束计算">结束计算</a></li>
+    </ul>
+  </li>
+  <li><a href="#小工具" id="markdown-toc-小工具">小工具</a>    <ul>
+      <li><a href="#文件ioio_files" id="markdown-toc-文件ioio_files">文件IO<code class="highlighter-rouge">io_files</code></a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>QE代码阅读系列, 个人学习记录, 仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/QEF/q-e.git">q-e code</a><br /></p>
+<h2 id="相关文件">相关文件</h2>
+
+<h2 id="代码结构">代码结构</h2>
+<h3 id="重要的函数">重要的函数</h3>
+<p>PROGRAM pwscf
+<br />     CALL mp_startup
+<br />     CALL read_input_file
+<br />     CALL run_pwscf
+<br />         CALL iosys()
+<br />              CALL readpp()
+<br />         CALL setup()
+<br />         CALL init_run()
+<br />         main_loop: DO idone = 1, nstep
+<br />              CALL electrons()
+<br />              IF ( lforce ) CALL forces()
+<br />              IF ( lstres ) CALL stress ( sigma )
+<br />              CALL update_file ( )
+<br />              CALL update_pot()
+<br />         END DO main_loop 
+<br />
+END PROGRAM pwscf</p>
+
+<p>下面的文件中,带对勾的都已经阅读并写下注释</p>
+
+<h2 id="pwscf"><strong>pwscf</strong></h2>
+<p>File:<code class="highlighter-rouge">PW/src/pwscf.f90</code><br />
+代码详情<br />
+<strong>PROGRAM pwscf</strong></p>
+
+<ul class="task-list">
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL mp_startup ( start_images=.true.)</code> 并行初始化,划分并行comm( e.g. image,npool,band)<br />
+  File:<code class="highlighter-rouge">Modules/mp_global.f90</code><br />
+  转<a href="/2020/04/06/qe-mp/">QE代码阅读: MP并行框架</a></p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL read_input_file ('PW', input_file_ )</code>读入输入文件<br />
+ File:<code class="highlighter-rouge">Modules/read_input.f90</code><br />
+ 单纯的初始值设置, 以及读入输入参数(NAMELIST和CARD), 很多模块公用此读入函数, 如neb.f90,manypw.f90,pwscf.f90,manycp.f90.这些模块会在自己的内部进行进一步的复制和设置更多参数</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL run_pwscf ( exit_status )</code>    执行pwscf的计算<br />
+File:<code class="highlighter-rouge">PW/src/run_pwscf.f90 </code><br /></p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />结束计算</p>
+  </li>
+</ul>
+
+<p><strong>END PROGRAM pwscf</strong></p>
+
+<h3 id="mp_startup"><strong>mp_startup</strong></h3>
+<p>File:<code class="highlighter-rouge">Modules/mp_global.f90</code><br />
+转<a href="/2020/04/06/qe-mp/">QE代码阅读: MP并行框架</a></p>
+
+<h3 id="read_input_file"><strong>read_input_file</strong></h3>
+<p>File:<code class="highlighter-rouge">Modules/read_input.f90</code><br />
+代码详情<br />
+<strong><code class="highlighter-rouge">SUBROUTINE read_input_file( prog, input_file_ )</code></strong><br />
+调用的模式如PWscf的<code class="highlighter-rouge">"PW"</code>, manypwscf的<code class="highlighter-rouge">"PW"</code>,i-PI的<code class="highlighter-rouge">"PW+iPi"</code>,neb的<code class="highlighter-rouge">"PW"</code>,manycp的<code class="highlighter-rouge">"CP"</code><br /> 
+对于电子构计算都是按照<code class="highlighter-rouge">"PW"</code>的模式读入</p>
+
+<ul class="task-list">
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">ierr = open_input_file( input_file_, xmlinput )</code> 打开输入文件</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL read_namelists( prog, qestdin )</code> 读入NAMELIST型变量<code class="highlighter-rouge">&amp;NAMELIST ... /</code><br /></p>
+
+    <p>File:<code class="highlighter-rouge">Modules/read_namelists.f90</code><br /></p>
+
+    <p>有读入顺序, 使用Fortran语法读入<code class="highlighter-rouge">READ( unit_loc, NAMELIST, iostat = ios )</code></p>
+
+    <p><code class="highlighter-rouge">"PW+ipi"</code>相比<code class="highlighter-rouge">"PW"</code>只是多读了一个<code class="highlighter-rouge">&amp;INOS /</code>而已, 无用的NAMELIST会warning</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL read_cards ( prog(1:2), qestdin )</code> 读入CARD型变量<br /></p>
+
+    <p>File:<code class="highlighter-rouge">Modules/read_cards.f90</code><br /></p>
+
+    <p>此处可以看到,对于pwscf,manypwscf,ipi,neb计算都按照PW读入卡片</p>
+  </li>
+</ul>
+
+<p><strong>END SUBROUTINE read_input_file</strong></p>
+
+<p>更详细内容<a href="/2020/04/14/qe-input/">QE代码阅读: 计算参数</a></p>
+
+<h3 id="run_pwscf"><strong>run_pwscf</strong></h3>
+<p>File:<code class="highlighter-rouge">PW/src/run_pwscf.f90 </code><br />
+代码详情<br />
+<strong>SUBROUTINE run_pwscf ( exit_status )</strong><br />
+<strong>注:<code class="highlighter-rouge">qmmm_</code>开头的一些函数, 先忽视, 目前都未执行</strong></p>
+<ul class="task-list">
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><strong><code class="highlighter-rouge">CALL iosys()</code>复制变量, 设置计算参数</strong><br />
+File:<code class="highlighter-rouge">PW/src/input.f90</code><br />
+初始化原子位置, 元素种类, 晶格矢量, 倒格失量<br />
+读入k点设置要求: 手动/自动. 读入赝势PP,DFT+D等参数设置,主要集中在计算参数的设置上<br />详情<a href="/2020/04/16/qe-init/">QE代码阅读: init for run_pwscf</a></p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><strong><code class="highlighter-rouge">CALL setup ()</code>作为iosys的补充,设置计算细节参数</strong><br />
+File:<code class="highlighter-rouge">PW/src/setup.f90</code><br />
+如荷电荷数,电子数,磁性质: <code class="highlighter-rouge">nonclinear(+/- soc)/spin -&gt; npol</code>,是否计算<code class="highlighter-rouge">magnitization</code>
+确定计算的细节参数, zv,nbnd,tpiba,ethr  <br />
+寻找体系对称性, 产生k点, 一些量子性质计算<br />详情<a href="/2020/04/16/qe-init/">QE代码阅读: init for run_pwscf</a></p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><strong><code class="highlighter-rouge">CALL init_run()</code>初始化物理量数据</strong><br />
+File:<code class="highlighter-rouge"> PW/src/init_run.f90</code>
+<br />根据<code class="highlighter-rouge">ectutwfc</code>&amp;<code class="highlighter-rouge">ecutrho</code>初始化fft网格<code class="highlighter-rouge">dfftp</code>&amp;<code class="highlighter-rouge">dffts</code>
+<br />把fft网格中的sricks、G点, 对角化使用的倒格式G分配到各个处理器上
+<br />ALLOCATE变量:波函数(<code class="highlighter-rouge">evc</code>,etc.),电荷密度(<code class="highlighter-rouge">rho</code>,etc),势能(<code class="highlighter-rouge">v</code>,etc)等
+<br /> 详情<a href="/2020/04/16/qe-init/">QE代码阅读: init for run_pwscf</a></p>
+  </li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="highlighter-rouge"> main_loop: DO idone = 1, nstep</code><br />
+        循环对应者MD或relax</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />    <strong><code class="highlighter-rouge">CALL non_scf()</code></strong> or <strong><code class="highlighter-rouge">CALL electrons()</code></strong>
+   <br />         File:<code class="highlighter-rouge">PW/src/non_scf.f90</code>, 非自洽计算
+   <br />         File:<code class="highlighter-rouge">PW/src/electrons.f90</code>, 电子自洽计算, 详情<a href="/2020/04/14/qe-electrons/">QE代码阅读: 电子自洽计算electrons</a></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />    <code class="highlighter-rouge">IF ( lforce ) CALL forces()</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />    <code class="highlighter-rouge">IF ( lstres ) CALL stress ( sigma )</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />    <code class="highlighter-rouge">CALL update_file ( )</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />    <code class="highlighter-rouge">CALL update_pot()</code></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="highlighter-rouge">END DO main_loop</code></li>
+</ul>
+
+<p><strong>END SUBROUTINE run_pwscf</strong>
+<br /><br /></p>
+
+<h3 id="结束计算">结束计算</h3>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">CALL</span><span class="w"> </span><span class="n">unset_mpi_comm_4_solvers</span><span class="p">()</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">stop_run</span><span class="p">(</span><span class="w"> </span><span class="n">exit_status</span><span class="w"> </span><span class="p">)</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">do_stop</span><span class="p">(</span><span class="w"> </span><span class="n">exit_status</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="小工具">小工具</h2>
+<h3 id="文件ioio_files">文件IO<code class="highlighter-rouge">io_files</code></h3>
+<p>File:<code class="highlighter-rouge">./Modules/io_files.f90</code><br />
+新建文件夹<code class="highlighter-rouge">create_directory</code></p>
+:ET

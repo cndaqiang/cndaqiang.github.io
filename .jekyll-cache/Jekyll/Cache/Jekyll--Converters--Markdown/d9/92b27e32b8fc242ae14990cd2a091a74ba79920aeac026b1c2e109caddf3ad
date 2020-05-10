@@ -1,0 +1,163 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#frp" id="markdown-toc-frp">FRP</a>    <ul>
+      <li><a href="#服务器客户端软件为同一个压缩包" id="markdown-toc-服务器客户端软件为同一个压缩包">服务器/客户端软件为同一个压缩包</a></li>
+      <li><a href="#服务器端frps配置" id="markdown-toc-服务器端frps配置">服务器端frps配置</a></li>
+      <li><a href="#客户端frpc" id="markdown-toc-客户端frpc">客户端frpc</a></li>
+      <li><a href="#免费的服务器端" id="markdown-toc-免费的服务器端">免费的服务器端</a>        <ul>
+          <li><a href="#sakura-frp" id="markdown-toc-sakura-frp">Sakura Frp</a>            <ul>
+              <li><a href="#客户端方法一-下载sakura客户端" id="markdown-toc-客户端方法一-下载sakura客户端">客户端方法一: 下载Sakura客户端</a></li>
+              <li><a href="#客户端方法二-使用frpc客户端" id="markdown-toc-客户端方法二-使用frpc客户端">客户端方法二: 使用frpc客户端</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="frp">FRP</h2>
+<h3 id="服务器客户端软件为同一个压缩包">服务器/客户端软件为同一个压缩包</h3>
+<p>下载链接: <a href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a><br />
+openwrt下载示例：<br />
+根据https://dev.archive.openwrt.org/wiki/platforms得知ar71xxx是MIPS的架构<br />
+下载对应架构的<a href="https://github.com/fatedier/frp/releases?after=v0.20.0">0.17版</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/fatedier/frp/releases/download/v0.17.0/frp_0.17.0_linux_mips.tar.gz
+</code></pre></div></div>
+
+<h3 id="服务器端frps配置">服务器端frps配置</h3>
+<p>编译<code class="highlighter-rouge">frps.ini</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[common]
+bind_port = 6666  #frps服务端口
+token = wgjg$%^$ftrd234 #frp认证密钥
+dashboard_port = 7777  #[可选] 网页管理端口
+dashboard_user = admin #[可选] 网页管理账户
+dashboard_pwd = passwd #[可选] 网页管理密码
+#通过 ip:7777 访问网页管理
+</code></pre></div></div>
+<p>启动</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/frp/frps -c /opt/frp/frps.ini
+</code></pre></div></div>
+<p>也可以添加到系统服务<code class="highlighter-rouge">vim /etc/systemd/system/frps.service</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=Frps server
+Wants=network-online.target
+After=network-online.target
+[Service]
+User=root
+WorkingDirectory=/opt/
+LimitNOFILE=4096
+PIDFile=/var/run/frps/client.pid
+ExecStart=/opt/frp/frps -c /opt/frp/frps.ini
+#Restart=on-failure
+StartLimitInterval=600
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+<p>启动服务</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl daemon-reload
+systemctl start frps
+systemctl stop frps
+systemctl status frps
+systemctl enable frps #开机自启
+systemctl disable frps #关闭开机自启
+</code></pre></div></div>
+
+<h3 id="客户端frpc">客户端frpc</h3>
+<p>编译<code class="highlighter-rouge">frpc.ini</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Proxy config for user cndaqiang
+[common]
+server_addr = 服务器ip
+server_port = 服务器端口
+tcp_mux = true
+protocol = tcp
+http_proxy = 
+token = wgjg$%^$ftrd234 #frp认证密钥
+dns_server = 114.114.114.114
+ 
+# 具体映射
+[test remote:999 -&gt; 123.123.123.123:666] #备注
+privilege_mode = true
+type = tcp
+local_ip = 123.123.123.123
+local_port = 666
+remote_port = 999
+use_encryption = true
+use_compression = true
+[test remote:996 -&gt; 123.123.123.123:669] #备注
+privilege_mode = true
+type = tcp
+local_ip = 123.123.123.123
+local_port = 669
+remote_port = 996
+use_encryption = true
+use_compression = true
+#等等
+</code></pre></div></div>
+<p>启动</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/frp/frpc -c /opt/frp/frpc.ini
+</code></pre></div></div>
+
+<p>也可添加到系统服务<code class="highlighter-rouge">vim /etc/systemd/system/frpc.service</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=Frpc Client
+Wants=network-online.target
+After=network-online.target
+[Service]
+User=root
+WorkingDirectory=/opt/
+LimitNOFILE=4096
+PIDFile=/var/run/frpc/client.pid
+ExecStart=/opt/frp/frpc -c /opt/frp/frpc.ini
+Restart=on-failure
+StartLimitInterval=600
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+
+<p>启动服务</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl daemon-reload
+systemctl start frpc
+systemctl stop frpc
+systemctl status frpc
+systemctl enable frpc #开机自启
+systemctl disable frpc #关闭开机自启
+</code></pre></div></div>
+
+<h3 id="免费的服务器端">免费的服务器端</h3>
+<h4 id="sakura-frp"><a href="https://www.natfrp.com">Sakura Frp</a></h4>
+<p><a href="https://www.natfrp.com">Sakura Frp</a>
+注册申请映射列表
+<img src="/uploads/2019/10/sakura.png" alt="" /></p>
+
+<h5 id="客户端方法一-下载sakura客户端">客户端方法一: 下载Sakura客户端</h5>
+<p>如在一32位linux系统上下载</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://cdn.tcotp.cn:4443/client/Sakura_frpc_linux_386.tar.gz
+</code></pre></div></div>
+<p>并保存到/opt/soft<br />
+添加系统服务，<code class="highlighter-rouge">vim /etc/systemd/system/sakurafrp.service</code> <br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=Sakura Frp Client
+Wants=network-online.target
+After=network-online.target
+[Service]
+User=root
+WorkingDirectory=/你的客户端储存位置/
+LimitNOFILE=4096
+PIDFile=/var/run/sakurafrp/client.pid
+ExecStart=/你的客户端储存位置/客户端文件名 --su=你的账号 --sp=你的密码 --sid=你要选择的服务器的ID(就是服务器列表左侧的数字)
+Restart=on-failure
+StartLimitInterval=600
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+<p>启动管理服务</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl daemon-reload
+systemctl start sakurafrp
+systemctl enable sakurafrp
+systemctl disable sakurafrp
+</code></pre></div></div>
+
+<h5 id="客户端方法二-使用frpc客户端">客户端方法二: 使用frpc客户端</h5>
+<p>方法同上<br />
+从映射列表下载用于<a href="https://www.natfrp.com/?do=publicconf&amp;id=1">原版 Frpc 的配置文件</a></p>
+:ET

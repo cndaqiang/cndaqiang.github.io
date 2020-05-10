@@ -1,0 +1,5 @@
+I"F
+<p>编译方法主要参考<a href="https://www.zybuluo.com/sculxb/note/987446#octopus%E5%AE%89%E8%A3%85-%E7%AE%97%E7%9B%98">@sculxb</a><br />
+环境centos6.5，软件版本gcc-4.4.7,libXC-2.0.0,gsl-1.14,openmpi-1.10.3,fftw-3.3.3 scalapack-2,octopus-4.1.2<br />
+gcc使用系统默认的gcc-4.4.7,其他软件分别编译</p>
+:ET

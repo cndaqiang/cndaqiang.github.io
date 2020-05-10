@@ -1,0 +1,394 @@
+I"�T<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#pgi编译器基本用法" id="markdown-toc-pgi编译器基本用法">PGI编译器基本用法</a></li>
+  <li><a href="#cuda" id="markdown-toc-cuda">CUDA</a>    <ul>
+      <li><a href="#基本概念" id="markdown-toc-基本概念">基本概念</a></li>
+      <li><a href="#注意事项" id="markdown-toc-注意事项">注意事项</a></li>
+      <li><a href="#查看显卡属性" id="markdown-toc-查看显卡属性">查看显卡属性</a></li>
+      <li><a href="#设置核函数计算网格" id="markdown-toc-设置核函数计算网格">设置核函数计算网格</a></li>
+      <li><a href="#主机设备代码同步问题" id="markdown-toc-主机设备代码同步问题">主机,设备代码同步问题</a></li>
+      <li><a href="#核函数的参数传递" id="markdown-toc-核函数的参数传递">核函数的参数传递</a></li>
+      <li><a href="#性能测试" id="markdown-toc-性能测试">性能测试</a>        <ul>
+          <li><a href="#检测各个模块运行时间-nvprof-aout" id="markdown-toc-检测各个模块运行时间-nvprof-aout">检测各个模块运行时间<code class="highlighter-rouge"> nvprof ./a.out</code></a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#报错" id="markdown-toc-报错">报错</a>    <ul>
+      <li><a href="#cuda代码错误" id="markdown-toc-cuda代码错误">CUDA代码错误</a></li>
+      <li><a href="#pgi普通fortran语法错误" id="markdown-toc-pgi普通fortran语法错误">PGI普通Fortran语法错误</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="/web/file/2020/PGI_ustc.pdf">李会民：PGI编译器和使用ustc</a><br />
+<a href="https://scc.ustc.edu.cn/zlsc/cxyy/201003/W020140729474268704267.pdf">小小河：CUDA Fortran 高效编程实践</a></p>
+
+<h2 id="pgi编译器基本用法">PGI编译器基本用法</h2>
+<p>编译器</p>
+<ul>
+  <li>编译C、 C++源程序的命令分别： <code class="highlighter-rouge">pgcc、 pgCC</code></li>
+  <li>编译Fortran 77源程序的命令： <code class="highlighter-rouge">pgf77</code></li>
+  <li>编译Fortran 90的源程序的命令： <code class="highlighter-rouge">pgf90、 pgf901、 pgf902、 pgf90_ex、pgf95和pgfortran</code></li>
+  <li>与NVIDIA CUDA库配合，可以编译Fortran-CUDA程序</li>
+</ul>
+
+<p>参数</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">-c</code></td>
+      <td>仅编译成对象文件（.o文件）</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-o</code></td>
+      <td>生成可执行文件名</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-O</code></td>
+      <td>优化</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-mp</code></td>
+      <td>openmp</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>编译普通Fortran示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/cuda$  cat hello.f90 
+PROGRAM hello
+      WRITE(*,*) "hello"
+ENDPROGRAM hello
+cndaqiang@girl:~/code/cuda$ pgf90 hello.f90 -o hello
+cndaqiang@girl:~/code/cuda$ ./hello 
+ hello
+</code></pre></div></div>
+<p>编译cuda示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/cuda$ cat example.cuf 
+!attributes(global) 设备函数，global可被主机调用
+attributes(global) subroutine hellocuda()
+    IMPLICIT NONE
+    INTEGER :: i,d,j
+    i = BlockIdx%x  !线程块索引
+    d = BlockDim%x  !线程块长度
+    j = ThreadIdx%x !线程索引
+    WRITE(*,*) "Block",i,"Thread",j,"In",d
+ENDSUBROUTINE
+
+PROGRAM main
+USE cudafor
+IMPLICIT NONE
+INTEGER :: i
+call hellocuda&lt;&lt;&lt;2,3&gt;&gt;&gt;()
+i=cudaDeviceSynchronize() !use cudafor才能正常使用
+!在执行hellocuda时，控制权就交给cpu了
+END PROGRAM
+cndaqiang@girl:~/code/cuda$ pgfortran example.cuf &amp;&amp; ./a.out 
+ Block            2 Thread            1 In            3
+ Block            2 Thread            2 In            3
+ Block            2 Thread            3 In            3
+ Block            1 Thread            1 In            3
+ Block            1 Thread            2 In            3
+ Block            1 Thread            3 In            3
+</code></pre></div></div>
+<p>因为启动GPU上的函数<code class="highlighter-rouge">hellocuda</code>后，控制权就返回CPU了，因此，加上<code class="highlighter-rouge">i=cudaDeviceSynchronize() </code>，等待GPU输出之后，再继续</p>
+
+<h2 id="cuda">CUDA</h2>
+<h3 id="基本概念">基本概念</h3>
+<ul>
+  <li>主机host：指CPU及其内存。</li>
+  <li>设备device：指GPU及其内存。</li>
+  <li>CPU代码：指一个仅用到CPU的实现/在host上执行的代码</li>
+  <li>核函数kernel： host上调用，device上执行的subroutine，如<code class="highlighter-rouge">attributes(global) subroutine hellocuda()</code></li>
+  <li>启动核函数：在host上调用device上的函数 ，如<code class="highlighter-rouge">CALL hellocuda &lt;&lt;&lt;2,3&gt;&gt;&gt;([参数])</code>
+<br />使用<code class="highlighter-rouge">&lt;&lt;&lt;线程块数量,每个线程块的线程数&gt;&gt;&gt;</code>，即<code class="highlighter-rouge">&lt;&lt;&lt;Grid,Block&gt;&gt;&gt;</code></li>
+  <li>定义函数<code class="highlighter-rouge">attributes(属性) subroutine funname()</code>,当属性为:
+<br /> <code class="highlighter-rouge">global</code>, device上执行，host上调用,例<code class="highlighter-rouge">attributes(global) subroutine hellocuda()</code>,<strong>调用时指明网格<code class="highlighter-rouge">&lt;&lt;&lt;&gt;&gt;&gt;</code></strong>
+<br /> <code class="highlighter-rouge">device</code>, device上执行，device上调用,例<code class="highlighter-rouge">attributes(device) subroutine hellocuda()</code>，直接启用，<strong>没有<code class="highlighter-rouge">&lt;&lt;&lt;&gt;&gt;&gt;</code></strong>
+<br /> <code class="highlighter-rouge">host</code>, host上执行，host上调用,不写属性，默认就是此情况,例<code class="highlighter-rouge">subroutine hellohost()</code>,直接启用，<strong>没有<code class="highlighter-rouge">&lt;&lt;&lt;&gt;&gt;&gt;</code></strong></li>
+  <li>内存<br />
+全局内存(Gloabl Memory):由显存决定，所有线程都可以访问，操作,我们传递给核函数的device变量存储在共享内存上<br />
+共享内存(Shard Memory):每个线程块共享，寿命与线程块一样<br />
+私有本地内存(Local Memory):仅本线程能访问</li>
+</ul>
+
+<h3 id="注意事项">注意事项</h3>
+<ul>
+  <li>设备上的函数不能contained在主程序或其他子程序中</li>
+  <li>很多函数变量都来自<code class="highlighter-rouge">USE cudafor</code></li>
+  <li>CPU进行控制，GPU进行计算</li>
+</ul>
+
+<h3 id="查看显卡属性">查看显卡属性</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/cuda$ cat checkcuda.cuf 
+PROGRAM checkcuda
+USE cudafor
+IMPLICIT NONE
+type(cudaDeviceProp) :: prop
+INTEGER :: nDevices=0,i,ierr
+!
+ierr = cudaGetDeviceCount(nDevices)
+if(nDevices .EQ. 0) RETURN
+DO i=0,nDevices-1
+    WRITE(*,"('Device Number:',i0)"),i
+    ierr = cudaGetDeviceProperties(prop,i)
+    WRITE(*,"('Device Name: ',a)") TRIM(prop%name)
+    !计算能力 主要.次要 ，理解为版本号
+    WRITE(*,"('Compute Capability: ',i0,'.',i0)") prop%major, prop%minor
+    !处理器数量
+    WRITE(*,"('Number of Multiprocessors: ',i0)") prop%multiProcessorCount
+    WRITE(*,"('Max Threads per Multiprocessor:',i0)") prop%maxThreadsPerMultiprocessor
+    WRITE(*,"('Global Memory (GB):',f9.3)" ) prop%totalGlobalMem/(1024.0**3)
+    WRITE(*,"(/,A)") "Execution Configuration Limits "
+    WRITE(*,"('Max Grid Dims: ',i0,'x',i0,'x',i0)") prop%maxGridSize
+    !每维Block内最大线程数
+    WRITE(*,"('Max Block Dims: ',i0,'x',i0,'x',i0)") prop%maxThreadsDim
+    WRITE(*,"('Max Threads per Block: ',i0)") prop%maxThreadsPerBlock
+ENDDO
+END PROGRAMcndaqiang@girl:~/code/cuda$ pgf90 checkcuda.cuf &amp;&amp; ./a.out 
+Device Number:0
+Device Name: GeForce 940MX
+Compute Capability: 5.0
+Number of Multiprocessors: 3
+Max Threads per Multiprocessor:2048
+Global Memory (GB):    1.958
+
+Execution Configuration Limits 
+Max Grid Dims: 2147483647x65535x65535
+Max Block Dims: 1024x1024x64
+Max Threads per Block: 1024
+</code></pre></div></div>
+<p>并发线程数=<code class="highlighter-rouge">多处理器数量*每处理器上最大线程数量</code><br />
+对于此940MX而言，使用一维网格,一个Block线程数可达<code class="highlighter-rouge">2147483647*1024</code><br />
+也可以使用<code class="highlighter-rouge">pgaccelinfo</code>查看</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/cuda$ pgaccelinfo 
+
+CUDA Driver Version:           10010
+NVRM version:                  NVIDIA UNIX x86_64 Kernel Module  435.21  Sun Aug 25 08:17:57 CDT 2019
+
+Device Number:                 0
+Device Name:                   GeForce 940MX
+Device Revision Number:        5.0
+Global Memory Size:            2101870592
+Number of Multiprocessors:     3
+Concurrent Copy and Execution: Yes
+Total Constant Memory:         65536
+Total Shared Memory per Block: 49152
+Registers per Block:           65536
+Warp Size:                     32
+Maximum Threads per Block:     1024
+Maximum Block Dimensions:      1024, 1024, 64
+Maximum Grid Dimensions:       2147483647 x 65535 x 65535
+Maximum Memory Pitch:          2147483647B
+Texture Alignment:             512B
+Clock Rate:                    1189 MHz
+Execution Timeout:             Yes
+Integrated Device:             No
+Can Map Host Memory:           Yes
+Compute Mode:                  default
+Concurrent Kernels:            Yes
+ECC Enabled:                   No
+Memory Clock Rate:             2000 MHz
+Memory Bus Width:              64 bits
+L2 Cache Size:                 1048576 bytes
+Max Threads Per SMP:           2048
+Async Engines:                 1
+Unified Addressing:            Yes
+Managed Memory:                Yes
+Concurrent Managed Memory:     No
+PGI Default Target:            -ta=tesla:cc50
+</code></pre></div></div>
+<h3 id="设置核函数计算网格">设置核函数计算网格</h3>
+<p>一维Gird,一维Block</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!一维网格中有M个Block，每个Block有N个Thread
+call sub&lt;&lt;&lt;M,N&gt;&gt;&gt;([argument])
+</code></pre></div></div>
+<p>多维</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TYPE(dim3) grid,block
+!
+grid=dim3(2,2,2)
+block=dim3(1,1,1)
+call hellocuda&lt;&lt;&lt;grid,block&gt;&gt;&gt;()
+</code></pre></div></div>
+<p>kernal函数中的网格内置变量,是dim3的类型</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    gx=GridDim%x !网格大小,即Block数量
+    gy=GridDim%y !网格大小,即Block数量
+    gz=GridDim%z !网格大小,即Block数量
+    bx=BlockIdx%x !Block ID
+    by=BlockIdx%y !Block ID
+    bz=BlockIdx%z !Block ID
+    bDx=BlockDim%x !Block大小，即Thread数量/Block
+    bDy=BlockDim%y !Block大小，即Thread数量/Block
+    bDz=BlockDim%z !Block大小，即Thread数量/Block
+    tx=ThreadIdx%x !Thead ID
+    ty=ThreadIdx%y !Thead ID
+    tz=ThreadIdx%z !Thead ID
+</code></pre></div></div>
+<p>确定绝对线程数，可用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bi =    BlockIdx%x +        &amp;
+        (BlockIdx%y - 1)*GridDim%x + &amp;
+        (BlockIdx%z - 1)*GridDim%y*GridDim%x
+ti = (bi-1)*BlockDim%x*BlockDim%y*BlockDim%z + &amp;
+        ThreadIdx%x +        &amp;
+        (ThreadIdx%y - 1)*BlockDim%x + &amp;
+        (ThreadIdx%z - 1)*BlockDim%y*BlockDim%x
+</code></pre></div></div>
+<p>在核函数上启动<code class="highlighter-rouge">device</code>函数时，不能设置网格(因为是各个Thread分别调用此函数)，<code class="highlighter-rouge">device</code>中也有网格内置变量，值由调用该函数的线程确定</p>
+
+<h3 id="主机设备代码同步问题">主机,设备代码同步问题</h3>
+<p>默认主机和设备间的代码(golbal的核函数)执行是不同步的,<br />即下面代码在开始执行<code class="highlighter-rouge">CALL hellocuda &lt;&lt;&lt;2,3&gt;&gt;&gt;()</code>时，控制权就返回CPU了</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a_d=1 
+CALL hellocuda &lt;&lt;&lt;2,3&gt;&gt;&gt;()
+</code></pre></div></div>
+<p>主机和内核之前的数据传输是同步的(或者是阻塞的)，如<code class="highlighter-rouge">a_d=1</code>,只有当CPU和GPU都执行到此处才可以传输数据。<br />
+其他同步方法</p>
+<ul>
+  <li>在代码内添加<code class="highlighter-rouge">i=cudaDeviceSynchronize()</code>,直到所有设备(GPU)上代码执行完到此处,主机(CPU)程序才继续执行</li>
+  <li>可以设置环境变量，使CPU和GPU同步函数调用<code class="highlighter-rouge">export CUDA_LAUNCH_BLOCKING=1</code></li>
+</ul>
+
+<h3 id="核函数的参数传递">核函数的参数传递</h3>
+<p><strong>默认传址调用</strong><br />
+传递的变量需要保存在device上，即该变量原始定义时加上device属性，如<code class="highlighter-rouge">INTEGER,device :: x_d(100)</code><br />
+应该只能传递在GPU/device上的地址<br />
+<strong>不可以直接传递host上的变量地址</strong><br />
+<br />
+<strong>传值调用时</strong><br />
+传值调用可以传递host上的变量，此时，在核函数内部定义时加上value属性，如<code class="highlighter-rouge">INTEGER,value :: N </code><br />
+<strong>包含传递形参的核函数只能在MODULE里定义,不能使用external</strong>,不然传递过来的值都很随机，引起计算异常</p>
+
+<p>传递示例,可看到external的函数不能传值，module的可以，传递device形变量都可以</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/cuda$ cat cudavar.cuf
+attributes(global) SUBROUTINE whoIam(n,n_d)
+IMPLICIT NONE
+INTEGER,value :: N
+INTEGER :: N_d
+WRITE(*,*) "External", "N",N,"N_d",N_d
+END SUBROUTINE
+
+MODULE m_var
+CONTAINS
+attributes(global) SUBROUTINE whoIam_m(n,n_d)
+IMPLICIT NONE
+INTEGER,value :: N
+INTEGER :: N_d
+WRITE(*,*) "Module", "N",N,"N_d",N_d
+END SUBROUTINE
+END MODULE
+
+PROGRAM testSend
+use cudafor
+USE m_var
+IMPLICIT NONE
+INTEGER   :: N,i
+INTEGER,device :: N_d
+N=10
+N_d=10
+CALL whoIam&lt;&lt;&lt;1,1&gt;&gt;&gt;(N,N_d)
+CALL whoIam_m&lt;&lt;&lt;1,1&gt;&gt;&gt;(N,N_d)
+i=cudaDeviceSynchronize()
+END PROGRAM
+cndaqiang@girl:~/code/cuda$ pgfortran cudavar.cuf &amp;&amp; ./a.out 
+ External N    816657356 N_d           10
+ Module N           10 N_d           10
+</code></pre></div></div>
+
+<h3 id="性能测试">性能测试</h3>
+<p>下载<a href="/web/file/2020/fastcuda.cuf">fastcuda.cuf</a>，编译测试<br />
+可以看到当矩阵大于1E5时，GPU(940MX)计算时间=CPU(i7-7500U)时间/3<br />
+不同变量赋值耗时 &lt; 相同变量赋值     <br />
+不同变量赋值: <code class="highlighter-rouge">GPU-GPU &lt; CPU-CPU</code>   <br />
+GPU-CPU赋值耗时:<code class="highlighter-rouge">GPUx-GPUy + CPUx-CPUy </code>  <br />
+GPUx-GPUy默认的赋值还挺快的</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/cuda$ pgfortran fastcuda.cuf  &amp;&amp; ./a.out 
+ -----------------------
+N     100000      CPU build, WALL         1.10000 ms
+N     100000        CPU cal, WALL         0.25800 ms
+N     100000      GPU build, WALL         0.12800 ms
+N     100000        GPU cal, WALL         0.06400 ms
+N     100000       GPU-&gt;CPU, WALL         0.33300 ms
+N     100000       CPU-&gt;GPU, WALL         0.30300 ms
+N     100000     CPUy-&gt;CPUx, WALL         0.20800 ms
+N     100000     CPUy-&gt;CPUy, WALL         0.42600 ms
+N     100000     GPUy-&gt;GPUz, WALL         0.07100 ms
+N     100000     GPUy-&gt;GPUy, WALL         0.59500 ms
+N     100000                Error         0.00000
+ -----------------------
+N  100100000      CPU build, WALL       910.17902 ms
+N  100100000        CPU cal, WALL       202.79601 ms
+N  100100000      GPU build, WALL        45.75900 ms
+N  100100000        GPU cal, WALL        59.73200 ms
+N  100100000       GPU-&gt;CPU, WALL       244.66000 ms
+N  100100000       CPU-&gt;GPU, WALL       251.89999 ms
+N  100100000     CPUy-&gt;CPUx, WALL       210.46001 ms
+N  100100000     CPUy-&gt;CPUy, WALL       495.70901 ms
+N  100100000     GPUy-&gt;GPUz, WALL        31.10200 ms
+N  100100000     GPUy-&gt;GPUy, WALL       499.45700 ms
+N  100100000                Error         0.00000
+</code></pre></div></div>
+<h4 id="检测各个模块运行时间-nvprof-aout">检测各个模块运行时间<code class="highlighter-rouge"> nvprof ./a.out</code></h4>
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python27) cndaqiang@girl:~/code/cuda$ nvprof ./a.out
+            2            2            2
+==2410== NVPROF is profiling process 2410, command: ./a.out
+...程序运行输出
+==2410== Profiling application: ./a.out
+==2410== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:  100.00%  509.55us         1  509.55us  509.55us  509.55us  m_mycuda_hellocuda_
+      API calls:   99.61%  264.75ms         1  264.75ms  264.75ms  264.75ms  cudaLaunchKernel
+                    0.21%  549.89us         1  549.89us  549.89us  549.89us  cudaDeviceSynchronize
+                    0.12%  318.01us        97  3.2780us     250ns  139.94us  cuDeviceGetAttribute
+                    0.05%  123.14us         1  123.14us  123.14us  123.14us  cuDeviceTotalMem
+                    0.02%  50.688us         1  50.688us  50.688us  50.688us  cuDeviceGetName
+                    0.00%  2.9850us         3     995ns     267ns  2.0500us  cuDeviceGetCount
+                    0.00%  2.1570us         2  1.0780us     348ns  1.8090us  cuDeviceGet
+                    0.00%     464ns         1     464ns     464ns     464ns
+</code></pre></div></div>
+
+<h2 id="报错">报错</h2>
+<h3 id="cuda代码错误">CUDA代码错误</h3>
+<p>在设备(GPU)代码上运行主机(CPU)程序,如<code class="highlighter-rouge">CALL SLEEP(1)</code>,<code class="highlighter-rouge">CALL system("")</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PGF90-S-0155-Calls from device code to a host subroutine are allowed only in emulation mode - sleep (hellocuda.cuf: 11)
+  0 inform,   0 warnings,   1 severes, 0 fatal for mycuda2
+</code></pre></div></div>
+
+<p>在host上输出device变量,如<code class="highlighter-rouge">WRITE(*,*)  a_d</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PGF90-S-0155-device data allowed in I/O statements only in emulation mode  (hellocuda.cuf: 45)
+  0 inform,   0 warnings,   1 severes, 0 fatal for hellocuda
+</code></pre></div></div>
+
+<p>device代码不能使用格式化输出？ 不能用<code class="highlighter-rouge">WRITE(*,"(A)") "Hello"</code>,只能<code class="highlighter-rouge">WRITE(*,*) "Hello"</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PGF90-S-0155-I/O statements allowed in device routines only in emulation mode  (hellocuda.cuf: 12)
+  0 inform,   0 warnings,   1 severes, 0 fatal for mycuda
+</code></pre></div></div>
+
+<p>在host上调用device函数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PGF90-S-0155-Kernel launch of attributes(device) subprogram is not allowed - gpufun (hellocuda.cuf: 43)
+  0 inform,   0 warnings,   1 severes, 0 fatal for main
+</code></pre></div></div>
+
+<p>拓展名<code class="highlighter-rouge">cuf</code>写为<code class="highlighter-rouge">f90</code>时，不识别cuda函数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/cndaqiang/code/cuda/checkcuda.f90:8: undefined reference to `cudagetdevicecount_'
+</code></pre></div></div>
+<p>向核函数传递host上变量,如果非要传递，把输入参数类型加上<code class="highlighter-rouge">value</code>，且需要在Module里面</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PGF90-S-0528-Argument number 1 to whoiam_m: device attribute mismatch (cudavar.cuf: 47)
+  0 inform,   0 warnings,   1 severes, 0 fatal for testsend
+</code></pre></div></div>
+<h3 id="pgi普通fortran语法错误">PGI普通Fortran语法错误</h3>
+
+<p>在代码行后面多打<strong>中文字符(空格,叹号,汉字…)</strong>，如｀IMPLICIT NONE｀与<code class="highlighter-rouge">IMPLICIT NONE　</code>的区别
+警告，也可以运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PGF90-W-0025-Illegal character (E3) - ignored (hellocuda.cuf: 7)
+</code></pre></div></div>
+<p>中英文逗号打错<code class="highlighter-rouge">,</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PGF90-W-0025-Illegal character (EF) - ignored (hellocuda.cuf: 12)
+</code></pre></div></div>
+<p>sqrt输入类型为实数,使用整形<code class="highlighter-rouge">sqrt(10)</code>输入报错</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PGF90-S-0038-Symbol, sqrt, has not been explicitly declared (fatercuda.cuf)
+  0 inform,   0 warnings,   1 severes, 0 fatal for fast
+</code></pre></div></div>
+:ET

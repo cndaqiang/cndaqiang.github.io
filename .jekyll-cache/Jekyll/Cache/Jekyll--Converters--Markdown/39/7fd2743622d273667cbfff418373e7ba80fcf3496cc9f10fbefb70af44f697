@@ -1,0 +1,17 @@
+I"g<ul id="markdown-toc">
+  <li><a href="#书写" id="markdown-toc-书写">书写</a></li>
+  <li><a href="#统一内容" id="markdown-toc-统一内容">统一内容</a></li>
+</ul>
+
+<h1 id="书写">书写</h1>
+<ul>
+  <li>回车后加<code class="highlighter-rouge">&lt;br&gt;</code>,才能在保持结构的基础上换行</li>
+  <li>html标签，代码，<code class="highlighter-rouge">$</code>等字符加重音符</li>
+  <li>
+    <p>列表<code class="highlighter-rouge">-</code>后，要换行才能结束引用-</p>
+  </li>
+  <li>表格结束后要两个换行</li>
+</ul>
+
+<h1 id="统一内容">统一内容</h1>
+:ET

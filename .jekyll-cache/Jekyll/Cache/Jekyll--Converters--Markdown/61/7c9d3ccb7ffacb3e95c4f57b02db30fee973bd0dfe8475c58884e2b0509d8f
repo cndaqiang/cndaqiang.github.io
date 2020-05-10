@@ -1,0 +1,226 @@
+I"d5<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#致谢" id="markdown-toc-致谢">致谢</a></li>
+  <li><a href="#需要" id="markdown-toc-需要">需要</a></li>
+  <li><a href="#流程" id="markdown-toc-流程">流程</a></li>
+  <li><a href="#初态末态结构优化" id="markdown-toc-初态末态结构优化">初态末态结构优化</a>    <ul>
+      <li><a href="#结构优化同vasp正常的结构优化一样" id="markdown-toc-结构优化同vasp正常的结构优化一样">结构优化同vasp正常的结构优化一样</a></li>
+    </ul>
+  </li>
+  <li><a href="#构建中间图像" id="markdown-toc-构建中间图像">构建中间图像</a>    <ul>
+      <li><a href="#检测初末结构相似度" id="markdown-toc-检测初末结构相似度">检测初末结构相似度</a></li>
+      <li><a href="#插入中间图像的poscar" id="markdown-toc-插入中间图像的poscar">插入中间图像的POSCAR</a></li>
+      <li><a href="#将ini和fin的outcar分别复制到00n1文件夹中便于后续分析" id="markdown-toc-将ini和fin的outcar分别复制到00n1文件夹中便于后续分析">将ini和fin的OUTCAR分别复制到00,N+1文件夹中，便于后续分析</a></li>
+      <li><a href="#准备incar-kpoints-potcar-文件" id="markdown-toc-准备incar-kpoints-potcar-文件">准备INCAR KPOINTS POTCAR 文件</a></li>
+    </ul>
+  </li>
+  <li><a href="#过渡态计算" id="markdown-toc-过渡态计算">过渡态计算</a>    <ul>
+      <li><a href="#检查是否收敛" id="markdown-toc-检查是否收敛">检查是否收敛</a></li>
+      <li><a href="#检查切向力" id="markdown-toc-检查切向力">检查切向力</a></li>
+      <li><a href="#结果打包" id="markdown-toc-结果打包">结果打包</a></li>
+    </ul>
+  </li>
+  <li><a href="#更多案例" id="markdown-toc-更多案例">更多案例</a></li>
+  <li><a href="#使用默认的gcc编译gunplot" id="markdown-toc-使用默认的gcc编译gunplot">使用默认的gcc编译gunplot</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://blog.sina.com.cn/s/blog_b364ab230102vghk.html#cmt_5BD3168D-2A316DE7-1318DF001-81F-8A8">一个人就是一个叠加态-vasp-vtst计算过渡态(NEB方法)具体过程</a>
+<br /><a href="https://zhuanlan.zhihu.com/p/31727335">sky-vasp做过渡态经验NEB</a>
+<br /><a href="http://agrh1209.blogspot.com/2016/11/vaspneb.html">FAN_冬-VASP+NEB</a>
+<br /><a href="https://www.bigbrosci.com/2018/11/16/ex76_01_check_inputs/">bbs(大师兄科研网)</a></p>
+
+<h2 id="致谢">致谢</h2>
+<p>感谢<strong><a href="https://mp.weixin.qq.com/s/CQ0_IgpCCybaLh0Sw4yC_A">学术之友</a></strong>公众号的推广，公众号内包含多种学术干货、科研资讯、科研招聘等信息,<br />
+感谢留言区的<a href="https://mp.weixin.qq.com/s/CQ0_IgpCCybaLh0Sw4yC_A">@Lei</a>指出文中原来存在的错误</p>
+
+<h2 id="需要">需要</h2>
+<p>vasp+vtst,编译<a href="/2018/12/07/NEB-compile/">编译vasp5.4.1+VTST</a></p>
+
+<p>处理脚本下载<a href="http://theory.cm.utexas.edu/code/vtstscripts.tgz">vtstscripts</a>，解压后放在PATH路径</p>
+
+<h2 id="流程">流程</h2>
+<ul>
+  <li>分别对初态和末态进行结构优化</li>
+  <li>使用脚本生成中间过程图像(结构)</li>
+  <li>NEB计算</li>
+  <li>处理结果</li>
+</ul>
+
+<p>文件结构
+<img src="/uploads/2018/12/neb2.png" alt="" /></p>
+
+<h2 id="初态末态结构优化">初态末态结构优化</h2>
+<p><strong>变化的原子在POSCAR中的位置一定要一一对应</strong><br />
+<strong>变化的原子在POSCAR中的位置一定要一一对应</strong><br />
+<strong>变化的原子在POSCAR中的位置一定要一一对应</strong><br />
+如图,体相Si中在(0.125,0.125,0.125)处有空位，(0,0,0)处的Si运动到此处
+构建POSCAR时，不仅是把64个Si原子的POSCAR中对应空位的原子删除
+<br />还要调整顺序，把变化的两个位置放在POSCAR的中相同位置
+<img src="/uploads/2018/12/neb1.png" alt="" /></p>
+<h3 id="结构优化同vasp正常的结构优化一样">结构优化同vasp正常的结构优化一样</h3>
+<p>初态末态输入文件所在文件夹建议命名为<code class="highlighter-rouge">ini</code>和<code class="highlighter-rouge">fin</code><br />
+<strong>INCAR中的EDIFFG参数使用力收敛标准,比如<code class="highlighter-rouge">EDIFFG=-0.02</code></strong><br />
+在两个文件夹里面运行vasp任务就可以<br />
+输入文件参数的设置要和之后的过渡态计算一致<br /></p>
+
+<h2 id="构建中间图像">构建中间图像</h2>
+<p>将处理脚本下载<a href="http://theory.cm.utexas.edu/code/vtstscripts.tgz">vtstscripts</a>，解压后放在PATH路径<br />
+在<code class="highlighter-rouge">ini</code>和<code class="highlighter-rouge">fin</code>文件夹的上层文件夹</p>
+
+<h3 id="检测初末结构相似度">检测初末结构相似度</h3>
+<p>每个对应原子的初末态距离的平方和，再开根号
+<br /> <code class="highlighter-rouge">&lt;5</code>埃，即可</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@managernode new-6.2]$ dist.pl ini/CONTCAR fin/CONTCAR
+2.03953509783509
+</code></pre></div></div>
+
+<h3 id="插入中间图像的poscar">插入中间图像的POSCAR</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@managernode new-6.2]$ nebmake.pl ini/CONTCAR fin/CONTCAR N 
+</code></pre></div></div>
+<ul>
+  <li>N为中间图像的数量，之后要在INCAR中写入这个N,本例N=4</li>
+  <li>执行完命令后出现文件夹00，01，02 , … ,N，N+1</li>
+  <li>00表示初态，里面放的是ini/CONTCAR, N+1表示末态，放的是fin/CONTCAR, 01-N是插入的点</li>
+  <li>N+2个文件夹里面的文件名称都是POSCAR</li>
+  <li>将来提交任务时，<strong>使用的CPU一定要是N的整数倍</strong></li>
+  <li>一般插点数目可取(dist.pl返回值/0.8)</li>
+</ul>
+
+<h3 id="将ini和fin的outcar分别复制到00n1文件夹中便于后续分析">将ini和fin的OUTCAR分别复制到00,N+1文件夹中，便于后续分析</h3>
+
+<h3 id="准备incar-kpoints-potcar-文件">准备INCAR KPOINTS POTCAR 文件</h3>
+<p>KPOINTS,POTCAR同初末态计算一致<br />
+INCAR非过渡态参数与初末结构优化一致<br />
+NEB参数</p>
+<ul>
+  <li>LCLIMB=.TRUE. #通知vasp使用VTST计算</li>
+  <li>ICAHIN=0 #通知vasp使用VTST计算</li>
+  <li>IMAGES=N  #之前添加的图像数量N image number</li>
+  <li>结构优化算法(过渡态计算的优化器Optimizer)选择vasp或者vtst的</li>
+  <li>
+    <ul>
+      <li>vasp优化算法
+<br /> IBRION =1 (quasi-Newton) 或3 (quick-min)   (基于力的优化方法)。
+<br /> POTIM = 取个合理的数值。
+<br />bbs.一般来说，如果你感觉自己插的点基本上就是反应的路径了，可以使用IBRION= 1。
+<br />bbs.如果你的初始和末态结构不是很理想，插的点也是马马虎虎，那么3则是一个很好的选择。
+<br />bbs.IBRION选择完了，我们还要设置一个合理的POTIM。个人经验0.1-1.0之间都是可以接受的。</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>vtst优化算法
+<br /><a href="http://theory.cm.utexas.edu/vtsttools/optimizers.html">更多:Optimizers</a>
+<br /> IBRION=3
+<br /> POTIM=0
+<br /> IOPT=优化算法,我也不知道该如何选择,VTST给的说明<a href="http://theory.cm.utexas.edu/vasp/optimizers.html">FORCE BASED OPTIMIZERS</a>
+<img src="/uploads/2018/12/neb3.png" alt="" />
+Must set  IOPT = 3 or 7 when using ISIF = 3</li>
+    </ul>
+  </li>
+  <li>SPRING=-5
+    <blockquote>
+      <p>bbs.使用多大的劲控制蚂蚱不乱跳：
+这个参数是干嘛的? 查阅一下VTST的官网，<a href="http://theory.cm.utexas.edu/vtsttools/neb.html">链接</a>
+<br />The nudged elastic band (NEB) is a method for finding saddlepoints and minimum energy paths between known reactants and products. Themethod works by optimizing a number of intermediate images along the reactionpath. Each image finds the lowest energy possible while maintaining equalspacing to neighboring images. This constrained optimization is done by addingspring forces along the band between images and by projecting out the componentof the force due to the potential perpendicular to the band.
+<br /> 什么意思呢？打个比方，这8个IMAGES就是一条绳上的8只蚂蚱，这些蚂蚱只能在一个方向上跳，
+<br /> 在优化的时候，蚂蚱跳的太远，或者太偏就会被拉回来。
+<br /> 拉回来的这个力就是通过SPRING这个参数来设置的。
+<br /> 而我们之前的优化优化计算中，一条绳上只栓一只蚂蚱，该蚂蚱则比较自由，
+<br /> 前后左右可以随便跳，并且没有人往回拽，这也是过渡态计算和普通优化所不同的地方。
+<br /> 具体的理论部分，大家自行查阅NEB相关的参考文献。
+<br />如果你算的一个基元反应，两个原子之间的键很强，
+<br />那么我们就需要将SPRING这个参数设置的更负一些，
+<br />比如SPRING= -10，-15 或者-20。(不一定是-5的倍数，也可以是-6，-11 等。)
+<br />如果你不知道怎么设置，一般来说默认值-5就足够用了</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="过渡态计算">过渡态计算</h2>
+<p>准备好输入文件后，就可以提交计算任务了
+<br />如果一运行就终止了，查看01文件夹下面的OUTCAR，最后一行，可能会给出原因</p>
+
+<h3 id="检查是否收敛">检查是否收敛</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nebef.pl
+</code></pre></div></div>
+<p><img src="/uploads/2018/12/neb4.png" alt="" /></p>
+<ul>
+  <li>第二列即为最大受力force of images in the neb,(有些结构，由于天然的对称性，受力为0)
+<br />我的INCAR中EDIFFG设置为-0.02,当所有结构最大力小于0.02eV/A时，结束计算
+<br />上图中的力都小于0.02，此时已经完全收敛，计算结束。</li>
+  <li>第三列为相应结构的能量。</li>
+  <li>第四列为与初始结构的能量差</li>
+</ul>
+
+<h3 id="检查切向力">检查切向力</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nebbarrier.pl 
+cat neb.dat
+</code></pre></div></div>
+<p><img src="/uploads/2018/12/neb5.png" alt="" /></p>
+<ul>
+  <li>该命令没有输出到屏幕的内容，而是生成neb.dat文件。</li>
+  <li>第二列表示距离(即临近两结构的dist.pl的计算结果)，</li>
+  <li>第三列表示能量(以初态能量为参考值)，</li>
+  <li>第四列为切向力(forces along the neb)
+<br />过渡态附近切向力会正负变号，而且接近0
+<br />如图中图像3对应的图像，就很可能是过渡态，将其CONTCAR取出，在其附近结构优化一下应该可以找到过渡态
+<br />过渡态能量是极大值，也可以确认
+<br />过渡态另一特征是有且仅有一个虚频，对找到的过渡态计算一下振动频率可以进一步确认</li>
+</ul>
+
+<h3 id="结果打包">结果打包</h3>
+<p>先修改一下这个程序<code class="highlighter-rouge">nebresults.pl</code>再使用
+<br />将57到71行注释掉：
+<br />如果不注释它就会把你的OUTCAR文件压缩
+<br />如果正在计算的时候执行，VASP找不到OUTCAR，计算终止
+<img src="/uploads/2018/12/neb6.png" alt="" />
+<br />另：这个命令需要使用gunplot进行画图，没有安装也没问题，忽视报错，可以用其他软件画图
+<br />这个打包也就是依次执行了这几个程序，并用gunplot画了eps格式的图
+<br />gunplot安装最下面会提到</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nebresults.pl
+
+Unziping the OUTCARs ... done
+Do nebbarrier.pl ; nebspline.pl
+Do nebef.pl
+Do nebmovie.pl
+Do nebjmovie.pl
+Do nebconverge.pl
+</code></pre></div></div>
+<p>做了这些事情</p>
+<ul>
+  <li>nebbarrier.pl,  生成neb.dat,包含，收敛情况，NEB方向力，能量，上面已说明</li>
+  <li>nebspline.pl,  生成的spline.dat文件是对neb.dat里 能量v距离的关系进行插值，用来画mep.eps
+<br />mep.eps是以dist.pl距离为横坐标，能量为纵坐标画出的能势垒图,可用EPS/PS viewer打开
+<br />我们也可以使用neb.dat的数据用自己喜欢的画图软件插值画图</li>
+  <li>nebef.pl,  上面已分析收敛 受力，能量，结果在nebef.dat</li>
+  <li>nebmovie.pl,  生成结构变化</li>
+  <li>nebjmovie.pl,</li>
+  <li>nebconverge.pl</li>
+  <li>还有对各文件夹中的OUTCAR打包压缩。生成了很多文件。
+<br />生成的vaspgr文件夹内是各个插点结构的收敛图</li>
+</ul>
+
+<p>我计算的一个mep.eps图为
+<img src="/uploads/2018/12/neb7.png" alt="" />
+<br />图中在00-02之间数据不足,我又在00-02之间插值模拟，这次使用origin读取neb.dat画图，如图
+<img src="/uploads/2018/12/neb8.png" alt="" /></p>
+
+<h2 id="更多案例">更多案例</h2>
+<p>参考<a href="https://github.com/cndaqiang/DFT-EXERCISES">DFT-EXERCISES</a>里面solution.pdf里面的第6章的过渡态计算内容</p>
+
+<h2 id="使用默认的gcc编译gunplot">使用默认的gcc编译gunplot</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://jaist.dl.sourceforge.net/project/gnuplot/gnuplot/5.2.5/gnuplot-5.2.5.tar.gz
+tar xzvf gnuplot-5.2.5.tar.gz 
+cd gnuplot-5.2.5/
+./configure --prefix=/home/cndaqiang/soft/gunplot/
+make
+make install
+</code></pre></div></div>
+<p>再把<code class="highlighter-rouge">./configure --prefix=/home/cndaqiang/soft/gunplot/bin</code>添加到系统PATH就可以了</p>
+
+:ET

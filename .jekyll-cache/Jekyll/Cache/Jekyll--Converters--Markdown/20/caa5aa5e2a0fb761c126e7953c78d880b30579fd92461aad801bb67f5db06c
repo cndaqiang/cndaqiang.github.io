@@ -1,0 +1,82 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#注意" id="markdown-toc-注意">注意</a></li>
+  <li><a href="#绘图" id="markdown-toc-绘图">绘图</a>    <ul>
+      <li><a href="#二维图形绘制" id="markdown-toc-二维图形绘制">二维图形绘制</a>        <ul>
+          <li><a href="#多个画板" id="markdown-toc-多个画板">多个画板</a></li>
+          <li><a href="#填充图" id="markdown-toc-填充图">填充图</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+</code></pre></div></div>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://www.runoob.com/w3cnote/matplotlib-tutorial.html">Matplotlib 教程</a><br />
+<a href="https://legacy.gitbook.com/book/wizardforcel/matplotlib-intro-tut/details">wizardforcel Matplotlib 入门教程</a></p>
+
+<h2 id="注意">注意</h2>
+<ul>
+  <li><strong>plt.show()之后会清空画板，所有绘图数据删除，保存前不要执行</strong></li>
+  <li>在没有图形化界面的环境下，要执行<code class="highlighter-rouge">plt.switch_backend('agg')</code></li>
+  <li><strong>官方的案例最好了<a href="https://matplotlib.org/gallery/index.html">Examples</a></strong></li>
+  <li>无图形化的终端画图
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import matplotlib as mpl
+mpl.use('Agg')
+import matplotlib.pyplot as plt
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="绘图">绘图</h2>
+<h3 id="二维图形绘制">二维图形绘制</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x=np.linspace(0, 2*np.pi, num=100, endpoint=True)
+ysin=np.sin(x)
+ycos=np.cos(x)
+#创建画板,内含1x1
+fig, ax = plt.subplots(1,1,sharex=True,sharey=False,figsize=(8,6))
+ax.plot(x,ysin,label="sin")
+ax.plot(x,ycos,label="cos")
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_title("sin and cos")
+ax.legend() #上图例，plt里面的label
+</code></pre></div></div>
+<p>显示<code class="highlighter-rouge">plt.show()</code>,<strong>plt.show()之后会清空画板，所有绘图数据删除，保存前不要执行</strong>
+<img src="/uploads/2020/03/pltshowq.png" alt="" />
+保存图形命令</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>figfile="sincos.png" #支持png,pdf等多种格式
+plt.savefig(figfile,dpi=60)
+</code></pre></div></div>
+<h4 id="多个画板">多个画板</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fig, [ax1,ax2] = plt.subplots(1,2,sharex=True,sharey=False,figsize=(8,6))
+ax1.plot(x,ysin,label="sin")
+ax2.plot(x,ycos,label="cos")
+ax1.set_title("sin")
+ax2.set_title("cos")
+ax1.legend() #上图例，plt里面的label
+ax2.legend() #上图例，plt里面的label
+figfile="sincos.png" #支持png,pdf等多种格式
+plt.savefig(figfile,dpi=100)
+</code></pre></div></div>
+<p>也可以</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fig, ax = plt.subplots(1,2,sharex=True,sharey=False,figsize=(8,6))
+ax[0].plot(x,ysin,label="sin")
+ax[1].plot(x,ycos,label="cos")
+</code></pre></div></div>
+<p><img src="/uploads/2020/03/sincos2.png" alt="" /></p>
+
+<h4 id="填充图">填充图</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ysin=np.sin(x)
+ycos=np.cos(x)-0.5
+fig, ax = plt.subplots(1,1,sharex=True,sharey=False,figsize=(8,6))
+ax.fill_between(x, 0, ysin,alpha=0.5) #,, facecolor='blue', alpha=0.5)
+ax.fill_between(x, 0, ycos,alpha=0.5) #,, facecolor='red', alpha=0.5)
+</code></pre></div></div>
+<p><img src="/uploads/2020/03/fill.png" alt="" /></p>
+:ET

@@ -1,0 +1,905 @@
+I"�{<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#numpy" id="markdown-toc-numpy">Numpy</a>    <ul>
+      <li><a href="#创建矩阵" id="markdown-toc-创建矩阵">创建矩阵</a>        <ul>
+          <li><a href="#nparray" id="markdown-toc-nparray">np.array()</a></li>
+          <li><a href="#未初始化的数组numpyemptyshape-dtype--float-order--c" id="markdown-toc-未初始化的数组numpyemptyshape-dtype--float-order--c">未初始化的数组<code class="highlighter-rouge">numpy.empty(shape, dtype = float, order = 'C')</code></a></li>
+          <li><a href="#全0数组numpyzerosshape-dtype--float-order--c" id="markdown-toc-全0数组numpyzerosshape-dtype--float-order--c">全0数组<code class="highlighter-rouge">numpy.zeros(shape, dtype = float, order = 'C')</code></a></li>
+          <li><a href="#全1数组numpyonesshape-dtype--none-order--c" id="markdown-toc-全1数组numpyonesshape-dtype--none-order--c">全1数组<code class="highlighter-rouge">numpy.ones(shape, dtype = None, order = 'C')</code></a></li>
+          <li><a href="#等差累加数组numpyarangestart-stop-step-dtype" id="markdown-toc-等差累加数组numpyarangestart-stop-step-dtype">等差(累加)数组<code class="highlighter-rouge">numpy.arange(start, stop, step, dtype)</code></a></li>
+          <li><a href="#等差均分数组nplinspacestart-stop-num50-endpointtrue-retstepfalse-dtypenone" id="markdown-toc-等差均分数组nplinspacestart-stop-num50-endpointtrue-retstepfalse-dtypenone">等差(均分)数组<code class="highlighter-rouge">np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)</code></a></li>
+          <li><a href="#等比数组nplogspacestart-stop-num50-endpointtrue-base100-dtypenone" id="markdown-toc-等比数组nplogspacestart-stop-num50-endpointtrue-base100-dtypenone">等比数组<code class="highlighter-rouge">np.logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None)</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#矩阵属性" id="markdown-toc-矩阵属性">矩阵属性</a></li>
+      <li><a href="#操纵矩阵" id="markdown-toc-操纵矩阵">操纵矩阵</a>        <ul>
+          <li><a href="#提取矩阵" id="markdown-toc-提取矩阵">提取矩阵</a></li>
+          <li><a href="#修改形状reshape" id="markdown-toc-修改形状reshape">修改形状reshape</a></li>
+          <li><a href="#展开数组ravel" id="markdown-toc-展开数组ravel">展开数组ravel</a></li>
+          <li><a href="#合并数组npappend" id="markdown-toc-合并数组npappend">合并数组np.append</a></li>
+          <li><a href="#其他-略" id="markdown-toc-其他-略">其他 略</a></li>
+        </ul>
+      </li>
+      <li><a href="#数学函数" id="markdown-toc-数学函数">数学函数</a>        <ul>
+          <li><a href="#三角函数trigonometric" id="markdown-toc-三角函数trigonometric">三角函数（Trigonometric）</a></li>
+          <li><a href="#双曲线函数hyperbolic" id="markdown-toc-双曲线函数hyperbolic">双曲线函数（Hyperbolic）</a></li>
+          <li><a href="#四舍五入rounding" id="markdown-toc-四舍五入rounding">四舍五入（Rounding）</a></li>
+          <li><a href="#和积差异sumsproductsdifferences" id="markdown-toc-和积差异sumsproductsdifferences">和、积、差异（Sums、Products、Differences）</a></li>
+          <li><a href="#指数对数函数exponentslogarithm" id="markdown-toc-指数对数函数exponentslogarithm">指数、对数函数（Exponents&amp;Logarithm）</a></li>
+          <li><a href="#算术运算" id="markdown-toc-算术运算">算术运算</a></li>
+          <li><a href="#其他miscellaneous" id="markdown-toc-其他miscellaneous">其他（Miscellaneous）</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#pandas" id="markdown-toc-pandas">Pandas</a>    <ul>
+      <li><a href="#数据类型" id="markdown-toc-数据类型">数据类型</a></li>
+      <li><a href="#series" id="markdown-toc-series">Series</a>        <ul>
+          <li><a href="#创建pdseries数组" id="markdown-toc-创建pdseries数组">创建<code class="highlighter-rouge">pd.Series(数组)</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#dataframe" id="markdown-toc-dataframe">DataFrame</a>        <ul>
+          <li><a href="#创建" id="markdown-toc-创建">创建</a></li>
+        </ul>
+      </li>
+      <li><a href="#读写文件" id="markdown-toc-读写文件">读写文件</a>        <ul>
+          <li><a href="#pdread_table读取文本数据作为dataframe类型" id="markdown-toc-pdread_table读取文本数据作为dataframe类型">pd.read_table读取文本数据作为DataFrame类型</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>仅记录使用到的，后续使用再补充</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+import pandas as pd
+</code></pre></div></div>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://www.runoob.com/numpy/numpy-tutorial.html">NumPy 教程</a></p>
+
+<h2 id="numpy">Numpy</h2>
+<h3 id="创建矩阵">创建矩阵</h3>
+<h4 id="nparray">np.array()</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.array([1,2,3,4])
+array([1, 2, 3, 4])
+&gt;&gt;&gt; np.array([[1,2],[3,4]])
+array([[1, 2],
+       [3, 4]])
+&gt;&gt;&gt; b=np.array([[1,2],[3,4]])
+&gt;&gt;&gt; b[0,1] #b[m,n,l], m,n,l层数依次向内
+2
+</code></pre></div></div>
+<p>np.array([],后面还有很多属性)，略</p>
+
+<h4 id="未初始化的数组numpyemptyshape-dtype--float-order--c">未初始化的数组<code class="highlighter-rouge">numpy.empty(shape, dtype = float, order = 'C')</code></h4>
+<p><code class="highlighter-rouge">np.empty([维度] [,dtype=类型缺省float] )</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.empty([3,2],dtype=float)
+array([[1., 0.],
+       [2., 0.],
+       [3., 0.]])
+</code></pre></div></div>
+<h4 id="全0数组numpyzerosshape-dtype--float-order--c">全0数组<code class="highlighter-rouge">numpy.zeros(shape, dtype = float, order = 'C')</code></h4>
+<h4 id="全1数组numpyonesshape-dtype--none-order--c">全1数组<code class="highlighter-rouge">numpy.ones(shape, dtype = None, order = 'C')</code></h4>
+
+<h4 id="等差累加数组numpyarangestart-stop-step-dtype">等差(累加)数组<code class="highlighter-rouge">numpy.arange(start, stop, step, dtype)</code></h4>
+<p>注意终止值不包含</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">start</code></td>
+      <td style="text-align: left">起始值，默认为<code class="highlighter-rouge">0</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">stop</code></td>
+      <td style="text-align: left"><strong>终止值（不包含）</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">step</code></td>
+      <td style="text-align: left">步长，默认为<code class="highlighter-rouge">1</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">dtype</code></td>
+      <td style="text-align: left">返回<code class="highlighter-rouge">ndarray</code>的数据类型，如果没有提供，则会使用输入数据的类型。</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.arange(0,1,0.5)
+array([0. , 0.5])
+</code></pre></div></div>
+
+<h4 id="等差均分数组nplinspacestart-stop-num50-endpointtrue-retstepfalse-dtypenone">等差(均分)数组<code class="highlighter-rouge">np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)</code></h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">start</code></td>
+      <td style="text-align: left">序列的起始值</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">stop</code></td>
+      <td style="text-align: left"><strong>序列的终止值，默认包含，如果<code class="highlighter-rouge">endpoint</code>为<code class="highlighter-rouge">true</code>，该值包含于数列中</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">num</code></td>
+      <td style="text-align: left">要生成的等步长的样本数量，默认为<code class="highlighter-rouge">50</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">endpoint</code></td>
+      <td style="text-align: left">该值为 <code class="highlighter-rouge">true</code> 时，数列中中包含<code class="highlighter-rouge">stop</code>值，反之不包含，默认是True。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">retstep</code></td>
+      <td style="text-align: left">如果为 True 时，生成的数组中会显示间距，反之不显示。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">dtype</code></td>
+      <td style="text-align: left"><code class="highlighter-rouge">ndarray</code> 的数据类型</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.linspace(0,1,3)
+array([0. , 0.5, 1. ])
+</code></pre></div></div>
+
+<h4 id="等比数组nplogspacestart-stop-num50-endpointtrue-base100-dtypenone">等比数组<code class="highlighter-rouge">np.logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None)</code></h4>
+<p>产生<code class="highlighter-rouge">[base**start,...,base**end]</code>类型的数组,python中用<code class="highlighter-rouge">**</code>表示幂级数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.logspace(3,5,4,base=2)
+array([ 8.        , 12.69920842, 20.1587368 , 32.        ])
+#[2^3,...,2^5]
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">参数</th>
+      <th style="text-align: left">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">start</code></td>
+      <td style="text-align: left">序列的起始值为：base ** start</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">stop</code></td>
+      <td style="text-align: left">序列的终止值为：base ** stop。如果<code class="highlighter-rouge">endpoint</code>为<code class="highlighter-rouge">true</code>，该值包含于数列中</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">num</code></td>
+      <td style="text-align: left">要生成的等步长的样本数量，默认为<code class="highlighter-rouge">50</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">endpoint</code></td>
+      <td style="text-align: left">该值为 <code class="highlighter-rouge">true</code> 时，数列中中包含<code class="highlighter-rouge">stop</code>值，反之不包含，默认是True。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">base</code></td>
+      <td style="text-align: left">对数 log 的底数。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">dtype</code></td>
+      <td style="text-align: left"><code class="highlighter-rouge">ndarray</code> 的数据类型</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="矩阵属性">矩阵属性</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">属性</th>
+      <th style="text-align: left">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">ndarray.ndim</td>
+      <td style="text-align: left">秩，即轴的数量或维度的数量</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ndarray.shape</td>
+      <td style="text-align: left">数组的维度，对于矩阵，n 行 m 列</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ndarray.size</td>
+      <td style="text-align: left">数组元素的总个数，相当于 .shape 中 n*m 的值</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ndarray.dtype</td>
+      <td style="text-align: left">ndarray 对象的元素类型</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ndarray.itemsize</td>
+      <td style="text-align: left">ndarray 对象中每个元素的大小，以字节为单位</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ndarray.flags</td>
+      <td style="text-align: left">ndarray 对象的内存信息</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ndarray.real</td>
+      <td style="text-align: left">ndarray元素的实部</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ndarray.imag</td>
+      <td style="text-align: left">ndarray 元素的虚部</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ndarray.data</td>
+      <td style="text-align: left">包含实际数组元素的缓冲区，由于一般通过数组的索引获取元素，所以通常不需要使用这个属性。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="操纵矩阵">操纵矩阵</h3>
+<h4 id="提取矩阵">提取矩阵</h4>
+<ul>
+  <li><code class="highlighter-rouge">a[m]</code>,<code class="highlighter-rouge">a[m,:]</code>,<code class="highlighter-rouge">-1</code>代表最后一个索引，<code class="highlighter-rouge">-2</code>倒数第二个索引</li>
+  <li><code class="highlighter-rouge">a[a&gt;4]</code></li>
+  <li><code class="highlighter-rouge">a[start:end:step]</code>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; a
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+&gt;&gt;&gt; a[-1]
+9
+&gt;&gt;&gt; a[[0,-1]]
+array([0, 9])
+&gt;&gt;&gt; a[0:2]
+array([0, 1])
+&gt;&gt;&gt; a[a&lt;3]
+array([0, 1, 2])
+&gt;&gt;&gt; a&lt;3
+array([ True,  True,  True, False, False, False, False, False, False,
+     False])
+&gt;&gt;&gt; a[0:10:2]
+array([0, 2, 4, 6, 8])
+&gt;&gt;&gt; a[[0,9]]
+array([0, 9])
+&gt;&gt;&gt; a.resize([2,5])
+&gt;&gt;&gt; a
+array([[0, 1, 2, 3, 4],
+     [5, 6, 7, 8, 9]])
+&gt;&gt;&gt; a[0,:]
+array([0, 1, 2, 3, 4])
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="修改形状reshape">修改形状reshape</h4>
+<ul>
+  <li><code class="highlighter-rouge">np.reshape(数组,[维度])</code>，<strong>不修改数组本省</strong></li>
+  <li><code class="highlighter-rouge">数组.reshape([维度])</code>，<strong>不修改数组本身</strong></li>
+  <li><code class="highlighter-rouge">np.resize(数组,[维度])</code>, <strong>修改数组本身</strong>，新维度&gt;旧维度，补0,反之，只取前几个元素</li>
+  <li><code class="highlighter-rouge">数组.resize([维度])</code>, <strong>修改数组本身，修改后元素数要与修改前相同</strong></li>
+</ul>
+
+<p><strong>注意</strong>
+<img src="/uploads/2019/11/reshape.jpg" alt="" /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.reshape(a,[2,5])
+array([[0, 1, 2, 3, 4],
+       [5, 6, 7, 8, 9]])
+&gt;&gt;&gt; a.reshape([2,5])
+array([[0, 1, 2, 3, 4],
+       [5, 6, 7, 8, 9]])
+&gt;&gt;&gt; 
+&gt;&gt;&gt; a
+array([[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]])
+&gt;&gt;&gt; a.resize([2,5])
+&gt;&gt;&gt; a
+array([[0, 1, 2, 3, 4],
+       [5, 6, 7, 8, 9]])
+&gt;&gt;&gt; np.resize(a,[1,4])
+array([[0, 1, 2, 3]])
+</code></pre></div></div>
+
+<h4 id="展开数组ravel">展开数组ravel</h4>
+<p>均不改变数组本身</p>
+<ul>
+  <li>np.ravel(a)</li>
+  <li>a.ravel()
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; a.ravel()
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="合并数组npappend">合并数组np.append</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; np.append(a,a)
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+</code></pre></div></div>
+<h4 id="其他-略">其他 略</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">函数</th>
+      <th style="text-align: left">元素及描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">resize</code></td>
+      <td style="text-align: left">返回指定形状的新数组</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">append</code></td>
+      <td style="text-align: left">将值添加到数组末尾</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">insert</code></td>
+      <td style="text-align: left">沿指定轴将值插入到指定下标之前</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">delete</code></td>
+      <td style="text-align: left">删掉某个轴的子数组，并返回删除后的新数组</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="highlighter-rouge">unique</code></td>
+      <td style="text-align: left">查找数组内的唯一元素</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="数学函数">数学函数</h3>
+<p>转载自<a href="https://blog.csdn.net/claroja/article/details/71081369">NumPy 数学函数</a></p>
+
+<h4 id="三角函数trigonometric">三角函数（Trigonometric）</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Describe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>sin(x[, out])</td>
+      <td>正弦值</td>
+    </tr>
+    <tr>
+      <td>cos(x[, out])</td>
+      <td>余弦值</td>
+    </tr>
+    <tr>
+      <td>tan(x[, out])</td>
+      <td>正切值</td>
+    </tr>
+    <tr>
+      <td>arcsin(x[, out])</td>
+      <td>反正弦</td>
+    </tr>
+    <tr>
+      <td>arccos(x[, out])</td>
+      <td>反余弦</td>
+    </tr>
+    <tr>
+      <td>arctan(x[, out])</td>
+      <td>反正切</td>
+    </tr>
+    <tr>
+      <td>hypot(x1, x2[, out])</td>
+      <td>求直角三角形斜边</td>
+    </tr>
+    <tr>
+      <td>arctan2(x1, x2[, out])</td>
+      <td>Element-wise arc tangent of x1/x2 choosing the quadrant correctly.</td>
+    </tr>
+    <tr>
+      <td>degrees(x[, out])</td>
+      <td>弧度求角度</td>
+    </tr>
+    <tr>
+      <td>radians(x[, out])</td>
+      <td>角度求弧度</td>
+    </tr>
+    <tr>
+      <td>unwrap(p[, discont, axis])</td>
+      <td>Unwrap by changing deltas between values to 2*pi complement.</td>
+    </tr>
+    <tr>
+      <td>deg2rad(x[, out])</td>
+      <td>角度求弧度</td>
+    </tr>
+    <tr>
+      <td>rad2deg(x[, out])</td>
+      <td>弧度求角度</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="双曲线函数hyperbolic">双曲线函数（Hyperbolic）</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Describe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>sinh(x[, out])</td>
+      <td>双曲线正弦</td>
+    </tr>
+    <tr>
+      <td>cosh(x[, out])</td>
+      <td>双曲线余弦</td>
+    </tr>
+    <tr>
+      <td>tanh(x[, out])</td>
+      <td>双曲线正切</td>
+    </tr>
+    <tr>
+      <td>arcsinh(x[, out])</td>
+      <td>反双曲线正弦</td>
+    </tr>
+    <tr>
+      <td>arccosh(x[, out])</td>
+      <td>反双曲线余弦</td>
+    </tr>
+    <tr>
+      <td>arctanh(x[, out])</td>
+      <td>反双曲线正切</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="四舍五入rounding">四舍五入（Rounding）</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Describe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>around(a[, decimals, out])</td>
+      <td>以给定的小数位进行四舍五入</td>
+    </tr>
+    <tr>
+      <td>round_(a[, decimals, out])</td>
+      <td>以给定的小数位进行四舍五入，等同于around</td>
+    </tr>
+    <tr>
+      <td>rint(x[, out])</td>
+      <td>四舍五入到整数</td>
+    </tr>
+    <tr>
+      <td>fix(x[, y])</td>
+      <td>向0取整，正数向下取整，负数向上取整</td>
+    </tr>
+    <tr>
+      <td>floor(x[, out])</td>
+      <td>向下取整</td>
+    </tr>
+    <tr>
+      <td>ceil(x[, out])</td>
+      <td>向上取整</td>
+    </tr>
+    <tr>
+      <td>trunc(x[, out])</td>
+      <td>取整数部分</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="和积差异sumsproductsdifferences">和、积、差异（Sums、Products、Differences）</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Describe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>prod(a[, axis, dtype, out, keepdims])</td>
+      <td>求积</td>
+    </tr>
+    <tr>
+      <td>sum(a[, axis, dtype, out, keepdims])</td>
+      <td>求和</td>
+    </tr>
+    <tr>
+      <td>nanprod(a[, axis, dtype, out, keepdims])</td>
+      <td>求积，缺省值为1</td>
+    </tr>
+    <tr>
+      <td>nansum(a[, axis, dtype, out, keepdims])</td>
+      <td>求和，缺省值为0</td>
+    </tr>
+    <tr>
+      <td>cumprod(a[, axis, dtype, out])</td>
+      <td>累积</td>
+    </tr>
+    <tr>
+      <td>cumsum(a[, axis, dtype, out])</td>
+      <td>累和</td>
+    </tr>
+    <tr>
+      <td>nancumprod(a[, axis, dtype, out])</td>
+      <td>累积，缺省为1</td>
+    </tr>
+    <tr>
+      <td>nancumsum(a[, axis, dtype, out])</td>
+      <td>累和，缺省为0</td>
+    </tr>
+    <tr>
+      <td>diff(a[, n, axis])</td>
+      <td>out[n] = a[n+1] - a[n]</td>
+    </tr>
+    <tr>
+      <td>ediff1d(ary[, to_end, to_begin])</td>
+      <td>The differences between consecutive elements of an array.</td>
+    </tr>
+    <tr>
+      <td>gradient(f, *varargs, **kwargs)</td>
+      <td>Return the gradient of an N-dimensional array.</td>
+    </tr>
+    <tr>
+      <td>cross(a, b[, axisa, axisb, axisc, axis])</td>
+      <td>Return the cross product of two (arrays of) vectors.</td>
+    </tr>
+    <tr>
+      <td>trapz(y[, x, dx, axis])</td>
+      <td>Integrate along the given axis using the composite trapezoidal rule.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="指数对数函数exponentslogarithm">指数、对数函数（Exponents&amp;Logarithm）</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Describe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>exp(x[, out])</td>
+      <td>指数</td>
+    </tr>
+    <tr>
+      <td>expm1(x[, out])</td>
+      <td>exp(x) - 1</td>
+    </tr>
+    <tr>
+      <td>exp2(x[, out])</td>
+      <td>2**x</td>
+    </tr>
+    <tr>
+      <td>log(x[, out])</td>
+      <td>对数</td>
+    </tr>
+    <tr>
+      <td>log10(x[, out])</td>
+      <td>以10为底对数</td>
+    </tr>
+    <tr>
+      <td>log2(x[, out])</td>
+      <td>以2为底对数.</td>
+    </tr>
+    <tr>
+      <td>log1p(x[, out])</td>
+      <td>exp(x) - 1</td>
+    </tr>
+    <tr>
+      <td>logaddexp(x1, x2[, out])</td>
+      <td>Logarithm of the sum of exponentiations of the inputs.</td>
+    </tr>
+    <tr>
+      <td>logaddexp2(x1, x2[, out])</td>
+      <td>Logarithm of the sum of exponentiations of the inputs in base-2.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="算术运算">算术运算</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Describe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>add(x1, x2[, out])</td>
+      <td>加法</td>
+    </tr>
+    <tr>
+      <td>reciprocal(x[, out])</td>
+      <td>倒数</td>
+    </tr>
+    <tr>
+      <td>negative(x[, out])</td>
+      <td>负数</td>
+    </tr>
+    <tr>
+      <td>multiply(x1, x2[, out])</td>
+      <td>乘法</td>
+    </tr>
+    <tr>
+      <td>divide(x1, x2[, out])</td>
+      <td>除法</td>
+    </tr>
+    <tr>
+      <td>power(x1, x2[, out])</td>
+      <td>幂运算</td>
+    </tr>
+    <tr>
+      <td>subtract(x1, x2[, out])</td>
+      <td>减法</td>
+    </tr>
+    <tr>
+      <td>true_divide(x1, x2[, out])</td>
+      <td>真除法 /</td>
+    </tr>
+    <tr>
+      <td>floor_divide(x1, x2[, out])</td>
+      <td>向下取整除法 //</td>
+    </tr>
+    <tr>
+      <td>fmod(x1, x2[, out])</td>
+      <td>求余</td>
+    </tr>
+    <tr>
+      <td>mod(x1, x2[, out])</td>
+      <td>求余，余数为正</td>
+    </tr>
+    <tr>
+      <td>modf(x[, out1, out2])</td>
+      <td>分别返回整数和余数</td>
+    </tr>
+    <tr>
+      <td>remainder(x1, x2[, out])</td>
+      <td>和mod相同</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="其他miscellaneous">其他（Miscellaneous）</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function</th>
+      <th>Describe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>convolve(a, v[, mode])</td>
+      <td>Returns the discrete, linear convolution of two one-dimensional sequences.</td>
+    </tr>
+    <tr>
+      <td>clip(a, a_min, a_max[, out])</td>
+      <td>求某一范围的值</td>
+    </tr>
+    <tr>
+      <td>sqrt(x[, out])</td>
+      <td>开平方</td>
+    </tr>
+    <tr>
+      <td>cbrt(x[, out])</td>
+      <td>开立方</td>
+    </tr>
+    <tr>
+      <td>square(x[, out])</td>
+      <td>求平方</td>
+    </tr>
+    <tr>
+      <td>absolute(x[, out])</td>
+      <td>绝对值</td>
+    </tr>
+    <tr>
+      <td>fabs(x[, out])</td>
+      <td>绝对值</td>
+    </tr>
+    <tr>
+      <td>sign(x[, out])</td>
+      <td>标记数字的正负零</td>
+    </tr>
+    <tr>
+      <td>maximum(x1, x2[, out])</td>
+      <td>求最大值</td>
+    </tr>
+    <tr>
+      <td>minimum(x1, x2[, out])</td>
+      <td>求最小值</td>
+    </tr>
+    <tr>
+      <td>fmax(x1, x2[, out])</td>
+      <td>求最大值</td>
+    </tr>
+    <tr>
+      <td>fmin(x1, x2[, out])</td>
+      <td>求最小值</td>
+    </tr>
+    <tr>
+      <td>nan_to_num(x)</td>
+      <td>替换空值</td>
+    </tr>
+    <tr>
+      <td>real_if_close(a[, tol])</td>
+      <td>If complex input returns a real array if complex parts are close to zero.</td>
+    </tr>
+    <tr>
+      <td>interp(x, xp, fp[, left, right, period])</td>
+      <td>One-dimensional linear interpolation.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>还有点积，线性代数等数学函数</p>
+
+<h2 id="pandas">Pandas</h2>
+
+<p><a href="https://www.yiibai.com/pandas/python_pandas_data_structures.html">易百教程-Pandas</a></p>
+
+<h3 id="数据类型">数据类型</h3>
+<ul>
+  <li>一维：系列(Series)</li>
+  <li>二维：数据帧(DataFrame)</li>
+  <li>三维：面板(Panel)</li>
+</ul>
+
+<p>Series构成DataFrame，DataFrame构成Panel</p>
+
+<h3 id="series">Series</h3>
+<h4 id="创建pdseries数组">创建<code class="highlighter-rouge">pd.Series(数组)</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pandas.Series( data, index, dtype, copy)
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>编号</th>
+      <th>参数</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><code class="highlighter-rouge">data</code></td>
+      <td>数据采取各种形式，如：<code class="highlighter-rouge">ndarray</code>，<code class="highlighter-rouge">list</code>，<code class="highlighter-rouge">constants</code></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code class="highlighter-rouge">index</code></td>
+      <td>索引值必须是唯一的和散列的，与数据的长度相同。 默认<code class="highlighter-rouge">np.arange(n)</code>如果没有索引被传递。</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code class="highlighter-rouge">dtype</code></td>
+      <td><code class="highlighter-rouge">dtype</code>用于数据类型。如果没有，将推断数据类型</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code class="highlighter-rouge">copy</code></td>
+      <td>复制数据，默认为<code class="highlighter-rouge">false</code>。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data=pd.Series([1,2,3])
+data=pd.Series(np.arange(10))
+</code></pre></div></div>
+<p>提取数值<code class="highlighter-rouge">data.values</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; data.values
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+</code></pre></div></div>
+<p>提取指定元素<code class="highlighter-rouge">data.get(N)</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; data.get(0)
+0
+</code></pre></div></div>
+<p>提取首尾head,tail</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; data.head(2)
+0    0
+1    1
+dtype: int64
+&gt;&gt;&gt; data.tail(2)
+8    8
+9    9
+dtype: int64
+</code></pre></div></div>
+
+<h3 id="dataframe">DataFrame</h3>
+<h4 id="创建">创建</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pandas.DataFrame( data, index, columns, dtype, copy)
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>编号</th>
+      <th>参数</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><code class="highlighter-rouge">data</code></td>
+      <td>数据采取各种形式，如:<code class="highlighter-rouge">ndarray</code>，<code class="highlighter-rouge">series</code>，<code class="highlighter-rouge">map</code>，<code class="highlighter-rouge">lists</code>，<code class="highlighter-rouge">dict</code>，<code class="highlighter-rouge">constant</code>和另一个<code class="highlighter-rouge">DataFrame</code>。</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code class="highlighter-rouge">index</code></td>
+      <td>对于行标签，要用于结果帧的索引是可选缺省值<code class="highlighter-rouge">np.arrange(n)</code>，如果没有传递索引值。</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code class="highlighter-rouge">columns</code></td>
+      <td>对于列标签，可选的默认语法是 - <code class="highlighter-rouge">np.arange(n)</code>。 这只有在没有索引传递的情况下才是这样。</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code class="highlighter-rouge">dtype</code></td>
+      <td>每列的数据类型。</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><code class="highlighter-rouge">copy</code></td>
+      <td>如果默认值为<code class="highlighter-rouge">False</code>，则此命令(或任何它)用于复制数据。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; a
+array([[0, 1, 2, 3, 4],
+       [5, 6, 7, 8, 9]])
+&gt;&gt;&gt; pd.DataFrame(a)
+   0  1  2  3  4
+0  0  1  2  3  4
+1  5  6  7  8  9
+</code></pre></div></div>
+<p>提取数值</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; data=pd.DataFrame(a)
+&gt;&gt;&gt; data.values
+array([[0, 1, 2, 3, 4],
+       [5, 6, 7, 8, 9]])
+&gt;&gt;&gt; data.head(1)
+   0  1  2  3  4
+0  0  1  2  3  4
+&gt;&gt;&gt; 
+</code></pre></div></div>
+
+<h3 id="读写文件">读写文件</h3>
+<h4 id="pdread_table读取文本数据作为dataframe类型">pd.read_table读取文本数据作为DataFrame类型</h4>
+<p>使用values提取数值作为Numpy类型</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; import pandas as pd
+&gt;&gt;&gt; mydata=pd.read_table("data.dat")
+&gt;&gt;&gt; type(mydata)
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+&gt;&gt;&gt; data=mydata.values
+</code></pre></div></div>
+:ET

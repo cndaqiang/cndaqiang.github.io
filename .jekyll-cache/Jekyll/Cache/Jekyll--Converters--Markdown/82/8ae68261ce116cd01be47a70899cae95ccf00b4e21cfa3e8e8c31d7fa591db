@@ -1,0 +1,52 @@
+I"+<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://shipengliang.com/software-exp/swapon-failed-operation-not-permitted-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.html">swapon failed: Operation not permitted 解决办法</a></p>
+
+<p><a href="http://linux-problem-solver.blogspot.com/2013/08/create-fake-swap-in-openvz-vps-if-you-get-swapon-failed-operation-not-permitted-error.html">Create Fake Swap in OpenVZ VPS if you get swapon failed: Operation not permitted Error</a></p>
+<h2 id="环境">环境</h2>
+<p>Ubuntu 16.04 LTS (GNU/Linux 2.6.32-042stab116.2 x86_64)</p>
+
+<p>openvz
+ 120M内存</p>
+
+<h2 id="操作">操作</h2>
+<p>查看内存剩余</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ free -m
+              total        used        free      shared  buff/cache   available
+Mem:            128          17          80           7          29          32
+</code></pre></div></div>
+<p>编写增加内存脚本</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi mkswap.sh
+</code></pre></div></div>
+<p>填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">SWAP</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">512</span><span class="k">}</span><span class="s2">"</span>
+
+<span class="nv">NEW</span><span class="o">=</span><span class="s2">"</span><span class="nv">$[</span><span class="s2">SWAP*1024]"</span><span class="p">;</span> <span class="nv">TEMP</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">NEW</span><span class="p">//?/ </span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="nv">OLD</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">TEMP</span>:1<span class="k">}</span><span class="s2">0"</span>
+
+umount /proc/meminfo 2&gt; /dev/null
+<span class="nb">sed</span> <span class="s2">"/^Swap</span><span class="se">\(</span><span class="s2">Total</span><span class="se">\|</span><span class="s2">Free</span><span class="se">\)</span><span class="s2">:/s,</span><span class="nv">$OLD</span><span class="s2">,</span><span class="nv">$NEW</span><span class="s2">,"</span> /proc/meminfo <span class="o">&gt;</span> /etc/fake_meminfo
+mount <span class="nt">--bind</span> /etc/fake_meminfo /proc/meminfo
+</code></pre></div></div>
+<p>保存后，赋予执行权限</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x mkswap.sh
+</code></pre></div></div>
+<p>增加swap,下面1024单位为M，可自定义，缺省为512</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./mkswap.sh 1024
+</code></pre></div></div>
+<p>查看是否增加</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ free -m
+              total        used        free      shared  buff/cache   available
+Mem:            128          20          71           9          36          24
+Swap:          1024           0        1024
+</code></pre></div></div>
+<p>取消swap分区</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./mkswap.sh 0
+</code></pre></div></div>
+:ET

@@ -1,0 +1,150 @@
+I"5<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a>    <ul>
+      <li><a href="#关于list的一些用法" id="markdown-toc-关于list的一些用法">关于list的一些用法</a></li>
+    </ul>
+  </li>
+  <li><a href="#关于字典" id="markdown-toc-关于字典">关于字典</a></li>
+</ul>
+
+<p>主要针对python对象类型中的字符串str，列表list，元组tup，集合set，字典dir
+补充的不全，有机会回来增加</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://www.runoob.com/python3/python3-data-structure.html">Python3教程-数据结构| 菜鸟教程</a></p>
+
+<p>回顾以下python(一)基本语法里面的内容</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>有序</th>
+      <th>引用元素 <code class="highlighter-rouge">[]</code></th>
+      <th>修改元素</th>
+      <th>元素类型</th>
+      <th>定义示例</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>字符串string</td>
+      <td>√</td>
+      <td>索引下标</td>
+      <td>×</td>
+      <td>字符（串）</td>
+      <td><code class="highlighter-rouge">str0='string'</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>列表list</td>
+      <td>√</td>
+      <td>索引下标</td>
+      <td>√</td>
+      <td>任意组合</td>
+      <td><code class="highlighter-rouge">list0=[1,2,'3']</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>元组tuple</td>
+      <td>√</td>
+      <td>索引下标</td>
+      <td>×</td>
+      <td>任意组合</td>
+      <td><code class="highlighter-rouge">tup0=(1,2,'3')</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>集合set</td>
+      <td>×</td>
+      <td>无</td>
+      <td>无</td>
+      <td>不包含list，tuple，dict</td>
+      <td><code class="highlighter-rouge">set0={1,2,'3'}</code></td>
+      <td>{}用于定义空字典，set()为空集合</td>
+    </tr>
+    <tr>
+      <td>字典dict</td>
+      <td>×</td>
+      <td>key</td>
+      <td>√</td>
+      <td>任意组合</td>
+      <td><code class="highlighter-rouge">dict0={1:1,'2':2,3:'3'}</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="关于list的一些用法">关于list的一些用法</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>方法</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>list.append(x)</td>
+      <td>把一个元素添加到列表的结尾，相当于 a[len(a):] = [x]。</td>
+    </tr>
+    <tr>
+      <td>list.extend(L)</td>
+      <td>通过添加指定列表的所有元素来扩充列表，相当于 a[len(a):] = L。</td>
+    </tr>
+    <tr>
+      <td>list.insert(i, x)</td>
+      <td>在指定位置插入一个元素。第一个参数是准备插入到其前面的那个元素的索引，例如 a.insert(0, x) 会插入到整个列表之前，而 a.insert(len(a), x) 相当于 a.append(x) 。</td>
+    </tr>
+    <tr>
+      <td>list.remove(x)</td>
+      <td>删除列表中值为 x 的第一个元素。如果没有这样的元素，就会返回一个错误。</td>
+    </tr>
+    <tr>
+      <td>list.pop([i])</td>
+      <td>从列表的指定位置删除元素，并将其返回。如果没有指定索引，a.pop()返回最后一个元素。元素随即从列表中被删除。（方法中 i 两边的方括号表示这个参数是可选的，而不是要求你输入一对方括号，你会经常在 Python 库参考手册中遇到这样的标记。）</td>
+    </tr>
+    <tr>
+      <td>list.clear()</td>
+      <td>移除列表中的所有项，等于del a[:]。</td>
+    </tr>
+    <tr>
+      <td>list.index(x)</td>
+      <td>返回列表中第一个值为 x 的元素的索引。如果没有匹配的元素就会返回一个错误。</td>
+    </tr>
+    <tr>
+      <td>list.count(x)</td>
+      <td>返回 x 在列表中出现的次数。</td>
+    </tr>
+    <tr>
+      <td>list.sort()</td>
+      <td>对列表中的元素进行排序。</td>
+    </tr>
+    <tr>
+      <td>list.reverse()</td>
+      <td>倒排列表中的元素。</td>
+    </tr>
+    <tr>
+      <td>list.copy()</td>
+      <td>返回列表的浅复制，等于a[:]</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>上述用法可将列表用于堆栈或队列使用</strong></p>
+
+<h2 id="关于字典">关于字典</h2>
+
+<p>字典对象中的item()方法可以输出字典中所有的key和value，如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; set0={'name':'ming','num':123456}
+&gt;&gt;&gt; set0.items()
+dict_items([('name', 'ming'), ('num', 123456)])
+&gt;&gt;&gt; for k,v in set0.items():
+...  print(k,v)
+... 
+name ming
+num 123456
+</code></pre></div></div>
+
+:ET

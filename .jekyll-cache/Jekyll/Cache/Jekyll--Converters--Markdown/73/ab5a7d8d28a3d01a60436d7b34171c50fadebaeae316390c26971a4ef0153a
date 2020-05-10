@@ -1,0 +1,100 @@
+I"L<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#步骤" id="markdown-toc-步骤">步骤</a>    <ul>
+      <li><a href="#1-he-ipv6-tunnel" id="markdown-toc-1-he-ipv6-tunnel">1. HE IPv6 tunnel</a>        <ul>
+          <li><a href="#11-注册he-ipv6-tunnel" id="markdown-toc-11-注册he-ipv6-tunnel">1.1 注册HE IPv6 tunnel</a></li>
+          <li><a href="#12-create-regular-tunnel" id="markdown-toc-12-create-regular-tunnel">1.2 Create Regular Tunnel</a></li>
+          <li><a href="#13-查看ip地址" id="markdown-toc-13-查看ip地址">1.3 查看ip地址</a></li>
+        </ul>
+      </li>
+      <li><a href="#2-编译tb-tun" id="markdown-toc-2-编译tb-tun">2. 编译tb-tun</a>        <ul>
+          <li><a href="#21-下载" id="markdown-toc-21-下载">2.1 下载</a></li>
+          <li><a href="#22-编译" id="markdown-toc-22-编译">2.2 编译</a></li>
+        </ul>
+      </li>
+      <li><a href="#3-创建tunnel" id="markdown-toc-3-创建tunnel">3. 创建tunnel</a>        <ul>
+          <li><a href="#31-需要开启tuntap" id="markdown-toc-31-需要开启tuntap">3.1 需要开启tun/tap</a></li>
+          <li><a href="#32-设置tunnel" id="markdown-toc-32-设置tunnel">3.2 设置tunnel</a></li>
+          <li><a href="#33-ping6测试" id="markdown-toc-33-ping6测试">3.3 ping6测试</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+</ul>
+<p>利用HE IPv6使openvz支持ipv6</p>
+
+<h2 id="参考">参考</h2>
+<p>https://github.com/acgrid/tb-tun</p>
+
+<p><a href="https://fishcn.win/?id=5">飞扬的喵窝-为OpenVZ VPS添加HE IPv6 tunnel</a></p>
+
+<h2 id="环境">环境</h2>
+<p>OpenVZ Linux VPS Ubuntu 14.04 x86</p>
+
+<h2 id="步骤">步骤</h2>
+<h3 id="1-he-ipv6-tunnel">1. HE IPv6 tunnel</h3>
+<h4 id="11-注册he-ipv6-tunnel">1.1 注册HE IPv6 tunnel</h4>
+<p>登陆注册https://tunnelbroker.net</p>
+<h4 id="12-create-regular-tunnel">1.2 Create Regular Tunnel</h4>
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-fe62c6dbf3b7ba5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<ul>
+  <li>IPv4 Endpoint (Your side):填vps的ip</li>
+  <li>Available Tunnel Servers:在vps上ping试试看哪个延迟最低</li>
+  <li>Checking address…可以后，点下方Create Tunnel就好了</li>
+</ul>
+
+<h4 id="13-查看ip地址">1.3 查看ip地址</h4>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-2c50a052b157b50f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<h3 id="2-编译tb-tun">2. 编译tb-tun</h3>
+<p>许多教程里给的源码地址都已失效，我重新从GitHub上找了代码，如果我找的这个代码地址失效，可自行到GitHub上找
+源代码<strong><a href="https://github.com/acgrid/tb-tun">tb-tun</a></strong></p>
+<h4 id="21-下载">2.1 下载</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@GaseousOvercooked-VM:/# mkdir tb-tun-file
+root@GaseousOvercooked-VM:/# cd tb-tun-file/
+
+</code></pre></div></div>
+<p>我是浏览器下载https://codeload.github.com/acgrid/tb-tun/zip/master
+然后本地解压后用winscp上传到vps的/tb-tun-file目录
+wget 然后解压或者git 命令都行，源码就在那里，传到vps上就可以</p>
+<h4 id="22-编译">2.2 编译</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc tb_userspace.c -l pthread -o tb_userspace
+</code></pre></div></div>
+<p>如果缺少gcc,先安装gcc，例deb系</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install gcc
+</code></pre></div></div>
+<h3 id="3-创建tunnel">3. 创建tunnel</h3>
+<h4 id="31-需要开启tuntap">3.1 需要开启tun/tap</h4>
+<p>先检查tun/tap设备是否已经打开，可以通过命令cat /dev/net/tun检测，如果返回File descriptor in bad state，则说明tun/tap设备已经打开，否则需要到控制面板更改或给客服发ticket开启。</p>
+<h4 id="32-设置tunnel">3.2 设置tunnel</h4>
+<p>下述命令中
+he-ipv6为之后的tunnel名称，可自定义
+[server ipv4 addr] 
+[client ipv4 addr]
+[client ipv6 addr]
+为<strong>1.3 查看ip地址</strong>图中的几个ip地址</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@GaseousOvercooked-VM:/tb-tun-file# setsid ./tb_userspace he-ipv6 [server ipv4 addr] [client ipv4 addr] sit &gt; /dev/null
+root@GaseousOvercooked-VM:/tb-tun-file# ifconfig he-ipv6 inet6 add [client ipv6 addr]
+root@GaseousOvercooked-VM:/tb-tun-file# ifconfig he-ipv6 mtu 1480
+root@GaseousOvercooked-VM:/tb-tun-file# ifconfig he-ipv6 up
+root@GaseousOvercooked-VM:/tb-tun-file# route -A inet6 add ::/0 dev he-ipv6
+root@GaseousOvercooked-VM:/tb-tun-file# ip -6 route del default dev venet0
+</code></pre></div></div>
+<h4 id="33-ping6测试">3.3 ping6测试</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ping6 ipv6.google.com
+</code></pre></div></div>
+<p>测试是否正常</p>
+<h2 id="备注">备注</h2>
+<ul>
+  <li>
+    <ol>
+      <li>上述命令重启后会无效，需从<strong>3.2 设置tunnel</strong>继续输入，需要添加开机脚本可参考<a href="https://www.cybermilitia.net/2013/07/22/ipv6-tunnel-on-openvz/">IPv6 tunnel on OpenVZ</a></li>
+    </ol>
+  </li>
+</ul>
+:ET

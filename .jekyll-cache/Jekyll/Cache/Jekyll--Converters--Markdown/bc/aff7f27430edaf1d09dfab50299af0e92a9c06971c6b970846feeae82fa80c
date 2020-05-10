@@ -1,0 +1,64 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#重装系统" id="markdown-toc-重装系统">重装系统</a>    <ul>
+      <li><a href="#1备份" id="markdown-toc-1备份">1备份</a></li>
+      <li><a href="#2记录软件" id="markdown-toc-2记录软件">2记录软件</a></li>
+      <li><a href="#3重装后" id="markdown-toc-3重装后">3重装后</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="重装系统">重装系统</h1>
+
+<h2 id="1备份">1备份</h2>
+<p>桌面等文件
+c盘，数据库，网站等
+git仓库
+~/.ssh
+/视频目录软件
+xmanage数据</p>
+
+<h2 id="2记录软件">2记录软件</h2>
+<ul>
+  <li>git</li>
+  <li>ruby</li>
+  <li>Accelrys_Materials_Studio_8.0_Win</li>
+  <li>坚果云</li>
+  <li>PotPlayer绿色</li>
+  <li>Tim</li>
+  <li>vmware</li>
+  <li>chrome</li>
+  <li>Xmanager</li>
+  <li>winscp</li>
+  <li>Steam</li>
+  <li>Bash on ubuntu (以后要不再这里，可以）</li>
+  <li>欧陆</li>
+  <li>inode</li>
+  <li>7z</li>
+  <li>xamp</li>
+  <li>Adobe DC</li>
+</ul>
+
+<h2 id="3重装后">3重装后</h2>
+
+<p>设置视频，图片，桌面等目录到<code class="highlighter-rouge">D:\win10cndaqiang\xxx</code>，使绿色软件和个人用户文件恢复<br />
+右键属性-&gt;位置</p>
+
+<ul>
+  <li>路由器可以做种，网速限制 10k/s即可</li>
+  <li>卸载mac</li>
+  <li>复制绿色软件到固态，~./ssh</li>
+  <li>挂ssr</li>
+  <li>下载chrome，登陆信息，设置默认浏览器
+<br />chrome下载时好像不需要挂ss，挂ss好像快？</li>
+  <li>登陆微软(手机热点）</li>
+  <li>安装软件</li>
+  <li>steam
+等安装在非系统盘直接打开恢复</li>
+  <li>配置git</li>
+  <li>配置ruby</li>
+  <li>配置xamp</li>
+  <li>登陆邮箱，同步日程邮件</li>
+  <li>更新win10</li>
+  <li>安装bash on ubuntu</li>
+</ul>
+:ET

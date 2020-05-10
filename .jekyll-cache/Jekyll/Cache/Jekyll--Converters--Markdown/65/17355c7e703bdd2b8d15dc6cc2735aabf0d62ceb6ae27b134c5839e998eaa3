@@ -1,0 +1,103 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#注意" id="markdown-toc-注意">注意</a></li>
+  <li><a href="#查看显卡是否存在" id="markdown-toc-查看显卡是否存在">查看显卡是否存在</a></li>
+  <li><a href="#禁用nouveau驱动" id="markdown-toc-禁用nouveau驱动">禁用Nouveau驱动</a></li>
+  <li><a href="#开机默认文本模式" id="markdown-toc-开机默认文本模式">开机默认文本模式</a></li>
+  <li><a href="#一些依赖" id="markdown-toc-一些依赖">一些依赖</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+  <li><a href="#查看运行状况" id="markdown-toc-查看运行状况">查看运行状况</a></li>
+</ul>
+
+<p>在阿里云的GPU服务器上安装cuda没有什么问题，在自己的服务器上安装遇到一些问题，记录如下<br /></p>
+
+<h2 id="注意">注意</h2>
+<p>硬盘空间
+需要root用户安装</p>
+
+<p>参考<br />
+<a href="https://blog.csdn.net/liglewang/article/details/76222642">CentOS 7 设置默认进入图形界面或文本界面</a><br />
+<a href="https://blog.51cto.com/enetq/591622">Linux安装Nvidia显卡驱动：禁用The Nouveau kernel driver的方法！</a></p>
+
+<h2 id="查看显卡是否存在">查看显卡是否存在</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@mom ~]$ lspci  | grep -i vga
+05:00.0 VGA compatible controller: NVIDIA Corporation GM107 [GeForce GTX 750 Ti] (rev a2)
+09:00.0 VGA compatible controller: Matrox Electronics Systems Ltd. MGA G200e [Pilot] ServerEngines (SEP1) (rev 05)
+</code></pre></div></div>
+
+<h2 id="禁用nouveau驱动">禁用Nouveau驱动</h2>
+<p>Centos之前安装了Nouveau的驱动</p>
+<ol>
+  <li>把驱动加入黑名单中: 在<code class="highlighter-rouge">/etc/modprobe.d/blacklist.conf</code>  在后面加入：
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blacklist nouveau
+</code></pre></div>    </div>
+  </li>
+  <li>使用 dracut重新建立  initramfs p_w_picpath file :
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#备份 the initramfs file
+$ sudo mv /boot/initramfs-$(uname -r).img /boot/initramfs-$(uname -r).img.bak
+#重新建立 the initramfs file
+$ sudo dracut -v /boot/initramfs-$(uname -r).img $(uname -r)
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="开机默认文本模式">开机默认文本模式</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@mom ~]$ systemctl get-default
+multi-user.target
+[cndaqiang@mom ~]$ sudo systemctl set-default multi-user.target
+</code></pre></div></div>
+<p>重启，检查nouveau driver确保没有被加载！</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ lsmod | grep nouveau
+</code></pre></div></div>
+
+<h2 id="一些依赖">一些依赖</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install epel-release
+yum install --enablerepo=epel dkms
+</code></pre></div></div>
+
+<h2 id="安装">安装</h2>
+<p>从<a href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal">CUDA Toolkit 10.1 Download</a>下载<code class="highlighter-rouge">cuda_10.1.105_418.39_linux.run</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./cuda_10.1.105_418.39_linux.run
+</code></pre></div></div>
+<p>安装即可，安装结果</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom cndaqiang]# ./cuda_10.1.105_418.39_linux.run 
+===========
+= Summary =
+===========
+
+Driver:   Installed
+Toolkit:  Installed in /usr/local/cuda-10.1/
+Samples:  Not Selected
+
+Please make sure that
+ -   PATH includes /usr/local/cuda-10.1/bin
+ -   LD_LIBRARY_PATH includes /usr/local/cuda-10.1/lib64, or, add /usr/local/cuda-10.1/lib64 to /etc/ld.so.conf and run ldconfig as root
+</code></pre></div></div>
+<p>最后把安装所说的添加PATH和LD_LIBRARY_PATH<br /></p>
+
+<p>编译vasp所需的<code class="highlighter-rouge">cublas</code>和<code class="highlighter-rouge">cuda</code>库，在安装cuda时自定义的安装目录的lib目录下，或者在<code class="highlighter-rouge"> /usr/lib </code>里面，编译时，注意修改<code class="highlighter-rouge">makefile.include</code></p>
+
+<h2 id="查看运行状况">查看运行状况</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@mom vasp.5.4.4-gpu]$ nvidia-smi
+Mon Apr  1 21:37:29 2019       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 418.39       Driver Version: 418.39       CUDA Version: 10.1     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  GeForce GTX 750 Ti  Off  | 00000000:05:00.0 Off |                  N/A |
+| 30%   25C    P0     1W /  38W |      0MiB /  2001MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+</code></pre></div></div>
+<p>或实时显示<code class="highlighter-rouge">watch -n 0 "nvidia-smi"</code></p>
+:ET

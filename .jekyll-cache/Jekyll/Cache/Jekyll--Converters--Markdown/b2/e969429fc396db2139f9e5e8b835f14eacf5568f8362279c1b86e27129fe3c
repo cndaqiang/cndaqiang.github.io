@@ -1,0 +1,133 @@
+I"$<ul id="markdown-toc">
+  <li><a href="#2019-06-15更新" id="markdown-toc-2019-06-15更新">2019-06-15更新</a></li>
+  <li><a href="#笔记软件" id="markdown-toc-笔记软件">笔记软件</a>    <ul>
+      <li><a href="#需求" id="markdown-toc-需求">需求</a></li>
+      <li><a href="#考虑过的笔记方案" id="markdown-toc-考虑过的笔记方案">考虑过的笔记方案</a>        <ul>
+          <li><a href="#笔记软件-1" id="markdown-toc-笔记软件-1">笔记软件</a></li>
+          <li><a href="#本地云网站云盘同步" id="markdown-toc-本地云网站云盘同步">本地/云网站+云盘同步</a></li>
+          <li><a href="#离线笔记软件" id="markdown-toc-离线笔记软件">离线笔记软件</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#pc端笔记方案_veracryptzim同步云盘" id="markdown-toc-pc端笔记方案_veracryptzim同步云盘">PC端笔记方案_VeraCrypt+Zim+同步云盘</a>    <ul>
+      <li><a href="#zim---a-desktop-wiki" id="markdown-toc-zim---a-desktop-wiki">Zim - A Desktop Wiki</a></li>
+      <li><a href="#veracrypt" id="markdown-toc-veracrypt">VeraCrypt</a></li>
+      <li><a href="#同步云盘" id="markdown-toc-同步云盘">同步云盘</a></li>
+    </ul>
+  </li>
+  <li><a href="#安装使用" id="markdown-toc-安装使用">安装使用</a>    <ul>
+      <li><a href="#zim" id="markdown-toc-zim">Zim</a>        <ul>
+          <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+          <li><a href="#中文支持" id="markdown-toc-中文支持">中文支持</a></li>
+          <li><a href="#常用" id="markdown-toc-常用">常用</a></li>
+          <li><a href="#插入图片过大" id="markdown-toc-插入图片过大">插入图片过大</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#安装veracrypt" id="markdown-toc-安装veracrypt">安装VeraCrypt</a>    <ul>
+      <li><a href="#同步盘" id="markdown-toc-同步盘">同步盘</a></li>
+      <li><a href="#效果图" id="markdown-toc-效果图">效果图</a></li>
+    </ul>
+  </li>
+</ul>
+<p>主要为了解决我的密码保存问题,之前密码都是保存在onenote,加个密码,每次解密后快速搜索,而且手机也支持,昨天onenote居然卡顿了,而且onenote在linux平台一直不能很顺利的使用,也是我笔记本基本不用linux的最大原因.</p>
+
+<h2 id="2019-06-15更新">2019-06-15更新</h2>
+<p>在不同的系统下完全有各自的加密方式，比如win的Bitlocker，可以开机自动挂载，密码输入正确就可以，也不错，再用<br />
+因关机没有挂载Bitlocker分区时，添加盘符，进入控制面板解锁</p>
+
+<h2 id="笔记软件">笔记软件</h2>
+<h3 id="需求">需求</h3>
+<ul>
+  <li>全平台,至少PC端可以全平台使用</li>
+  <li>云同步,可以使用第三方云盘解决</li>
+  <li>一些笔记需要加密,隐藏,保证在电脑丢失的情况下
+<br />信息不被一些没有技术的人轻松获取</li>
+  <li>电脑丢失不影响我的生活(上述要求满足,此条件自然满足)</li>
+  <li>没必要只是用单一笔记软件
+<br />有些笔记不需要满足上述要求,完全可以多个笔记软件混合使用</li>
+</ul>
+
+<h3 id="考虑过的笔记方案">考虑过的笔记方案</h3>
+<h4 id="笔记软件-1">笔记软件</h4>
+<ul>
+  <li>
+    <p>onenote
+<br />除了linux不能流畅使用,满足全平台+同步+加密条件,简直是我的最爱了,足够优秀。<br />
+加密的笔记搜索起来很慢<br />
+继续使用,不再使用加密功能,用于生活琐事,和移动端看笔记。</p>
+  </li>
+  <li><a href="https://www.yinxiang.com/">印象笔记</a>
+<br />免费用户不支持离线,直接放弃,标准版8元/月,不想额外付费了。</li>
+  <li><a href="https://note.youdao.com/">有道笔记</a>
+<br />有广告</li>
+  <li><a href="https://www.wiz.cn/">为知笔记</a>
+<br />免费用户只能使用100天,放弃</li>
+</ul>
+
+<h4 id="本地云网站云盘同步">本地/云网站+云盘同步</h4>
+<ul>
+  <li>wordpress+php+mysql博客类
+<br />本地需要定期备份数据库,额外运行网站服务,没必要
+<br />服务器运行,不支持离线,服务器安全需要维护</li>
+  <li>jekyll等静态网页
+<br />编辑起来不太方便,复制粘贴格式无法保留</li>
+</ul>
+
+<h4 id="离线笔记软件">离线笔记软件</h4>
+<ul>
+  <li><a href="http://www.wjjsoft.com">Mybase</a>
+<br />我非常喜欢,适用于PC全平台,自带加密功能,离线使用,编辑器也不错<br />
+正版需要付费,(因为不知道这个软件是否会继续开发,所以我不愿意付费和使用破解版)</li>
+  <li>md编辑器,gitbook等
+<br />gitbook运行起来太卡了,md编辑器粘贴图形困难</li>
+  <li>Zim等离线笔记软件
+<br />考虑Zim支持PC全平台,编辑器也不错(不支持md语法,不是必须条件)
+<br />致命弱点不能加密,所以需要第三方加密软件进行加密</li>
+</ul>
+
+<h2 id="pc端笔记方案_veracryptzim同步云盘">PC端笔记方案_VeraCrypt+Zim+同步云盘</h2>
+<h3 id="zim---a-desktop-wiki"><a href="http://zim-wiki.org/">Zim - A Desktop Wiki</a></h3>
+<p>虽然没有onenote那么强大,但笔记功能还可以,可以从粘贴板复制图片等并保持排版
+<br />开源,免费,支持Linux，<a href="http://zim-wiki.org/install.html">OSX</a>,Windows.</p>
+
+<h3 id="veracrypt"><a href="https://veracrypt.codeplex.com/">VeraCrypt</a></h3>
+<p>VeraCrypt 是一款基于已终止的 TrueCrypt项目开发的开源即时加密软件，它可以创建一个虚拟的加密磁盘或者加密分区，用来保护隐私文件。详细信息和安装<a href="https://www.appinn.com/veracrypt/">@小众软件</a><br />
+<br />主要是用于对存放含有密码的笔记,开源,免费支持Linux，OSX,Windows.(移动端也有第三方客户端)
+<br /><br />我最喜欢的地方是,开机一次解密,挂载成一个分区,断电或关机数据都会加密.而且存储文件没有格式要求,<strong>可以把加密盘,命名为<code class="highlighter-rouge">xxx.dll</code>等名称藏在C盘某个目录内,减少电脑失窃后某些文件/笔记被偷看的可能</strong>。
+<br /><br />除了给笔记加密,还有更多有趣的玩法</p>
+
+<h3 id="同步云盘">同步云盘</h3>
+<p>避免数据丢失,对Zim的笔记进行备份,因为日常备份都用坚果云了,所以选择<a href="https://www.jianguoyun.com">坚果云</a></p>
+
+<h2 id="安装使用">安装使用</h2>
+<h3 id="zim">Zim</h3>
+<h4 id="安装">安装</h4>
+<p>从<a href="http://zim-wiki.org/">Zim - A Desktop Wiki</a>下载安装即可<br /></p>
+<h4 id="中文支持">中文支持</h4>
+<p>参考<a href="http://menxu.lofter.com/post/164b9d_3ebf7b">Zim桌面wiki系统</a><br />
+使用中文:我的电脑（计算机）右键属性里的环境变量里增加一个变量，变量名为 “LANG”，值为 “zh_CN.UTF-8″，皆不带引号</p>
+<h4 id="常用">常用</h4>
+<p><code class="highlighter-rouge">ctrl +/-</code>调节页面文本显示大小</p>
+<h4 id="插入图片过大">插入图片过大</h4>
+<p>选中图片,ctrl+E,调整大小</p>
+
+<h2 id="安装veracrypt">安装VeraCrypt</h2>
+<p>参考<a href="https://sourceforge.net/p/veracrypt/discussion/technical/thread/1056ed16/">Please add these info for Linux/Ubuntu users</a><br />
+从<a href="https://veracrypt.codeplex.com/">VeraCrypt</a>下载安装即可,教程很多<br />
+ubuntu错误提示</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VeraCrypt:process::Execute:88
+</code></pre></div></div>
+<p>安装下列解决</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install exfat-fuse  exfat-utils dmsetup
+</code></pre></div></div>
+<h3 id="同步盘">同步盘</h3>
+<p>选择你喜欢的。</p>
+
+<h3 id="效果图">效果图</h3>
+<p>win10和ubuntu16.04编辑同一笔记
+<img src="/uploads/2018/01/zimlin.PNG" alt="" />
+<img src="/uploads/2018/01/zimwin.PNG" alt="" /></p>
+:ET

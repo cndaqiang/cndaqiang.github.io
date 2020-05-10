@@ -1,0 +1,251 @@
+I"�+<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+  <li><a href="#程序说明" id="markdown-toc-程序说明">程序说明</a>    <ul>
+      <li><a href="#计算模块" id="markdown-toc-计算模块">计算模块</a></li>
+      <li><a href="#后处理模块" id="markdown-toc-后处理模块">后处理模块</a></li>
+    </ul>
+  </li>
+  <li><a href="#pwx-输入文件" id="markdown-toc-pwx-输入文件"><code class="highlighter-rouge">pw.x</code> 输入文件</a>    <ul>
+      <li><a href="#inputin" id="markdown-toc-inputin">input.in</a></li>
+      <li><a href="#赝势" id="markdown-toc-赝势">赝势</a></li>
+    </ul>
+  </li>
+  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+  <li><a href="#分析" id="markdown-toc-分析">分析</a>    <ul>
+      <li><a href="#ppx电荷密度分析" id="markdown-toc-ppx电荷密度分析"><code class="highlighter-rouge">pp.x</code>电荷密度分析</a>        <ul>
+          <li><a href="#输入文件示例" id="markdown-toc-输入文件示例">输入文件示例</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#报错" id="markdown-toc-报错">报错</a></li>
+</ul>
+
+<p>QE 快速上手记录<br />
+仅是一个快速上手了。。。。。<br />
+后续学习笔记<a href="/2020/03/06/learnqe/">Learn QE1 电子结构计算</a>,<a href="/2020/03/07/learnqe2/">Learn QE2 原子结构相关：结构优化,MD,NEB</a></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://www.bilibili.com/video/av36194036">QE的那点B事儿</a></p>
+
+<h2 id="安装">安装</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/soft/intel17
+cd ~/soft/intel17/
+module load mpi/intelmpi/2017.4.239
+wget https://github.com/QEF/q-e/releases/download/qe-6.4.1/qe-6.4.1_release_pack.tgz
+tar xzvf qe-6.4.1_release_pack.tgz 
+cd qe-6.4.1/
+./configure -h
+./configure FC=ifort CC=icc MPIF90=mpiifort
+make -j20 pwall
+#如果要生成赝势，需要编译
+make -j20 ld1
+make -j20 upf
+</code></pre></div></div>
+
+<h2 id="程序说明">程序说明</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alpha2f.x     epa.x         fermi_velocity.x               iotk                molecularpdos.x       plotband.x  pw2bgw.x        q2qstar.x       wfck2r.x
+average.x     epsilon.x     fqha.x                         iotk_print_kinds.x  neb.x                 plotproj.x  pw2critic.x     q2r.x
+bands.x       ev.x          fs.x                           iotk.x              open_grid.x           plotrho.x   pw2gw.x         q2trans_fd.x
+cell2ibrav.x  fd_ef.x       generate_rVV10_kernel_table.x  kpoints.x           path_interpolation.x  pmw.x       pw2wannier90.x  q2trans.x
+dist.x        fd_ifc.x      generate_vdW_kernel_table.x    lambda.x            phcg.x                ppacf.x     pwcond.x        sumpdos.x
+dos.x         fd.x          ibrav2cell.x                   manypw.x            ph.x                  pp.x        pwi2xsf.x       wannier_ham.x
+dynmat.x      fermi_proj.x  initial_state.x                matdyn.x            plan_avg.x            projwfc.x   pw.x            wannier_plot.x
+</code></pre></div></div>
+<p>各个文件夹里面有不同程序的example<br />
+各个程序的输入文件参考<a href="https://www.quantum-espresso.org/resources/users-manual/input-data-description">INPUT DATA DESCRIPTION</a></p>
+<h3 id="计算模块">计算模块</h3>
+<p><code class="highlighter-rouge">pw</code>平面波</p>
+<ul>
+  <li><code class="highlighter-rouge">pw.x</code> PWscf 自洽</li>
+  <li><code class="highlighter-rouge">ph.x</code> 声子</li>
+  <li>…</li>
+</ul>
+
+<h3 id="后处理模块">后处理模块</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">pp.x</code></li>
+  <li><code class="highlighter-rouge">dos.x</code></li>
+  <li><code class="highlighter-rouge">bands.x</code></li>
+  <li>…</li>
+</ul>
+
+<h2 id="pwx-输入文件"><code class="highlighter-rouge">pw.x</code> 输入文件</h2>
+<h3 id="inputin">input.in</h3>
+<p>参考<a href="https://www.quantum-espresso.org/Doc/INPUT_PW.html">Input File Description</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>! !开头是注释
+! 控制参数模块
+! &amp;开始
+! /结束
+
+&amp;CONTROL
+calculation="scf", !scf自洽计算
+restart_mode="from_scratch", !从之前的计算结果中提取
+prefix="Pt", !前缀
+pseudo_dir=".",
+outdir="./out",
+!! ...更多参数
+/
+
+&amp;SYSTEM
+!计算体系
+ibrav=1, !晶格的形状，参见https://www.quantum-espresso.org/Doc/INPUT_PW.html!idm199
+celldm(1)=4.981, !晶格参数a,b,c,cos(ab),cos(ac),cos(bc)
+           !a,b,c是原子单位制 1 Bohr = 1 a0= 0.52917720859˚A
+           !1˚A=1/0.52917720859=1.8897
+           !根据ibrav参数，决定要设置的celldm(i),i的取值范围
+#celldm()也可以用A,B,C,(单位是Angstrom)，cosAB, cosAC, cosBC代替
+nat=1,  ! num of atoms
+ntyp=1, ! type of species  ,同位素，赝势不同，等为不同species
+ecutwfc=25, !原子单位制Ry
+             !1 Ry = 1/2 Ha = 13.60569193 eV
+             !与VASP相同，可以通过看赝势选择
+!ecutrho=,   !与赝势,ecutwfc能有关
+             !越大收敛的越平滑，震荡少
+             !default 4 times ecutwfc
+/
+
+&amp;ELECTRONS
+!电子步参数
+mixing_beta=0.7, !old 30% new 70%
+conv_thr=1d-6,   !收敛标准
+/
+
+![ &amp;IONS
+!  ...
+! / ]
+
+![ &amp;CELL
+!  ...
+! / ]
+
+ATOMIC_SPECIES
+Pt 195.084 Pt.pbe-n-kjpaw_psl.1.0.0.UPF
+! X  Mass_X  PseudoPot_X
+! Y  Mass_Y  PseudoPot_Y
+! Z  Mass_Z  PseudoPot_Z
+
+ATOMIC_POSITIONS alat
+Pt 0.0 0.0 0.0
+!{ alat 分子坐标| bohr | crystal | angstrom | crystal_sg }
+!  X 0.0  0.0  0.0  {if_pos(1) if_pos(2) if_pos(3)}
+!  Y 0.5  0.0  0.0
+!  Z O.0  0.2  0.2
+!控制行不能这样注释
+!ATOMIC_POSITIONS alat !{ alat 分子坐标| bohr | crystal | angstrom | crystal_sg }
+
+
+K_POINTS automatic 
+10 10 10 1 1 1
+!{ tpiba | automatic 自动 | crystal | gamma 只有k=0的点| tpiba_b | crystal_b | tpiba_c | crystal_c }
+!if (gamma)
+!   nothing to read
+!if (automatic)
+!   nk1, nk2, nk3, k1, k2, k3
+#nk1,nk2,nk3 k点数量， k1,k2,k3平移项，只能0，1
+#nk为奇数时，取样过gamma点
+!if (not automatic)
+!   nks
+!   xk_x, xk_y, xk_z,  wk
+
+</code></pre></div></div>
+
+<h3 id="赝势">赝势</h3>
+<p>下载<a href="https://www.quantum-espresso.org/pseudopotentials">pseudopotentials</a><br />
+里面有建议的截断能</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Suggested minimum cutoff for wavefunctions:  39. Ry
+    Suggested minimum cutoff for charge density: 401. Ry
+</code></pre></div></div>
+<p>可以帮助设置</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ecutwfc=40,  !要大于赝势中的Suggested minimum cutoff for wavefunctions:  39. Ry
+             !原子单位制Ry
+             !1 Ry = 1/2 Ha = 13.60569193 eV
+             !
+!ecutrho=,   ！!要大于赝势中的Suggested minimum cutoff for charge density: 401. Ry
+             !与赝势,ecutwfc能有关
+             !越大收敛的越平滑，震荡少
+             !default 4 times ecutwfc
+</code></pre></div></div>
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@admin1 Pt-cutoff]$ vi Pt.pbe-n-kjpaw_psl.1.0.0.UPF 
+
+&lt;UPF version="2.0.1"&gt;
+  &lt;PP_INFO&gt;
+Generated using "atomic" code by A. Dal Corso  v.6.3
+Author: ADC
+Generation date:  6Sep2018
+Pseudopotential type: PAW
+Element: Pt
+Functional:  SLA  PW   PBX  PBC
+    Suggested minimum cutoff for wavefunctions:  39. Ry
+    Suggested minimum cutoff for charge density: 401. Ry
+    The Pseudo was generated with a Scalar-Relativistic Calculation
+    Local Potential by smoothing AE potential with Bessel fncs, cutoff radius:   2.4000
+    Pseudopotential contains additional information for GIPAW reconstruction.
+    Valence configuration:
+    nl pn  l   occ       Rcut    Rcut US       E pseu
+    6S  1  0  1.00      2.000      2.200    -0.415930
+    6P  2  1  0.00      2.300      2.500    -0.061766
+    5D  3  2  9.00      1.000      2.200    -0.451355
+    Generation configuration:
+    6S  1  0  1.00      2.000      2.200    -0.415928
+    6S  1  0  0.00      2.000      2.200     4.400000
+    6P  2  1  0.00      2.300      2.500    -0.061766
+    6P  2  1  0.00      2.300      2.500     6.400000
+    5D  3  2  9.00      1.000      2.200    -0.451352
+    5D  3  2  0.00      1.000      2.200     0.800000
+    Pseudization used: troullier-martins
+
+...
+</code></pre></div></div>
+
+<h2 id="运行">运行</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#进行电子自洽scf计算
+mpirun -np 4 pw.x &lt; input.in | tee result
+</code></pre></div></div>
+
+<h2 id="分析">分析</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>energy=$(grep ! result |awk '{ print $5}')
+time=$(grep  PWSCF  result  |grep CPU | awk '{print $5 }')
+</code></pre></div></div>
+<h3 id="ppx电荷密度分析"><code class="highlighter-rouge">pp.x</code>电荷密度分析</h3>
+<p>准备输入文件，语法<a href="https://www.quantum-espresso.org/Doc/INPUT_PP.html">INPUT_PP</a><br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pp.x &lt; input.pp.in &gt; result.pp
+</code></pre></div></div>
+<h4 id="输入文件示例">输入文件示例</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUTPP
+outdir="./out", !同input.in
+prefix="Pt",    !同input.in
+plot_num=0, !功能0 电荷密度
+/
+
+&amp;PLOT
+iflag=3, !3=3D,2=2D
+output_format=6, !保存数据格矢 6  = format as gaussian cube file  (3D)     (can be read by many programs)
+fileout="Pt.cube",
+nx=64,ny=64,nz=64,
+/
+
+</code></pre></div></div>
+<p>用VESTA打开Pt.cube查看电荷密度，如图
+<img src="/uploads/2019/07/Pt.png" alt="" />
+<a href="https://www.bilibili.com/video/av36194036">@李二狗-QE的那点B事儿1</a></p>
+
+<h2 id="报错">报错</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     Error in routine  read_namelists (1):
+      bad line in namelist &amp;system: "ntype=1, ! type of species  ,同位素，赝势不同，等为不同species" (error could be in the previous line)
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+</code></pre></div></div>
+<p>语法错误，<code class="highlighter-rouge">ntyp</code>而不是<code class="highlighter-rouge">ntype</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     Error in routine n_plane_waves (1):
+     No plane waves found: running on too many processors?
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+</code></pre></div></div>
+<p>核太多了，减少<code class="highlighter-rouge">mpirun -np</code>后面跟的核数</p>
+:ET

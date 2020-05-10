@@ -1,0 +1,164 @@
+I".#<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#物理" id="markdown-toc-物理">物理</a>    <ul>
+      <li><a href="#能量的泛函" id="markdown-toc-能量的泛函">能量的泛函</a>        <ul>
+          <li><a href="#总能量" id="markdown-toc-总能量">总能量</a>            <ul>
+              <li><a href="#输入势场的能量泛函" id="markdown-toc-输入势场的能量泛函"><strong>输入势场的能量泛函</strong></a></li>
+              <li><a href="#输入电荷密度的能量泛函" id="markdown-toc-输入电荷密度的能量泛函"><strong>输入电荷密度的能量泛函</strong></a></li>
+              <li><a href="#输入势场密度的能量泛函" id="markdown-toc-输入势场密度的能量泛函"><strong>输入势场,密度的能量泛函</strong></a></li>
+            </ul>
+          </li>
+          <li><a href="#热力学体系的总能量" id="markdown-toc-热力学体系的总能量">热力学体系的总能量</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#文件" id="markdown-toc-文件">文件</a></li>
+  <li><a href="#代码" id="markdown-toc-代码">代码</a>    <ul>
+      <li><a href="#预准备" id="markdown-toc-预准备">预准备</a></li>
+      <li><a href="#略restart模式" id="markdown-toc-略restart模式">[略]restart模式</a></li>
+      <li><a href="#do-idum1niter" id="markdown-toc-do-idum1niter">DO idum=1,niter</a>        <ul>
+          <li><a href="#electrons_scf" id="markdown-toc-electrons_scf"><code class="highlighter-rouge">electrons_scf</code></a>            <ul>
+              <li><a href="#预准备-1" id="markdown-toc-预准备-1">预准备</a></li>
+            </ul>
+          </li>
+          <li><a href="#略若是-dft_is_hybrid执行后续命令" id="markdown-toc-略若是-dft_is_hybrid执行后续命令">[略]若是<code class="highlighter-rouge"> dft_is_hybrid()</code>执行后续命令</a></li>
+        </ul>
+      </li>
+      <li><a href="#end-do" id="markdown-toc-end-do">END DO</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/QEF/q-e.git">q-e code</a><br />
+<a href="https://books.google.com/books?id=v1YhAwAAQBAJ">Martin, R. M., &amp; Martin, R. M. (2004). Electronic structure: basic theory and practical methods. Cambridge university press.</a><br /></p>
+
+<h2 id="物理">物理</h2>
+<h3 id="能量的泛函">能量的泛函</h3>
+<h4 id="总能量">总能量</h4>
+<p>According to Chap (9.2) of <a href="https://books.google.com/books?id=v1YhAwAAQBAJ">Martin, R. M., &amp; Martin, R. M. (2004). Electronic structure: basic theory and practical methods. Cambridge university press.</a>,理论上，尽管Kohn-Sham能量是密度的泛函，但是实际操作上，我们可能会采用各种形式的能量泛函，如<script type="math/tex">E_{KS}(V^{in}) , E_{KS}(n^{in}) , E_{KS}(V^{in},n^{in})</script><br />
+总能量from (7.1)</p>
+<center>
+$$
+E_{KS} = T_s[n] = \int{ d\overrightarrow{r} V_{ext}(\overrightarrow{r}) } + E_{Hartree}[n]+E_{II} +E_{XC}[n]
+$$
+
+$$
+E_{Hartree}[n]=\frac{1}{2} \int{ d^3rd^3r' \frac{n(\overrightarrow{r}) n(\overrightarrow{r'})}{|\overrightarrow{r} - \overrightarrow{r'} |} }
+$$
+
+$$
+n( \overrightarrow{r} ) = \sum_{\sigma } {n(\overrightarrow{r},\sigma) } = \sum_{\sigma}\sum_{i=1}^{N^\sigma} |\psi_i^\sigma(\overrightarrow{r}) |^2
+$$
+</center>
+<p>where,</p>
+<ul>
+  <li><script type="math/tex">T_s</script>是无相互作用体系的动能</li>
+  <li><script type="math/tex">V_{ext}</script>是外势能</li>
+  <li><script type="math/tex">E_{Hartree}</script>是无相护作用体系的电荷密度的经典库伦能</li>
+  <li><script type="math/tex">E_{II}</script> 是离子间相互作用能</li>
+  <li><script type="math/tex">E_{XC}</script>是前面使用无相护作用电子体系计算的动能,电子间相互作用能,和电子真实的相互作用能之间的差别</li>
+  <li><script type="math/tex">\sigma</script>是自旋维度</li>
+</ul>
+
+<p>理论上，Kohn-Sham能量是密度的泛函(Eq 9.2)</p>
+<center>
+$$
+E_{KS}=T_s[n]+E_{pot}[n]
+$$
+
+$$
+E_{pot} = \int {d\overrightarrow{r}V_{ext}(\overrightarrow{r})n(\overrightarrow{r})} + E_{Hartree}[n]+E_{II} +E_{XC}[n]
+$$
+</center>
+
+<p>where, 动能<script type="math/tex">T_s</script>为单粒子能量<script type="math/tex">% <![CDATA[
+\varepsilon_i^\sigma = < \psi_i^\sigma|H_{KS}^\sigma|pai_i^\sigma> %]]></script>减去势能，自旋相同的单粒子态的哈密顿量，以及势能<script type="math/tex">V^{\sigma,in}(\overrightarrow{r})</script>相同，因此可以化成求和的形式，<script type="math/tex">E_S</script>是无相护作用系统的单粒子占据态能量之和</p>
+<center>
+$$
+T_s = E_s - \sum_\sigma \int d\overrightarrow{r}V^{\sigma,in}(\overrightarrow{r})n^{out}(\overrightarrow{r},\sigma)
+$$
+</center>
+
+<h5 id="输入势场的能量泛函"><strong>输入势场的能量泛函</strong></h5>
+<p>Frome(9.7)<br />
+在操作上输入势场决定了所有的物理量的计算，进而决定最终的能量</p>
+<center>
+$$
+E_{KS}[V^{in}]=E_s[V^{in}] - \sum_\sigma\int d\overrightarrow{r}V^{\sigma,in}(\overrightarrow{r})n^{out}(\overrightarrow{r},\sigma) + E_{pot}[n^{out}]
+
+$$
+</center>
+
+<p>通过调整<script type="math/tex">V^{in}</script>达到最小的能量，此时得到Kohn-Sham Eq的解(<script type="math/tex">V_{KS},n_0</script>),<br />
+此时,<script type="math/tex">V^{in} = V_{KS}, n^{in}=n_0</script><br /><br />
+通过推导(9.8)可以证明,<strong><script type="math/tex">E_{KS}[V^{in}]\geq E_{KS}[V^KS]</script></strong></p>
+
+<h5 id="输入电荷密度的能量泛函"><strong>输入电荷密度的能量泛函</strong></h5>
+<p>From(Eq 9.9),是<strong>Harris,Weinert,Foulkes,Haydock,etc.</strong>人提出证明的泛函，使用输入密度计算总能量<br />
+称作HWF能量,<script type="math/tex">E_{HWF}[n^{in}]</script>,QE在电子自洽循环前就计算了相应变量<code class="highlighter-rouge">deband_hwf = delta_e()</code></p>
+<center>
+$$
+E_{KS}[V^{in}]=E_s[V_{n^{in}}] - \sum_\sigma\int d\overrightarrow{r}V^{\sigma,in}(\overrightarrow{r})n^{in}(\overrightarrow{r},\sigma) + E_{pot}[n^{in}]
+$$
+</center>
+<p><strong>注意上面公式中的<script type="math/tex">- \sum_\sigma\int d\overrightarrow{r}V^{\sigma,in}(\overrightarrow{r})n^{in}(\overrightarrow{r},\sigma) + E_{pot}[n^{in}]</script>都是用<script type="math/tex">n^{in}</script>计算的</strong><br /></p>
+
+<p>通过推导(Eq 9.10)可以证明,<strong><script type="math/tex">E_{HWF}[n^{in}] \leq E_{KS}[V^{in}]</script></strong>,<br /></p>
+
+<p><strong>由于<script type="math/tex">\Delta n</script>的原因，可能会出现就算过程中<script type="math/tex">E_{HWF}[n^{in}]</script>小于最终能量<script type="math/tex">E_{KS}[V^{in}]</script>的情况</strong></p>
+
+<p>该方法有很多优点:</p>
+<ul>
+  <li>当密度接近真实密度，<script type="math/tex">E_{HWF}[n^{in}]</script>比<script type="math/tex">E_{KS}[V^{in}]</script>更接近真实的<script type="math/tex">E_{KS}</script></li>
+  <li>收敛时，无需计算输出电荷密度</li>
+  <li>etc, 很useful</li>
+</ul>
+
+<h5 id="输入势场密度的能量泛函"><strong>输入势场,密度的能量泛函</strong></h5>
+<p>把输入势场和密度作为独立的变量，计算总能量<br />
+From (Eq 9.13)</p>
+
+<center>
+$$
+E_{KS}[V^{in},n^{in}]=E_s[V^{in}] - \sum_\sigma\int d\overrightarrow{r}V^{\sigma,in}(\overrightarrow{r})n^{in}(\overrightarrow{r},\sigma) + E_{pot}[n^{in}]
+$$
+</center>
+
+<h4 id="热力学体系的总能量">热力学体系的总能量</h4>
+<p>entropy S熵最小,等，再引入温度T等参数</p>
+
+<h2 id="文件">文件</h2>
+<p><code class="highlighter-rouge">PW/src/electrons.f90</code> 自洽计算入口</p>
+
+<p><br /><br /></p>
+
+<h1 id="代码">代码</h1>
+<h2 id="预准备">预准备</h2>
+<ul>
+  <li>计数变量归0
+-设置收敛标准</li>
+  <li>终止检查</li>
+</ul>
+
+<h2 id="略restart模式">[略]restart模式</h2>
+
+<h2 id="do-idum1niter">DO idum=1,niter</h2>
+<p>该循环用于杂换泛函的计算,如B3LYP的情况<code class="highlighter-rouge">input_dft='B3LYP'</code><br />
+不杂化时，通常该大循环实际上只循环了一次,电子密度自洽求解的循环结束后，<br />
+判断不是杂化形式，就直接结束了｀IF ( .NOT. dft_is_hybrid() ) RETURN｀</p>
+
+<h3 id="electrons_scf"><code class="highlighter-rouge">electrons_scf</code></h3>
+<p>File:<code class="highlighter-rouge">PW/src/electrons.f90</code>本文件<br />
+<strong>真正的电荷密度自洽部分</strong><br /></p>
+<h4 id="预准备-1">预准备</h4>
+
+<h3 id="略若是-dft_is_hybrid执行后续命令">[略]若是<code class="highlighter-rouge"> dft_is_hybrid()</code>执行后续命令</h3>
+<p>还会执行一次fft的init</p>
+
+<h2 id="end-do">END DO</h2>
+:ET

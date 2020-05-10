@@ -1,0 +1,542 @@
+I"�Y<ul id="markdown-toc">
+  <li><a href="#html学习二常用标签属性" id="markdown-toc-html学习二常用标签属性">HTML学习(二)常用标签，属性</a>    <ul>
+      <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+      <li><a href="#标签" id="markdown-toc-标签">标签</a>        <ul>
+          <li><a href="#头head" id="markdown-toc-头head">头head</a>            <ul>
+              <li><a href="#网站标题title" id="markdown-toc-网站标题title">网站标题title</a></li>
+              <li><a href="#link" id="markdown-toc-link">link</a></li>
+              <li><a href="#style" id="markdown-toc-style">style</a></li>
+              <li><a href="#meta" id="markdown-toc-meta">meta</a></li>
+              <li><a href="#basescript-noscript未掌握" id="markdown-toc-basescript-noscript未掌握"><code class="highlighter-rouge">&lt;base&gt;,&lt;script&gt;, &lt;noscript&gt;</code>未掌握</a></li>
+            </ul>
+          </li>
+          <li><a href="#body" id="markdown-toc-body">body</a></li>
+          <li><a href="#html标题h1h6" id="markdown-toc-html标题h1h6">HTML标题<code class="highlighter-rouge">&lt;h1&gt;...&lt;h6&gt;</code></a></li>
+          <li><a href="#水平线hr" id="markdown-toc-水平线hr">水平线<code class="highlighter-rouge">&lt;hr&gt;</code></a></li>
+          <li><a href="#段落p" id="markdown-toc-段落p">段落<code class="highlighter-rouge">&lt;p&gt;</code></a></li>
+          <li><a href="#换行br" id="markdown-toc-换行br">换行br</a></li>
+          <li><a href="#文字格式化" id="markdown-toc-文字格式化">文字格式化</a>            <ul>
+              <li><a href="#字体格式" id="markdown-toc-字体格式">字体格式</a></li>
+              <li><a href="#计算机输出" id="markdown-toc-计算机输出">计算机输出</a></li>
+              <li><a href="#引用" id="markdown-toc-引用">引用</a></li>
+            </ul>
+          </li>
+          <li><a href="#超链接a" id="markdown-toc-超链接a">超链接<code class="highlighter-rouge">&lt;a&gt;</code></a></li>
+          <li><a href="#图像img" id="markdown-toc-图像img">图像img</a></li>
+          <li><a href="#表格table" id="markdown-toc-表格table">表格table</a></li>
+          <li><a href="#列表" id="markdown-toc-列表">列表</a>            <ul>
+              <li><a href="#有序列表" id="markdown-toc-有序列表">有序列表</a></li>
+              <li><a href="#无序列表ul" id="markdown-toc-无序列表ul">无序列表ul</a></li>
+              <li><a href="#自定义列表" id="markdown-toc-自定义列表">自定义列表</a></li>
+            </ul>
+          </li>
+          <li><a href="#区块" id="markdown-toc-区块">区块</a>            <ul>
+              <li><a href="#div" id="markdown-toc-div">div</a></li>
+            </ul>
+          </li>
+          <li><a href="#框架" id="markdown-toc-框架">框架</a></li>
+          <li><a href="#标签嵌套实例" id="markdown-toc-标签嵌套实例">标签嵌套实例</a>            <ul>
+              <li><a href="#图片超链接" id="markdown-toc-图片超链接">图片超链接</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#属性" id="markdown-toc-属性">属性</a>        <ul>
+          <li><a href="#href超链接" id="markdown-toc-href超链接">href超链接</a></li>
+          <li><a href="#id标记" id="markdown-toc-id标记">id标记</a></li>
+          <li><a href="#style-1" id="markdown-toc-style-1">style</a></li>
+        </ul>
+      </li>
+      <li><a href="#以下未掌握" id="markdown-toc-以下未掌握">以下未掌握</a>        <ul>
+          <li><a href="#title" id="markdown-toc-title">title</a></li>
+          <li><a href="#target" id="markdown-toc-target">target</a></li>
+          <li><a href="#class" id="markdown-toc-class">class</a></li>
+        </ul>
+      </li>
+      <li><a href="#应用" id="markdown-toc-应用">应用</a>        <ul>
+          <li><a href="#网插入页pdf" id="markdown-toc-网插入页pdf">网插入页pdf</a></li>
+          <li><a href="#网页内引入另一个网页" id="markdown-toc-网页内引入另一个网页">网页内引入另一个网页</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="html学习二常用标签属性">HTML学习(二)常用标签，属性</h1>
+<h2 id="参考">参考</h2>
+<p><a href="http://www.runoob.com/html/html-tutorial.html">HTML 教程-菜鸟教程</a></p>
+
+<p><a href="http://www.w3school.com.cn/index.html">HTML 教程 - w3school 在线教程</a></p>
+<h2 id="标签">标签</h2>
+<p>标签之间可以嵌套</p>
+<h3 id="头head">头head</h3>
+<blockquote>
+  <p><code class="highlighter-rouge">&lt;head&gt;</code> 元素包含了所有的头部标签元素。在 <code class="highlighter-rouge">&lt;head&gt;</code>元素中你可以插入脚本（scripts）, 样式文件（CSS），及各种meta信息。
+可以添加在头部区域的元素标签为: <code class="highlighter-rouge">&lt;title&gt;, &lt;link&gt;,&lt;style&gt;, &lt;meta&gt; , &lt;base&gt;,&lt;script&gt;, &lt;noscript&gt;</code>
+头部内容不会被显示到网页上</p>
+</blockquote>
+
+<h4 id="网站标题title">网站标题title</h4>
+<p>网页标题</p>
+<blockquote>
+  <p>在 HTML/XHTML 文档中是必须的</p>
+  <h4 id="link">link</h4>
+  <p>链接外部样式表，参见<a href="/2017/08/09/html1/">html学习(一)语法结构</a>中css部分</p>
+</blockquote>
+
+<h4 id="style">style</h4>
+<p>定义内部样式表，参见<a href="/2017/08/09/html1/">html学习(一)语法结构</a>中css部分</p>
+<h4 id="meta">meta</h4>
+<blockquote>
+  <p><code class="highlighter-rouge">&lt;meta&gt;</code> 标签通常用于指定网页的描述，关键词，文件的最后修改时间，作者，和其他元数据。
+元数据可以使用于浏览器（如何显示内容或重新加载页面），<strong>搜索引擎（关键词）</strong>，或其他Web服务。</p>
+</blockquote>
+
+<p>例,指定作者，并3秒钟刷新一次</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;meta name="author" content="cndaqiang" &gt;
+&lt;meta http-equiv="refresh" content="3"&gt;
+</code></pre></div></div>
+<p><code class="highlighter-rouge">&lt;meta charset="utf-8"&gt;</code> 声明UTF8编码
+<code class="highlighter-rouge">&lt;meta charset="gbk"&gt;</code> 声明GBK 为默认编码。</p>
+<h4 id="basescript-noscript未掌握"><code class="highlighter-rouge">&lt;base&gt;,&lt;script&gt;, &lt;noscript&gt;</code>未掌握</h4>
+<h3 id="body">body</h3>
+<p>浏览器展示给用户的部分</p>
+<h3 id="html标题h1h6">HTML标题<code class="highlighter-rouge">&lt;h1&gt;...&lt;h6&gt;</code></h3>
+<p>标题随数字增大，逐渐变小</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h1&gt;第一个标题&lt;/h1&gt;
+&lt;h2&gt;第二个标题&lt;/h2&gt;
+</code></pre></div></div>
+
+<h3 id="水平线hr">水平线<code class="highlighter-rouge">&lt;hr&gt;</code></h3>
+<p>例</p>
+<hr />
+
+<h3 id="段落p">段落<code class="highlighter-rouge">&lt;p&gt;</code></h3>
+<p>html忽略html代码中的回车，不会被“翻译”为换行
+多个空格只会输出一个空格(毕竟是源代码，对空格进行忽略再正常不过)</p>
+<blockquote>
+  <p>无法通过在 HTML 代码中添加额外的空格或换行来改变输出的效果。
+当显示页面时，浏览器会移除源代码中多余的空格和空行。所有连续的空格或空行都会被算作一个空格。需要注意的是，HTML 代码中的所有连续的空行（换行）也被显示为一个空格。</p>
+</blockquote>
+
+<p>使用&lt;p&gt;…&lt;/p&gt;确定一个段落
+<strong>所以以后用markdown写文章注意</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;一个段落&lt;/p&gt;
+		段落      1
+		段落2
+		&lt;p&gt;二个段落&lt;/p&gt;
+</code></pre></div></div>
+<p>效果</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>一个段落
+
+段落 1 段落2
+二个段落
+</code></pre></div></div>
+<h3 id="换行br">换行br</h3>
+<p>例，不换段落换行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;二个&lt;br&gt;段落&lt;/p&gt;
+</code></pre></div></div>
+<h3 id="文字格式化">文字格式化</h3>
+<h4 id="字体格式">字体格式</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>标签</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;b&gt;</code></td>
+      <td>定义粗体文本</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;em&gt;</code></td>
+      <td>定义着重文字</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;i&gt;</code></td>
+      <td>定义斜体字</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;small&gt;</code></td>
+      <td>定义小号字</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;strong&gt;</code></td>
+      <td>定义加重语气</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;sub&gt;</code></td>
+      <td>定义下标字</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;sup&gt;</code></td>
+      <td>定义上标字</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;ins&gt;</code></td>
+      <td>定义插入字</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;del&gt;</code></td>
+      <td>定义删除字</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;b&gt;粗体&lt;/b&gt;&lt;em&gt;着重&lt;/em&gt;&lt;i&gt;斜体&lt;/i&gt;&lt;small&gt;小号&lt;/small&gt;
+&lt;strong&gt;加重&lt;/strong&gt;&lt;sub&gt;下标&lt;/sub&gt;&lt;sup&gt;上标&lt;/sup&gt;
+&lt;ins&gt;插入&lt;/ins&gt;&lt;del&gt;删除&lt;/del&gt;
+</code></pre></div></div>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-06be2d6580d1bc6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<h4 id="计算机输出">计算机输出</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>标签</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;code&gt;</code></td>
+      <td>定义计算机代码</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;kbd&gt;</code></td>
+      <td>定义键盘码</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;samp&gt;</code></td>
+      <td>定义计算机代码样本</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;var&gt;</code></td>
+      <td>定义变量</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;pre&gt;</code></td>
+      <td>定义预格式文本</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;code&gt;code&lt;/code&gt;&lt;br&gt;&lt;kbd&gt;kbd&lt;/kbd&gt;&lt;br&gt;&lt;samp&gt;samp&lt;/samp&gt;&lt;br&gt;
+&lt;var&gt;var&lt;/var&gt;&lt;br&gt;&lt;pre&gt;pre&lt;/pre&gt;
+</code></pre></div></div>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-64206622ca03cb1d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<h4 id="引用">引用</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>标签</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;abbr&gt;</code></td>
+      <td>定义缩写</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;address&gt;</code></td>
+      <td>定义地址</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;bdo&gt;</code></td>
+      <td>定义文字方向</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;blockqu&gt;</code></td>
+      <td>定义长的引用</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;q&gt;</code></td>
+      <td>定义短的引用语</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;cite&gt;</code></td>
+      <td>定义引用、引证</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;dfn&gt;</code></td>
+      <td>定义一个定义项目</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;abbr&gt;abbr&lt;/abbr&gt;&lt;br&gt;&lt;address&gt;address&lt;/address&gt;&lt;br&gt;
+&lt;bdo&gt;bdo&lt;/bdo&gt;&lt;br&gt;&lt;blockqu&gt;blockqu&lt;/blockqu&gt;&lt;br&gt;&lt;q&gt;q&lt;/q&gt;&lt;br&gt;
+&lt;cite&gt;cite&lt;/cite&gt;&lt;br&gt;&lt;dfn&gt;dfn&lt;/dfn&gt;
+</code></pre></div></div>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-a6dd1dfc508d8f09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<h3 id="超链接a">超链接<code class="highlighter-rouge">&lt;a&gt;</code></h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a href="url"&gt;链接文本&lt;/a&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>请始终将正斜杠添加到子文件夹。假如这样书写链接：href=”http://www.runoob.com/html”，就会向服务器产生两次 HTTP 请求。这是因为服务器会添加正斜杠到这个地址，然后创建一个新的请求，就像这样：href=”http://www.runoob.com/html/”</p>
+</blockquote>
+
+<h3 id="图像img">图像img</h3>
+<p>简书编辑器发布时会自动把图片代码转换成md语法，
+如图</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-6c2127ff9ee3567a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<h3 id="表格table">表格table</h3>
+<p><code class="highlighter-rouge">&lt;table&gt;</code> 标签定义 HTML 表格。</p>
+
+<p>简单的 HTML 表格由 table 元素以及一个或多个 tr、th 或 td 元素组成。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>标签</th>
+      <th>功能</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;table&gt;</code></td>
+      <td>定义表格</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;th&gt;</code></td>
+      <td>定义表格的表头</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;tr&gt;</code></td>
+      <td>定义表格的行</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;td&gt;</code></td>
+      <td>定义表格单元</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;caption&gt;</code></td>
+      <td>定义表格标题</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;colgroup&gt;</code></td>
+      <td>定义表格列的组</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;col&gt;</code></td>
+      <td>定义用于表格列的属性</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;thead&gt;</code></td>
+      <td>定义表格的页眉</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;tbody&gt;</code></td>
+      <td>定义表格的主体</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">&lt;tfoot&gt;</code></td>
+      <td>定义表格的页脚</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	&lt;table&gt;
+	&lt;tr&gt;
+	&lt;th&gt;头1&lt;/th&gt;&lt;th&gt;头2&lt;/th&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+	&lt;td&gt;单元1&lt;/td&gt;&lt;td&gt;单元2&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;/table&gt;
+</code></pre></div></div>
+<p>效果</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-d28a94f42f2acc1b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="没有边框的表格" /></p>
+
+<p><strong>注</strong></p>
+<ul>
+  <li>可以没有表头th全是元素td，浏览器一般会把标头th翻译为加粗，如上图</li>
+  <li>表格常用属性 <img src="http://upload-images.jianshu.io/upload_images/4575564-43b3dc6807d0dd4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="来自http://www.w3school.com.cn/index.html" /></li>
+  <li>根据属性，设置表格边框 <code class="highlighter-rouge">&lt;table border="1"&gt;</code></li>
+  <li>表格内嵌套图片等当然没问题</li>
+</ul>
+
+<h3 id="列表">列表</h3>
+<p><strong>列表定义</strong></p>
+
+<p>如 有序列表</p>
+<ol>
+  <li>一</li>
+  <li>二</li>
+  <li>三</li>
+</ol>
+
+<p>无序列表</p>
+<ul>
+  <li>一</li>
+  <li>二</li>
+  <li>三</li>
+</ul>
+
+<h4 id="有序列表">有序列表</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ol&gt;
+&lt;li&gt;一行&lt;/li&gt;
+&lt;li&gt;二行&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre></div></div>
+<h4 id="无序列表ul">无序列表ul</h4>
+<p><strong>语法</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ul&gt;
+&lt;li&gt;一行&lt;/li&gt;
+&lt;li&gt;二行&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></div></div>
+<h4 id="自定义列表">自定义列表</h4>
+<p>就是没有开头的圆点和编号
+dt比dd要缩进，如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dl&gt;
+&lt;dt&gt;- white cold drink&lt;/dt&gt;
+&lt;dt&gt;- white cold drink&lt;/dt&gt;
+&lt;dt&gt;- white cold drink&lt;/dt&gt;
+&lt;dt&gt;- white cold drink&lt;/dt&gt;
+&lt;dd&gt;- white cold drink&lt;/dd&gt;
+&lt;dd&gt;- white cold drink&lt;/dd&gt;
+&lt;dd&gt;- white cold drink&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre></div></div>
+<p>效果如图</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-334c0e0dd863b889.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<p><strong>列表项内部可以嵌套段落、换行符、图片、链接以及其他列表等等。</strong></p>
+<h3 id="区块">区块</h3>
+
+<blockquote>
+  <p>大多数 HTML 元素被定义为块级元素或内联元素</p>
+  <blockquote>
+    <p>内联元素在显示时通常不会以新行开始。
+实例: <code class="highlighter-rouge">&lt;b&gt;, &lt;td&gt;, &lt;a&gt;, &lt;img&gt;</code></p>
+  </blockquote>
+
+  <blockquote>
+    <p>块级元素在浏览器显示时，通常会以新行来开始（和结束）。
+实例: <code class="highlighter-rouge">&lt;h1&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;table&gt;,&lt;div&gt;</code></p>
+  </blockquote>
+
+</blockquote>
+
+<h4 id="div">div</h4>
+<blockquote>
+  <p><code class="highlighter-rouge">&lt;div&gt;</code> 元素没有特定的含义，它属于块级元素，浏览器会在其前后显示折行。
+ 与 CSS 一同使用，<code class="highlighter-rouge">&lt;div&gt;</code> 元素可用于对大的内容块设置样式属性
+** <code class="highlighter-rouge">&lt;div&gt;</code> 元素的另一个常见的用途是文档布局**。它取代了使用表格定义布局的方法。</p>
+</blockquote>
+
+<p>例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div&gt;
+
+&lt;div&gt;
+	&lt;h1&gt;标题&lt;/h1&gt;
+&lt;/div&gt;
+
+&lt;div style="float:left"&gt;
+	&lt;ul&gt;
+		&lt;li&gt;1&lt;/li&gt;
+		&lt;li&gt;2&lt;/li&gt;
+		&lt;li&gt;3&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div style="float:right"&gt;
+	&lt;p&gt;内容&lt;/p&gt;
+	&lt;p&gt;内容&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+</code></pre></div></div>
+<p>效果</p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-1500ff24d394fa52.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<p><strong>当然使用table也能实现相同效果，增加css定义，可以使网页布局更顺眼</strong></p>
+
+<p>学到这，就可以看好看网页的css和布局了</p>
+<h3 id="框架">框架</h3>
+<p>就是在网页上显示另一个html文档，注意仅是html文档，如果url指向的是php或者其他类型不可以
+<strong>语法</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;iframe src="http://127.0.0.1/html/" &gt;&lt;/iframe&gt;
+</code></pre></div></div>
+<p>设置显示大小</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;iframe src="目录" width="200" height="200"&gt;&lt;/iframe&gt;
+</code></pre></div></div>
+<p>去除边框</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;iframe src="目录" frameborder="0"&gt;&lt;/iframe&gt;
+</code></pre></div></div>
+
+<h3 id="标签嵌套实例">标签嵌套实例</h3>
+<h4 id="图片超链接">图片超链接</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a href="http://www.jianshu.com/"&gt;&lt;img src="http://upload-images.jianshu.io/upload_images/4575564-a6dd1dfc508d8f09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"/&gt;&lt;/a&gt;
+</code></pre></div></div>
+
+<h2 id="属性">属性</h2>
+<p><code class="highlighter-rouge">属性="属性值"*</code></p>
+<h3 id="href超链接">href超链接</h3>
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a href="url"&gt;链接文本&lt;/a&gt;
+</code></pre></div></div>
+
+<h3 id="id标记">id标记</h3>
+<p>例
+点击超链接回到一个段落则跳转到id为one的部分</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p id="one"&gt;一个段落&lt;/p&gt;
+省略
+&lt;a href="#one"&gt;回到一个段落&lt;/a&gt;
+</code></pre></div></div>
+<p>跳转到另一url内的id</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a href="http://test.com/index.html#tips"&gt;
+</code></pre></div></div>
+<h3 id="style-1">style</h3>
+<p>定义元素内样式表,用于css，
+例<a href="/2017/08/09/html1/">html学习(一)语法结构</a>中css部分</p>
+
+<p>更改字体的大小，颜色，等等各种标签的不同属性</p>
+
+<h2 id="以下未掌握">以下未掌握</h2>
+<h3 id="title">title</h3>
+<p>描述了元素的额外信息 (作为工具条使用)</p>
+<h3 id="target">target</h3>
+<h3 id="class">class</h3>
+<p>为html元素定义一个或多个类名（classname）(类名从样式文件引入)</p>
+
+<h2 id="应用">应用</h2>
+<h3 id="网插入页pdf">网插入页pdf</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;iframe src="My.pdf" style="width:900px; height:700px;" frameborder="0"&gt;&lt;/iframe&gt; 
+</code></pre></div></div>
+
+<h3 id="网页内引入另一个网页">网页内引入另一个网页</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;body&gt;
+    &lt;div id="tab_1"&gt;
+        &lt;iframe src="http://cndaqiang.gitee.io/archive/index.html"
+        width="100%" height="100%"
+        &gt;&lt;/iframe&gt;
+    &lt;!--代码参考自: [CSDN @Uncle_Gen](https://blog.csdn.net/mildddd/article/details/79800950) --&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre></div></div>
+
+:ET

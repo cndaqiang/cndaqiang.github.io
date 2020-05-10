@@ -1,0 +1,98 @@
+I"+<ul id="markdown-toc">
+  <li><a href="#dell-14-7460-hackintosh" id="markdown-toc-dell-14-7460-hackintosh">dell-14-7460-hackintosh</a>    <ul>
+      <li><a href="#致谢" id="markdown-toc-致谢">致谢</a></li>
+      <li><a href="#用途" id="markdown-toc-用途">用途</a></li>
+      <li><a href="#安装" id="markdown-toc-安装">安装</a>        <ul>
+          <li><a href="#需要" id="markdown-toc-需要">需要</a>            <ul>
+              <li><a href="#efi-引导clover" id="markdown-toc-efi-引导clover">EFI 引导（CLOVER）:<br /></a></li>
+              <li><a href="#安装镜像" id="markdown-toc-安装镜像">安装镜像</a></li>
+            </ul>
+          </li>
+          <li><a href="#安装过程" id="markdown-toc-安装过程">安装过程</a>            <ul>
+              <li><a href="#1-利用工具将镜像写入存储介质u盘硬盘分区" id="markdown-toc-1-利用工具将镜像写入存储介质u盘硬盘分区">1. 利用工具将镜像写入存储介质(U盘/硬盘分区)</a></li>
+              <li><a href="#2-配置efi" id="markdown-toc-2-配置efi">2. 配置EFI</a></li>
+              <li><a href="#3-bios设置" id="markdown-toc-3-bios设置">3. BIOS设置</a></li>
+              <li><a href="#4-重启选择开机启动项为刚才设置的efi即可" id="markdown-toc-4-重启选择开机启动项为刚才设置的efi即可">4. 重启选择开机启动项为刚才设置的EFI即可</a></li>
+              <li><a href="#5-其他" id="markdown-toc-5-其他">5. 其他</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#安装之后" id="markdown-toc-安装之后">安装之后</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>之前装过黑苹果，但由于是装在机械，比较慢，没有继续使用。<br />
+昨天换了固态，又重新进行了一次安装，同时找到了一个合适的EFI，所有记录来自<a href="https://github.com/cndaqiang/dell-14-7460-hackintosh">cndaqiang/dell-14-7460-hackintosh</a><br />
+本文来自此项目的README，转到博客里容易被谷歌收录，本文不进行更新，后续更新见<a href="https://github.com/cndaqiang/dell-14-7460-hackintosh">cndaqiang/dell-14-7460-hackintosh</a></p>
+
+<h1 id="dell-14-7460-hackintosh">dell-14-7460-hackintosh</h1>
+<p>dell燃7000 I代 黑苹果记录</p>
+
+<h2 id="致谢">致谢</h2>
+<p>本项目是在<a href="https://github.com/xzhih/dell-7460-7560-hackintosh">zhih-dell-7460-7560-hackintosh</a>的基础上修改的
+感谢大佬，大佬的博客<a href="https://zhih.me">底噪</a></p>
+
+<h2 id="用途">用途</h2>
+<p>我将在这个仓库中以Issues的形式记录:<br />
+安装使用过程中遇到的问题<br />
+对其他教程的“术语”进行解释<br />
+同时记录如何把mac系统变得适合自己使用</p>
+
+<h2 id="安装">安装</h2>
+<h3 id="需要">需要</h3>
+<h4 id="efi-引导clover">EFI 引导（CLOVER）:<br /></h4>
+<p>CLOVER就是一个引导管理器，开机若使用CLOVER引导，则CLOVER会自动检索各个硬盘分区(或U盘)里面存在的系统(或安装镜像)<br />
+然后将他们整理到同一个界面供用户选择<br />
+他的特点是：</p>
+<ul>
+  <li>开机时自动检测，不用手动配置各个系统的EFI选项</li>
+  <li>同时可以提供黑苹果系统所需要的驱动程序和相关配置</li>
+</ul>
+
+<p>综合上述，使用安装U盘中的CLOVER，或是使用硬盘ESP分区里的CLOVER，还是你额外准备一个SD/U盘等存储介质在里面的ESP分区中放入含有CLOVER的EFI都可以引导<br /></p>
+
+<p>在windows下可以：
+先复制带拷贝的CLOVER文件，如仓库中的10.14 EFI/EFI<br />
+用DiskGenius打开任意一块GUID存储设备的ESP分区，点击左边的浏览文件，然后<code class="highlighter-rouge">Ctrl+v</code>就可以了
+<img src="https://user-images.githubusercontent.com/26620270/59099779-bea22180-8956-11e9-84f4-204c99ad9174.png" alt="image" />
+mac下可以用<a href="https://mackie100projects.altervista.org/download-clover-configurator/">Clover Configurator</a>进行修改</p>
+
+<p>不用使用一些教程里面的把镜像写入到U盘，又修改U盘里面的ESP分区里的EFI/CLOVER<br />
+感谢<a href="https://zhih.me">底噪</a>提供的EFI文件，此EFI文件在安装和使用过程中都没有任何问题，同时大佬还提供了相关机型的EFI<a href="https://zhih.me/hackintosh/#/">底噪|黑苹果合集</a></p>
+
+<h4 id="安装镜像">安装镜像</h4>
+<p>将黑果小兵提供的安装镜像使用写盘工具写入到一个U盘，或者硬盘的某一个分区都可以(显然写入分区会比写入U盘安装过程中省下大量时间)<br />
+因此U盘在安装过程也不是必须的，而且U盘比硬盘的速度慢<br />
+写入镜像的方法：</p>
+<ul>
+  <li>transmac 很久以前常用的方式</li>
+  <li><a href="https://www.balena.io/etcher/">Etcher</a> 好现代化，免费使用,适用于写入Flash介质(U盘)</li>
+  <li>如果已经有(黑/白)苹果系统了，也可以在mac完成写盘操作</li>
+</ul>
+
+<h3 id="安装过程">安装过程</h3>
+<p>下面的1，2不分先后，可以先写镜像（这个过程慢），在这过程中配置EFI</p>
+<h4 id="1-利用工具将镜像写入存储介质u盘硬盘分区">1. 利用工具将镜像写入存储介质(U盘/硬盘分区)</h4>
+<p>镜像下载<a href="https://blog.daliansky.net/categories/%E4%B8%8B%E8%BD%BD/%E9%95%9C%E5%83%8F/">黑果小兵的部落阁</a><br />
+写入</p>
+
+<h4 id="2-配置efi">2. 配置EFI</h4>
+<p>使用DiskGenius或者其他(Win/MAC)软件修改引导硬盘(电脑里的硬盘，SD卡，或者写完了镜像的U盘)的ESP分区<br />
+注ESP分区要调到大于200M</p>
+
+<h4 id="3-bios设置">3. BIOS设置</h4>
+<p>设置硬盘 AHCI、关闭安全启动，保存退出</p>
+
+<h4 id="4-重启选择开机启动项为刚才设置的efi即可">4. 重启选择开机启动项为刚才设置的EFI即可</h4>
+<p>在CLOVER界面选择安装镜像所在的分区启动，安装即可</p>
+
+<h4 id="5-其他">5. 其他</h4>
+<p>我的安装过程就结束了，之后使用无需在进行其他操作<br />
+其他教程中的装完系统再配置EFI,CLOVER，是因为使用了U盘的EFI引导，我直接使用硬盘中的EFI引导和安装，故无后续</p>
+
+<h2 id="安装之后">安装之后</h2>
+<p>遇到的问题，和优化，我放到<a href="https://github.com/cndaqiang/dell-14-7460-hackintosh/issues">Issues</a>里了</p>
+
+:ET

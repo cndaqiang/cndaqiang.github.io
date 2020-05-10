@@ -1,0 +1,103 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a>    <ul>
+      <li><a href="#old" id="markdown-toc-old">old</a></li>
+      <li><a href="#new" id="markdown-toc-new">new</a></li>
+    </ul>
+  </li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a>    <ul>
+      <li><a href="#新环境搭建" id="markdown-toc-新环境搭建">新环境搭建</a></li>
+      <li><a href="#网站备份" id="markdown-toc-网站备份">网站备份</a>        <ul>
+          <li><a href="#打包旧网站数据" id="markdown-toc-打包旧网站数据">打包旧网站数据</a></li>
+          <li><a href="#下载数据库" id="markdown-toc-下载数据库">下载数据库</a></li>
+        </ul>
+      </li>
+      <li><a href="#上传网站到新网站根目录" id="markdown-toc-上传网站到新网站根目录">上传网站到新网站根目录</a></li>
+      <li><a href="#更改部分文件夹权限" id="markdown-toc-更改部分文件夹权限">更改部分文件夹权限</a></li>
+      <li><a href="#恢复数据库" id="markdown-toc-恢复数据库">恢复数据库</a></li>
+      <li><a href="#涉及域名调节" id="markdown-toc-涉及域名调节">涉及域名调节</a></li>
+    </ul>
+  </li>
+</ul>
+<p>论坛所在服务器版本为ubuntu14.04，准备更换硬盘，并装系统16.04，记录如下</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://www.51php.com/discuz/17182.html">DISCUZ X3 论坛更换域名详细图文教程
+</a></p>
+
+<p><a href="http://www.discuz.net/thread-3258692-1-1.html">Can not write to cache files, please check directory ./data/ and ./data/sysda…</a></p>
+
+<p><a href="http://www.chinaz.com/server/2009/0512/75598.shtml">菜鸟入门之centos的文件夹权限继承</a></p>
+<h2 id="环境">环境</h2>
+<h3 id="old">old</h3>
+<p>Ubuntu 14.04.1 LTS (GNU/Linux 3.13.0-132-generic x86_64)</p>
+
+<p>Apache/2.4.7 (Ubuntu)</p>
+
+<p>PHP 5.5.9-1ubuntu4.22 (cli)</p>
+
+<p>discuz 3.1</p>
+
+<h3 id="new">new</h3>
+<p>Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-87-generic x86_64)</p>
+
+<p>Apache/2.4.18 (Ubuntu)</p>
+
+<p>PHP 5.6.31-6+ubuntu16.04.1+deb.sury.org+1 (cli)</p>
+
+<h2 id="操作">操作</h2>
+<h3 id="新环境搭建">新环境搭建</h3>
+<p>需要搭建php5
+参见<a href="/2017/10/11/ubutnu1604-lamp5/">Ubuntu16.04搭建LAMP(php5)</a></p>
+
+<p>根据需要设置apache，建立必要的文件夹和权限</p>
+<h3 id="网站备份">网站备份</h3>
+<h4 id="打包旧网站数据">打包旧网站数据</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ tar -czf www.backup.full.20171011.tar.gz www
+</code></pre></div></div>
+<h4 id="下载数据库">下载数据库</h4>
+<p>登录phpmyadmin下载相应论坛数据库
+参考<a href="/2017/09/27/mysql/">Mysql&amp;Phpmyadmin简单学习</a></p>
+
+<p>记录论坛数据库用户密码权限
+通过查看</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>discuz目录/config/config_global.php 
+discuz目录/config/config_ucenter.php
+discuz目录uc_server/data/config.inc.php 
+</code></pre></div></div>
+<p>确定</p>
+<h3 id="上传网站到新网站根目录">上传网站到新网站根目录</h3>
+<p>此处使用wget</p>
+
+<p>在old服务器内</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mv www.backup.full.20171011.tar.gz www
+</code></pre></div></div>
+<p>new服务器内</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ wget http://old服务器域名或地址/www.backup.full.20171011.tar.gz
+</code></pre></div></div>
+<p>new服务器内解压</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ tar xvf www.backup.full.20171011.tar.gz
+</code></pre></div></div>
+<p>移动到合适位置，如果命令不方便移动，就用winscp</p>
+<h3 id="更改部分文件夹权限">更改部分文件夹权限</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod -R 777 网站目录/data
+chmod -R 777 网站目录/uc_server/data
+</code></pre></div></div>
+<h3 id="恢复数据库">恢复数据库</h3>
+<p>上传old数据库，并设置好用户权限
+对于较大的数据库可能需要<a href="/2017/10/11/phpmyadmin-import/">phpmyadmin导入文件大小限制</a></p>
+
+<blockquote>
+  <p>论坛文件中数据库配置涉及以下文件</p>
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config/config_global.php 
+config/config_ucenter.php
+uc_server/data/config.inc.php 
+</code></pre></div>  </div>
+</blockquote>
+
+<p>可根据配置文件，调节不同数据库的用户和权限</p>
+
+<h3 id="涉及域名调节">涉及域名调节</h3>
+<p>参考
+<a href="/2017/10/12/discuz-change-domain/">discuz更换域名</a></p>
+:ET

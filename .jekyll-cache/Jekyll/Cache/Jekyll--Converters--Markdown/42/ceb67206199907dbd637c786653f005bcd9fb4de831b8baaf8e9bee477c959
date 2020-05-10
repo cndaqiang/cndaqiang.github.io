@@ -1,0 +1,193 @@
+I"�f<ul id="markdown-toc">
+  <li><a href="#lapack" id="markdown-toc-lapack">Lapack</a>    <ul>
+      <li><a href="#矩阵存储" id="markdown-toc-矩阵存储">矩阵存储</a></li>
+      <li><a href="#代码示例" id="markdown-toc-代码示例">代码示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#scalapack" id="markdown-toc-scalapack">ScaLapack</a>    <ul>
+      <li><a href="#矩阵存储-1" id="markdown-toc-矩阵存储-1">矩阵存储</a></li>
+      <li><a href="#代码示例-1" id="markdown-toc-代码示例-1">代码示例</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="lapack">Lapack</h2>
+<h3 id="矩阵存储">矩阵存储</h3>
+<p><img src="/uploads/2019/10/lapackband.png" alt="" /></p>
+
+<h3 id="代码示例">代码示例</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>subroutine inv_gb (N,KL,KU,A,invA,Info)
+   implicit none 
+
+   integer,intent(in) :: N         ! Size of the matrix.
+   integer,intent(in) :: KL        ! Number of subdiagonals in the band of B.
+   integer,intent(in) :: KU        ! Number of superdiagonals in the band of B.
+   real(8),intent(in) :: A(N,N)    ! Banded atrix to be inverted(full matrix)
+   real(8),intent(out):: invA(N,N) ! A^-1 (full matrix)
+   integer,intent(out):: Info      ! Error codes.
+ 
+ ! Local variables.
+ 
+   real(8),allocatable:: LUdecom(:,:)
+   integer,allocatable:: LUpivot(:)
+   real(8),allocatable:: LUwork (:)
+   integer :: i,j,m
+ 
+ ! Allocate auxiliary memory.
+ 
+   allocate (LUpivot(N));  LUpivot=0
+   allocate (LUwork(N*N)); LUwork =0.d0 
+   allocate (LUdecom(2*KL+KU+1,N))
+
+   !change full matrix to banded matrix
+   m=n
+   Do j=1,N 
+      DO i = max(1,j-ku),min(m,j+kl)
+         LUdecom(kl+ku+1+i-j,j)=A(i,j)
+      ENDDO
+   ENDDO
+
+ 
+ ! Perform LU decomposition.
+   call DGBTRF (N,N,KL,KU,LUdecom,2*KL+KU+1,LUpivot,Info)
+   if (Info.ne.0) return
+ 
+ ! Perform matrix inversion.
+ 
+   invA=0.d0
+   do i=1,N
+     invA(i,i)=1.d0
+     call DGBTRS ('N',N,KL,KU,1,LUdecom,2*KL+KU+1,LUpivot,invA(i,:),N,Info)
+   end do
+ 
+   deallocate (LUpivot,LUwork,LUdecom)
+   return
+  end subroutine inv_gb
+</code></pre></div></div>
+
+<h2 id="scalapack">ScaLapack</h2>
+
+<h3 id="矩阵存储-1">矩阵存储</h3>
+<p><img src="/uploads/2019/10/scalapackbd.png" alt="" /></p>
+
+<h3 id="代码示例-1">代码示例</h3>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">subroutine</span><span class="w"> </span><span class="n">PDGBTRF_EXAMPLE3ZZ</span><span class="p">()</span><span class="w">
+
+</span><span class="c1">!</span><span class="w">
+</span><span class="c1">!     This is an example of using PDGBTRF and PDGBTRS.</span><span class="w">
+</span><span class="c1">!     A matrix of size 9x9 is distributed on a 1x3 process</span><span class="w">
+</span><span class="c1">!     grid, factored, and solved in parallel.</span><span class="w">
+</span><span class="c1">!     </span><span class="w">
+</span><span class="c1">!</span><span class="w">
+      </span><span class="kt">INTEGER</span><span class="w">          </span><span class="n">ICTXT</span><span class="p">,</span><span class="w"> </span><span class="n">INFO</span><span class="p">,</span><span class="w"> </span><span class="n">MYCOL</span><span class="p">,</span><span class="w"> </span><span class="n">MYROW</span><span class="p">,</span><span class="w"> </span><span class="n">NPCOL</span><span class="p">,</span><span class="w"> </span><span class="n">NPROW</span><span class="w">
+      </span><span class="kt">INTEGER</span><span class="w">          </span><span class="n">BWL</span><span class="p">,</span><span class="w"> </span><span class="n">BWU</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">NB</span><span class="p">,</span><span class="w"> </span><span class="n">LAF</span><span class="p">,</span><span class="w"> </span><span class="n">LWORK</span><span class="w">
+
+      </span><span class="k">PARAMETER</span><span class="w">       </span><span class="p">(</span><span class="n">BWL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">BWU</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">NB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="c1">!NB Blocksize 4 4 2 </span><span class="w">
+                       </span><span class="c1">! P*NB&gt;= mod(JA-1,NB)+N.</span><span class="w">
+                       </span><span class="c1">!算法要求一个处理器不能分布两block矩阵</span><span class="w">
+                       </span><span class="c1">!有些时候，算法还不能保证分布能算出来，INFO &gt; 0</span><span class="w">
+                       </span><span class="c1">!这还和数据有关系</span><span class="w">
+      </span><span class="k">PARAMETER</span><span class="w">       </span><span class="p">(</span><span class="n">LDA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1+2</span><span class="o">*</span><span class="n">BWL</span><span class="mi">+2</span><span class="o">*</span><span class="n">BWU</span><span class="w"> </span><span class="mi">+10</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">LNA</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="w"> 
+      </span><span class="k">PARAMETER</span><span class="w">       </span><span class="p">(</span><span class="w"> </span><span class="n">LDB</span><span class="o">=</span><span class="n">NB</span><span class="mi">+10</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">NRHS</span><span class="o">=</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="c1">!LNB=NRHS</span><span class="w">
+      </span><span class="k">PARAMETER</span><span class="w">       </span><span class="p">(</span><span class="n">LAF</span><span class="o">=</span><span class="p">(</span><span class="n">NB</span><span class="o">+</span><span class="n">BWU</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">BWL</span><span class="o">+</span><span class="n">BWU</span><span class="p">)</span><span class="mi">+6</span><span class="o">*</span><span class="p">(</span><span class="n">BWL</span><span class="o">+</span><span class="n">BWU</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">BWL</span><span class="mi">+2</span><span class="o">*</span><span class="n">BWU</span><span class="p">)</span><span class="w"> </span><span class="mi">+10</span><span class="w"> </span><span class="p">)</span><span class="w">
+      </span><span class="k">PARAMETER</span><span class="w">       </span><span class="p">(</span><span class="n">LWORK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NRHS</span><span class="o">*</span><span class="p">(</span><span class="n">NB</span><span class="mi">+2</span><span class="o">*</span><span class="n">BWL</span><span class="mi">+4</span><span class="o">*</span><span class="n">BWU</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+      </span><span class="kt">INTEGER</span><span class="w">          </span><span class="n">DESCA</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="n">DESCB</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="n">IPIV</span><span class="p">(</span><span class="n">NB</span><span class="mi">+10</span><span class="p">),</span><span class="w"> </span><span class="n">FILL_IN</span><span class="p">,</span><span class="n">I</span><span class="w">
+      </span><span class="c1">!                                      IPIV(&gt;= DESCA( NB ))</span><span class="w">
+      </span><span class="c1">!DOUBLE PRECISION A(LDA,LNA),B(LDB,NRHS),AF(LAF),WORK(LWORK)</span><span class="w">
+      </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="n">LDA</span><span class="p">,</span><span class="n">LNA</span><span class="p">),</span><span class="n">B</span><span class="p">(</span><span class="n">LDB</span><span class="p">,</span><span class="n">NRHS</span><span class="p">),</span><span class="n">AF</span><span class="p">(</span><span class="n">LAF</span><span class="p">),</span><span class="n">WORK</span><span class="p">(</span><span class="n">LWORK</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">!     </span><span class="w">
+</span><span class="c1">!     INITIALIZE THE PROCESS GRID</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+      </span><span class="n">NPROW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="n">NPCOL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w">
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">SL_INIT</span><span class="p">(</span><span class="w"> </span><span class="n">ICTXT</span><span class="p">,</span><span class="w"> </span><span class="n">NPROW</span><span class="p">,</span><span class="w"> </span><span class="n">NPCOL</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">BLACS_GRIDINFO</span><span class="p">(</span><span class="w"> </span><span class="n">ICTXT</span><span class="p">,</span><span class="w"> </span><span class="n">NPROW</span><span class="p">,</span><span class="w"> </span><span class="n">NPCOL</span><span class="p">,</span><span class="w"> </span><span class="n">MYROW</span><span class="p">,</span><span class="w"> </span><span class="n">MYCOL</span><span class="w"> </span><span class="p">)</span><span class="w">
+      </span><span class="k">IF</span><span class="p">(</span><span class="w"> </span><span class="n">MYROW</span><span class="ow">.LT.</span><span class="mi">0</span><span class="w"> </span><span class="ow">.OR.</span><span class="w"> </span><span class="n">MYCOL</span><span class="ow">.LT.</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+         </span><span class="k">return</span><span class="w">
+      </span><span class="k">ENDIF</span><span class="w">
+
+</span><span class="c1">!</span><span class="w">
+</span><span class="c1">!     DISTRIBUTE THE MATRIX ON THE PROCESS GRID</span><span class="w">
+</span><span class="c1">!     Initialize the array descriptors for the matrices A and B</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">501</span><span class="w">                   </span><span class="c1">! descriptor type</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ICTXT</span><span class="w">                 </span><span class="c1">! BLACS process grid handle</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w">                     </span><span class="c1">! number of rows in A</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NB</span><span class="w">                    </span><span class="c1">! Blocking factor of the distribution</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                     </span><span class="c1">! size of block rows</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LDA</span><span class="w">         </span><span class="c1">! leading dimension of A</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                     </span><span class="c1">! process row for 1st row of A</span><span class="w">
+
+      </span><span class="c1">!这个只决定行分布，列都是一样的NRHS</span><span class="w">
+
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">502</span><span class="w">                   </span><span class="c1">! descriptor type</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ICTXT</span><span class="w">                 </span><span class="c1">! BLACS process grid handle</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w">                     </span><span class="c1">! number of rows in B</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NB</span><span class="w">                    </span><span class="c1">! Blocking factor of the distribution</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                     </span><span class="c1">! size of block rows</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LDB</span><span class="w">                   </span><span class="c1">! leading dimension of B</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                     </span><span class="c1">! process row for 1st row of B</span><span class="w">
+
+</span><span class="c1">!</span><span class="w">
+</span><span class="c1">!     Generate matrices A and B and distribute them to the process grid</span><span class="w">
+</span><span class="c1">!    AX=B</span><span class="w">
+</span><span class="c1">!     Perform LU factorization</span><span class="w">
+</span><span class="c1">!'</span><span class="w">
+
+      </span><span class="c1">!A的值无所谓了，只要能分解就行</span><span class="w">
+      </span><span class="n">A</span><span class="o">=</span><span class="nb">cmplx</span><span class="p">(</span><span class="mf">1.0_dp</span><span class="p">,</span><span class="mf">1.0_dp</span><span class="p">)</span><span class="w">
+
+      </span><span class="c1">!write(*,*) "LAF,LWORK",LAF,LWORK</span><span class="w">
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">PZGBTRF</span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">BWL</span><span class="p">,</span><span class="w"> </span><span class="n">BWU</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">DESCA</span><span class="p">,</span><span class="w"> </span><span class="n">IPIV</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+               </span><span class="n">AF</span><span class="p">,</span><span class="w"> </span><span class="n">LAF</span><span class="p">,</span><span class="w"> </span><span class="n">WORK</span><span class="p">,</span><span class="w"> </span><span class="n">LWORK</span><span class="p">,</span><span class="w"> </span><span class="n">INFO</span><span class="w"> </span><span class="p">)</span><span class="w">
+      </span><span class="c1">!INFO &lt; 0  为非法值</span><span class="w">
+      </span><span class="c1">!INFO &gt; 0 LU分解失败，矩阵不合理，local(intro)失败，inter失败</span><span class="w">
+      </span><span class="c1">!write(*,*) "LAF,LWORK After",AF(1),WORK(1)</span><span class="w">
+
+      </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">INFO</span><span class="p">/</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+         </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">'Info flag from PDGBTRF = '</span><span class="p">,</span><span class="n">INFO</span><span class="p">,</span><span class="w"> </span><span class="s1">', Col = '</span><span class="p">,</span><span class="n">MYCOL</span><span class="w">
+         </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">100</span><span class="w">
+      </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+
+      </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"Done PDGBTRF"</span><span class="w">
+
+
+</span><span class="c1">!</span><span class="w">
+</span><span class="c1">!     Solve using the LU factorization from PDGBTRF</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+      
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">PZGBTRS</span><span class="p">(</span><span class="s1">'N'</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">BWL</span><span class="p">,</span><span class="w"> </span><span class="n">BWU</span><span class="p">,</span><span class="w"> </span><span class="n">NRHS</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">DESCA</span><span class="p">,</span><span class="w"> </span><span class="n">IPIV</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+             </span><span class="n">B</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">DESCB</span><span class="p">,</span><span class="w"> </span><span class="n">AF</span><span class="p">,</span><span class="w"> </span><span class="n">LAF</span><span class="p">,</span><span class="w"> </span><span class="n">WORK</span><span class="p">,</span><span class="w"> </span><span class="n">LWORK</span><span class="p">,</span><span class="w"> </span><span class="n">INFO</span><span class="p">)</span><span class="w">
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">blacs_barrier</span><span class="p">(</span><span class="w"> </span><span class="n">ICTXT</span><span class="p">,</span><span class="w"> </span><span class="s1">'A'</span><span class="w"> </span><span class="p">)</span><span class="w">
+      
+
+
+</span><span class="c1">!call pdgbtrs(trans, n, bwl, bwu, nrhs, a, ja, desca, ipiv, b, ib, descb, af, laf, work, lwork, info)</span><span class="w">
+
+      </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">INFO</span><span class="p">/</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+         </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">'Info flag from PDGBTRS = '</span><span class="p">,</span><span class="n">INFO</span><span class="p">,</span><span class="w"> </span><span class="s1">', Col = '</span><span class="p">,</span><span class="n">MYCOL</span><span class="w">
+         </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">100</span><span class="w">
+      </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+
+      </span><span class="k">IF</span><span class="p">(</span><span class="n">MYCOL</span><span class="w"> </span><span class="ow">.eq.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+         </span><span class="k">DO</span><span class="w"> </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NRHS</span><span class="w">
+         </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"Mycol"</span><span class="p">,</span><span class="n">MYCOL</span><span class="p">,</span><span class="s2">"NRHS"</span><span class="p">,</span><span class="n">I</span><span class="p">,</span><span class="n">B</span><span class="p">(:,</span><span class="n">I</span><span class="p">)</span><span class="w">
+         </span><span class="k">ENDDO</span><span class="w">
+      </span><span class="k">ENDIF</span><span class="w">
+
+         </span><span class="c1">!write(*,200) 'X(',3*MYCOL+1,':',3*MYCOL+NB,') = ',B</span><span class="w">
+</span><span class="nl">200</span><span class="w">  </span><span class="k">format</span><span class="p">((</span><span class="l">a2</span><span class="p">,</span><span class="l">I3</span><span class="p">,</span><span class="l">a1</span><span class="p">,</span><span class="l">I3</span><span class="p">,</span><span class="l">a4</span><span class="p">,</span><span class="l">3</span><span class="p">(</span><span class="l">f10.2</span><span class="p">,</span><span class="l">2x</span><span class="p">)))</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+</span><span class="c1">!     Release the process grid and exit BLACS</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+</span><span class="nl">100</span><span class="w">  </span><span class="k">CALL</span><span class="w"> </span><span class="n">BLACS_GRIDEXIT</span><span class="p">(</span><span class="w"> </span><span class="n">ICTXT</span><span class="w"> </span><span class="p">)</span><span class="w">
+     </span><span class="k">CALL</span><span class="w"> </span><span class="n">BLACS_EXIT</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w">
+     </span><span class="k">stop</span><span class="w">
+   </span><span class="k">end</span><span class="w"> </span><span class="k">subroutine</span><span class="w"> </span><span class="n">PDGBTRF_EXAMPLE3ZZ</span><span class="w">
+
+</span></code></pre></div></div>
+:ET

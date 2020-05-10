@@ -1,0 +1,116 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+  <li><a href="#配置文件" id="markdown-toc-配置文件">配置文件</a>    <ul>
+      <li><a href="#配置文件目录etcapache2" id="markdown-toc-配置文件目录etcapache2">配置文件目录/etc/apache2</a></li>
+      <li><a href="#虚拟主机网站配置" id="markdown-toc-虚拟主机网站配置">虚拟主机/网站配置</a>        <ul>
+          <li><a href="#新建虚拟主机网站" id="markdown-toc-新建虚拟主机网站">新建虚拟主机/网站</a></li>
+          <li><a href="#虚拟主机网站配置规则" id="markdown-toc-虚拟主机网站配置规则">虚拟主机/网站配置规则</a></li>
+          <li><a href="#启用虚拟主机" id="markdown-toc-启用虚拟主机">启用虚拟主机</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#注" id="markdown-toc-注">注</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://www.cnblogs.com/ylan2009/archive/2012/02/25/2368028.html">ubuntu apache2配置详解(含虚拟主机配置方法)</a></p>
+
+<p><a href="https://my.oschina.net/aiheng1988/blog/146967">Apache Http Server学习笔记</a></p>
+
+<p><a href="http://www.phpxs.com/post/apache/">编程学习网</a>
+<a href="https://httpd.apache.org/docs/2.4/zh-cn/">Apache HTTP 服务器 2.4 文档</a></p>
+<h2 id="环境">环境</h2>
+<p>Ubuntu 14.04.1 LTS (GNU/Linux 3.13.0-105-generic x86_64)</p>
+<h2 id="安装">安装</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install apache2
+</code></pre></div></div>
+<h2 id="配置文件">配置文件</h2>
+<h3 id="配置文件目录etcapache2">配置文件目录/etc/apache2</h3>
+<p><strong>ls查看配置文件目录</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@VM-10-194-ubuntu:/etc/apache2# ls
+apache2.conf    conf-enabled  magic           mods-enabled  sites-available
+conf-available  envvars       mods-available  ports.conf    sites-enabled
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>文件/目录</th>
+      <th>功能</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>apache2.conf</td>
+      <td>Apache在启动时会自动读取这个文件的配置信息<br />而其他的一些配置文件，如 httpd.conf等，则是通过Include指令包含进来<br />在apache2.conf中可以找到这些Include行：例IncludeOptional mods-enabled/*.load`</td>
+      <td><img src="http://upload-images.jianshu.io/upload_images/4575564-48466fca0211fecf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></td>
+    </tr>
+    <tr>
+      <td>ports.conf</td>
+      <td>Apache使用的端口<br />也可以先把apache2.conf中的Include /etc/apache2/ports.conf一行去掉，在httpd.conf里设置Apache端口<br />必须在这里开启端口的监听，不然只在virtualhosts里设置的端口不起作用</td>
+      <td><img src="http://upload-images.jianshu.io/upload_images/4575564-30d6b6f0aed3410a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></td>
+    </tr>
+    <tr>
+      <td>sites-enabled/</td>
+      <td>apache2.conf中引用了这里面的虚拟主机配置<br />通过<code class="highlighter-rouge">ls -l</code>可以发现，这里得到文件都是链接向<code class="highlighter-rouge">../sites-available/</code>的，而apache2.conf只引用sites-enabled/而不引用/sites-available/，所以我们在/sites-available/里面配置好虚拟主机配置后，还要连接到sites-enabled/目录</td>
+      <td><img src="http://upload-images.jianshu.io/upload_images/4575564-847b3ff3a074e87f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></td>
+    </tr>
+    <tr>
+      <td>sites-available/</td>
+      <td>虚拟主机的配置目录，但是不会被引用，需要链接到<code class="highlighter-rouge">../site-enabled</code></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>mods-enabled/</td>
+      <td>存放apache功能模块，与sites-enabled类似，是链接目录，而且被apache2.conf引用</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>mods-available/</td>
+      <td>存放apache功能模块，与sites-available类似，是真实配置，不被引用，需要连接</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>由上表可得直接在<code class="highlighter-rouge">/etc/apache2/apache2.conf</code>直接修改即可快速完成配置，当然也可以按照下面的流程</p>
+
+<h3 id="虚拟主机网站配置">虚拟主机/网站配置</h3>
+
+<p>配置目录<code class="highlighter-rouge">/etc/apache2/sites-available</code>
+我装的apache是默认支持虚拟主机的，看其他教程里说默认不支持，需要改apache.conf</p>
+
+<h4 id="新建虚拟主机网站">新建虚拟主机/网站</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@VM-10-194-ubuntu:/# cd /etc/apache2/sites-available
+root@VM-10-194-ubuntu:/etc/apache2/sites-available# vi test-site.conf
+</code></pre></div></div>
+<h4 id="虚拟主机网站配置规则">虚拟主机/网站配置规则</h4>
+<p><strong>语法</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost 地址[:端口号] [地址[:端口号]] &gt;
+具体规则
+ &lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<p>端口号需要在ports.conf里添加监听
+<strong>一个端口号只能被一个VirtualHost监听</strong>
+<strong>具体规则</strong>
+先总结几个案例再写会好些
+例如结合<a href="/2017/09/27/apache-proxy/">Ubuntu Apache 反向代理</a>，把<VirtualHost>部分的配置添加到test-site.conf Servername换成域名</VirtualHost></p>
+
+<p>更多实例<a href="/2017/09/27/apache-conf/">Apache 实例</a></p>
+
+<h4 id="启用虚拟主机">启用虚拟主机</h4>
+<p>建立连接</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ln -s /etc/apache2/sites-available/test-site.conf /etc/apache2/sites-enabled/test.site.conf
+</code></pre></div></div>
+
+<p>重启Apache</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/init.d/apache2 restart
+</code></pre></div></div>
+<h2 id="注">注</h2>
+<p>Centos apache的配置目录在<code class="highlighter-rouge"> /etc/httpd/conf</code>目录，所有配置都在httpd.conf里面</p>
+:ET

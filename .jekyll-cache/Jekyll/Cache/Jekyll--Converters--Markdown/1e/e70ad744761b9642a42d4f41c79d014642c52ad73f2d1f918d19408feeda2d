@@ -1,0 +1,386 @@
+I"�U<ul id="markdown-toc">
+  <li><a href="#推荐看此文从0搭建centos7-计算集群" id="markdown-toc-推荐看此文从0搭建centos7-计算集群">推荐看此文从0搭建Centos7 计算集群</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#集群系统" id="markdown-toc-集群系统">集群系统</a>    <ul>
+      <li><a href="#节点" id="markdown-toc-节点">节点</a></li>
+    </ul>
+  </li>
+  <li><a href="#单机安装" id="markdown-toc-单机安装">单机安装</a>    <ul>
+      <li><a href="#主节点master配置" id="markdown-toc-主节点master配置">主节点(master)配置</a></li>
+      <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+      <li><a href="#下载" id="markdown-toc-下载">下载</a></li>
+      <li><a href="#安装依赖" id="markdown-toc-安装依赖">安装依赖</a></li>
+      <li><a href="#编译安装" id="markdown-toc-编译安装">编译安装</a>        <ul>
+          <li><a href="#添加系统服务" id="markdown-toc-添加系统服务">添加系统服务</a></li>
+          <li><a href="#添加开机启动" id="markdown-toc-添加开机启动">添加开机启动</a></li>
+        </ul>
+      </li>
+      <li><a href="#打包生成个节点安装包" id="markdown-toc-打包生成个节点安装包">打包，生成个节点安装包</a></li>
+      <li><a href="#初始化" id="markdown-toc-初始化">初始化</a></li>
+      <li><a href="#启动程序" id="markdown-toc-启动程序">启动程序</a></li>
+      <li><a href="#配置节点" id="markdown-toc-配置节点">配置节点</a>        <ul>
+          <li><a href="#管理节点调度节点master" id="markdown-toc-管理节点调度节点master">管理节点(调度节点,master)</a></li>
+          <li><a href="#计算节点" id="markdown-toc-计算节点">计算节点</a></li>
+          <li><a href="#计算节点配置" id="markdown-toc-计算节点配置">计算节点配置</a></li>
+          <li><a href="#创建队列" id="markdown-toc-创建队列">创建队列</a></li>
+          <li><a href="#注" id="markdown-toc-注">注</a></li>
+        </ul>
+      </li>
+      <li><a href="#测试提交任务qsub" id="markdown-toc-测试提交任务qsub">测试提交任务<code class="highlighter-rouge">qsub</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#使用" id="markdown-toc-使用">使用</a>    <ul>
+      <li><a href="#命令" id="markdown-toc-命令">命令</a></li>
+      <li><a href="#pbs脚本文件" id="markdown-toc-pbs脚本文件">PBS脚本文件</a>        <ul>
+          <li><a href="#说明" id="markdown-toc-说明">说明</a></li>
+          <li><a href="#pbs运行参数" id="markdown-toc-pbs运行参数">PBS运行参数</a></li>
+          <li><a href="#运行vasp示例" id="markdown-toc-运行vasp示例">运行VASP示例</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="推荐看此文从0搭建centos7-计算集群">推荐看此文<a href="/2019/09/19/Centos7-CC19/">从0搭建Centos7 计算集群</a></h1>
+<p>2019-09-19:以后遇到的问题我也仅会更新到此文<a href="/2019/09/19/Centos7-CC19/">从0搭建Centos7 计算集群</a><br />
+本文不再更新<br />
+————————————————-<br />
+本文主要在ubuntu编译失败的基础上复制过来，在centos上进行安装尝试。<br />
+本文最初的目的是我希望搭建一个环境熟悉torque的命令的，所以搭建的并不适合从事集群计算
+<br />搭建计算的集群可以参考<a href="/doc/2018/01/xiada-ssh-mpich2-torque.pdf">集群架设
+</a>和<a href="http://blog.csdn.net/dream_angel_z/article/details/44225669">CentOS下torque集群配置（一）-torque安装与配置</a></p>
+
+<h1 id="参考">参考</h1>
+<p><a href="http://blog.sciencenet.cn/blog-478347-395684.html">[转载]PBS！！</a>
+<br /><a href="https://stackoverflow.com/questions/25979525/cannot-find-lssl-cannot-find-lcrypto-when-installing-mysql-python-using-mar">“cannot find -lssl; cannot find -lcrypto” when installing mysql-python using mariaDB library</a>
+<br /><a href="https://stackoverflow.com/questions/12578499/how-to-install-boost-on-ubuntu/12578564#12578564?newreg=1035048611464711a0444542ec818276">How to Install boost on Ubuntu?
+</a>
+<br /><a href="http://blog.51cto.com/rabbitjian/1862678">PBS Torque 5.1.3安装配置</a>
+<br /><a href="http://blog.csdn.net/dream_angel_z/article/details/44225669">CentOS下torque集群配置（一）-torque安装与配置</a>
+<br /><a href="https://zhidao.baidu.com/question/328528962.html">shell编程。ubuntu下的shell出错，提示第4行function: not found，还有第七行的 } 有错。高手教一下</a>
+<br /><a href="https://www.panda-os.com/blog/2013/06/red5-init-script-for-ubuntu/">RED5 INIT SCRIPT FOR UBUNTU</a>
+<br /><a href="http://www.cnblogs.com/huangpeng/archive/2009/03/11/1408926.html">hosts文件详解</a></p>
+
+<h1 id="集群系统">集群系统</h1>
+<p>集群系统就好像一台服务器或者PC，集群资源由实现如下几个部分：</p>
+<ul>
+  <li>资源管理器
+<br />为了确保分配给作业合适的资源，集群资源管理需要维护一个数据库。这个数据库记录了集群系统中各种资源的属性和状态、所有用户提交的请求和正在运行的作业。</li>
+  <li>作业调度策略管理器
+<br />策略管理器根据资源管理器得到各个结点上的资源状况和系统的作业信息生成一个优先级列表。这个列表告诉资源管理器何时在哪些结点上运行哪个作业</li>
+</ul>
+
+<blockquote>
+  <p>PBS作业分配的调度器 （scheduler），其主要任务是分配批作业计算任务到现有的计算资源上。 PBS的目前包括openPBS，PBS Pro和Torque三个主要分支。 其中OpenPBS是最早的PBS系统，目前已经没有太多后续开发，PBS pro是PBS的商业版本，功能最为丰富。Torque是Clustering公司接过了OpenPBS，并给与后续支持的一个开源版本。<br />
+Maui作业调度器,想象为PBS中的一个插入部件。它采用积极的调度策略优化资源的利用和减少作业的响应时间</p>
+</blockquote>
+
+<h2 id="节点">节点</h2>
+<p>对于torque PBS有以下节点</p>
+<ul>
+  <li>管理节点(master)
+<br />集群系统的管理节点
+<br />编译安装管理Torque PBS
+<br />安装pbs_server</li>
+  <li>计算节点
+<br />安装pbs_client
+<br />安装pbs_mom</li>
+  <li>交作业节点
+<br />安装pbs_client</li>
+</ul>
+
+<h1 id="单机安装">单机安装</h1>
+<p>此次进行单机安装pbs，即管理节点，计算节点，作业节点都在一个服务器上,不安装Maui</p>
+
+<h2 id="主节点master配置">主节点(master)配置</h2>
+<p>如无特殊说明，以root身份运行</p>
+<h2 id="环境">环境</h2>
+<p>centos 7</p>
+<h2 id="下载">下载</h2>
+<p>安装包下载地址<a href="http://www.adaptivecomputing.com/products/open-source/torque/">Torque Resource Manager</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://wpfilebase.s3.amazonaws.com/torque/torque-6.1.1.1.tar.gz
+tar xzvf torque-6.1.1.1.tar.gz
+cd torque-6.1.1.1
+</code></pre></div></div>
+<p>主机名可改为master,我不改了,查看主机名为VM_10_194_centos</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@VM_10_194_centos torque-6.1.1.1]# echo $HOSTNAME
+VM_10_194_centos
+</code></pre></div></div>
+<p>修改<code class="highlighter-rouge">/etc/hosts</code>使里有<code class="highlighter-rouge">127.0.0.1 主机名或域名 [别名] [别名]</code>
+<br /> 主机名必须放在别名前面，即<code class="highlighter-rouge">VM_10_194_centos</code>要在<code class="highlighter-rouge">localhost</code>前面，如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1  VM_10_194_centos localhost  localhost.localdomain
+::1        VM_10_194_centos localhost localhost.localdomain localhost6 localhost6.localdomain6 
+</code></pre></div></div>
+<p>多节点时要设置各个节点的主机名和ip</p>
+<h2 id="安装依赖">安装依赖</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install libxml2-devel openssl-devel gcc gcc-c++ boost-devel libtool -y
+</code></pre></div></div>
+<h2 id="编译安装">编译安装</h2>
+<p>编译安装</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure --prefix=/usr/local/torque --with-default-server=$HOSTNAME
+make
+make install
+</code></pre></div></div>
+<p>其中</p>
+<ul>
+  <li><code class="highlighter-rouge">$HOSTNAME</code>是主机名</li>
+  <li><code class="highlighter-rouge">--prefix=安装目录</code>参数可以不带，则默认安装到<code class="highlighter-rouge">/usr/local/sbin</code>,<code class="highlighter-rouge">/usr/local/bin</code>目录
+<br />此处安装到<code class="highlighter-rouge">/usr/local/torque</code>安装后需要添加PATH
+<br />添加PATH:
+<br />在<code class="highlighter-rouge">/etc/profile</code>里添加<code class="highlighter-rouge">export PATH=/usr/local/torque/bin:/usr/local/torque/sbin:$PATH</code>
+<br /><code class="highlighter-rouge">source /etc/profile</code>或者退出重新登陆
+<br />可通过<code class="highlighter-rouge">which pbs_server</code>查看是否添加成功</li>
+  <li>卸载命令<code class="highlighter-rouge"> make uninstall</code></li>
+</ul>
+
+<p><code class="highlighter-rouge">ls /usr/local/torque/sbin</code>可看到主要安装了这几个程序</p>
+<ul>
+  <li>pbs_mom 
+<br />PBS MOM守护进程， 负责监控本机并执行作业，位于所有计算节点上</li>
+  <li>pbs_sched
+<br />PBS调度守护进程，负责调度作业，位于服务节点上</li>
+  <li>pbs_server
+<br />PBS服务守护进程，负责接收作业提交，位于服务节点上</li>
+</ul>
+
+<h3 id="添加系统服务">添加系统服务</h3>
+<p>将上述命令设置为系统服务</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp contrib/init.d/{pbs_{server,sched,mom},trqauthd} /etc/init.d/
+</code></pre></div></div>
+<p>之后可以使用系统服务命令快速启动关闭查看状态<br />
+老版centos命令,centos7兼容</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service pbs_server stop|start|restart|status
+</code></pre></div></div>
+<p>centos7还可以使用<code class="highlighter-rouge">systemctl</code>,</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl stop|start|restart|status pbs_server
+</code></pre></div></div>
+<h3 id="添加开机启动">添加开机启动</h3>
+<p>添加为系统服务后可以添加开机启动<br />
+老版centos命令,centos7兼容</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chkconfig pbs_server on
+chkconfig pbs_sched on
+chkconfig pbs_mom on
+</code></pre></div></div>
+<p>centos7还可以使用<code class="highlighter-rouge">systemctl enable</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl enable pbs_server 
+systemctl enable pbs_sched
+systemctl enable pbs_mom
+</code></pre></div></div>
+<h2 id="打包生成个节点安装包">打包，生成个节点安装包</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make packages
+</code></pre></div></div>
+
+<h2 id="初始化">初始化</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qterm
+./torque.setup root
+</code></pre></div></div>
+<blockquote>
+  <p>qterm为终止pbs_server的运行,若不终止，无法初始化
+<br />有教程中说root应为普通用户名
+<br />如果<code class="highlighter-rouge">/etc/hosts</code>中主机名放在别名后面，会报错</p>
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qmgr obj= svr=default: Bad ACL entry in host list MSG=First bad host: VM_10_194_centos
+ERROR: cannot set root@VM_10_194_centos in operators list
+</code></pre></div>  </div>
+</blockquote>
+
+<h2 id="启动程序">启动程序</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in pbs_server pbs_sched pbs_mom ; do service $i restart; done
+trqauthd
+# centos7 还可以
+for i in pbs_server pbs_sched pbs_mom ; do systemctl restart $i ; done
+trqauthd
+</code></pre></div></div>
+<p><code class="highlighter-rouge">ps -e | grep pbs</code>可以查看启动情况</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@VM_10_194_centos cndaqiang]# ps -e | grep pbs
+ 8966 ?        00:00:00 pbs_server
+ 8987 ?        00:00:00 pbs_sched
+ 8995 ?        00:00:00 pbs_mom
+</code></pre></div></div>
+<h2 id="配置节点">配置节点</h2>
+<h3 id="管理节点调度节点master">管理节点(调度节点,master)</h3>
+<p><strong>注:</strong>,每次初始化<code class="highlighter-rouge">./torque.setup &lt;username&gt;</code> ，会清空管理节点的配置信息,需重新配置<br />
+终止pbs_server</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qterm
+</code></pre></div></div>
+<p>编辑<code class="highlighter-rouge">/var/spool/torque/server_priv/nodes</code>，填入管理节点主机名,如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VM_10_194_centos np=8 normal
+#指定节点，节点的进程数目，节点属性
+</code></pre></div></div>
+<h3 id="计算节点">计算节点</h3>
+<p>编辑<code class="highlighter-rouge">/var/spool/torque/mom_priv/config</code>，填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$pbsserver VM_10_194_centos
+$logevent 255
+</code></pre></div></div>
+<p>重启</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in pbs_server pbs_sched pbs_mom ; do service $i restart; done
+trqauthd
+</code></pre></div></div>
+<p>查看节点</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@VM_10_194_centos cndaqiang]# qnodes
+VM_10_194_centos
+     state = free
+     power_state = Running
+     np = 1
+     ntype = cluster
+     status = opsys=linux,uname=Linux VM_10_194_centos 3.10.0-514.21.1.el7.x86_64 #1 SMP Thu May 25 17:04:51 UTC 2017 x86_64,sessions=10148,nsessions=1,nusers=1,idletime=48030,totmem=3113664kb,availmem=2808244kb,physmem=1016516kb,ncpus=1,loadave=0.00,gres=,netload=2164774121,state=free,varattr= ,cpuclock=Fixed,version=6.1.1.1,rectime=1515722674,jobs=
+     mom_service_port = 15002
+     mom_manager_port = 15003
+</code></pre></div></div>
+
+<h3 id="计算节点配置">计算节点配置</h3>
+<p>由于这次是单机,计算节点和管理节点在同一机器，很多集权计算节点的配置不用做了<br />
+安装软件包</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./torque-package-clients-linux-x86_64.sh --install  
+./torque-package-mom-linux-x86_64.sh --install
+</code></pre></div></div>
+<p>重启</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in pbs_server pbs_sched pbs_mom ; do service $i restart; done
+trqauthd
+</code></pre></div></div>
+
+<h3 id="创建队列">创建队列</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@VM_10_194_centos torque]# qmgr
+Max open servers: 9
+Qmgr:  creat queue normal queue_type=execution
+Qmgr:  set server default_queue=normal
+Qmgr:  set queue normal started=true 
+Qmgr:  set queue normal enabled=true
+Qmgr:  set server scheduling=true
+Qmgr:  (ctrl+d退出)
+</code></pre></div></div>
+<p>重启</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in pbs_server pbs_sched pbs_mom ; do service $i restart; done
+</code></pre></div></div>
+<h3 id="注">注</h3>
+<p>每次管理节点开机,都需要</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trqauthd
+</code></pre></div></div>
+<p>和重新创建队列</p>
+
+<h2 id="测试提交任务qsub">测试提交任务<code class="highlighter-rouge">qsub</code></h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@VM_10_194_centos torque]# su cndaqiang
+[cndaqiang@VM_10_194_centos torque]$ echo "sleep 30" |qsub
+8.localhost
+[cndaqiang@VM_10_194_centos torque]$ qstat
+Job ID                    Name             User            Time Use S Queue
+------------------------- ---------------- --------------- -------- - -----
+8.localhost                STDIN            cndaqiang              0 R normal         
+[cndaqiang@VM_10_194_centos torque]$ qstat
+Job ID                    Name             User            Time Use S Queue
+------------------------- ---------------- --------------- -------- - -----
+8.localhost                STDIN            cndaqiang       00:00:00 C normal
+</code></pre></div></div>
+<p>30秒后，状态由<code class="highlighter-rouge">R</code>run变为了<code class="highlighter-rouge">C</code>complete</p>
+
+<h1 id="使用">使用</h1>
+<p>该部分主要参考
+<br /><a href="http://hydro.igsnrr.ac.cn/data/resources/PBS.pdf">PBS</a>
+<br /><a href="http://blog.sciencenet.cn/blog-478347-395684.html">[转载]PBS！！</a></p>
+<h2 id="命令">命令</h2>
+<ul>
+  <li>提交脚本
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qsub &lt;PBS作业脚本&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>查询作业状态
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@centos1:~$ qstat
+Job ID                    Name             User            Time Use S Queue
+------------------------- ---------------- --------------- -------- - -----
+8.centos1                  STDIN            cndaqiang              0 R normal
+</code></pre></div>    </div>
+    <p>状态:E退出,Q排队,H挂起,R运行,C结束</p>
+  </li>
+  <li>删除作业
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qdel &lt;Job ID&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>挂起作业
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qhold &lt;Job ID&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>取消挂起
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qrls &lt;Job ID&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>交换作业顺序
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qorder &lt;Job ID&gt; &lt;Job ID&gt;
+</code></pre></div>    </div>
+  </li>
+  <li>qstat
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qstat 查看最近作业状态
+qstat -f &lt;Job ID&gt; 查看作业信息(作业提交多了，忘记是什么必备)
+qstat -n &lt;Job ID&gt; 查看作业节点
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="pbs脚本文件">PBS脚本文件</h2>
+<h3 id="说明">说明</h3>
+<ul>
+  <li>本质是一个SHELL脚本,和bash语法相同,可直接调用shell命令</li>
+  <li><code class="highlighter-rouge">#</code>开头注释</li>
+  <li><code class="highlighter-rouge">#PBS</code>开头是PBS运行参数</li>
+  <li>环境变量
+<br />类似于PHP的魔术变量(预定义常量)
+<img src="/uploads/2018/01/pbs.png" alt="" /></li>
+</ul>
+
+<h3 id="pbs运行参数">PBS运行参数</h3>
+<p>可以在<code class="highlighter-rouge">qsub 运行参数 &lt;作业脚本&gt;</code>中设置<br />
+也可以在脚本中以<code class="highlighter-rouge">#PBS 运行参数</code>设置<br />
+<code class="highlighter-rouge">qsub 运行参数 &lt;作业脚本&gt;</code>设置的优先级更高<br />
+详细参数设置
+<img src="/uploads/2018/01/pbs2.png" alt="" /></p>
+
+<h3 id="运行vasp示例">运行VASP示例</h3>
+<p>参考<a href="http://cist.bnu.edu.cn/docs/20150427050417757608.docx">北师-普通用户用pbs提交作业操作手册</a></p>
+
+<p><strong>pbs脚本中用中文注释会报错</strong><code class="highlighter-rouge">qsub:  file must be an ascii script</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#####PBS参数设置#####
+#PBS -N vasp
+#程序名
+#PBS -l nodes=1:ppn=3
+#节点,每个节点核数
+#PBS -l walltime=1:00:00:00
+#作业运行最大时间1天，估算自己的作业最大运行时间，这里指定一下
+#PBS -q batch
+# 添加到队列batch
+#PBS -V
+#定义环境变量范围
+#PBS -S /bin/bash 
+
+#####设置PATH#####
+source /opt/intel/compilers_and_libraries_2018.0.128/linux/bin/compilervars.sh intel64
+source /opt/intel/compilers_and_libraries_2018.0.128/linux/bin/iccvars.sh intel64 
+source /opt/intel/compilers_and_libraries_2018.0.128/linux/bin/ifortvars.sh intel64 
+source /opt/intel/compilers_and_libraries/linux/mkl/bin/mklvars.sh intel64
+source  /opt/intel/impi/2018.0.128/bin64/mpivars.sh
+
+#####计算#####
+cd $PBS_O_WORKDIR
+#进入工作目录
+EXEC=/home/cndaqiang/soft/vasp.5.4.1/build/std/vasp
+#vasp
+NP=`cat $PBS_NODEFILE | wc -l`
+#wc -l 统计行数
+#NP为 mpirun运行的np(number of processes,),核数
+NN=`cat $PBS_NODEFILE | sort | uniq | tee /tmp/cqiang_nodes.$$ | wc -l`
+#sort排序,uniq去除重复,tee重定向输出,$$代表shell本身的PID
+#NN为节点数
+cat $PBS_NODEFILE &gt; /tmp/cqiang_nodefile.$$
+#存储节点进程信息
+mpirun -genv I_MPI_DEVICE rdssm -machinefile /tmp/cqiang_nodefile.$$ -n $NP $EXEC
+# -machinefile :指定加入运算的资源
+# -nolocal :本机器不参与运算
+# -np :处理器数量
+
+rm -rf /tmp/cqiang_nodefile.$$
+rm -rf /tmp/cqiang_nodes.$$
+</code></pre></div></div>
+<p>将脚本放于vasp输入文件同一目录</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qsub &lt;脚本名&gt;
+</code></pre></div></div>
+<p>即可运行</p>
+
+:ET

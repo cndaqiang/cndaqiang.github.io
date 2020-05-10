@@ -1,0 +1,143 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a>    <ul>
+      <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+      <li><a href="#配置" id="markdown-toc-配置">配置</a>        <ul>
+          <li><a href="#vpn-网段和openwrt所在的网段不同简单推荐" id="markdown-toc-vpn-网段和openwrt所在的网段不同简单推荐">VPN 网段和OpenWRT所在的网段不同（简单推荐）</a></li>
+          <li><a href="#vpn-网段和openwrt所在的网段一样" id="markdown-toc-vpn-网段和openwrt所在的网段一样">VPN 网段和OpenWRT所在的网段一样</a></li>
+        </ul>
+      </li>
+      <li><a href="#设置访问账户密码" id="markdown-toc-设置访问账户密码">设置访问账户密码</a></li>
+      <li><a href="#配置防火墙" id="markdown-toc-配置防火墙">配置防火墙</a></li>
+      <li><a href="#启动" id="markdown-toc-启动">启动</a></li>
+      <li><a href="#客户端连接" id="markdown-toc-客户端连接">客户端连接</a></li>
+    </ul>
+  </li>
+  <li><a href="#问题" id="markdown-toc-问题">问题</a></li>
+</ul>
+
+<h2 id="环境">环境</h2>
+<p>CHAOS CALMER (15.05.1, r48532)</p>
+<h2 id="参考">参考</h2>
+<p><a href="http://www.hooklearn.top/2016/04/27/openwrt%E6%90%AD%E5%BB%BAopenconnect-vpn/">Openwrt搭建OpenConnect VPN</a></p>
+<h2 id="操作">操作</h2>
+<h3 id="安装">安装</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg install ocserv luci-app-ocserv
+</code></pre></div></div>
+<h3 id="配置">配置</h3>
+<p>LuCI-》服务-》OpenConnect VPN</p>
+<ul>
+  <li>Enable Server：打钩表示启动服务。</li>
+  <li>User Authentication：用户认证方式，选择plain，表示使用OpenWRT路由器上面定义的用户名和密码登录VPN。</li>
+  <li>Firewall Zone：选择Lan</li>
+  <li>端口：默认是443，可自定义</li>
+  <li>Max Clients最大连接数</li>
+  <li>Max same Clients 同一个账号能够登录几个。</li>
+  <li>Enable compression：打钩表示启用压缩。</li>
+  <li>Enable UDP：打钩表示启用UDP协议。</li>
+  <li>AnyConnect client compatibility：打钩表示允许 Cisco 的 Anyconnect Client 作为VPN客户端软件连接</li>
+</ul>
+
+<hr />
+
+<p>VPN客户端连到内网之后，获得的IP地址的网段范围<strong>有两种配置方案</strong></p>
+
+<p>VPN IPv4-Network-Address： 客户端ip地址</p>
+
+<p>VPN IPv4-Netmask：子网掩码</p>
+
+<hr />
+
+<h4 id="vpn-网段和openwrt所在的网段不同简单推荐">VPN 网段和OpenWRT所在的网段不同（简单推荐）</h4>
+
+<p>例</p>
+
+<p>OpenWRT的路由器的IP地址为：192.168.1.1，子网掩码为255.255.255.0</p>
+
+<p>设置为</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IPv4-Network-Address：192.168.2.0（0表示网络地址）
+VPN IPv4-Netmask：255.255.255.0
+</code></pre></div></div>
+<hr />
+
+<h4 id="vpn-网段和openwrt所在的网段一样">VPN 网段和OpenWRT所在的网段一样</h4>
+<p>使用其中某一段子网IP地址，但是所有接口上的ARP代理功能</p>
+
+<p>例如我使用的是192.168.1.10~192.168.1.17这几个ip，涉及子网掩码的计算，计算方法简如下，原理略</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>192.168.1.10     192.168.1.0000 1010 #10的二进制0000 1010
+192.168.1.17     192.168.1.0000 1111 #17的二进制0000 1111
+11111111.11111111.11111111.1111 0000   255.255.255.240# 240的二进制1111 0000
+VPN IPv4-Netmask为192.168.1.10 和VPN IPv4-Netmask为255.255.255.240
+</code></pre></div></div>
+<p><strong>启用代理ARP</strong></p>
+
+<p>编辑<code class="highlighter-rouge"> /etc/sysctl.conf</code>
+新增一条：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>net.ipv4.conf.all.proxy_arp=1
+</code></pre></div></div>
+<p>保存,重新载入配置</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sysctl -p
+</code></pre></div></div>
+<hr />
+
+<h3 id="设置访问账户密码">设置访问账户密码</h3>
+<p>LuCI–&gt;服务–&gt;OpenConnect VPN–&gt;User Settings
+在Available users里填入账号密码即可，保存后，密码自动显示为密文</p>
+<h3 id="配置防火墙">配置防火墙</h3>
+<p><strong>开放访问端口</strong></p>
+
+<p>使用端口为4433，则要在防火墙上把这个口打开
+LuCI-》网络-》防火墙-》Traffic Rules
+Open ports on router:
+<img src="http://upload-images.jianshu.io/upload_images/4575564-39d1aef77a0e4fcb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" />
+名称 自定义</p>
+
+<p>协议TCP+UDP</p>
+
+<p>External port 4433</p>
+
+<p>保存应用</p>
+
+<p><strong>允许VPN的流量访问内网资源</strong></p>
+
+<p>编辑/etc/firewall.user，添加下列内容</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables -A input_rule -i vpns+ -j ACCEPT
+iptables -A forwarding_rule -i vpns+ -j ACCEPT
+iptables -A forwarding_rule -o vpns+ -j ACCEPT
+iptables -A output_rule -o vpns+ -j ACCEPT
+</code></pre></div></div>
+<p>重启防火墙</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/init.d/firewall restart
+</code></pre></div></div>
+
+<h3 id="启动">启动</h3>
+<p>重启</p>
+
+<p>Luci –&gt;系统–&gt;启动项–&gt;ocserv</p>
+
+<p><strong>开机启动</strong></p>
+
+<p>虽然Luci –&gt;系统–&gt;启动项–&gt;ocserv设为了开机启动，没有效果，解决方案</p>
+
+<p>Luci –&gt;系统–&gt;启动项–&gt;</p>
+
+<p>本地启动脚本中加入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(sleep 11; /etc/init.d/ocserv start)&amp;
+</code></pre></div></div>
+<h3 id="客户端连接">客户端连接</h3>
+<p>下载客户端
+<a href="http://www.cisco.com/c/en/us/support/security/anyconnect-secure-mobility-client/tsd-products-support-series-home.html">Android</a></p>
+
+<p><a href="https://itunes.apple.com/cn/app/cisco-anyconnect/id392790924?mt=8">IOS</a></p>
+
+<p>PC端，搜索anyconnect</p>
+
+<p>服务器地址ip:端口，连接时提示危险就在设置里不勾选阻止不信任的服务器，接受之类的</p>
+
+<h2 id="问题">问题</h2>
+<p><strong>1.移动端提示”安全网关已拒绝所尝试的连接操作。需要尝试与同一或其他安全网关建立新连接。新连接要求重新进行身份验证。”PC端提示”anyconnect was not able to establish a connection to the specified secure gateway please try again”</strong></p>
+
+<p>解决方案参考<a href="/2017/08/03/ubuntu-ocserv/">Ubuntu上安装ocserv</a></p>
+:ET

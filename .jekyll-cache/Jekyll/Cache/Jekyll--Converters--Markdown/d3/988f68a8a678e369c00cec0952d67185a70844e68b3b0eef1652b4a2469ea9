@@ -1,0 +1,44 @@
+I"�	<ul id="markdown-toc">
+  <li><a href="#环境" id="markdown-toc-环境">环境：</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考:</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
+      <li><a href="#下载" id="markdown-toc-下载">下载</a></li>
+      <li><a href="#scp上传到opwnwrt" id="markdown-toc-scp上传到opwnwrt">scp上传到OpwnWrt</a></li>
+      <li><a href="#安装-1" id="markdown-toc-安装-1">安装</a></li>
+      <li><a href="#修改配置文件" id="markdown-toc-修改配置文件">修改配置文件</a></li>
+      <li><a href="#将配置文件中选择的端口添加到防火墙许可" id="markdown-toc-将配置文件中选择的端口添加到防火墙许可">将配置文件中选择的端口添加到防火墙许可</a></li>
+      <li><a href="#重启ss即可" id="markdown-toc-重启ss即可">重启ss即可</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="环境">环境：</h2>
+<p>OpenWrt (Chaos Calmer)<br />
+CPU: ar71xx</p>
+<h2 id="参考">参考:</h2>
+<p><a href="https://ntgeralt.blogspot.com/2015/12/openwrtshadowsocks.html">OpenWRT 路由器搭建 Shadowsocks 服务器 （ss-server on ramips、71xx、bc47xx）</a></p>
+
+<h2 id="安装">安装</h2>
+
+<h3 id="下载">下载</h3>
+<p>选择自己的CPU平台下载，我仅测试了ar71xx没问题<br />
+<a href="/web/file/2019/libev-ss-server_2.4.5-1_ar71xx.ipk">libev-ss-server_2.4.5-1_ar71xx.ipk</a><br />
+<a href="/web/file/2019/libev-ss-server_2.4.5-1_brcm47xx.ipk">libev-ss-server_2.4.5-1_brcm47xx.ipk</a><br />
+<a href="/web/file/2019/libev-ss-server_2.4.5-1_ramips_24kec.ipk">libev-ss-server_2.4.5-1_ramips_24kec.ipk</a><br /></p>
+
+<h3 id="scp上传到opwnwrt">scp上传到OpwnWrt</h3>
+
+<h3 id="安装-1">安装</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg install libev-ss-server_2.4.5-1_ar71xx.ipk
+</code></pre></div></div>
+
+<h3 id="修改配置文件">修改配置文件</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/shadowsocks-server.json
+</code></pre></div></div>
+<p>配置规则参见<a href="https://cndaqiang.github.io/2017/09/27/ubuntu-ss/">/2017/09/27/ubuntu-ss/</a></p>
+<h3 id="将配置文件中选择的端口添加到防火墙许可">将配置文件中选择的端口添加到防火墙许可</h3>
+<p>Luci&gt;网络&gt;防火墙&gt;Traffic Rules&gt;Open ports on router:</p>
+
+<h3 id="重启ss即可">重启ss即可</h3>
+<p>Luci&gt;系统&gt;启动项&gt;shadowsocks-server&gt;重启</p>
+:ET

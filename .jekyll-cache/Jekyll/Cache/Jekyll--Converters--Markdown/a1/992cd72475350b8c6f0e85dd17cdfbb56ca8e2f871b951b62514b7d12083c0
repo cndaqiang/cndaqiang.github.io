@@ -1,0 +1,4 @@
+I"�
+<p>VASP主要计算流程:结构优化、静态自洽、非自洽计算
+<br />别忘记<strong><code class="highlighter-rouge">cp CONTCAR POSCAR</code></strong></p>
+:ET

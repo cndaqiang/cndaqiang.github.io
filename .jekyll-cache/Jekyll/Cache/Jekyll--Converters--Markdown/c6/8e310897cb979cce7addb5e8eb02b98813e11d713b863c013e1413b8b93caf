@@ -1,0 +1,113 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#操作示例" id="markdown-toc-操作示例">操作示例</a>    <ul>
+      <li><a href="#安装liblzma" id="markdown-toc-安装liblzma">安装<code class="highlighter-rouge">liblzma</code></a>        <ul>
+          <li><a href="#1-检查xz依赖的程序包" id="markdown-toc-1-检查xz依赖的程序包">1. 检查xz依赖的程序包</a></li>
+          <li><a href="#2-下载安装缺失的依赖" id="markdown-toc-2-下载安装缺失的依赖">2. 下载安装缺失的依赖</a></li>
+          <li><a href="#3添加环境变量" id="markdown-toc-3添加环境变量">3.添加环境变量</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://blog.csdn.net/sty945/article/details/80888872">centos 非root用户(普通用户)替换yum安装软件方法</a></p>
+
+<h2 id="操作示例">操作示例</h2>
+<h3 id="安装liblzma">安装<code class="highlighter-rouge">liblzma</code></h3>
+<p>编译R语言时遇到,<code class="highlighter-rouge">configure: error: "liblzma library and headers are required"</code>,然而我是实在不敢<code class="highlighter-rouge">sudo yum</code>了<br />
+使用普通用户安装</p>
+
+<h4 id="1-检查xz依赖的程序包">1. 检查xz依赖的程序包</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@managernode yumlocal]$ cd ~/soft/yumlocal/
+[cndaqiang@managernode yumlocal]$ yum deplist xz
+已加载插件：axelget, fastestmirror, langpacks
+No metadata available for base
+No metadata available for extras
+No metadata available for mariadb-main
+No metadata available for mariadb-maxscale
+No metadata available for mariadb-tools
+No metadata available for mongodb-enterprise
+No metadata available for mongodb-org-4.0
+No metadata available for updates
+Loading mirror speeds from cached hostfile
+软件包：xz.x86_64 5.2.2-1.el7
+   依赖：/bin/sh
+   provider: bash.x86_64 4.2.46-31.el7
+   依赖：libc.so.6(GLIBC_2.17)(64bit)
+   provider: glibc.x86_64 2.17-260.el7_6.6
+   依赖：liblzma.so.5()(64bit)
+   provider: xz-libs.x86_64 5.2.2-1.el7
+   依赖：liblzma.so.5(XZ_5.0)(64bit)
+   provider: xz-libs.x86_64 5.2.2-1.el7
+   依赖：liblzma.so.5(XZ_5.1.2alpha)(64bit)
+   provider: xz-libs.x86_64 5.2.2-1.el7
+   依赖：liblzma.so.5(XZ_5.2.2)(64bit)
+   provider: xz-libs.x86_64 5.2.2-1.el7
+   依赖：libpthread.so.0()(64bit)
+   provider: glibc.x86_64 2.17-260.el7_6.6
+   依赖：libpthread.so.0(GLIBC_2.2.5)(64bit)
+   provider: glibc.x86_64 2.17-260.el7_6.6
+   依赖：rtld(GNU_HASH)
+   provider: glibc.x86_64 2.17-260.el7_6.6
+   provider: glibc.i686 2.17-260.el7_6.6
+   依赖：xz-libs = 5.2.2-1.el7
+   provider: xz-libs.x86_64 5.2.2-1.el7
+   provider: xz-libs.i686 5.2.2-1.el7
+</code></pre></div></div>
+<h4 id="2-下载安装缺失的依赖">2. 下载安装缺失的依赖</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@managernode yumlocal]$ yumdownloader xz-libs
+已加载插件：axelget, fastestmirror, langpacks
+No metadata available for base
+No metadata available for extras
+No metadata available for mariadb-main
+No metadata available for mariadb-maxscale
+No metadata available for mariadb-tools
+No metadata available for mongodb-enterprise
+No metadata available for mongodb-org-4.0
+No metadata available for updates
+Loading mirror speeds from cached hostfile
+(1/2): xz-libs-5.2.2-1.el7.x86_64.rpm                      | 103 kB  00:00:01     
+(2/2): xz-libs-5.2.2-1.el7.i686.rpm                        | 109 kB  00:00:05     
+[cndaqiang@managernode yumlocal]$ ls
+rpm  xz-libs-5.2.2-1.el7.i686.rpm  xz-libs-5.2.2-1.el7.x86_64.rpm
+[cndaqiang@managernode yumlocal]$ rpm2cpio  xz-libs-5.2.2-1.el7.i686.rpm | cpio -idvm
+./usr/lib/liblzma.so.5
+./usr/lib/liblzma.so.5.2.2
+./usr/share/doc/xz-libs-5.2.2
+./usr/share/doc/xz-libs-5.2.2/COPYING
+./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv2
+./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv3
+./usr/share/doc/xz-libs-5.2.2/COPYING.LGPLv2.1
+494 块
+[cndaqiang@managernode yumlocal]$ rpm2cpio  xz-libs-5.2.2-1.el7.x86_64.rpm | cpio -idvm
+./usr/lib64/liblzma.so.5
+./usr/lib64/liblzma.so.5.2.2
+./usr/share/doc/xz-libs-5.2.2
+cpio: 未创建 ./usr/share/doc/xz-libs-5.2.2/COPYING：已有更新或同样新的版本存在
+./usr/share/doc/xz-libs-5.2.2/COPYING
+cpio: 未创建 ./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv2：已有更新或同样新的版本存在
+./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv2
+cpio: 未创建 ./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv3：已有更新或同样新的版本存在
+./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv3
+cpio: 未创建 ./usr/share/doc/xz-libs-5.2.2/COPYING.LGPLv2.1：已有更新或同样新的版本存在
+./usr/share/doc/xz-libs-5.2.2/COPYING.LGPLv2.1
+471 块
+[cndaqiang@managernode yumlocal]$ 
+</code></pre></div></div>
+<p>更多的依赖，如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yumdownloader xz-devel
+rpm2cpio  xz-devel-5.2.2-1.el7.x86_64.rpm | cpio -idvm
+rpm2cpio  xz-devel-5.2.2-1.el7.i686.rpm | cpio -idvm
+</code></pre></div></div>
+
+<h4 id="3添加环境变量">3.添加环境变量</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=/home/cndaqiang/soft/yumlocal/usr/bin:/home/cndaqiang/soft/yumlocal/usr/sbin:$PATH
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/yumlocal/usr/lib:/home/cndaqiang/soft/yumlocal/usr/lib64:$LD_LIBRARY_PATH
+export CFLAGS="-I/home/cndaqiang/soft/yumlocal/usr/include "
+export LDFLAGS="-L/home/cndaqiang/soft/yumlocal/usr/lib64  -L/home/cndaqiang/soft/yumlocal/usr/lib -L/home/cndaqiang/soft/yumlocal/lib64 -L/home/cndaqiang/soft/yumlocal/lib "
+</code></pre></div></div>
+<p>之后configure R语言就没问题了</p>
+
+:ET

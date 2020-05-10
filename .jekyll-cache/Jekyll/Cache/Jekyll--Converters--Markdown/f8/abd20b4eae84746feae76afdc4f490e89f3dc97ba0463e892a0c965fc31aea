@@ -1,0 +1,83 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#名词" id="markdown-toc-名词">名词</a></li>
+  <li><a href="#开始操作" id="markdown-toc-开始操作">开始操作</a>    <ul>
+      <li><a href="#下载bios固件" id="markdown-toc-下载bios固件">下载BIOS固件</a></li>
+      <li><a href="#格式化u盘为fat32格式" id="markdown-toc-格式化u盘为fat32格式">格式化U盘为FAT32格式</a></li>
+      <li><a href="#把u盘插到电脑上开机选择启动项为internal-efi-shell" id="markdown-toc-把u盘插到电脑上开机选择启动项为internal-efi-shell">把U盘插到电脑上，开机选择启动项为<code class="highlighter-rouge">Internal EFI Shell</code></a></li>
+      <li><a href="#默认不用管即可进入刷机模式若只刷风扇按q退出" id="markdown-toc-默认不用管即可进入刷机模式若只刷风扇按q退出">默认不用管即可进入刷机模式，若只刷风扇，按<code class="highlighter-rouge">q</code>退出</a></li>
+      <li><a href="#只刷风扇传感器sdr" id="markdown-toc-只刷风扇传感器sdr">只刷风扇传感器SDR</a>        <ul>
+          <li><a href="#输入u盘编号进行相应分区如fs1用ls查看已有文件" id="markdown-toc-输入u盘编号进行相应分区如fs1用ls查看已有文件">输入U盘编号进行相应分区，如<code class="highlighter-rouge">fs1:</code>,用<code class="highlighter-rouge">ls</code>查看已有文件</a></li>
+          <li><a href="#我们只刷sdr输入updatefrusdrnsh" id="markdown-toc-我们只刷sdr输入updatefrusdrnsh">我们只刷SDR，输入<code class="highlighter-rouge">UpdateFRUSDR.nsh</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#进一步优化其实没看到优化效果" id="markdown-toc-进一步优化其实没看到优化效果">进一步优化(其实没看到优化效果)</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>终于终于控制注风扇的转速了，可以变成一台办公机器了。<br />
+S2600CP2J是Intel的服务器主板，之前看过的视频教程里面，只要系统的一个风扇出现故障，则全部风扇以最高速度运行(飞机起飞的声音)<br />
+我的板子买回来到现在，一开机CPU的风扇堪比国产大飞机，周围根本没法站人。<br />
+在风扇上加上变速线(电阻)后才好一些，但是也不能放到办公室里呀，还是吵。<br />
+前两天看帖子，终于想到，我的噪音风扇，可能是因为我只插了CPU的风扇插头，其他的风扇插头没有插，系统检测到异常，所以CPU的风扇根本停不下来。<br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://forums.servethehome.com/index.php?threads/s2600cp-cpu-fan-speed-maybe-a-solution.13910/">S2600CP CPU Fan Speed, Maybe a Solution?</a><br />
+<a href="https://forums.servethehome.com/index.php?threads/changing-fan-settings-in-frusdr-on-intel-s2600cp2j-noob.18348/">Changing fan settings in FRUSDR on Intel S2600CP2J - noob</a></p>
+<h2 id="名词">名词</h2>
+<p>FRUSDR (Field Replaceable Unit/Sensor Data Record) <br />
+FRUSDR (现场可更换单元/传感器数据记录)</p>
+
+<h2 id="开始操作">开始操作</h2>
+<h3 id="下载bios固件">下载BIOS固件</h3>
+<p>下载链接: <a href="https://downloadcenter.intel.com/download/26957/Intel-Server-Board-S2600CP-Firmware-Update-Package-for-EFI?product=56333">Download Intel® Server Board S2600CP Firmware Update Package for EFI</a><br />
+支持多种主板:</p>
+<ul>
+  <li>Intel® Server Board S2600CP2</li>
+  <li>Intel® Server Board S2600CP2IOC</li>
+  <li>Intel® Server Board S2600CP2J</li>
+  <li>Intel® Server Board S2600CP4</li>
+  <li>Intel® Server Board S2600CP4IOC</li>
+  <li>Intel® Server System P4208CP4MHGC</li>
+  <li>Intel® Server System P4308CP4MHEN</li>
+  <li>Intel® Server System P4308CP4MHGC</li>
+</ul>
+
+<h3 id="格式化u盘为fat32格式">格式化U盘为FAT32格式</h3>
+<p>格式化为FAT32格式<br />
+把下载的固件解压放到U盘中<br />
+<img src="/uploads/2019/06/bios.jpg" alt="" /></p>
+
+<h3 id="把u盘插到电脑上开机选择启动项为internal-efi-shell">把U盘插到电脑上，开机选择启动项为<code class="highlighter-rouge">Internal EFI Shell</code></h3>
+<p>进入EFI交互模式刷BIOS
+<img src="/uploads/2019/06/efi.jpg" alt="" /></p>
+
+<h3 id="默认不用管即可进入刷机模式若只刷风扇按q退出">默认不用管即可进入刷机模式，若只刷风扇，按<code class="highlighter-rouge">q</code>退出</h3>
+<p>默认情况，系统会自动识别到U盘,进入刷BIOS模式<br />
+跟着系统走就行了
+<img src="/uploads/2019/06/package.jpg" alt="" />
+若没有自动刷BIOS，按照下面的<strong>只刷风扇传感器SDR</strong>步骤，进入U盘后，执行<code class="highlighter-rouge">Startup.nsh</code></p>
+
+<h3 id="只刷风扇传感器sdr">只刷风扇传感器SDR</h3>
+<p>按<code class="highlighter-rouge">q</code>退出，或者一开始就<code class="highlighter-rouge">ESC</code>退出</p>
+<h4 id="输入u盘编号进行相应分区如fs1用ls查看已有文件">输入U盘编号进行相应分区，如<code class="highlighter-rouge">fs1:</code>,用<code class="highlighter-rouge">ls</code>查看已有文件</h4>
+<p><img src="/uploads/2019/06/fs.jpg" alt="" /></p>
+<h4 id="我们只刷sdr输入updatefrusdrnsh">我们只刷SDR，输入<code class="highlighter-rouge">UpdateFRUSDR.nsh</code></h4>
+<p><img src="/uploads/2019/06/fru.jpg" alt="" />
+经过我的测试，输入1，只刷sdr就可以
+<img src="/uploads/2019/06/sdr.jpg" alt="" />
+我用的low
+<img src="/uploads/2019/06/low.jpg" alt="" />
+风扇传感器设置:<br />
+主板上各个风扇插槽上面有各自的名称，自己上主板上瞅<br />
+将插着传感器(4pin)的风扇插槽设置为<code class="highlighter-rouge">y</code><br />
+其他插槽就算插着机箱风扇，如果没有温度传感器(3pin)设置为<code class="highlighter-rouge">n</code><br />
+图为我的电脑设置，只有CPU fan有传感器
+<img src="/uploads/2019/06/fan.jpg" alt="" />
+刷bios完成，风扇的声音应该一下就小了
+<img src="/uploads/2019/06/ok.jpg" alt="" /></p>
+
+<h3 id="进一步优化其实没看到优化效果">进一步优化(其实没看到优化效果)</h3>
+<p><img src="/uploads/2019/06/biosfan.jpg" alt="" /></p>
+:ET

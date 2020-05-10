@@ -1,0 +1,160 @@
+I"h"<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#模块包" id="markdown-toc-模块包">模块&amp;包</a>    <ul>
+      <li><a href="#模块文件" id="markdown-toc-模块文件">模块文件</a></li>
+      <li><a href="#包" id="markdown-toc-包">包</a></li>
+      <li><a href="#导入使用模块" id="markdown-toc-导入使用模块">导入&amp;使用模块</a>        <ul>
+          <li><a href="#导入语法" id="markdown-toc-导入语法">导入语法</a>            <ul>
+              <li><a href="#import导入" id="markdown-toc-import导入">import导入</a></li>
+              <li><a href="#import导入后使用" id="markdown-toc-import导入后使用">import导入后使用</a></li>
+              <li><a href="#from-模块-import-变量函数" id="markdown-toc-from-模块-import-变量函数">from 模块 import 变量/函数</a></li>
+              <li><a href="#from-包-import-模块" id="markdown-toc-from-包-import-模块">from 包 import 模块</a></li>
+            </ul>
+          </li>
+          <li><a href="#例如" id="markdown-toc-例如">例如</a></li>
+          <li><a href="#模块的搜索路径" id="markdown-toc-模块的搜索路径">模块的搜索路径</a></li>
+        </ul>
+      </li>
+      <li><a href="#关于模块的更多内容" id="markdown-toc-关于模块的更多内容">关于模块的更多内容</a>        <ul>
+          <li><a href="#便准模块" id="markdown-toc-便准模块">便准模块</a></li>
+          <li><a href="#dir" id="markdown-toc-dir">dir()</a>            <ul>
+              <li><a href="#__name__" id="markdown-toc-__name__"><code class="highlighter-rouge">__name__</code></a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>做完python(一)基本语法的笔记，对python有了一些基础的了解，可以深入的看<a href="https://bop.molun.net/">简明python教程</a>等书籍，进行更多的学习
+昨天使用了python版的ssr让我对python的好感又增加了不少</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://bop.molun.net/">简明python教程</a></p>
+
+<p><a href="http://www.runoob.com/python/python-tutorial.html">Python 基础教程-菜鸟教程</a></p>
+
+<p><a href="http://www.runoob.com/python3/python3-tutorial.html">Python3教程-菜鸟教程</a></p>
+
+<p><a href="http://blog.csdn.net/zhenzhen_08/article/details/6304488">Python3.2 — Print函数用法</a></p>
+
+<p><a href="http://www.pythondoc.com/pythontutorial3/modules.html#tut-modules">Python tutorial</a></p>
+
+<h1 id="模块包">模块&amp;包</h1>
+
+<h2 id="模块文件">模块文件</h2>
+<blockquote>
+  <p>模块是一个包含所有你定义的函数和变量的文件，其<strong>后缀名是.py</strong>。模块可以被别的程序引入，以使用该模块中的函数等功能。这也是使用 python 标准库的方法。
+<strong>其实我们之前写的每个py文件就可以认为是一个模块</strong></p>
+</blockquote>
+
+<ul>
+  <li>模块文件语法和正常python文件一样</li>
+</ul>
+
+<h2 id="包">包</h2>
+<blockquote>
+  <p>包是一种管理 Python 模块命名空间的形式，采用”点模块名称”。
+<strong>文件夹下面有文件夹最下面是模块文件，文件夹视为包</strong></p>
+</blockquote>
+
+<p>每个包下面必须含有<code class="highlighter-rouge">__init__.py</code>文件，即使为空，也可以放置包初始化时的代码，可php的命名空间越来越像了
+如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sound/              #包            
+      __init__.py               
+      formats/         #子包         
+              __init__.py
+              wavread.py       #模块
+              wavwrite.py        
+      effects/                 
+              __init__.py
+              echo.py
+              surround.py
+      filters/                  
+              __init__.py
+              equalizer.py
+</code></pre></div></div>
+
+<h2 id="导入使用模块">导入&amp;使用模块</h2>
+<ul>
+  <li>导入某一模块，文件名不能含有点<code class="highlighter-rouge">.</code>,点代表子模块或者模块里的某函数/变量，类似于php里的命名空间</li>
+  <li>模块后缀名就是.py,所以导入module.py 导入名写module没有.py，.py代表子模块py</li>
+  <li>执行一次导入操作，则模块就被运行一次，即如果模块内有print()输出，导入时就会输出</li>
+</ul>
+
+<h3 id="导入语法">导入语法</h3>
+<h4 id="import导入">import导入</h4>
+<p>导入module1.py,module2.py,module3.py…模块</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import module1,module2,module3
+</code></pre></div></div>
+<p>导入sound包中effects包中的echo模块,也支持逗号隔开导入多个，*代表所有</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import sound.effects.echo   #注意没有.py
+</code></pre></div></div>
+<h4 id="import导入后使用">import导入后使用</h4>
+<p>使用导入module.py
+通过<code class="highlighter-rouge">module.变量/函数名</code>的方式使用模块中的变量/函数</p>
+
+<h4 id="from-模块-import-变量函数">from 模块 import 变量/函数</h4>
+<p>系统只记录import的内容，不会记得import的内容，例，<code class="highlighter-rouge">from 模块 import 变量</code>，后<code class="highlighter-rouge">模块.变量函数</code>无效
+使用时直接用<code class="highlighter-rouge">变量/函数名</code>，不需要<code class="highlighter-rouge">module.变量/函数名</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from module import 变量/函数名
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sound.effects.module import 变量/函数名 
+</code></pre></div></div>
+<h4 id="from-包-import-模块">from 包 import 模块</h4>
+<p>从包中导入模块，使用时任然需要模块.变量/函数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sound.effects import echo 
+</code></pre></div></div>
+<h3 id="例如">例如</h3>
+<p>文件目录</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+|-- fu
+|   |-- __init__.py
+|   `-- zi
+|       |-- __init__.py
+|       `-- mo.py 
+`-- import0.py
+</code></pre></div></div>
+<p>mo.py</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def fun(str):
+ print(str)
+a='hello,word'
+</code></pre></div></div>
+<p>import0.py</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from fu.zi.mo import fun
+fun("import function")  #导入模块中的函数，可以直接使用
+from fu.zi import mo
+mo.fun(mo.a)  #导入模块，需要像命名空间一样用点导入
+</code></pre></div></div>
+<p>运行import0.py</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 import0.py 
+import function
+hello,word
+</code></pre></div></div>
+
+<p>运行之后目录里在之前的xxx.py的基础上多了xxx.pyc文件，这是缓存每个模块编译后的版本
+好像也可以拓展研究，先略</p>
+
+<h3 id="模块的搜索路径">模块的搜索路径</h3>
+<p>当前工作目录&gt; sys.path（sys模块的path变量）变量中给出的目录列表
+<strong>包含符号链接的目录不会被加到目录搜索路径中</strong></p>
+
+<h2 id="关于模块的更多内容">关于模块的更多内容</h2>
+<h3 id="便准模块">便准模块</h3>
+<p>现在我们已经了解了模块的用法，可以看到，如果定义好了很多模块，我们就不用重复造轮子了，使用成熟的包&amp;模块可以剩很多事情，很多标准模块，数学模块，体现出python的用处来了</p>
+<h3 id="dir">dir()</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dir(模块)
+</code></pre></div></div>
+<p>返回模块内所有的变量，函数名,dir()无参数输出当前解释器/模块的变量/函数名</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; dir()
+['__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__']
+</code></pre></div></div>
+<p>这些<code class="highlighter-rouge">__xxx___</code>肯定类似php里的魔术变量</p>
+<h4 id="__name__"><code class="highlighter-rouge">__name__</code></h4>
+<blockquote>
+  <p>每个模块都有一个__name__属性，当其值是’<strong>main</strong>‘时，表明该模块自身在运行，否则是被引入,可以用于模块引入初始化时通过条件语句不运行某段程序</p>
+</blockquote>
+
+:ET

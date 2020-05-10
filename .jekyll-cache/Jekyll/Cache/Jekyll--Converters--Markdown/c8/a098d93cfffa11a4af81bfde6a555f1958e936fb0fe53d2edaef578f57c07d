@@ -1,0 +1,1031 @@
+I"��<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#注" id="markdown-toc-注">注</a></li>
+  <li><a href="#公式" id="markdown-toc-公式">公式</a></li>
+  <li><a href="#相关文件" id="markdown-toc-相关文件">相关文件</a>    <ul>
+      <li><a href="#读入赝势" id="markdown-toc-读入赝势">读入赝势</a></li>
+      <li><a href="#赝势定义" id="markdown-toc-赝势定义">赝势定义</a></li>
+    </ul>
+  </li>
+  <li><a href="#赝势结构体定义" id="markdown-toc-赝势结构体定义">赝势结构体定义</a>    <ul>
+      <li><a href="#基本信息" id="markdown-toc-基本信息">基本信息</a></li>
+      <li><a href="#wavefunctions-and-projectors" id="markdown-toc-wavefunctions-and-projectors">Wavefunctions and projectors</a></li>
+      <li><a href="#minimal-radial-grid" id="markdown-toc-minimal-radial-grid">Minimal radial grid:</a></li>
+      <li><a href="#pseudized-core-charge" id="markdown-toc-pseudized-core-charge">Pseudized core charge</a></li>
+      <li><a href="#local-potential" id="markdown-toc-local-potential">Local potential</a></li>
+      <li><a href="#augmentation" id="markdown-toc-augmentation">Augmentation</a></li>
+      <li><a href="#wfc" id="markdown-toc-wfc">wfc</a></li>
+      <li><a href="#soc" id="markdown-toc-soc">SOC</a></li>
+      <li><a href="#paw" id="markdown-toc-paw">PAW:</a></li>
+      <li><a href="#gipaw" id="markdown-toc-gipaw">GIPAW:</a></li>
+      <li><a href="#md5" id="markdown-toc-md5">MD5</a></li>
+    </ul>
+  </li>
+  <li><a href="#其他需要的结构体" id="markdown-toc-其他需要的结构体">其他需要的结构体</a>    <ul>
+      <li><a href="#radial_grid_type-结构体信息" id="markdown-toc-radial_grid_type-结构体信息">radial_grid_type 结构体信息</a></li>
+    </ul>
+  </li>
+  <li><a href="#相关变量" id="markdown-toc-相关变量">相关变量</a>    <ul>
+      <li><a href="#module-uspp_param" id="markdown-toc-module-uspp_param"><code class="highlighter-rouge">MODULE uspp_param</code></a></li>
+      <li><a href="#module-uspp" id="markdown-toc-module-uspp"><code class="highlighter-rouge">MODULE uspp</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#upf文件内容" id="markdown-toc-upf文件内容">UPF文件内容</a>    <ul>
+      <li><a href="#oncvpsp赝势结构" id="markdown-toc-oncvpsp赝势结构">ONCVPSP赝势结构</a></li>
+    </ul>
+  </li>
+  <li><a href="#读入流程" id="markdown-toc-读入流程">读入流程</a>    <ul>
+      <li><a href="#readpp-赝势读取入口" id="markdown-toc-readpp-赝势读取入口">readpp 赝势读取入口</a>        <ul>
+          <li><a href="#功能" id="markdown-toc-功能">功能</a></li>
+          <li><a href="#参数-readpp--input_dft-printout-ecutwfc_pp-ecutrho_pp-" id="markdown-toc-参数-readpp--input_dft-printout-ecutwfc_pp-ecutrho_pp-">参数: <code class="highlighter-rouge">readpp ( input_dft, printout, ecutwfc_pp, ecutrho_pp )</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#read_upf-upf赝势读取入口" id="markdown-toc-read_upf-upf赝势读取入口">read_upf UPF赝势读取入口</a>        <ul>
+          <li><a href="#功能-1" id="markdown-toc-功能-1">功能</a></li>
+          <li><a href="#参数-read_upfupf-grid-ierr-unit--filename" id="markdown-toc-参数-read_upfupf-grid-ierr-unit--filename">参数: <code class="highlighter-rouge">read_upf(upf, grid, ierr, unit,  filename)</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#read_upf_v2-直接读入v2版upf文件并设置参数" id="markdown-toc-read_upf_v2-直接读入v2版upf文件并设置参数">read_upf_v2 直接读入v2版UPF文件,并设置参数</a>        <ul>
+          <li><a href="#功能-2" id="markdown-toc-功能-2">功能</a></li>
+          <li><a href="#参数-read_upf_v2u-upf-grid-ierr-" id="markdown-toc-参数-read_upf_v2u-upf-grid-ierr-">参数: <code class="highlighter-rouge">read_upf_v2(u, upf, grid, ierr) </code></a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://www.quantum-espresso.org/pseudopotentials/unified-pseudopotential-format">QE-UNIFIED PSEUDOPOTENTIAL FORMAT</a><br />
+<a href="https://github.com/QEF/q-e.git">q-e code</a><br /></p>
+
+<h2 id="注">注</h2>
+<ul>
+  <li>本文目前仅记录v2的UPF赝势读入过程</li>
+  <li>使用的赝势主要摸守恒赝势<a href="https://github.com/pipidog/ONCVPSP">ONCVPSP</a></li>
+</ul>
+
+<h2 id="公式">公式</h2>
+<p>中心立场的波函数具有 $ \psi (\overrightarrow{r}) = R(r)Y_{lm} $ 的形式,<br />
+其中 $ Y_{lm} $ 是球谐函数，将$ \psi $表达式带入中心立场的薛定谔方程，得到$ R(r) $满足的方程，其感受的势场与角动量$ l,m $有关<br />
+而且，l相同的态是能量简并态(对于1/r库伦形式的势场，相同的n不同的l也是能量简并)<br />
+反向推导可得出赝势与角动量有关，进一步赝势可以分为局域部分(径向)和非局域部分(角向相关)</p>
+
+<script type="math/tex; mode=display">V_{pp}(r)=V_{local}(r) + \delta V_{non-local}(r)</script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\delta V_{non-local}(r) = \sum_{lm} | Y_{lm} > V_{l}(r) < Y_{lm} | %]]></script>
+
+<p>KB可分离赝势</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\delta V_{non-local}(r) = \sum_{lm}  \left [        \sum_{s,s^{,} }  B_{s,s^{,} }  | \beta_{s} >  < \beta_{s^{,}}     |  \right ] _{lm} %]]></script>
+
+<p>对于USPP,如下, <strong>在QE中都使用USPP的方式读入USPP/NC/等赝势</strong>
+<br />局域<strong>PP_LOCAL</strong>
+<br />非局域:
+<br /><strong>PP_NONLOCAL/PP_BETA</strong> $ | \beta_{s} &gt; $
+<br /><strong>PP_NONLOCAL/PP_DIJ</strong> $ D_{s,s^{,} } $</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\delta V_{NL}^{US}(r) =      \sum_{s,s^{,} }  D_{s,s^{,} }  | \beta_{s} >  < \beta_{s^{,}}     | %]]></script>
+
+<h2 id="相关文件">相关文件</h2>
+<h3 id="读入赝势">读入赝势</h3>
+<ul>
+  <li><code class="highlighter-rouge">Modules/read_pseudo.f90 -&gt; SUBROUTINE readpp</code> 赝势读取入口:调用各种形式的赝势</li>
+  <li><code class="highlighter-rouge">Modules/upf.f90 -&gt; SUBROUTINE read_upf</code> UPF赝势读取入口:调用各个版本的UPF赝势</li>
+  <li><code class="highlighter-rouge">Modules/read_upf_v2.f90 -&gt; SUBROUTINE read_upf_v2</code> Version 2 的UPF赝势读取入口:读入Mesh,Local,Non-Local,Beta Fun, Wfc等<br />
+其他版本的UPF略</li>
+  <li><code class="highlighter-rouge">FoX/lib/*</code>,读取UPF格式使用Fox辅助读入,编译自<code class="highlighter-rouge">archive/fox.tgz</code></li>
+</ul>
+
+<h3 id="赝势定义">赝势定义</h3>
+<ul>
+  <li><code class="highlighter-rouge">Modules/uspp.f90 -&gt; TYPE (pseudo_upf),  ALLOCATABLE, TARGET :: upf(:)</code>赝势定义<br />
+<code class="highlighter-rouge">MODULE uspp</code>:USPP和NCPP的upf参数模块</li>
+  <li><code class="highlighter-rouge">Modules/pseudo_types.f90 -&gt; TYPE pseudo_upf</code>赝势结构体各个参数定义:Mesh,Local,Non-Local,Beta Fun, Wfc<br />
+后期代码调用赝势可以从这里找注释，下面表格中有具体解释和输入示例</li>
+  <li><code class="highlighter-rouge">Modules/atom.f90 -&gt; type(radial_grid_type), allocatable, target :: rgrid(:)</code>赝势径向坐标结构体定义<br />
+<code class="highlighter-rouge">upf(nt)%grid =&gt; rgrid(nt)</code></li>
+  <li><code class="highlighter-rouge">Modules/radial_grids.f90 -&gt; TYPE radial_grid_type</code> 径向坐标结构体各个参数定义
+<code class="highlighter-rouge">r,rab,r^2...</code></li>
+</ul>
+
+<h2 id="赝势结构体定义">赝势结构体定义</h2>
+<p>参考自<code class="highlighter-rouge">Modules/pseudo_types.f90</code><br />
+下面表格中来源列的:</p>
+<ul>
+  <li><strong>PP_HEADER</strong> 来自赝势文件中的PP_HEADER节点的信息,以下同理</li>
+  <li><strong>MESH</strong></li>
+  <li><strong>PP_LOCAL</strong></li>
+  <li><strong>PP_NONLOCAL</strong></li>
+  <li><strong>PP_NLCC</strong></li>
+  <li><strong>PP_PWSCF</strong></li>
+  <li><strong>PP_SPIN_ORB</strong></li>
+  <li><strong>PP_RHOATOM</strong></li>
+</ul>
+
+<h3 id="基本信息">基本信息</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CHARACTER(LEN=80)</td>
+      <td>generated=’ ‘</td>
+      <td>generator software</td>
+      <td>PP_HEADER <br /> generated=”Generated using ONCVPSP code by D. R. Hamann”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=80)</td>
+      <td>author=’anonymous’</td>
+      <td>pseudopotential’s author</td>
+      <td>PP_HEADER <br />  author=”anonymous”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=80)</td>
+      <td>date=’ ‘</td>
+      <td>generation date</td>
+      <td>PP_HEADER <br /> date=”170818”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=80)</td>
+      <td>comment=’ ‘</td>
+      <td>author’s comment</td>
+      <td>PP_HEADER <br /> comment=””</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=2)</td>
+      <td>psd=’ ‘</td>
+      <td>Element label</td>
+      <td>PP_HEADER <br /> element=”O “</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=20)</td>
+      <td>typ=’ ‘</td>
+      <td>Pseudo type ( NC or US or PAW)</td>
+      <td>PP_HEADER <br /> pseudo_type=”NC”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(len=6)</td>
+      <td>rel=’ ‘</td>
+      <td>relativistic:<code class="highlighter-rouge"> {no|scalar|full}</code></td>
+      <td>PP_HEADER <br />  relativistic=”full”</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>tvanp</td>
+      <td>.true. if Ultrasoft</td>
+      <td>PP_HEADER <br />  is_ultrasoft=”F”</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>tcoulombp</td>
+      <td>.true. if Coulomb 1/r potential</td>
+      <td>PP_HEADER <br />  is_coulomb=”F”</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>nlcc</td>
+      <td>Non linear core corrections</td>
+      <td>PP_HEADER <br />  core_correction=”T”</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>is_gth</td>
+      <td>.true. if Goedecker-Teter-Hutter</td>
+      <td>v2UPF是False</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>is_multiproj</td>
+      <td>.true. if multiple projectors per l <br /> (for NC PP only; US-PP and PAW are assumed to be multi-projector)</td>
+      <td>v2UPF是.True.</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=25)</td>
+      <td>dft</td>
+      <td>Exch-Corr type</td>
+      <td>PP_HEADER <br />   functional=”PBE”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>zp</td>
+      <td>z valence</td>
+      <td>PP_HEADER <br />  z_valence=”    6.00”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>etotps</td>
+      <td>total energy</td>
+      <td>PP_HEADER <br />  total_psenergy=”  -3.15123440404E+01”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>ecutwfc</td>
+      <td>suggested cut-off for wfc</td>
+      <td>PP_HEADER <br />  wfc_cutoff=”?”, oncv没提供</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>ecutrho</td>
+      <td>suggested cut-off for rho</td>
+      <td>PP_HEADER <br />   rho_cutoff=”   9.35000000000E+00”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(len=11)</td>
+      <td>nv</td>
+      <td>UPF file three-digit version i.e. 2.0.0</td>
+      <td>PP_HEADER <br />  <code class="highlighter-rouge">&lt;UPF version="2.0.1"&gt;</code></td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>lmax</td>
+      <td>maximum l component in beta</td>
+      <td>PP_HEADER <br />  l_max=”2”</td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>lmax_rho</td>
+      <td>max l component in charge (should be <code class="highlighter-rouge">2*lmax</code>)</td>
+      <td>PP_HEADER <br />  l_max_rho = “?”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>vnl(:,:,:)</td>
+      <td><code class="highlighter-rouge">vnl(i,l,s) = V(r_i)_{ls}</code><br />(semilocal form) only for single-channel NC PP<br /></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="wavefunctions-and-projectors">Wavefunctions and projectors</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER</td>
+      <td>nwfc</td>
+      <td>number of atomic wavefunctions</td>
+      <td>PP_HEADER <br />   number_of_wfc=”3”</td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nbeta</td>
+      <td>number of projectors</td>
+      <td>PP_HEADER <br />   number_of_proj=”8”</td>
+    </tr>
+    <tr>
+      <td>INTEGER,  POINTER</td>
+      <td>kbeta(:)</td>
+      <td>kbeta(nbeta) see below<br />kbeta&lt;=mesh is the number of grid points for each beta function<br />beta(r,nb) = 0 for r &gt; r(kbeta(nb))<br />beta函数的大小和网格一样，对于大于kbeta的beta函数部分都是0，从赝势文件中也可以看到一堆0</td>
+      <td>PP_NONLOCAL/PP_BETA 属性<br /> cutoff_radius_index=” 152”</td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>kkbeta</td>
+      <td>kkbeta=max(kbeta(:))<br />kkbeta&lt;=mesh is the largest of such number so that for all beta<br />beta(r,nb) = 0 for r &gt; r(kkbeta)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER,  POINTER</td>
+      <td>lll(:)</td>
+      <td>lll(nbeta) l of each projector</td>
+      <td>PP_NONLOCAL/PP_BETA 属性<br /> angular_momentum=”0”   <br /> PP_SPIN_ORB/PP_RELBETA 属性<br /> lll=”0”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>beta(:,:)</td>
+      <td>beta(mesh,nbeta) projectors</td>
+      <td>PP_NONLOCAL/PP_BETA 数据</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=2), POINTER</td>
+      <td>els(:)</td>
+      <td>els(nwfc) label of wfc</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br /> label=”2S”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=2), POINTER</td>
+      <td>els_beta(:)=”Xn”</td>
+      <td>els(nbeta) label of beta</td>
+      <td>PP_NONLOCAL/PP_BETA 属性<br />  label=”?”</td>
+    </tr>
+    <tr>
+      <td>INTEGER, POINTER</td>
+      <td>nchi(:)</td>
+      <td>lchi(nwfc) value of pseudo-n for wavefcts</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br />   n=”?”</td>
+    </tr>
+    <tr>
+      <td>INTEGER, POINTER</td>
+      <td>lchi(:)</td>
+      <td>lchi(nwfc) value of l for wavefcts</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br />  l=”0”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>oc(:)</td>
+      <td>oc(nwfc) occupancies for wavefcts</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br />   occupation=” 2.000”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>epseu(:)</td>
+      <td>pseudo one-particle energy (nwfc)</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br />  pseudo_energy=”   -0.1761094801E+01”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rcut_chi(:)</td>
+      <td>rcut_chi(nwfc) cutoff inner radius</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br /> cutoff_radius=”?”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rcutus_chi(:)</td>
+      <td>rcutus_chi(nwfc) ultrasoft outer radius</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br />  ultrasoft_cutoff_radius=”?”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>chi(:,:)</td>
+      <td>chi(mesh,nwfc) atomic wavefcts<br />Chi and rho_at are only used for initial density and initial wfcs:</td>
+      <td>PP_PWSCF/PP_CHI 值</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rho_at(:)</td>
+      <td>rho_at(mesh) atomic charge<br />Chi and rho_at are only used for initial density and initial wfcs:</td>
+      <td>PP_RHOATOM 值</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="minimal-radial-grid">Minimal radial grid:</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER</td>
+      <td>mesh</td>
+      <td>number of points in the radial mesh</td>
+      <td>PP_HEADER <br />  mesh_size=”   936”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>xmin</td>
+      <td>the minimum x of the linear mesh</td>
+      <td>MESH属性</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>rmax</td>
+      <td>the maximum radius of the mesh</td>
+      <td>MESH属性</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>zmesh</td>
+      <td>the nuclear charge used for mesh</td>
+      <td>MESH属性</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>dx</td>
+      <td>the deltax of the linear mesh</td>
+      <td>MESH属性</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>r(:)</td>
+      <td>r(mesh)  radial grid</td>
+      <td>upf%r(1:upf%mesh) = PP_MESH/PP_R</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rab(:)</td>
+      <td>rab(mesh) dr(x)/dx (x=linear grid)</td>
+      <td>upf%rab(1:upf%mesh) = PP_MESH/PP_RAB</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="pseudized-core-charge">Pseudized core charge</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rho_atc(:)</td>
+      <td>rho_atc(mesh) atomic core charge</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="local-potential">Local potential</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER</td>
+      <td>lloc</td>
+      <td>L of channel used to generate local potential<br />(if &lt; 0 it was generated by smoothing AE potential)</td>
+      <td>PP_HEADER <br />   l_local=”-1”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>rcloc</td>
+      <td>vloc = v_ae for r &gt; rcloc</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>vloc(:)</td>
+      <td>vloc(mesh) local atomic potential</td>
+      <td>PP_LOCAL值</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>dion(:,:)</td>
+      <td>dion(nbeta,nbeta) atomic D_{mu,nu}</td>
+      <td>PP_NONLOCAL/PP_DIJ 值</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="augmentation">Augmentation</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LOGICAL</td>
+      <td>q_with_l</td>
+      <td>if .true. qfunc is pseudized in different ways for different</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nqf</td>
+      <td>number of Q coefficients</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nqlc</td>
+      <td>number of angular momenta in Q</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>qqq_eps</td>
+      <td>qfunc is null if its norm is .lt. qqq_eps</td>
+      <td>非us and 非 paw qqq_eps=-1._dp</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rinner(:)</td>
+      <td><code class="highlighter-rouge">rinner(0:2*lmax)</code> r_L</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>qqq(:,:)</td>
+      <td>qqq(nbeta,nbeta)  q_{mu,nu}</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>qfunc(:,:)</td>
+      <td><code class="highlighter-rouge">qfunc(mesh,nbeta*(nbeta+1)/2)</code><br />Augmentation without L dependecy<br /> <code class="highlighter-rouge">Q_{mu,nu}(|r|) function for |r|&gt; r_L</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>qfuncl(:,:,:)</td>
+      <td><code class="highlighter-rouge">qfuncl(mesh,nbeta*(nbeta+1)/2,l)</code><br />Augmentation depending on L (optional, compulsory for PAW)<br /><code class="highlighter-rouge">Q_{mu,nu}(|r|) function for |r|&gt; r_L</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>qfcoef(:,:,:,:)</td>
+      <td><code class="highlighter-rouge">qfcoef(nqf,0:2*lmax,nbeta,nbeta)</code><br />Analitycal coeffs cor small r expansion of qfunc (Vanderbilt’s code) <br /> <code class="highlighter-rouge">coefficients for Q for |r|&lt;r_L</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="wfc">wfc</h3>
+<p>All electron and pseudo wavefunction, pswfc differ from chi as they are   one for each beta, not just some choosen for initial conditions</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LOGICAL</td>
+      <td>has_wfc</td>
+      <td>if true, UPF contain AE and PS wfc for each beta</td>
+      <td>PP_HEADER <br />  has_wfc=”F”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>aewfc(:,:)</td>
+      <td>wfc(mesh,nbeta) all-electron wfc</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>pswfc(:,:)</td>
+      <td>wfc(mesh,nbeta) pseudo wfc</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="soc">SOC</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LOGICAL</td>
+      <td>has_so</td>
+      <td>if .true. includes spin-orbit</td>
+      <td>PP_HEADER <br />  has_so=”T”</td>
+    </tr>
+    <tr>
+      <td>INTEGER, POINTER</td>
+      <td>nn(:)</td>
+      <td>nn(nwfc) quantum number of wfc</td>
+      <td>PP_SPIN_ORB/PP_RELWFC 属性<br /> nn=”1”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rcut(:)</td>
+      <td>cut-off radius(nbeta)</td>
+      <td>PP_NONLOCAL/PP_BETA 属性<br />  cutoff_radius=”    1.5100000000E+00”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rcutus(:)</td>
+      <td>ultrasoft cut-off radius (nbeta)</td>
+      <td>PP_NONLOCAL/PP_BETA 属性<br />  norm_conserving_radius=”?”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>jchi(:)</td>
+      <td>jchi(nwfc) j=l+1/2 or l-1/2 of wfc</td>
+      <td>PP_SPIN_ORB/PP_RELWFC 属性<br />  jchi=”0.5”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>jjj(:)</td>
+      <td>jjj(nbeta) j=l+1/2 or l-1/2 of beta</td>
+      <td>PP_SPIN_ORB/PP_RELBETA 属性<br /> jjj=”0.5”</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="paw">PAW:</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER</td>
+      <td>paw_data_format</td>
+      <td>The version of the format</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>tpawp</td>
+      <td>true if atom is PAW, PAW data must be present</td>
+      <td>PP_HEADER <br />   is_paw=”F”</td>
+    </tr>
+    <tr>
+      <td>TYPE(paw_in_upf)</td>
+      <td>paw</td>
+      <td>additional data for PAW (see above)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>TYPE(radial_grid_type),POINTER</td>
+      <td>grid</td>
+      <td>pointer to the corresponding grid in radial_grids module</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="gipaw">GIPAW:</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LOGICAL</td>
+      <td>has_gipaw</td>
+      <td>Whether GIPAW data is included</td>
+      <td>PP_HEADER <br />   has_gipaw=”F”</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>paw_as_gipaw        !EMINE</td>
+      <td> </td>
+      <td>PP_HEADER <br />  paw_as_gipaw=”?”</td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>gipaw_data_format</td>
+      <td>The version of the format</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>gipaw_ncore_orbitals</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_core_orbital_n(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_core_orbital_l(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=2), POINTER</td>
+      <td>gipaw_core_orbital_el(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_core_orbital(:,:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_vlocal_ae(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_vlocal_ps(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>gipaw_wfs_nchannels</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=2), POINTER</td>
+      <td>gipaw_wfs_el(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, POINTER</td>
+      <td>gipaw_wfs_ll(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_wfs_ae(:,:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_wfs_rcut(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_wfs_rcutus(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_wfs_ps(:,:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="md5">MD5</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CHARACTER(len=32)</td>
+      <td>MD5_cksum = ‘NOT SET’</td>
+      <td>MD5 checksum … used to verify integrity of the information contained<br />in the pseudopotential file w.r.t previous run</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="其他需要的结构体">其他需要的结构体</h2>
+<h3 id="radial_grid_type-结构体信息">radial_grid_type 结构体信息</h3>
+<p>参考自<code class="highlighter-rouge">Modules/radial_grids.f90</code></p>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">TYPE</span><span class="w"> </span><span class="n">radial_grid_type</span><span class="w">
+
+  </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">mesh</span><span class="w">          </span><span class="c1">! the actual number of mesh points</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="k">POINTER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">r</span><span class="p">(:),</span><span class="w">    </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the radial mesh</span><span class="w">
+       </span><span class="n">r2</span><span class="p">(:),</span><span class="w">   </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the square of the radial mesh</span><span class="w">
+       </span><span class="n">rab</span><span class="p">(:),</span><span class="w">  </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! d r(x) / d x where x is the linear grid　！相邻网格0-&gt;--&gt;A-&gt;B-&gt;--&gt;N的差R(B)-R(A)</span><span class="w">
+       </span><span class="n">sqr</span><span class="p">(:),</span><span class="w">  </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the square root of the radial mesh</span><span class="w">
+       </span><span class="n">rm1</span><span class="p">(:),</span><span class="w">  </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! 1 / r</span><span class="w">
+       </span><span class="n">rm2</span><span class="p">(:),</span><span class="w">  </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! 1 / r**2</span><span class="w">
+       </span><span class="n">rm3</span><span class="p">(:)</span><span class="w">     </span><span class="c1">! 1 / r**3</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">xmin</span><span class="p">,</span><span class="w">       </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the minimum x</span><span class="w">
+       </span><span class="n">rmax</span><span class="p">,</span><span class="w">       </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the maximum radial point</span><span class="w">
+       </span><span class="n">zmesh</span><span class="p">,</span><span class="w">      </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the ionic charge used for the mesh</span><span class="w">
+       </span><span class="n">dx</span><span class="w">            </span><span class="c1">! the deltax of the linear mesh</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">radial_grid_type</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="相关变量">相关变量</h2>
+<h3 id="module-uspp_param"><code class="highlighter-rouge">MODULE uspp_param</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/uspp.f90</code><br /></p>
+<blockquote>
+  <p>Ultrasoft and Norm-Conserving pseudopotential parameters</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>变量</th>
+      <th>含义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">TYPE (pseudo_upf),  ALLOCATABLE, TARGET    upf(:)</code></td>
+      <td>pseudo potential</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    nh(npsx),</code></td>
+      <td>number of beta functions per atomic type</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    nhm,</code></td>
+      <td>max number of different beta functions per atom</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    nbetam,</code></td>
+      <td>max number of beta functions</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    iver(3,npsx)</code></td>
+      <td>version of the atomic code</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    lmaxkb,</code></td>
+      <td>max angular momentum</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    lmaxq</code></td>
+      <td>max angular momentum + 1 for Q functions</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    nvb,</code></td>
+      <td>number of species with Vanderbilt PPs (CPV)</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER   ish(npsx)</code></td>
+      <td>for each specie the index of the first beta  <br /> function: ish(1)=1, ish(i)=1+SUM(nh(1:i-1))</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="module-uspp"><code class="highlighter-rouge">MODULE uspp</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/uspp.f90</code><br /></p>
+<blockquote>
+  <p>Ultrasoft PPs:</p>
+  <ul>
+    <li>Clebsch-Gordan coefficients “ap”, auxiliary variables “lpx”, “lpl”</li>
+    <li>beta and q functions of the solid</li>
+  </ul>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">dvan(:,:,:)  </code>      the D functions of the solid</li>
+  <li><code class="highlighter-rouge">deeq(:,:,:,:)</code>      the integral of V_eff and Q_{nm}</li>
+  <li><code class="highlighter-rouge">qq_nt(:,:,:) </code>      the integral of q functions in the solid (ONE PER NTYP) used to be the qq array</li>
+  <li><code class="highlighter-rouge">qq_at(:,:,:)</code>       the integral of q functions in the solid (ONE PER ATOM !!!!)</li>
+  <li><code class="highlighter-rouge">nhtoj(:,:)  </code>       correspondence n &lt;-&gt; total angular momentum</li>
+</ul>
+
+<h2 id="upf文件内容">UPF文件内容</h2>
+<h3 id="oncvpsp赝势结构"><a href="https://github.com/pipidog/ONCVPSP">ONCVPSP</a>赝势结构</h3>
+<p>文件名</p>
+<ul>
+  <li>xx_ONCV_PBE_sr.upf =&gt; scalar relativistic (for non-spin-orbit calculations)</li>
+  <li>xx_ONCV_PBE_fr.upf =&gt; fully relativistic (for spin-orbit calculatons)</li>
+</ul>
+
+<p>文件结构:<br />
+以<a href="/web/file/2020/O_ONCV_PBE_fr.upf">O_ONCV_PBE_fr.upf</a>为例<br />
+截图来自 代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br />
+<img src="/uploads/2020/04/oncv.png" alt="" /></p>
+
+<h2 id="读入流程">读入流程</h2>
+<ol>
+  <li><code class="highlighter-rouge">iosys(PW/src/input.f90 )</code></li>
+  <li><code class="highlighter-rouge">readpp(Modules/read_pseudo.f90)</code></li>
+  <li><code class="highlighter-rouge">readupf(Modules/upf.f90)</code></li>
+  <li><code class="highlighter-rouge">read_upf_v2(Modules/read_upf_v2.f90)</code></li>
+</ol>
+
+<h3 id="readpp-赝势读取入口">readpp 赝势读取入口</h3>
+<p>File:<code class="highlighter-rouge">Modules/read_pseudo.f90</code><br /></p>
+<h4 id="功能">功能</h4>
+<ul>
+  <li>根据元素数<code class="highlighter-rouge">ntyp</code>分配<code class="highlighter-rouge">upf(ntyp),grid(ntyp)</code>内存</li>
+  <li>判断各个元素的位置, 检查是否存在</li>
+  <li>调用UPF赝势读取入口<code class="highlighter-rouge">read_upf</code>,循环依次读入各个元素</li>
+  <li>等</li>
+</ul>
+
+<h4 id="参数-readpp--input_dft-printout-ecutwfc_pp-ecutrho_pp-">参数: <code class="highlighter-rouge">readpp ( input_dft, printout, ecutwfc_pp, ecutrho_pp )</code></h4>
+<ul>
+  <li><code class="highlighter-rouge">CHARACTER(len=*), INTENT(INOUT) :: input_dft</code><br />
+PW输入参数<code class="highlighter-rouge">input_dft=</code>,即是否指定计算使用的Exc泛函,默认从赝势中读取</li>
+  <li><code class="highlighter-rouge">LOGICAL, OPTIONAL, INTENT(IN) :: printout</code><br />
+,额外多向屏幕输出一些信息</li>
+  <li><code class="highlighter-rouge">REAL(DP), OPTIONAL, INTENT(OUT) :: ecutwfc_pp, ecutrho_pp</code><br />
+波函数截断能，电荷截断能</li>
+</ul>
+
+<p>用法: <code class="highlighter-rouge">USE read_pseudo_mod,       ONLY : readpp</code><br />
+示例: <code class="highlighter-rouge">CALL readpp ( input_dft, .FALSE., ecutwfc_pp, ecutrho_pp )</code><br /></p>
+
+<h3 id="read_upf-upf赝势读取入口">read_upf UPF赝势读取入口</h3>
+<p>File:<code class="highlighter-rouge">Modules/upf.f90</code></p>
+<h4 id="功能-1">功能</h4>
+<ul>
+  <li>使用Fox库, 打开upf文件</li>
+  <li>根据UPF Node的version属性，调用相应版本的UPF读入函数,如:<br />
+<code class="highlighter-rouge">&lt;UPF version="2.0.1"&gt;</code>调用<code class="highlighter-rouge">read_upf_v2</code></li>
+</ul>
+
+<h4 id="参数-read_upfupf-grid-ierr-unit--filename">参数: <code class="highlighter-rouge">read_upf(upf, grid, ierr, unit,  filename)</code></h4>
+<ul>
+  <li><code class="highlighter-rouge">INTEGER,INTENT(IN), OPTIONAL  :: unit</code>
+<br />   i/o unit</li>
+  <li><code class="highlighter-rouge">CHARACTER(len=*),INTENT(IN),OPTIONAL :: filename</code>
+<br />   i/o filename</li>
+  <li><code class="highlighter-rouge">TYPE(pseudo_upf),INTENT(INOUT) :: upf</code>
+<br />   upf变量, the derived type storing the pseudo data</li>
+  <li><code class="highlighter-rouge">TYPE(radial_grid_type),OPTIONAL,INTENT(INOUT),TARGET :: grid</code>
+<br />   derived type where is possible to store data on the radial mesh</li>
+  <li><code class="highlighter-rouge">INTEGER,INTENT(INOUT) :: ierr</code>
+<br />错误代码
+ <br />   On input:
+ <br />   ierr =0:   return if not a valid xml schema or UPF v.2 file
+ <br />   ierr/=0: continue if not a valid xml schema or UPF v.2 file
+ <br />   On output:
+ <br />   ierr=0: xml schema, ierr=-1: UPF v.1,  ierr=-2: UPF v.2
+ <br />   ierr&gt;0: error reading PP file
+ <br />   ierr=-81: error reading PP file, possibly UPF fix needed</li>
+</ul>
+
+<p>用法:<code class="highlighter-rouge">USE upf_module,   ONLY: read_upf</code><br />
+示例:<code class="highlighter-rouge">CALL  read_upf(upf(nt), rgrid(nt), isupf, filename = file_pseudo )</code></p>
+
+<h3 id="read_upf_v2-直接读入v2版upf文件并设置参数">read_upf_v2 直接读入v2版UPF文件,并设置参数</h3>
+<p>File:<code class="highlighter-rouge">Modules/read_upf_v2.f90</code></p>
+<h4 id="功能-2">功能</h4>
+<ul>
+  <li>读入<strong>PP_HEADER</strong>节点,设置参数:<code class="highlighter-rouge">CALL read_upf_header(u, upf)</code></li>
+  <li>读入<strong>PP_MESH</strong>节点,设置grif等参数:<code class="highlighter-rouge">CALL read_upf_mesh(u, upf, grid)</code></li>
+  <li>读入<strong>PP_NLCC</strong>节点:<code class="highlighter-rouge">CALL extractDataContent(auxNode, upf%rho_atc)</code></li>
+  <li>读入<strong>PP_LOCAL</strong>节点:<code class="highlighter-rouge">CALL extractDataContent(auxNode, upf%vloc)</code></li>
+  <li>读入<strong>PP_NONLOCAL</strong>节点:<code class="highlighter-rouge">CALL read_upf_nonlocal(u, upf)</code></li>
+  <li>读入<strong>PP_PSWFC/PP_CHI</strong>节点:<code class="highlighter-rouge">CALL read_upf_pswfc(u, upf)</code></li>
+  <li>读入<strong>PP_FULL_WFC</strong>节点:<code class="highlighter-rouge">CALL read_upf_full_wfc(u, upf)</code>,ONCV赝势中没有此项</li>
+  <li>读入<strong>PP_RHOATOM</strong>节点:<code class="highlighter-rouge">CALL extractDataContent(auxNode, upf%rho_at)</code></li>
+  <li>读入<strong>PP_SPIN_ORB</strong>节点:<code class="highlighter-rouge">CALL read_upf_spin_orb(u, upf)</code>,SOC可选</li>
+  <li>读入<strong>PP_PAW</strong>节点:<code class="highlighter-rouge">CALL read_upf_paw(u, upf)</code>,ONCV赝势中没有此项</li>
+  <li>读入<strong>PP_GIPAW</strong>节点:<code class="highlighter-rouge">CALL read_upf_gipaw(u, upf)</code>,ONCV赝势中没有此项</li>
+</ul>
+
+<h4 id="参数-read_upf_v2u-upf-grid-ierr-">参数: <code class="highlighter-rouge">read_upf_v2(u, upf, grid, ierr) </code></h4>
+<ul>
+  <li>u 赝势文件节点变量</li>
+  <li>upf 同上赝势变量</li>
+  <li>grid 同上网格</li>
+  <li>ierr 错误代码</li>
+</ul>
+
+<p>用法:<code class="highlighter-rouge">USE read_upf_v2_module,ONLY: read_upf_v2</code>
+示例:<code class="highlighter-rouge">CALL read_upf_v2( u, upf, grid, ierr )</code></p>
+:ET

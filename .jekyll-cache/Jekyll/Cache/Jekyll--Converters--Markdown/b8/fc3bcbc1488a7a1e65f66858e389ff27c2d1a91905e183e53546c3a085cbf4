@@ -1,0 +1,69 @@
+I"5
+<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#原r中的内容" id="markdown-toc-原r中的内容">原R中的内容</a>    <ul>
+      <li><a href="#ggplot2" id="markdown-toc-ggplot2">ggplot2</a>        <ul>
+          <li><a href="#qplot" id="markdown-toc-qplot">qplot</a></li>
+          <li><a href="#ggplot" id="markdown-toc-ggplot">ggplot</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>在R和Python中都可以用ggplot画图，那就统一用这一个软件包吧，节约些时间</p>
+
+<h2 id="参考">参考</h2>
+
+<h1 id="原r中的内容">原R中的内容</h1>
+<h2 id="ggplot2">ggplot2</h2>
+<p>代码的发展，很多函数都变了，注意，有的教程给的函数不能用</p>
+<h3 id="qplot">qplot</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qplot(数据框索引,数据框索引,data=数据框)
+&gt; price=1:10
+&gt; num=sin(price)
+&gt; mydata=data.frame(price,num)
+qplot(price,num,data=mydata)
+#也可以使用数学函数处理
+qplot(price,log(x),data=mydata)
+#也可以是数据框内多组数据的计算结果
+qplot(price,log(x)*num,data=mydata)
+</code></pre></div></div>
+<p>根据分类，确定颜色和尺寸</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; qplot(price,num,data=data,colour=good,shape=xx,size=num,alpha=num/10)
+#shape=字符型，不然报错
+#color字符数子都行，图形颜色
+#size指定大小
+#alpha透明度[0-1]之间
+&gt; mydata
+   price        num xx good
+1      1  0.8414710  1    0
+2      2  0.9092974  1    0
+3      3  0.1411200  1    0
+4      4 -0.7568025  1    0
+5      5 -0.9589243  1    0
+6      6 -0.2794155  1    1
+7      7  0.6569866  1    1
+8      8  0.9893582  1    1
+9      9  0.4121185  0    1
+10    10 -0.5440211  0    1
+
+</code></pre></div></div>
+<p>geom指定形状</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qplot(price,num,data=data,geom="line")
+#geom="path","line"连线
+#geom="point" 默认散点
+#"smooth"平滑，使用span,method等继续控制，
+#qplot(num,price,data=data,geom=c("smooth"),span=0.5,method="gam")
+#也可以组合多种图形
+qplot(price,num,data=data,geom=c("point","line"))
+</code></pre></div></div>
+<p>保存</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggsave("my.png")
+</code></pre></div></div>
+<p>貌似只保存最近的图</p>
+
+<h3 id="ggplot">ggplot</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+:ET

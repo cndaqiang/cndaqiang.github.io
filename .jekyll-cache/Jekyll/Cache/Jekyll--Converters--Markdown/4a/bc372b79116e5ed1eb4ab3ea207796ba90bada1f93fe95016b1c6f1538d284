@@ -1,0 +1,88 @@
+I" <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#问题" id="markdown-toc-问题">问题</a></li>
+  <li><a href="#原因" id="markdown-toc-原因">原因</a></li>
+  <li><a href="#解决方案" id="markdown-toc-解决方案">解决方案</a></li>
+  <li><a href="#附录" id="markdown-toc-附录">附录</a>    <ul>
+      <li><a href="#centos进入单用户模式" id="markdown-toc-centos进入单用户模式">Centos进入单用户模式</a></li>
+      <li><a href="#centos7-进入rescue模式" id="markdown-toc-centos7-进入rescue模式">Centos7 进入rescue模式</a>        <ul>
+          <li><a href="#此时mntsysimage是检测到的本地已经安装的centos系统根目录" id="markdown-toc-此时mntsysimage是检测到的本地已经安装的centos系统根目录">此时<code class="highlighter-rouge">/mnt/sysimage</code>是检测到的本地已经安装的Centos系统根目录<br /></a></li>
+          <li><a href="#mntinstallrepopackages是安装光盘中的rpm仓库目录可以用来安装缺失损坏的程序" id="markdown-toc-mntinstallrepopackages是安装光盘中的rpm仓库目录可以用来安装缺失损坏的程序"><code class="highlighter-rouge">/mnt/install/repo/Packages</code>是安装光盘中的rpm仓库目录，可以用来安装缺失损坏的程序</a></li>
+        </ul>
+      </li>
+      <li><a href="#rescue模式下rpm安装包的方法" id="markdown-toc-rescue模式下rpm安装包的方法">rescue模式下rpm安装包的方法</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://access.redhat.com/solutions/483273">Segmentation Fault when running commands</a><br />
+<a href="https://www.cnblogs.com/caya-yuan/p/10554422.html">Centos7 – glibc 升级失败、意外删除、故意删除后的处理方法</a><br />
+<a href="https://access.redhat.com/solutions/163073">How to re-install a package in rescue mode, when chroot fails?</a><br /></p>
+
+<h2 id="问题">问题</h2>
+<p>yum安装完curl后,输出常用命令如<code class="highlighter-rouge">top, yum, ping</code>等常用命令，后提示</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Segmentation fault
+</code></pre></div></div>
+<p>此时已经无法远程ssh登陆<br />
+重启后，各种服务无法启动，如<code class="highlighter-rouge">Failed to start Login Service </code>(这直接导致开机后，输入用户名，回车后，不会进入正常的输入密码，又跳到了输用户名的界面)，MongDB等进程也无法启动 <br />
+重启进入单用户模式后，<code class="highlighter-rouge">top, yum, ping</code>等这些常用命令依然提示<code class="highlighter-rouge">Segmentation fault</code></p>
+
+<h2 id="原因">原因</h2>
+<p><code class="highlighter-rouge">glibc</code>出了问题,很多基本命命令依赖<code class="highlighter-rouge">glibc</code></p>
+
+<h2 id="解决方案">解决方案</h2>
+<p>插入刻录了centos7 DVD的U盘，最好是Everything的，因为我们之后要本地安装glibc，Everything的镜像里面含有所有的rpm安装包<br />
+按照附录的方式进入rescue模式<br />
+按照附录的rescue模式下rpm安装包的方法, 使用rpm安装所需的libgc的包<br />
+<img src="/uploads/2019/09/glibc2.png" alt="" />
+安装顺序</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>glibc-headers
+glibc
+glibc-devel
+</code></pre></div></div>
+<p>我安装完这三个就ok了，如果其他的也损坏了，也安装上吧
+<code class="highlighter-rouge">exit</code>退出救援模式系统自动重启</p>
+
+<h2 id="附录">附录</h2>
+<h3 id="centos进入单用户模式">Centos进入单用户模式</h3>
+<p>grub引导界面，按e
+<img src="/uploads/2019/09/d1.png" alt="" />
+修改fi结束后的下一行中的<code class="highlighter-rouge">ro</code>为<code class="highlighter-rouge">rw init=/sysroot/bin/bash</code>，其他教程里的<code class="highlighter-rouge">init=/sysroot/bin/sh</code>一样可行
+<img src="/uploads/2019/09/d2.png" alt="" />
+<img src="/uploads/2019/09/d3.png" alt="" />
+<code class="highlighter-rouge">ctrl+x</code>进入系统<br />
+<code class="highlighter-rouge">chroot /sysroot</code>就进去了之前系统的操作环境<br />
+有些命令执行前还需要<code class="highlighter-rouge">mount proc /proc -t proc</code>
+<img src="/uploads/2019/09/d4.png" alt="" /></p>
+
+<h3 id="centos7-进入rescue模式">Centos7 进入rescue模式</h3>
+<p>U盘启动，选择<code class="highlighter-rouge">Troubleshooting</code>-&gt;<code class="highlighter-rouge">Rescue a CentOS system</code>-&gt;然后按<code class="highlighter-rouge">1</code>进入<code class="highlighter-rouge">continue</code><br />
+这篇文章<a href="https://www.tecmint.com/recover-or-rescue-corrupted-grub-boot-loader-in-centos-7/">How to Recover or Rescue Corrupted Grub Boot Loader in CentOS 7</a>的截图就很好了,直接转发了过来
+<img src="/uploads/2019/09/c1.png" alt="" />
+<img src="/uploads/2019/09/c2.png" alt="" />
+<img src="/uploads/2019/09/c3.png" alt="" />
+<img src="/uploads/2019/09/c4.png" alt="" /></p>
+
+<h4 id="此时mntsysimage是检测到的本地已经安装的centos系统根目录">此时<code class="highlighter-rouge">/mnt/sysimage</code>是检测到的本地已经安装的Centos系统根目录<br /></h4>
+<p>之后如果<code class="highlighter-rouge">chroot /mnt/sysimage</code> 则“进入原来的系统环境”，使用的命令都是原来系统的命令<br />
+用<code class="highlighter-rouge">exit</code>  可以退出原来系统的环境，回到救援模式环境<br />
+<strong>原来的系统如果出现命令都不能用问题，就不要<code class="highlighter-rouge">chroot /mnt/sysimage</code>了</strong></p>
+
+<h4 id="mntinstallrepopackages是安装光盘中的rpm仓库目录可以用来安装缺失损坏的程序"><code class="highlighter-rouge">/mnt/install/repo/Packages</code>是安装光盘中的rpm仓库目录，可以用来安装缺失损坏的程序</h4>
+<p>如<code class="highlighter-rouge">glibc</code>
+<img src="/uploads/2019/09/repo.jpg" alt="" /></p>
+
+<h3 id="rescue模式下rpm安装包的方法">rescue模式下rpm安装包的方法</h3>
+<p>测试安装abc.rpm是否缺少其他依赖，如果缺少，要先安装依赖</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /mnt/install/repo/Packages
+rpm -ivh --test --force --noscripts --root=/mnt/sysimage abc.rpm
+</code></pre></div></div>
+<p>去掉<code class="highlighter-rouge">--test</code>则可以安装<br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /mnt/install/repo/Packages
+rpm -ivh --force --noscripts --root=/mnt/sysimage abc.rpm
+</code></pre></div></div>
+<p>删除glibc后系统命令失效，重新安装示例：
+<img src="/uploads/2019/09/glibc.png" alt="" /></p>
+
+:ET

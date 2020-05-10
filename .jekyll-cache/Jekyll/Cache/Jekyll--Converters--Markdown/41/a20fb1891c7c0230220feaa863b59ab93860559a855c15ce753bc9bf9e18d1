@@ -1,0 +1,55 @@
+I"<ul id="markdown-toc">
+  <li><a href="#homebrew" id="markdown-toc-homebrew">HomeBrew</a></li>
+  <li><a href="#gcc" id="markdown-toc-gcc">gcc</a></li>
+  <li><a href="#其他程序" id="markdown-toc-其他程序">其他程序</a></li>
+</ul>
+<p>本文后续更新地址<a href="https://github.com/cndaqiang/dell-14-7460-hackintosh/issues/10#">mac配置开发环境</a></p>
+
+<h2 id="homebrew">HomeBrew</h2>
+<p><a href="https://brew.sh/index_zh-cn">Homebrew</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+</code></pre></div></div>
+<p>添加PATH</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PATH=/usr/local/bin:$PATH
+</code></pre></div></div>
+<p>之后安装的程序都在<code class="highlighter-rouge">/usr/local/bin</code>里，包括各版本的python,gcc等</p>
+
+<h2 id="gcc">gcc</h2>
+<p>当然要用祖传代码兼容性最好的<code class="highlighter-rouge">gcc-4</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/soft/gcc $ brew search gcc
+==&gt; Formulae
+gcc                 gcc@5               gcc@7               i386-elf-gcc
+gcc@4.9 ✔           gcc@6               gcc@8
+~/soft/gcc $ 
+</code></pre></div></div>
+<p>安装软件包</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install gcc@4.9
+</code></pre></div></div>
+<p>安装之后</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/soft/gcc $ gcc
+gcc             gcc-ar-4.9      gcc-ranlib-4.9  
+gcc-4.9         gcc-nm-4.9    
+~/soft/gcc $ gcc-4.9 --version
+gcc-4.9 (Homebrew GCC 4.9.4_1) 4.9.4
+Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</code></pre></div></div>
+<p>在PATH路径建立软连接<br />
+替换系统的gcc<br />
+因为makefile并不会识别环境中的<code class="highlighter-rouge">alias</code>指令，因此要通过软连接的形式，将<code class="highlighter-rouge">gfortran</code>指向<code class="highlighter-rouge">gfortran-4.9</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#注ar，nm，randlib使用gcc-4.9带的，会各种baocuo
+#以测试通过，使用系统默认的打包程序无异常
+ln -s   /usr/local/bin/gcc-4.9 gcc
+ln -s   /usr/local/bin/gfortran-4.9     gfortran
+ln -s   /usr/local/bin/cpp-4.9          cpp
+ln -s   /usr/local/bin/c++-4.9          c++
+ln -s   /usr/local/bin/g++-4.9          g++
+ln -s   /usr/local/bin/gcov-4.9 gcov
+</code></pre></div></div>
+
+<h2 id="其他程序">其他程序</h2>
+<p>其实除了打包程序使用系统的外，<strong>其他编译过程与linux没啥区别了</strong>。。。。<br />
+连指令都一样<br />
+如openmpi，。。。，siesta的安装，完全可以按照我<a href="/">博客</a>上的内容来</p>
+:ET

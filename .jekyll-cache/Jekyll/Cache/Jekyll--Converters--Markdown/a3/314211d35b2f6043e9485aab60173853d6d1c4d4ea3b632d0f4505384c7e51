@@ -1,0 +1,13 @@
+I"<ul id="markdown-toc">
+  <li><a href="#推荐看此文从0搭建centos7-计算集群" id="markdown-toc-推荐看此文从0搭建centos7-计算集群">推荐看此文从0搭建Centos7 计算集群</a></li>
+</ul>
+
+<h1 id="推荐看此文从0搭建centos7-计算集群">推荐看此文<a href="/2019/09/19/Centos7-CC19/">从0搭建Centos7 计算集群</a></h1>
+<p>2019-09-19:以后遇到的问题我也仅会更新到此文<a href="/2019/09/19/Centos7-CC19/">从0搭建Centos7 计算集群</a><br />
+本文不再更新<br />
+————————————————-<br />
+本文主要在ubuntu编译失败的基础上复制过来，在centos上进行安装尝试。<br />
+本文最初的目的是我希望搭建一个环境熟悉torque的命令的，所以搭建的并不适合从事集群计算
+<br />搭建计算的集群可以参考<a href="/doc/2018/01/xiada-ssh-mpich2-torque.pdf">集群架设
+</a>和<a href="http://blog.csdn.net/dream_angel_z/article/details/44225669">CentOS下torque集群配置（一）-torque安装与配置</a></p>
+:ET

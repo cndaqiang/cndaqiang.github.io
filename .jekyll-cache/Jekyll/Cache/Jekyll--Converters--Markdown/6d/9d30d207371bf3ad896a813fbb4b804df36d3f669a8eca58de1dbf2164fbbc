@@ -1,0 +1,71 @@
+I"D<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#安装lamp" id="markdown-toc-安装lamp">安装LAMP</a>    <ul>
+      <li><a href="#apache2" id="markdown-toc-apache2">Apache2</a></li>
+      <li><a href="#php" id="markdown-toc-php">PHP</a></li>
+      <li><a href="#mysql" id="markdown-toc-mysql">Mysql</a></li>
+      <li><a href="#使用phpmyadmin网页管理数据库" id="markdown-toc-使用phpmyadmin网页管理数据库">使用Phpmyadmin网页管理数据库</a>        <ul>
+          <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+          <li><a href="#在apache中添加phpmyadmin访问" id="markdown-toc-在apache中添加phpmyadmin访问">在apache中添加phpmyadmin访问</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/26642845">Ubuntu16.10安装Apache, MySQL, PHP7,phpmyadmin</a></p>
+
+<p><a href="https://www.renfei.org/blog/set-up-apache-mysql-php-phpmyadmin-on-ubuntu-server.html">Ubuntu 配置 Apache, MySQL, PHP 以及 phpMyAdmin 过程记录</a></p>
+<h2 id="环境">环境</h2>
+<p>Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-53-generic x86_64)</p>
+<h2 id="安装lamp">安装LAMP</h2>
+<h3 id="apache2">Apache2</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get update
+apt-get install apache2
+</code></pre></div></div>
+<h3 id="php">PHP</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install php
+#默认安装版本为php7.0
+apt-get install libapache2-mod-php
+#使apache支持php
+
+#解析php
+apt-get install php7.0-fpm  
+
+#其他模块
+apt-get install php7.0-curl php7.0-xml php7.0-mcrypt php7.0-json php7.0-gd php7.0-mbstring  
+</code></pre></div></div>
+<h3 id="mysql">Mysql</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install mysql-server
+apt-get install php7.0-mysql
+#php7.0与mysql交互
+apt-get install mysql-client
+mysql_secure_installation
+#一个安全设置
+</code></pre></div></div>
+<h3 id="使用phpmyadmin网页管理数据库">使用Phpmyadmin网页管理数据库</h3>
+<p><a href="https://zh.wikipedia.org/wiki/PhpMyAdmin">wiki-phpMyAdmin</a></p>
+<h4 id="安装">安装</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install phpmyadmin
+</code></pre></div></div>
+<p>安装过程比较长，会有几个选项，依次如下：</p>
+
+<p>（1）选择服务器软件。这里选择刚刚安装的 Apache2。</p>
+
+<p>（2）选择手动设定。</p>
+
+<p>（3）输入之前安装 MySQL 时设的 MySQL root 账户的密码。</p>
+
+<p>（4）设定 phpMyAdmin 的登录密码。</p>
+<h4 id="在apache中添加phpmyadmin访问">在apache中添加phpmyadmin访问</h4>
+<p>此处需要apache知识<a href="/2017/09/27/apache/">Apache学习</a>
+phpmyadmin就是一个php网页，需要在apache中添加这个网页的配置信息才可以访问
+<strong>把phpmyadmin的页面连接到网站根目录/phpMyAdmin</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ln -s /usr/share/phpmyadmin /var/www/html/phpMyAdmin
+</code></pre></div></div>
+<p>则可通过<code class="highlighter-rouge">域名/phpMyAdmin</code>访问</p>
+:ET

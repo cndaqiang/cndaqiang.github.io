@@ -1,0 +1,56 @@
+I"4<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#编译" id="markdown-toc-编译">编译</a>    <ul>
+      <li><a href="#下载代码" id="markdown-toc-下载代码">下载代码</a></li>
+      <li><a href="#增加vtst代码" id="markdown-toc-增加vtst代码">增加VTST代码</a></li>
+    </ul>
+  </li>
+  <li><a href="#修改代码增加编译依赖关系" id="markdown-toc-修改代码增加编译依赖关系">修改代码，增加编译依赖关系</a>    <ul>
+      <li><a href="#编译-1" id="markdown-toc-编译-1">编译</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p>科大李会民老师的<a href="http://hmli.ustc.edu.cn/doc/app/vasp.5.4.1-vtst.htm">VASP 5.4.1+VTST编译安装</a>
+<br /><a href="http://theory.cm.utexas.edu/vasp/installation.html">Installation — Transition State Tools for VASP</a></p>
+
+<h2 id="编译">编译</h2>
+<h3 id="下载代码">下载代码</h3>
+<p>下面的下载地址已失效，从这里下载：<a href="http://theory.cm.utexas.edu/vtsttools/download.html">http://theory.cm.utexas.edu/vtsttools/download.html</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://theory.cm.utexas.edu/code/vtstcode.tgz
+</code></pre></div></div>
+<p>编译不用这个脚本，不过在NEB过渡态和其他处理中这个脚本都有用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://theory.cm.utexas.edu/code/vtstscripts.tgz
+</code></pre></div></div>
+<h3 id="增加vtst代码">增加VTST代码</h3>
+<p>解压<code class="highlighter-rouge">vtstcode.tgz</code>后，复制里面的内容到vasp目录下<code class="highlighter-rouge">src</code>目录</p>
+
+<h2 id="修改代码增加编译依赖关系">修改代码，增加编译依赖关系</h2>
+<p>修改<code class="highlighter-rouge">src/main.F</code>文件，在3222行
+将</p>
+
+<pre><code class="language-`">3222       CALL CHAIN_FORCE(T_INFO%NIONS,DYN%POSION,TOTEN,TIFOR, &amp;
+3223            LATT_CUR%A,LATT_CUR%B,IO%IU6)
+</code></pre>
+
+<p>修改为</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3222       CALL CHAIN_FORCE(T_INFO%NIONS,DYN%POSION,TOTEN,TIFOR, &amp;
+3223            TSIF,LATT_CUR%A,LATT_CUR%B,IO%IU6)
+3224            !LATT_CUR%A,LATT_CUR%B,IO%IU6)
+</code></pre></div></div>
+<p>在<code class="highlighter-rouge">src/.objects</code>里面的chain.o前面添加</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bfgs.o dynmat.o instanton.o lbfgs.o sd.o cg.o dimer.o bbm.o \
+fire.o lanczos.o neb.o qm.o opt.o \
+</code></pre></div></div>
+<p>例如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 67         bfgs.o dynmat.o instanton.o lbfgs.o sd.o cg.o dimer.o bbm.o \
+ 68         fire.o lanczos.o neb.o qm.o opt.o \
+ 69         chain.o \
+</code></pre></div></div>
+
+<h3 id="编译-1">编译</h3>
+
+<p>编译设置与编译vasp没有区别，参考<a href="/2018/01/15/intel-mpi-vasp/">Intel Parallel Studio XE 编译VASP </a></p>
+:ET

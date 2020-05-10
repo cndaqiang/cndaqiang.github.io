@@ -1,0 +1,809 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#创建用户" id="markdown-toc-创建用户">创建用户</a></li>
+  <li><a href="#挂载安装光盘作为本地yum仓库" id="markdown-toc-挂载安装光盘作为本地yum仓库">挂载安装光盘作为本地yum仓库</a>    <ul>
+      <li><a href="#挂载安装光盘" id="markdown-toc-挂载安装光盘">挂载安装光盘</a></li>
+      <li><a href="#配置光盘为yum源" id="markdown-toc-配置光盘为yum源">配置光盘为yum源</a></li>
+    </ul>
+  </li>
+  <li><a href="#网络配置" id="markdown-toc-网络配置">网络配置</a>    <ul>
+      <li><a href="#改主机名" id="markdown-toc-改主机名">改主机名</a></li>
+      <li><a href="#网络" id="markdown-toc-网络">网络</a>        <ul>
+          <li><a href="#网卡配置文件规则" id="markdown-toc-网卡配置文件规则">网卡配置文件规则</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#nis-账户管理服务器" id="markdown-toc-nis-账户管理服务器">NIS 账户管理服务器</a>    <ul>
+      <li><a href="#关闭selinux和防火墙" id="markdown-toc-关闭selinux和防火墙">关闭Selinux和防火墙</a></li>
+      <li><a href="#服务器" id="markdown-toc-服务器">服务器</a></li>
+      <li><a href="#客户端" id="markdown-toc-客户端">客户端</a></li>
+      <li><a href="#client测试" id="markdown-toc-client测试">client测试</a></li>
+      <li><a href="#开启防火墙的设置" id="markdown-toc-开启防火墙的设置">开启防火墙的设置</a></li>
+    </ul>
+  </li>
+  <li><a href="#nfs文件系统共享服务器" id="markdown-toc-nfs文件系统共享服务器">NFS文件系统共享服务器</a>    <ul>
+      <li><a href="#服务器端" id="markdown-toc-服务器端">服务器端</a></li>
+      <li><a href="#客户端-1" id="markdown-toc-客户端-1">客户端</a></li>
+    </ul>
+  </li>
+  <li><a href="#防火墙iptables" id="markdown-toc-防火墙iptables">防火墙iptables</a>    <ul>
+      <li><a href="#查看iptables现有规则iptables--nvl" id="markdown-toc-查看iptables现有规则iptables--nvl">查看iptables现有规则<code class="highlighter-rouge">iptables -nvL</code></a></li>
+      <li><a href="#删除规则iptables--d-" id="markdown-toc-删除规则iptables--d-">删除规则<code class="highlighter-rouge">iptables -D </code></a></li>
+      <li><a href="#增加规则" id="markdown-toc-增加规则">增加规则</a></li>
+      <li><a href="#保存生效" id="markdown-toc-保存生效">保存生效</a></li>
+    </ul>
+  </li>
+  <li><a href="#pbs作业管理系统" id="markdown-toc-pbs作业管理系统">pbs作业管理系统</a>    <ul>
+      <li><a href="#管理节点mom01" id="markdown-toc-管理节点mom01">管理节点mom01</a></li>
+      <li><a href="#计算节点mom01boy01" id="markdown-toc-计算节点mom01boy01">计算节点mom01,boy01</a>        <ul>
+          <li><a href="#计算节点mom01单机pbs" id="markdown-toc-计算节点mom01单机pbs">计算节点mom01(单机pbs)</a></li>
+          <li><a href="#计算节点boy01集群" id="markdown-toc-计算节点boy01集群">计算节点boy01(集群)</a></li>
+          <li><a href="#增加计算节点修改管理节点和计算节点配置文件重启即可" id="markdown-toc-增加计算节点修改管理节点和计算节点配置文件重启即可">增加计算节点，修改管理节点和计算节点配置文件重启即可</a></li>
+        </ul>
+      </li>
+      <li><a href="#交作业" id="markdown-toc-交作业">交作业</a></li>
+      <li><a href="#pbs出错时-重启pbs服务查看pbs_xxx-status找错误原因" id="markdown-toc-pbs出错时-重启pbs服务查看pbs_xxx-status找错误原因">pbs出错时 重启pbs服务，查看pbs_xxx status，找错误原因</a>        <ul>
+          <li><a href="#配置文件写错" id="markdown-toc-配置文件写错">配置文件写错</a></li>
+          <li><a href="#端口占用导致" id="markdown-toc-端口占用导致">端口占用导致</a></li>
+          <li><a href="#添加计算节点" id="markdown-toc-添加计算节点">添加计算节点</a>            <ul>
+              <li><a href="#将管理节点添加到计算节点" id="markdown-toc-将管理节点添加到计算节点">将管理节点添加到计算节点</a></li>
+            </ul>
+          </li>
+          <li><a href="#共享文件与配置使得momlock冲突" id="markdown-toc-共享文件与配置使得momlock冲突">共享文件与配置使得mom.lock冲突</a></li>
+        </ul>
+      </li>
+      <li><a href="#pbs命令" id="markdown-toc-pbs命令">pbs命令</a></li>
+    </ul>
+  </li>
+  <li><a href="#备份" id="markdown-toc-备份">备份</a>    <ul>
+      <li><a href="#备份磁盘" id="markdown-toc-备份磁盘">备份磁盘</a></li>
+      <li><a href="#克隆磁盘" id="markdown-toc-克隆磁盘">克隆磁盘</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>基于pbs作业系统的集群，支持NIS，NFS服务，slurm的后期有时间补上。
+本文最初发在<a href="https://github.com/cndaqiang/E5-PC-daily/issues/6">Centos 7 集群搭建</a></p>
+
+<h2 id="创建用户">创建用户</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>useradd -d 用户家目录 -M 用户名
+passwd 用户名
+# 添加到sudo组
+usermod -aG wheel 用户名
+</code></pre></div></div>
+<h2 id="挂载安装光盘作为本地yum仓库">挂载安装光盘作为本地yum仓库</h2>
+<p>没有外网需要安装程序时，可通过挂载光驱/iso文件作为本地仓库</p>
+<h3 id="挂载安装光盘">挂载安装光盘</h3>
+<p>挂载iso文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir /media/CentOS-7-x86_64-Everything-1908
+mount -o loop /opt/source/CentOS-7-x86_64-Everything-1908.iso /media/CentOS-7-x86_64-Everything-1908
+</code></pre></div></div>
+<p>or 挂载光驱</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir  /media/diskOS
+mount /dev/cdrom /media/diskOS #挂载光盘
+</code></pre></div></div>
+
+<h3 id="配置光盘为yum源">配置光盘为yum源</h3>
+
+<ol>
+  <li>挂载iso/光驱</li>
+  <li>配置yum
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /etc/yum.repos.d/
+#取消网络yum
+mv CentOS-Base.repo CentOS-Base.repo.bak
+#配置光盘镜像 
+vi CentOS-Media.repo 
+</code></pre></div>    </div>
+    <p>修改</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[c7-media]
+name=CentOS-$releasever - Media
+#把挂载目录添加到baseurl
+[c7-media]
+name=CentOS-$releasever - Media
+baseurl=file:///media/CentOS-7-x86_64-Everything-1908  #此处添加新的挂载地址
+     file:///media/cdrom/
+     file:///media/cdrecorder/
+gpgcheck=1
+enabled=1 #此处设置1打开
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+</code></pre></div>    </div>
+  </li>
+  <li>安装测试
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@node8 source]# yum install python
+已加载插件：fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * c7-media:
+c7-media                                                 | 3.6 kB     00:00  #&lt;此处看出已经替换为了光盘的源
+正在解决依赖关系
+--&gt; 正在检查事务
+---&gt; 软件包 python.x86_64.0.2.7.5-68.el7 将被 升级
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="网络配置">网络配置</h2>
+<h3 id="改主机名">改主机名</h3>
+<p><a href="https://blog.csdn.net/tantexian/article/details/45958275">如何在CentOS 7上修改主机名hostname</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#永久
+hostnamectl --static set-hostname newname
+</code></pre></div></div>
+<p>修改更新<code class="highlighter-rouge">/etc/hosts</code></p>
+
+<h3 id="网络">网络</h3>
+<p>开机启用网卡</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/sysconfig/network-scripts/ifcfg-eth0
+#设置ONBOOT=yes则开机启动
+#同时也是网卡配置文件
+</code></pre></div></div>
+<p>临时开启</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ifup eth0
+</code></pre></div></div>
+<p>关闭</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ifdown eth0
+</code></pre></div></div>
+<h4 id="网卡配置文件规则">网卡配置文件规则</h4>
+<p>vi /etc/sysconfig/network-scripts/ifcfg-ens34  #不同的网卡 ifcfg-跟的后缀不同</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=dhcp
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens34
+UUID=bf1e0d23-8b7a-40e0-83e7-1dcbb072206c
+DEVICE=ens34
+ONBOOT=yes
+</code></pre></div></div>
+
+<h2 id="nis-账户管理服务器">NIS 账户管理服务器</h2>
+<p><a href="http://cn.linux.vbird.org/linux_server/0430nis.php#whatisnis">第十四章、账号控管： NIS 服务器</a>
+<a href="http://www.178pt.com/32.html">Centos7- NIS环境搭建</a>
+<a href="https://www.fee.im/2019/03/install-nis-on-centos7/">在Centos7上安装NIS</a>
+ Network Information Services (NIS server) 最早应该是称为 Sun Yellow Pages (简称 yp)
+一台服务器(管理节点)保存用户账户密码，所有服务器用户都保存在NIS服务器上</p>
+<ul>
+  <li>yp-tools ：提供 NIS 相关的查寻指令功能</li>
+  <li>ypbind   ：提供 NIS Client 端的设定软件</li>
+  <li>ypserv   ：提供 NIS Server 端的设定软件</li>
+  <li>rpcbind  ：就是 RPC 一定需要的数据啊！</li>
+</ul>
+
+<h3 id="关闭selinux和防火墙">关闭Selinux和防火墙</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/selinux/config
+</code></pre></div></div>
+<p>设置</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELINUX=disabled
+</code></pre></div></div>
+<p>关闭防火墙</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl stop firewalld
+systemctl disable firewalld
+reboot
+</code></pre></div></div>
+
+<h3 id="服务器">服务器</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum -y install ypserv ypbind yp-tools
+</code></pre></div></div>
+<p>设置域</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "NISDOMAIN=CC19" &gt;&gt; /etc/sysconfig/network
+</code></pre></div></div>
+<p>启动服务</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl start ypserv
+systemctl start rpcbind
+systemctl start yppasswdd
+#开机启动
+systemctl enable ypserv
+systemctl enable rpcbind
+systemctl enable yppasswdd
+</code></pre></div></div>
+<p>创建用户</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 ~]# sudo adduser --home /home/c1 c1
+[root@mom01 ~]# passwd c1
+Changing password for user c1.
+New password: 
+Retype new password: 
+passwd: all authentication tokens updated successfully.
+</code></pre></div></div>
+<p>更新用户信息数据库</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/lib64/yp/ypinit -m
+# 新增账户时，需要更新数据库  
+make -C /var/yp
+</code></pre></div></div>
+<h3 id="客户端">客户端</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum -y install ypbind yp-tools
+</code></pre></div></div>
+<p>设置域</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "NISDOMAIN=CC19" &gt;&gt; /etc/sysconfig/network
+</code></pre></div></div>
+<p>设置用户认证信息读取顺序</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/nsswitch.conf
+</code></pre></div></div>
+<p>在存在的认证方式前添加nis</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>passwd:     files sss nis
+shadow:     files sss nis
+group:      files sss nis 
+#initgroups: files sss
+
+#hosts:     db files nisplus nis dns
+hosts:      files nis dns myhostname
+
+</code></pre></div></div>
+<p>设置ns客户端</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/yp.conf
+</code></pre></div></div>
+<p>添加<code class="highlighter-rouge">domain CC19   broadcast</code>，指定服务器地址也行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/sysconfig/authconfig
+</code></pre></div></div>
+<p>修改<code class="highlighter-rouge">USENIS=yes</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/pam.d/system-auth
+</code></pre></div></div>
+<p>添加nis<code class="highlighter-rouge">password    sufficient    pam_unix.so sha512 shadow nis  nullok try_first_pass use_authtok</code>
+启动</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl start rpcbind
+systemctl start ypbind
+
+systemctl enable rpcbind
+systemctl enable ypbind
+</code></pre></div></div>
+<h3 id="client测试">client测试</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@boy01 ~]# yptest
+Test 1: domainname
+Configured domainname is "CC19"
+
+Test 2: ypbind
+Used NIS server: mom01
+
+Test 3: yp_match
+WARNING: No such key in map (Map passwd.byname, key nobody)
+
+Test 4: yp_first
+c1 c1:$6$v6nN75rW$20nFRAqDHqGVOyXFxaRUtG5ZeiySw7.hZkg0HfvD2kb/g/5daMfRCMAxuEG0nelTjZ//VaSKx0E8CRClhxzcP.:1001:1001::/home/c1:/bin/bash
+
+Test 5: yp_next
+cndaqang cndaqang:$6$aBRr9Jo4YWMFHhFQ$Wk.5DGrfsxipEVQPM2NaKJw.3sLdGlGUKGGxZzGFeYfiFqtHEI.B68akDTeNZN77SMkGPYZmQ1Z2iyUfYRYd4/:1000:1000:cndaqang:/home/cndaqang:/bin/bash
+
+Test 6: yp_master
+mom01
+
+Test 7: yp_order
+1568563871
+
+Test 8: yp_maplist
+netid.byname
+mail.aliases
+protocols.byname
+protocols.bynumber
+services.byservicename
+services.byname
+rpc.bynumber
+rpc.byname
+hosts.byaddr
+hosts.byname
+group.bygid
+group.byname
+passwd.byuid
+passwd.byname
+ypservers
+
+Test 9: yp_all
+c1 c1:$6$v6nN75rW$20nFRAqDHqGVOyXFxaRUtG5ZeiySw7.hZkg0HfvD2kb/g/5daMfRCMAxuEG0nelTjZ//VaSKx0E8CRClhxzaP.:1001:1001::/home/c1:/bin/bash
+cndaqang cndaqang:$6$aBRr9Jo4YWMFHhFQ$Wk.5DGrfsxipEVQPM2NaKJw.3sLdGlGUKGGxZzGFeYfiFqtHEI.B68akDTeNZN77SMkGPYZmQ1Z2iyUfYRYd5/:1000:1000:cndaqang:/home/cndaqang:/bin/bash
+1 tests failed
+</code></pre></div></div>
+<p>查看nis服务器</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@boy01 ~]# ypwhich
+mom01
+</code></pre></div></div>
+
+<h3 id="开启防火墙的设置">开启防火墙的设置</h3>
+<p>因为计算节点boyxx和管理节点mom之间还有局域网， 可以把此部分的防火墙端口打开，关闭连接外网的端口<br />
+查看NIS服务器端口占用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 ~]# rpcinfo -p localhost
+   program vers proto   port  service
+    100000    4   tcp    111  portmapper
+    100000    3   tcp    111  portmapper
+    100000    2   tcp    111  portmapper
+    100000    4   udp    111  portmapper
+    100000    3   udp    111  portmapper
+    100000    2   udp    111  portmapper
+    100004    2   udp    992  ypserv
+    100004    1   udp    992  ypserv
+    100004    2   tcp    995  ypserv
+    100004    1   tcp    995  ypserv
+    100009    1   udp   1007  yppasswdd
+</code></pre></div></div>
+<p>由于linux端口范围 <a href="https://bbs.csdn.net/topics/340204446">1024以下是系统保留的，从1024-65535是用户使用的</a>，子网11.11.11.0/24，关闭默认防火墙，使用iptables
+可以</p>
+<ul>
+  <li>打开内网网卡的防火墙<code class="highlighter-rouge">iptables -A INPUT -i ens33 -j ACCEPT</code></li>
+  <li>允许内网ip通过<code class="highlighter-rouge">iptables -I INPUT -s 11.11.11.0/24  -j ACCEPT</code></li>
+</ul>
+
+<h2 id="nfs文件系统共享服务器">NFS文件系统共享服务器</h2>
+<p><a href="https://qizhanming.com/blog/2018/08/08/how-to-install-nfs-on-centos-7">CentOS 7 下 yum 安装和配置 NFS</a>
+NFS 是 Network File System 的缩写，即网络文件系统。即计算节点可以执行管理节点的程序，查看用户的文件</p>
+
+<h3 id="服务器端">服务器端</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum -y install nfs-utils
+systemctl enable rpcbind
+systemctl enable nfs
+systemctl start rpcbind
+systemctl start nfs
+#查看端口
+rpcinfo -p localhost | grep nfs
+    100003    3   tcp   2049  nfs
+    100003    4   tcp   2049  nfs
+    100227    3   tcp   2049  nfs_acl
+    100003    3   udp   2049  nfs
+    100003    4   udp   2049  nfs
+    100227    3   udp   2049  nfs_acl
+</code></pre></div></div>
+<p>设置共享目录，此处设置计算程序目录<code class="highlighter-rouge">/opt</code>,用户数据目录<code class="highlighter-rouge">/home</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod 755 /home
+chmod 755 /opt
+</code></pre></div></div>
+<p>添加到配置文件<code class="highlighter-rouge">vi /etc/exports</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># shareDir ip(rw,no_root_squash,no_all_squash,sync)
+# ip  192.168.0.0/24: 客户端 IP 范围，* 代表所有，即没有限制。
+# rw: 权限设置，可读可写。
+# sync: 同步共享目录。
+# no_root_squash: 可以使用 root 授权。
+# no_all_squash: 可以使用普通用户授权。
+
+/home *(rw,no_root_squash,sync)
+/opt  *(rw,no_root_squash,sync)
+</code></pre></div></div>
+<p>重启服务</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl restart nfs
+</code></pre></div></div>
+<p>查看共享情况</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 home]#  showmount -e localhost
+Export list for localhost:
+/opt  *
+/home *
+</code></pre></div></div>
+<p>防火墙已设置对集群内网打开</p>
+<h3 id="客户端-1">客户端</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum -y install nfs-utils
+systemctl enable rpcbind
+systemctl start rpcbind
+</code></pre></div></div>
+<p><strong>客户端不需要打开防火墙，因为客户端时发出请求方，网络能连接到服务端即可。
+客户端也不需要开启 NFS 服务，因为不共享目录。</strong><br />
+查看管理节点nfs情况</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@boy01 ~]# showmount -e mom01
+Export list for mom01:
+/opt  *
+/home *
+</code></pre></div></div>
+<p>挂载</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@boy01 ~]# mount mom01:/opt /opt
+[root@boy01 ~]# mount mom01:/home /home
+[root@boy01 ~]# ls /home/
+c1  cndaqang  test
+</code></pre></div></div>
+<p>开机挂载,添加mount命令到开机脚本，或添加到<code class="highlighter-rouge">/etc/fstab</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mom01:/home     /home                   nfs     defaults        0 0
+mom01:/opt      /opt                    nfs     defaults        0 0
+</code></pre></div></div>
+
+<h2 id="防火墙iptables">防火墙iptables</h2>
+<p><a href="https://www.cnblogs.com/kreo/p/4368811.html">CentOS7安装iptables防火墙</a>
+<a href="https://blog.51cto.com/balich/1745244">Linux 下的（防火墙）iptables</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#install
+yum -y install iptables iptables-services 
+#remove default firewalld
+systemctl stop firewalld
+systemctl disable firewalld
+systemctl mask firewalld
+</code></pre></div></div>
+<h3 id="查看iptables现有规则iptables--nvl">查看iptables现有规则<code class="highlighter-rouge">iptables -nvL</code></h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 ~]# iptables -nvL
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+  100  7320 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+   10   832 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 76 packets, 9016 bytes)
+ pkts bytes target     prot opt in     out     source               destination  
+</code></pre></div></div>
+<h3 id="删除规则iptables--d-">删除规则<code class="highlighter-rouge">iptables -D </code></h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 ~]# iptables -nvL --line-number
+Chain INPUT (policy DROP 2 packets, 148 bytes)
+num   pkts bytes target     prot opt in     out     source               destination         
+1      184 13504 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+2       16  1444 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+3        0     0 ACCEPT     all  --  ens33  *       0.0.0.0/0            0.0.0.0/0           
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+num   pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 21 packets, 2928 bytes)
+num   pkts bytes target     prot opt in     out     source               destination         
+[root@mom01 ~]# iptables -D INPUT 3
+[root@mom01 ~]# iptables -nvL --line-number
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+num   pkts bytes target     prot opt in     out     source               destination         
+1      203 14796 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+2       16  1444 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+num   pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 4 packets, 464 bytes)
+num   pkts bytes target     prot opt in     out     source               destination
+</code></pre></div></div>
+<h3 id="增加规则">增加规则</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#允许所有
+iptables -P INPUT ACCEPT
+#清空所有默认规则**若未`iptables -P INPUT ACCEPT`, 会清空默认的ssh**
+iptables -F
+#清空所有自定义规则
+iptables -X
+#所有计数器归0
+iptables -Z
+#允许来自于lo接口的数据包(本地访问)，若无此，很多服务比如ypserv无法启动
+iptables -A INPUT -i lo -j ACCEPT
+#-A代表缀加，-I 插入带开头， -i网卡 -j操作
+#允许来自于内网网卡ens33的数据包(集群访问)
+iptables -A INPUT -i ens33 -j ACCEPT
+#允许11.11.11.1访问所有端口
+iptables -I INPUT -s 11.11.11.1  -j ACCEPT
+#允许11.11.11.0/24网段ip访问所有端口(集群操作)
+iptables -I INPUT -s 11.11.11.0/24  -j ACCEPT
+#开放22端口
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+#开放21端口(FTP)
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+#开放80端口(HTTP)
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+#开放443端口(HTTPS)
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+#允许ping
+iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT
+##允许接受本机请求之后的返回数据 RELATED,是为FTP设置的
+#iptables -A INPUT -m state --state  RELATED,ESTABLISHED -j ACCEPT
+#其他入站一律丢弃 
+iptables -P INPUT DROP
+#所有出站一律绿灯
+iptables -P OUTPUT ACCEPT
+#所有转发一律丢弃
+iptables -P FORWARD DROP
+</code></pre></div></div>
+<h3 id="保存生效">保存生效</h3>
+<p>执行<code class="highlighter-rouge">iptables</code>后立即生效，重启有效</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl enable iptables
+service iptables save
+</code></pre></div></div>
+
+<h2 id="pbs作业管理系统">pbs作业管理系统</h2>
+<h3 id="管理节点mom01">管理节点mom01</h3>
+<p>程序都安装在<code class="highlighter-rouge">/opt</code>, 管理节点和计算节点共享<code class="highlighter-rouge">/opt</code>目录</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> yum -y install libxml2-devel openssl-devel gcc gcc-c++ boost-devel libtool
+./configure --prefix=/opt/CC19/torque6  --with-default-server=$HOSTNAME
+#--prefix= 程序安装目录
+#--with-server-home=/opt/CC19/torque6/share 配置文件目录 默认/var/spool/torque
+make -j8
+make install
+#PATH
+export TORQUE_HOME=/opt/CC19/torque6
+export PATH=$TORQUE_HOME/bin:$TORQUE_HOME/sbin:$PATH
+#并把上述PATH添加到`/etc/profile`
+#添加到系统服务
+cp contrib/init.d/{pbs_{server,sched,mom},trqauthd} /etc/init.d/
+systemctl daemon-reload
+make packages
+libtool --finish /opt/CC19/torque6/lib
+</code></pre></div></div>
+<p>初始化</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./torque.setup root
+hostname: mom01
+Currently no servers active. Default server will be listed as active server. Error  15133
+Active server name: mom01  pbs_server port is: 15001
+trqauthd daemonized - port /tmp/trqauthd-unix
+trqauthd successfully started
+initializing TORQUE (admin: root)
+
+You have selected to start pbs_server in create mode.
+If the server database exists it will be overwritten.
+do you wish to continue y/(n)?y
+</code></pre></div></div>
+<p>配置文件(计算节点)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /opt/CC19/torque6/server_priv/nodes
+# 在docker上安装时，是这个文件，不知道哪里设置的不同导致不一样 vi /var/spool/torque/server_priv/nodes
+#填入计算节点 np=核数 队列名， 如
+mom01 np=4 regular
+boy01 np=8 regula
+</code></pre></div></div>
+<p>配置regular队列</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 torque-6.1.1.1]# qmgr
+Max open servers: 9
+Qmgr: creat queue regular queue_type=execution
+Qmgr: set server default_queue=regular
+Qmgr: set queue regular started=true
+Qmgr: set queue regular enabled=true
+Qmgr: set server scheduling=true
+</code></pre></div></div>
+<p>启动pbs服务</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in trqauthd pbs_server pbs_sched  ; do systemctl restart  $i.service ; done
+#检查是否启动完成
+for i in trqauthd pbs_server pbs_sched  ; do systemctl status  $i.service ; done
+</code></pre></div></div>
+<p>查看节点信息(注：此处还未配置计算节点mom01, boy01，所以是down状态)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 torque-6.1.1.1]#  qnodes -l all
+mom01                down
+boy01                down
+</code></pre></div></div>
+<h3 id="计算节点mom01boy01">计算节点mom01,boy01</h3>
+<p>注：已配置NIS，NFS</p>
+<h4 id="计算节点mom01单机pbs">计算节点mom01(单机pbs)</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#修改配置文件                                              
+[root@mom01 torque-6.1.1.1]# vi /var/spool/torque/mom_priv/config
+#加入下面两行
+$pbsserver mom01                                                                  
+$logevent 255        
+#启动服务         
+[root@mom01 torque-6.1.1.1]# systemctl restart pbs_mom.service 
+[root@mom01 torque-6.1.1.1]# systemctl status pbs_mom.service 
+● pbs_mom.service - TORQUE pbs_mom daemon
+   Loaded: loaded (/usr/lib/systemd/system/pbs_mom.service; disabled; vendor preset: disabled)
+   Active: active (running) since Tue 2019-09-17 13:21:36 CST; 6s ago
+  Process: 75096 ExecStop=/bin/bash -c     for i in {1..5}; do      kill -0 $MAINPID &amp;&gt;/dev/null || exit 0;      /opt/CC19/torque6/sbin/momctl -s &amp;&amp; exit;      sleep 1;    done   (code=exited, status=0/SUCCESS)
+ Main PID: 75102 (pbs_mom)
+    Tasks: 11
+   CGroup: /system.slice/pbs_mom.service
+           └─75102 /opt/CC19/torque6/sbin/pbs_mom -F -d /var/spool/torque
+
+Sep 17 13:21:36 mom01 systemd[1]: Started TORQUE pbs_mom daemon.
+Sep 17 13:21:36 mom01 systemd[1]: Starting TORQUE pbs_mom daemon...         
+</code></pre></div></div>
+<p>回到管理节点查看：mom01已上线</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 torque-6.1.1.1]# qnodes -l all
+mom01                free
+boy01                down
+</code></pre></div></div>
+<h4 id="计算节点boy01集群">计算节点boy01(集群)</h4>
+<p>登陆计算节点boy01，注：已配置NIS，NFS</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /opt/sourcecode/torque-6.1.1.1/
+./torque-package-clients-linux-x86_64.sh --install
+./torque-package-mom-linux-x86_64.sh --install
+#修改配置文件                                              
+[root@boy01 torque-6.1.1.1]# vi /var/spool/torque/mom_priv/config
+#加入下面两行
+$pbsserver mom01                                                                  
+$logevent 255        
+#启动服务         
+[root@boy01 torque-6.1.1.1]# systemctl restart pbs_mom.service 
+[root@boy01 torque-6.1.1.1]# systemctl status pbs_mom.service 
+</code></pre></div></div>
+<p>回到管理节点查看</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 torque-6.1.1.1]# qnodes -l all
+mom01                free
+boy01                free
+</code></pre></div></div>
+<h4 id="增加计算节点修改管理节点和计算节点配置文件重启即可">增加计算节点，修改管理节点和计算节点配置文件重启即可</h4>
+
+<h3 id="交作业">交作业</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[c1@mom01 ~]$ rm result 
+[c1@mom01 ~]$ cat run.pbs 
+#PBS -N test
+#PBS -l nodes=1:ppn=4
+#PBS -l walltime=1:00:00:00
+#PBS -q regular
+#PBS -V
+#PBS -S /bin/bash
+#PBS -o test.out
+#
+cd $PBS_O_WORKDIR
+echo "hello" 
+echo $HOSTNAME &gt;&gt; result
+ping -c 4 11.11.11.100 
+sleep 60
+[c1@mom01 ~]$ qsub run.pbs 
+3.mom01
+[c1@mom01 ~]$ qsub run.pbs 
+4.mom01
+[c1@mom01 ~]$ qstat 
+Job ID                    Name             User            Time Use S Queue
+------------------------- ---------------- --------------- -------- - -----     
+3.mom01                    test             c1                     0 R regular        
+4.mom01                    test             c1                     0 R regular        
+[c1@mom01 ~]$ qstat -f 3 | grep host
+    exec_host = mom01/0-3
+    submit_host = mom01
+[c1@mom01 ~]$ qstat -f 4 | grep host
+    exec_host = boy01/0-3
+    submit_host = mom01
+#查看结果
+[c1@mom01 ~]$ cat result 
+mom01
+boy01
+</code></pre></div></div>
+
+<h3 id="pbs出错时-重启pbs服务查看pbs_xxx-status找错误原因">pbs出错时 重启pbs服务，查看pbs_xxx status，找错误原因</h3>
+
+<h4 id="配置文件写错">配置文件写错</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 torque-6.1.1.1]# qnodes
+
+Unable to communicate with mom01(11.11.11.100)
+Cannot connect to specified server host 'mom01'.
+qnodes: cannot connect to server mom01, error=111 (Connection refused)
+</code></pre></div></div>
+<p>找到错误原因，解决，启动服务</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 torque-6.1.1.1]# service pbs_server status
+● pbs_server.service - TORQUE pbs_server daemon
+   Loaded: loaded (/usr/lib/systemd/system/pbs_server.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Mon 2019-09-16 23:19:02 CST; 2s ago
+  Process: 30495 ExecStart=/opt/CC19/torque6/sbin/pbs_server -F -d $PBS_HOME $PBS_ARGS (code=exited, status=3)
+ Main PID: 30495 (code=exited, status=3)
+
+Sep 16 23:19:02 mom01 systemd[1]: Started TORQUE pbs_server daemon.
+Sep 16 23:19:02 mom01 systemd[1]: Starting TORQUE pbs_server daemon...
+Sep 16 23:19:02 mom01 PBS_Server[30495]: LOG_ERROR::parse_node_name, invalid character in token "$logevent" on line 2
+Sep 16 23:19:02 mom01 PBS_Server[30495]: LOG_ERROR::PBS_Server, pbsd_init failed
+Sep 16 23:19:02 mom01 systemd[1]: pbs_server.service: main process exited, code=exited, status=3/NOTIMPLEMENTED
+Sep 16 23:19:02 mom01 systemd[1]: Unit pbs_server.service entered failed state.
+Sep 16 23:19:02 mom01 systemd[1]: pbs_server.service failed.
+#错误原因是：/opt/CC19/torque6/server_priv/nodes 配置文件写错了
+#删除配置文件中的 $logevent 255即可
+[root@mom01 torque-6.1.1.1]# vi /opt/CC19/torque6/server_priv/nodes 
+[root@mom01 torque-6.1.1.1]# service pbs_server start
+Starting pbs_server (via systemctl):                       [  OK  ]
+[root@mom01 torque-6.1.1.1]# service pbs_server status
+● pbs_server.service - TORQUE pbs_server daemon
+   Loaded: loaded (/usr/lib/systemd/system/pbs_server.service; disabled; vendor preset: disabled)
+   Active: active (running) since Mon 2019-09-16 23:19:26 CST; 2s ago
+ Main PID: 30565 (pbs_server)
+    Tasks: 10
+   CGroup: /system.slice/pbs_server.service
+           └─30565 /opt/CC19/torque6/sbin/pbs_server -F -d /opt/CC19/torque6
+
+Sep 16 23:19:26 mom01 systemd[1]: Started TORQUE pbs_server daemon.
+Sep 16 23:19:26 mom01 systemd[1]: Starting TORQUE pbs_server daemon...
+Sep 16 23:19:26 mom01 pbs_server[30565]: Assertion failed, bad pointer in link: file "req_select.c", line 401
+Sep 16 23:19:26 mom01 pbs_server[30565]: Assertion failed, bad pointer in link: file "req_select.c", line 401
+[root@mom01 torque-6.1.1.1]# qnodes
+boy01
+     state = down
+     power_state = Running
+     np = 8
+     properties = regular
+     ntype = cluster
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+</code></pre></div></div>
+<h4 id="端口占用导致">端口占用导致</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 torque-6.1.1.1]# service pbs_server status                                                   
+● pbs_server.service - TORQUE pbs_server daemon                                                          
+   Loaded: loaded (/usr/lib/systemd/system/pbs_server.service; disabled; vendor preset: disabled)        
+   Active: failed (Result: exit-code) since Tue 2019-09-17 09:52:41 CST; 4min 29s ago                    
+  Process: 3987 ExecStart=/opt/CC19/torque6/sbin/pbs_server -F -d $PBS_HOME $PBS_ARGS (code=exited, statu
+s=3)                                                                                                     
+ Main PID: 3987 (code=exited, status=3)                                                                  
+                                                                                                         
+Sep 17 09:52:41 mom01 systemd[1]: Started TORQUE pbs_server daemon.                                      
+Sep 17 09:52:41 mom01 systemd[1]: Starting TORQUE pbs_server daemon...                                   
+Sep 17 09:52:41 mom01 pbs_server[3987]: pbs_server port already bound: Address already in use            
+Sep 17 09:52:41 mom01 systemd[1]: pbs_server.service: main process exited, code=exited, status=3/...ENTED
+Sep 17 09:52:41 mom01 systemd[1]: Unit pbs_server.service entered failed state.                          
+Sep 17 09:52:41 mom01 systemd[1]: pbs_server.service failed.                                             
+Hint: Some lines were ellipsized, use -l to show in full.  
+</code></pre></div></div>
+<p>原因<strong>pbs_server port already bound</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#查看端口                                              
+[root@mom01 torque-6.1.1.1]# netstat -ntulp                                                              
+Active Internet connections (only servers)                                                               
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name                  
+tcp        0      0 0.0.0.0:15001           0.0.0.0:*               LISTEN      3745/pbs_server  
+#发现存在端口占据，杀掉          
+[root@mom01 torque-6.1.1.1]# kill -9 3745                                                                
+[root@mom01 torque-6.1.1.1]# service pbs_server status                                                   
+● pbs_server.service - TORQUE pbs_server daemon                                                          
+   Loaded: loaded (/usr/lib/systemd/system/pbs_server.service; disabled; vendor preset: disabled)        
+   Active: failed (Result: exit-code) since Tue 2019-09-17 09:52:41 CST; 5min ago                        
+  Process: 3987 ExecStart=/opt/CC19/torque6/sbin/pbs_server -F -d $PBS_HOME $PBS_ARGS (code=exited, statu
+s=3)                                                                                                     
+ Main PID: 3987 (code=exited, status=3)                                                                  
+                                                                                                         
+Sep 17 09:52:41 mom01 systemd[1]: Started TORQUE pbs_server daemon.                                                         
+Sep 17 09:52:41 mom01 systemd[1]: Starting TORQUE pbs_server daemon...                                                      
+Sep 17 09:52:41 mom01 pbs_server[3987]: pbs_server port already bound: Address already in use                               
+Sep 17 09:52:41 mom01 systemd[1]: pbs_server.service: main process exited, code=exited, status=3/...ENTEDSep 17 09:52:41 mom
+01 systemd[1]: Unit pbs_server.service entered failed state.                                                                
+Sep 17 09:52:41 mom01 systemd[1]: pbs_server.service failed.                                                                
+Hint: Some lines were ellipsized, use -l to show in full.                                                                   
+[root@mom01 torque-6.1.1.1]# service pbs_server start                                                                       
+Starting pbs_server (via systemctl):                       [  OK  ]                                                         
+[root@mom01 torque-6.1.1.1]# service pbs_server status                                                                      
+● pbs_server.service - TORQUE pbs_server daemon                                                                             
+   Loaded: loaded (/usr/lib/systemd/system/pbs_server.service; disabled; vendor preset: disabled)                           
+   Active: active (running) since Tue 2019-09-17 09:58:43 CST; 1s ago                                                       
+Sep 17 09:52:41 mom01 systemd[1]: Started TORQUE pbs_server daemon.                                                        Sep 17 09:52:41 mom01 systemd[1]: Starting TORQUE pbs_server daemon...   
+</code></pre></div></div>
+
+<h4 id="添加计算节点">添加计算节点</h4>
+<h5 id="将管理节点添加到计算节点">将管理节点添加到计算节点</h5>
+<p>systemctl daemon-reload
+主节点,查看pbs_mom结果不同</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 torque-6.1.1.1]# service pbs_mom status                                                                                             
+pbs_mom running but subsys not locked                      [FAILED]                                                                             
+[root@mom01 torque-6.1.1.1]# systemctl status pbs_mom.service                                                                                   
+● pbs_mom.service - TORQUE pbs_mom daemon                                                                                                       
+   Loaded: loaded (/usr/lib/systemd/system/pbs_mom.service; disabled; vendor preset: disabled)                                                  
+   Active: active (running) since Tue 2019-09-17 10:11:11 CST; 1min 13s ago                                                                     
+  Process: 5350 ExecStop=/bin/bash -c     for i in {1..5}; do      kill -0 $MAINPID &amp;&gt;/dev/null || exit 0;      /opt/CC19/torque6/sbin/momctl -s
+ &amp;&amp; exit;      sleep 1;    done   (code=exited, status=0/SUCCESS)                                                                               
+ Main PID: 5369 (pbs_mom)                                                                                                                       
+    Tasks: 11                                                                                                                                   
+   CGroup: /system.slice/pbs_mom.service                                                                                                        
+           └─5369 /opt/CC19/torque6/sbin/pbs_mom -F -d /opt/CC19/torque6                                                                        
+                                                                                                                                                
+Sep 17 10:11:11 mom01 systemd[1]: Started TORQUE pbs_mom daemon.                                                                                
+Sep 17 10:11:11 mom01 systemd[1]: Starting TORQUE pbs_mom daemon...  
+</code></pre></div></div>
+<p>qnodes查看已经上线了</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 torque-6.1.1.1]# qnodes -l all                                                                                                      
+boy01                down                                                                                                                       
+mom01                free 
+</code></pre></div></div>
+
+<h4 id="共享文件与配置使得momlock冲突">共享文件与配置使得mom.lock冲突</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@boy01 ~]# systemctl status pbs_mom.service                                                                                                               
+● pbs_mom.service - SYSV: pbs_mom is part of a batch scheduler                                                                                                 
+   Loaded: loaded (/etc/rc.d/init.d/pbs_mom; bad; vendor preset: disabled)                                                                                     
+   Active: failed (Result: exit-code) since Tue 2019-09-17 10:17:43 CST; 40s ago                                                                               
+     Docs: man:systemd-sysv-generator(8)                                                                                                                       
+  Process: 2657 ExecStart=/etc/rc.d/init.d/pbs_mom start (code=exited, status=1/FAILURE)                                                                       
+                                                                                                                                                               
+Sep 17 10:17:42 boy01 systemd[1]: Starting SYSV: pbs_mom is part of a batch scheduler...                                                                       
+Sep 17 10:17:43 boy01 pbs_mom[2673]: LOG_ERROR::Resource temporarily unavailable (11) in pbs_mom, cannot lock '/opt/CC19/torque6/mom_priv/mom.lock...om running
+Sep 17 10:17:43 boy01 pbs_mom[2657]: Starting TORQUE Mom: cannot lock '/opt/CC19/torque6/mom_priv/mom.lock' - another mom running                              
+Sep 17 10:17:43 boy01 pbs_mom[2657]: [FAILED]                                                                                                                  
+Sep 17 10:17:43 boy01 systemd[1]: pbs_mom.service: control process exited, code=exited status=1                                                                
+Sep 17 10:17:43 boy01 systemd[1]: Failed to start SYSV: pbs_mom is part of a batch scheduler.                                                                  
+Sep 17 10:17:43 boy01 systemd[1]: Unit pbs_mom.service entered failed state.                                                                                   
+Sep 17 10:17:43 boy01 systemd[1]: pbs_mom.service failed.                                                                                                      
+Hint: Some lines were ellipsized, use -l to show in full.
+</code></pre></div></div>
+<p>错误原因**Starting TORQUE Mom: cannot lock ‘/opt/CC19/torque6/mom_priv/mom.lock’ - another mom running **
+修改配置</p>
+
+<h3 id="pbs命令">pbs命令</h3>
+<p>更多命令参考<a href="/2018/01/11/torque-install-centos/">单机centos编译安装使用PBS torque</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>交换作业顺序
+[chendq@node8 core165]$ mqstat
+Job ID                    Name             User            Time Use S Queue
+------------------------- ---------------- --------------- -------- - -----
+12.node8.localdomain       test             chendq                 0 Q regular
+13.node8.localdomain       test             chendq                 0 Q regular
+14.node8.localdomain       test             chendq                 0 Q regular
+15.node8.localdomain       tdap             chendq                 0 Q regular
+[chendq@node8 core165]$ qorder 15.node8.localdomain 12.node8.localdomain
+[chendq@node8 core165]$ mqstat
+Job ID                    Name             User            Time Use S Queue
+------------------------- ---------------- --------------- -------- - -----
+12.node8.localdomain       test             chendq                 0 Q regular
+13.node8.localdomain       test             chendq                 0 Q regular
+14.node8.localdomain       test             chendq                 0 Q regular
+15.node8.localdomain       tdap             chendq          14:30:44 R regular
+</code></pre></div></div>
+
+<h2 id="备份">备份</h2>
+<h3 id="备份磁盘">备份磁盘</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dd if=/dev/sdb of=mbr.bin
+另开窗口，查看进度
+watch -n 5 killall -USR1 dd
+</code></pre></div></div>
+<h3 id="克隆磁盘">克隆磁盘</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dd if=/dev/sdb of=/dev/sdc
+dd if=/dev/sdb3 of=/dev/sdc3
+</code></pre></div></div>
+:ET

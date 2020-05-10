@@ -1,0 +1,82 @@
+I"�<ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#编译-g" id="markdown-toc-编译-g">编译<code class="highlighter-rouge">-g</code></a></li>
+  <li><a href="#gdb调试命令" id="markdown-toc-gdb调试命令">gdb调试命令</a></li>
+</ul>
+
+<p>shell+gfortran</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://v.fcode.cn/">《Fortran实用编程》系列视频教程 - Fortran Coder 研讨团队</a><br /></p>
+
+<p><a href="https://www.ibm.com/developerworks/cn/linux/sdk/gdb/index.html">使用 GDB 调试 Linux 软件</a></p>
+
+<h2 id="编译-g">编译<code class="highlighter-rouge">-g</code></h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gfortran -g xxx.f90 -o run.o
+gdb run.o
+</code></pre></div></div>
+<p>进入调试状态</p>
+
+<h2 id="gdb调试命令">gdb调试命令</h2>
+<p><code class="highlighter-rouge">l</code>查看源码</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading symbols from a.out...done.
+(gdb) l
+1       program str
+2             implicit none
+3             integer::filenum(5)
+4             integer::i,uid
+5             character(len=10) :: filename
+6             data filenum /1,12,123,1234,12345/
+7             uid=20
+8             filename="qwertyuiop"
+9             do i=1,5
+10            write(filename,"(i6.5a4)") filenum(i),".txt"
+(gdb)!回车查看下一页
+</code></pre></div></div>
+<p><code class="highlighter-rouge">b 8</code>会<code class="highlighter-rouge">break 8</code>在第8行加断点</p>
+
+<p><code class="highlighter-rouge">'disable &lt;breakpoint number&gt;'、'enable &lt;breakpoint number&gt;' 或 'delete &lt;breakpoint number&gt;' </code>来禁用、启用和彻底删除断点</p>
+
+<p><code class="highlighter-rouge">r</code>或<code class="highlighter-rouge">run</code> 从头开始运行</p>
+
+<p><code class="highlighter-rouge">c</code>或<code class="highlighter-rouge">continue</code>继续执行</p>
+
+<p><code class="highlighter-rouge">n</code>或<code class="highlighter-rouge">next</code>单步调试</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) next
+10            write(filename,"(i6.5a4)") filenum(i),".txt"
+(gdb) next
+11            write(*,"(a10)") filename
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">info locals</code>查看变量信息</p>
+
+<p><code class="highlighter-rouge">print 变量名</code>查看某一变量信息</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) info locals
+filename = ' 12345.txt'
+filenum = (1, 12, 123, 1234, 12345)
+i = 6
+uid = 20
+(gdb) print i
+$4 = 6 !4是第四个变量
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">set var bianliang=值</code>该变数值</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(gdb) info locals
+filename = ' 00001.txt'
+filenum = (1, 12, 123, 1234, 12345)
+i = 1
+uid = 20
+(gdb) set var filenum(1)=10
+(gdb) info locals
+filename = ' 00001.txt'
+filenum = (10, 12, 123, 1234, 12345)
+i = 1
+uid = 20
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">q</code>或<code class="highlighter-rouge">quit</code>退出</p>
+
+:ET

@@ -1,0 +1,59 @@
+I"�
+<ul id="markdown-toc">
+  <li><a href="#前言" id="markdown-toc-前言">前言</a>    <ul>
+      <li><a href="#致谢" id="markdown-toc-致谢">致谢</a></li>
+      <li><a href="#建议" id="markdown-toc-建议">建议</a></li>
+    </ul>
+  </li>
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#被简书封禁的文章" id="markdown-toc-被简书封禁的文章">被简书封禁的文章</a>    <ul>
+      <li><a href="#简书部分" id="markdown-toc-简书部分">简书部分</a></li>
+    </ul>
+  </li>
+</ul>
+<p>之前关于openwrt的内容写在<a href="http://www.jianshu.com/p/6b1007451e1b">我的简书-openwrt经验分享前言和目录</a>懒得转载了</p>
+
+<h2 id="前言">前言</h2>
+<h3 id="致谢">致谢</h3>
+<p>首先感谢网站部的B同学(处于保密不涉及真实姓名)在我接触openwrt的路上提供了很大的帮助，让我了解了很多事情，帮我找bug解决遇到的各种问题。L，S和L也向我提供了很多的帮助</p>
+<h3 id="建议">建议</h3>
+<p>1.出现问题多看log</p>
+
+<p>2.搜索openwrt+关键词，找不到思路可搜索linux+关键词</p>
+
+<p>3.复制的命令直接粘贴到终端里可能出错，手动输入试试</p>
+<h2 id="目录">目录</h2>
+<h2 id="被简书封禁的文章">被简书封禁的文章</h2>
+<p>已转至本博客</p>
+
+<p><a href="/2017/09/12/openwrt-tr/">OpenWrt使用transmission下载挂pt</a></p>
+
+<p><a href="/2017/09/27/openwrt-ocserv/">OpenWrt搭建ocserv服务器</a></p>
+
+<h3 id="简书部分">简书部分</h3>
+<p><a href="http://www.jianshu.com/p/54b1d09e2328">玩openwrt的基础</a></p>
+
+<p><a href="http://www.jianshu.com/p/6d9a8612c5d9">openwrt固件获取、编译与安装</a></p>
+
+<p><a href="http://www.jianshu.com/p/31bafccda436">装完openwrt的操作</a></p>
+
+<p><a href="http://www.jianshu.com/p/fb60a4e3465f">openwrt h3c 802.1x 校园网认证</a></p>
+
+<p><a href="http://www.jianshu.com/p/5d3abfe1a4e2">openwrt 无线网中继</a></p>
+
+<p><a href="http://www.jianshu.com/p/adff41e500d8">openwrt 挂载U盘/硬盘+交换分区</a></p>
+
+<p><a href="http://www.jianshu.com/p/7badab74a530">openwrt vsftp 搭建ftp服务器</a></p>
+
+<p><a href="http://www.jianshu.com/p/c536ffd570f8">openwrt transmission下载挂pt</a></p>
+
+<p><a href="http://www.jianshu.com/p/7a8daf7cec4c">transmission禁用ipv4的尝试</a></p>
+
+<p><a href="http://www.jianshu.com/p/ab2df4282e59">transmission 下载完种子，重新发种/辅种 跳过校验</a></p>
+
+<p><a href="http://www.jianshu.com/p/22df172b6a32">openwrt 同步时间计划任务</a></p>
+
+<p><a href="http://www.jianshu.com/p/b831c87baf20">openwrt DDNS 免费 动态解析路由器ip</a></p>
+
+<p><a href="http://www.jianshu.com/p/34560bbe8772">openwrt samba网络硬盘</a></p>
+:ET

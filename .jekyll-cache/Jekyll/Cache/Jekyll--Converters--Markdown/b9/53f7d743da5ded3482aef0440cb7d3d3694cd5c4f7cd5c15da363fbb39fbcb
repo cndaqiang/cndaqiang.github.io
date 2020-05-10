@@ -1,0 +1,247 @@
+I"�6<ul id="markdown-toc">
+  <li><a href="#有管理员权限时" id="markdown-toc-有管理员权限时">有管理员权限时</a></li>
+  <li><a href="#无管理员权限时2019-05-06更新" id="markdown-toc-无管理员权限时2019-05-06更新">无管理员权限时(2019-05-06更新)</a>    <ul>
+      <li><a href="#非管理员对于octopus-41-2同样的错误" id="markdown-toc-非管理员对于octopus-41-2同样的错误">[非管理员]对于octopus-4.1-2同样的错误</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Error: Invalid character in name at (1)<br />
+/usr/include/stdc-predef.h:2.3:<br />
+	Included at c_pointer.F90:1:<br />
+	   This file is part of the GNU C Library.<br />
+   1<br /></p>
+
+<p>centos7编译octopus遇到的问题<br />
+与在centos6上，使用相同版本的gcc-4.8.4,libxc-2.0.3,gsl-1.14,openmpi-1.10.3,fftw-3.3.3,sclapack进行编译<br />
+octopus-4.1.2的configure命令没有报错，make时却报下面的错误</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* Copyright (C) 1991-2012 Free Software Foundation, Inc.
+ 1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:2.3:
+	Included at c_pointer.F90:1:
+
+   This file is part of the GNU C Library.
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:4.3:
+	Included at c_pointer.F90:1:
+
+   The GNU C Library is free software; you can redistribute it and/or
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:4.39:
+	Included at c_pointer.F90:1:
+
+   The GNU C Library is free software; you can redistribute it and/or
+									   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:5.3:
+	Included at c_pointer.F90:1:
+
+   modify it under the terms of the GNU Lesser General Public
+</code></pre></div></div>
+
+<p><br /><br /><br /><br /></p>
+<h2 id="有管理员权限时">有管理员权限时</h2>
+<p>根据<a href="http://www.yambo-code.org/forum/viewtopic.php?f=1&amp;t=842">Yambo Community Forum</a>的建议，应该是libxc的问题，无法识别<code class="highlighter-rouge">/usr/include/stdc-predef.h</code>中的注释部分
+<br /><br />备份<code class="highlighter-rouge">stdc-predef.h</code>后，删除其中的注释部分，也就是<code class="highlighter-rouge">/*注释。。。*/</code>里面的内容，再执行编译就可以了</p>
+
+<h2 id="无管理员权限时2019-05-06更新">无管理员权限时(2019-05-06更新)</h2>
+<p>在RedHat上编译libxc-2.0.0遇到，同样错误,也是<code class="highlighter-rouge">/usr/include/stdc-predef.h</code>的注释造成<br />
+在make后的目录中，搜索注释中的语句<code class="highlighter-rouge">IEC</code>，发现<code class="highlighter-rouge">/usr/include/stdc-predef.h</code>已经被引入<code class="highlighter-rouge">src/libxc.f90</code><br />
+只要删除<code class="highlighter-rouge">src/libxc.f90</code>中的<code class="highlighter-rouge">/* */</code>部分继续make就可以编译了<br /></p>
+
+<p><br /><br />发现错误和结局的过程如下</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   The GNU C Library is distributed in the hope that it will be useful,
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:10.3:
+    Included at ./libxc_master.F90:1:
+
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:10.29:
+    Included at ./libxc_master.F90:1:
+
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+                             1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:11.3:
+    Included at ./libxc_master.F90:1:
+
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:12.3:
+    Included at ./libxc_master.F90:1:
+
+   Lesser General Public License for more details.
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:14.3:
+    Included at ./libxc_master.F90:1:
+
+   You should have received a copy of the GNU Lesser General Public
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:15.3:
+    Included at ./libxc_master.F90:1:
+
+   License along with the GNU C Library; if not, see
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:15.41:
+    Included at ./libxc_master.F90:1:
+
+   License along with the GNU C Library; if not, see
+                                         1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:16.4:
+    Included at ./libxc_master.F90:1:
+
+   &lt;http://www.gnu.org/licenses/&gt;.  */
+    1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:21.1:
+    Included at ./libxc_master.F90:1:
+
+/* This header is separate from features.h so that the compiler can
+ 1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:22.3:
+    Included at ./libxc_master.F90:1:
+
+   include it implicitly at the start of every compilation.  It must
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:23.3:
+    Included at ./libxc_master.F90:1:
+
+   not itself include &lt;features.h&gt; or any other header that includes
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:24.4:
+    Included at ./libxc_master.F90:1:
+
+   &lt;features.h&gt; because the implicit include comes before any feature
+    1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:25.3:
+    Included at ./libxc_master.F90:1:
+
+   test macros that may be defined in a source file before it first
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:26.3:
+    Included at ./libxc_master.F90:1:
+
+   explicitly includes a system header.  GCC knows the name of this
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:27.3:
+    Included at ./libxc_master.F90:1:
+
+   header in order to preinclude it.  */
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:29.1:
+    Included at ./libxc_master.F90:1:
+
+/* We do support the IEC 559 math functionality, real and complex.  */
+ 1
+Error: Invalid character in name at (1)
+Fatal Error: Error count reached limit of 25.
+make[3]: *** [libxc_la-libxc.lo] Error 1
+make[3]: Leaving directory `/public/home/chendq/soft/gcc-openmpi/source/libxc-2.0.0/src'
+make[2]: *** [all] Error 2
+make[2]: Leaving directory `/public/home/chendq/soft/gcc-openmpi/source/libxc-2.0.0/src'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/public/home/chendq/soft/gcc-openmpi/source/libxc-2.0.0'
+make: *** [all] Error 2
+</code></pre></div></div>
+<p>在make后的目录中，搜索注释中的语句<code class="highlighter-rouge">IEC</code>，发现<code class="highlighter-rouge">/usr/include/stdc-predef.h</code>已经被引入<code class="highlighter-rouge">src/libxc.f90</code><br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[chendq@login3 libxc-2.0.0]$ fyou IEC
+src/libxc.f90:33:/* We do support the IEC 559 math functionality, real and complex.  */
+src/libxc.f90:37:/* wchar_t uses ISO/IEC 10646 (2nd ed., published 2011-03-15) /
+</code></pre></div></div>
+<p>只要删除<code class="highlighter-rouge">src/libxc.f90</code>中的<code class="highlighter-rouge">/* */</code>部分就可以编译了<br /></p>
+
+<h3 id="非管理员对于octopus-41-2同样的错误">[非管理员]对于octopus-4.1-2同样的错误</h3>
+<p>要改的信息更多，可以通过修改Makefile解决</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /public/home/cndaqiang/soft/gcc-MVAPICH/source/octopus-4.1.2/src/basic
+vi Makefile
+</code></pre></div></div>
+<p>做出如下更改</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>719 ########Add by cndaqiang
+720 ####### 2019-05-07
+721 .F90.o:
+722         /lib/cpp -C -ansi  $(AM_CPPFLAGS) -I. $&lt; &gt; $*_oct.f90
+723         $(top_srcdir)/build/preprocess.pl $*_oct.f90 \
+724           "" "yes" "yes"
+725         sed -i '5,41d' $*_oct.f90
+726         mpif90 -O3      -I /public/home/chendq/soft/gcc-openmpi/libxc-2.0.0/include $(AM_FCFLAGS) -c  -o $@ $*_oct.    f90
+727 #       @rm -f $*_oct.f90
+728 
+
+729 ########END cndaqiang
+730 # This rule is basically to create a _oct.f90 file by hand for
+731 # debugging purposes. It is identical to the first part of
+732 # the .F90.o rule.
+733 ##########Add by cndaqiang
+734 ######### 2019-05-07
+735 .F90_oct.f90:
+736         /lib/cpp -C -ansi  $(AM_CPPFLAGS) -I. $&lt; &gt; $*_oct.f90
+737         $(top_srcdir)/build/preprocess.pl $*_oct.f90 \
+738           "" "yes" "yes"
+739         sed -i '5,41d' $*_oct.f90
+740 
+741 ########END cndaqiang
+</code></pre></div></div>
+<p>针对下面Makefile做同样修改</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi src/math/Makefile
+vi src/species/Makefile
+vi src/ions/Makefile
+vi src/grid/Makefile
+vi src/poisson/Makefile
+vi src/states/Makefile
+vi src/xc/Makefile
+vi src/hamiltonian/Makefile
+vi src/system/Makefile
+vi src/scf/Makefile
+vi src/td/Makefile
+vi src/opt_control/Makefile
+vi src/td/Makefile
+vi src/sternheimer/Makefile
+vi src/main/Makefile
+</code></pre></div></div>
+<p>或者使用下面的脚本</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c">#!/bin/bash</span>
+<span class="k">for </span>i <span class="k">in </span>basic  math   species   ions   grid   poisson   states   xc   hamiltonian   system   scf   td   opt_control   td   sternheimer   main
+<span class="k">do
+</span><span class="nv">Makefile</span><span class="o">=</span>src/<span class="k">${</span><span class="nv">i</span><span class="k">}</span>/Makefile
+<span class="c">#修改.F90.o</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">grep</span> <span class="nt">-n</span> <span class="s2">"^.F90.o:"</span>  <span class="nv">$Makefile</span> | <span class="nb">awk</span> <span class="s1">'{printf "%d\n",$1}'</span> <span class="si">)</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">+4"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i CNQsed -i '5,41d' </span><span class="se">\$\*</span><span class="s2">_oct.f90"</span> <span class="nv">$Makefile</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">s/CNQ/</span><span class="se">\t</span><span class="s2">/g"</span> <span class="nv">$Makefile</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">-4"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i ##### Add by CNQ "</span> <span class="nv">$Makefile</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">+8"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i ##### END CNQ "</span> <span class="nv">$Makefile</span>
+<span class="c">#修改.F90_oct.f90</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">grep</span> <span class="nt">-n</span> .F90_oct.f90 <span class="nv">$Makefile</span> | <span class="nb">awk</span> <span class="s1">'{printf "%d\n",$1}'</span> <span class="si">)</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">+4"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i CNQsed -i '5,41d' </span><span class="se">\$\*</span><span class="s2">_oct.f90"</span> <span class="nv">$Makefile</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">s/CNQ/</span><span class="se">\t</span><span class="s2">/g"</span> <span class="nv">$Makefile</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">-4"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i ##### Add by CNQ "</span> <span class="nv">$Makefile</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">+6"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i ##### END CNQ "</span> <span class="nv">$Makefile</span>
+
+<span class="k">done</span> 
+</code></pre></div></div>
+
+:ET

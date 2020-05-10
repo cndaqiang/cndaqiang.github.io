@@ -1,0 +1,35 @@
+---
+layout: default
+---
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>{{page.title}}</h1>
+        <hr>
+        {{content}}
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                </ul>
+            </div>
+           <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+           <div class="side">
+            <div>
+                <i class="fa fa-database"></i>
+               访客数据
+            </div>
+            <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+           </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script src="{{ "/js/pageContent.js " | prepend: site.baseurl }}" charset="utf-8"></script>
