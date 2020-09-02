@@ -2,79 +2,13 @@
  
 # 本地搭建过程
 此操作只是为了能够本地预览博客效果，GitHub-page上已有环境
-## windows安装本地环境
-### 安装 ruby
-[下载页面](https://rubyinstaller.org/downloads/)
-下载安装
-### 安装Ruby DevKit   
-我安装的是 Ruby 2.4.0 (推荐2.4.x,2.5以上报错了)
-使用 ridk install 安装DevKit   
-### 安装jekyll
-使用github-pages包
-```
-gem install github-pages
-```
-
-## ubuntu18.04安装本地环境
-```
-sudo apt-get install ruby2.5 
-sudo apt-get install ruby2.5-dev
-sudo apt install zlib1g-dev
-sudo gem update
-sudo gem install github-pages
-```
-
-## macOS 10.14安装本地环境
-```
-brew install ruby@2.4
-#按照下面添加PATH
-#PATH=/usr/local/lib/ruby/gems/2.4.0/bin:$PATH
-# echo 'export PATH="/usr/local/opt/ruby@2.4/bin:$PATH"' >> ~/.bash_profile
-#For compilers to find ruby@2.4 you may need to set:
-#  export LDFLAGS="-L/usr/local/opt/ruby@2.4/lib"
-#  export CPPFLAGS="-I/usr/local/opt/ruby@2.4/include"
-#还要添加
-export PATH="/usr/local/lib/ruby/gems/2.4.0/bin:$PATH"
-gem install github-pages
-sudo jekyll s #普通用户报错。。。不想排查了
-#可能会需要
-#重启进Recover，在终端输入
-csrutil disable
-```
-
-## 运行
-进入网站目录
-```
-jekyll s [--port 端口号(不设置默认端口4000)]
-```
-浏览器访问`http://127.0.0.1:4000`
 
 ## 重新安装gem环境,采用bunlde配置环境
-### 卸载
-Linux
-```
-sudo su
-for i in `gem list --no-versions`; do gem uninstall -aIx $i; done
-apt-get autoremove --purge gem
-apt-get autoremove --purge ruby
-```
-Mac
-```
-brew uninstall ruby
-```
-
-### ~~编译安装~~
-```
-tar xzvf ruby-2.7.1.tar.gz
-cd ruby-2.7.1
-./configure
-make
-make install
-```
 
 ### rvm安装
 ```
-sudo apt install gnupg
+sudo apt install gnupg #linux
+brew install gnupg #mac
 #下面非root
 gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 \curl -sSL https://get.rvm.io | bash -s stable
@@ -88,6 +22,7 @@ rvm install "ruby-2.7.0"
 rvm install "ruby-2.7.0"
 rvm use "ruby-2.7.0" --default 
 ```
+
 
 ### gem 安装bunlder
 ```
@@ -120,6 +55,16 @@ cndaqiang@girl:~/code/cndaqiang.github.io$ bundle install
 Fetching source index from https://mirrors.tuna.tsinghua.edu.cn/rubygems/
 #期间会要求输入密码
 ```
+
+## 运行
+进入网站目录
+```
+jekyll s [--port 端口号(不设置默认端口4000)]
+```
+浏览器访问`http://127.0.0.1:4000`
+
+
+
 
 # 此项目使用
 ## 目录结构
@@ -287,7 +232,8 @@ bundle install
 bundle exec jekyll serve [-P port]
 ```
 ## 博客更新　2020-05-10
-全面迁移gitee.
+全面迁移gitee, Now only for me.<br>
+使用web分支作为所有内容，master分支为公开内容.
 
 
 ### CSS
