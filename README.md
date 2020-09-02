@@ -50,17 +50,47 @@ jekyll s [--port 端口号(不设置默认端口4000)]
 浏览器访问`http://127.0.0.1:4000`
 
 ## 重新安装gem环境,采用bunlde配置环境
+### 卸载
+Linux
 ```
 sudo su
 for i in `gem list --no-versions`; do gem uninstall -aIx $i; done
 apt-get autoremove --purge gem
 apt-get autoremove --purge ruby
-#编译安装
+```
+Mac
+```
+brew uninstall ruby
+```
+
+### ~~编译安装~~
+```
 tar xzvf ruby-2.7.1.tar.gz
 cd ruby-2.7.1
 ./configure
 make
 make install
+```
+
+### rvm安装
+```
+sudo apt install gnupg
+#下面非root
+gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+\curl -sSL https://get.rvm.io | bash -s stable
+\curl -sSL https://get.rvm.io | bash -s stable --rails
+```
+mac会提示缺少的程序，并自动进行编译安装
+```
+#mac/Linux
+#source /Users/cndaqiang/.rvm/scripts/rvm
+rvm install "ruby-2.7.0"
+rvm install "ruby-2.7.0"
+rvm use "ruby-2.7.0" --default 
+```
+
+### gem 安装bunlder
+```
 #设置源
 gem sources --add https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --remove https://rubygems.org/
 #更新
