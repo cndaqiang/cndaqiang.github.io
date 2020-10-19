@@ -24,6 +24,9 @@ Fortran95程序设计【彭国伦】<br>
 [详论fortran格式化输出](http://blog.sciencenet.cn/blog-287062-269811.html)
 
 
+## 注意
+- **大坑,定义的变量在计算前要手动赋值初始化，重复掉用此函数，即使在定义变量时初始化，有时候变量里面也有值，累加大忌**
+- **DO i=start,end循环结束后,i=end+1**
 
 ## 语法规则
 代码结构<br>
@@ -1670,5 +1673,5 @@ MOD (A, P) | 余数函数
 MODULO (A, P) | 模数函数
 NINT (A [, KIND]) | 最近的整数
 REAL (A [, KIND]) | 转换为实数类型
-SIGN (A, B) | 符号传输
+SIGN (A, B) | 符号传输,i.e. ABS(A)*sign(B)<br>注意A,B的类型要一致<br>`sign(-10.0,1.0)==10.0; sign(10,-1)==-10`
 

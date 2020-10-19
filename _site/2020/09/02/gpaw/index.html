@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>GPAW安装</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2020/09/02/gpaw/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2020/09/02/gpaw/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2020/09/02/gpaw/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2020/09/02/gpaw/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>GPAW安装</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-09-02
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#GPAW" title="Tag: GPAW" rel="tag">GPAW</a-->
+        <a href="/tag/#GPAW" title="Tag: GPAW" rel="tag">GPAW</a>&nbsp;
+    
+        <!--a href="/tag/#Ubuntu" title="Tag: Ubuntu" rel="tag">Ubuntu</a-->
+        <a href="/tag/#Ubuntu" title="Tag: Ubuntu" rel="tag">Ubuntu</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#ubuntu1804mint19" id="markdown-toc-ubuntu1804mint19">Ubuntu18.04/Mint19</a>    <ul>
+      <li><a href="#库" id="markdown-toc-库">库</a></li>
+      <li><a href="#python" id="markdown-toc-python">python</a></li>
+      <li><a href="#gpaw" id="markdown-toc-gpaw">gpaw</a></li>
+      <li><a href="#安装paw数据" id="markdown-toc-安装paw数据">安装paw数据</a></li>
+      <li><a href="#测试" id="markdown-toc-测试">测试</a></li>
+    </ul>
+  </li>
+  <li><a href="#centos7" id="markdown-toc-centos7">Centos7</a></li>
+  <li><a href="#自己编译库" id="markdown-toc-自己编译库">自己编译库</a>    <ul>
+      <li><a href="#gcc-mvapich2-错误" id="markdown-toc-gcc-mvapich2-错误"><del>gcc mvapich2 错误</del></a></li>
+      <li><a href="#intel" id="markdown-toc-intel">intel</a></li>
+    </ul>
+  </li>
+  <li><a href="#macosx" id="markdown-toc-macosx">macosx</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://wiki.fysik.dtu.dk/gpaw/dev/platforms/Linux/centos.html">GPAW</a></p>
+
+<h2 id="ubuntu1804mint19">Ubuntu18.04/Mint19</h2>
+<h3 id="库">库</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install libopenblas-dev libxc-dev libscalapack-mpi-dev libfftw3-dev
+</code></pre></div></div>
+<h3 id="python">python</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#创建环境
+conda create --name python37 python=3.7
+#激活环境
+source activate python37 # for Linux &amp; Mac
+#包
+echo y  | conda install -n python37 numpy
+echo y  | conda install -n  python37 matplotlib
+echo y  | conda install -n  python37 pandas
+echo y  | conda install -n  python37 scipy
+#只能pip安装
+echo y  | python -m pip install --upgrade pip --user  -i https://pypi.tuna.tsinghua.edu.cn/simple
+echo y  | python -m pip install --user PyHamcrest -i https://pypi.tuna.tsinghua.edu.cn/simple
+echo y  | python -m ensurepip --user
+echo y  | python -m pip install ase --user -i https://pypi.tuna.tsinghua.edu.cn/simple
+</code></pre></div></div>
+<h3 id="gpaw">gpaw</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@gitlab.com:gpaw/gpaw.git
+cd gpaw
+vi siteconfig.py
+</code></pre></div></div>
+<p>填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fftw = True
+scalapack = True
+libraries = ['xc', 'blas', 'fftw3', 'scalapack-openmpi']
+</code></pre></div></div>
+<p>安装</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python setup.py install
+</code></pre></div></div>
+<h3 id="安装paw数据">安装paw数据</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpaw install-data pawdir
+</code></pre></div></div>
+
+<h3 id="测试">测试</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mint19:~$ gpaw test
+-----------------+----------------------------------------------------------------------------------------------------------
+python-3.7.9     | /home/cndaqiang/anaconda3/envs/python37/bin/python
+gpaw-20.1.1b1    | /home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/gpaw/
+ase-3.20.1       | /home/cndaqiang/.local/lib/python3.7/site-packages/ase/
+numpy-1.19.1     | /home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/numpy/
+scipy-1.5.2      | /home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/scipy/
+libxc-3.0.0      | yes
+_gpaw-96a66e3883 | /home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/_gpaw.cpython-37m-x86_64-linux-gnu.so
+MPI enabled      | yes
+scalapack        | yes
+Elpa             | no
+FFTW             | yes
+libvdwxc         | no
+PAW-datasets (1) | /home/cndaqiang/soft/gpaw/pawdir/gpaw-setups-0.9.20000
+-----------------+----------------------------------------------------------------------------------------------------------
+Doing a test calculation (cores: 1): ... Done
+
+Test parallel calculation with "gpaw -P 4 test".
+(python37) cndaqiang@mint19:~$ gpaw -P 4 test
+-----------------+----------------------------------------------------------------------------------------------------------
+python-3.7.9     | /home/cndaqiang/anaconda3/envs/python37/bin/python
+gpaw-20.1.1b1    | /home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/gpaw/
+ase-3.20.1       | /home/cndaqiang/.local/lib/python3.7/site-packages/ase/
+numpy-1.19.1     | /home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/numpy/
+scipy-1.5.2      | /home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/scipy/
+libxc-3.0.0      | yes
+_gpaw-96a66e3883 | /home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/_gpaw.cpython-37m-x86_64-linux-gnu.so
+MPI enabled      | yes
+scalapack        | yes
+Elpa             | no
+FFTW             | yes
+libvdwxc         | no
+PAW-datasets (1) | /home/cndaqiang/soft/gpaw/pawdir/gpaw-setups-0.9.20000
+-----------------+----------------------------------------------------------------------------------------------------------
+Doing a test calculation (cores: 4): ... Done
+</code></pre></div></div>
+<p>结果输出到当前目录的test.txt文件</p>
+
+<h2 id="centos7">Centos7</h2>
+<p>python部分差不多，依赖要修改一下，其他部分同Ubuntu18.04</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install epel-release #有些程序包在这里面
+yum install libxc-devel openblas-devel openmpi-devel fftw-devel
+yum install blacs-openmpi-devel scalapack-openmpi-devel
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OPENMPI=/usr/lib64/openmpi
+export PATH=$OPENMPI/bin/:$PATH
+export LD_LIBRARY_PATH=$OPENMPI/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi siteconfig.py
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fftw = True
+scalapack = True
+libraries = ['xc', 'fftw3', 'scalapack', 'mpiblacs']
+library_dirs = ['/usr/lib64/openmpi/lib/']
+</code></pre></div></div>
+
+<h2 id="自己编译库">自己编译库</h2>
+
+<h3 id="gcc-mvapich2-错误"><del>gcc mvapich2 错误</del></h3>
+<p><code class="highlighter-rouge">siteconfig.py</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#fPIC参数是为了连接静态库
+compiler = 'mpicc -fPIC'
+mpicompiler = 'mpicc -fPIC'
+mpilinker = mpicompiler
+
+fftw = True
+scalapack = True
+
+
+FFTWDIR  ="/public/home/cndaqiang/soft/gcc-MVAPICH/fftw-3.3.3"
+LIBXCDIR ="/public/home/cndaqiang/soft/gcc-MVAPICH/libxc-4.3.4"
+MATHDIR  ="/public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib"
+MPIDIR="/public/software/mpi/mvapich2/gnu/2.3b"
+
+include_dirs=[ FFTWDIR+"/include", LIBXCDIR+"/include",MPIDIR+"/include"]
+library_dirs=[ FFTWDIR+"/lib", LIBXCDIR+"/lib" , MATHDIR,MPIDIR+"/lib"]
+#下面的二选一
+#libraries
+libraries=[ "fftw3_mpi", "fftw3","xc","refblas", "tmg", "reflapack", "scalapack"]
+#直接指出库位置
+BLAS_LIBS="/public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib/librefblas.a"
+LAPACK_LIBS="/public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib/libreflapack.a"
+LAPACK_LIBSS="/public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib/libtmg.a"
+SCALAPACK_LIBS="/public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib/libscalapack.a"
+extra_link_args += [ LIBXCDIR + '/lib/libxc.a' ]
+extra_link_args += [ FFTWDIR+'/lib/libfftw3.a',FFTWDIR+'/lib/libfftw3_mpi.a' ]
+extra_link_args += [ SCALAPACK_LIBS , LAPACK_LIBS,LAPACK_LIBSS, BLAS_LIBS ]
+</code></pre></div></div>
+<p>报错</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/public/home/cndaqiang/anaconda3/envs/python37/compiler_compat/ld: /public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib/libscalapack.a(pbdtrst1.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+/public/home/cndaqiang/anaconda3/envs/python37/compiler_compat/ld: final link failed: nonrepresentable section on output
+</code></pre></div></div>
+<p>好像是因为静态库的原因，加上<code class="highlighter-rouge">-fPIC</code>也不行</p>
+
+<h3 id="intel">intel</h3>
+<p>加载编译器,fftw</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module load mpi/intelmpi/2017.4.239
+module load mathlib/fftw/intelmpi/3.3.7_double
+module load compiler/intel/intel-compiler-2017.5.239
+</code></pre></div></div>
+
+<p>编译libxc, <strong>加入动态库支持<code class="highlighter-rouge">--enable-shared</code></strong>,具体细节见<a href="/2018/09/15/gun-openmpi-octopus-4.1.2/"> centos6.5 gcc Openmpi 编译octopus-4.1.2</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure --prefix=$PWD/../libxc-4.2.3 CC=icc CXX=icpc FC=ifort --enable-shared
+make -j8
+make install
+</code></pre></div></div>
+<p>环境变量</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LIBXCDIR=/public/home/cndaqiang/soft/intel17/libxc-4.2.3
+export PATH=$LIBXCDIR/bin:$PATH
+export LD_LIBRARY_PATH=$LIBXCDIR/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">siteconfig.py</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>compiler = 'mpiicc -fPIC'
+mpicompiler = 'mpiicc -fPIC'
+mpilinker = mpicompiler
+
+fftw = True
+scalapack = True
+
+FFTWDIR  = "/public/software/mathlib/fftw/intelmpi/3.3.7_double"
+LIBXCDIR = "/public/home/cndaqiang/soft/intel17/libxc-4.2.3"
+MATHDIR  = "/public/software/compiler/intel/intel-compiler-2017.5.239/mkl/lib/intel64"
+MPIDIR   = "/public/software/mpi/intelmpi/2017.4.239/intel64"
+
+include_dirs=[ FFTWDIR+"/include", LIBXCDIR+"/include",MPIDIR+"/include"]
+library_dirs=[ FFTWDIR+"/lib", LIBXCDIR+"/lib" , MATHDIR,MPIDIR+"/lib"]
+libraries=[ "fftw3_mpi", "fftw3","xc", "mkl_intel_lp64", "mkl_sequential", "mkl_core", "pthread", "mkl_blacs_intelmpi_lp64" , "mkl_scalapack_lp64"]
+</code></pre></div></div>
+
+<p><strong>不过测试报错</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) [cndaqiang@login3 gpaw]$ !gp
+gpaw  test
+-------------------------+-------------------------------------------------------------------------------------------------------
+python-3.7.3             | /public/home/cndaqiang/anaconda3/envs/python37/bin/python
+gpaw-20.1.1b1-96a66e3883 | /public/home/cndaqiang/soft/intel17/gpaw/gpaw/
+ase-3.19.1               | /public/home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/ase/
+numpy-1.19.1             | /public/home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/numpy/
+scipy-1.5.2              | /public/home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/scipy/
+libxc-4.2.3              | yes
+_gpaw-96a66e3883         | /public/home/cndaqiang/soft/intel17/gpaw/build/lib.linux-x86_64-3.7/_gpaw.cpython-37m-x86_64-linux-gnu.so
+MPI enabled              | yes
+scalapack                | yes
+Elpa                     | no
+FFTW                     | yes
+libvdwxc                 | no
+PAW-datasets (1)         | /public/home/cndaqiang/soft/intel17/gpaw/pawdir/gpaw-setups-0.9.20000
+-------------------------+-------------------------------------------------------------------------------------------------------
+Doing a test calculation (cores: 1): ... 段错误
+</code></pre></div></div>
+
+<h2 id="macosx">macosx</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install libxc
+brew install open-mpi
+brew install fftw
+brew install lapack
+brew install openblas
+brew install scalapack
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  export LDFLAGS="$LDFLAGS-L/usr/local/opt/openblas/lib"
+  export CPPFLAGS="$CPPFLAGS-I/usr/local/opt/openblas/include"
+  export LDFLAGS="$LDFLAGS-L/usr/local/Cellar/fftw/3.3.8_2/lib"
+  export CPPFLAGS="$CPPFLAGS-I/usr/local/Cellar/fftw/3.3.8_2/include"
+  export LDFLAGS="$LDFLAGS-L/usr/local/opt/lapack/lib"
+  export CPPFLAGS="$CPPFLAGS-I/usr/local/opt/lapack/include"
+  export LDFLAGS="$LDFLAGS-L/usr/local/Cellar/scalapack/2.1.0_2/lib/"
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mac gpaw$ cat siteconfig.py
+fftw = True
+scalapack = True
+libraries = ['xc','blas' , 'fftw3', 'lapack','scalapack']
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpaw install-data pawdir
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mac gpaw$ gpaw -P 4 test
+-------------------------+----------------------------------------------------------------------------------------
+python-3.7.9             | /Users/cndaqiang/anaconda3/envs/python37/bin/python
+gpaw-20.1.1b1-96a66e3883 | /Users/cndaqiang/soft/gpaw/gpaw/
+ase-3.20.1               | /Users/cndaqiang/.local/lib/python3.7/site-packages/ase/
+numpy-1.19.1             | /Users/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/numpy/
+scipy-1.5.2              | /Users/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/scipy/
+libxc-4.3.4              | yes
+_gpaw-96a66e3883         | /Users/cndaqiang/soft/gpaw/build/lib.macosx-10.9-x86_64-3.7/_gpaw.cpython-37m-darwin.so
+MPI enabled              | yes
+scalapack                | yes
+Elpa                     | no
+FFTW                     | yes
+libvdwxc                 | no
+PAW-datasets (1)         | /Users/cndaqiang/soft/gpaw/pawdir/gpaw-setups-0.9.20000
+-------------------------+----------------------------------------------------------------------------------------
+Doing a test calculation (cores: 4): ... Done
+</code></pre></div></div>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/09/03/aseuse/">ASE快速上手
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/09/03/gpawuse/">GPAW快速上手
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/09/02/yuebing/">月饼试吃</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/09/03/gpawuse/">GPAW快速上手</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

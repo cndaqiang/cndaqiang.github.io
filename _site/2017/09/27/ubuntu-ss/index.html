@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Ubuntu下搭建ss服务器</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2017/09/27/ubuntu-ss/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2017/09/27/ubuntu-ss/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2017/09/27/ubuntu-ss/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2017/09/27/ubuntu-ss/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Ubuntu下搭建ss服务器</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-27
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#ubuntu" title="Tag: ubuntu" rel="tag">ubuntu</a-->
+        <a href="/tag/#ubuntu" title="Tag: ubuntu" rel="tag">ubuntu</a>&nbsp;
+    
+        <!--a href="/tag/#ss" title="Tag: ss" rel="tag">ss</a-->
+        <a href="/tag/#ss" title="Tag: ss" rel="tag">ss</a>&nbsp;
+    
+        <!--a href="/tag/#Shadowsocks" title="Tag: Shadowsocks" rel="tag">Shadowsocks</a-->
+        <a href="/tag/#Shadowsocks" title="Tag: Shadowsocks" rel="tag">Shadowsocks</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#环境" id="markdown-toc-环境">环境：</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+  <li><a href="#配置-shadowsocks" id="markdown-toc-配置-shadowsocks">配置 Shadowsocks</a></li>
+  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+  <li><a href="#客户端" id="markdown-toc-客户端">客户端</a></li>
+  <li><a href="#可选操作" id="markdown-toc-可选操作">可选操作</a>    <ul>
+      <li><a href="#添加开机启动" id="markdown-toc-添加开机启动">添加开机启动</a></li>
+      <li><a href="#支持ipv6" id="markdown-toc-支持ipv6">支持ipv6</a></li>
+    </ul>
+  </li>
+  <li><a href="#遇到的问题" id="markdown-toc-遇到的问题">遇到的问题</a>    <ul>
+      <li><a href="#ss-安装了也配置了启动服务也没问题但是在电脑或者手机连接上直接超时了这可能是防火墙的问题" id="markdown-toc-ss-安装了也配置了启动服务也没问题但是在电脑或者手机连接上直接超时了这可能是防火墙的问题">SS 安装了也配置了，启动服务也没问题，但是在电脑或者手机连接上直接超时了。这可能是防火墙的问题</a></li>
+      <li><a href="#卸载" id="markdown-toc-卸载">卸载</a></li>
+      <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="环境">环境：</h2>
+<p>Ubuntu 17.04 32bit  虚拟机</p>
+
+<p>Ubuntu 14.04 64bit  vps</p>
+<h1 id="安装">安装</h1>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chen@ubuntu:~$ sudo su
+root@ubuntu:/home/chen# apt-get update
+root@ubuntu:/home/chen# apt-get install python-pip
+root@ubuntu:/home/chen# apt-get update
+root@ubuntu:/home/chen# apt-get install shadowsocks
+# 安装加密方式
+root@ubuntu:/home/chen# apt-get install python-m2crypto
+# 启动 8388为端口  passwd为密码 aes-256-cfb为加密方式可选择可选择"bf-cfb","aes-256-cfb","des-cfb","rc4-md5",等等
+root@ubuntu:/home/chen#  ssserver -p 8388 -k passwd -m aes-256-cfb  -d start
+# 停止
+root@ubuntu:/home/chen# ssserver -p 8388 -k passwd -m aes-256-cfb  -d stop 
+</code></pre></div></div>
+<p>到这里已经可以使用ss客户端连接了，更多参数设置如下</p>
+<h1 id="配置-shadowsocks">配置 Shadowsocks</h1>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ubuntu:/home/chen# vi /etc/shadowsocks.json
+</code></pre></div></div>
+<p>单用户认证填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "server":"my_server_ip",
+    "server_port":8388,
+    "local_address": "127.0.0.1",
+    "local_port：":1080,
+    "password":"mypassword",
+    "timeout":300,
+    "method":"rc4-md5",
+    "fast_open": false
+}
+</code></pre></div></div>
+<p>多账号认证填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "server":"my_server_ip",
+    "port_password":{
+    	"8388":"mypassword",
+    	"8389":"mypassword",
+        "8390":"mypassword"
+    },
+    "timeout":300,
+    "method":"rc4-md5",
+    "fast_open": false
+}
+</code></pre></div></div>
+<blockquote>
+  <ul>
+    <li>server：服务器IP地址</li>
+    <li>server_port：SS服务指定端口</li>
+    <li>local_address：本地服务地址，默认127.0.0.1</li>
+    <li>local_port：本地服务端口，常用1080</li>
+    <li>password：SS服务密码，禁止使用默认密码mypassword</li>
+    <li>timeout：服务超时，单位秒s</li>
+    <li>method：加密方式，默认aes-256-cfb</li>
+    <li>fast_open：<a href="https://github.com/shadowsocks/shadowsocks/wiki/TCP-Fast-Open">TCP Fast Open</a> ,true or false</li>
+  </ul>
+
+</blockquote>
+
+<h1 id="运行">运行</h1>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#运行
+root@ubuntu:/home/chen# ssserver -c /etc/shadowsocks.json -d start
+#关闭
+root@ubuntu:/home/chen# ssserver -c /etc/shadowsocks.json -d stop
+
+</code></pre></div></div>
+<p>如果ubuntu在路由器下面，路由器添加防火墙转发到虚拟机的8388端口即可</p>
+<h1 id="客户端">客户端</h1>
+<p><strong>IOS:</strong> <a href="https://itunes.apple.com/cn/app/wingy-http-s-socks5-proxy-utility/id1178584911?mt=8#">Wing</a></p>
+
+<p>其他平台很多，更多介绍<a href="https://www.gitbook.com/book/lollogit/help/details">SS使用教程</a></p>
+<h1 id="可选操作">可选操作</h1>
+<h2 id="添加开机启动">添加开机启动</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ubuntu:/etc/init.d# cd /etc/init.d
+root@ubuntu:/etc/init.d# vi Shadowsocks
+</code></pre></div></div>
+<p>填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+ssserver <span class="nt">-c</span> /etc/shadowsocks.json <span class="nt">-d</span> start
+</code></pre></div></div>
+<p>添加执行权限</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ubuntu:/etc/init.d# chmod 755 Shadowsocks 
+root@ubuntu:/etc/init.d# update-rc.d Shadowsocks defaults 95
+chen@ubuntu:/etc/init.d$ sudo update-rc.d Shadowsocks defaults 95
+</code></pre></div></div>
+<h2 id="支持ipv6">支持ipv6</h2>
+<p>将shadowsocks.json文件中</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> "server":"my_server_ip",
+</code></pre></div></div>
+<p>更改为</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"server":"::", 
+</code></pre></div></div>
+
+<h1 id="遇到的问题">遇到的问题</h1>
+<h2 id="ss-安装了也配置了启动服务也没问题但是在电脑或者手机连接上直接超时了这可能是防火墙的问题">SS 安装了也配置了，启动服务也没问题，但是在电脑或者手机连接上直接超时了。这可能是防火墙的问题</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ubuntu:/home/chen# apt install firewalld
+root@ubuntu:/home/chen# firewall-cmd --zone=public --add-port=8388/tcp --permanent
+root@ubuntu:/home/chen# firewall-cmd --zone=public --add-port=8388/udp --permanent
+</code></pre></div></div>
+
+<h2 id="卸载">卸载</h2>
+<p>最近好像流行ssr，卸载了ss，安装ssr
+卸载</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip uninstall shadowsocks
+</code></pre></div></div>
+<p>安装ssr教程<a href="/2017/09/28/ubuntu1604-ssr/">ubuntu 16.04 安装python版ssr</a></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://xfabs.github.io/2016/08/02/shadowsocks/">Shadowsocks 安装与配置教程</a></p>
+
+<p><a href="http://www.jianshu.com/p/a061ad8158f4">Ubuntu下搭建ss服务器</a></p>
+
+<p><a href="https://segmentfault.com/a/1190000006128950">[Linux — 在Ubuntu服务器上搭建SS服务](https://segmentfault.com/a/1190000006128950)</a></p>
+
+<p><a href="http://blog.csdn.net/hcx25909/article/details/9068497">Ubuntu下添加开机启动脚本</a></p>
+
+<p><a href="http://go2think.com/ss-ipv6/">Shadowsocks支持IPv6配置</a></p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/09/27/openwrt-ocserv/">OpenWrt搭建ocserv服务器</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/09/27/ubuntu-vsftps/">Ubuntu使用vsftpd搭建ftp服务器</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

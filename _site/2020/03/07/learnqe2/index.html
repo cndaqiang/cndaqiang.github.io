@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Learn QE2 原子结构相关：结构优化,MD,NEB</title>
+    <meta name="description" content="本学习教程内容主要来自互联网，个人学习记录，仅供参考。代码仓库LearnQE@cndaqiang">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2020/03/07/learnqe2/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2020/03/07/learnqe2/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2020/03/07/learnqe2/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2020/03/07/learnqe2/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Learn QE2 原子结构相关：结构优化,MD,NEB</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-03-07
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Quantum-Espresso" title="Category: Quantum-Espresso" rel="category">Quantum-Espresso</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a-->
+        <a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a>&nbsp;
+    
+        <!--a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a-->
+        <a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#示例" id="markdown-toc-示例">示例</a>    <ul>
+      <li><a href="#结构优化" id="markdown-toc-结构优化">结构优化</a>        <ul>
+          <li><a href="#graphane-relax" id="markdown-toc-graphane-relax">Graphane relax</a></li>
+          <li><a href="#hcp-zinc-vc-relax" id="markdown-toc-hcp-zinc-vc-relax">hcp-Zinc vc-relax</a></li>
+        </ul>
+      </li>
+      <li><a href="#md分子动力学略" id="markdown-toc-md分子动力学略">MD分子动力学[略]</a></li>
+      <li><a href="#neb计算" id="markdown-toc-neb计算">NEB计算</a>        <ul>
+          <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+          <li><a href="#hcn-转换为-cnh-的过程" id="markdown-toc-hcn-转换为-cnh-的过程">HCN 转换为 CNH 的过程</a></li>
+          <li><a href="#计算输出" id="markdown-toc-计算输出">计算输出</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#附录" id="markdown-toc-附录">附录</a>    <ul>
+      <li><a href="#xcrysden-help" id="markdown-toc-xcrysden-help">xcrysden help</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>本学习教程内容主要来自互联网，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://github.com/cndaqiang/LearnQE">LearnQE@cndaqiang</a></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://qe2019.ijs.si/">Summer School on Advanced Materials and Molecular Modelling</a><br />
+<a href="https://gitlab.com/QEF/material-for-ljubljana-qe-summer-school">GitLab for qe2019</a><br /></p>
+
+<h2 id="示例">示例</h2>
+<h3 id="结构优化">结构优化</h3>
+<h4 id="graphane-relax">Graphane relax</h4>
+<p>relax计算<code class="highlighter-rouge">    calculation = 'relax',</code>,添加<code class="highlighter-rouge">&amp;IONS</code>原子收敛参数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;IONS
+!都有默认值
+		!ion_dynamics="bfgs" !relax: bfgs,damp ; md: verlet langevin, langevin-smc....
+/
+</code></pre></div></div>
+<p>运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-2/example1.relax
+mpirun -np 4 pw.x -i pw.graphane.relax.in | tee graphane.relax.out
+xcrysden  --pwo graphane.relax.out 
+</code></pre></div></div>
+<p>xcrysden打开后，可以选择<code class="highlighter-rouge">Display All Coordinates as Animation</code>，<br />
+然后显示不同原子步的结构，分别测量，C-H键长变化:0.9851Ang-&gt;1.1083Ang</p>
+<h4 id="hcp-zinc-vc-relax">hcp-Zinc vc-relax</h4>
+<p>vc-relax,变cell结构优化，要加上<code class="highlighter-rouge">&amp;CELL</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &amp;IONS
+ /
+ &amp;CELL
+ /
+</code></pre></div></div>
+<p>运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.Zn.vc-relax.in | tee Zn.vc-relax.out
+xcrysden --pwo  Zn.vc-relax.out
+</code></pre></div></div>
+
+<h3 id="md分子动力学略">MD分子动力学[略]</h3>
+<p>与结构优化类似，添加步长dt和总步数nstep,</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;CONTROL
+	  calculation="md" !scf nscf 
+      nstep=68
+      dt=4
+/
+&amp;IONS
+!tempw起始温度
+!		tempw = 0.1
+!系综，verlet(NVE)
+		ion_dynamics="verlet"
+/
+&amp;CELL
+/
+
+</code></pre></div></div>
+
+<h3 id="neb计算">NEB计算</h3>
+<p>输入文件结构示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BEGIN
+
+BEGIN_PATH_INPUT
+&amp;PATH
+nstep_path = 200 !最大步数
+num_of_images = 7
+!默认pwscf_1 pwscf_N仅计算一次，只有2-N1共N-2个image参与后续的迭代
+!设置first_last_opt = .True. 1,N也参与迭代
+!first_last_opt = .False.
+/
+END_PATH_INPUT
+
+BEGIN_ENGINE_INPUT
+!各个图像的计算参数，把pw.x的输入复制过来，
+!仅不包含原子结构ATOMIC_POSITIONS，其他的如晶格参数，赝势依旧在此处填写
+&amp;CONTROL
+pseudo_dir = './'
+/
+&amp;SYSTEM
+  ibrav = 0
+  A =    1.00000000000000
+  nat = 3
+  ntyp = 3
+
+  ecutwfc = 30 
+!  	kinetic energy cutoff (Ry) for wavefunctions
+  ecutrho = 200 !4*ecutwfc
+
+/
+&amp;ELECTRONS
+/
+
+CELL_PARAMETERS {alat}
+  20.0000000000000000   0.0000000000000000   0.0000000000000000
+   0.0000000000000000  20.0000000000000000   0.0000000000000000
+   0.0000000000000000   0.0000000000000000  20.0000000000000000
+ATOMIC_SPECIES
+  C 12.0107 C_ONCV_PBE_fr.upf
+  N 14.0067 N_ONCV_PBE_fr.upf
+  H 1.00794 H_ONCV_PBE_fr.upf
+K_POINTS {automatic}
+1 1 1  0 0 0
+
+BEGIN_POSITIONS
+!初始IMAGE，终止IMAGE
+FIRST_IMAGE
+ATOMIC_POSITIONS {crystal}
+  C   0.4999025166406645 0.5000000000000000 0.5000000000000000
+  N   0.5578501003511457 0.5000000000000000 0.5000000000000000
+  H   0.4462473830081877 0.5000000000000000 0.5000000000000000 
+LAST_IMAGE
+ATOMIC_POSITIONS {crystal}
+  C   0.5000000000000000 0.5000000000000000 0.4414141678546500
+  N   0.5000000000000000 0.5000000000000000 0.5001920800889998
+  H   0.5000000000000000 0.5000000000000000 0.5503937520563474
+END_POSITIONS
+   
+END_ENGINE_INPUT
+END
+</code></pre></div></div>
+<h4 id="运行">运行</h4>
+<ul>
+  <li>默认的计算方式,创建pwscf_[1-N],然后分别进入到相应的文件夹进行计算<br />
+可以看到开始时只有pwscf_1中有输出，随后其他文件夹内以此出现输出文件
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 neb.x -i neb.in | tee neb.out
+</code></pre></div>    </div>
+  </li>
+  <li>使用image并行(-ni n)，可以同时开始好几个pwscf_的计算，如下，有四个image同时计算<br />
+<strong>image并行的image数量小于等于neb的image-2</strong>,因为初始和最终的image不参与后续的计算<br />
+如果设置<code class="highlighter-rouge">first_last_opt = .True.</code>，初始，最终的image也参与计算，此时image并行的image数量小于等于neb的image
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 neb.x -ni 4  -i neb.in | tee neb.out
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>xcrysden 可以根据neb.in生成变化动图，如下例</p>
+
+<h4 id="hcn-转换为-cnh-的过程">HCN 转换为 CNH 的过程</h4>
+<p>工作路径</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-2/example3.neb/HCN_CNH
+</code></pre></div></div>
+<p>之前使用VASP+VTST的计算结果<a href="https://github.com/cndaqiang/DFT-EXERCISES">DFT-EXERCISES</a>中的6.5节<br />
+<img src="/uploads/2020/03/neb.gif" alt="" /></p>
+
+<h4 id="计算输出">计算输出</h4>
+<p>运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EXEC=/public/home/chendq/soft/intel17/qe-6.4.1/bin/neb.x
+srun --mpi=pmi2 $EXEC -ni 5 -i neb.in | tee result
+</code></pre></div></div>
+<p><strong>下面的输出，是我中途kill了neb.x的结果，不是最终收敛的结果</strong></p>
+<ul>
+  <li>neb.dat 是输入neb.in中的<code class="highlighter-rouge">&amp;PATH</code>的备份</li>
+  <li>pw_1.in pw_2.in 是neb.in中的初态，末态scf计算的参数和坐标</li>
+  <li>pwscf_i 各个image的运行目录，与正常的scf计算相同，<code class="highlighter-rouge">pwscf_i/PW.out</code>是标准输出</li>
+  <li>pwscf.int ??</li>
+  <li>pwscf.dat中[反应坐标，相对能量，error]与标准输出中的一致,用于画反应势能面
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    image        energy (eV)        error (eV/A)        frozen
+
+       1       -455.0343548            3.837393            T
+       2       -454.1570363           17.615266            F
+       3       -453.7100989           11.466074            F
+       4       -453.2121126            3.452926            F
+       5       -453.9481453            0.191098            F
+       6       -453.7209844           14.164421            F
+       7       -454.3738303            3.409830            T
+</code></pre></div>    </div>
+  </li>
+  <li>pwscf.pathI 每次迭代的反应路径</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C_ONCV_PBE_fr.upf  pwscf.dat     pwscf.path26  pwscf.path46
+H_ONCV_PBE_fr.upf  pwscf.int     pwscf.path27  pwscf.path47
+neb.dat            pwscf.path    pwscf.path28  pwscf.path48
+neb.in             pwscf.path0   pwscf.path29  pwscf.path49
+N_ONCV_PBE_fr.upf  pwscf.path1   pwscf.path3   pwscf.path5
+out.1_0            pwscf.path10  pwscf.path30  pwscf.path50
+out.2_0            pwscf.path11  pwscf.path31  pwscf.path51
+out.3_0            pwscf.path12  pwscf.path32  pwscf.path52
+out.4_0            pwscf.path13  pwscf.path33  pwscf.path53
+out.5_0            pwscf.path14  pwscf.path34  pwscf.path54
+out.6_0            pwscf.path15  pwscf.path35  pwscf.path55
+pw_1.in            pwscf.path16  pwscf.path36  pwscf.path6
+pw_2.in            pwscf.path17  pwscf.path37  pwscf.path7
+pwscf_1            pwscf.path18  pwscf.path38  pwscf.path8
+pwscf_2            pwscf.path19  pwscf.path39  pwscf.path9
+pwscf_3            pwscf.path2   pwscf.path4   pwscf.xyz
+pwscf_4            pwscf.path20  pwscf.path40  result
+pwscf_5            pwscf.path21  pwscf.path41  run-qe-sslab.sh
+pwscf_6            pwscf.path22  pwscf.path42  run-qe-sslab.sh.e1010102
+pwscf_7            pwscf.path23  pwscf.path43  run-qe-sslab.sh.o1010102
+pwscf.axsf         pwscf.path24  pwscf.path44
+pwscf.crd          pwscf.path25  pwscf.path45
+</code></pre></div></div>
+<p><strong>结果等待SSLAB中</strong></p>
+
+<h2 id="附录">附录</h2>
+<h3 id="xcrysden-help">xcrysden help</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       --xsf file
+           Load structure from XCrySDen's-Structure-File (XSF) formatted file.
+
+       --cube file
+       --gXX_cube file
+       --g98_cube file
+           Load  structure  from  Gaussian cube file. The cube file should be produced with the Cube=Cards option. Only scalar cube files are supported, that
+           is, Cube=(Cards,Density) or Cube=(Cards,Orbitals) or Cube=(Cards,Potential). Refer to GAUSSIAN manual for the meaning of this keywords.
+
+       --pwi
+       --pw_inp file
+           Load structure from pw.x input file. pw.x is a  pseudopotential  planewave  program  of  the  Quantum-ESPRESSO  distribution  (http://www.quantum-
+           espresso.org/).
+
+       --pwo
+       --pw_out file
+           Load  structure  from  pw.x  output  file.  pw.x  is a pseudopotential planewave program of the Quantum-ESPRESSO distribution (http://www.quantum-
+           espresso.org/).
+
+       -s script
+       --script script
+           Load script from file containing Tcl script.
+</code></pre></div></div>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/03/06/learnqe/">Learn QE1 电子结构计算</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/03/27/ac/">使用<s>blog.cndaqiang.ac.cn</s> https://cndaqiang.gitee.io辅助Github page访问</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>[已放弃]&lt;s&gt;单机ubuntu编译安装PBS torque&lt;/s&gt;</title>
+    <meta name="description" content="  2020-02-24: Ubuntu建议安装Slurm作业系统  -&gt;Ubuntu 18.04/Mint 19 单机安装Slurm2020-02-24: Ubuntu建议安装Slurm作业系统  -&gt;Ubuntu 18.04/Mint 19 单机安装Slurm尝试在组里的服务器运行vasp，需要使...">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2018/01/11/torque-install-ubuntu/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2018/01/11/torque-install-ubuntu/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2018/01/11/torque-install-ubuntu/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2018/01/11/torque-install-ubuntu/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>[已放弃]<s>单机ubuntu编译安装PBS torque</s></h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-01-11
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#pbs" title="Tag: pbs" rel="tag">pbs</a-->
+        <a href="/tag/#pbs" title="Tag: pbs" rel="tag">pbs</a>&nbsp;
+    
+        <!--a href="/tag/#%E9%9B%86%E7%BE%A4" title="Tag: 集群" rel="tag">集群</a-->
+        <a href="/tag/#集群" title="Tag: 集群" rel="tag">集群</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#2020-02-24-ubuntu建议安装slurm作业系统---ubuntu-1804mint-19-单机安装slurm" id="markdown-toc-2020-02-24-ubuntu建议安装slurm作业系统---ubuntu-1804mint-19-单机安装slurm">2020-02-24: Ubuntu建议安装Slurm作业系统 <br /> -&gt;Ubuntu 18.04/Mint 19 单机安装Slurm</a></li>
+  <li><a href="#放弃尝试仅供参考" id="markdown-toc-放弃尝试仅供参考">放弃尝试，仅供参考</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#集群系统" id="markdown-toc-集群系统">集群系统</a>    <ul>
+      <li><a href="#节点" id="markdown-toc-节点">节点</a></li>
+    </ul>
+  </li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
+      <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+      <li><a href="#下载" id="markdown-toc-下载">下载</a></li>
+      <li><a href="#依赖" id="markdown-toc-依赖">依赖</a></li>
+      <li><a href="#编译安装管理节点" id="markdown-toc-编译安装管理节点">编译安装(管理节点)</a></li>
+      <li><a href="#初始化此步有错误提示详见下" id="markdown-toc-初始化此步有错误提示详见下">初始化(此步有错误提示,详见下)</a></li>
+      <li><a href="#打包生成个节点安装包" id="markdown-toc-打包生成个节点安装包">打包，生成个节点安装包</a></li>
+      <li><a href="#单机安装节点程序" id="markdown-toc-单机安装节点程序">单机安装节点程序</a></li>
+    </ul>
+  </li>
+</ul>
+<h1 id="2020-02-24-ubuntu建议安装slurm作业系统---ubuntu-1804mint-19-单机安装slurm">2020-02-24: Ubuntu建议安装Slurm作业系统 <br /> -&gt;<a href="/2020/01/24/slurm/">Ubuntu 18.04/Mint 19 单机安装Slurm</a></h1>
+<p>尝试在组里的服务器运行vasp，需要使用提交任务脚本，不允许在登陆节点直接运算，师兄给了一个pbs的脚本。<br />
+还是现在自己服务器上安装pbs看看<br />
+<strong>建议ubuntu还是使用apt安装吧</strong>，放弃编译，直接编译后，很多运行脚本的语法都是为RedHat/Centos编写的。<br />
+想到组里的服务器是RedHat，把我的服务器由ubuntu重装为centos<br /></p>
+
+<h1 id="放弃尝试仅供参考">放弃尝试，仅供参考</h1>
+<h1 id="参考">参考</h1>
+<p><a href="http://blog.sciencenet.cn/blog-478347-395684.html">[转载]PBS！！</a>
+<br /><a href="https://stackoverflow.com/questions/25979525/cannot-find-lssl-cannot-find-lcrypto-when-installing-mysql-python-using-mar">“cannot find -lssl; cannot find -lcrypto” when installing mysql-python using mariaDB library</a>
+<br /><a href="https://stackoverflow.com/questions/12578499/how-to-install-boost-on-ubuntu/12578564#12578564?newreg=1035048611464711a0444542ec818276">How to Install boost on Ubuntu?
+</a>
+<br /><a href="http://blog.51cto.com/rabbitjian/1862678">PBS Torque 5.1.3安装配置</a>
+<br /><a href="http://blog.csdn.net/dream_angel_z/article/details/44225669">CentOS下torque集群配置（一）-torque安装与配置</a>
+<br /><a href="https://zhidao.baidu.com/question/328528962.html">shell编程。ubuntu下的shell出错，提示第4行function: not found，还有第七行的 } 有错。高手教一下</a>
+<br /><a href="https://www.panda-os.com/blog/2013/06/red5-init-script-for-ubuntu/">RED5 INIT SCRIPT FOR UBUNTU</a></p>
+
+<h1 id="集群系统">集群系统</h1>
+<p>集群系统就好像一台服务器或者PC，集群资源由实现如下几个部分：</p>
+<ul>
+  <li>资源管理器
+<br />为了确保分配给作业合适的资源，集群资源管理需要维护一个数据库。这个数据库记录了集群系统中各种资源的属性和状态、所有用户提交的请求和正在运行的作业。</li>
+  <li>作业调度策略管理器
+<br />策略管理器根据资源管理器得到各个结点上的资源状况和系统的作业信息生成一个优先级列表。这个列表告诉资源管理器何时在哪些结点上运行哪个作业</li>
+</ul>
+
+<blockquote>
+  <p>PBS作业分配的调度器 （scheduler），其主要任务是分配批作业计算任务到现有的计算资源上。 PBS的目前包括openPBS，PBS Pro和Torque三个主要分支。 其中OpenPBS是最早的PBS系统，目前已经没有太多后续开发，PBS pro是PBS的商业版本，功能最为丰富。Torque是Clustering公司接过了OpenPBS，并给与后续支持的一个开源版本。</p>
+</blockquote>
+
+<blockquote>
+  <p>Maui作业调度器,想象为PBS中的一个插入部件。它采用积极的调度策略优化资源的利用和减少作业的响应时间</p>
+</blockquote>
+
+<h2 id="节点">节点</h2>
+<p>对于torque PBS有以下节点</p>
+<ul>
+  <li>管理节点(master)
+<br />集群系统的管理节点
+<br />编译安装管理Torque PBS
+<br />安装pbs_server</li>
+  <li>计算节点
+<br />安装pbs_client
+<br />安装pbs_mom</li>
+  <li>交作业节点
+<br />安装pbs_client</li>
+</ul>
+
+<h1 id="安装">安装</h1>
+<p>此次进行单机安装pbs，即管理节点，计算节点，作业节点都在一个服务器上,不安装Maui</p>
+
+<h2 id="环境">环境</h2>
+<p>ubuntu 16.04
+<br /> win10 bash
+<br />不得不说，单核的云服务器比我笔记本上的win10 bash快的不止一点</p>
+<h2 id="下载">下载</h2>
+<p>安装包下载地址<a href="http://www.adaptivecomputing.com/products/open-source/torque/">Torque Resource Manager</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://wpfilebase.s3.amazonaws.com/torque/torque-6.1.1.1.tar.gz
+tar xzvf torque-6.1.1.1.tar.gz
+cd torque-6.1.1.1.tar.gz
+</code></pre></div></div>
+<h2 id="依赖">依赖</h2>
+<p>在编译过程中提示错误,安装下列依赖解决</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install libxml2-dev
+sudo apt install zlib1g-dev
+sudo apt install libboost-all-dev
+sudo apt install libssl-dev
+</code></pre></div></div>
+
+<h2 id="编译安装管理节点">编译安装(管理节点)</h2>
+<p>编译安装</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure  --with-default-server=master
+make
+sudo make install
+</code></pre></div></div>
+
+<p>编译安装后，在当前文件夹下有<code class="highlighter-rouge">torque.setup</code>文件，用于之后生成各节点软件包
+<br />执行程序默认安装在<code class="highlighter-rouge">/usr/local/sbin</code>,<code class="highlighter-rouge">/usr/local/bin</code>目录
+<br />也可通过<code class="highlighter-rouge">--prefix=安装目录</code>改变安装目录,安装后需要添加PATH,添加PATH方法见<a href="https://cndaqiang.github.io/2017/09/10/linux-command/">Linux常用命令学习</a>
+<br /><code class="highlighter-rouge">ls /usr/local/sbin</code>可以看到相关文件，主要</p>
+<ul>
+  <li>pbs_mom 
+<br />PBS MOM守护进程， 负责监控本机并执行作业，位于所有计算节点上</li>
+  <li>pbs_sched
+<br />PBS调度守护进程，负责调度作业，位于服务节点上</li>
+  <li>pbs_server
+<br />PBS服务守护进程，负责接收作业提交，位于服务节点上</li>
+</ul>
+
+<p>也可将上述命令利用系统服务来启动(<strong>不适用于ubuntu</strong>,原因如下)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo cp contrib/init.d/{pbs_{server,sched,mom},trqauthd} /etc/init.d/
+</code></pre></div></div>
+<p>之后可以使用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo /etc/init.d/pbs_server stop|start|restart
+</code></pre></div></div>
+<p>来使用
+<br />
+<strong>然而非常悲剧的是</strong><code class="highlighter-rouge">/etc/init.d/pbs_server</code>中使用了<code class="highlighter-rouge">success</code>和<code class="highlighter-rouge">failure</code>命令， <strong>This init Script is written for CentOS and not for Ubuntu.</strong></p>
+
+<h2 id="初始化此步有错误提示详见下">初始化(此步有错误提示,详见下)</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./torque.setup 用户名
+</code></pre></div></div>
+<p>错误提示</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cqiang@DESKTOP-BMKQE7V:~/soft/torque/torque-6.1.1.1$ sudo ./torque.setup root
+./torque.setup: 8: ./torque.setup: function: not found
+</code></pre></div></div>
+<p>通过修改<code class="highlighter-rouge">./torque.setup</code>文件,将开头的<code class="highlighter-rouge"><span class="c">#!/bin/sh</span></code>修改为<code class="highlighter-rouge"><span class="c">#!/bin/bash</span></code>,再运行<code class="highlighter-rouge">sudo ./torque.setup 用户名</code>就不报错了</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +w ./torque.setup
+vi ./torque.setup
+</code></pre></div></div>
+<p>想卸载可使用下列命令</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo make uninstall
+</code></pre></div></div>
+
+<h2 id="打包生成个节点安装包">打包，生成个节点安装包</h2>
+<p>使用普通用户打包，不要使用root用户或sudo
+<br />使用普通用户是为了，拷贝到其他机器上可以直接运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ubuntu@VM-10-194-ubuntu:~/torque_install/torque-6.1.1.1$  make packages
+</code></pre></div></div>
+<p>得到各节点所需要的，安装程序</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>torque-package-clients-linux-x86_64.sh
+torque-package-devel-linux-x86_64.sh
+torque-package-doc-linux-x86_64.sh
+torque-package-mom-linux-x86_64.sh
+torque-package-server-linux-x86_64.sh
+</code></pre></div></div>
+<p>将其他节点需要的程序传过去即可，此次我们单机安装，无需传输</p>
+
+<h2 id="单机安装节点程序">单机安装节点程序</h2>
+<p>单机作为管理,计算,交作业节点，需安装client,server,mom包</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./torque-package-server-linux-x86_64.sh --install
+sudo ./torque-package-clients-linux-x86_64.sh --install
+sudo ./torque-package-mom-linux-x86_64.sh --install
+</code></pre></div></div>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2018/01/04/dft-ji-lu/">DFT学习笔记</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/01/11/torque-install-centos/">单机centos编译安装使用PBS torque</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -638,11 +638,14 @@ www.xianren.org，不加参数-L，就会像大火烧山一样，会递归下载
 -A 指定要下载的文件样式列表，多个样式用逗号分隔
 -i 后面跟一个文件，文件内指明要下载的URL
 --------------------- 
-作者：武坤 
-来源：CSDN 
 原文：https://blog.csdn.net/zelinhehe/article/details/53508845 
-版权声明：本文为博主原创文章，转载请附上博文链接！
 ```
+
+下载指定类型的文件
+```
+wget  -r -np -P ./pdf -A pdf  www.iiserpune.ac.in/~smr2626/talks-presentations.html
+```
+
 ### 安装卸载软件
 #### dpkg
 ```
@@ -902,7 +905,7 @@ sudo nmap -sP -PI -PT -oN ipandmaclist.txt 10.127.1.0/24
 nohup 命令 &
 ```
 2. setsid<br>
-在使用ssh开隧道时，希望在后台运行，nohup,(命令 &)，screen，disown等无法使用，使用setsid可以<br>
+在使用ssh开socks隧道时，希望在后台运行，nohup,(命令 &)，screen，disown等无法使用，使用setsid可以<br>
 就可以使用ipv6加服务器，免费使用网络了
 ```
 setsid ssh -D 192.168.1.178:5678 -p 1234 username@ipv6128.qiang
@@ -925,6 +928,13 @@ ssh  -f -N -D 192.168.1.178:5678 -p 1234 username@ipv6128.qiang
 RMM:   7    -0.688651957131E+02    0.23242E-04   -0.10489E-04  6514   0.318E-02    0.133E-02
 #让job忽略HUP信号，断开ssh后，仍能运行
 [cndaqiang@mom 3]$ disown -h %3
+```
+
+### ssh相关
+
+使用socks代理连接服务器
+```
+ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:1200 %h %p" cndaqiang@mom
 ```
 
 ### 等待 

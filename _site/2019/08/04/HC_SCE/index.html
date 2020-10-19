@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Fortran使用Scalapack求解HC=SCE</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2019/08/04/HC_SCE/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2019/08/04/HC_SCE/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2019/08/04/HC_SCE/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2019/08/04/HC_SCE/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Fortran使用Scalapack求解HC=SCE</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-08-04
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Fortran" title="Category: Fortran" rel="category">Fortran</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>&nbsp;
+    
+        <!--a href="/tag/#Scalapack" title="Tag: Scalapack" rel="tag">Scalapack</a-->
+        <a href="/tag/#Scalapack" title="Tag: Scalapack" rel="tag">Scalapack</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#数据" id="markdown-toc-数据">数据</a></li>
+  <li><a href="#计算方法" id="markdown-toc-计算方法">计算方法</a></li>
+  <li><a href="#源码" id="markdown-toc-源码">源码</a></li>
+  <li><a href="#处理结果" id="markdown-toc-处理结果">处理结果</a></li>
+  <li><a href="#使用matlab检验计算结果" id="markdown-toc-使用matlab检验计算结果">使用matlab检验计算结果</a></li>
+</ul>
+
+<p>Scalapack的内容和用法见<a href="/2019/04/06/Fortran-math/">Fortran 科学计算</a></p>
+<h2 id="参考">参考</h2>
+<p><a href="https://www.sciencedirect.com/science/article/pii/0010465596000173">ScaLAPACK: a portable linear algebra library for distributed memory computers — design issues and performance</a><br />
+SIESTA源码<br /></p>
+
+<h2 id="数据">数据</h2>
+<p>H原子的scf中由五条轨道(NAOs)作为基组得到的H,S:
+<a href="/web/file/2019/H.data">H.data</a>
+<a href="/web/file/2019/S.data">S.data</a></p>
+
+<h2 id="计算方法">计算方法</h2>
+<p><img src="/uploads/2019/08/hc1.png" alt="" />
+<img src="/uploads/2019/08/hc2.png" alt="" /></p>
+
+<h2 id="源码">源码</h2>
+<p><code class="highlighter-rouge">HC_SCE.f90</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program HC_SCE
+    use m_mpi_my
+    implicit none
+    
+    INTEGER,parameter :: dp=8,DLEN_=9
+    REAL(dp),allocatable    ::  H(:,:),S(:,:),C(:,:),E(:)
+    REAL(dp),allocatable    ::  H_2d(:,:),S_2d(:,:),C_2d(:,:),E_2d(:)
+    INTEGER :: m,lm,ln,blocksize,i,j
+    !矩阵H_aux(m,m), local H(lm,m)
+    REAL(dp) :: work(80),iwork(80)
+    INTEGER :: lwork=80,liwork=45    
+    
+    INTEGER :: ICTXT,ICTXT_2d,NPROW,NPCOL,myROW,myCOL
+    INTEGER :: DESCH(DLEN_),DESCH_2d(DLEN_),DESCE(DLEN_),INFO,DSCALE
+    INTEGER :: ICTXT_1d,ICTXT_3d,ICTXT_4d
+    call mpi_start()
+
+
+    
+!********************************************************************************   
+!1D网格计算
+!********************************************************************************
+!**************************
+!处理器grid
+!**************************
+    NPCOL=1
+    NPROW=4
+    CALL BLACS_GET( -1, 0, ICTXT ) 
+    
+    !call SL_INIT(ICTXT,NPROW,NPCOL)
+    !BLACS_GET与SL_INIT貌似写一个就行
+    
+    call blacs_gridinit(ICTXT,'C',NPROW,NPCOL)
+    call blacs_gridinfo(ICTXT,NPROW,NPCOL,myROW,myCOL)
+        
+    !write(*,*) node,NPROW,NPCOL,myROW,mycol
+!**************************
+!数据网格
+!读入数据H,S
+!**************************
+    m=5
+    lm=1
+    if(node .eq. 0) lm=2
+    allocate(H(lm,m),S(lm,m),C(lm,m),E(m))
+    blocksize=1
+    call DESCINIT(DESCH,m,m,blocksize,blocksize,0,0,ICTXT,lm,INFO)
+    call DESCINIT(DESCH,5,5,1,1,0,0,ICTXT,lm,INFO)
+    !write(*,*) node,DESCH
+    !write(*,*) INFO
+    !call DESCINIT(DESCE_2d,m,m,blocksize,blocksize,0,0,ICTXT_2d,lm,INFO)
+    call PdLAREAD("H.data",H,DESCH,0,0,WORK)
+    call PdLAREAD("S.data",S,DESCH,0,0,WORK)
+    if(IOnode) write(*,*) "H is : -------------------------------"
+    DO i=0,4  
+        
+        if(node .eq. mod(i,np)  ) write(*,*) node,i,":",H(1+i/np,:)   !DO i=1,lm
+        call sleep(1)           !    write(*,*) node,i,":",S(i,:) 
+    END DO 
+    !call sleep(1)
+    if(IOnode) write(*,*) "S is : -------------------------------"
+    DO i=0,4  
+        
+        if(node .eq. mod(i,np)  ) write(*,*) node,i,":",S(1+i/np,:)   !DO i=1,lm
+        call sleep(1)           !    write(*,*) node,i,":",S(i,:) 
+    END DO 
+    
+!****************************
+!Hz=Szw   
+!此处：S=U^T*U ,S=U
+!Hz=U^T*Uzw  
+!C=U^(-T)*H*U^(-1) U是上三角矩阵
+!Cy=wy -&gt; w,y ! C是一个上三角矩阵,可以告诉scalapack 
+!U^z=y;z=U^(-1)*y
+!函数：https://scc.ustc.edu.cn/zlsc/tc4600/intel/2017.0.098/mkl/common/mklman_f/index.htm
+!****************************
+    call pdpotrf('U',m,S,1,1,DESCH,INFO)
+            
+            !call pdpotrf(uplo, n, a, ia, ja, desca, info)
+            !uplo= 'U' or 'L'
+                !sub(A) = UH*U if uplo='U',
+                !sub(A) = L*LH if uplo='L'
+            !n (global) INTEGER. The order of the distributed matrix sub(A) (n≥0).
+!
+!    DO i=0,4
+!        if(node .eq. mod(i,np)) write(*,*) node,i,"SU",S(1+i/np,:)
+!        !call sleep(1)        
+!    END DO 
+ 
+!****************************
+!Hz=Szw   
+!S=U^T*U ,S=U
+!Hz=U^T*Uzw  
+!此处：C=U^(-T)*H*U^(-1) U是上三角矩阵
+!Cy=wy -&gt; w,y ! C是一个上三角矩阵,可以告诉scalapack 
+!U^z=y;z=U^(-1)*y
+!函数：https://scc.ustc.edu.cn/zlsc/tc4600/intel/2017.0.098/mkl/common/mklman_f/index.htm
+!*****************************    
+    call pdsyngst(1,'U',m,H,1,1,DESCH,S,1,1, DESCH,DSCALE,work,lwork,info)
+    !H=inv(UH)*sub( A )*inv(U)
+    
+    !call pdsyngst (ibtype, uplo, n, a, ia, ja, desca, b, ib, jb, descb, scale, work, lwork, info )
+    !结果保存到a
+    !ibtype
+        != 1: compute inv(UH)*sub( A )*inv(U) or inv(L)*sub( A )*inv(LH);
+        != 2 or 3: compute U*sub( A )*UH or LH*sub( A )*L.
+    !uplo
+        != 'U': Upper triangle of sub( A ) is stored and sub( B ) is factored as UH*U;
+        != 'L': Lower triangle of sub( A ) is stored and sub( B ) is factored as L*LH.
+    !n The order of the matrices sub( A ) and sub( B ). n &gt;= 0.
+    !SCALE : output ,no use
+    !work
+    !lwork 需要判断！！！
+    !lwork
+    !(local or global)
+    !INTEGER.
+    !The size of the array work.
+    !lwork is local input and must be at least lwork &gt;= MAX( NB * ( NP0 +1 ), 3 * NB )
+    !
+    !When ibtype = 1 and uplo = 'L', p?syngst provides improved performance when lwork &gt;= 2 * NP0 * NB + NQ0 * NB + NB * NB,
+    !
+    !where NB = mb_a = nb_a,
+    !
+    !NP0 = numroc( n, NB, 0, 0, NPROW ),
+    !
+    !NQ0 = numroc( n, NB, 0, 0, NPROW ),
+    !
+    !numroc is a ScaLAPACK tool functions
+    !
+    !MYROW, MYCOL, NPROW and NPCOL can be determined by calling the subroutine blacs_gridinfo.
+    !
+    !If lwork = -1, then lwork is global input and a workspace query is assumed; the routine only calculates the optimal size for all work arrays. Each of these values is returned in the first entry of the corresponding work array, and no error message is issued by pxerbla.
+
+!    DO i=0,4
+!        if(node .eq. mod(i,np)) write(*,*) node,i,":",H(1+i/np,:)
+!        call sleep(1)        
+!    END DO 
+    
+!****************************
+!Hz=Szw   
+!S=U^T*U ,S=U
+!Hz=U^T*Uzw  
+!C=U^(-T)*H*U^(-1) U是上三角矩阵
+!此处 Cy=wy -&gt; w,y ! C是一个上三角矩阵,可以告诉scalapack 
+!U^z=y;z=U^(-1)*y
+!函数：https://scc.ustc.edu.cn/zlsc/tc4600/intel/2017.0.098/mkl/common/mklman_f/index.htm
+!*****************************  
+
+     call pdsyevd('V','U',m,H,1,1,DESCH,E,C,1,1,DESCH,work,lwork,iwork,liwork,INFO)
+     
+     !call pdsyevd(jobz, uplo, n, a, ia, ja, desca, w, z, iz, jz, descz, work, lwork, iwork, liwork, info)
+        !jobz
+           !(global) CHARACTER*1. Must be 'N' or 'V'.
+           !Specifies if it is necessary to compute the eigenvectors:
+           !If jobz = 'N', then only eigenvalues are computed.
+           !If jobz = 'V', then eigenvalues and eigenvectors are computed.
+        !uplo
+           !(global) CHARACTER*1. Must be 'U' or 'L'.
+           !Specifies whether the upper or lower triangular part of the Hermitian matrix A is stored:
+           !If uplo = 'U', a stores the upper triangular part of A.
+           !If uplo = 'L', a stores the lower triangular part of A.
+           
+        !w 的维度w(n), n是A(n,n)的维度w
+
+        !lwork需要计算最小值
+
+        !iwork
+            !(local) INTEGER. Workspace array of size liwork.
+        !liwork
+            !(local) INTEGER , size of iwork.
+            !liwork = 7*n + 8*npcol + 2.    
+            !liwork &gt;= 7*5+8*1+2=45 都可以
+
+     !DO i=0,4
+     !    if(node .eq. mod(i,np)) write(*,*) node,i,":",C(1+i/np,:)
+     !    !call sleep(1)        
+     !END DO 
+     !
+!****************************
+!Hz=Szw   
+!S=U^T*U ,S=U
+!Hz=U^T*Uzw  
+!C=U^(-T)*H*U^(-1) U是上三角矩阵
+!Cy=wy -&gt; w,y ! C是一个上三角矩阵,可以告诉scalapack 
+!此处 U^z=y;z=U^(-1)*y
+!函数：https://scc.ustc.edu.cn/zlsc/tc4600/intel/2017.0.098/mkl/common/mklman_f/index.htm
+!*****************************  
+     call pdtrsm('Left','U','N','Non-unit',m,m,1.0_dp,S,1,1,DESCH,C,1,1,DESCH)
+              
+              !求解S*X=Z
+              !X的解保存到z2d中去，此时z2d才变成真的z2d
+              
+              !call pdtrsm(side, uplo, transa, diag, m, n, alpha,a , ia, ja, desca, b, ib, jb, descb)
+              !The p?trsm routines solve one of the following distributed matrix equations:
+              !op(sub(A))*X = alpha*sub(B),
+              !or
+              !X*op(sub(A)) = alpha*sub(B),
+              !if side = 'L' or 'l', then op(sub(A))*X = alpha*sub(B);
+              !if side = 'R' or 'r', then X*op(sub(A)) = alpha*sub(B).
+              !uplo
+                  !if uplo = 'U' or 'u', then the matrix is upper triangular;
+                  !if uplo = 'L' or 'l', then the matrix is low triangular.
+              !transa
+                  !if transa = 'N' or 'n', then op(sub(A)) = sub(A);
+                  !if transa = 'T' or 't', then op(sub(A)) = sub(A)';
+                  !if transa = 'C' or 'c', then op(sub(A)) = conjg(sub(A)').
+              !diag
+              !(global) CHARACTER*1. Specifies whether the matrix sub(A) is unit triangular:
+                  !if diag = 'U' or 'u' then the matrix is unit triangular;
+                  !if diag = 'N' or 'n', then the matrix is not unit triangular.
+              !b  Overwritten by the solution distributed matrix X. 
+             
+     DO i=0,4
+         if(node .eq. mod(i,np)) then
+            write(*,*) "Eig",E(i+1),"Vector",C(1+i/np,:)
+         endif
+         call sleep(1)        
+     END DO 
+       
+    !CALL BLACS_GRIDEXIT( ICTXT )
+    
+    !deallocate(H,S,C,E)
+
+
+!********************************************************************************
+!2D网格计算    
+!********************************************************************************
+
+!**************************
+!处理器grid
+!**************************
+    
+    NPCOL=2
+    NPROW=2
+!建立多个处理器网格的方法
+    CALL BLACS_GET( -1, 0, ICTXT_1d )
+    call blacs_gridinit(ICTXT_1d,'C',NPROW,NPCOL)
+    call blacs_gridinfo(ICTXT_1d,NPROW,NPCOL,myROW,myCOL)
+    !
+    CALL BLACS_GET( -1, 0, ICTXT_2d )
+    call blacs_gridinit(ICTXT_2d,'C',NPROW,NPCOL)
+    call blacs_gridinfo(ICTXT_2d,NPROW,NPCOL,myROW,myCOL)
+    !
+    CALL BLACS_GET( -1, 0, ICTXT_3d )
+    call blacs_gridinit(ICTXT_3d,'C',NPROW,NPCOL)
+    !call blacs_gridinfo(ICTXT_3d,NPROW,NPCOL,myROW,myCOL)
+    CALL BLACS_GET( -1, 0, ICTXT_4d )
+    call blacs_gridinit(ICTXT_4d,'C',NPROW,NPCOL)
+    !call blacs_gridinfo(ICTXT_4d,NPROW,NPCOL,myROW,myCOL)    
+    if(IOnode) write(*,*) "CNQ:ICTXT" ,ICTXT,ICTXT_1d,ICTXT_2d,ICTXT_3d,ICTXT_4d
+!不同的处理器网不会互相干扰，有各自的ICTXT
+
+!**************************
+!数据网格
+
+!**************************
+    !在ICTXT情况下读入数据，测试不同网格下的转换
+    call PdLAREAD("H.data",H,DESCH,0,0,WORK)
+    call PdLAREAD("S.data",S,DESCH,0,0,WORK)  
+    
+    m=5
+    blocksize=1
+    lm=3
+    ln=3
+    if(myROW .eq. 1) lm=2
+    if(myCol .eq. 1) ln=2
+    allocate(H_2d(lm,ln),S_2d(lm,ln),C_2d(lm,ln),E_2d(m))
+    call DESCINIT(DESCH_2d,m,m,blocksize,blocksize,0,0,ICTXT_2d,lm,INFO)
+    !write(*,*) INFO
+    !call DESCINIT(DESCE_2d,m,m,blocksize,blocksize,0,0,ICTXT_2d,lm,INFO)
+    call pdgemr2d(m, m, H, 1, 1, DESCH, H_2d, 1, 1, DESCH_2d, ictxt_2d)
+    !在不同的处理器/数据网格间复制矩阵
+    !call pdgemr2d(m, n, a, ia, ja, desca, b, ib, jb, descb, ictxt)
+    !b "=" a 
+    !ictxt 当ictxt与ictxt_2d的所有处理器一样时，用谁都可以
+    !The context encompassing at least the union of all processes
+    !                 in context A and context B. All processes in 
+    !                  the context ictxt must call this routine, 
+    !                   even if they do not own a piece of either matrix.
+    
+     !This can check H have be copied succeed
+     !DO i=0,4
+     !    if(myROW .eq. mod(i,NPROW) .and. myCOL .eq. 0 ) then
+     !       j=i/2
+     !       write(*,*) "H2d",j+1,i,H_2d(j+1,1)
+     !    endif
+     !    call sleep(1)        
+     !END DO
+     call pdgemr2d(m, m, S, 1, 1, DESCH, S_2d, 1, 1, DESCH_2d, ictxt_2d)
+  
+     !计算过程同1D
+     call pdpotrf('U',m,S_2d,1,1,DESCH_2d,INFO)
+     call pdsyngst(1,'U',m,H_2d,1,1,DESCH_2d,S_2d,1,1, DESCH_2d,DSCALE,work,lwork,info)
+     liwork=53
+     !liwork=7*5+8*2+2=53
+     call pdsyevd('V','U',m,H_2d,1,1,DESCH_2d,E_2d,C_2d,1,1,DESCH_2d,work,lwork,iwork,liwork,INFO)
+     call pdtrsm('Left','U','N','Non-unit',m,m,1.0_dp,S_2d,1,1,DESCH_2d,C_2d,1,1,DESCH_2d)
+     if(node .eq. 0) write(*,*) "Use 2D Eigvalue is:"
+     if(node .eq. 0) write(*,*) E_2d
+    
+    deallocate(H,S,C,E)
+    deallocate(H_2d,S_2d,C_2d,E_2d)
+    CALL BLACS_GRIDEXIT( ICTXT )
+    CALL BLACS_GRIDEXIT( ICTXT_1d )    
+    CALL BLACS_GRIDEXIT( ICTXT_2d )    
+    CALL BLACS_GRIDEXIT( ICTXT_3d )    
+    CALL BLACS_GRIDEXIT( ICTXT_4d )    
+    call mpi_end()
+end program HC_SCE
+</code></pre></div></div>
+<p>将代码中的’U’换为’L’可以得到同样的本征值解，只是本征矢量有些不同</p>
+
+<h2 id="处理结果">处理结果</h2>
+<p><img src="/uploads/2019/08/hcsce.jpg" alt="" /></p>
+
+<h2 id="使用matlab检验计算结果">使用matlab检验计算结果</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt; H
+
+H =
+
+   -0.4240   -0.4014   -0.0000    0.0000   -0.0000
+   -0.4014   -0.2996   -0.0000    0.0000   -0.0000
+   -0.0000   -0.0000    0.8041   -0.0000   -0.0000
+    0.0000    0.0000   -0.0000    0.8042    0.0000
+   -0.0000   -0.0000   -0.0000    0.0000    0.8041
+
+&gt;&gt; S
+
+S =
+
+    1.0000    0.9548         0   -0.0000         0
+    0.9548    1.0000         0   -0.0000         0
+         0         0    1.0000         0         0
+    0.0000    0.0000         0    1.0000         0
+         0         0         0         0    1.0000
+
+&gt;&gt; C
+
+C =
+
+   -1.0275    0.0004   -0.0000   -0.0000   -3.2032
+    0.0289   -0.0004    0.0000    0.0000    3.3639
+   -0.0000   -0.7084   -0.7058   -0.0000   -0.0001
+    0.0000   -0.0000   -0.0000    1.0000   -0.0000
+   -0.0000   -0.7058    0.7084    0.0000   -0.0001
+
+&gt;&gt; %HC=SCE
+&gt;&gt; %inv(C)*inv(S)*HC=E
+&gt;&gt; inv(C)*inv(S)*H*C
+
+ans =
+
+   -0.4241    0.0000    0.0000    0.0000   -0.0000
+    0.0000    0.8041   -0.0000    0.0000   -0.0000
+    0.0000   -0.0000    0.8041    0.0000   -0.0000
+   -0.0000   -0.0000    0.0000    0.8042    0.0000
+    0.0000    0.0000    0.0000    0.0000    0.9098
+
+&gt;&gt; 
+</code></pre></div></div>
+<p>对角线的值即为E</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/08/02/ss/">OpenWrt (Chaos Calmer)下搭建ss服务器</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/08/07/scalapack/">[挖坑]BLAS, Lapack, Scalapack & Fortran 快速上手</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

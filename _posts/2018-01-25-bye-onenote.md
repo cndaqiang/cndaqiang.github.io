@@ -89,6 +89,12 @@ VeraCrypt 是一款基于已终止的 TrueCrypt项目开发的开源即时加密
 `ctrl +/-`调节页面文本显示大小
 #### 插入图片过大
 选中图片,ctrl+E,调整大小
+#### 常用插件
+Edit>Preferences>Plugins
+- 插入代码块高亮Source View<br>
+插入后就可以Insert>Code Block
+![](/uploads/2020/06/source.PNG)
+- 目录插件 Table of Contents
 
 ## 安装VeraCrypt
 参考[Please add these info for Linux/Ubuntu users](https://sourceforge.net/p/veracrypt/discussion/technical/thread/1056ed16/)<br>

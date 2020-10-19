@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>使用cloudflare加速博客访问/免费搭建谷歌镜像</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2020/05/02/cloudflare/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2020/05/02/cloudflare/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2020/05/02/cloudflare/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2020/05/02/cloudflare/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>使用cloudflare加速博客访问/免费搭建谷歌镜像</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-05-02
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#web" title="Category: web" rel="category">web</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#cdn" title="Tag: cdn" rel="tag">cdn</a-->
+        <a href="/tag/#cdn" title="Tag: cdn" rel="tag">cdn</a>&nbsp;
+    
+        <!--a href="/tag/#web" title="Tag: web" rel="tag">web</a-->
+        <a href="/tag/#web" title="Tag: web" rel="tag">web</a>&nbsp;
+    
+        <!--a href="/tag/#Google" title="Tag: Google" rel="tag">Google</a-->
+        <a href="/tag/#Google" title="Tag: Google" rel="tag">Google</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#结果测速对比" id="markdown-toc-结果测速对比">结果:测速对比</a></li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a>    <ul>
+      <li><a href="#注册" id="markdown-toc-注册">注册</a></li>
+      <li><a href="#创建workers" id="markdown-toc-创建workers">创建Workers</a></li>
+      <li><a href="#填入脚本" id="markdown-toc-填入脚本">填入脚本</a></li>
+      <li><a href="#部署访问" id="markdown-toc-部署访问">部署访问</a></li>
+    </ul>
+  </li>
+  <li><a href="#后续" id="markdown-toc-后续">后续</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://umrhe.com/cloudflare-workers-to-google.html">使用 Cloudflare Workers™ 制作镜像站，可访问谷歌@何先生</a></p>
+
+<h2 id="结果测速对比">结果:测速对比</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://blog.cndaqiang.workers.dev/uploads/2020/04/coffee.jpg
+wget https://cndaqiang.github.io/uploads/2020/04/coffee.jpg
+wget https://cndaqiang.gitee.io/uploads/2020/04/coffee.jpg
+</code></pre></div></div>
+<p><strong>国内访问速度: <code class="highlighter-rouge">gitee = 5*cloudfare = 50*GithubPage</code></strong></p>
+<ul>
+  <li>cloudfare
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2020-05-02 08:35:44 (419 KB/s) - ‘coffee.jpg.1’ saved [3248748/3248748]
+</code></pre></div>    </div>
+  </li>
+  <li>Github Page
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2020-05-02 08:37:34 (36.8 KB/s) - ‘coffee.jpg.2’ saved [3248748/3248748]
+</code></pre></div>    </div>
+  </li>
+  <li>gitee
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2020-05-02 08:40:33 (2.13 MB/s) - ‘coffee.jpg.3’ saved [3248748/3248748]
+</code></pre></div>    </div>
+    <p>站长工具测试
+<img src="/uploads/2020/05/blogspeed1.png" alt="" /></p>
+  </li>
+</ul>
+
+<h2 id="操作">操作</h2>
+<h3 id="注册">注册</h3>
+<p>注册<a href="https://dash.cloudflare.com/">https://dash.cloudflare.com/</a></p>
+<h3 id="创建workers">创建Workers</h3>
+<p><img src="/uploads/2020/05/cloudfare.jpg" alt="" />
+创建一个worker
+<img src="/uploads/2020/05/cloudfare2.jpg" alt="" /></p>
+<h3 id="填入脚本">填入脚本</h3>
+<ul>
+  <li>谷歌镜像脚本</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 你要镜像的网站.</span>
+<span class="k">const</span> <span class="no">upstream</span> <span class="o">=</span> <span class="s1">'www.google.com'</span>
+
+<span class="c1">// 镜像网站的目录，比如你想镜像某个网站的二级目录则填写二级目录的目录名，镜像 google 用不到，默认即可.</span>
+<span class="k">const</span> <span class="no">upstream_path</span> <span class="o">=</span> <span class="s1">'/'</span>
+
+<span class="c1">// 镜像站是否有手机访问专用网址，没有则填一样的.</span>
+<span class="k">const</span> <span class="no">upstream_mobile</span> <span class="o">=</span> <span class="s1">'www.google.com'</span>
+
+<span class="c1">// 屏蔽国家和地区.</span>
+<span class="k">const</span> <span class="no">blocked_region</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'KP'</span><span class="p">,</span> <span class="s1">'SY'</span><span class="p">,</span> <span class="s1">'PK'</span><span class="p">,</span> <span class="s1">'CU'</span><span class="p">]</span>
+
+<span class="c1">// 屏蔽 IP 地址.</span>
+<span class="k">const</span> <span class="no">blocked_ip_address</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'0.0.0.0'</span><span class="p">,</span> <span class="s1">'127.0.0.1'</span><span class="p">]</span>
+
+<span class="c1">// 镜像站是否开启 HTTPS.</span>
+<span class="k">const</span> <span class="no">https</span> <span class="o">=</span> <span class="kc">true</span>
+
+<span class="c1">// 文本替换.</span>
+<span class="k">const</span> <span class="no">replace_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'$upstream'</span><span class="o">:</span> <span class="s1">'$custom_domain'</span><span class="p">,</span>
+    <span class="s1">'//google.com'</span><span class="o">:</span> <span class="s1">''</span>
+<span class="p">}</span>
+
+<span class="c1">// 以下保持默认，不要动</span>
+<span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'fetch'</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="o">.</span><span class="nx">respondWith</span><span class="p">(</span><span class="nx">fetchAndApply</span><span class="p">(</span><span class="nx">event</span><span class="o">.</span><span class="nx">request</span><span class="p">));</span>
+<span class="p">})</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="nf">fetchAndApply</span><span class="p">(</span><span class="nx">request</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">const</span> <span class="no">region</span> <span class="o">=</span> <span class="nx">request</span><span class="o">.</span><span class="nx">headers</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'cf-ipcountry'</span><span class="p">)</span><span class="o">.</span><span class="nx">toUpperCase</span><span class="p">();</span>
+    <span class="k">const</span> <span class="no">ip_address</span> <span class="o">=</span> <span class="nx">request</span><span class="o">.</span><span class="nx">headers</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'cf-connecting-ip'</span><span class="p">);</span>
+    <span class="k">const</span> <span class="no">user_agent</span> <span class="o">=</span> <span class="nx">request</span><span class="o">.</span><span class="nx">headers</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'user-agent'</span><span class="p">);</span>
+
+    <span class="nx">let</span> <span class="nx">response</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="nx">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">URL</span><span class="p">(</span><span class="nx">request</span><span class="o">.</span><span class="nx">url</span><span class="p">);</span>
+    <span class="nx">let</span> <span class="nx">url_hostname</span> <span class="o">=</span> <span class="nx">url</span><span class="o">.</span><span class="nx">hostname</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">https</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">url</span><span class="o">.</span><span class="nx">protocol</span> <span class="o">=</span> <span class="s1">'https:'</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">url</span><span class="o">.</span><span class="nx">protocol</span> <span class="o">=</span> <span class="s1">'http:'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="k">await</span> <span class="nx">device_status</span><span class="p">(</span><span class="nx">user_agent</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nx">upstream_domain</span> <span class="o">=</span> <span class="nx">upstream</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nx">upstream_domain</span> <span class="o">=</span> <span class="nx">upstream_mobile</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">url</span><span class="o">.</span><span class="nx">host</span> <span class="o">=</span> <span class="nx">upstream_domain</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">url</span><span class="o">.</span><span class="nx">pathname</span> <span class="o">==</span> <span class="s1">'/'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">url</span><span class="o">.</span><span class="nx">pathname</span> <span class="o">=</span> <span class="nx">upstream_path</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">url</span><span class="o">.</span><span class="nx">pathname</span> <span class="o">=</span> <span class="nx">upstream_path</span> <span class="o">+</span> <span class="nx">url</span><span class="o">.</span><span class="nx">pathname</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">blocked_region</span><span class="o">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">region</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="s1">'Access denied: WorkersProxy is not available in your region yet.'</span><span class="p">,</span> <span class="p">{</span>
+            <span class="nx">status</span><span class="o">:</span> <span class="mi">403</span>
+        <span class="p">});</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">blocked_ip_address</span><span class="o">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">ip_address</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="s1">'Access denied: Your IP address is blocked by WorkersProxy.'</span><span class="p">,</span> <span class="p">{</span>
+            <span class="nx">status</span><span class="o">:</span> <span class="mi">403</span>
+        <span class="p">});</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">let</span> <span class="nx">method</span> <span class="o">=</span> <span class="nx">request</span><span class="o">.</span><span class="nx">method</span><span class="p">;</span>
+        <span class="nx">let</span> <span class="nx">request_headers</span> <span class="o">=</span> <span class="nx">request</span><span class="o">.</span><span class="nx">headers</span><span class="p">;</span>
+        <span class="nx">let</span> <span class="nx">new_request_headers</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">(</span><span class="nx">request_headers</span><span class="p">);</span>
+
+        <span class="nx">new_request_headers</span><span class="o">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">'Host'</span><span class="p">,</span> <span class="nx">url</span><span class="o">.</span><span class="nx">hostname</span><span class="p">);</span>
+        <span class="nx">new_request_headers</span><span class="o">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">'Referer'</span><span class="p">,</span> <span class="nx">url</span><span class="o">.</span><span class="nx">hostname</span><span class="p">);</span>
+
+        <span class="nx">let</span> <span class="nx">original_response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="o">.</span><span class="nx">href</span><span class="p">,</span> <span class="p">{</span>
+            <span class="nx">method</span><span class="o">:</span> <span class="nx">method</span><span class="p">,</span>
+            <span class="nx">headers</span><span class="o">:</span> <span class="nx">new_request_headers</span>
+        <span class="p">})</span>
+
+        <span class="nx">let</span> <span class="nx">original_response_clone</span> <span class="o">=</span> <span class="nx">original_response</span><span class="o">.</span><span class="k">clone</span><span class="p">();</span>
+        <span class="nx">let</span> <span class="nx">original_text</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="nx">let</span> <span class="nx">response_headers</span> <span class="o">=</span> <span class="nx">original_response</span><span class="o">.</span><span class="nx">headers</span><span class="p">;</span>
+        <span class="nx">let</span> <span class="nx">new_response_headers</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">(</span><span class="nx">response_headers</span><span class="p">);</span>
+        <span class="nx">let</span> <span class="nx">status</span> <span class="o">=</span> <span class="nx">original_response</span><span class="o">.</span><span class="nx">status</span><span class="p">;</span>
+
+        <span class="nx">new_response_headers</span><span class="o">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">'access-control-allow-origin'</span><span class="p">,</span> <span class="s1">'*'</span><span class="p">);</span>
+        <span class="nx">new_response_headers</span><span class="o">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">'access-control-allow-credentials'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+        <span class="nx">new_response_headers</span><span class="o">.</span><span class="nb">delete</span><span class="p">(</span><span class="s1">'content-security-policy'</span><span class="p">);</span>
+        <span class="nx">new_response_headers</span><span class="o">.</span><span class="nb">delete</span><span class="p">(</span><span class="s1">'content-security-policy-report-only'</span><span class="p">);</span>
+        <span class="nx">new_response_headers</span><span class="o">.</span><span class="nb">delete</span><span class="p">(</span><span class="s1">'clear-site-data'</span><span class="p">);</span>
+
+        <span class="k">const</span> <span class="no">content_type</span> <span class="o">=</span> <span class="nx">new_response_headers</span><span class="o">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'content-type'</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">content_type</span><span class="o">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">'text/html'</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">content_type</span><span class="o">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">'UTF-8'</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">original_text</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">replace_response_text</span><span class="p">(</span><span class="nx">original_response_clone</span><span class="p">,</span> <span class="nx">upstream_domain</span><span class="p">,</span> <span class="nx">url_hostname</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">original_text</span> <span class="o">=</span> <span class="nx">original_response_clone</span><span class="o">.</span><span class="nx">body</span>
+        <span class="p">}</span>
+
+        <span class="nx">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="nx">original_text</span><span class="p">,</span> <span class="p">{</span>
+            <span class="nx">status</span><span class="p">,</span>
+            <span class="nx">headers</span><span class="o">:</span> <span class="nx">new_response_headers</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">response</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="nf">replace_response_text</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="nx">upstream_domain</span><span class="p">,</span> <span class="nx">host_name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">let</span> <span class="nx">text</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">response</span><span class="o">.</span><span class="nx">text</span><span class="p">()</span>
+
+    <span class="k">var</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="nx">in</span> <span class="nx">replace_dict</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">j</span> <span class="o">=</span> <span class="nx">replace_dict</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">==</span> <span class="s1">'$upstream'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">i</span> <span class="o">=</span> <span class="nx">upstream_domain</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">==</span> <span class="s1">'$custom_domain'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">i</span> <span class="o">=</span> <span class="nx">host_name</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">==</span> <span class="s1">'$upstream'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">j</span> <span class="o">=</span> <span class="nx">upstream_domain</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">==</span> <span class="s1">'$custom_domain'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">j</span> <span class="o">=</span> <span class="nx">host_name</span>
+        <span class="p">}</span>
+
+        <span class="nx">let</span> <span class="nx">re</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RegExp</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="s1">'g'</span><span class="p">)</span>
+        <span class="nx">text</span> <span class="o">=</span> <span class="nx">text</span><span class="o">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">re</span><span class="p">,</span> <span class="nx">j</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">text</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="k">async</span> <span class="k">function</span> <span class="nf">device_status</span><span class="p">(</span><span class="nx">user_agent_info</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nx">agents</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Android"</span><span class="p">,</span> <span class="s2">"iPhone"</span><span class="p">,</span> <span class="s2">"SymbianOS"</span><span class="p">,</span> <span class="s2">"Windows Phone"</span><span class="p">,</span> <span class="s2">"iPad"</span><span class="p">,</span> <span class="s2">"iPod"</span><span class="p">];</span>
+    <span class="k">var</span> <span class="nx">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">v</span> <span class="o">&lt;</span> <span class="nx">agents</span><span class="o">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">v</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">user_agent_info</span><span class="o">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">agents</span><span class="p">[</span><span class="nx">v</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">flag</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">flag</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>博客加速脚本
+把谷歌镜像脚本开头替换为即可. 博客有的页面第一次打开偶尔会出现页面乱的情况，刷新一下就好了</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 你要镜像的网站.
+const upstream = 'cndaqiang.github.io'
+
+// 镜像网站的目录，比如你想镜像某个网站的二级目录则填写二级目录的目录名，镜像 google 用不到，默认即可.
+const upstream_path = '/'
+
+// 镜像站是否有手机访问专用网址，没有则填一样的.
+const upstream_mobile = 'cndaqiang.github.io'
+
+// 屏蔽国家和地区.
+const blocked_region = ['KP', 'SY', 'PK', 'CU']
+
+// 屏蔽 IP 地址.
+const blocked_ip_address = ['0.0.0.0', '127.0.0.1']
+
+// 镜像站是否开启 HTTPS.
+const https = true
+
+// 文本替换.
+const replace_dict = {
+    '$upstream': '$custom_domain',
+    '//cndaqiang.github.io': ''
+}
+</code></pre></div></div>
+
+<h3 id="部署访问">部署访问</h3>
+<p>每天有免费100,000次的请求，个人足够了</p>
+
+<h2 id="后续">后续</h2>
+<p>youtube的镜像卡的不行<br />
+谷歌学术异常流量问题<br />
+谷歌的镜像没有问题,手机测试通过<br />
+<img src="/uploads/2020/05/1520248476.jpg" alt="" />
+<br />
+应该可以造成图床cdn加速一样的,在githuapage里面存上图片，然后用cloudflare加速</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/07/01/js/">JavaScript学习
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/04/22/fft/">关于FFT变换的一些思考</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/07/01/js/">JavaScript学习</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

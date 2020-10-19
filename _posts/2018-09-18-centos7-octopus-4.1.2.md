@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "centos7 gun 编译octopus-4.1.2遇到问题和解决方案 "
+title:  "centos7 gnu 编译octopus-4.1.2遇到问题和解决方案 "
 date:   2018-09-18 21:12:00 +0800
 categories: DFT
 tags: gnu octopus

@@ -14,7 +14,9 @@ type: page
 - [元素周期表](https://cndaqiang.github.io/Periodic_Table/)
 - [自建免费谷歌镜像:https://google.cndaqiang.workers.dev/](https://google.cndaqiang.workers.dev/)
 - [Q-Tools Manual](http://cndaqiang.gitee.io/q-tools/)
+- [自用开源程序源码mirror](/packages/) or  [gitee](https://cndaqiang.gitee.io/packages/)
 <br><br>
+- [google drive推荐的文件类型转换](https://cloudconvert.com)
 
 ## DFT程序和理论
 搜索Castep,有很多中英文教程，介绍程序是怎么计算的，对于看代码有帮助，如[Nonlinear core correction](https://www.tcm.phy.cam.ac.uk/castep/documentation/WebHelp/content/modules/castep/thcastepnonlincorr.htm?tocpath=Theory%20in%20CASTEP%7CCASTEP%20background%20theory%7CPseudopotentials%7C_____3)

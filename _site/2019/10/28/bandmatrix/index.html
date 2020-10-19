@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>利用Lapack和ScaLapach进行带状矩阵计算</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2019/10/28/bandmatrix/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2019/10/28/bandmatrix/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2019/10/28/bandmatrix/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2019/10/28/bandmatrix/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>利用Lapack和ScaLapach进行带状矩阵计算</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-10-28
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Fortran" title="Category: Fortran" rel="category">Fortran</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>&nbsp;
+    
+        <!--a href="/tag/#Lapack" title="Tag: Lapack" rel="tag">Lapack</a-->
+        <a href="/tag/#Lapack" title="Tag: Lapack" rel="tag">Lapack</a>&nbsp;
+    
+        <!--a href="/tag/#ScaLapack" title="Tag: ScaLapack" rel="tag">ScaLapack</a-->
+        <a href="/tag/#ScaLapack" title="Tag: ScaLapack" rel="tag">ScaLapack</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#lapack" id="markdown-toc-lapack">Lapack</a>    <ul>
+      <li><a href="#矩阵存储" id="markdown-toc-矩阵存储">矩阵存储</a></li>
+      <li><a href="#代码示例" id="markdown-toc-代码示例">代码示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#scalapack" id="markdown-toc-scalapack">ScaLapack</a>    <ul>
+      <li><a href="#矩阵存储-1" id="markdown-toc-矩阵存储-1">矩阵存储</a></li>
+      <li><a href="#代码示例-1" id="markdown-toc-代码示例-1">代码示例</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="lapack">Lapack</h2>
+<h3 id="矩阵存储">矩阵存储</h3>
+<p><img src="/uploads/2019/10/lapackband.png" alt="" /></p>
+
+<h3 id="代码示例">代码示例</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>subroutine inv_gb (N,KL,KU,A,invA,Info)
+   implicit none 
+
+   integer,intent(in) :: N         ! Size of the matrix.
+   integer,intent(in) :: KL        ! Number of subdiagonals in the band of B.
+   integer,intent(in) :: KU        ! Number of superdiagonals in the band of B.
+   real(8),intent(in) :: A(N,N)    ! Banded atrix to be inverted(full matrix)
+   real(8),intent(out):: invA(N,N) ! A^-1 (full matrix)
+   integer,intent(out):: Info      ! Error codes.
+ 
+ ! Local variables.
+ 
+   real(8),allocatable:: LUdecom(:,:)
+   integer,allocatable:: LUpivot(:)
+   real(8),allocatable:: LUwork (:)
+   integer :: i,j,m
+ 
+ ! Allocate auxiliary memory.
+ 
+   allocate (LUpivot(N));  LUpivot=0
+   allocate (LUwork(N*N)); LUwork =0.d0 
+   allocate (LUdecom(2*KL+KU+1,N))
+
+   !change full matrix to banded matrix
+   m=n
+   Do j=1,N 
+      DO i = max(1,j-ku),min(m,j+kl)
+         LUdecom(kl+ku+1+i-j,j)=A(i,j)
+      ENDDO
+   ENDDO
+
+ 
+ ! Perform LU decomposition.
+   call DGBTRF (N,N,KL,KU,LUdecom,2*KL+KU+1,LUpivot,Info)
+   if (Info.ne.0) return
+ 
+ ! Perform matrix inversion.
+ 
+   invA=0.d0
+   do i=1,N
+     invA(i,i)=1.d0
+     call DGBTRS ('N',N,KL,KU,1,LUdecom,2*KL+KU+1,LUpivot,invA(i,:),N,Info)
+   end do
+ 
+   deallocate (LUpivot,LUwork,LUdecom)
+   return
+  end subroutine inv_gb
+</code></pre></div></div>
+
+<h2 id="scalapack">ScaLapack</h2>
+
+<h3 id="矩阵存储-1">矩阵存储</h3>
+<p><img src="/uploads/2019/10/scalapackbd.png" alt="" /></p>
+
+<h3 id="代码示例-1">代码示例</h3>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">subroutine</span><span class="w"> </span><span class="n">PDGBTRF_EXAMPLE3ZZ</span><span class="p">()</span><span class="w">
+
+</span><span class="c1">!</span><span class="w">
+</span><span class="c1">!     This is an example of using PDGBTRF and PDGBTRS.</span><span class="w">
+</span><span class="c1">!     A matrix of size 9x9 is distributed on a 1x3 process</span><span class="w">
+</span><span class="c1">!     grid, factored, and solved in parallel.</span><span class="w">
+</span><span class="c1">!     </span><span class="w">
+</span><span class="c1">!</span><span class="w">
+      </span><span class="kt">INTEGER</span><span class="w">          </span><span class="n">ICTXT</span><span class="p">,</span><span class="w"> </span><span class="n">INFO</span><span class="p">,</span><span class="w"> </span><span class="n">MYCOL</span><span class="p">,</span><span class="w"> </span><span class="n">MYROW</span><span class="p">,</span><span class="w"> </span><span class="n">NPCOL</span><span class="p">,</span><span class="w"> </span><span class="n">NPROW</span><span class="w">
+      </span><span class="kt">INTEGER</span><span class="w">          </span><span class="n">BWL</span><span class="p">,</span><span class="w"> </span><span class="n">BWU</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">NB</span><span class="p">,</span><span class="w"> </span><span class="n">LAF</span><span class="p">,</span><span class="w"> </span><span class="n">LWORK</span><span class="w">
+
+      </span><span class="k">PARAMETER</span><span class="w">       </span><span class="p">(</span><span class="n">BWL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">BWU</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">NB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="c1">!NB Blocksize 4 4 2 </span><span class="w">
+                       </span><span class="c1">! P*NB&gt;= mod(JA-1,NB)+N.</span><span class="w">
+                       </span><span class="c1">!算法要求一个处理器不能分布两block矩阵</span><span class="w">
+                       </span><span class="c1">!有些时候，算法还不能保证分布能算出来，INFO &gt; 0</span><span class="w">
+                       </span><span class="c1">!这还和数据有关系</span><span class="w">
+      </span><span class="k">PARAMETER</span><span class="w">       </span><span class="p">(</span><span class="n">LDA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1+2</span><span class="o">*</span><span class="n">BWL</span><span class="mi">+2</span><span class="o">*</span><span class="n">BWU</span><span class="w"> </span><span class="mi">+10</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">LNA</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="w"> 
+      </span><span class="k">PARAMETER</span><span class="w">       </span><span class="p">(</span><span class="w"> </span><span class="n">LDB</span><span class="o">=</span><span class="n">NB</span><span class="mi">+10</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">NRHS</span><span class="o">=</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="c1">!LNB=NRHS</span><span class="w">
+      </span><span class="k">PARAMETER</span><span class="w">       </span><span class="p">(</span><span class="n">LAF</span><span class="o">=</span><span class="p">(</span><span class="n">NB</span><span class="o">+</span><span class="n">BWU</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">BWL</span><span class="o">+</span><span class="n">BWU</span><span class="p">)</span><span class="mi">+6</span><span class="o">*</span><span class="p">(</span><span class="n">BWL</span><span class="o">+</span><span class="n">BWU</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">BWL</span><span class="mi">+2</span><span class="o">*</span><span class="n">BWU</span><span class="p">)</span><span class="w"> </span><span class="mi">+10</span><span class="w"> </span><span class="p">)</span><span class="w">
+      </span><span class="k">PARAMETER</span><span class="w">       </span><span class="p">(</span><span class="n">LWORK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NRHS</span><span class="o">*</span><span class="p">(</span><span class="n">NB</span><span class="mi">+2</span><span class="o">*</span><span class="n">BWL</span><span class="mi">+4</span><span class="o">*</span><span class="n">BWU</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+      </span><span class="kt">INTEGER</span><span class="w">          </span><span class="n">DESCA</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="n">DESCB</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="n">IPIV</span><span class="p">(</span><span class="n">NB</span><span class="mi">+10</span><span class="p">),</span><span class="w"> </span><span class="n">FILL_IN</span><span class="p">,</span><span class="n">I</span><span class="w">
+      </span><span class="c1">!                                      IPIV(&gt;= DESCA( NB ))</span><span class="w">
+      </span><span class="c1">!DOUBLE PRECISION A(LDA,LNA),B(LDB,NRHS),AF(LAF),WORK(LWORK)</span><span class="w">
+      </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="n">LDA</span><span class="p">,</span><span class="n">LNA</span><span class="p">),</span><span class="n">B</span><span class="p">(</span><span class="n">LDB</span><span class="p">,</span><span class="n">NRHS</span><span class="p">),</span><span class="n">AF</span><span class="p">(</span><span class="n">LAF</span><span class="p">),</span><span class="n">WORK</span><span class="p">(</span><span class="n">LWORK</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">!     </span><span class="w">
+</span><span class="c1">!     INITIALIZE THE PROCESS GRID</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+      </span><span class="n">NPROW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="n">NPCOL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w">
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">SL_INIT</span><span class="p">(</span><span class="w"> </span><span class="n">ICTXT</span><span class="p">,</span><span class="w"> </span><span class="n">NPROW</span><span class="p">,</span><span class="w"> </span><span class="n">NPCOL</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">BLACS_GRIDINFO</span><span class="p">(</span><span class="w"> </span><span class="n">ICTXT</span><span class="p">,</span><span class="w"> </span><span class="n">NPROW</span><span class="p">,</span><span class="w"> </span><span class="n">NPCOL</span><span class="p">,</span><span class="w"> </span><span class="n">MYROW</span><span class="p">,</span><span class="w"> </span><span class="n">MYCOL</span><span class="w"> </span><span class="p">)</span><span class="w">
+      </span><span class="k">IF</span><span class="p">(</span><span class="w"> </span><span class="n">MYROW</span><span class="ow">.LT.</span><span class="mi">0</span><span class="w"> </span><span class="ow">.OR.</span><span class="w"> </span><span class="n">MYCOL</span><span class="ow">.LT.</span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+         </span><span class="k">return</span><span class="w">
+      </span><span class="k">ENDIF</span><span class="w">
+
+</span><span class="c1">!</span><span class="w">
+</span><span class="c1">!     DISTRIBUTE THE MATRIX ON THE PROCESS GRID</span><span class="w">
+</span><span class="c1">!     Initialize the array descriptors for the matrices A and B</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">501</span><span class="w">                   </span><span class="c1">! descriptor type</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ICTXT</span><span class="w">                 </span><span class="c1">! BLACS process grid handle</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w">                     </span><span class="c1">! number of rows in A</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NB</span><span class="w">                    </span><span class="c1">! Blocking factor of the distribution</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                     </span><span class="c1">! size of block rows</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LDA</span><span class="w">         </span><span class="c1">! leading dimension of A</span><span class="w">
+      </span><span class="n">DESCA</span><span class="p">(</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                     </span><span class="c1">! process row for 1st row of A</span><span class="w">
+
+      </span><span class="c1">!这个只决定行分布，列都是一样的NRHS</span><span class="w">
+
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">502</span><span class="w">                   </span><span class="c1">! descriptor type</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ICTXT</span><span class="w">                 </span><span class="c1">! BLACS process grid handle</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w">                     </span><span class="c1">! number of rows in B</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NB</span><span class="w">                    </span><span class="c1">! Blocking factor of the distribution</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                     </span><span class="c1">! size of block rows</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LDB</span><span class="w">                   </span><span class="c1">! leading dimension of B</span><span class="w">
+      </span><span class="n">DESCB</span><span class="p">(</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">                     </span><span class="c1">! process row for 1st row of B</span><span class="w">
+
+</span><span class="c1">!</span><span class="w">
+</span><span class="c1">!     Generate matrices A and B and distribute them to the process grid</span><span class="w">
+</span><span class="c1">!    AX=B</span><span class="w">
+</span><span class="c1">!     Perform LU factorization</span><span class="w">
+</span><span class="c1">!'</span><span class="w">
+
+      </span><span class="c1">!A的值无所谓了，只要能分解就行</span><span class="w">
+      </span><span class="n">A</span><span class="o">=</span><span class="nb">cmplx</span><span class="p">(</span><span class="mf">1.0_dp</span><span class="p">,</span><span class="mf">1.0_dp</span><span class="p">)</span><span class="w">
+
+      </span><span class="c1">!write(*,*) "LAF,LWORK",LAF,LWORK</span><span class="w">
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">PZGBTRF</span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">BWL</span><span class="p">,</span><span class="w"> </span><span class="n">BWU</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">DESCA</span><span class="p">,</span><span class="w"> </span><span class="n">IPIV</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+               </span><span class="n">AF</span><span class="p">,</span><span class="w"> </span><span class="n">LAF</span><span class="p">,</span><span class="w"> </span><span class="n">WORK</span><span class="p">,</span><span class="w"> </span><span class="n">LWORK</span><span class="p">,</span><span class="w"> </span><span class="n">INFO</span><span class="w"> </span><span class="p">)</span><span class="w">
+      </span><span class="c1">!INFO &lt; 0  为非法值</span><span class="w">
+      </span><span class="c1">!INFO &gt; 0 LU分解失败，矩阵不合理，local(intro)失败，inter失败</span><span class="w">
+      </span><span class="c1">!write(*,*) "LAF,LWORK After",AF(1),WORK(1)</span><span class="w">
+
+      </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">INFO</span><span class="p">/</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+         </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">'Info flag from PDGBTRF = '</span><span class="p">,</span><span class="n">INFO</span><span class="p">,</span><span class="w"> </span><span class="s1">', Col = '</span><span class="p">,</span><span class="n">MYCOL</span><span class="w">
+         </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">100</span><span class="w">
+      </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+
+      </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"Done PDGBTRF"</span><span class="w">
+
+
+</span><span class="c1">!</span><span class="w">
+</span><span class="c1">!     Solve using the LU factorization from PDGBTRF</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+      
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">PZGBTRS</span><span class="p">(</span><span class="s1">'N'</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">BWL</span><span class="p">,</span><span class="w"> </span><span class="n">BWU</span><span class="p">,</span><span class="w"> </span><span class="n">NRHS</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">DESCA</span><span class="p">,</span><span class="w"> </span><span class="n">IPIV</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+             </span><span class="n">B</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">DESCB</span><span class="p">,</span><span class="w"> </span><span class="n">AF</span><span class="p">,</span><span class="w"> </span><span class="n">LAF</span><span class="p">,</span><span class="w"> </span><span class="n">WORK</span><span class="p">,</span><span class="w"> </span><span class="n">LWORK</span><span class="p">,</span><span class="w"> </span><span class="n">INFO</span><span class="p">)</span><span class="w">
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">blacs_barrier</span><span class="p">(</span><span class="w"> </span><span class="n">ICTXT</span><span class="p">,</span><span class="w"> </span><span class="s1">'A'</span><span class="w"> </span><span class="p">)</span><span class="w">
+      
+
+
+</span><span class="c1">!call pdgbtrs(trans, n, bwl, bwu, nrhs, a, ja, desca, ipiv, b, ib, descb, af, laf, work, lwork, info)</span><span class="w">
+
+      </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">INFO</span><span class="p">/</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+         </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s1">'Info flag from PDGBTRS = '</span><span class="p">,</span><span class="n">INFO</span><span class="p">,</span><span class="w"> </span><span class="s1">', Col = '</span><span class="p">,</span><span class="n">MYCOL</span><span class="w">
+         </span><span class="k">GOTO</span><span class="w"> </span><span class="mi">100</span><span class="w">
+      </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+
+      </span><span class="k">IF</span><span class="p">(</span><span class="n">MYCOL</span><span class="w"> </span><span class="ow">.eq.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+         </span><span class="k">DO</span><span class="w"> </span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NRHS</span><span class="w">
+         </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"Mycol"</span><span class="p">,</span><span class="n">MYCOL</span><span class="p">,</span><span class="s2">"NRHS"</span><span class="p">,</span><span class="n">I</span><span class="p">,</span><span class="n">B</span><span class="p">(:,</span><span class="n">I</span><span class="p">)</span><span class="w">
+         </span><span class="k">ENDDO</span><span class="w">
+      </span><span class="k">ENDIF</span><span class="w">
+
+         </span><span class="c1">!write(*,200) 'X(',3*MYCOL+1,':',3*MYCOL+NB,') = ',B</span><span class="w">
+</span><span class="nl">200</span><span class="w">  </span><span class="k">format</span><span class="p">((</span><span class="l">a2</span><span class="p">,</span><span class="l">I3</span><span class="p">,</span><span class="l">a1</span><span class="p">,</span><span class="l">I3</span><span class="p">,</span><span class="l">a4</span><span class="p">,</span><span class="l">3</span><span class="p">(</span><span class="l">f10.2</span><span class="p">,</span><span class="l">2x</span><span class="p">)))</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+</span><span class="c1">!     Release the process grid and exit BLACS</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+</span><span class="nl">100</span><span class="w">  </span><span class="k">CALL</span><span class="w"> </span><span class="n">BLACS_GRIDEXIT</span><span class="p">(</span><span class="w"> </span><span class="n">ICTXT</span><span class="w"> </span><span class="p">)</span><span class="w">
+     </span><span class="k">CALL</span><span class="w"> </span><span class="n">BLACS_EXIT</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w">
+     </span><span class="k">stop</span><span class="w">
+   </span><span class="k">end</span><span class="w"> </span><span class="k">subroutine</span><span class="w"> </span><span class="n">PDGBTRF_EXAMPLE3ZZ</span><span class="w">
+
+</span></code></pre></div></div>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/10/28/Frp/">Frp内网穿透</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/11/21/numpy/">[挖坑]Numpy，Pandas</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

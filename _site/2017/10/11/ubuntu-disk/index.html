@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Ubuntu16.04挂载新硬盘并格式化硬盘</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2017/10/11/ubuntu-disk/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2017/10/11/ubuntu-disk/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2017/10/11/ubuntu-disk/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2017/10/11/ubuntu-disk/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Ubuntu16.04挂载新硬盘并格式化硬盘</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-10-11
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Linux" title="Tag: Linux" rel="tag">Linux</a-->
+        <a href="/tag/#Linux" title="Tag: Linux" rel="tag">Linux</a>&nbsp;
+    
+        <!--a href="/tag/#ubuntu" title="Tag: ubuntu" rel="tag">ubuntu</a-->
+        <a href="/tag/#ubuntu" title="Tag: ubuntu" rel="tag">ubuntu</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a>    <ul>
+      <li><a href="#查看硬盘" id="markdown-toc-查看硬盘">查看硬盘</a>        <ul>
+          <li><a href="#查看方法一" id="markdown-toc-查看方法一">查看方法一</a>            <ul>
+              <li><a href="#查看dev下面的设备文件" id="markdown-toc-查看dev下面的设备文件">查看/dev下面的设备文件</a></li>
+            </ul>
+          </li>
+          <li><a href="#通过sudo-fdisk--l也可以查看" id="markdown-toc-通过sudo-fdisk--l也可以查看">通过<code class="highlighter-rouge">sudo fdisk -l</code>也可以查看</a></li>
+        </ul>
+      </li>
+      <li><a href="#新建分区" id="markdown-toc-新建分区">新建分区</a></li>
+      <li><a href="#格式化" id="markdown-toc-格式化">格式化</a></li>
+      <li><a href="#挂载" id="markdown-toc-挂载">挂载</a>        <ul>
+          <li><a href="#创建目录并挂载" id="markdown-toc-创建目录并挂载">创建目录并挂载</a></li>
+          <li><a href="#开机自动挂载" id="markdown-toc-开机自动挂载">开机自动挂载</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#后续" id="markdown-toc-后续">后续</a>    <ul>
+      <li><a href="#将gpt分区格式化为mbr" id="markdown-toc-将gpt分区格式化为mbr">将GPT分区格式化为MBR</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://huifeng.me/2016/04/19/new-disk-mount-to-Ubuntu/">为 Ubuntu 加载新硬盘</a>
+<a href="https://gist.github.com/1292765944/387215102522dbbac233b2580e646c8c">ubuntu 添加新硬盘</a></p>
+<h2 id="环境">环境</h2>
+<p>Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-87-generic x86_64)</p>
+<h2 id="操作">操作</h2>
+<h3 id="查看硬盘">查看硬盘</h3>
+<h4 id="查看方法一">查看方法一</h4>
+<h5 id="查看dev下面的设备文件">查看/dev下面的设备文件</h5>
+<blockquote>
+  <p>Linux 硬盘识别：
+2.6 kernel以后,linux会将识别到的硬件设备,在/dev/下建立相应的设备文件.
+如:
+sda 表示第1块SCSI硬盘，第二块是sdb，以此类推
+hda 表示第1块IDE硬盘(即连接在第1个IDE接口的Master口上)
+scd0 表示第1个USB光驱.
+当添加了新硬盘后,在/dev目录下会有相应的设备文件产生.cciss的硬盘是个例外,它的
+设备文件在/dev/cciss/目录下.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ll -h /dev/sd*
+brw-rw---- 1 root disk 8,  0 10月 11 09:20 /dev/sda
+brw-rw---- 1 root disk 8,  1 10月 11 09:20 /dev/sda1
+brw-rw---- 1 root disk 8,  2 10月 11 09:20 /dev/sda2
+brw-rw---- 1 root disk 8,  5 10月 11 09:20 /dev/sda5
+brw-rw---- 1 root disk 8, 16 10月 11 09:20 /dev/sdb
+</code></pre></div></div>
+<p>我们可以看到新sdb硬盘没有建立分区</p>
+
+<h4 id="通过sudo-fdisk--l也可以查看">通过<code class="highlighter-rouge">sudo fdisk -l</code>也可以查看</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo fdisk -l
+Disk /dev/sdb: 40 GiB, 42949672960 bytes, 83886080 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sda: 10 GiB, 10737418240 bytes, 20971520 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x6e488164
+
+Device     Boot   Start      End  Sectors  Size Id Type
+/dev/sda1  *       2048   999423   997376  487M 83 Linux
+/dev/sda2       1001470 20969471 19968002  9.5G  5 Extended
+/dev/sda5       1001472 20969471 19968000  9.5G 8e Linux LVM
+</code></pre></div></div>
+
+<p>可看到sda1已分区，sdb未分区</p>
+<h3 id="新建分区">新建分区</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo fdisk /dev/sdb
+</code></pre></div></div>
+<p>之后进入command状态，大概是这么操作的：</p>
+<ul>
+  <li>输入 m 查看帮助</li>
+  <li>输入 p 查看 /dev/sdb 分区的状态</li>
+  <li>输入 n 创建sdb这块硬盘的分区</li>
+  <li>选 p primary =&gt;输入　p</li>
+  <li>Partition number =&gt;分一个区所以输入　1</li>
+  <li>其他的默认回车即可</li>
+  <li>最后输入 w 保存并退出 Command 状态。</li>
+</ul>
+
+<p>操作示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Command (m for help): n
+# n创建分区
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): p
+# p(primary主分区） e(extended拓展分区)
+Partition number (1-4, default 1): 1
+# 分区号
+First sector (2048-83886079, default 2048): 
+# 默认
+Last sector, +sectors or +size{K,M,G,T,P} (2048-83886079, default 83886079): 
+# 大小，可自定义，保持默认
+Created a new partition 1 of type 'Linux' and of size 40 GiB.
+
+Command (m for help): p
+# 查看分区情况
+Disk /dev/sdb: 40 GiB, 42949672960 bytes, 83886080 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xbb6c1792
+
+Device     Boot Start      End  Sectors Size Id Type
+/dev/sdb1        2048 83886079 83884032  40G 83 Linux
+
+Command (m for help): w
+# 保存
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+</code></pre></div></div>
+<p>在通过查看命令即可查看，新增的硬盘</p>
+<h3 id="格式化">格式化</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo mkfs.ext4 /dev/sdb1
+</code></pre></div></div>
+
+<p>ext4为分区格式</p>
+
+<h3 id="挂载">挂载</h3>
+<h4 id="创建目录并挂载">创建目录并挂载</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo mkdir /home/data
+sudo mount /dev/sdb1 /home/data
+</code></pre></div></div>
+<h4 id="开机自动挂载">开机自动挂载</h4>
+<p>查看sdb1的UUID</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo blkid
+</code></pre></div></div>
+<p>添加UUID到<code class="highlighter-rouge">/etc/fstab</code>
+添加<code class="highlighter-rouge">UUID=63295b70-daec-4253-b659-821f51200be9 /home/data ext4 defaults,errors=remount-ro    0       1</code>到<code class="highlighter-rouge">/etc/fstab</code>
+其中UUID后面跟sdb1的UUID
+重启</p>
+<h2 id="后续">后续</h2>
+<p>如果涉及新硬盘的权限问题，可以通过chown，chmod命令调整权限</p>
+
+<h3 id="将gpt分区格式化为mbr">将GPT分区格式化为MBR</h3>
+<p>参考<a href="https://blog.csdn.net/zougen/article/details/79552056">Linux下GPT格式磁盘重新格式化为MBR格式</a><br />
+使用<code class="highlighter-rouge">parted</code>命令</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parted /dev/vdb
+(parted)mktable
+New disk label type? msdos              #分区格式MBR分区被称作msdos，其它分区aix, amiga, bsd, dvh, gpt, mac, msdos, pc98, sun, loop
+Warning: The existing disk label on /dev/vdb will be destroyed and all data on
+this disk will be lost. Do you want to continue?
+Yes/No?Yes
+</code></pre></div></div>
+<p>之后再使用fdisk格式化具体格式</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/10/11/phpmyadmin-import/">phpMyAdmin导入文件大小限制</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/10/11/ubutnu1604-lamp5/">Ubuntu16.04搭建LAMP(php5)</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

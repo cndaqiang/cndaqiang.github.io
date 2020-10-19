@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Mysql&amp;phpMyAdmin简单学习</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2017/09/27/mysql/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2017/09/27/mysql/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2017/09/27/mysql/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2017/09/27/mysql/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Mysql&phpMyAdmin简单学习</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-27
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#web" title="Category: web" rel="category">web</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#web" title="Tag: web" rel="tag">web</a-->
+        <a href="/tag/#web" title="Tag: web" rel="tag">web</a>&nbsp;
+    
+        <!--a href="/tag/#Mysql" title="Tag: Mysql" rel="tag">Mysql</a-->
+        <a href="/tag/#Mysql" title="Tag: Mysql" rel="tag">Mysql</a>&nbsp;
+    
+        <!--a href="/tag/#phpMyAdmin" title="Tag: phpMyAdmin" rel="tag">phpMyAdmin</a-->
+        <a href="/tag/#phpMyAdmin" title="Tag: phpMyAdmin" rel="tag">phpMyAdmin</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#定义" id="markdown-toc-定义">定义</a></li>
+  <li><a href="#mysql命令操作" id="markdown-toc-mysql命令操作">Mysql命令操作</a>    <ul>
+      <li><a href="#1-登陆" id="markdown-toc-1-登陆">1. 登陆</a></li>
+      <li><a href="#2-启动关闭" id="markdown-toc-2-启动关闭">2. 启动&amp;关闭</a>        <ul>
+          <li><a href="#21-软件安装目录usrbin" id="markdown-toc-21-软件安装目录usrbin">2.1 软件安装目录<code class="highlighter-rouge">/usr/bin</code></a></li>
+          <li><a href="#22-启动-service-mysql-start" id="markdown-toc-22-启动-service-mysql-start">2.2 启动 <code class="highlighter-rouge">service mysql start</code></a></li>
+          <li><a href="#23-关闭-service-mysql-stop" id="markdown-toc-23-关闭-service-mysql-stop">2.3 关闭 <code class="highlighter-rouge">service mysql stop</code></a></li>
+          <li><a href="#24-重启-service-mysql-restart" id="markdown-toc-24-重启-service-mysql-restart">2.4 重启 <code class="highlighter-rouge">service mysql restart</code></a></li>
+          <li><a href="#24-查看mysql是否在监听端口命令启动-netstat--tl--grep-mysql" id="markdown-toc-24-查看mysql是否在监听端口命令启动-netstat--tl--grep-mysql">2.4 查看mysql是否在监听端口命令/启动 <code class="highlighter-rouge">netstat -tl | grep mysql</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#配置文件目录etcmysql" id="markdown-toc-配置文件目录etcmysql">配置文件目录<code class="highlighter-rouge">/etc/mysql</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#使用phpmyadmin网页管理数据库" id="markdown-toc-使用phpmyadmin网页管理数据库">使用Phpmyadmin网页管理数据库</a>    <ul>
+      <li><a href="#安装phpmyadmin" id="markdown-toc-安装phpmyadmin">安装phpmyadmin</a></li>
+      <li><a href="#使用" id="markdown-toc-使用">使用</a>        <ul>
+          <li><a href="#一些理解" id="markdown-toc-一些理解">一些理解</a></li>
+          <li><a href="#选项卡" id="markdown-toc-选项卡">选项卡</a></li>
+          <li><a href="#搜索指定关键字" id="markdown-toc-搜索指定关键字">搜索指定关键字</a></li>
+          <li><a href="#浏览数据库内容" id="markdown-toc-浏览数据库内容">浏览数据库内容</a></li>
+          <li><a href="#phpmyadmin执行命令报错时如" id="markdown-toc-phpmyadmin执行命令报错时如">phpmyadmin执行命令报错时，如</a></li>
+          <li><a href="#结构" id="markdown-toc-结构">结构</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#其他" id="markdown-toc-其他">其他</a>    <ul>
+      <li><a href="#phpmyadmin导入导出" id="markdown-toc-phpmyadmin导入导出">phpmyadmin导入导出</a></li>
+      <li><a href="#sql语法" id="markdown-toc-sql语法">SQL语法</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="环境">环境</h2>
+<p>Ubuntu 14.04.1 LTS (GNU/Linux 3.13.0-105-generic x86_64</p>
+
+<p>前期准备<a href="/2017/09/27/ubuntu1604-lamp/">Ubuntu16.10搭建LAMP</a>
+Windows10</p>
+<h2 id="参考">参考</h2>
+<p>陈惠贞 , 陈俊荣.PHP 7&amp;MySQL跨设备网站开发[M].北京:清华大学出版社,2017</p>
+
+<p><a href="http://www.jianshu.com/p/694d7d0a170b">Ubuntu下MySQL简单操作</a></p>
+
+<p><a href="https://docs.phpmyadmin.net/zh_CN/latest/#">phpMyAdmin 4.8.0-dev 文档</a></p>
+<h2 id="定义">定义</h2>
+<p><strong>理解数据库是干什么用的，里面都是什么</strong></p>
+
+<p>数据库里不是放着图片这些数据，他记录的是一些索引信息，和一些记录，比如论坛用户有哪些，不同的用户组名称，权限,文章，网站域名等等信息</p>
+<h2 id="mysql命令操作">Mysql命令操作</h2>
+<h3 id="1-登陆">1. 登陆</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ubuntu@VM-10-194-ubuntu:~$ mysql -h localhost -u root -p
+Enter password: 
+</code></pre></div></div>
+<ul>
+  <li>-h 主机名</li>
+  <li>-u 用户</li>
+  <li>-p 密码</li>
+</ul>
+
+<p>进入mysql后界面</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; 
+</code></pre></div></div>
+<p>退出</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; exit
+</code></pre></div></div>
+<h3 id="2-启动关闭">2. 启动&amp;关闭</h3>
+<h4 id="21-软件安装目录usrbin">2.1 软件安装目录<code class="highlighter-rouge">/usr/bin</code></h4>
+<h4 id="22-启动-service-mysql-start">2.2 启动 <code class="highlighter-rouge">service mysql start</code></h4>
+<h4 id="23-关闭-service-mysql-stop">2.3 关闭 <code class="highlighter-rouge">service mysql stop</code></h4>
+<h4 id="24-重启-service-mysql-restart">2.4 重启 <code class="highlighter-rouge">service mysql restart</code></h4>
+<h4 id="24-查看mysql是否在监听端口命令启动-netstat--tl--grep-mysql">2.4 查看mysql是否在监听端口命令/启动 <code class="highlighter-rouge">netstat -tl | grep mysql</code></h4>
+
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@VM-10-194-ubuntu:/usr/bin# service mysql start
+mysql start/running, process 20212
+root@VM-10-194-ubuntu:/usr/bin# netstat -tl | grep mysql
+tcp        0      0 localhost:mysql         *:*                     LISTEN     
+root@VM-10-194-ubuntu:/usr/bin# service mysql stop
+mysql stop/waiting
+root@VM-10-194-ubuntu:/usr/bin# netstat -tl | grep mysql
+root@VM-10-194-ubuntu:/usr/bin# 
+</code></pre></div></div>
+
+<h3 id="配置文件目录etcmysql">配置文件目录<code class="highlighter-rouge">/etc/mysql</code></h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@VM-10-194-ubuntu:/etc/mysql# ls
+</code></pre></div></div>
+
+<h2 id="使用phpmyadmin网页管理数据库">使用Phpmyadmin网页管理数据库</h2>
+<p><a href="https://zh.wikipedia.org/wiki/PhpMyAdmin">wiki-phpMyAdmin</a></p>
+<h3 id="安装phpmyadmin">安装phpmyadmin</h3>
+<p>参考<a href="/2017/09/27/ubuntu1604-lamp/">Ubuntu16.10搭建LAMP</a></p>
+
+<h3 id="使用">使用</h3>
+<p>到了web端了，与操作系统关系不大，以下内容基于windows环境安装的LAMP进行学习</p>
+<h4 id="一些理解">一些理解</h4>
+<p>管理数据库使用SQL语法</p>
+
+<p>phpmyadmin就是一个php程序，也可以去官网下载，解压到网站目录，登录就用数据库的账户密码</p>
+
+<p>phpmyadmin把我们想做的操作翻译成SQL语法，输入给数据库</p>
+
+<p>一些操作出问题，换个phpmyadmin可能就好了</p>
+
+<h4 id="选项卡">选项卡</h4>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-6c8daa72d915318f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-02fe259948a1c318.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" />
+<strong>不同的结构下，选项卡能执行的功能不同，能使用的选项卡也不同</strong></p>
+<ul>
+  <li><strong>[账户]管理账户，设置权限</strong></li>
+  <li><strong>[结构]查看数据库结构，表，记录，然后进行修改，浏览</strong></li>
+  <li><strong>[搜索]搜索</strong></li>
+  <li><strong>[导入][导出]可以用来备份数据库，导入数据库是最快的学习方式</strong></li>
+  <li><strong>[权限]可以添加用户修改用户权限</strong></li>
+  <li><strong>[操作]可以新建数据表，复制数据库，重命名，删除数据库等操作</strong></li>
+</ul>
+
+<h4 id="搜索指定关键字">搜索指定关键字</h4>
+<p>要选择列表不然搜不到
+<img src="http://upload-images.jianshu.io/upload_images/4575564-104358253a8e9062.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" />
+通配符</p>
+
+<h4 id="浏览数据库内容">浏览数据库内容</h4>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-b510024ff80e24c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" />
+随后依次在左边选择数据库，右边就会跟着变化
+右键新建标签页可新建浏览器页面浏览数据库内容</p>
+
+<h4 id="phpmyadmin执行命令报错时如">phpmyadmin执行命令报错时，如</h4>
+<p><a href="/uploads/2017/11/phpmyadmin.png"></a>
+其中<code class="highlighter-rouge">SQL查询</code>为执行的命令,<code class="highlighter-rouge">MYSQL 返回</code>为错误代码，搜索错误代码解决问题就好</p>
+<h4 id="结构">结构</h4>
+<p><strong>库-&gt;表-&gt;记录</strong>
+如图</p>
+<ul>
+  <li>数据库 copy</li>
+  <li>数据表 pre_common_addon</li>
+  <li>每条数据记录的属性 <strong>字段</strong></li>
+  <li>插入可添加新数据</li>
+  <li>字段-&gt;新建 可以新建属性</li>
+</ul>
+
+<p>每条数据记录的属性的排序，可以鼠标拖动顺序
+<img src="http://upload-images.jianshu.io/upload_images/4575564-a6d3fa383c084262.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+<h2 id="其他">其他</h2>
+<h3 id="phpmyadmin导入导出">phpmyadmin导入导出</h3>
+<p><a href="/2017/10/11/phpmyadmin-import/">phpmyadmin导入文件大小限制</a>
+导出出现问题，换个phpmyadmin就好了</p>
+<h3 id="sql语法">SQL语法</h3>
+<p>需要再继续学习</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/07/01/js/">JavaScript学习
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/05/02/cloudflare/">使用cloudflare加速博客访问/免费搭建谷歌镜像
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/09/27/apache/">Apache学习</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/09/27/openwrt-jianshu/">OpenWrt简书部分文章</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Apache学习</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2017/09/27/apache/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2017/09/27/apache/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2017/09/27/apache/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2017/09/27/apache/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Apache学习</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-27
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#web" title="Category: web" rel="category">web</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#ubuntu" title="Tag: ubuntu" rel="tag">ubuntu</a-->
+        <a href="/tag/#ubuntu" title="Tag: ubuntu" rel="tag">ubuntu</a>&nbsp;
+    
+        <!--a href="/tag/#Apache" title="Tag: Apache" rel="tag">Apache</a-->
+        <a href="/tag/#Apache" title="Tag: Apache" rel="tag">Apache</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+  <li><a href="#配置文件" id="markdown-toc-配置文件">配置文件</a>    <ul>
+      <li><a href="#配置文件目录etcapache2" id="markdown-toc-配置文件目录etcapache2">配置文件目录/etc/apache2</a></li>
+      <li><a href="#虚拟主机网站配置" id="markdown-toc-虚拟主机网站配置">虚拟主机/网站配置</a>        <ul>
+          <li><a href="#新建虚拟主机网站" id="markdown-toc-新建虚拟主机网站">新建虚拟主机/网站</a></li>
+          <li><a href="#虚拟主机网站配置规则" id="markdown-toc-虚拟主机网站配置规则">虚拟主机/网站配置规则</a></li>
+          <li><a href="#启用虚拟主机" id="markdown-toc-启用虚拟主机">启用虚拟主机</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#注" id="markdown-toc-注">注</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://www.cnblogs.com/ylan2009/archive/2012/02/25/2368028.html">ubuntu apache2配置详解(含虚拟主机配置方法)</a></p>
+
+<p><a href="https://my.oschina.net/aiheng1988/blog/146967">Apache Http Server学习笔记</a></p>
+
+<p><a href="http://www.phpxs.com/post/apache/">编程学习网</a>
+<a href="https://httpd.apache.org/docs/2.4/zh-cn/">Apache HTTP 服务器 2.4 文档</a></p>
+<h2 id="环境">环境</h2>
+<p>Ubuntu 14.04.1 LTS (GNU/Linux 3.13.0-105-generic x86_64)</p>
+<h2 id="安装">安装</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get install apache2
+</code></pre></div></div>
+<h2 id="配置文件">配置文件</h2>
+<h3 id="配置文件目录etcapache2">配置文件目录/etc/apache2</h3>
+<p><strong>ls查看配置文件目录</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@VM-10-194-ubuntu:/etc/apache2# ls
+apache2.conf    conf-enabled  magic           mods-enabled  sites-available
+conf-available  envvars       mods-available  ports.conf    sites-enabled
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>文件/目录</th>
+      <th>功能</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>apache2.conf</td>
+      <td>Apache在启动时会自动读取这个文件的配置信息<br />而其他的一些配置文件，如 httpd.conf等，则是通过Include指令包含进来<br />在apache2.conf中可以找到这些Include行：例IncludeOptional mods-enabled/*.load`</td>
+      <td><img src="http://upload-images.jianshu.io/upload_images/4575564-48466fca0211fecf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></td>
+    </tr>
+    <tr>
+      <td>ports.conf</td>
+      <td>Apache使用的端口<br />也可以先把apache2.conf中的Include /etc/apache2/ports.conf一行去掉，在httpd.conf里设置Apache端口<br />必须在这里开启端口的监听，不然只在virtualhosts里设置的端口不起作用</td>
+      <td><img src="http://upload-images.jianshu.io/upload_images/4575564-30d6b6f0aed3410a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></td>
+    </tr>
+    <tr>
+      <td>sites-enabled/</td>
+      <td>apache2.conf中引用了这里面的虚拟主机配置<br />通过<code class="highlighter-rouge">ls -l</code>可以发现，这里得到文件都是链接向<code class="highlighter-rouge">../sites-available/</code>的，而apache2.conf只引用sites-enabled/而不引用/sites-available/，所以我们在/sites-available/里面配置好虚拟主机配置后，还要连接到sites-enabled/目录</td>
+      <td><img src="http://upload-images.jianshu.io/upload_images/4575564-847b3ff3a074e87f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></td>
+    </tr>
+    <tr>
+      <td>sites-available/</td>
+      <td>虚拟主机的配置目录，但是不会被引用，需要链接到<code class="highlighter-rouge">../site-enabled</code></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>mods-enabled/</td>
+      <td>存放apache功能模块，与sites-enabled类似，是链接目录，而且被apache2.conf引用</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>mods-available/</td>
+      <td>存放apache功能模块，与sites-available类似，是真实配置，不被引用，需要连接</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>由上表可得直接在<code class="highlighter-rouge">/etc/apache2/apache2.conf</code>直接修改即可快速完成配置，当然也可以按照下面的流程</p>
+
+<h3 id="虚拟主机网站配置">虚拟主机/网站配置</h3>
+
+<p>配置目录<code class="highlighter-rouge">/etc/apache2/sites-available</code>
+我装的apache是默认支持虚拟主机的，看其他教程里说默认不支持，需要改apache.conf</p>
+
+<h4 id="新建虚拟主机网站">新建虚拟主机/网站</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@VM-10-194-ubuntu:/# cd /etc/apache2/sites-available
+root@VM-10-194-ubuntu:/etc/apache2/sites-available# vi test-site.conf
+</code></pre></div></div>
+<h4 id="虚拟主机网站配置规则">虚拟主机/网站配置规则</h4>
+<p><strong>语法</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;VirtualHost 地址[:端口号] [地址[:端口号]] &gt;
+具体规则
+ &lt;/VirtualHost&gt;
+</code></pre></div></div>
+
+<p>端口号需要在ports.conf里添加监听
+<strong>一个端口号只能被一个VirtualHost监听</strong>
+<strong>具体规则</strong>
+先总结几个案例再写会好些
+例如结合<a href="/2017/09/27/apache-proxy/">Ubuntu Apache 反向代理</a>，把<VirtualHost>部分的配置添加到test-site.conf Servername换成域名</VirtualHost></p>
+
+<p>更多实例<a href="/2017/09/27/apache-conf/">Apache 实例</a></p>
+
+<h4 id="启用虚拟主机">启用虚拟主机</h4>
+<p>建立连接</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ln -s /etc/apache2/sites-available/test-site.conf /etc/apache2/sites-enabled/test.site.conf
+</code></pre></div></div>
+
+<p>重启Apache</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/init.d/apache2 restart
+</code></pre></div></div>
+<h2 id="注">注</h2>
+<p>Centos apache的配置目录在<code class="highlighter-rouge"> /etc/httpd/conf</code>目录，所有配置都在httpd.conf里面</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/09/27/apache-proxy/">Apache 反向代理</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/09/27/mysql/">Mysql&phpMyAdmin简单学习</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

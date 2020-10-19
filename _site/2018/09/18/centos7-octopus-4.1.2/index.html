@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>centos7 gnu 编译octopus-4.1.2遇到问题和解决方案 </title>
+    <meta name="description" content="Error: Invalid character in name at (1)/usr/include/stdc-predef.h:2.3:	Included at c_pointer.F90:1:	   This file is part of the GNU C Library.   1">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2018/09/18/centos7-octopus-4.1.2/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2018/09/18/centos7-octopus-4.1.2/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2018/09/18/centos7-octopus-4.1.2/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>centos7 gnu 编译octopus-4.1.2遇到问题和解决方案 </h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-09-18
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a-->
+        <a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a>&nbsp;
+    
+        <!--a href="/tag/#octopus" title="Tag: octopus" rel="tag">octopus</a-->
+        <a href="/tag/#octopus" title="Tag: octopus" rel="tag">octopus</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#有管理员权限时" id="markdown-toc-有管理员权限时">有管理员权限时</a></li>
+  <li><a href="#无管理员权限时2019-05-06更新" id="markdown-toc-无管理员权限时2019-05-06更新">无管理员权限时(2019-05-06更新)</a>    <ul>
+      <li><a href="#非管理员对于octopus-41-2同样的错误" id="markdown-toc-非管理员对于octopus-41-2同样的错误">[非管理员]对于octopus-4.1-2同样的错误</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Error: Invalid character in name at (1)<br />
+/usr/include/stdc-predef.h:2.3:<br />
+	Included at c_pointer.F90:1:<br />
+	   This file is part of the GNU C Library.<br />
+   1<br /></p>
+
+<p>centos7编译octopus遇到的问题<br />
+与在centos6上，使用相同版本的gcc-4.8.4,libxc-2.0.3,gsl-1.14,openmpi-1.10.3,fftw-3.3.3,sclapack进行编译<br />
+octopus-4.1.2的configure命令没有报错，make时却报下面的错误</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* Copyright (C) 1991-2012 Free Software Foundation, Inc.
+ 1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:2.3:
+	Included at c_pointer.F90:1:
+
+   This file is part of the GNU C Library.
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:4.3:
+	Included at c_pointer.F90:1:
+
+   The GNU C Library is free software; you can redistribute it and/or
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:4.39:
+	Included at c_pointer.F90:1:
+
+   The GNU C Library is free software; you can redistribute it and/or
+									   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:5.3:
+	Included at c_pointer.F90:1:
+
+   modify it under the terms of the GNU Lesser General Public
+</code></pre></div></div>
+
+<p><br /><br /><br /><br /></p>
+<h2 id="有管理员权限时">有管理员权限时</h2>
+<p>根据<a href="http://www.yambo-code.org/forum/viewtopic.php?f=1&amp;t=842">Yambo Community Forum</a>的建议，应该是libxc的问题，无法识别<code class="highlighter-rouge">/usr/include/stdc-predef.h</code>中的注释部分
+<br /><br />备份<code class="highlighter-rouge">stdc-predef.h</code>后，删除其中的注释部分，也就是<code class="highlighter-rouge">/*注释。。。*/</code>里面的内容，再执行编译就可以了</p>
+
+<h2 id="无管理员权限时2019-05-06更新">无管理员权限时(2019-05-06更新)</h2>
+<p>在RedHat上编译libxc-2.0.0遇到，同样错误,也是<code class="highlighter-rouge">/usr/include/stdc-predef.h</code>的注释造成<br />
+在make后的目录中，搜索注释中的语句<code class="highlighter-rouge">IEC</code>，发现<code class="highlighter-rouge">/usr/include/stdc-predef.h</code>已经被引入<code class="highlighter-rouge">src/libxc.f90</code><br />
+只要删除<code class="highlighter-rouge">src/libxc.f90</code>中的<code class="highlighter-rouge">/* */</code>部分继续make就可以编译了<br /></p>
+
+<p><br /><br />发现错误和结局的过程如下</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   The GNU C Library is distributed in the hope that it will be useful,
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:10.3:
+    Included at ./libxc_master.F90:1:
+
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:10.29:
+    Included at ./libxc_master.F90:1:
+
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+                             1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:11.3:
+    Included at ./libxc_master.F90:1:
+
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:12.3:
+    Included at ./libxc_master.F90:1:
+
+   Lesser General Public License for more details.
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:14.3:
+    Included at ./libxc_master.F90:1:
+
+   You should have received a copy of the GNU Lesser General Public
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:15.3:
+    Included at ./libxc_master.F90:1:
+
+   License along with the GNU C Library; if not, see
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:15.41:
+    Included at ./libxc_master.F90:1:
+
+   License along with the GNU C Library; if not, see
+                                         1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:16.4:
+    Included at ./libxc_master.F90:1:
+
+   &lt;http://www.gnu.org/licenses/&gt;.  */
+    1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:21.1:
+    Included at ./libxc_master.F90:1:
+
+/* This header is separate from features.h so that the compiler can
+ 1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:22.3:
+    Included at ./libxc_master.F90:1:
+
+   include it implicitly at the start of every compilation.  It must
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:23.3:
+    Included at ./libxc_master.F90:1:
+
+   not itself include &lt;features.h&gt; or any other header that includes
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:24.4:
+    Included at ./libxc_master.F90:1:
+
+   &lt;features.h&gt; because the implicit include comes before any feature
+    1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:25.3:
+    Included at ./libxc_master.F90:1:
+
+   test macros that may be defined in a source file before it first
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:26.3:
+    Included at ./libxc_master.F90:1:
+
+   explicitly includes a system header.  GCC knows the name of this
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:27.3:
+    Included at ./libxc_master.F90:1:
+
+   header in order to preinclude it.  */
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:29.1:
+    Included at ./libxc_master.F90:1:
+
+/* We do support the IEC 559 math functionality, real and complex.  */
+ 1
+Error: Invalid character in name at (1)
+Fatal Error: Error count reached limit of 25.
+make[3]: *** [libxc_la-libxc.lo] Error 1
+make[3]: Leaving directory `/public/home/chendq/soft/gcc-openmpi/source/libxc-2.0.0/src'
+make[2]: *** [all] Error 2
+make[2]: Leaving directory `/public/home/chendq/soft/gcc-openmpi/source/libxc-2.0.0/src'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/public/home/chendq/soft/gcc-openmpi/source/libxc-2.0.0'
+make: *** [all] Error 2
+</code></pre></div></div>
+<p>在make后的目录中，搜索注释中的语句<code class="highlighter-rouge">IEC</code>，发现<code class="highlighter-rouge">/usr/include/stdc-predef.h</code>已经被引入<code class="highlighter-rouge">src/libxc.f90</code><br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[chendq@login3 libxc-2.0.0]$ fyou IEC
+src/libxc.f90:33:/* We do support the IEC 559 math functionality, real and complex.  */
+src/libxc.f90:37:/* wchar_t uses ISO/IEC 10646 (2nd ed., published 2011-03-15) /
+</code></pre></div></div>
+<p>只要删除<code class="highlighter-rouge">src/libxc.f90</code>中的<code class="highlighter-rouge">/* */</code>部分就可以编译了<br /></p>
+
+<h3 id="非管理员对于octopus-41-2同样的错误">[非管理员]对于octopus-4.1-2同样的错误</h3>
+<p>要改的信息更多，可以通过修改Makefile解决</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /public/home/cndaqiang/soft/gcc-MVAPICH/source/octopus-4.1.2/src/basic
+vi Makefile
+</code></pre></div></div>
+<p>做出如下更改</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>719 ########Add by cndaqiang
+720 ####### 2019-05-07
+721 .F90.o:
+722         /lib/cpp -C -ansi  $(AM_CPPFLAGS) -I. $&lt; &gt; $*_oct.f90
+723         $(top_srcdir)/build/preprocess.pl $*_oct.f90 \
+724           "" "yes" "yes"
+725         sed -i '5,41d' $*_oct.f90
+726         mpif90 -O3      -I /public/home/chendq/soft/gcc-openmpi/libxc-2.0.0/include $(AM_FCFLAGS) -c  -o $@ $*_oct.    f90
+727 #       @rm -f $*_oct.f90
+728 
+
+729 ########END cndaqiang
+730 # This rule is basically to create a _oct.f90 file by hand for
+731 # debugging purposes. It is identical to the first part of
+732 # the .F90.o rule.
+733 ##########Add by cndaqiang
+734 ######### 2019-05-07
+735 .F90_oct.f90:
+736         /lib/cpp -C -ansi  $(AM_CPPFLAGS) -I. $&lt; &gt; $*_oct.f90
+737         $(top_srcdir)/build/preprocess.pl $*_oct.f90 \
+738           "" "yes" "yes"
+739         sed -i '5,41d' $*_oct.f90
+740 
+741 ########END cndaqiang
+</code></pre></div></div>
+<p>针对下面Makefile做同样修改</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi src/math/Makefile
+vi src/species/Makefile
+vi src/ions/Makefile
+vi src/grid/Makefile
+vi src/poisson/Makefile
+vi src/states/Makefile
+vi src/xc/Makefile
+vi src/hamiltonian/Makefile
+vi src/system/Makefile
+vi src/scf/Makefile
+vi src/td/Makefile
+vi src/opt_control/Makefile
+vi src/td/Makefile
+vi src/sternheimer/Makefile
+vi src/main/Makefile
+</code></pre></div></div>
+<p>或者使用下面的脚本</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c">#!/bin/bash</span>
+<span class="k">for </span>i <span class="k">in </span>basic  math   species   ions   grid   poisson   states   xc   hamiltonian   system   scf   td   opt_control   td   sternheimer   main
+<span class="k">do
+</span><span class="nv">Makefile</span><span class="o">=</span>src/<span class="k">${</span><span class="nv">i</span><span class="k">}</span>/Makefile
+<span class="c">#修改.F90.o</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">grep</span> <span class="nt">-n</span> <span class="s2">"^.F90.o:"</span>  <span class="nv">$Makefile</span> | <span class="nb">awk</span> <span class="s1">'{printf "%d\n",$1}'</span> <span class="si">)</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">+4"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i CNQsed -i '5,41d' </span><span class="se">\$\*</span><span class="s2">_oct.f90"</span> <span class="nv">$Makefile</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">s/CNQ/</span><span class="se">\t</span><span class="s2">/g"</span> <span class="nv">$Makefile</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">-4"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i ##### Add by CNQ "</span> <span class="nv">$Makefile</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">+8"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i ##### END CNQ "</span> <span class="nv">$Makefile</span>
+<span class="c">#修改.F90_oct.f90</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">grep</span> <span class="nt">-n</span> .F90_oct.f90 <span class="nv">$Makefile</span> | <span class="nb">awk</span> <span class="s1">'{printf "%d\n",$1}'</span> <span class="si">)</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">+4"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i CNQsed -i '5,41d' </span><span class="se">\$\*</span><span class="s2">_oct.f90"</span> <span class="nv">$Makefile</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">s/CNQ/</span><span class="se">\t</span><span class="s2">/g"</span> <span class="nv">$Makefile</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">-4"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i ##### Add by CNQ "</span> <span class="nv">$Makefile</span>
+<span class="nv">hang</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$hang</span><span class="s2">+6"</span>|bc<span class="si">)</span>
+<span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"</span><span class="k">${</span><span class="nv">hang</span><span class="k">}</span><span class="s2">i ##### END CNQ "</span> <span class="nv">$Makefile</span>
+
+<span class="k">done</span> 
+</code></pre></div></div>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/10/19/huairou-octopus/">怀柔计算中心安装octopus10.1&4.1.2
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2018/09/15/gun-openmpi-octopus-7.1/">centos6.5 Gcc Openmpi 编译octopus-7.1 </a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/10/17/deal-file/">[gitbook文章重置] 正则表达式 grep sed awk </a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

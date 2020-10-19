@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>centos6.5 gcc Openmpi 编译octopus-4.1.2 </title>
+    <meta name="description" content="编译方法主要参考@sculxb环境centos6.5，软件版本gcc-4.4.7,libXC-2.0.0,gsl-1.14,openmpi-1.10.3,fftw-3.3.3 scalapack-2,octopus-4.1.2gcc使用系统默认的gcc-4.4.7,其他软件分别编译">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2018/09/15/gun-openmpi-octopus-4.1.2/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2018/09/15/gun-openmpi-octopus-4.1.2/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2018/09/15/gun-openmpi-octopus-4.1.2/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2018/09/15/gun-openmpi-octopus-4.1.2/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>centos6.5 gcc Openmpi 编译octopus-4.1.2 </h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-09-15
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a-->
+        <a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a>&nbsp;
+    
+        <!--a href="/tag/#octopus" title="Tag: octopus" rel="tag">octopus</a-->
+        <a href="/tag/#octopus" title="Tag: octopus" rel="tag">octopus</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#依赖关系" id="markdown-toc-依赖关系">依赖关系</a></li>
+  <li><a href="#下载" id="markdown-toc-下载">下载</a></li>
+  <li><a href="#如果编译gcc" id="markdown-toc-如果编译gcc">如果编译gcc</a></li>
+  <li><a href="#libxc-200" id="markdown-toc-libxc-200">libXC-2.0.0</a></li>
+  <li><a href="#gsl-114" id="markdown-toc-gsl-114">gsl-1.14</a></li>
+  <li><a href="#openmpi-1103" id="markdown-toc-openmpi-1103">openmpi-1.10.3</a></li>
+  <li><a href="#fftw-333" id="markdown-toc-fftw-333">fftw-3.3.3</a></li>
+  <li><a href="#scalapack" id="markdown-toc-scalapack">scalapack</a></li>
+  <li><a href="#octopus-412" id="markdown-toc-octopus-412">octopus-4.1.2</a></li>
+  <li><a href="#测试" id="markdown-toc-测试">测试</a></li>
+  <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+</ul>
+
+<p>编译方法主要参考<a href="https://www.zybuluo.com/sculxb/note/987446#octopus%E5%AE%89%E8%A3%85-%E7%AE%97%E7%9B%98">@sculxb</a><br />
+环境centos6.5，软件版本gcc-4.4.7,libXC-2.0.0,gsl-1.14,openmpi-1.10.3,fftw-3.3.3 scalapack-2,octopus-4.1.2<br />
+gcc使用系统默认的gcc-4.4.7,其他软件分别编译</p>
+
+<p><br /> <br />
+根据<a href="https://linuxcluster.wordpress.com/2015/03/25/basic-configuration-of-octopus-4-1-2-with-openmpi-on-centos-6/">Basic Configuration of Octopus 4.1.2 with OpenMPI on CentOS 6</a>的建议:<br />
+octopus-4.1.2只能使用libxc-2.0.x或2.1.x<br />
+gsl只能用1.14或更早<br /><br /></p>
+
+<p><br /><strong>遇到的问题:</strong><br />
+gcc-4.4.7编译openmpi-1.6.4报错，使用openmpi-1.10.3<br />
+gcc-4.8.4编译libxc-2.0.0出错，使用libxc-2.0.3<br />
+centos7最后编译octopus时configure没问题，make时报错，解决方案<a href="/2018/09/18/centos7-octopus-4.1.2/">centos7 gun 编译octopus-4.1.2遇到问题和解决方案</a></p>
+
+<h2 id="依赖关系">依赖关系</h2>
+<ul>
+  <li><strong>使用gcc编译libXC-2.0.0,gsl-1.14,openmpi-1.10.3</strong><br /></li>
+  <li><strong>编译openmpi-1.10.3得到的并行编译器(mpicc,mpif90等)和库用于编译fftw-3.3.3 scalapack-2,octopus-4.1.2</strong><br />
+因此在测试不同openmpi版本时，不用重新编译libxc和gsl</li>
+</ul>
+
+<p>此文直接将在我计算机上的编译过程输入的命令复制了过来，请适当更改</p>
+
+<h2 id="下载">下载</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://ftp.gnu.org/gnu/gsl/gsl-1.14.tar.gz
+wget http://www.tddft.org/programs/octopus/down.php?file=libxc/2.0.0/libxc-2.0.0.tar.gz
+wget https://download.open-mpi.org/release/open-mpi/v1.10/openmpi-1.10.3.tar.gz
+wget http://www.netlib.org/scalapack/scalapack_installer.tgz
+wget ftp://ftp.fftw.org/pub/fftw/fftw-3.3.3.tar.gz
+wget http://www.tddft.org/programs/octopus/down.php?file=4.1.2/octopus-4.1.2.tar.gz
+</code></pre></div></div>
+
+<h2 id="如果编译gcc">如果编译gcc</h2>
+
+<p>如果指定某版本的gcc编译器，可以参考<a href="/2018/09/12/gun-openmpi-siesta/">gcc Openmpi 编译siesta</a><br />
+编译libXC时要指定FCCPP为gcc-4.8.4的cpp，默认是系统的<code class="highlighter-rouge">/usr/bin/cpp</code></p>
+
+<h2 id="libxc-200">libXC-2.0.0</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ..
+tar xzvf libxc-2.0.0.tar.gz 
+cd libxc-2.0.0
+./configure --prefix=/home/cndaqiang/soft/libxc-2.0.0/ CC=gcc CXX=g++ FC=gfortran
+make -j8
+make install
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/libxc-2.0.0/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+
+<h2 id="gsl-114">gsl-1.14</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ..
+tar xzvf gsl-1.14.tar.gz 
+cd gsl-1.14
+mkdir build-gsl
+cd build-gsl/
+../configure --prefix=/home/cndaqiang/soft/gsl-1.14
+make -j8
+make install
+export PATH=/home/cndaqiang/soft/gsl-1.14/bin:$PATH
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/gsl-1.14/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+
+<h2 id="openmpi-1103">openmpi-1.10.3</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar xzvf openmpi-1.10.3.tar.gz 
+cd openmpi-1.10.3
+./configure --prefix=/home/cndaqiang/soft/openmpi-1.10.3 CC=gcc FC=gfortran CXX=g++
+make -j8
+make install
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/openmpi-1.10.3/lib:$LD_LIBRARY_PATH
+export PATH=/home/cndaqiang/soft/openmpi-1.10.3/bin:$PATH
+</code></pre></div></div>
+
+<h2 id="fftw-333">fftw-3.3.3</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ..
+tar xzvf fftw-3.3.3.tar.gz 
+cd fftw-3.3.3
+./configure --prefix=/home/cndaqiang/soft/fftw-3.3.3 --enable-mpi
+make -j8
+make install
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/fftw-3.3.3/lib:$LD_LIBRARY_PATH
+export PATH=/home/cndaqiang/soft/fftw-3.3.3/bin:$PATH
+</code></pre></div></div>
+
+<h2 id="scalapack">scalapack</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ..
+tar xzvf scalapack_installer.tgz 
+cd scalapack_installer
+./setup.py --prefix=/home/cndaqiang/soft/scalapack --downall
+</code></pre></div></div>
+
+<h2 id="octopus-412">octopus-4.1.2</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ..
+tar xzvf octopus-4.1.2.tar.gz 
+cd octopus-4.1.2
+ ./configure --prefix=/home/cndaqiang/soft/octopus-4.1.2 --with-blas='-L/home/cndaqiang/soft/scalapack/lib -lrefblas' --with-lapack='-L/home/cndaqiang/soft/scalapack/lib -ltmg -lreflapack' --with-scalapack='-L/home/cndaqiang/soft/scalapack/lib -lscalapack' --with-libxc-prefix=/home/cndaqiang/soft/libxc-2.0.0 --with-gsl-prefix=/home/cndaqiang/soft/gsl-1.14  --with-fft-lib=/home/cndaqiang/soft/fftw-3.3.3/lib/libfftw3.a --enable-mpi
+make -j8
+make install
+</code></pre></div></div>
+
+<h2 id="测试">测试</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EXEC=/home/cndaqiang/soft/octopus-4.1.2/bin/octopus_mpi 
+cd ~/soft/octopus-test/
+mpirun -np 8 $EXEC  &lt;inp&gt; result
+grep rel_dens result
+</code></pre></div></div>
+
+<h2 id="备注">备注</h2>
+<p>每次运行octopus需执行下列命令，即在交作业脚本中加入以下内容，或者添加到.bashrc</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LD_LIBRARY_PATH=/home/cndaqiang/soft/openmpi-1.10.3/lib:$LD_LIBRARY_PATH
+export PATH=/home/cndaqiang/soft/openmpi-1.10.3/bin:$PATH
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/libxc-2.0.0/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/gsl-1.14/lib:$LD_LIBRARY_PATH
+export PATH=/home/cndaqiang/soft/gsl-1.14/bin:$PATH
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/fftw-3.3.3/lib:$LD_LIBRARY_PATH
+export PATH=/home/cndaqiang/soft/fftw-3.3.3/bin:$PATH
+</code></pre></div></div>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/10/19/huairou-octopus/">怀柔计算中心安装octopus10.1&4.1.2
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2018/09/12/my-PC/">[水文一篇]第一次组装电脑</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/09/15/gun-openmpi-octopus-7.1/">centos6.5 Gcc Openmpi 编译octopus-7.1 </a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

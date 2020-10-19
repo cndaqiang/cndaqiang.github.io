@@ -222,3 +222,15 @@ mpirun noticed that process rank 0 with PID 15152 on node cndaqiangdeMac exited 
 - 使用ifort编译
 - 把gfortran的优化参数由`-O2`改为`-O`或`-O0`
 
+
+### 管理节点运行正常，作业节点编译运行报错
+```
+error while loading shared libraries: libibmad.so.5: cannot open shared object file: No such file or directory
+```
+还有缺`ibraries: libosmcomp.so.4`
+
+现象: 计算节点和管理节点不同缺少库<br>
+原因:计算节点少安装<br>
+解决:
+- 在计算节点安装
+- [非管理员],通过`whereis libibmad.so.5`找到缺少的库复制到计算个管理节点共享的目录，添加目录到环境变量`LD_LIBRARY_PATH`

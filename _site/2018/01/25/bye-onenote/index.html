@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>PC端笔记方案_VeraCrypt+Zim+同步云盘</title>
+    <meta name="description" content="主要为了解决我的密码保存问题,之前密码都是保存在onenote,加个密码,每次解密后快速搜索,而且手机也支持,昨天onenote居然卡顿了,而且onenote在linux平台一直不能很顺利的使用,也是我笔记本基本不用linux的最大原因.">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2018/01/25/bye-onenote/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2018/01/25/bye-onenote/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2018/01/25/bye-onenote/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2018/01/25/bye-onenote/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>PC端笔记方案_VeraCrypt+Zim+同步云盘</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-01-25
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#生活" title="Category: 生活" rel="category">生活</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E5%85%A8%E5%B9%B3%E5%8F%B0" title="Tag: 全平台" rel="tag">全平台</a-->
+        <a href="/tag/#全平台" title="Tag: 全平台" rel="tag">全平台</a>&nbsp;
+    
+        <!--a href="/tag/#tool" title="Tag: tool" rel="tag">tool</a-->
+        <a href="/tag/#tool" title="Tag: tool" rel="tag">tool</a>&nbsp;
+    
+        <!--a href="/tag/#%E7%AC%94%E8%AE%B0" title="Tag: 笔记" rel="tag">笔记</a-->
+        <a href="/tag/#笔记" title="Tag: 笔记" rel="tag">笔记</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#2019-06-15更新" id="markdown-toc-2019-06-15更新">2019-06-15更新</a></li>
+  <li><a href="#笔记软件" id="markdown-toc-笔记软件">笔记软件</a>    <ul>
+      <li><a href="#需求" id="markdown-toc-需求">需求</a></li>
+      <li><a href="#考虑过的笔记方案" id="markdown-toc-考虑过的笔记方案">考虑过的笔记方案</a>        <ul>
+          <li><a href="#笔记软件-1" id="markdown-toc-笔记软件-1">笔记软件</a></li>
+          <li><a href="#本地云网站云盘同步" id="markdown-toc-本地云网站云盘同步">本地/云网站+云盘同步</a></li>
+          <li><a href="#离线笔记软件" id="markdown-toc-离线笔记软件">离线笔记软件</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#pc端笔记方案_veracryptzim同步云盘" id="markdown-toc-pc端笔记方案_veracryptzim同步云盘">PC端笔记方案_VeraCrypt+Zim+同步云盘</a>    <ul>
+      <li><a href="#zim---a-desktop-wiki" id="markdown-toc-zim---a-desktop-wiki">Zim - A Desktop Wiki</a></li>
+      <li><a href="#veracrypt" id="markdown-toc-veracrypt">VeraCrypt</a></li>
+      <li><a href="#同步云盘" id="markdown-toc-同步云盘">同步云盘</a></li>
+    </ul>
+  </li>
+  <li><a href="#安装使用" id="markdown-toc-安装使用">安装使用</a>    <ul>
+      <li><a href="#zim" id="markdown-toc-zim">Zim</a>        <ul>
+          <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+          <li><a href="#中文支持" id="markdown-toc-中文支持">中文支持</a></li>
+          <li><a href="#常用" id="markdown-toc-常用">常用</a></li>
+          <li><a href="#插入图片过大" id="markdown-toc-插入图片过大">插入图片过大</a></li>
+          <li><a href="#常用插件" id="markdown-toc-常用插件">常用插件</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#安装veracrypt" id="markdown-toc-安装veracrypt">安装VeraCrypt</a>    <ul>
+      <li><a href="#同步盘" id="markdown-toc-同步盘">同步盘</a></li>
+      <li><a href="#效果图" id="markdown-toc-效果图">效果图</a></li>
+    </ul>
+  </li>
+</ul>
+<p>主要为了解决我的密码保存问题,之前密码都是保存在onenote,加个密码,每次解密后快速搜索,而且手机也支持,昨天onenote居然卡顿了,而且onenote在linux平台一直不能很顺利的使用,也是我笔记本基本不用linux的最大原因.</p>
+
+<h2 id="2019-06-15更新">2019-06-15更新</h2>
+<p>在不同的系统下完全有各自的加密方式，比如win的Bitlocker，可以开机自动挂载，密码输入正确就可以，也不错，再用<br />
+因关机没有挂载Bitlocker分区时，添加盘符，进入控制面板解锁</p>
+
+<h2 id="笔记软件">笔记软件</h2>
+<h3 id="需求">需求</h3>
+<ul>
+  <li>全平台,至少PC端可以全平台使用</li>
+  <li>云同步,可以使用第三方云盘解决</li>
+  <li>一些笔记需要加密,隐藏,保证在电脑丢失的情况下
+<br />信息不被一些没有技术的人轻松获取</li>
+  <li>电脑丢失不影响我的生活(上述要求满足,此条件自然满足)</li>
+  <li>没必要只是用单一笔记软件
+<br />有些笔记不需要满足上述要求,完全可以多个笔记软件混合使用</li>
+</ul>
+
+<h3 id="考虑过的笔记方案">考虑过的笔记方案</h3>
+<h4 id="笔记软件-1">笔记软件</h4>
+<ul>
+  <li>
+    <p>onenote
+<br />除了linux不能流畅使用,满足全平台+同步+加密条件,简直是我的最爱了,足够优秀。<br />
+加密的笔记搜索起来很慢<br />
+继续使用,不再使用加密功能,用于生活琐事,和移动端看笔记。</p>
+  </li>
+  <li><a href="https://www.yinxiang.com/">印象笔记</a>
+<br />免费用户不支持离线,直接放弃,标准版8元/月,不想额外付费了。</li>
+  <li><a href="https://note.youdao.com/">有道笔记</a>
+<br />有广告</li>
+  <li><a href="https://www.wiz.cn/">为知笔记</a>
+<br />免费用户只能使用100天,放弃</li>
+</ul>
+
+<h4 id="本地云网站云盘同步">本地/云网站+云盘同步</h4>
+<ul>
+  <li>wordpress+php+mysql博客类
+<br />本地需要定期备份数据库,额外运行网站服务,没必要
+<br />服务器运行,不支持离线,服务器安全需要维护</li>
+  <li>jekyll等静态网页
+<br />编辑起来不太方便,复制粘贴格式无法保留</li>
+</ul>
+
+<h4 id="离线笔记软件">离线笔记软件</h4>
+<ul>
+  <li><a href="http://www.wjjsoft.com">Mybase</a>
+<br />我非常喜欢,适用于PC全平台,自带加密功能,离线使用,编辑器也不错<br />
+正版需要付费,(因为不知道这个软件是否会继续开发,所以我不愿意付费和使用破解版)</li>
+  <li>md编辑器,gitbook等
+<br />gitbook运行起来太卡了,md编辑器粘贴图形困难</li>
+  <li>Zim等离线笔记软件
+<br />考虑Zim支持PC全平台,编辑器也不错(不支持md语法,不是必须条件)
+<br />致命弱点不能加密,所以需要第三方加密软件进行加密</li>
+</ul>
+
+<h2 id="pc端笔记方案_veracryptzim同步云盘">PC端笔记方案_VeraCrypt+Zim+同步云盘</h2>
+<h3 id="zim---a-desktop-wiki"><a href="http://zim-wiki.org/">Zim - A Desktop Wiki</a></h3>
+<p>虽然没有onenote那么强大,但笔记功能还可以,可以从粘贴板复制图片等并保持排版
+<br />开源,免费,支持Linux，<a href="http://zim-wiki.org/install.html">OSX</a>,Windows.</p>
+
+<h3 id="veracrypt"><a href="https://veracrypt.codeplex.com/">VeraCrypt</a></h3>
+<p>VeraCrypt 是一款基于已终止的 TrueCrypt项目开发的开源即时加密软件，它可以创建一个虚拟的加密磁盘或者加密分区，用来保护隐私文件。详细信息和安装<a href="https://www.appinn.com/veracrypt/">@小众软件</a><br />
+<br />主要是用于对存放含有密码的笔记,开源,免费支持Linux，OSX,Windows.(移动端也有第三方客户端)
+<br /><br />我最喜欢的地方是,开机一次解密,挂载成一个分区,断电或关机数据都会加密.而且存储文件没有格式要求,<strong>可以把加密盘,命名为<code class="highlighter-rouge">xxx.dll</code>等名称藏在C盘某个目录内,减少电脑失窃后某些文件/笔记被偷看的可能</strong>。
+<br /><br />除了给笔记加密,还有更多有趣的玩法</p>
+
+<h3 id="同步云盘">同步云盘</h3>
+<p>避免数据丢失,对Zim的笔记进行备份,因为日常备份都用坚果云了,所以选择<a href="https://www.jianguoyun.com">坚果云</a></p>
+
+<h2 id="安装使用">安装使用</h2>
+<h3 id="zim">Zim</h3>
+<h4 id="安装">安装</h4>
+<p>从<a href="http://zim-wiki.org/">Zim - A Desktop Wiki</a>下载安装即可<br /></p>
+<h4 id="中文支持">中文支持</h4>
+<p>参考<a href="http://menxu.lofter.com/post/164b9d_3ebf7b">Zim桌面wiki系统</a><br />
+使用中文:我的电脑（计算机）右键属性里的环境变量里增加一个变量，变量名为 “LANG”，值为 “zh_CN.UTF-8″，皆不带引号</p>
+<h4 id="常用">常用</h4>
+<p><code class="highlighter-rouge">ctrl +/-</code>调节页面文本显示大小</p>
+<h4 id="插入图片过大">插入图片过大</h4>
+<p>选中图片,ctrl+E,调整大小</p>
+<h4 id="常用插件">常用插件</h4>
+<p>Edit&gt;Preferences&gt;Plugins</p>
+<ul>
+  <li>插入代码块高亮Source View<br />
+插入后就可以Insert&gt;Code Block
+<img src="/uploads/2020/06/source.PNG" alt="" /></li>
+  <li>目录插件 Table of Contents</li>
+</ul>
+
+<h2 id="安装veracrypt">安装VeraCrypt</h2>
+<p>参考<a href="https://sourceforge.net/p/veracrypt/discussion/technical/thread/1056ed16/">Please add these info for Linux/Ubuntu users</a><br />
+从<a href="https://veracrypt.codeplex.com/">VeraCrypt</a>下载安装即可,教程很多<br />
+ubuntu错误提示</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VeraCrypt:process::Execute:88
+</code></pre></div></div>
+<p>安装下列解决</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install exfat-fuse  exfat-utils dmsetup
+</code></pre></div></div>
+<h3 id="同步盘">同步盘</h3>
+<p>选择你喜欢的。</p>
+
+<h3 id="效果图">效果图</h3>
+<p>win10和ubuntu16.04编辑同一笔记
+<img src="/uploads/2018/01/zimlin.PNG" alt="" />
+<img src="/uploads/2018/01/zimwin.PNG" alt="" /></p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2018/01/24/vasp-step2/">vasp计算流程-静态自洽</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/01/31/vasp-step3/">vasp计算流程-非自洽计算</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

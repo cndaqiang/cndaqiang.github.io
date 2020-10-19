@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>R语言快速上手</title>
+    <meta name="description" content="R语言快速上手">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2019/05/09/R/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2019/05/09/R/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2019/05/09/R/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2019/05/09/R/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>R语言快速上手</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-05-09
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#R" title="Category: R" rel="category">R</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#R" title="Tag: R" rel="tag">R</a-->
+        <a href="/tag/#R" title="Tag: R" rel="tag">R</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#说明" id="markdown-toc-说明">说明</a>    <ul>
+      <li><a href="#安装程序包" id="markdown-toc-安装程序包">安装程序包</a>        <ul>
+          <li><a href="#安装r语言" id="markdown-toc-安装r语言">安装R语言</a></li>
+          <li><a href="#cran-进入r后安装无需root" id="markdown-toc-cran-进入r后安装无需root">CRAN 进入R后安装，无需root</a></li>
+          <li><a href="#bioconductor" id="markdown-toc-bioconductor">Bioconductor</a></li>
+          <li><a href="#github" id="markdown-toc-github">GitHub</a></li>
+          <li><a href="#查看程序包帮助" id="markdown-toc-查看程序包帮助">查看程序包帮助</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#数据类型" id="markdown-toc-数据类型">数据类型</a>    <ul>
+      <li><a href="#基本数据元素" id="markdown-toc-基本数据元素">基本数据元素</a>        <ul>
+          <li><a href="#数据类型转换" id="markdown-toc-数据类型转换">数据类型转换</a></li>
+        </ul>
+      </li>
+      <li><a href="#数组" id="markdown-toc-数组">数组</a>        <ul>
+          <li><a href="#定义c" id="markdown-toc-定义c">定义<code class="highlighter-rouge">c</code></a></li>
+          <li><a href="#调用-" id="markdown-toc-调用-">调用<code class="highlighter-rouge">[ ]</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#矩阵" id="markdown-toc-矩阵">矩阵</a>        <ul>
+          <li><a href="#定义matrix" id="markdown-toc-定义matrix">定义<code class="highlighter-rouge">matrix</code></a></li>
+          <li><a href="#调用--1" id="markdown-toc-调用--1">调用<code class="highlighter-rouge">[ ]</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#数组array" id="markdown-toc-数组array">数组<code class="highlighter-rouge">array</code></a>        <ul>
+          <li><a href="#定义array" id="markdown-toc-定义array">定义<code class="highlighter-rouge">array</code></a></li>
+          <li><a href="#特定数组" id="markdown-toc-特定数组">特定数组</a></li>
+          <li><a href="#提取-" id="markdown-toc-提取-">提取<code class="highlighter-rouge">[ ]</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#数据框" id="markdown-toc-数据框">数据框</a>        <ul>
+          <li><a href="#定义dataframecol1col2col3" id="markdown-toc-定义dataframecol1col2col3">定义<code class="highlighter-rouge">data.frame(col1,col2,col3...)</code></a></li>
+          <li><a href="#调用--2" id="markdown-toc-调用--2">调用<code class="highlighter-rouge">[ ]</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#因子" id="markdown-toc-因子">因子</a></li>
+      <li><a href="#列表" id="markdown-toc-列表">列表</a>        <ul>
+          <li><a href="#定义" id="markdown-toc-定义">定义</a></li>
+          <li><a href="#调用listname-keywords" id="markdown-toc-调用listname-keywords">调用<code class="highlighter-rouge">listname[" keywords"]</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#其他" id="markdown-toc-其他">其他</a>        <ul>
+          <li><a href="#对变量注释names" id="markdown-toc-对变量注释names">对变量注释<code class="highlighter-rouge">names</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#变量数据对象操作" id="markdown-toc-变量数据对象操作">变量(数据对象)操作</a></li>
+      <li><a href="#变量数据对象处理函数" id="markdown-toc-变量数据对象处理函数">变量(数据对象)处理函数</a>        <ul>
+          <li><a href="#字符" id="markdown-toc-字符">字符</a></li>
+          <li><a href="#转义字符串" id="markdown-toc-转义字符串">转义字符串</a></li>
+          <li><a href="#其他处理函数" id="markdown-toc-其他处理函数">其他处理函数</a></li>
+          <li><a href="#矩阵操作" id="markdown-toc-矩阵操作">矩阵操作</a></li>
+        </ul>
+      </li>
+      <li><a href="#整合重构数据暂略" id="markdown-toc-整合重构数据暂略">整合重构数据，暂略</a></li>
+    </ul>
+  </li>
+  <li><a href="#数学函数" id="markdown-toc-数学函数">数学函数</a>    <ul>
+      <li><a href="#数学运算" id="markdown-toc-数学运算">数学运算</a></li>
+      <li><a href="#统计函数" id="markdown-toc-统计函数">统计函数</a></li>
+      <li><a href="#概率函数" id="markdown-toc-概率函数">概率函数</a>        <ul>
+          <li><a href="#随机数种子" id="markdown-toc-随机数种子">随机数种子</a></li>
+          <li><a href="#多元正态数据mvrnorm-略" id="markdown-toc-多元正态数据mvrnorm-略">多元正态数据<code class="highlighter-rouge">mvrnorm</code> 略</a></li>
+        </ul>
+      </li>
+      <li><a href="#将变量矩阵数组数据框作为函数的输入参数" id="markdown-toc-将变量矩阵数组数据框作为函数的输入参数">将变量(矩阵，数组，数据框…)作为函数的输入参数</a>        <ul>
+          <li><a href="#直接置入" id="markdown-toc-直接置入">直接置入</a></li>
+          <li><a href="#apply-数组矩阵某一维度" id="markdown-toc-apply-数组矩阵某一维度">apply （数组，矩阵）某一维度</a></li>
+          <li><a href="#lapplysapply-列表list的某一维度暂略" id="markdown-toc-lapplysapply-列表list的某一维度暂略">lapply,sapply (列表list)的某一维度，暂略</a></li>
+        </ul>
+      </li>
+      <li><a href="#自编函数" id="markdown-toc-自编函数">自编函数</a></li>
+    </ul>
+  </li>
+  <li><a href="#判断" id="markdown-toc-判断">判断</a>    <ul>
+      <li><a href="#if" id="markdown-toc-if">if</a></li>
+      <li><a href="#swith" id="markdown-toc-swith">swith</a></li>
+      <li><a href="#与或非" id="markdown-toc-与或非">与或非</a></li>
+    </ul>
+  </li>
+  <li><a href="#循环" id="markdown-toc-循环">循环</a>    <ul>
+      <li><a href="#for--i-in-seq" id="markdown-toc-for--i-in-seq">for ( i in seq)</a></li>
+      <li><a href="#while-条件" id="markdown-toc-while-条件">while (条件)</a></li>
+      <li><a href="#循环控制break和next" id="markdown-toc-循环控制break和next">循环控制break和next</a></li>
+    </ul>
+  </li>
+  <li><a href="#自定义函数" id="markdown-toc-自定义函数">自定义函数</a></li>
+  <li><a href="#把source当模块用" id="markdown-toc-把source当模块用">把source当模块用</a></li>
+  <li><a href="#绘图" id="markdown-toc-绘图">绘图</a>    <ul>
+      <li><a href="#函数" id="markdown-toc-函数">函数</a></li>
+    </ul>
+  </li>
+  <li><a href="#格式化输入输出" id="markdown-toc-格式化输入输出">格式化输入输出</a>    <ul>
+      <li><a href="#cat输出信息到屏幕文件" id="markdown-toc-cat输出信息到屏幕文件"><code class="highlighter-rouge">cat</code>输出信息到屏幕/文件</a></li>
+      <li><a href="#print的输出会带很多信息如上" id="markdown-toc-print的输出会带很多信息如上"><code class="highlighter-rouge">print</code>的输出会带很多信息，如上</a></li>
+    </ul>
+  </li>
+  <li><a href="#文件读写" id="markdown-toc-文件读写">文件读写</a>    <ul>
+      <li><a href="#手输入edit" id="markdown-toc-手输入edit">手输入<code class="highlighter-rouge">edit()</code></a></li>
+      <li><a href="#从文本文件读入" id="markdown-toc-从文本文件读入">从文本文件读入</a></li>
+      <li><a href="#保存数据" id="markdown-toc-保存数据">保存数据</a>        <ul>
+          <li><a href="#writecsv默认sep是其他具体参数同writetable" id="markdown-toc-writecsv默认sep是其他具体参数同writetable">write.csv默认sep是<code class="highlighter-rouge">,</code>，其他具体参数同<code class="highlighter-rouge">write.table</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#其他-1" id="markdown-toc-其他-1">其他</a></li>
+    </ul>
+  </li>
+  <li><a href="#r调用fortran" id="markdown-toc-r调用fortran">R调用Fortran</a></li>
+  <li><a href="#r调用python" id="markdown-toc-r调用python">R调用Python</a></li>
+  <li><a href="#有趣" id="markdown-toc-有趣">有趣</a>    <ul>
+      <li><a href="#assign将字符串转为变量" id="markdown-toc-assign将字符串转为变量"><code class="highlighter-rouge">assign</code>将字符串转为变量</a></li>
+      <li><a href="#systemls" id="markdown-toc-systemls"><code class="highlighter-rouge">system("ls")</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#将r语言变成linux的小脚本使用" id="markdown-toc-将r语言变成linux的小脚本使用">将R语言，变成Linux的小脚本使用</a>    <ul>
+      <li><a href="#在超算上编译安装r到个人目录" id="markdown-toc-在超算上编译安装r到个人目录">在超算上编译安装R到个人目录</a></li>
+      <li><a href="#脚本" id="markdown-toc-脚本">脚本</a></li>
+      <li><a href="#集成到makefile里编译计算画图简直不要太爽" id="markdown-toc-集成到makefile里编译计算画图简直不要太爽">集成到makefile里,编译计算,画图,简直不要太爽</a></li>
+      <li><a href="#调用shell的grep组合操作" id="markdown-toc-调用shell的grep组合操作">调用shell的<code class="highlighter-rouge">grep</code>组合操作</a></li>
+    </ul>
+  </li>
+  <li><a href="#plot" id="markdown-toc-plot">plot</a></li>
+  <li><a href="#ggplot2" id="markdown-toc-ggplot2">ggplot2</a>    <ul>
+      <li><a href="#qplot" id="markdown-toc-qplot">qplot</a></li>
+      <li><a href="#ggplot" id="markdown-toc-ggplot">ggplot</a></li>
+      <li><a href="#3d画图" id="markdown-toc-3d画图">3d画图</a></li>
+    </ul>
+  </li>
+  <li><a href="#r语言用于科学计算" id="markdown-toc-r语言用于科学计算">R语言用于科学计算</a>    <ul>
+      <li><a href="#fft" id="markdown-toc-fft">FFT</a>        <ul>
+          <li><a href="#fft-1" id="markdown-toc-fft-1">FFT</a></li>
+          <li><a href="#ifft示例" id="markdown-toc-ifft示例">IFFT示例</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>R语言快速上手<br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://cn.voidcc.com/question/p-kowbomba-bds.html">.Fortran（）返回任何结果</a><br />
+卡巴, 科弗, 高涛, 等. R 语 言 实 战[J]. 2013.<br />
+<a href="http://rvdsd.top/2018/09/07/BioStatistics/%E7%94%9F%E7%89%A9%E7%BB%9F%E8%AE%A1-dnorm,%20pnorm,%20qnorm,%20and%20rnorm/">dnorm, pnorm, qnorm与rnorm的区别</a><br />
+<a href="https://blog.csdn.net/swuteresa/article/details/8564247">R语言的流程控制</a><br />
+<a href="https://omicspie.com/2018/05/29/R%20study2/">R语言入门</a><br />
+<a href="https://blog.csdn.net/u011596455/article/details/79753788">R 语言–接收命令行参数</a><br />
+<a href="https://d.cosx.org/d/108295-108295">R里面有没有函数可以输出到已有文件末尾？</a><br />
+<a href="https://ww2.mathworks.cn/help/matlab/ref/fft.html">快速傅里叶变换 - MATLAB fft- MathWorks 中国</a><br />
+<a href="https://blog.csdn.net/u013421629/article/details/72771241">【R语言数据导出txt】 write.table 函数用法</a></p>
+
+<h2 id="说明">说明</h2>
+<ul>
+  <li>运行脚本方法<br />
+1) <code class="highlighter-rouge">R CMD [option] [xxx.R] [输出]</code><br />
+2) 与python和bash一样，在脚本里指明程序，添加可执行权限
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env Rscript</span><span class="w">
+</span><span class="n">age</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">5</span><span class="p">)</span><span class="w"> 
+</span><span class="n">weight</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">6</span><span class="p">)</span><span class="w"> 
+</span><span class="n">plot</span><span class="p">(</span><span class="n">age</span><span class="p">,</span><span class="n">weight</span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>注释用<code class="highlighter-rouge">#</code></li>
+  <li>同行书写，用<code class="highlighter-rouge">;</code>代表换行</li>
+  <li>变量名区分大小写,字母数字下划线</li>
+  <li>变量无需定义，随用随赋值，新创建，赋值为新数据=删除旧变量并重新定义赋值</li>
+  <li>R的数组和矩阵的元素类型不用相同</li>
+  <li>变量赋值，教程中是<code class="highlighter-rouge">b &lt;- 5</code>，在<code class="highlighter-rouge">R version 3.3.1</code>可以直接<code class="highlighter-rouge">b=5;b=c(1,2,3)</code></li>
+  <li>删除变量<code class="highlighter-rouge">rm(变量名)</code></li>
+  <li><strong>使用[” “]提取元素，有<code class="highlighter-rouge">“</code>，双引号</strong></li>
+  <li>在脚本或程序中多次执行<code class="highlighter-rouge">plot</code>，每次的图会变成一个pdf的一页，程序执行结束后，有个总图的pdf保存在当前目录</li>
+  <li>使用source像模块一样调用</li>
+  <li>当前目录若存在<code class="highlighter-rouge">.RData .Rhistory</code>文件，好像会影响脚本运行结果</li>
+</ul>
+
+<h3 id="安装程序包">安装程序包</h3>
+<h4 id="安装r语言">安装R语言</h4>
+<ul>
+  <li>下载/编译 安装<a href="https://mirrors.tuna.tsinghua.edu.cn/CRAN/">清华-mirrors</a><br />
+可以下载安装包，也可以源码编译</li>
+  <li>homebrew安装
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#MacOS也可以
+brew install R
+</code></pre></div>    </div>
+  </li>
+  <li>anaconda也可以安装
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/work/dfft-yimin/out$ conda install R
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="cran-进入r后安装无需root">CRAN 进入R后安装，无需root</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages("inline")
+</code></pre></div></div>
+<p>指定清华镜像</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>options(repos=structure(c(CRAN="https://mirrors.tuna.tsinghua.edu.cn/CRAN/"))) 
+</code></pre></div></div>
+<h4 id="bioconductor">Bioconductor</h4>
+<p>Bioconductor是大部分的生信相关的包存放的地方，网址<a href="https://www.bioconductor.org/">https://www.bioconductor.org/</a> 安装使用代码如下</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## try http:// if https:// URLs are not supported
+source("https://bioconductor.org/biocLite.R")
+biocLite("package.name")#将package.name替换为自己的要安装的包的名字即可。
+</code></pre></div></div>
+<h4 id="github">GitHub</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages("devtools")
+library(devtools)
+install_github("user.name/package.name")#其中user.name是github作者的用户名。
+</code></pre></div></div>
+<h4 id="查看程序包帮助">查看程序包帮助</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>help(package = "sxtTools")
+#如果想看某个具体的函数的信息，可以使用下面的代码：
+?installBioc
+</code></pre></div></div>
+
+<h2 id="数据类型">数据类型</h2>
+<p>R的基本数据元素有数值，字符，逻辑型<br /></p>
+
+<h3 id="基本数据元素">基本数据元素</h3>
+<p>直接赋值，和数组就个c的区别</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; a=5.0     #数值型
+&gt; a
+[1] 5
+&gt; a="hello" #字符类型
+&gt; a
+[1] "hello"
+&gt; a=T       #逻辑型
+&gt; a
+[1] TRUE
+</code></pre></div></div>
+<h4 id="数据类型转换">数据类型转换</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">as.numeric(a)</code> 转数值</li>
+  <li><code class="highlighter-rouge">as.character(b)</code>  将数字b转化成字符格式</li>
+  <li><code class="highlighter-rouge">format(1.2345,digits = 3)</code> 将数字转成字符格式，并设置有效位数为3</li>
+  <li><code class="highlighter-rouge">as.matrix(a)</code>转矩阵</li>
+  <li><code class="highlighter-rouge">data.frame(Ave) </code>转数据框</li>
+  <li><code class="highlighter-rouge">as.numeric(as.vector(unlist(strsplit(Dipole,","))))</code> 组合操作，拆分字符串</li>
+  <li><code class="highlighter-rouge">options(digits=N)</code>,设置数据精度，屏幕显示的小数点位数</li>
+</ul>
+
+<h3 id="数组">数组</h3>
+<p>数组元素可以是数值，字符，逻辑型混合在一起，不必相同类型</p>
+<h4 id="定义c">定义<code class="highlighter-rouge">c</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; a=4
+&gt; a
+[1] 4
+&gt; a &lt;- c(2,3)
+&gt; a
+[1] 2 3
+</code></pre></div></div>
+<p>其他定义方式</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; 1:4
+[1] 1 2 3 4
+</code></pre></div></div>
+<h4 id="调用-">调用<code class="highlighter-rouge">[ ]</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a[n]
+</code></pre></div></div>
+<h3 id="矩阵">矩阵</h3>
+<p>矩阵是由向量构成，因此元素可以是数值，字符，逻辑型混合在一起，不必相同类型</p>
+<h4 id="定义matrix">定义<code class="highlighter-rouge">matrix</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>matrix(向量,[nrow=行数,ncol=列数][,byrow=T/F][,dimname=list(行名矩阵,列名矩阵)]  )
+</code></pre></div></div>
+<p>提取向量中的前nrow*ncol个元素填充矩阵<br />
+若不设置行数，默认为列向量<br />
+byrow=T向量按行填充，F按列填充，
+示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; matrix(c(1,2,"hello",3),nrow=2,ncol=1)
+     [,1]
+[1,] "1"
+[2,] "2"
+&gt; matrix(c(1,2,"hello",3),nrow=4,ncol=1)
+     [,1]
+[1,] "1"
+[2,] "2"
+[3,] "hello"
+[4,] "3"
+&gt; matrix(1:4,nrow=2,ncol=2,byrow=F,dimname=list(c("hang1","hang2"),c("lie1","lie2")))
+      lie1 lie2
+hang1    1    3
+hang2    2    4
+</code></pre></div></div>
+<h4 id="调用--1">调用<code class="highlighter-rouge">[ ]</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; b=matrix(1:4,nrow=2,ncol=2,byrow=F,dimname=list(c("hang1","hang2"),c("lie1","lie2")))
+&gt; b[1,1]
+[1] 1
+&gt; b["hang1","lie2"]
+[1] 3
+&gt; aa
+     [,1] [,2] [,3] [,4]
+[1,]    1    3    5    7
+[2,]    2    4    6    8
+&gt; aa[1,2:3]
+[1] 3 5
+</code></pre></div></div>
+<p>也支持像matlab一样，条件调用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; x=1:10
+&gt; x[x&gt;5]
+[1]  6  7  8  9 10
+</code></pre></div></div>
+<p><strong>注意，<code class="highlighter-rouge">a:b/2其实是c(a:b)/2, 应该写 a:(b/2),在提取矩阵时用, mydata[1:(n/2),2]</code></strong></p>
+
+<h3 id="数组array">数组<code class="highlighter-rouge">array</code></h3>
+<p>矩阵只能是二维的，数组与矩阵一样，区别是可以是高维的</p>
+<h4 id="定义array">定义<code class="highlighter-rouge">array</code></h4>
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> b=array(1:8,c(2,2,2),dimname=list(c("hang1","hang2"),c("lie1","lie2"),c("matrix1","matrix2")))
+ &gt; b
+, , matrix1
+
+      lie1 lie2
+hang1    1    3
+hang2    2    4
+
+, , matrix2
+
+      lie1 lie2
+hang1    5    7
+hang2    6    8
+</code></pre></div></div>
+
+<h4 id="特定数组">特定数组</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x=1:10 !等差数组
+&gt; seq(1,5,2)
+[1] 1 3 5
+</code></pre></div></div>
+<h4 id="提取-">提取<code class="highlighter-rouge">[ ]</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; b["hang2","lie1","matrix2"]
+[1] 6
+</code></pre></div></div>
+<h3 id="数据框">数据框</h3>
+<p>是将多个变量保存到一个数据框中<br />
+可以根据变量名从数据框中提取数据</p>
+<h4 id="定义dataframecol1col2col3">定义<code class="highlighter-rouge">data.frame(col1,col2,col3...)</code></h4>
+<p>每列元素要一样多</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; col1=1:5
+&gt; col2=2:6
+&gt; col3=c("q","w","e","r","t")
+&gt; data.frame(col1,col2,col3)
+  col1 col2 col3
+1    1    2    q
+2    2    3    w
+3    3    4    e
+4    4    5    r
+5    5    6    t
+#指定行名称
+&gt; data.frame(col1,col2,col3,row.names=col3)
+  col1 col2 col3
+q    1    2    q
+w    2    3    w
+e    3    4    e
+r    4    5    r
+t    5    6    t
+#后期修改列名
+dipoledate=data.frame(result$getDipolePython())
+names(dipoledate)=c("Time","x","y","z")
+</code></pre></div></div>
+
+<h4 id="调用--2">调用<code class="highlighter-rouge">[ ]</code></h4>
+<p>个人觉得<code class="highlighter-rouge">$</code>挺好用的</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; b=data.frame(col1,col2,col3)
+&gt; b["col2"]
+  col2
+1    2
+2    3
+3    4
+4    5
+5    6
+&gt; b[1:3,2:3] #和matlab一样呀，[  [行],列]内只有一个数组则从列提取
+  col2 col3
+1    2    q
+2    3    w
+3    4    e
+&gt; b$col1
+[1] 1 2 3 4 5
+&gt; summary(b$col1)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+      1       2       3       3       4       5
+</code></pre></div></div>
+<p>也可以通过<code class="highlighter-rouge">attach</code>将数据框加到R的搜索路径中，就可以直接用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; rm(col1)
+&gt; col1
+Error: object 'col1' not found
+&gt; attach(b)     #加入搜索路径
+The following objects are masked _by_ .GlobalEnv:
+
+    col2, col3
+
+&gt; col1
+[1] 1 2 3 4 5
+&gt; detach(b)     #移除搜索路径
+&gt; col1
+Error: object 'col1' not found
+</code></pre></div></div>
+<p>也可以使用<code class="highlighter-rouge">with(数据框,{命令})</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; with(b,{
++ col1
++ })
+[1] 1 2 3 4 5
+</code></pre></div></div>
+
+<h3 id="因子">因子</h3>
+<p>因子可以理解为对已有数据的分类<br />
+一般含有字符型的数组，默认就是factor因子</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; sex=factor(c("男","男","女","男"))
+&gt; sex
+[1] 男 男 女 男
+Levels: 女 男
+</code></pre></div></div>
+<p>指定设置分类顺序<code class="highlighter-rouge">levels=c(...)</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; sex=factor(c("男","男","女","男"),levels=c("男","女"))
+&gt; sex
+[1] 男 男 女 男
+Levels: 男 女
+</code></pre></div></div>
+<p>分类后，并不影响原数据,可以更好的用于数据分析</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; sex[1]
+[1] 男
+Levels: 男 女
+</code></pre></div></div>
+<p>常将分类后的向量组成数据框，用于进一步分析</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; sex
+[1] 男     男     女     Unkown
+Levels: Unkown 女 男
+&gt; num
+[1] 12 14 12 15
+Levels: 12 14 15
+&gt; name
+[1] "Li" "Ya" "CQ" "LL"
+&gt; data=data.frame(name,sex,num)
+&gt; data
+  name    sex num
+1   Li     男  12
+2   Ya     男  14
+3   CQ     女  12
+4   LL Unkown  15
+&gt; str(data)
+'data.frame':   4 obs. of  3 variables:
+ $ name: Factor w/ 4 levels "CQ","Li","LL",..: 2 4 1 3
+ $ sex : Factor w/ 3 levels "Unkown","女",..: 3 3 2 1
+ $ num : Factor w/ 3 levels "12","14","15": 1 2 1 3
+&gt; summary(data)
+ name       sex    num
+ CQ:1   Unkown:1   12:2
+ Li:1   女    :1   14:1
+ LL:1   男    :2   15:1
+ Ya:1
+</code></pre></div></div>
+
+<h3 id="列表">列表</h3>
+<p>就像一个垃圾站，什么都能往里丢</p>
+<h4 id="定义">定义</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>list(keywords1=...,keywords2=a,b,c...,keywords3....)
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; list(one=num,two=name,sex)
+$one
+[1] 12 14 12 15
+Levels: 12 14 15
+
+$two
+[1] "Li" "Ya" "CQ" "LL"
+
+[[3]]
+[1] 男     男     女     Unkown
+Levels: Unkown 女 男
+</code></pre></div></div>
+<h4 id="调用listname-keywords">调用<code class="highlighter-rouge">listname[" keywords"]</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; lista["two"]
+$two
+[1] "Li" "Ya" "CQ" "LL"
+&gt; lista$two
+[1] "Li" "Ya" "CQ" "LL"
+</code></pre></div></div>
+
+<h3 id="其他">其他</h3>
+<h4 id="对变量注释names">对变量注释<code class="highlighter-rouge">names</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; a=c("xiaoming",13)
+&gt; a
+[1] "xiaoming" "13"
+&gt; names(a)[1]="Name"
+&gt; names(a)[2]="age"
+&gt; a
+      Name        age
+"xiaoming"       "13"
+</code></pre></div></div>
+
+<h3 id="变量数据对象操作">变量(数据对象)操作</h3>
+<p><code class="highlighter-rouge">class(变量名)</code>查看变量类型</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 在拿到数据之前第一步要做的就是概览数据
+head(df,n=10)#查看数据集的前十条记录
+str(df)#查看数据集结构
+tail(df)#查看数据集最后部分
+sapply(df)#查看数据集类型及名称
+summary(df)#查看数据集各变量描述统计
+</code></pre></div></div>
+
+<p>函 数 用 途</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>length(object) 显示对象中元素/成分的数量
+dim(object) 显示某个对象的维度
+str(object) 显示某个对象的结构
+class(object) 显示某个对象的类或类型
+mode(object) 显示某个对象的模式
+names(object) 显示某对象中各成分的名称
+c(object, object,…) 将对象合并入一个向量 
+
+cbind(object, object, …) 按列合并对象
+rbind(object, object, …) 按行合并对象
+Object 输出某个对象
+head(object) 列出某个对象的开始部分
+tail(object) 列出某个对象的最后部分
+ls() 显示当前的对象列表
+rm(object, object, …) 删除一个或更多个对象。语句rm(list = ls())
+将删除当前工作环境中的几乎所有对象*
+newobject &lt;- edit(object) 编辑对象并另存为newobject
+fix(object) 直接编辑对象，调用vi编辑
+</code></pre></div></div>
+
+<h3 id="变量数据对象处理函数">变量(数据对象)处理函数</h3>
+<h4 id="字符">字符</h4>
+
+<p><img src="/uploads/2019/05/charfun.jpg" alt="" /></p>
+
+<p>函数<code class="highlighter-rouge">grep()、 sub()和strsplit()</code>
+搜索某个文本字符串（ fixed=TRUE）<br />
+搜索正则表达式（ fixed=FALSE，默认值为FALSE）<br />
+正则表达式可参考<a href="/2018/10/17/deal-file/">[gitbook文章重置] 正则表达式 grep sed awk</a></p>
+
+<h4 id="转义字符串">转义字符串</h4>
+<p>要使用特殊字符时，要在前面加<code class="highlighter-rouge">\\</code>，如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>name=unlist(strsplit(as.character(mydata[id,1]),"\\|"))[3]
+</code></pre></div></div>
+
+<h4 id="其他处理函数">其他处理函数</h4>
+<p><img src="/uploads/2019/05/oth.jpg" alt="" /></p>
+
+<h4 id="矩阵操作">矩阵操作</h4>
+<p>转置<code class="highlighter-rouge">t(a)</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; a=matrix(1:10,nrow=2)
+&gt; t(a)
+     [,1] [,2]
+[1,]    1    2
+[2,]    3    4
+[3,]    5    6
+[4,]    7    8
+[5,]    9   10
+</code></pre></div></div>
+
+<h3 id="整合重构数据暂略">整合重构数据，暂略</h3>
+
+<h2 id="数学函数">数学函数</h2>
+
+<p>和matlab差不多啊</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x=1:10
+plot(x,sin(x))
+</code></pre></div></div>
+<p>也可以画x图</p>
+<h3 id="数学运算">数学运算</h3>
+<p>abs, 取整, cos, sin, acos,asin,三角函数,ln=<code class="highlighter-rouge">log(x,base=exp(1))</code></p>
+
+<p><img src="/uploads/2019/05/rfun.jpg" alt="" /></p>
+
+<h3 id="统计函数">统计函数</h3>
+<p>mean,sum</p>
+
+<p><img src="/uploads/2019/05/tfun.jpg" alt="" /></p>
+
+<h3 id="概率函数">概率函数</h3>
+<p>在R中，概率函数形如：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[dpqr][分布名称](参数表)
+</code></pre></div></div>
+<p>[dpqr]表示其所指分布的某一方面：</p>
+<ul>
+  <li>d = 密度函数（ density）!就是统计函数值</li>
+  <li>p = 分布函数（ distribution function） !统计函数的积分</li>
+  <li>q = 分位数函数（ quantile function）</li>
+  <li>r = 生成随机数（随机偏差）!生成符合分布的一组数x，x符合这一分布函数</li>
+</ul>
+
+<p>以正态分布<code class="highlighter-rouge">norm</code>为例<br />
+<img src="/uploads/2019/05/norm.jpg" alt="" />
+其他分布名称
+<img src="/uploads/2019/05/fenbu.jpg" alt="" /></p>
+
+<h4 id="随机数种子">随机数种子</h4>
+<p>R每次计算伪随机数都会使用不同的随机数种子，我们可以指定随机数种子<br />
+这样可以重复出(自己/别人)的计算结果，如下<br />
+**注意：种子只生效一次，若仍使用该种子，要继续<code class="highlighter-rouge">set.seed()</code> **</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; rnorm(10)
+ [1]  1.2240818  0.3598138  0.4007715  0.1106827 -0.5558411  1.7869131
+ [7]  0.4978505 -1.9666172  0.7013559 -0.4727914
+&gt; rnorm(10)
+ [1] -1.0678237 -0.2179749 -1.0260044 -0.7288912 -0.6250393 -1.6866933
+ [7]  0.8377870  0.1533731 -1.1381369  1.2538149
+&gt; set.seed(123)
+&gt; rnorm(10)
+ [1] -0.56047565 -0.23017749  1.55870831  0.07050839  0.12928774  1.71506499
+ [7]  0.46091621 -1.26506123 -0.68685285 -0.44566197
+&gt; set.seed(123)
+&gt; rnorm(10)
+ [1] -0.56047565 -0.23017749  1.55870831  0.07050839  0.12928774  1.71506499
+ [7]  0.46091621 -1.26506123 -0.68685285 -0.44566197
+</code></pre></div></div>
+<h4 id="多元正态数据mvrnorm-略">多元正态数据<code class="highlighter-rouge">mvrnorm</code> 略</h4>
+
+<h3 id="将变量矩阵数组数据框作为函数的输入参数">将变量(矩阵，数组，数据框…)作为函数的输入参数</h3>
+<h4 id="直接置入">直接置入</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; x=1:10
+&gt; sin(x)
+ [1]  0.8414710  0.9092974  0.1411200 -0.7568025 -0.9589243 -0.2794155
+ [7]  0.6569866  0.9893582  0.4121185 -0.5440211
+&gt; xx=matrix(1:10,nrow=2)
+&gt; sin(xx)
+          [,1]       [,2]       [,3]      [,4]       [,5]
+[1,] 0.8414710  0.1411200 -0.9589243 0.6569866  0.4121185
+[2,] 0.9092974 -0.7568025 -0.2794155 0.9893582 -0.5440211
+&gt; mean(xx)
+[1] 5.5
+</code></pre></div></div>
+<h4 id="apply-数组矩阵某一维度">apply （数组，矩阵）某一维度</h4>
+<p><code class="highlighter-rouge">apply(变量名,维度，函数名)</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; apply(xx,1,sin)
+           [,1]       [,2]
+[1,]  0.8414710  0.9092974
+[2,]  0.1411200 -0.7568025
+[3,] -0.9589243 -0.2794155
+[4,]  0.6569866  0.9893582
+[5,]  0.4121185 -0.5440211
+&gt; apply(xx,1,mean)
+[1] 5 6
+</code></pre></div></div>
+<h4 id="lapplysapply-列表list的某一维度暂略">lapply,sapply (列表list)的某一维度，暂略</h4>
+
+<h3 id="自编函数">自编函数</h3>
+
+<h2 id="判断">判断</h2>
+<h3 id="if">if</h3>
+<p><strong><code class="highlighter-rouge">}</code>后跟新的<code class="highlighter-rouge">else</code></strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (条件)
+{ 
+执行
+}else if
+{
+执行    
+}else{
+执行 
+}
+</code></pre></div></div>
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; if(a==10)
++ {
++ a=5
++ }
+&gt; if(a==5)
++ {
++ a=5
++ }else if(a==6)
++ {
++ a=6
++ }else
++ {a=10
++ }
+&gt; a
+[1] 5
+</code></pre></div></div>
+<h3 id="swith">swith</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>swith(表达式,case1,case2,cse3)
+#表达式为整数时，返回表达式对应的case值
+#表达式为字符串时，case必须有名称，见下例，返回case值
+#非整数非字符串，系统会转换成整数
+</code></pre></div></div>
+<p>好像就只能这么用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; a=2
+&gt; switch(a,"ming","hong","li")
+[1] "hong"
+&gt; switch("a",a="ming",b="hong",c="li")
+[1] "ming"
+</code></pre></div></div>
+
+<h3 id="与或非">与或非</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;、|、!、&amp;&amp;、||、xor
+</code></pre></div></div>
+
+<h2 id="循环">循环</h2>
+<h3 id="for--i-in-seq">for ( i in seq)</h3>
+<p>若省略<code class="highlighter-rouge">{ }</code>只循环for下面的一句，类似c</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; for (i in 1:10)
++ {
++ y[i]=i
++ }
+</code></pre></div></div>
+<h3 id="while-条件">while (条件)</h3>
+<p>与for一样</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; &gt; while (i&gt;5)
++ {
++ i=i-2
++ y=i
++ }
+</code></pre></div></div>
+<h3 id="循环控制break和next">循环控制break和next</h3>
+<h2 id="自定义函数">自定义函数</h2>
+<p><strong>先定义后使用</strong>
+示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myfun=function(x,y=2,z=3)
+{
+a=x*y+z
+return(a)
+}
+myfun(x=0)
+</code></pre></div></div>
+<p>调用其他文件中的函数，先</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source("myfun.R")
+y=myfun(x=0)
+</code></pre></div></div>
+
+<h2 id="把source当模块用">把source当模块用</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source("myfun.R")
+</code></pre></div></div>
+
+<h2 id="绘图">绘图</h2>
+
+<h3 id="函数">函数</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot 散点，点线
+hist 直方图
+boxplot
+par 
+...等等
+</code></pre></div></div>
+<p>线性，比例尺等也可以调控，都可以查表，或者单独做一个教程，此文不多讲，（估计没）有时间重开一个文章写绘图</p>
+
+<p>pretty生成特定坐标，用于画图</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pretty(x,n) 创建美观的分割点。通过选取n+1个等间距的取整值，将一个连续型变量x分割为n个区间
+pretty(1:15)          # 0  2  4  6  8 10 12 14 16
+pretty(1:15, h = 2)   # 0  5 10 15
+pretty(1:15, n = 4)   # 0  5 10 15
+pretty(1:15 * 2)      # 0  5 10 15 20 25 30
+pretty(1:20)          # 0  5 10 15 20
+pretty(1:20, n = 2)   # 0 10 20
+pretty(1:20, n = 10)  # 0  2  4 ... 20
+</code></pre></div></div>
+
+<h2 id="格式化输入输出">格式化输入输出</h2>
+<h3 id="cat输出信息到屏幕文件"><code class="highlighter-rouge">cat</code>输出信息到屏幕/文件</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#源码
+#!/usr/bin/env Rscript
+cat("the total number is:",3+5,"\n")
+#sep指定各个间隔，file="输出到文件"
+cat(1:4,"\n",sep="\t",file="catout") #默认清除源文件输入
+cat(1:4,sep=c(",","!","@","\n"),file="catout", append = TRUE) # append = TRUE追加到末尾
+#sep也可以指定每一个字符之间的间隔
+#也可使用   sep=c(rep("\t",3),"\n") 
+cat(1:4,sep=c(rep("\t",3),"\n"),file="catout", append = TRUE)
+x=3+4
+print(x)
+#运行
+cndaqiang@win10:~/code/R/Rcode&gt; ./test.R
+the total number is: 8
+[1] 7
+cndaqiang@win10:~/code/R/Rcode&gt; cat catout
+1       2       3       4
+1,2!3@4
+1       2       3       4
+</code></pre></div></div>
+<p>还可以这样</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>com=system("ls")
+cat(com)
+#结果
+cndaqiang@win10:~/code/R/Rcode&gt; ./test.R
+catout    Cv.dat    myf.f90  myf.so           RCv.R       test      windowscode
+cnq.R     ggplot.r  myf.mod  myfun.R          Rgraph.R    test.dat
+cnq.Rout  input.R   myf.o    PErrorBar_CNQ.R  Rplots.pdf  test.R
+</code></pre></div></div>
+<h3 id="print的输出会带很多信息如上"><code class="highlighter-rouge">print</code>的输出会带很多信息，如上</h3>
+
+<h2 id="文件读写">文件读写</h2>
+<h3 id="手输入edit">手输入<code class="highlighter-rouge">edit()</code></h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new=edit()
+</code></pre></div></div>
+<p>然后填入<code class="highlighter-rouge">c(1,2,3)</code>即等价于<code class="highlighter-rouge">new=c(1,2,3)</code><br />
+也可以在<code class="highlighter-rouge">edit()</code>括号中加入其他变量，进行修改,不影响原数据</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; new=edit(c(2,3,4))
+</code></pre></div></div>
+<h3 id="从文本文件读入">从文本文件读入</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read.table("文件名"[,header=T/F,sep="间隔标识符",row.name="变量名"]) 
+Cv=read.table("Cv.dat",skip=1) #skip跳过行号
+</code></pre></div></div>
+<ul>
+  <li>header是否将数据文件的第一行识别为变量名,如
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; read.table("my.dat")
+ V1  V2  V3
+1 num one two
+2   1  11  21
+3   2  12  22
+4   3  13  23
+&gt; read.table("my.dat",header=T)
+num one two
+1   1  11  21
+2   2  12  22
+3   3  13  23
+</code></pre></div>    </div>
+  </li>
+  <li>sep数据间隔，默认为一个或多个空格、制表符、换行符或回车符，默认就行</li>
+  <li>row.name=”变量名”，将变量名所在列作为行名
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; read.table("my.dat",header=T,row.name="num")
+one two
+1  11  21
+2  12  22
+3  13  23
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="保存数据">保存数据</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>write.csv(Dipole,"RDipole.csv",row.names =F)
+#======保存图片
+#
+pdf("RDipole.pdf")
+#png("filename.png")
+#jpeg("filename.jpeg")
+#bmp("filename.bmp")
+#
+#
+#
+#
+for ( direct in 2:4)
+{
+plot(Dipole[,1],Dipole[,direct],type="l",main = "Dipole", xlab = names(Dipole)[1],  ylab = names(Dipole)[direct])
+}
+dev.off()
+
+#控制画板
+png(file="my.png",width=800,height=30000)
+</code></pre></div></div>
+<h4 id="writecsv默认sep是其他具体参数同writetable">write.csv默认sep是<code class="highlighter-rouge">,</code>，其他具体参数同<code class="highlighter-rouge">write.table</code></h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>write.table (x, file ="", sep ="", row.names =TRUE, col.names =TRUE, quote =TRUE)
+
+x：需要导出的数据 
+file：导出的文件路径 
+sep：分隔符，默认为空格（” “），也就是以空格为分割列 
+row.names：是否导出行序号，默认为TRUE，也就是导出行序号 
+col.names：是否导出列名，默认为TRUE，也就是导出列名 
+quote：字符串是否使用引号表示，默认为TRUE，也就是使用引号表示
+</code></pre></div></div>
+<p><strong>貌似write.csv在输出data.frame时还是比不过write.table</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; write.table(TDEFIELD_all,file="test",row.names =F, col.names =FALSE)
+&gt; write.csv(TDEFIELD_all,file="test",row.names =F, col.names =FALSE)
+Warning message:
+In write.csv(TDEFIELD_all, file = "test", row.names = F, col.names = FALSE) :
+  不能修改'col.names'
+</code></pre></div></div>
+
+<h3 id="其他-1">其他</h3>
+
+<h2 id="r调用fortran">R调用Fortran</h2>
+
+<p>R会自动编译文件<br />
+myf.90文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>subroutine myfun(a,a2)
+    REAL(8) :: a,a2 #Fortran必须使用双精度
+    open(unit=20,file="test")
+    write(20,*) a,a2
+    close(20)
+end subroutine myfun
+
+subroutine ofun(a,b)
+    REAL(8) :: a,b
+    b=a**10
+end subroutine ofun
+
+</code></pre></div></div>
+<p>cnq.R文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env Rscript</span><span class="w">
+</span><span class="n">system</span><span class="p">(</span><span class="s2">"R CMD SHLIB myf.f90"</span><span class="p">)</span><span class="w">  </span><span class="c1">#编译动态库</span><span class="w">
+</span><span class="c1">#好像会自动根据时间戳，判断是否需要重新编译</span><span class="w">
+</span><span class="n">dyn.load</span><span class="p">(</span><span class="s2">"myf.so"</span><span class="p">)</span><span class="w"> </span><span class="c1">#导入动态库</span><span class="w">
+</span><span class="c1">#.Fortran("函数名",[索引1=]as.类型(输入数据),[索引2=]as.类型(输入数据).....)</span><span class="w">
+</span><span class="c1">#索引任意也可以没有</span><span class="w">
+</span><span class="c1">#计算结果为list型，使用[ ]或$提取计算结果</span><span class="w">
+</span><span class="n">input</span><span class="o">=</span><span class="m">0</span><span class="w">
+</span><span class="n">output</span><span class="o">=</span><span class="m">0</span><span class="w">
+</span><span class="n">c</span><span class="o">=</span><span class="n">.Fortran</span><span class="p">(</span><span class="s2">"ofun"</span><span class="p">,</span><span class="n">inp</span><span class="o">=</span><span class="nf">as.double</span><span class="p">(</span><span class="m">2</span><span class="p">),</span><span class="n">outp</span><span class="o">=</span><span class="nf">as.double</span><span class="p">(</span><span class="m">4</span><span class="p">))[</span><span class="s2">"outp"</span><span class="p">]</span><span class="w">
+</span><span class="n">.Fortran</span><span class="p">(</span><span class="s2">"myfun"</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="nf">as.double</span><span class="p">(</span><span class="m">2</span><span class="p">),</span><span class="n">a2</span><span class="o">=</span><span class="nf">as.double</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+<p>查看计算结果</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@win10:/mnt/e/work/CODE/R/Rcode&gt; cat test
+   2.0000000000000000        1024.0000000000000
+</code></pre></div></div>
+
+<h2 id="r调用python">R调用Python</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 安装reticulate包
+install.packages("reticulate")
+# 加载reticulate包
+library(reticulate)
+&gt; os=import("os")
+&gt; os$system("python --version")
+Python 2.7.16 :: Anaconda, Inc.
+[1] 0
+result=import("pyramids.io.result")
+dipo=result$getDipolePython()
+
+ 
+</code></pre></div></div>
+
+<h2 id="有趣">有趣</h2>
+<h3 id="assign将字符串转为变量"><code class="highlighter-rouge">assign</code>将字符串转为变量</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; x
+ [1]  1  2  3  4  5  6  7  8  9 10
+&gt; assign('ww',x)#转为变量并赋值x
+&gt; ww
+ [1]  1  2  3  4  5  6  7  8  9 10
+ 
+#get()：返回与字符串同名的变量的值,并转成字符串
+#assign():为字符串变量的字符串赋值
+&gt; get("xx")
+ [1] "1" "1" "1" "1" "1" "1" "1" "1" "0" "0"
+&gt; 
+
+</code></pre></div></div>
+<h3 id="systemls"><code class="highlighter-rouge">system("ls")</code></h3>
+<p>调用系统命令<code class="highlighter-rouge">system("系统命令")</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>com=system(c("cd ..;ls"))
+#查看保存变量
+cat(com)
+#执行系统命令，并将结果保存到com
+或者
+&gt; com=system(c("cd ..;ls"),intern=T)
+&gt; com
+[1] "Ag55"        "Ag55.tar.gz" "graphenTDAP" "H2O"         "test-O3"
+</code></pre></div></div>
+
+<h2 id="将r语言变成linux的小脚本使用">将R语言，变成Linux的小脚本使用</h2>
+<h3 id="在超算上编译安装r到个人目录">在超算上编译安装R到个人目录</h3>
+<p>编译时候发现,R语言编译时有lapack，不错不错</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://mirrors.tuna.tsinghua.edu.cn/CRAN/src/base/R-3/R-3.6.0.tar.gz
+tar xzvf R-3.6.0.tar.gz 
+cd R-3.6.0/
+module load  mpi/mvapich2/gnu/2.3b
+./configure --prefix=/public/home/cndaqiang/soft/gcc-MVAPICH/R-3.6.0
+make #不支持-j20
+make install
+PATH=/public/home/chendq/soft/gcc-MVAPICH/R-3.6.0/bin:$PATH
+#--------------------------------------------
+#Error ：configure: error: libcurl &gt;= 7.22.0 library and headers are required with support for https
+#参考https://www.chengzi520.com/?p=1912
+wget https://curl.haxx.se/download/curl-7.57.0.tar.gz
+tar zxvf curl-7.57.0.tar.gz
+cd curl-7.57.0
+./configure --prefix=/home/cndaqiang/software/gcc-4.8.5-openmpi-1.10.7/curl-7.57.0
+make &amp;&amp; make install 
+# 在~/.bashrc添加：
+#R
+CURLDIR=/home/cndaqiang/software/gcc-4.8.5-openmpi-1.10.7/curl-7.57.0
+export PATH=$CURLDIR/bin:$PATH
+export LD_LIBRARY_PATH=$CURLDIR/lib:$LD_LIBRARY_PATH
+#使环境变量生效：
+source ~/.bashrc
+#--------------------------------------------------
+#WARNING：configure: WARNING: neither inconsolata.sty nor zi4.sty found: PDF vignettes and package manuals will not be rendered optimally 警告
+#我们忽视了这个错误，有人解决如下
+#https://my.oschina.net/u/2429108/blog/552977
+3) 下载安装 inconsolata.sty
+下载 ：wget http://mirrors.ctan.org/fonts/inconsolata.zip
+解压 ：Unzip inconsolata.zip 
+将文件拷贝到目录下：
+        cp -Rfp inconsolata/* /usr/share/texmf/
+ 刷新sty ：
+        mktexlsr
+</code></pre></div></div>
+<h3 id="脚本">脚本</h3>
+<p>文件开头</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env Rscript</span><span class="w">
+</span><span class="n">margs</span><span class="o">=</span><span class="n">commandArgs</span><span class="p">()</span><span class="w">
+</span><span class="c1">#参数</span><span class="w">
+</span><span class="c1">#print(margs)</span><span class="w">
+</span><span class="c1">#cndaqiang@win10:/mnt/e/work/CODE/R/Rcode&gt; ./input.R 1 2 3</span><span class="w">
+</span><span class="c1">#[1] "/usr/lib64/R/bin/exec/R" "--slave"</span><span class="w">
+</span><span class="c1">#[3] "--no-restore"            "--file=./input.R"</span><span class="w">
+</span><span class="c1">#[5] "--args"                  "1"</span><span class="w">
+</span><span class="c1">#[7] "2"                       "3"</span><span class="w">
+</span><span class="c1">#linux中，第6个开始才是用户输入的参数</span><span class="w">
+</span><span class="n">inpara</span><span class="o">=</span><span class="n">margs</span><span class="p">[</span><span class="m">6</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">margs</span><span class="p">)]</span><span class="w">
+</span><span class="c1">#常用包</span><span class="w">
+</span><span class="c1">#ggplot2</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p>快速画图</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env Rscript</span><span class="w">
+</span><span class="c1">##################################</span><span class="w">
+</span><span class="c1"># Author : cndaqiang             #</span><span class="w">
+</span><span class="c1"># Update : 2019-05-11            #</span><span class="w">
+</span><span class="c1"># Build  : 2019-05-11            #</span><span class="w">
+</span><span class="c1"># What   : 画x,y图               #</span><span class="w">
+</span><span class="c1">##################################</span><span class="w">
+</span><span class="c1">#头文件</span><span class="w">
+</span><span class="c1">#函数库</span><span class="w">
+</span><span class="n">source</span><span class="p">(</span><span class="s2">"~/scripts/R-module/head.R"</span><span class="p">)</span><span class="w">
+</span><span class="c1">#source(paste(CNQMODULEPATH,"xxx.R"))</span><span class="w">
+</span><span class="n">datafile</span><span class="o">=</span><span class="n">inpara</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="c1">#第一个输入参数为数据文件名</span><span class="w">
+</span><span class="n">skipline</span><span class="o">=</span><span class="n">inpara</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="c1">#第二个输入参数为是否跳过第一行</span><span class="w">
+</span><span class="n">rplot</span><span class="o">=</span><span class="k">function</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span><span class="n">xlable</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span><span class="n">ylable</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span><span class="n">qtitle</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span><span class="n">skipline</span><span class="o">=</span><span class="m">0</span><span class="p">)</span><span class="w">
+</span><span class="p">{</span><span class="w">
+</span><span class="c1">#datafile="Cv.dat" #输入文件</span><span class="w">
+</span><span class="c1">#xlable="x" #x标签</span><span class="w">
+</span><span class="c1">#ylable="y" #y标签</span><span class="w">
+</span><span class="c1">#skipline=1 #跳过开头的几行</span><span class="w">
+</span><span class="c1">#读入数据</span><span class="w">
+    </span><span class="n">mydata</span><span class="o">=</span><span class="n">read.table</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span><span class="n">skip</span><span class="o">=</span><span class="n">skipline</span><span class="p">)</span><span class="w">
+    </span><span class="n">datacol</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">mydata</span><span class="p">[</span><span class="m">1</span><span class="p">,])</span><span class="w">
+    </span><span class="n">datarow</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">mydata</span><span class="p">[,</span><span class="m">1</span><span class="p">])</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">datacol</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="n">plot</span><span class="p">(</span><span class="n">mydata</span><span class="p">,</span><span class="n">type</span><span class="o">=</span><span class="s2">"b"</span><span class="p">,</span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">qtitle</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xlable</span><span class="p">,</span><span class="w">  </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ylable</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="k">else</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+
+        </span><span class="n">ydata</span><span class="o">=</span><span class="n">mydata</span><span class="p">[,</span><span class="m">2</span><span class="o">:</span><span class="n">datacol</span><span class="p">]</span><span class="w"> </span><span class="c1">#</span><span class="w">
+        </span><span class="n">xdata</span><span class="o">=</span><span class="n">mydata</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="c1">#第一列</span><span class="w">
+        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">2</span><span class="o">:</span><span class="n">datacol</span><span class="w"> </span><span class="p">)</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="n">y</span><span class="o">=</span><span class="n">mydata</span><span class="p">[,</span><span class="n">i</span><span class="p">]</span><span class="w">
+            </span><span class="n">x</span><span class="o">=</span><span class="n">mydata</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span><span class="w">
+            </span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">type</span><span class="o">=</span><span class="s2">"b"</span><span class="p">,</span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">qtitle</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xlable</span><span class="p">,</span><span class="w">  </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ylable</span><span class="p">)</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">rplot</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span><span class="n">xlable</span><span class="o">=</span><span class="n">inpara</span><span class="p">[</span><span class="m">3</span><span class="p">],</span><span class="n">ylable</span><span class="o">=</span><span class="n">inpara</span><span class="p">[</span><span class="m">4</span><span class="p">],</span><span class="n">qtitle</span><span class="o">=</span><span class="n">inpara</span><span class="p">[</span><span class="m">5</span><span class="p">],</span><span class="n">skipline</span><span class="o">=</span><span class="n">skipline</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div>
+
+<h3 id="集成到makefile里编译计算画图简直不要太爽">集成到makefile里,编译计算,画图,简直不要太爽</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test:$(TEST)
+	$(FC)  $(FFLAGS) -o test $(OBJS) $(LIBS)
+	./test &gt; result.dat
+	./plot.r
+</code></pre></div></div>
+
+<h3 id="调用shell的grep组合操作">调用shell的<code class="highlighter-rouge">grep</code>组合操作</h3>
+<p>提取矩阵</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Dipole=paste("grep 'Electric dipole (a.u.)' ",result,"|grep 'TDAP' |awk '{printf \"%f,%f,%f,\",  $(NF-2),$(NF-1),$NF }' ")
+Dipole=system(Dipole,intern=T)
+Dipole=as.numeric(as.vector(unlist(strsplit(Dipole,",")))) #分离后，默认是list，转为向量和数值型
+Dipole=c(Dipole)
+Dipole=matrix(Dipole,ncol=3,byrow=T)
+</code></pre></div></div>
+<p>读入fdf格式</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#======读入时间
+MD.LengthTimeStep=paste("grep -i '^MD.LengthTimeStep'",result,"|awk '{ print $2 }'")
+#此处默认单位是fs了，不对fs进行判断
+MD.LengthTimeStep=as.numeric(system(MD.LengthTimeStep,intern=T))
+MD.FinalTimeStep=paste("grep -i '^MD.FinalTimeStep'",result,"|awk '{ print $2 }'")
+MD.FinalTimeStep=as.numeric(system(MD.FinalTimeStep,intern=T))
+</code></pre></div></div>
+<p>读入fdf block</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#行号
+phyHang=paste("grep -ni '^%block myblock'",input.fdf,"|awk -F: '{ print $1 }'")
+phyHang=paste("hang=$(",phyHang,")")
+phyHang=paste(phyHang,"hang=$(echo ${hang}+1|bc)",sep=";")
+#读入
+phy=paste(phyHang,";sed -n ${hang}p",input.fdf)
+phy=system(phy,intern=T)
+#
+phy=as.vector(unlist(strsplit(phy," +"))) #以空格分开，strsplit生成的是list，要转为向量
+phy=c(as.numeric(phy))
+
+phydata=phy[1]       #有物理含义
+phydata=phy[2]   #有物理含义
+phydata=phy[3]       #有物理含义
+phydata=phy[4]           #有物理含义
+phydata=phy[5]           #有物理含义
+</code></pre></div></div>
+<h2 id="plot">plot</h2>
+<p>使用<code class="highlighter-rouge">plot</code>进行画图时，数据框的一列，一定要写成<code class="highlighter-rouge">mydata[,lie]</code>，把一列提成数组，那个<code class="highlighter-rouge">,</code>不能少
+示例，</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pdf(file="RCurrentFFT.pdf")
+for ( direct in 2:colnum)
+{
+plot(myfft[1:myn/2,1],myfft[1:myn/2,direct],type="l",main = "Current FFT", xlab = paste(names(myfft)[1],"FFT"), ylab = paste(names(myfft)[direct],"FFT") )
+#----下面为加text到图中
+minfft=max(myfft[1:myn/2,direct])/10
+peak=(myfft[2:(myn/2),direct] &gt; myfft[1:(myn/2-1),direct]) &amp; (myfft[2:(myn/2),direct] &gt; myfft[3:(myn/2+1),direct]) &amp; ( myfft[2:(myn/2),direct] &gt; minfft ) 
+peak=c(T,peak,(1:(myn-2) &lt; 0))
+text(myfft[peak,1],myfft[peak,direct],format(myfft[peak,1],digits = 3),cex=1,pos=1,col="red")
+#x,y,显示的内容
+}
+dev.off()
+</code></pre></div></div>
+<h2 id="ggplot2">ggplot2</h2>
+<p>代码的发展，很多函数都变了，注意，有的教程给的函数不能用</p>
+<h3 id="qplot">qplot</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qplot(数据框索引,数据框索引,data=数据框)
+&gt; price=1:10
+&gt; num=sin(price)
+&gt; mydata=data.frame(price,num)
+qplot(price,num,data=mydata)
+#也可以使用数学函数处理
+qplot(price,log(x),data=mydata)
+#也可以是数据框内多组数据的计算结果
+qplot(price,log(x)*num,data=mydata)
+</code></pre></div></div>
+<p>根据分类，确定颜色和尺寸</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; qplot(price,num,data=data,colour=good,shape=xx,size=num,alpha=num/10)
+#shape=字符型，不然报错
+#color字符数子都行，图形颜色
+#size指定大小
+#alpha透明度[0-1]之间
+&gt; mydata
+   price        num xx good
+1      1  0.8414710  1    0
+2      2  0.9092974  1    0
+3      3  0.1411200  1    0
+4      4 -0.7568025  1    0
+5      5 -0.9589243  1    0
+6      6 -0.2794155  1    1
+7      7  0.6569866  1    1
+8      8  0.9893582  1    1
+9      9  0.4121185  0    1
+10    10 -0.5440211  0    1
+
+</code></pre></div></div>
+<p>geom指定形状</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qplot(price,num,data=data,geom="line")
+#geom="path","line"连线
+#geom="point" 默认散点
+#"smooth"平滑，使用span,method等继续控制，
+#qplot(num,price,data=data,geom=c("smooth"),span=0.5,method="gam")
+#也可以组合多种图形
+qplot(price,num,data=data,geom=c("point","line"))
+</code></pre></div></div>
+<p>保存</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ggsave("my.png")
+</code></pre></div></div>
+<p>貌似只保存最近的图</p>
+
+<h3 id="ggplot">ggplot</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#画图
+png(outfile)
+mypicture=ggplot(mydata,aes(x=xdata,y=ydata,color=orderdata))+geom_point()
+#加水平垂直参考线(阈值线),由输入参数Qylimit和Qxlimit控制
+mypicture=mypicture + geom_hline(yintercept=Qylimit,linetype=4)
+mypicture=mypicture + geom_vline(xintercept=c(-1*Qxlimit,Qxlimit),linetype=4)
+#设置x，y上下限
+mypicture=mypicture + xlim(Lxlimit,Hxlimit)
+mypicture=mypicture + ylim(Lylimit,Hylimit)
+#设置点的颜色
+mypicture=mypicture + scale_color_manual(values =c("Up" = "red", "Down" = "blue", "Normal" = "grey"))
+#x，y轴label
+#expression是为了输出上下标
+mypicture=mypicture + labs(x=expression(log[2](FC)),y=expression(-log[10](FDR)),color="significant")
+
+mypicture   
+dev.off()
+</code></pre></div></div>
+
+<h3 id="3d画图">3d画图</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zypper install Mesa-libGL-devel
+
+</code></pre></div></div>
+
+<h2 id="r语言用于科学计算">R语言用于科学计算</h2>
+<h3 id="fft">FFT</h3>
+<h4 id="fft-1">FFT</h4>
+<p>数学课本f(t)-c(w)<br />
+代码t=t0+n*dt, f&amp;n-&gt;FFT-&gt;C(n)<br />
+自己将n转为f(n),T(n)</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env Rscript</span><span class="w">
+</span><span class="c1">##################################</span><span class="w">
+</span><span class="c1"># Author : cndaqiang             #</span><span class="w">
+</span><span class="c1"># Update : 2019-05-20            #</span><span class="w">
+</span><span class="c1"># Build  : 2019-05-20            #</span><span class="w">
+</span><span class="c1"># What   : FFT分析               #</span><span class="w">
+</span><span class="c1">##################################</span><span class="w">
+
+</span><span class="n">fn1</span><span class="o">=</span><span class="m">5</span><span class="p">;</span><span class="n">fn2</span><span class="o">=</span><span class="m">10</span><span class="p">;</span><span class="n">fn3</span><span class="o">=</span><span class="m">100</span><span class="p">;</span><span class="n">fn4</span><span class="o">=</span><span class="m">233</span><span class="w"> </span><span class="c1">#频率</span><span class="w">
+</span><span class="n">dt</span><span class="o">=</span><span class="m">0.002</span><span class="w"> </span><span class="c1">#采样间隔</span><span class="w">
+</span><span class="n">t</span><span class="o">=</span><span class="n">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="n">dt</span><span class="p">)</span><span class="w"> </span><span class="c1">#样本点</span><span class="w">
+</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="w">  </span><span class="c1">#采样数</span><span class="w">
+</span><span class="n">y</span><span class="o">=</span><span class="nf">sin</span><span class="p">(</span><span class="m">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="n">fn1</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="m">+3</span><span class="o">*</span><span class="nf">cos</span><span class="p">(</span><span class="m">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="n">fn2</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="m">+4</span><span class="o">*</span><span class="nf">sin</span><span class="p">(</span><span class="m">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="n">fn3</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="m">+5</span><span class="o">*</span><span class="nf">sin</span><span class="p">(</span><span class="m">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="n">fn4</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="c1">#采样值</span><span class="w">
+</span><span class="c1">#plot(x,y)</span><span class="w">
+</span><span class="n">z</span><span class="o">=</span><span class="nf">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="w">  </span><span class="c1">#频谱 </span><span class="w">
+</span><span class="n">f</span><span class="o">=</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="m">-1</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="o">/</span><span class="n">dt</span><span class="w">  </span><span class="c1">#频率</span><span class="w">
+</span><span class="n">png</span><span class="p">(</span><span class="s2">"fft.png"</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="o">/</span><span class="m">2</span><span class="p">],</span><span class="n">z</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="o">/</span><span class="m">2</span><span class="p">],</span><span class="n">type</span><span class="o">=</span><span class="s2">"l"</span><span class="p">)</span><span class="w">
+</span><span class="n">dev.off</span><span class="p">()</span><span class="w">
+</span></code></pre></div></div>
+<p>结果图<br />
+图中的峰值比例不对，加密N点减少dt后就准了，就不补图了<br />
+由于输入是实数,这里<code class="highlighter-rouge">f=(1:n-1)/n/dt  #频率</code>应该变为<code class="highlighter-rouge">f=(1:n-1)/(n/2)/dt  #频率</code>
+<img src="/uploads/2019/05/fft.png" alt="" /></p>
+
+<h4 id="ifft示例">IFFT示例</h4>
+<p>FFT的结果需要除以N才能得到正确的强度</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; a=1000
+&gt; x=1:a;x=x*2*pi/a;y=exp(1i*x);z=fft(y);  z1=fft(fft(y),inverse = TRUE);  z2=fft(fft(y)/a,inverse = TRUE)
+&gt; max(abs(z))
+[1] 1000
+&gt; max(abs(z1))
+[1] 1000
+&gt; max(abs(zz))
+[1] 10000
+&gt; max(abs(z2))
+[1] 1
+&gt; 
+</code></pre></div></div>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/05/03/anaconda/">[linux]Anaconda安装</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/05/09/ggplot/">Python和R中使用ggplot画图</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

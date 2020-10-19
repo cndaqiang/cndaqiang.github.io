@@ -17,13 +17,13 @@ mathjax: true
 
 ## print
 ### 输出字符串，列表等
-```
+```python
 print('hello')
 print(str1,str2,str3)  #连接输出，中间以空格隔开
 print(list)
 ```
 print每执行一次，输出后最后默认加一个回车，可以print(str1,edn='结束内容')，指定输出后的内容
-```
+```python
 >>> print('a');print('b')
 a
 b 
@@ -43,7 +43,7 @@ a b
 - %m.nf --- 整数部分m个，不够补空格，小数部分n个
 
 **更多格式先略**
-```
+```python
 >>> print('%x' %23)
 17
 >>> str='hello,%d,%x,%o' %(45,45,45)
@@ -55,7 +55,8 @@ Python2.6 开始，新增了一种格式化字符串的函数 str.format()<br>
 基本语法是通过`{}`和`:`来代替以前的%<br>
 用于`print(str.format())`格式化输出很好
 <br>以下语法摘自参考[菜鸟教程](http://www.runoob.com)
-```
+
+```python
 >>>"{} {}".format("hello", "world")    # 不设置指定位置，按默认顺序
 'hello world'
  
@@ -65,8 +66,10 @@ Python2.6 开始，新增了一种格式化字符串的函数 str.format()<br>
 >>> "{1} {0} {1}".format("hello", "world")  # 设置指定位置
 'world hello world'
 ```
+
 也可设置参数
-```
+
+```python
 print("网站名：{name}, 地址 {url}".format(name="菜鸟教程", url="www.runoob.com"))
  
 # 通过字典设置参数
@@ -77,6 +80,7 @@ print("网站名：{name}, 地址 {url}".format(**site))
 my_list = ['菜鸟教程', 'www.runoob.com']
 print("网站名：{0[0]}, 地址 {0[1]}".format(my_list))  # "0" 是必须的
 ```
+
 数字格式<br>
 ![](/uploads/2018/02/pasted_image001.png)
 进制<br>
@@ -87,13 +91,15 @@ print("网站名：{0[0]}, 地址 {0[1]}".format(my_list))  # "0" 是必须的
 
 # 文件操作
 ## 文件读写
+
 推荐使用with打开,这样在遇到文件读写IOError时会自动调用f.close(),保证文件正常关闭
-```
+
+```python
 with open(文件名,模式) as f:
 	print(f.read())
 ```
 ### 打开文件
-```
+```python
 open(文件名,模式)
 #如
 f=open('../test.txt','w')
@@ -204,6 +210,19 @@ f=open(inputfile)
 rownum=len(f.readlines())
 ierror=f.seek(0,0)
 ```
+
+### 示例
+```python
+with open(inputfile,'r') as f:
+    for i in np.arange(4): f.readline() #跳过前4行
+    #读入剩下所有数据
+    data=[ [ float(i) for i in line.split() ] for line in f.readlines() ] 
+    data=np.array(data)
+spectrum=data[:,[0,2,3,4]] #提取一些数据
+```
+
+
+
 
 ### 判断文件是否读至结尾
 [python中判断readline读到文件末尾](https://www.cnblogs.com/summerkiki/p/4472043.html)

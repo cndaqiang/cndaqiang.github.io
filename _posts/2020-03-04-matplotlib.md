@@ -89,3 +89,10 @@ ax.fill_between(x, 0, ysin,alpha=0.5) #,, facecolor='blue', alpha=0.5)
 ax.fill_between(x, 0, ycos,alpha=0.5) #,, facecolor='red', alpha=0.5)
 ```
 ![](/uploads/2020/03/fill.png)
+
+### 文本
+#### latex展示
+使用`r"$Latex语法$"`
+```python
+xyz=[r"$\alpha_{xx}$","yy","zz","average"]
+```

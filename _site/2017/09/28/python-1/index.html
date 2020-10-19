@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>python(一)基本语法</title>
+    <meta name="description" content="2019-05-13重构文章">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2017/09/28/python-1/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2017/09/28/python-1/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2017/09/28/python-1/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2017/09/28/python-1/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>python(一)基本语法</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-28
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Python" title="Category: Python" rel="category">Python</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#python" title="Tag: python" rel="tag">python</a-->
+        <a href="/tag/#python" title="Tag: python" rel="tag">python</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#python简介" id="markdown-toc-python简介">python简介</a></li>
+  <li><a href="#注意" id="markdown-toc-注意">注意</a></li>
+  <li><a href="#python文件" id="markdown-toc-python文件">python文件</a>    <ul>
+      <li><a href="#1-编写" id="markdown-toc-1-编写">1. 编写</a></li>
+      <li><a href="#2-格式" id="markdown-toc-2-格式">2. 格式</a>        <ul>
+          <li><a href="#21-代码块" id="markdown-toc-21-代码块">2.1 代码块</a></li>
+          <li><a href="#22-多行语句" id="markdown-toc-22-多行语句">2.2 多行语句</a></li>
+          <li><a href="#23-代码分隔符" id="markdown-toc-23-代码分隔符">2.3 代码分隔符<code class="highlighter-rouge">；</code></a></li>
+          <li><a href="#22-注释" id="markdown-toc-22-注释">2.2 注释</a>            <ul>
+              <li><a href="#单行注释" id="markdown-toc-单行注释">单行注释</a></li>
+              <li><a href="#多行注释" id="markdown-toc-多行注释">多行注释</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#3-标识符" id="markdown-toc-3-标识符">3. 标识符</a></li>
+    </ul>
+  </li>
+  <li><a href="#变量类对象的关系" id="markdown-toc-变量类对象的关系">变量,类,对象的关系</a>    <ul>
+      <li><a href="#数字number类" id="markdown-toc-数字number类">数字number类</a>        <ul>
+          <li><a href="#长整数-int" id="markdown-toc-长整数-int">长整数 int</a></li>
+          <li><a href="#浮点数-float" id="markdown-toc-浮点数-float">浮点数 float</a></li>
+          <li><a href="#复数-complex" id="markdown-toc-复数-complex">复数 complex</a></li>
+          <li><a href="#布尔-bool" id="markdown-toc-布尔-bool">布尔 bool</a></li>
+        </ul>
+      </li>
+      <li><a href="#字符串string" id="markdown-toc-字符串string">字符串string</a>        <ul>
+          <li><a href="#定义" id="markdown-toc-定义">定义</a></li>
+          <li><a href="#字符串索引" id="markdown-toc-字符串索引">字符串索引</a></li>
+          <li><a href="#字符串连接" id="markdown-toc-字符串连接">字符串连接<code class="highlighter-rouge">+</code></a></li>
+          <li><a href="#字符串复制" id="markdown-toc-字符串复制">字符串复制<code class="highlighter-rouge">*</code></a></li>
+          <li><a href="#转义字符" id="markdown-toc-转义字符">转义字符</a></li>
+          <li><a href="#字符串元素不能被改变" id="markdown-toc-字符串元素不能被改变">字符串元素不能被改变</a></li>
+        </ul>
+      </li>
+      <li><a href="#列表list" id="markdown-toc-列表list">列表list</a>        <ul>
+          <li><a href="#定义-1" id="markdown-toc-定义-1">定义</a></li>
+          <li><a href="#索引连接复制换行" id="markdown-toc-索引连接复制换行">索引，连接，复制，换行</a></li>
+          <li><a href="#list元素可修改" id="markdown-toc-list元素可修改">list元素可修改</a></li>
+        </ul>
+      </li>
+      <li><a href="#元组tuple" id="markdown-toc-元组tuple">元组Tuple</a></li>
+      <li><a href="#定义-2" id="markdown-toc-定义-2">定义</a>        <ul>
+          <li><a href="#类似-使用索引复制连接-类似list" id="markdown-toc-类似-使用索引复制连接-类似list">类似: 使用，索引，复制，连接 类似list</a></li>
+          <li><a href="#不同" id="markdown-toc-不同">不同</a></li>
+        </ul>
+      </li>
+      <li><a href="#集合-set" id="markdown-toc-集合-set">集合 set</a>        <ul>
+          <li><a href="#定义声明" id="markdown-toc-定义声明">定义/声明</a></li>
+          <li><a href="#应用" id="markdown-toc-应用">应用</a></li>
+        </ul>
+      </li>
+      <li><a href="#字典-dictionary" id="markdown-toc-字典-dictionary">字典 dictionary</a>        <ul>
+          <li><a href="#字典定义声明" id="markdown-toc-字典定义声明">字典定义/声明</a></li>
+          <li><a href="#对比" id="markdown-toc-对比">对比</a></li>
+        </ul>
+      </li>
+      <li><a href="#类class" id="markdown-toc-类class">类class</a></li>
+      <li><a href="#类型转换" id="markdown-toc-类型转换">类型转换</a></li>
+    </ul>
+  </li>
+  <li><a href="#变量" id="markdown-toc-变量">变量</a>    <ul>
+      <li><a href="#变量-1" id="markdown-toc-变量-1">变量</a>        <ul>
+          <li><a href="#变量定义声明" id="markdown-toc-变量定义声明">变量定义/声明</a></li>
+          <li><a href="#变量的使用" id="markdown-toc-变量的使用">变量的使用</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#运算" id="markdown-toc-运算">运算</a>    <ul>
+      <li><a href="#算术运算" id="markdown-toc-算术运算">算术运算</a></li>
+      <li><a href="#赋值运算" id="markdown-toc-赋值运算">赋值运算</a></li>
+      <li><a href="#比较" id="markdown-toc-比较">比较</a></li>
+      <li><a href="#逻辑运算符" id="markdown-toc-逻辑运算符">逻辑运算符</a></li>
+      <li><a href="#位运算符" id="markdown-toc-位运算符">位运算符</a></li>
+      <li><a href="#成员运算符" id="markdown-toc-成员运算符">成员运算符</a></li>
+      <li><a href="#身份运算符" id="markdown-toc-身份运算符">身份运算符</a></li>
+      <li><a href="#运算符优先级" id="markdown-toc-运算符优先级">运算符优先级</a></li>
+    </ul>
+  </li>
+  <li><a href="#流程控制" id="markdown-toc-流程控制">流程控制</a>    <ul>
+      <li><a href="#条件-if-elif-else" id="markdown-toc-条件-if-elif-else">条件 if elif else</a></li>
+      <li><a href="#循环" id="markdown-toc-循环">循环</a>        <ul>
+          <li><a href="#while" id="markdown-toc-while">while</a></li>
+          <li><a href="#for" id="markdown-toc-for">for</a></li>
+          <li><a href="#break-跳出循环" id="markdown-toc-break-跳出循环">break 跳出循环</a></li>
+          <li><a href="#continue-进入下一个循环" id="markdown-toc-continue-进入下一个循环">continue 进入下一个循环</a></li>
+          <li><a href="#pass-不做任何事情空语句自动执行下一个" id="markdown-toc-pass-不做任何事情空语句自动执行下一个">pass 不做任何事情，空语句，自动执行下一个</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#函数" id="markdown-toc-函数">函数</a>    <ul>
+      <li><a href="#定义-3" id="markdown-toc-定义-3">定义</a></li>
+      <li><a href="#调用" id="markdown-toc-调用">调用</a></li>
+      <li><a href="#参数传递" id="markdown-toc-参数传递">参数传递</a>        <ul>
+          <li><a href="#可更改与不可更改对象传值传址" id="markdown-toc-可更改与不可更改对象传值传址">可更改与不可更改对象/传值&amp;传址</a></li>
+          <li><a href="#传递参数的方式" id="markdown-toc-传递参数的方式">传递参数的方式</a>            <ul>
+              <li><a href="#必须参数" id="markdown-toc-必须参数">必须参数</a></li>
+              <li><a href="#关键字参数" id="markdown-toc-关键字参数">关键字参数</a></li>
+              <li><a href="#默认参数" id="markdown-toc-默认参数">默认参数</a></li>
+            </ul>
+          </li>
+          <li><a href="#不定长参数" id="markdown-toc-不定长参数">不定长参数</a></li>
+        </ul>
+      </li>
+      <li><a href="#匿名函数" id="markdown-toc-匿名函数">匿名函数</a></li>
+      <li><a href="#变量作用范围" id="markdown-toc-变量作用范围">变量作用范围</a>        <ul>
+          <li><a href="#作用域" id="markdown-toc-作用域">作用域</a></li>
+          <li><a href="#关于global和nonlocal" id="markdown-toc-关于global和nonlocal">关于global和nonlocal</a></li>
+        </ul>
+      </li>
+      <li><a href="#常用函数" id="markdown-toc-常用函数">常用函数</a></li>
+    </ul>
+  </li>
+  <li><a href="#有趣" id="markdown-toc-有趣">有趣</a>    <ul>
+      <li><a href="#脚本输入参数" id="markdown-toc-脚本输入参数">脚本输入参数</a></li>
+      <li><a href="#ls-查看文件" id="markdown-toc-ls-查看文件">ls 查看文件</a></li>
+    </ul>
+  </li>
+  <li><a href="#报错" id="markdown-toc-报错">报错</a>    <ul>
+      <li><a href="#py脚本名和模块名冲突" id="markdown-toc-py脚本名和模块名冲突">py脚本名和模块名冲突</a></li>
+    </ul>
+  </li>
+</ul>
+<p>2019-05-13重构文章</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://bop.molun.net/">简明python教程</a></p>
+
+<p><a href="http://www.runoob.com/python/python-tutorial.html">Python 基础教程-菜鸟教程</a></p>
+
+<p><a href="http://www.runoob.com/python3/python3-tutorial.html">Python3教程-菜鸟教程</a></p>
+
+<p><a href="http://www.cnblogs.com/allenblogs/archive/2011/04/28/2031477.html">Python转义字符</a></p>
+
+<h2 id="环境">环境</h2>
+<p>Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-53-generic x86_64)</p>
+
+<p>Python 3.5.2 (default, Jul  5 2016, 12:43:10)</p>
+
+<p>[GCC 5.4.0 20160609] on linux</p>
+<h2 id="python简介">python简介</h2>
+<p>略</p>
+<h2 id="注意">注意</h2>
+<ul>
+  <li>python2与python3很多命令用法不一样，运行报错，可能是教程针对的版本不一样</li>
+  <li>python执行实时输出信息到屏幕<code class="highlighter-rouge">python -u xxx.py</code></li>
+  <li><strong>不要把py脚本的名称命名为模块的名字,会影响在当前目录倒入相关模块</strong></li>
+</ul>
+
+<h2 id="python文件">python文件</h2>
+<ul>
+  <li>ubuntu 16.04 上python版本
+<code class="highlighter-rouge">apt-get install python</code>安装2.7.11
+<code class="highlighter-rouge">apt-get install python3</code>安装3.5.1
+运行python时
+<code class="highlighter-rouge">python</code>和<code class="highlighter-rouge">python2</code>都表示python2
+<code class="highlighter-rouge">python3</code>才是python3</li>
+  <li>拓展名.py</li>
+  <li>python3支持utf8可以支持中文，直接<code class="highlighter-rouge">printf("你好")</code>,python2需要在开头加入<code class="highlighter-rouge"># -*- coding: UTF-8 -*-</code> 或者 <code class="highlighter-rouge">#coding=utf-8</code></li>
+</ul>
+
+<h3 id="1-编写">1. 编写</h3>
+<ul>
+  <li>脚本式编程
+编写 hello.py文件
+运行
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3 hello.py
+</code></pre></div>    </div>
+  </li>
+  <li>类似bash,参考<a href="http://www.jianshu.com/p/2438d563de06">20170805bash学习</a>
+vi hello.py 填入
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+</span><span class="k">print</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+</code></pre></div>    </div>
+    <p>更推荐首行写为<code class="highlighter-rouge"><span class="c1">#!/usr/bin/env python3</span></code>
+添加执行权限，运行</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x hello.py
+./hello.py
+</code></pre></div>    </div>
+  </li>
+  <li>在python解释器中运行,例
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python3
+Python 3.5.2 (default, Jul  5 2016, 12:43:10) 
+[GCC 5.4.0 20160609] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; print("hello")
+hello
+&gt;&gt;&gt; exit()
+$ 
+</code></pre></div>    </div>
+  </li>
+  <li>使用IDE
+<a href="https://www.jetbrains.com/pycharm-edu/">PyCharm 教育版</a></li>
+</ul>
+
+<h3 id="2-格式">2. 格式</h3>
+<h4 id="21-代码块">2.1 代码块</h4>
+<blockquote>
+  <p>Python 的代码块不使用大括号 {} 来控制类，函数以及其他逻辑判断。python 最具特色的就是用缩进来写模块。
+缩进的空白数量是可变的，但是所有代码块语句必须包含相同的缩进空白数量(<strong>同级别的代码块，前面必须缩进相同</strong>）</p>
+</blockquote>
+
+<p>例如 错误缩进</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print("hello")
+ print("你好")
+</code></pre></div></div>
+<p>同一级别，缩进不同，报错</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  File "hi.py", line 2
+    print("你好")
+    ^
+IndentationError: unexpected indent
+</code></pre></div></div>
+
+<blockquote>
+  <p>缩进相同的一组语句构成一个代码块，我们称之代码组。
+像if、while、def和class这样的复合语句，首行以关键字开始，以冒号( : )结束，该行之后的一行或多行代码构成代码组。
+我们将首行及后面的代码组称为一个子句(clause)。</p>
+</blockquote>
+
+<p>如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if expression : 
+   suite
+elif expression : 
+   suite 
+else : 
+   suite
+</code></pre></div></div>
+<h4 id="22-多行语句">2.2 多行语句</h4>
+<p>使用反斜杠<code class="highlighter-rouge">\</code>实现多行语句</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>total = one + \
+        two + 
+        three
+</code></pre></div></div>
+<p>在 <code class="highlighter-rouge">[], {}, 或 ()</code> 中的多行语句，不需要使用反斜杠<code class="highlighter-rouge">\</code>
+<strong>需要回头重新写此处,缩进</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>total = ['item_one', 'item_two', 'item_three',
+        'item_four', 'item_five']
+</code></pre></div></div>
+<h4 id="23-代码分隔符">2.3 代码分隔符<code class="highlighter-rouge">；</code></h4>
+<p>一行一条语句不需要代码分隔符，有也可以
+一行多个语句，中间用代码分隔符<code class="highlighter-rouge">;</code>隔开</p>
+
+<h4 id="22-注释">2.2 注释</h4>
+<h5 id="单行注释">单行注释</h5>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#单行注释
+</code></pre></div></div>
+<h5 id="多行注释">多行注释</h5>
+<p>单引号<code class="highlighter-rouge">'</code>多引号<code class="highlighter-rouge">"</code></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'''
+多行注释
+多行注释
+多行注释
+'''
+
+"""
+多行注释
+多行注释
+多行注释
+"""
+</code></pre></div></div>
+<h3 id="3-标识符">3. 标识符</h3>
+<p>与其他语言类似，字母数字下划线，不能数字开头，区分呢大小写</p>
+<blockquote>
+  <p>以下划线开头的标识符是有特殊意义的。以单下划线开头 <code class="highlighter-rouge">_foo</code> 的代表不能直接访问的类属性，需通过类提供的接口进行访问，不能用 <code class="highlighter-rouge">from xxx import *</code> 而导入；
+以双下划线开头的 <code class="highlighter-rouge">__foo</code> 代表类的私有成员；以双下划线开头和结尾的<code class="highlighter-rouge"> __foo__ </code>代表 Python 里特殊方法专用的标识，如 <code class="highlighter-rouge">__init__() </code>代表类的构造函数。</p>
+</blockquote>
+
+<p>查看保留字</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">keyword</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">keyword</span><span class="o">.</span><span class="n">kwlist</span>
+<span class="p">[</span><span class="s">'False'</span><span class="p">,</span> <span class="s">'None'</span><span class="p">,</span> <span class="s">'True'</span><span class="p">,</span> <span class="s">'and'</span><span class="p">,</span> <span class="s">'as'</span><span class="p">,</span> <span class="s">'assert'</span><span class="p">,</span> <span class="s">'break'</span><span class="p">,</span> <span class="s">'class'</span><span class="p">,</span> <span class="s">'continue'</span><span class="p">,</span> <span class="s">'def'</span><span class="p">,</span> <span class="s">'del'</span><span class="p">,</span> <span class="s">'elif'</span><span class="p">,</span> <span class="s">'else'</span><span class="p">,</span> <span class="s">'except'</span><span class="p">,</span> <span class="s">'finally'</span><span class="p">,</span> <span class="s">'for'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">,</span> <span class="s">'global'</span><span class="p">,</span> <span class="s">'if'</span><span class="p">,</span> <span class="s">'import'</span><span class="p">,</span> <span class="s">'in'</span><span class="p">,</span> <span class="s">'is'</span><span class="p">,</span> <span class="s">'lambda'</span><span class="p">,</span> <span class="s">'nonlocal'</span><span class="p">,</span> <span class="s">'not'</span><span class="p">,</span> <span class="s">'or'</span><span class="p">,</span> <span class="s">'pass'</span><span class="p">,</span> <span class="s">'raise'</span><span class="p">,</span> <span class="s">'return'</span><span class="p">,</span> <span class="s">'try'</span><span class="p">,</span> <span class="s">'while'</span><span class="p">,</span> <span class="s">'with'</span><span class="p">,</span> <span class="s">'yield'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="变量类对象的关系">变量,类,对象的关系</h2>
+<p><strong>Python程序中的任何内容都为对象,1也是一个对象,它属于<code class="highlighter-rouge">int</code>类</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">int</span><span class="s">'&gt;</span><span class="err">
+</span></code></pre></div></div>
+<p>变量更像是一个指针,当被赋予新值时,指向新的对象,我们所说的”类型”是变量所指的内存中<strong>对象</strong>的<strong>类</strong>,
+<strong>变量可以用于调用对应类定义的方法和属性</strong>.如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; a=1
+&gt;&gt;&gt; type(a)
+&lt;class 'int'&gt;
+&gt;&gt;&gt; a.
+a.bit_length(  a.denominator  a.imag         a.real         
+a.conjugate(   a.from_bytes(  a.numerator    a.to_bytes(
+&gt;&gt;&gt; a.real #这里就体现出和其他语言不一样的地方,a指向一个整型类的对象
+1
+</code></pre></div></div>
+<p>有些对象(如数组,字符串,列表等类定义的对象)可以通过<code class="highlighter-rouge">[]</code>使用对象的内部元素，类似matlab的随用随赋值</p>
+
+<p>常用的命令</p>
+<ul>
+  <li><code class="highlighter-rouge">type()</code>输出数据的类</li>
+  <li><code class="highlighter-rouge">print()</code>输出显示</li>
+  <li><code class="highlighter-rouge">变量=对象</code> 声明/赋值变量</li>
+</ul>
+
+<h3 id="数字number类">数字number类</h3>
+<h4 id="长整数-int">长整数 int</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; type(1)
+&lt;class 'int'&gt;
+</code></pre></div></div>
+<h4 id="浮点数-float">浮点数 float</h4>
+<p>1.2，3e5（3*10^5)</p>
+<h4 id="复数-complex">复数 complex</h4>
+<p>5+3.4j
+complex(5,3.4)</p>
+<h4 id="布尔-bool">布尔 bool</h4>
+<p>True,False</p>
+<h3 id="字符串string">字符串string</h3>
+<p>python中没有char类型</p>
+<h4 id="定义">定义</h4>
+<p>Python中的字符串用单引号<code class="highlighter-rouge">'</code>或双引号<code class="highlighter-rouge">"</code>括起来，同时使用反斜杠<code class="highlighter-rouge">\</code>转义特殊字符
+多行字符串用<code class="highlighter-rouge">'''</code>或者<code class="highlighter-rouge">"""</code>之间包含多行字符串，三个单/双引号内可自由的使用一个单/双引号
+如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; print("hello"+'word')
+helloword
+&gt;&gt;&gt; str='''zheshi
+... kejf
+... fe3f
+... '''
+&gt;&gt;&gt; str
+'zheshi\nkejf\nfe3f\n'
+</code></pre></div></div>
+<h4 id="字符串索引">字符串索引</h4>
+<blockquote>
+  <p>Python中的字符串有两种索引方式，从左往右以0开始，从右往左以-1开始，下述下标就是索引数字</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">str[下标]</code></p>
+
+<p><code class="highlighter-rouge">str[头下标:尾下标]</code></p>
+
+<p><code class="highlighter-rouge">str[头下标:]</code>表示从头下标到所有</p>
+
+<p><strong>非常奇怪的地方</strong></p>
+
+<p><code class="highlighter-rouge">str[n:m]</code>表示下标n到下标m-1截取(<strong>注，下标从0开始</strong>)</p>
+
+<p>如图<img src="\uploads\2017\11\python1.png" alt="" /></p>
+
+<p>例,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; str="123454321"
+&gt;&gt;&gt; str[0]
+'1'
+&gt;&gt;&gt; str[1]
+'2'
+&gt;&gt;&gt; str[-1]
+'1'
+&gt;&gt;&gt; str[0:1]
+'1'
+&gt;&gt;&gt; str[0:2]
+'12'
+&gt;&gt;&gt; str[0:-1]
+'12345432'
+</code></pre></div></div>
+
+<h4 id="字符串连接">字符串连接<code class="highlighter-rouge">+</code></h4>
+<p><code class="highlighter-rouge">字符串1+字符串2</code></p>
+<h4 id="字符串复制">字符串复制<code class="highlighter-rouge">*</code></h4>
+<p><code class="highlighter-rouge">字符串*[次数]</code>
+<strong>次数不能省略</strong></p>
+
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; print('字符串'+'连接'+'复制'*5)
+字符串连接复制复制复制复制复制
+</code></pre></div></div>
+<h4 id="转义字符">转义字符</h4>
+<p>使用反斜杠<code class="highlighter-rouge">\</code>进行转义，不希望转义时在字符转前加<code class="highlighter-rouge">r</code>表示初始字符
+例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; print('转义\n'+r'不专义\n')
+转义
+不专义\n
+</code></pre></div></div>
+
+<p><img src="uploads/2017/09/42e1ba5741eac0c4f2d9c1a4b1852086.png" alt="" /></p>
+
+<p>例如<code class="highlighter-rouge">\</code>在行尾时可以回车继续写</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; print('zhunayi\
+... hello')
+zhunayihello
+</code></pre></div></div>
+<h4 id="字符串元素不能被改变">字符串元素不能被改变</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; str='hello'
+&gt;&gt;&gt; str='word'
+&gt;&gt;&gt; str[1]='y'
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+TypeError: 'str' object does not support item assignment
+</code></pre></div></div>
+<h3 id="列表list">列表list</h3>
+<blockquote>
+  <p>列表中元素的类型可以不相同，它支持数字，字符串甚至可以包含列表（所谓嵌套）。
+列表是写在方括号<code class="highlighter-rouge">[]</code>之间、用逗号分隔开的元素列表。</p>
+</blockquote>
+
+<h4 id="定义-1">定义</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; list=['hello','word',1,3.6,5+6j]
+</code></pre></div></div>
+
+<h4 id="索引连接复制换行">索引，连接，复制，换行</h4>
+<p>类似字符串，</p>
+
+<p>也有那个奇怪的现象，<code class="highlighter-rouge">list[2:3]</code>表示从下标2到下标(3-1)个(下标从0开始)，而<code class="highlighter-rouge">list[2:2]</code>则为空
+例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; list=[1,2,3,4,5,6,7,8]
+&gt;&gt;&gt; print(list[0:3]+list*2)
+[1, 2, 3, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8]
+</code></pre></div></div>
+<p><strong>注意:</strong> list[n]表示list中的某元素，类型如果不是list时不能使用+与list类型连接，如int和list无法连接</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; print(list[0]+list*2)
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+TypeError: unsupported operand type(s) for +: 'int' and 'list' 
+</code></pre></div></div>
+<p>反斜线代表换行，不过在[],(),{}内的换行，不用<code class="highlighter-rouge">\</code>也可以</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; list=[3,5,6 \
+... ,7]
+&gt;&gt;&gt; list
+[3, 5, 6, 7]
+</code></pre></div></div>
+<h4 id="list元素可修改">list元素可修改</h4>
+<p><strong>与字符串不同</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#在最后增加元素
+&gt;&gt;&gt; list.append(9)
+&gt;&gt;&gt; list
+[6, 4, 5, 6, 7, 8, 9]
+#修改
+&gt;&gt;&gt; list[2]=6
+&gt;&gt;&gt; list[0:2]=[1,2]
+#删除指定下标元素
+&gt;&gt;&gt; list[0:2]=[]
+&gt;&gt;&gt; list
+[6, 4, 5, 6, 7, 8]
+&gt;&gt;&gt; del list[0:3]
+#删除最后一个元素
+&gt;&gt;&gt; list.pop()
+#删除内容为xxx的元素
+&gt;&gt;&gt; list.remove(xxx)
+
+</code></pre></div></div>
+<h3 id="元组tuple">元组Tuple</h3>
+<blockquote>
+  <p>与列表类似，不同之处在于元组的元素不能修改。元组写在小括号<code class="highlighter-rouge">()</code>里，元素之间用逗号隔开</p>
+</blockquote>
+
+<h3 id="定义-2">定义</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tup=(值，值)
+tup= 值，值  #可以不加括号表示元组
+</code></pre></div></div>
+<blockquote>
+  <p>元组在输出时总是有括号的，以便于正确表达嵌套结构。在输入时可能有或没有括号， 不过括号通常是必须的（如果元组是更大的表达式的一部分）</p>
+</blockquote>
+
+<h4 id="类似-使用索引复制连接-类似list">类似: 使用，索引，复制，连接 类似list</h4>
+<h4 id="不同">不同</h4>
+<p><strong>不能修改元素</strong></p>
+
+<p>构造包含 0 个或 1 个元素的元组，有一些<strong>额外</strong>的语法规则：</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; tup = ()     # 空元组
+&gt;&gt;&gt; tup1 = (1)    # 一个元素
+&gt;&gt;&gt; tup2 = (1,) # 一个元素，需要在元素后添加逗号
+&gt;&gt;&gt; tup1
+1
+&gt;&gt;&gt; tup2
+(1,)
+</code></pre></div></div>
+
+<h3 id="集合-set">集合 set</h3>
+<p><strong>无序不重复</strong>元素的序列,所以不支持索引</p>
+<blockquote>
+  <p>基本功能是进行成员关系测试和删除重复元素
+使用大括号 { } 或者 set() 函数创建集合，注意：创建一个空集合必须用 set() 而不是 { }，因为 { } 是用来创建一个空字典</p>
+</blockquote>
+
+<ul>
+  <li>list与tuple可以互相嵌套，list，tuple也可包含集合set，但是set不可以包含list和tuple</li>
+</ul>
+
+<h4 id="定义声明">定义/声明</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; set0={1,3,'rt'}
+&gt;&gt;&gt; set1=set()  #空集
+</code></pre></div></div>
+<p><strong>set()用法</strong>需要再学习</p>
+<h4 id="应用">应用</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#判断元素是否存在，存在返回True
+x in set
+#交并补
+a - b     # a和b的差集
+a | b     # a和b的并集
+a &amp; b     # a和b的交集
+a ^ b     # a和b中不同时存在的元素
+</code></pre></div></div>
+<h3 id="字典-dictionary">字典 dictionary</h3>
+<p>字典类似php中数组可以用key:value的形式，只不过python里的字典是无序的</p>
+
+<blockquote>
+  <p>列表是有序的对象结合，字典是无序的对象集合。两者之间的区别在于：字典当中的元素是通过键来存取的，而不是通过偏移存取。
+字典是一种映射类型，字典用<code class="highlighter-rouge">{ }</code>标识，它是一个无序的键(key) : 值(value)对集合。
+键(key)必须使用不可变类型(字符串，数字）。
+在同一个字典中，键(key)必须是唯一的</p>
+</blockquote>
+
+<h4 id="字典定义声明">字典定义/声明</h4>
+<p><code class="highlighter-rouge">{}</code>用于定义空字典
+<code class="highlighter-rouge">{key:value,key:value}</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; dic={}
+#修改或添加
+&gt;&gt;&gt; dic['name']='xiaoming'
+&gt;&gt;&gt; dic[1]=11
+&gt;&gt;&gt; dic
+{1: 11, 'name': 'xiaoming'}
+&gt;&gt;&gt; dic={'name':'cndaqiang','site':'blog','num':123456}
+&gt;&gt;&gt; dic.keys()
+dic_keys(['name', 'site', 'num'])
+&gt;&gt;&gt; dic.values()
+dic_values(['cndaqiang', 'blog', 123456])
+&gt;&gt;&gt; dic.items()
+[('num', 123456), ('name', 'cndaqiang'), ('site', 'blog')]
+#判断
+&gt;&gt;&gt; dic.has_key('name')
+True
+# 字典长度
+len(dict)
+
+
+#删除元素
+del dic[key]
+#删除字典(dic变量被清除)
+del dic
+#清空字典(dic变量还在)
+dic.clear()
+</code></pre></div></div>
+<h4 id="对比">对比</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>有序</th>
+      <th>引用元素 <code class="highlighter-rouge">[]</code></th>
+      <th>修改元素</th>
+      <th>元素类型</th>
+      <th>定义示例</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>字符串string</td>
+      <td>√</td>
+      <td>索引下标</td>
+      <td>×</td>
+      <td>字符（串）</td>
+      <td><code class="highlighter-rouge">str0='string'</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>列表list</td>
+      <td>√</td>
+      <td>索引下标</td>
+      <td>√</td>
+      <td>任意组合</td>
+      <td><code class="highlighter-rouge">list0=[1,2,'3']</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>元组tuple</td>
+      <td>√</td>
+      <td>索引下标</td>
+      <td>×</td>
+      <td>任意组合</td>
+      <td><code class="highlighter-rouge">tup0=(1,2,'3')</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>集合set</td>
+      <td>×</td>
+      <td>无</td>
+      <td>无</td>
+      <td>不包含list，tuple，dict</td>
+      <td><code class="highlighter-rouge">set0={1,2,'3'}</code></td>
+      <td>{}用于定义空字典，set()为空集合</td>
+    </tr>
+    <tr>
+      <td>字典dict</td>
+      <td>×</td>
+      <td>key</td>
+      <td>√</td>
+      <td>任意组合</td>
+      <td><code class="highlighter-rouge">dict0={1:1,'2':2,3:'3'}</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="类class">类class</h3>
+<p>也可以把一个数据集存在class里面,见<a href="/2017/09/29/python-3duixiang/">python(三)对象</a></p>
+
+<h3 id="类型转换">类型转换</h3>
+<p><a href="https://blog.csdn.net/emaste_r/article/details/8447192">python各种类型转换-int,str,char,float,ord,hex,oct等</a></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int(x [,base ])         将x转换为一个整数  
+long(x [,base ])        将x转换为一个长整数  
+float(x )               将x转换到一个浮点数  
+complex(real [,imag ])  创建一个复数  
+str(x )                 将对象 x 转换为字符串  
+repr(x )                将对象 x 转换为表达式字符串  
+eval(str )              用来计算在字符串中的有效Python表达式,并返回一个对象  
+tuple(s )               将序列 s 转换为一个元组  
+list(s )                将序列 s 转换为一个列表  
+chr(x )                 将一个整数转换为一个字符  
+unichr(x )              将一个整数转换为Unicode字符  
+ord(x )                 将一个字符转换为它的整数值  
+hex(x )                 将一个整数转换为一个十六进制字符串  
+oct(x )                 将一个整数转换为一个八进制字符串  
+#![](http://blog.cndaqiang.online/wp-content/uploads/2017/09/270b71679767300e9bfcef83efc2cbe4.png)
+</code></pre></div></div>
+
+<p>指定整数转为字符串后的小数点位数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>str(round(1.2345,2))
+</code></pre></div></div>
+
+<h2 id="变量">变量</h2>
+<h3 id="变量-1">变量</h3>
+<blockquote>
+  <p>Python 中的变量不需要声明。每个变量在使用前都必须赋值，变量赋值以后该变量才会被创建。</p>
+</blockquote>
+
+<ul>
+  <li>变量的赋值就是指向某一对象的地址，<strong>变量更像一个指针/地址，指向被赋值的对象</strong></li>
+</ul>
+
+<p>例如：变量赋值 a=5 后再赋值 a=10，这里实际是新生成一个 int 值对象 10，再让 a 指向它，而 5 被丢弃，不是改变a的值，相当于新生成了a，</p>
+
+<ul>
+  <li><strong>b=a 表示把a的对象(指针)传给b</strong>，即b和a指向相同的地址,例
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; a=[1,2,3]
+&gt;&gt;&gt; b=a
+&gt;&gt;&gt; a[2]=4 #使用a[]改变对象中的内容
+&gt;&gt;&gt; a=1  #a被指派新对象的地址
+&gt;&gt;&gt; b
+[1, 2, 4]
+&gt;&gt;&gt; a
+1
+</code></pre></div>    </div>
+  </li>
+  <li>字符串，列表，元组，集合，字典等类型，必须先定义，至少定义为空(分配对象/地址），不然变量没有指向的对象（或者说，没有指向的地址，怎么调用/赋值)，才能继续使用内部元素</li>
+  <li>数组类元素为数组时，也是指针，改变指针指向的值，数组也会变,如
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; a=[1,2,3]
+&gt;&gt;&gt; b=['a','b','c']
+&gt;&gt;&gt; c=a,b
+&gt;&gt;&gt; c
+([1, 2, 3], ['a', 'b', 'c'])
+&gt;&gt;&gt; a[:]=[]
+&gt;&gt;&gt; c
+([], ['a', 'b', 'c'])
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="变量定义声明">变量定义/声明</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a=4
+#多变量可以这样一次定义
+a=b=c=d=5
+#变量依次复制
+a,b,c=1,3,'char'
+</code></pre></div></div>
+<h4 id="变量的使用">变量的使用</h4>
+<p>直接使用变量名</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(a)
+</code></pre></div></div>
+<p>指向数组型(字符串，列表，元组，集合，字典等)对象的变量
+详见对象的数据类型</p>
+
+<h2 id="运算">运算</h2>
+<h3 id="算术运算">算术运算</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算符</th>
+      <th>描述</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>+</td>
+      <td>加</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>-</td>
+      <td>减</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>*</td>
+      <td>乘</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>/</td>
+      <td>除</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>%</td>
+      <td>取余</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>**</td>
+      <td>幂</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>//</td>
+      <td>除完取整</td>
+      <td>9.0//2结果为4.0 ，9//2结果为4</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; a=10
+&gt;&gt;&gt; b=3
+&gt;&gt;&gt; a/b
+3.3333333333333335
+&gt;&gt;&gt; a%b
+1
+&gt;&gt;&gt; a**b
+1000
+&gt;&gt;&gt; a//b
+3
+</code></pre></div></div>
+<h3 id="赋值运算">赋值运算</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算符</th>
+      <th>描述</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>=</td>
+      <td>等于</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>+=</td>
+      <td>c+=a等价于c=c+a<br />以下同理，略</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>-=</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>*=</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>/=</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>**=</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>//=</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="比较">比较</h3>
+<p>成立返回True，不成立返回False</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算符</th>
+      <th>描述</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>==</td>
+      <td>等于</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>!=</td>
+      <td>不等于</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>&gt;</td>
+      <td>大于</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>&lt;</td>
+      <td>小于</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>&gt;=</td>
+      <td>大于等于</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>&lt;=</td>
+      <td>小于等于</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="逻辑运算符">逻辑运算符</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算符</th>
+      <th>描述</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>and</td>
+      <td>与</td>
+      <td><code class="highlighter-rouge">a and b</code> ,如果a=0/False 返回False，如果a=非0/True，返回b（即b=False返回False，b为其他值，返回b的值）</td>
+    </tr>
+    <tr>
+      <td>or</td>
+      <td>或</td>
+      <td><code class="highlighter-rouge">a or b</code>a为True，返回a的值，否则返回b的值（即b=False返回False，b为其他值，返回b的值）</td>
+    </tr>
+    <tr>
+      <td>not</td>
+      <td>非</td>
+      <td><code class="highlighter-rouge">not ( a  and b )</code> ，返回True/False</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="位运算符">位运算符</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算符</th>
+      <th>描述</th>
+      <th>实例(a=0b111100,b=0b1101)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>&amp;</td>
+      <td>按位与运算符：参与运算的两个值,如果两个相应位都为1,则该位的结果为1,否则为0</td>
+      <td>(a &amp; b) 输出结果 12 ，二进制解释： 0000 1100</td>
+    </tr>
+    <tr>
+      <td><img src="/uploads/2017/09/e336ba088ee4ba0d83db82dcb946e8ab.png" alt="" /></td>
+      <td>按位或运算符：只要对应的二个二进位有一个为1时，结果位就为1。</td>
+      <td>(a<img src="/uploads/2017/09/e336ba088ee4ba0d83db82dcb946e8ab.png" alt="" />b) 输出结果 61 ，二进制解释： 0011 1101</td>
+    </tr>
+    <tr>
+      <td>^</td>
+      <td>按位异或运算符：当两对应的二进位相异时，结果为1</td>
+      <td>(a ^ b) 输出结果 49 ，二进制解释： 0011 0001</td>
+    </tr>
+    <tr>
+      <td>~</td>
+      <td>按位取反运算符：对数据的每个二进制位取反,即把1变为0,把0变为1。~x 类似于 -x-1</td>
+      <td>(~a ) 输出结果 -61 ，二进制解释： 1100 0011， 在一个有符号二进制数的补码形式。</td>
+    </tr>
+    <tr>
+      <td>«</td>
+      <td>左移动运算符：运算数的各二进位全部左移若干位，由”«“右边的数指定移动的位数，高位丢弃，低位补0。</td>
+      <td>a « 2 输出结果 240 ，二进制解释： 1111 0000</td>
+    </tr>
+    <tr>
+      <td>»</td>
+      <td>右移动运算符：把”»“左边的运算数的各二进位全部右移若干位，”»“右边的数指定移动的位数</td>
+      <td>a » 2 输出结果 15 ，二进制解释： 0000 111</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; a=60
+&gt;&gt;&gt; bin(a)
+'0b111100'
+&gt;&gt;&gt; b=13
+&gt;&gt;&gt; bin(b)
+'0b1101'
+&gt;&gt;&gt; bin(a^b)
+'0b110001'
+&gt;&gt;&gt; a^b
+49
+</code></pre></div></div>
+<h3 id="成员运算符">成员运算符</h3>
+<blockquote>
+  <p>测试实例中包含了一系列的成员，包括字符串，列表或元组</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算符</th>
+      <th>描述</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>in</td>
+      <td>如果在指定的序列中找到值返回 True，否则返回 False</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>not in</td>
+      <td>如果在指定的序列中没有找到值返回 True，否则返回 False</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="身份运算符">身份运算符</h3>
+<blockquote>
+  <p>身份运算符用于比较两个<strong>对象</strong>的存储单元
+x is y, 类似 id(x) == id(y) , 如果引用的是同一个对象则返回 True，否则返回 False</p>
+</blockquote>
+
+<p><strong>即指向同一对象为True，不同对象为False</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>运算符</th>
+      <th>描述</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>is</td>
+      <td>is 是判断两个标识符是不是引用自一个对象</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>is not</td>
+      <td>is not 是判断两个标识符是不是引用自不同对象</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; a=[1,2,3]
+&gt;&gt;&gt; b=[1,2,3]
+&gt;&gt;&gt; c=a #把a的指向赋予c
+&gt;&gt;&gt; d=a[:] #把a的值传给d，等价于新建了个和a指向对象一样的对象并让d指向新对象
+&gt;&gt;&gt; a is b
+False
+&gt;&gt;&gt; a is c
+True
+&gt;&gt;&gt; a is d
+False
+&gt;&gt;&gt; d
+[1, 2, 3]
+</code></pre></div></div>
+<h3 id="运算符优先级">运算符优先级</h3>
+<p>先略</p>
+
+<h2 id="流程控制">流程控制</h2>
+<ul>
+  <li>注意缩进</li>
+</ul>
+
+<h3 id="条件-if-elif-else">条件 if elif else</h3>
+<ul>
+  <li>注意缩进</li>
+  <li>python中无switch条件</li>
+  <li>if可以缩进嵌套</li>
+  <li>简短可以 <code class="highlighter-rouge">if 条件1:语句</code></li>
+  <li><code class="highlighter-rouge">if (条件):</code>也可以，这样比Fortran就多一个<code class="highlighter-rouge">:</code>更好记
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if 条件1:
+  语句1
+  语句2
+  语句3
+elif 条件2:
+  语句1
+  语句2
+else:
+  语句1
+  语句2
+</code></pre></div>    </div>
+    <h3 id="循环">循环</h3>
+    <h4 id="while">while</h4>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while 条件判断:
+  循环语句
+</code></pre></div>    </div>
+    <p>while else</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while 条件判断:
+  循环语句
+else:
+  while条件为false执行语句
+</code></pre></div>    </div>
+    <p>当循环体中只有一条语句时</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while 条件判断:循环语句
+</code></pre></div>    </div>
+    <h4 id="for">for</h4>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for x in 数列:
+  循环语句
+</code></pre></div>    </div>
+    <p>也可以像while那样，加个else，或者一行写语句<br />
+只有一个循环语句时可以</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for x in 数列: 循环语句
+for i in range(0,5):print(i)
+</code></pre></div>    </div>
+    <p>另一种常用操作产生一组数据，可以嵌套使用</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ 操作 for x in 数列  ]
+files=[ i[:-1] for i in files] #去掉结尾的"\n"
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="break-跳出循环">break 跳出循环</h4>
+<p>之后有else语句也不糊被执行</p>
+<h4 id="continue-进入下一个循环">continue 进入下一个循环</h4>
+<h4 id="pass-不做任何事情空语句自动执行下一个">pass 不做任何事情，空语句，自动执行下一个</h4>
+<p>可以使用循环中只有pass且无限循环来等待ctrl+c 打断
+例 <code class="highlighter-rouge">while True:pass</code></p>
+
+<h2 id="函数">函数</h2>
+<ul>
+  <li>先定义后使用
+为了方便阅读，可以变相的把主干写在开头，如
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def main()
+  fun1()
+def fun1()
+  函数体
+main()
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="定义-3">定义</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def 函数名():
+	函数体
+</code></pre></div></div>
+<p><strong>函数体结构比def要小，所以前面至少有一个空格缩进</strong></p>
+<ul>
+  <li><code class="highlighter-rouge">return 表达式</code>用于返回值，可以省略</li>
+</ul>
+
+<h3 id="调用">调用</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>函数名()
+</code></pre></div></div>
+<h3 id="参数传递">参数传递</h3>
+<ul>
+  <li>类型属于对象，变量是没有类型的，所以传参数时不能指定类型</li>
+  <li>python 中一切都是对象，严格意义我们不能说值传递还是引用传递(类似c中传递地址)</li>
+</ul>
+
+<p><strong>传递数组，如果函数内改变了数组，那么函数之外这个数组也会被改变</strong><br />
+所以用<strong>numpy的copy来复制数组而不是赋值</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   time=time[skip:].copy()
+   yvalue=yvalue_in[skip:,:].copy()
+</code></pre></div></div>
+
+<h4 id="可更改与不可更改对象传值传址">可更改与不可更改对象/传值&amp;传址</h4>
+<p>在 python 中，数字numbers，字符串strings, 元组tuples是不可更改的对象，而 列表list,字典 dict 等则是可以修改的对象。</p>
+<ul>
+  <li><strong>不可变类型</strong>：变量赋值 a=5 后再赋值 a=10，这里实际是新生成一个 int 值对象 10，再让 a 指向它，而 5 被丢弃，不是改变a的值，相当于新生成了a
+<br /> <strong>传递不可变类型对象的变量等价于c语言中的传值，</strong>在 fun（a）内部修改 a 的值，只是修改另一个复制的对象，不会影响 a 本身</li>
+  <li><strong>可变类型</strong>：变量赋值 la=[1,2,3,4] 后再赋值 la[2]=5 则是将 list la 的对象的第三个元素值更改，本身la没有动，只是其内部的一部分值被修改了
+<br /><strong>传递可变类型对象的变量等价于c中的传址</strong>在fun(la)内修改了la内元素，则函数外la也改变，如果在函数内la指向新对象，则外面la不变（就是传址嘛，地址改变了，原来地址内容肯定不受影响）</li>
+</ul>
+
+<h4 id="传递参数的方式">传递参数的方式</h4>
+<h5 id="必须参数">必须参数</h5>
+<p>就是正常的传递参数，所有参数按照定义的顺序一个不少的传入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def bixu(str,num):
+	print(str,num)
+bixu('hello',123)
+</code></pre></div></div>
+<h5 id="关键字参数">关键字参数</h5>
+<p>在传递时，指明fun(参数1=值1，参数2=值2)，因此不需要按照顺序</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def bixu(str,num):
+	print(str,num)
+bixu(num=123,str='hello') #关键字参数，不需指定顺序
+</code></pre></div></div>
+<h5 id="默认参数">默认参数</h5>
+<p>定义时赋值作为默认参数
+<strong>默认参数必须放在最后</strong>,不然报错</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    def bixu(str='hello',num):
+            ^
+SyntaxError: non-default argument follows default argument
+</code></pre></div></div>
+<p>正常例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+def bixu(num,str='hello'):
+	print(str,num)
+bixu(123)
+</code></pre></div></div>
+<h4 id="不定长参数">不定长参数</h4>
+<p>函数能处理比当初声明时更多的参数。这些参数叫做不定长参数
+用<code class="highlighter-rouge">*变量名</code>指代不定长参数，传入一个元组</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def bixu(num,str,*wuming): #不定长参数wuming
+	print(str,num)
+	for x in wuming:  #调用不定长参数wuming中的元素
+		print('\n',x)
+bixu(123,'hello',4,'word')
+</code></pre></div></div>
+
+<h3 id="匿名函数">匿名函数</h3>
+<p>使用lambda函数体只能有一条语句
+也支持关键字传参，默认参数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>函数名=lambda 参数1，参数2，参数。。。:只能一条语句
+</code></pre></div></div>
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bixu=lambda num,str:print(num,str)
+bixu(123,'ss')
+</code></pre></div></div>
+
+<h3 id="变量作用范围">变量作用范围</h3>
+<blockquote>
+  <p>Python 中只有模块（module），类（class）以及函数（def、lambda）才会引入新的作用域，其它的代码块（如 if/elif/else/、try/except、for/while等）是不会引入新的作用域的</p>
+</blockquote>
+
+<h4 id="作用域">作用域</h4>
+<ul>
+  <li>L （Local） 局部作用域  // 函数等作用域内定义改变</li>
+  <li>E （Enclosing） 闭包函数外的函数中  //函数嵌套时子函数外，父函数里，用nonlocal声明</li>
+  <li>G （Global） 全局作用域    // 全局，在局部用 blobal声明</li>
+  <li>B （Built-in） 内建作用域  //我觉得和定义与全局一样，只不过局部未使用global声明</li>
+</ul>
+
+<p>优先级 L –&gt; E –&gt; G –&gt;B 的规则查找，即：在局部找不到，便会去局部外的局部找（例如闭包），再找不到就会去全局找，再者去内建中找，</p>
+
+<h4 id="关于global和nonlocal">关于global和nonlocal</h4>
+<p><strong>按照优先级调用变量，无须使用global和nonlocal，只有在局域调用并且希望改变时上级作用域时才使用global和nonlocal</strong></p>
+
+<p>也就是说函数里的函数不做任何处理的情况下可以按照 L –&gt; E –&gt; G –&gt;B 的优先级<strong>调用</strong>变量，而一旦在局域内定义或修改了某一变量则为局部与变量，只会调用局部的不会调用上级的</p>
+
+<p>如果要在局部<strong>改变</strong>上级作用域的变量值要用global或者nonlocal来声明</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>g_quan=2
+b_nei='word'
+def fun():
+ l_local='hello' #局部变量
+ global g_quan  #全局变量可更改
+ print(g_quan,l_local,b_nei) #未global，则b_nei为内建变量，可以直接调用
+ g_quan=3
+fun()
+print(g_quan)
+</code></pre></div></div>
+<p>结果</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2 hello word
+3
+</code></pre></div></div>
+
+<p><strong>其他</strong> 代码段被执行的区块，定义变量才有效，即if 内的变量定义，只有if 成立被执行，相应定义才有效</p>
+<h3 id="常用函数">常用函数</h3>
+<p><strong>略</strong></p>
+
+<h2 id="有趣">有趣</h2>
+<h3 id="脚本输入参数">脚本输入参数</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import sys
+print("输入参数个数",len(sys.argv))
+print("输入参数",sys.argv)
+</code></pre></div></div>
+<p>运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/work/dfft-yimin$ ./simple_plot.py 1 2 34 
+输入参数个数 4
+输入参数 ['./simple_plot.py', '1', '2', '34']
+</code></pre></div></div>
+<h3 id="ls-查看文件">ls 查看文件</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import os
+files=os.popen("ls ").readlines()
+files=[ i[:-1] for i in files] #去掉结尾的"\n"
+print(file)
+</code></pre></div></div>
+<p>输出</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['cndaqiang', 'data', 'lost+found', 'windows']
+</code></pre></div></div>
+
+<h2 id="报错">报错</h2>
+<h3 id="py脚本名和模块名冲突">py脚本名和模块名冲突</h3>
+<p>重命名当前文件夹下面的脚本命即可</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    from ase import Atoms
+ImportError: cannot import name 'Atoms' from 'ase' (/home/data/work/gpaw/learn/ase.py)
+</code></pre></div></div>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/09/28/openvz-swap/">openvz增加swap分区</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/09/28/ubuntu-sudo-user/">Ubuntu创建sudo用户</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,59 @@
+# Precompiler options
+#CPP_OPTIONS= -DMPI -DHOST=\"IFC91_ompi\" -DIFC \
+             -DCACHE_SIZE=4000 -DPGF90 -Davoidalloc \
+             -DMPI_BLOCK=8000 -DscaLAPACK -Duse_collective \
+             -DnoAugXCmeta -Duse_bse_te \
+             -Duse_shmem -Dtbdyn
+CPP_OPTIONS= -DMPI -DHOST=\"LinuxIFC\" -DIFC \
+             -DCACHE_SIZE=8000 -DPGF90 -Davoidalloc \
+             -DMPI_BLOCK=8000 -DscaLAPACK -Duse_collective \
+             -DnoAugXCmeta -Duse_bse_te \
+             -Duse_shmem -Dtbdyn -DRPROMU_DGEMV -DRACCMU_DGEMV
+
+CPP        = fpp -f_com=no -free -w0  $*$(FUFFIX) $*$(SUFFIX) $(CPP_OPTIONS)
+
+FC         = mpif90
+FCL        = mpif90 -mkl
+
+FREE       = -free -names lowercase
+
+#FFLAGS     = -assume byterecl
+FFLAGS     = -assume byterecl -FR -heap-arrays
+#OFLAG      = -O2
+OFLAG      = -O1 -ip
+OFLAG_IN   = $(OFLAG)
+#DEBUG      = -O0
+DEBUG      = -O0 -FR
+
+MKLROOT    =/HOME/intel/composer_xe_2013_sp1.2.144/mkl
+MKL_PATH   = $(MKLROOT)/lib/intel64
+BLAS       =-L$(MKL_PATH) -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread
+LAPACK     =-L$(MKL_PATH) -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread
+#BLACS      = -lmkl_blacs_openmpi_lp64
+BLACS      =-L$(MKL_PATH) -lmkl_blacs_openmpi_lp64
+SCALAPACK  = $(MKL_PATH)/libmkl_scalapack_lp64.a $(MKL_PATH)/libmkl_scalapack_ilp64.a $(BLACS)
+
+#OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o \
+             $(MKLROOT)/interfaces/fftw3xf/libfftw3xf_intel.a
+OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o /WORK/app/fftw/3.3.4/lib/libfftw3_mpi.a
+INCS       =-I/WORK/app/fftw/3.3.4-double/include
+
+LLIBS      = $(SCALAPACK) $(LAPACK) $(BLAS)
+
+OBJECTS_O1 += fft3dfurth.o fftw3d.o fftmpi.o fftmpiw.o
+OBJECTS_O2 += fft3dlib.o
+
+# For what used to be vasp.5.lib
+CPP_LIB    = $(CPP)
+FC_LIB     = $(FC)
+CC_LIB     = icc
+CFLAGS_LIB = -O
+FFLAGS_LIB = -O1
+FREE_LIB   = $(FREE)
+
+OBJECTS_LIB= linpack_double.o getshmem.o
+
+# Normally no need to change this
+SRCDIR     = ../../src
+BINDIR     = ../../bin
+

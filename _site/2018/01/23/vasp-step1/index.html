@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>vasp计算流程-结构优化</title>
+    <meta name="description" content="VASP主要计算流程:结构优化、静态自洽、非自洽计算结构优化后，记得cp CONTCAR POSCAR">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2018/01/23/vasp-step1/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2018/01/23/vasp-step1/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2018/01/23/vasp-step1/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2018/01/23/vasp-step1/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>vasp计算流程-结构优化</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-01-23
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#vasp" title="Tag: vasp" rel="tag">vasp</a-->
+        <a href="/tag/#vasp" title="Tag: vasp" rel="tag">vasp</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#结构优化" id="markdown-toc-结构优化">结构优化</a>    <ul>
+      <li><a href="#说明" id="markdown-toc-说明">说明</a></li>
+      <li><a href="#结构优化的参数" id="markdown-toc-结构优化的参数">结构优化的参数：</a>        <ul>
+          <li><a href="#通用参数" id="markdown-toc-通用参数">通用参数</a></li>
+          <li><a href="#ibrion" id="markdown-toc-ibrion">IBRION</a></li>
+          <li><a href="#ediff-ediffg-nelm-nsw-isif" id="markdown-toc-ediff-ediffg-nelm-nsw-isif">EDIFF EDIFFG NELM NSW ISIF</a></li>
+        </ul>
+      </li>
+      <li><a href="#分析" id="markdown-toc-分析">分析</a>        <ul>
+          <li><a href="#初始结构设置" id="markdown-toc-初始结构设置">初始结构设置</a></li>
+          <li><a href="#弛豫参数设置" id="markdown-toc-弛豫参数设置"><strong>弛豫参数设置</strong></a></li>
+        </ul>
+      </li>
+      <li><a href="#案例" id="markdown-toc-案例">案例</a></li>
+      <li><a href="#参考-1" id="markdown-toc-参考-1">参考</a>        <ul>
+          <li><a href="#bbso2单分子优化" id="markdown-toc-bbso2单分子优化">bbs.O2单分子优化</a></li>
+          <li><a href="#bbs优化fe晶胞晶格参数" id="markdown-toc-bbs优化fe晶胞晶格参数">bbs.优化Fe晶胞晶格参数</a>            <ul>
+              <li><a href="#方法1-birch-murnaghan方程拟合" id="markdown-toc-方法1-birch-murnaghan方程拟合">方法1 Birch-Murnaghan方程拟合</a></li>
+              <li><a href="#方法2-直接计算isif3" id="markdown-toc-方法2-直接计算isif3">方法2 直接计算ISIF=3</a></li>
+            </ul>
+          </li>
+          <li><a href="#侯62结构参数优化" id="markdown-toc-侯62结构参数优化">侯.6.2结构参数优化</a>            <ul>
+              <li><a href="#只优化一个晶格参数时" id="markdown-toc-只优化一个晶格参数时">只优化一个晶格参数时</a></li>
+              <li><a href="#复杂情况" id="markdown-toc-复杂情况">复杂情况</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>VASP主要计算流程:结构优化、静态自洽、非自洽计算
+<br /><strong>结构优化后，记得<code class="highlighter-rouge">cp CONTCAR POSCAR</code></strong></p>
+
+<h1 id="参考">参考</h1>
+<p><a href="http://blog.csdn.net/kyang_823/article/details/59110848">VASP 结构优化、静态自洽、非自洽计算</a></p>
+<h1 id="结构优化">结构优化</h1>
+<p><strong>结构优化后，记得<code class="highlighter-rouge">cp CONTCAR POSCAR</code></strong></p>
+<h2 id="说明">说明</h2>
+<p>结构优化是指对整个输入体系的坐标进行调整，得到一个相对稳定的基态结构,因此可以得到体系的总能量、晶体结构参数.
+<br />结构优化分离子优化和电子优化两个嵌套的过程，优化的过程输出到<code class="highlighter-rouge">OSZICAR</code>文件,如下,<code class="highlighter-rouge">DAV: n</code>是电子优化嵌套在<code class="highlighter-rouge">n F= ...</code>离子优化中</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1     0.792799315692E+02    0.79280E+02   -0.34288E+03    64   0.507E+02
+...省略
+DAV:  21     0.264558511708E+00    0.53910E-04   -0.16164E-07    24   0.401E-03
+   1 F= 0.26455851E+00 E0= 0.26435292E+00  d E =0.264559E+00  mag=     2.0000
+       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1     0.143272113174E+03    0.14301E+03   -0.50023E+03    64   0.387E+02    0.379E+01
+省略
+</code></pre></div></div>
+<p>优化后晶格参数和原子位置等结果输出到<code class="highlighter-rouge">CONTCAR</code>文件(格式同POSCAR),结构优化完成后，<code class="highlighter-rouge">cp CONTCAR POSCAR</code>进行下一步的静态自洽计算，对电子结构做进一步调整</p>
+
+<h2 id="结构优化的参数">结构优化的参数：</h2>
+<p>参数的详细内容参考<a href="/2018/01/21/vasp-input/#ibrion-nfree-nsw-isif">VASP输入文件总结</a>和官方<strong><a href="http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html">manual</a></strong></p>
+<h3 id="通用参数">通用参数</h3>
+<ul>
+  <li>SYSTEM=注释</li>
+  <li>ISTART=0 ICHARGE=2</li>
+  <li>ISMEAR SIGMA(与结构，K点有关)
+<br /><strong>结构优化时不能使用ISMEAR=-5</strong></li>
+  <li>ISPIN(与体系有关?可以不设置) MAGMOM(可选)</li>
+  <li>ENCUT多个结构进行对比时,需要统一ENCUT</li>
+  <li>PREC等PREC=Accurate</li>
+</ul>
+
+<h3 id="ibrion">IBRION</h3>
+<ul>
+  <li>IBRION=2：共轭梯度算法(CG)，<strong>一般来说都用它</strong>
+<br />CG方法慢一些，找到全局最小的可能性也要大一些。</li>
+  <li>IBRION=1：准牛顿方法(quasi-Newton RMM-DIIS),用于小范围内稳定结构的搜索
+<br />准牛顿方法计算速度较快，适合于初始结构与平衡结构(势能面上全局最小值)比较接近的情况</li>
+  <li>IBRION其他取值用于其他计算</li>
+</ul>
+
+<h3 id="ediff-ediffg-nelm-nsw-isif">EDIFF EDIFFG NELM NSW ISIF</h3>
+<ul>
+  <li>EDIFF电子收敛标准
+<br />1E-4或者1E-5即可</li>
+  <li>EDIFFG原子收敛标准
+<br />力作为收敛标准:EDIFFG为负,一般-0.01到-0.05之间 (最近看的单层二维材料CoBr2,使用-1E-3)
+<br />能量作为标准:EDIFFG 为正,一般0.001-0.0001</li>
+  <li>NELM电子优化(SCF)最大计算步数(默认60)</li>
+  <li>NELMIN电子优化的最小步数。默认为2，一般不设置</li>
+  <li>NSW离子优化最大步数,默认0(不优化),必须设置</li>
+  <li>POTIM调整离子位置移动的大小,默认0.5,需要设置</li>
+  <li>NFREE确定每个方向和离子使用多少个位移
+<br />(计算频率使用,优化结构无需设置?)</li>
+  <li>ISIF控制离子运动中晶胞的变化情况
+<br />IBRION=0时默认0,其他情况默认2，常用2,3
+<br />我在计算二维材料时使用ISIF=3后，真空层变薄了，后期自恰计算的磁矩也和师兄的有差异，使用ISIF=2或者不结构优化直接自恰计算则和师兄的结果一样
+<br />小木虫.<a href="http://muchong.com/html/201511/9630139_2.html">vasp 2维材料优化问题</a>中前田庆次提到:<strong>二维材料不能ISIF=3,只能=2</strong>
+<br /><a href="https://www.researchgate.net/post/Is_ISIF_2_or_ISIF_3_in_INCAR_more_appropriate_for_when_I_try_to_optimize_a_new_2D_material_in_vasp">Is ISIF =2 or ISIF =3 in INCAR more appropriate for when I try to optimize a new 2D material in vasp?</a>Muhammad Zulfiqar:<strong>For 2D materials, it is recommended to use ISIF=4. For Bulk ISIF is taken as 3. ISIF= 2 is taken by default for material under stress</strong>
+<br />学术之友公众号.二维材料优化有人用isif=2，也有人用isif=4。也可以把源程序src目录下的constr_cell_relax.F文件修改下（网上有很多教程），然后用isif=3
+<br />修改constr_cell_relax.F只适用于正交晶胞就没有尝试，我之后使用二维CoCl2测试ISIF时，1x1和2x2的超胞&amp;ISIF=2，1x1&amp;ISIF=4接近结果，2x2超胞&amp;ISIF=4结果与ISIF=3一样与结果差异大，猜想结构优化用1x1晶胞ISIF=4(如果这个单胞复杂了，结果还对吗?),暂时先使用ISIF=2,然后使用不同的晶格参数计算EOS(Equation of state状态方程，常用Birch-Murnaghan状态方程)，最后拟合找到能量最低的晶格参数，下学期去问问师兄如何处理
+<img src="/uploads/2018/01/isif.JPG" alt="" /></li>
+</ul>
+
+<p>参数是互相联系的,比如精度大了,优化步数肯定就要增加<br />
+初始时结构不合理,原子距离太近,POTIM就要设置的小一些，不然很难收敛</p>
+<h2 id="分析">分析</h2>
+<p>收敛性主要影响因素：初始结构的合理性和弛豫参数的设置
+结构优化分电子迭代和离子弛豫两个嵌套的过程。</p>
+<ul>
+  <li>电子迭代自洽的速度，主要影响因素：初始结构的合理性，k点密度，截断能,是否考虑自旋和高斯展宽（SIGMA）；</li>
+  <li>离子弛豫的收敛速度，主要影响因素：弛豫方法（IBRION）,步长（POTIM）和收敛判据（EDIFFG）</li>
+</ul>
+
+<h3 id="初始结构设置">初始结构设置</h3>
+<p>从文献，<a href="https://www.materialsproject.org/">materialsproject</a>等平台使用MS,VESTA等工具设置<br />
+可以先在小体系上测试，然后再放到大体系中算。</p>
+
+<h3 id="弛豫参数设置"><strong>弛豫参数设置</strong></h3>
+<p>参考<a href="http://blog.csdn.net/kyang_823/article/details/59110848">VASP 结构优化、静态自洽、非自洽计算</a></p>
+<ul>
+  <li>初始结构不太合理，一开始采用很粗糙的优化（EDIFF=1E-3，EDIFFG= -0.2），很低的K点密度(Gamma)，<strong>不考虑自旋就可以了</strong>，这样NSW&lt;60的设置就比较好。其它参数可以默认。经过第一轮优化，就可以进入下一步细致的优化了。
+<br />EDIFF=1E-4,EDIFFG=-0.05，不考虑自旋，IBRION=2，其它默认，NSW=100;跑完后可以设置IBRION = 1，减小OPTIM（默认为0.5，可以设置0.2）继续优化。</li>
+  <li>优化的时候让它自己闷头跑是不对的，经常看看中间过程，根据情况调节优化参数是可以很好的提高优化速度。这个时候，提<strong>交两个以上的任务排队是好的方式，一个在调整的时候，下一个可以接着运行</strong></li>
+  <li>如果电子步不能在40步内收敛，要么是参数设置的问题，要么是初始模型太糟糕</li>
+  <li>静态自洽过程电子步不收敛一般是参数设置有问题。这个时候，改变迭代算法（ALGO），提高高斯展宽（SIGMA增加）,设置自洽延迟（NELMDL）都是不错的方法。对于大体系比较难收敛的话，可以先调节AMIN,BMIX跑十多步，得到电荷密度和波函数，再重新计算。实在没办法了，可以先放任它跑40步，没有收敛的迹象的话，停下来，得到电荷密度和波函数后重新计算。一般都能在40步内收敛。</li>
+  <li>不过有时电子步收敛速度依然很慢，还需要设置一些算法控制选项，例如设置ALGO=Very_Fast，减小真空层厚度，减少K点数目等。</li>
+</ul>
+
+<h2 id="案例">案例</h2>
+<p>MS建模-&gt;设置输入文件-&gt;优化
+<br />更多案例下载<a href="https://www.materialsproject.org">Materials Project</a>里面的VASP格式,看INCAR文件</p>
+<h2 id="参考-1">参考</h2>
+<h3 id="bbso2单分子优化"><a href="http://www.bigbrosci.cn/LVASPTHW">bbs.O2单分子优化</a></h3>
+<p>INCAR</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SYSTEM=O2
+ISTART=0
+ICHARGE=2
+ISMEAR=0 
+SIGMA=0.01
+#ISMEAR和SIGMA的取值参考[VASP输入文件总结](https://cndaqiang.github.io/2018/01/21/vasp-input/#ibrion-nfree-nsw-isif)和官方**[manual](http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html)**等各种资料
+ISPIN=2
+#需要考虑
+MAGMOM=2*2
+#MAGMOM可选
+ENCUT=400
+
+IBRION=2
+NSW=40
+#下面的参数也是在优化结果不合理的基础上逐渐添加的
+POTIM=0.2 
+#结构不合理,设置POTIM低于默认0.5,进行优化
+#初始结构越好,POTIM越随意
+EDIFF=1E-4
+</code></pre></div></div>
+<p>KPOINTS
+<br />自动,G,1x1x1,0 0 0</p>
+<h3 id="bbs优化fe晶胞晶格参数">bbs.优化Fe晶胞晶格参数</h3>
+<h4 id="方法1-birch-murnaghan方程拟合">方法1 Birch-Murnaghan方程拟合</h4>
+<p><br />使用分数坐标
+<br />不优化离子结构,设置NSW = 0 或者 1， 或者 IBRION = -1,ISIF不设置
+<br />计算不同晶格参数下的能量
+<br />使用晶格参数和能量通过Birch-Murnaghan方程拟合</p>
+<h4 id="方法2-直接计算isif3">方法2 直接计算ISIF=3</h4>
+<p>INCAR</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SYSTEM=Fe
+NWRITE=0 #控制输出到OUTCAR的信息多少，可选
+ISTART=0
+ICHARGE=2
+GGA=PE #有必要设置吗,配合POSCAR
+ISPIN=2
+MAGMOM=2*3
+ISMEAR=1
+SIGMA=0.05
+ENCUT=600
+
+IBRION=1
+NSW=100
+POTIM=0.1
+ISIF=3 #优化晶格等
+EDIFF=0.1E-06
+NELM=100
+LREAL=Auto  #暂时不了解这个参数适用场景
+</code></pre></div></div>
+<p>KPOINTS
+<br />自动,G,11x11x11,0 0 0</p>
+<h3 id="侯62结构参数优化">侯.6.2结构参数优化</h3>
+<h4 id="只优化一个晶格参数时">只优化一个晶格参数时</h4>
+<p>如fcc结构的Al，晶胞中只有一个原子<br />
+使用Birch-Murnaghan拟合</p>
+<h4 id="复杂情况">复杂情况</h4>
+<p>多步优化略<br />
+一次型优化，使用ISIF参数<br />
+这种方法结果合理精度不高，可提高EDIFF,EDIFFG精度提高准确性
+<br />INCAT</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SYSTEM=Mg-hex
+ENCUT=250
+ISTART=0
+ICHARGE=2
+ISMEAR=1
+SIGMA=0.2
+NSW=60
+IBRION=2
+ISIF=3
+POTIM=0.2
+EDIFF=1E-6
+EDIFF=-1E-3
+PREC=Accurate
+</code></pre></div></div>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2018/01/21/bash-x11/">win10 Bash 图形化运行程序</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/01/24/vasp-step2/">vasp计算流程-静态自洽</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

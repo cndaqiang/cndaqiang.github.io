@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Ubuntu 16.04 安装python版ssr</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2017/09/28/ubuntu1604-ssr/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2017/09/28/ubuntu1604-ssr/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2017/09/28/ubuntu1604-ssr/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2017/09/28/ubuntu1604-ssr/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Ubuntu 16.04 安装python版ssr</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-28
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#ubuntu" title="Tag: ubuntu" rel="tag">ubuntu</a-->
+        <a href="/tag/#ubuntu" title="Tag: ubuntu" rel="tag">ubuntu</a>&nbsp;
+    
+        <!--a href="/tag/#ssr" title="Tag: ssr" rel="tag">ssr</a-->
+        <a href="/tag/#ssr" title="Tag: ssr" rel="tag">ssr</a>&nbsp;
+    
+        <!--a href="/tag/#python" title="Tag: python" rel="tag">python</a-->
+        <a href="/tag/#python" title="Tag: python" rel="tag">python</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a>    <ul>
+      <li><a href="#安装python" id="markdown-toc-安装python">安装python</a></li>
+      <li><a href="#下载ssr" id="markdown-toc-下载ssr">下载ssr</a></li>
+      <li><a href="#配置ssr" id="markdown-toc-配置ssr">配置ssr</a>        <ul>
+          <li><a href="#配置示例" id="markdown-toc-配置示例">配置示例</a></li>
+        </ul>
+      </li>
+      <li><a href="#启动服务" id="markdown-toc-启动服务">启动服务</a></li>
+    </ul>
+  </li>
+  <li><a href="#客户端" id="markdown-toc-客户端">客户端</a>    <ul>
+      <li><a href="#linux端" id="markdown-toc-linux端">linux端</a></li>
+    </ul>
+  </li>
+  <li><a href="#遇到的问题" id="markdown-toc-遇到的问题">遇到的问题</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/shadowsocksr-backup/shadowsocksr">github-shadowsocksr-backup/shadowsocksr</a></p>
+
+<p><a href="http://www.zhouxuanyu.com/381.html">SSR配置config.json配置文件各项说明</a></p>
+<h2 id="环境">环境</h2>
+<p>Ubuntu 16.04 LTS (GNU/Linux 2.6.32-042stab116.2 x86_64)</p>
+
+<p>Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-62-generic x86_64)</p>
+
+<p>python版本 python 2.7</p>
+<h2 id="操作">操作</h2>
+<h3 id="安装python">安装python</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt-get update
+$ sudo apt-get install python
+</code></pre></div></div>
+<h3 id="下载ssr">下载ssr</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mkdir shadowsocksr
+$ cd shadowsocksr/
+$ wget https://github.com/cndaqiang/shadowsocksr/archive/manyuser.zip
+</code></pre></div></div>
+<h3 id="配置ssr">配置ssr</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt-get install unzip
+$ unzip manyuser.zip 
+cd shadowsocksr-manyuser/
+</code></pre></div></div>
+<p>配置文件shadowsocksr-manyuser/config.json</p>
+
+<p>配置文件内容解释可参考<a href="http://www.zhouxuanyu.com/381.html">SSR配置config.json配置文件各项说明</a></p>
+
+<p>主要参数和示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"server_port":8388,        //端口
+"password":"password",     //密码
+"protocol":"origin",       //协议插件
+"obfs":"http_simple",      //混淆插件
+"method":"aes-256-cfb",    //加密方式
+</code></pre></div></div>
+<h4 id="配置示例">配置示例</h4>
+<p>多用户，不同用户不同端口
+<strong>修改</strong> ` vi config.json `
+<strong>删除以下内容</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    "server_port": 8388,
+    "password": "m",
+</code></pre></div></div>
+<p>添加，不同端口和密码</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"port_password":{
+        "端口1":"密码1",
+        "端口2":"密码2"
+         },
+</code></pre></div></div>
+<p>其他参数可自定义</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"protocol":"origin",       //协议插件
+"obfs":"http_simple",      //混淆插件
+"method":"aes-256-cfb",    //加密方式
+</code></pre></div></div>
+<h3 id="启动服务">启动服务</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python ./shadowsocks/server.py -c config.json
+</code></pre></div></div>
+<p>会显示连接等信息
+其他启动方式</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo  python ./shadowsocks/server.py -c config.json -d start
+</code></pre></div></div>
+<p>停止</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo  python ./shadowsocks/server.py -c config.json -d stop
+</code></pre></div></div>
+<p>帮助</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python ./shadowsocks/server.py -h
+</code></pre></div></div>
+<h2 id="客户端">客户端</h2>
+<p>IOS： Potatso Lite（支持的参数更多）
+&lt;/br&gt;      Wingy
+其他平台自行搜索</p>
+<h3 id="linux端">linux端</h3>
+<p>与服务器端使用相同软件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ wget https://github.com/cndaqiang/shadowsocksr/archive/manyuser.zip
+</code></pre></div></div>
+<p>过程同服务器安装
+config.json修改为</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"server": "服务器密码ipv4地址",
+    "server_ipv6": "::",
+
+    "local_address": "127.0.0.1", 本地地址
+    "local_port": xxx, 本地socks端口
+    "server_port": xxx, 服务器端口
+    "password": "密码", 服务器密码
+</code></pre></div></div>
+<p>其他参数同服务器一样就可以
+<br />若同时连接多个服务器，在配置里，写明各个客户端的PID和LOG</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    "pid-file":"/var/run/shadowsocksrconf.pid",
+    "log-file":"/var/run/shadowsocksrconf.log",
+</code></pre></div></div>
+<p>使用方式</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo python ./shadowsocks/local.py -c config.json -d start|stop
+</code></pre></div></div>
+<p><strong>可选，添加到系统服务</strong>
+<code class="highlighter-rouge">sudo vi /etc/systemd/system/ssr.service</code>,填入</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=SSR Service, write by cndaqiang
+Documentation=https://cndaqiang.github.io
+After=network.target nss-lookup.target
+Wants=network-online.target
+
+[Service]
+# If the version of systemd is 240 or above, then uncommenting Type=exec and commenting out Type=simple
+#Type=exec
+Type=simple
+# Runs as cndaqiang or add CAP_NET_BIND_SERVICE ability can bind 1 to 1024 port.
+User=cndaqiang
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_NET_RAW
+NoNewPrivileges=yes
+ExecStart=/usr/bin/python /home/cndaqiang/MyTools/shadowsocksr-manyuser/shadowsocks/local.py -c /home/cndaqiang/MyTools/shadowsocksr-manyuser/boyclient.json
+Restart=on-failure
+# Don't restart in the case of configuration error
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+<p>然后</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#查看状态
+systemctl status ssr
+#重新载入配置信息
+systemctl daemon-reload
+#启动
+systemctl start ssr
+#关闭
+systemctl stop ssr
+#添加到开机启动
+systemctl enable ssr
+#关闭开开机启动
+systemctl disable ssr
+</code></pre></div></div>
+<h2 id="遇到的问题">遇到的问题</h2>
+<p>如果安装防火墙，请允许对应端口通过</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/09/28/ubuntu-sudo-user/">Ubuntu创建sudo用户</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/09/29/python-2/">python(二)包模块</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>[水文一篇]第一次组装电脑</title>
+    <meta name="description" content="一直想组一台自己的服务器，八月份开始搜集资料，还未开学就买配件，在宿舍组装完成。感谢国科大的单人间，不用担心噪声扰民。本人小白一个，以下内容为自己搜集的资料和我个人的猜想，切勿当真!!!,随便写一写，具体科普可看B站贴吧大佬发布的内容。有了笔记真的越来越懒得写了博客了">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2018/09/12/my-PC/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2018/09/12/my-PC/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2018/09/12/my-PC/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2018/09/12/my-PC/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>[水文一篇]第一次组装电脑</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-09-12
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#日记" title="Category: 日记" rel="category">日记</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#形成图" id="markdown-toc-形成图">形成图</a></li>
+  <li><a href="#配置" id="markdown-toc-配置">配置</a></li>
+  <li><a href="#主板" id="markdown-toc-主板">主板</a>    <ul>
+      <li><a href="#芯片组" id="markdown-toc-芯片组">芯片组</a></li>
+      <li><a href="#cpu" id="markdown-toc-cpu">CPU</a></li>
+      <li><a href="#cpu插槽" id="markdown-toc-cpu插槽">CPU插槽</a></li>
+      <li><a href="#接口" id="markdown-toc-接口">接口</a>        <ul>
+          <li><a href="#主板电源接口" id="markdown-toc-主板电源接口">主板电源接口</a></li>
+          <li><a href="#cpu电源接口" id="markdown-toc-cpu电源接口">CPU电源接口<br /></a></li>
+          <li><a href="#gpu供电接口" id="markdown-toc-gpu供电接口">GPU供电接口<br /></a></li>
+          <li><a href="#散热风扇接口" id="markdown-toc-散热风扇接口">散热风扇接口<br /></a></li>
+          <li><a href="#跳线接口" id="markdown-toc-跳线接口">跳线接口<br /></a></li>
+          <li><a href="#usb接口" id="markdown-toc-usb接口">USB接口<br /></a></li>
+          <li><a href="#音频接口" id="markdown-toc-音频接口">音频接口<br /></a></li>
+          <li><a href="#内存pciesata硬盘供电接口sata串口并口m2等大家都知道或者用不到了略" id="markdown-toc-内存pciesata硬盘供电接口sata串口并口m2等大家都知道或者用不到了略">内存、PCIe、SATA硬盘供电接口、SATA串口并口、M.2等大家都知道或者用不到了略</a></li>
+          <li><a href="#后面板" id="markdown-toc-后面板">后面板<br /></a></li>
+          <li><a href="#板型机箱" id="markdown-toc-板型机箱">板型、机箱</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>一直想组一台自己的服务器，八月份开始搜集资料，还未开学就买配件，在宿舍组装完成。感谢国科大的单人间，不用担心噪声扰民。<br />
+本人小白一个，以下内容为自己搜集的资料和我个人的猜想，<strong>切勿当真!!!</strong>,随便写一写，具体科普可看B站贴吧大佬发布的内容。<br />
+有了笔记真的越来越懒得写了博客了</p>
+
+<h2 id="形成图">形成图</h2>
+<p><img src="/uploads/2018/09/pcup.png" alt="" /></p>
+
+<h2 id="配置">配置</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>主板</td>
+      <td>intel s2600cp2j</td>
+      <td>拆机</td>
+    </tr>
+    <tr>
+      <td>CPU</td>
+      <td>Intel/英特尔 至强 E5-2680 V2 2.8G 10核20线程 25M 全新 正式版</td>
+      <td>2颗；拆机</td>
+    </tr>
+    <tr>
+      <td>电源</td>
+      <td>台达 服务器 工作站电源 650W GPS-650JBF 额定650W 全新 双8PIN</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>散热器</td>
+      <td>金钱豹 2011/1356/1366 针通用 全铜 10热管 超强散热 全新盒装</td>
+      <td>2颗</td>
+    </tr>
+    <tr>
+      <td>内存</td>
+      <td>三星原装 8G DDR3 2RX4 1333 ECC REG PC3L-10600R 服务器内存条</td>
+      <td>8x8=64G；拆机</td>
+    </tr>
+    <tr>
+      <td>固态</td>
+      <td>东芝(TOSHIBA) TR200系列 240GB SATA3 固态硬盘</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>机械硬盘</td>
+      <td>东芝(TOSHIBA) 3TB 7200转64M SATA3 台式机硬盘(DT01ACA300)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>显卡</td>
+      <td>GTX 750Ti</td>
+      <td>拆机</td>
+    </tr>
+    <tr>
+      <td>风扇</td>
+      <td>先马（SAMA）游戏风暴 12CM无光 机箱风扇（黑框红叶/小3拼+大四拼接口/航空动力学/低噪音/高效散热）</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>机箱</td>
+      <td>先马（SAMA）坦克 黑色 中塔式电脑机箱（支持ATX主板/长显卡/背线/水冷/台式游戏)</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>##　其他
+CPU风扇风扇加了减速线，不然声音太吵了，加线减速后，满载CPU温度仍在50℃<br />
+先马坦克的机箱是ATX，使用螺丝刀暴力改，才放在的E-ATX主板</p>
+
+<h2 id="主板">主板</h2>
+<p>主板的大致组成
+<img src="/uploads/2018/09/pc.png" alt="" /></p>
+<h3 id="芯片组">芯片组</h3>
+<p>负责连接cpu和各个部件，芯片组只能CPU生产商生产，主板厂商拿到芯片组后制成不同的主板</p>
+<ul>
+  <li>
+    <p>同一个芯片组可以制成不同CPU插槽，支持多种CPU<br />
+例如，<a href="https://ark.intel.com/products/63984/Intel-C602-Chipset">c602芯片组</a>支持E5-2680 v2、E5-4603、E5-4650L等CPU</p>
+  </li>
+  <li>
+    <p>不同芯片组的技术规格拓展性不同，此处不做讨论</p>
+  </li>
+</ul>
+
+<h3 id="cpu">CPU</h3>
+<ul>
+  <li>
+    <p>同一个CPU支持多种芯片组，具有唯一的CPU接口(插槽)<br />
+例如，i7-8700k的插槽为FCLGA1151，支持Z370，B360，H310等芯片组<br />
+因此买CPU和主板时要注意主板的芯片组、CPU插槽和CPU是否搭配<br />
+插槽相同，芯片组不支持不能使用，如图8700K与7700K的插槽都是LGA1151，但8700K却不支持200系列芯片组，只能使用300系列。
+<img src="/uploads/2018/09/cpu.JPG" alt="" /></p>
+  </li>
+  <li>
+    <p>不同cpu的技术规格拓展性不同，此处不做讨论</p>
+  </li>
+</ul>
+
+<h3 id="cpu插槽">CPU插槽</h3>
+<p>就是CPU的针脚的排布，一些针脚的功能，CPU与主板之间的物理接口形状，祥看<a href="https://zh.wikipedia.org/wiki/CPU%E6%8F%92%E5%BA%A7">维基百科-CPU接口</a></p>
+<ul>
+  <li>插槽不同，主板的物理接口也不通，因此支持的cpu散热器也不一样，可以按照针脚去搜散热器<br />
+同一个散热器也可能通过不同的支架支持多种插槽，如玄冰400兼容接口：Intel LGA 1151，AMD AM4，AMD AM3/FM2(数据来源jd)</li>
+</ul>
+
+<h3 id="接口">接口</h3>
+<p>提一下各个接口，不提具体的技术<br />
+很多接口都有防呆设置，不会插错<br />
+主板上各个接口的功能可通过查说明书找到<br /></p>
+<h4 id="主板电源接口">主板电源接口</h4>
+<p>两排最长的那个插槽，有24空(24pin)和20pin，如下图中红色方框内<br />
+插电源上最长的那个插头</p>
+<h4 id="cpu电源接口">CPU电源接口<br /></h4>
+<p>有4pin,6pin和8pin,<strong>注意显卡的6pin不能插在cpu上</strong><br />
+如图中，2颗cpu的供电接口，绿色框内</p>
+<h4 id="gpu供电接口">GPU供电接口<br /></h4>
+<p>有的显卡有，有的显卡没有</p>
+<h4 id="散热风扇接口">散热风扇接口<br /></h4>
+<p>主板向风扇供电<br />
+包括CPU散热风扇，和系统(机箱)散热风扇</p>
+<h4 id="跳线接口">跳线接口<br /></h4>
+<p>如图中紫色部分，具体每根针脚作用查说明书，用于插机箱前面板的电源按钮、电源指示灯、硬盘指示灯等的跳线</p>
+<h4 id="usb接口">USB接口<br /></h4>
+<p>USB2.0如图蓝色，不同的主板跳线和USB的接口外观不大一样，有的还有保护的外壳，查说明书,也用来插机箱前面板的USB线
+USB3.0,长一点，看说明书吧，用来插机箱前面板的USB线
+<img src="/uploads/2018/09/motherboard.png" alt="" /></p>
+<h4 id="音频接口">音频接口<br /></h4>
+<p>看说明书吧，用来插机箱前面板的USB线,主板不一定包含</p>
+<h4 id="内存pciesata硬盘供电接口sata串口并口m2等大家都知道或者用不到了略">内存、PCIe、SATA硬盘供电接口、SATA串口并口、M.2等大家都知道或者用不到了略</h4>
+<h4 id="后面板">后面板<br /></h4>
+<p>主板后面板可能集成网卡，音频，USB，typec，视频输出接口等<br />
+装机前，先把主板对应的挡板放在机箱内，再放入主板</p>
+<h4 id="板型机箱">板型、机箱</h4>
+<p>从小到大分为ITX,M-ATX,ATX,E-ATX，还有一些非标准板型<br />
+不同品牌相同板型的主板螺丝孔位是一样的<br />
+不同的板型需购买该板型或者大于该板型的机箱(先马坦克ATX机箱可以装下E-ATX)<br />
+<strong>注意板型，显卡长度，散热器高度等与机箱空间和主板上的其他部件是否有冲突</strong></p>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+            
+                
+            
+        
+            
+            
+                
+            
+                
+            
+        
+            
+            
+                
+            
+                
+            
+        
+            
+            
+                
+            
+                
+            
+        
+            
+            
+                
+            
+        
+            
+            
+                
+            
+        
+            
+            
+                
+            
+                
+            
+        
+            
+            
+                
+            
+                
+            
+                
+            
+        
+            
+            
+                
+            
+        
+            
+            
+                
+            
+                
+            
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2018/09/12/gun-openmpi-siesta/">gcc Openmpi 编译siesta </a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/09/15/gun-openmpi-octopus-4.1.2/">centos6.5 gcc Openmpi 编译octopus-4.1.2 </a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

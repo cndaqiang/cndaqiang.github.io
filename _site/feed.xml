@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cndaqiang</title>
+    <description></description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 19 Oct 2020 22:13:40 +0800</pubDate>
+    <lastBuildDate>Mon, 19 Oct 2020 22:13:40 +0800</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>怀柔计算中心安装octopus10.1&amp;4.1.2</title>
+        <description>
+</description>
+        <pubDate>Mon, 19 Oct 2020 21:48:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/10/19/huairou-octopus/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/10/19/huairou-octopus/</guid>
+        
+        <category>gnu</category>
+        
+        <category>octopus</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>ASE快速上手</title>
+        <description>
+</description>
+        <pubDate>Thu, 03 Sep 2020 10:17:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/03/aseuse/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/03/aseuse/</guid>
+        
+        <category>GPAW</category>
+        
+        <category>ASE</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>GPAW快速上手</title>
+        <description>
+</description>
+        <pubDate>Thu, 03 Sep 2020 10:04:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/03/gpawuse/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/03/gpawuse/</guid>
+        
+        <category>GPAW</category>
+        
+        <category>ASE</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>GPAW安装</title>
+        <description>
+</description>
+        <pubDate>Wed, 02 Sep 2020 21:29:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/02/gpaw/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/02/gpaw/</guid>
+        
+        <category>GPAW</category>
+        
+        <category>Ubuntu</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>月饼试吃</title>
+        <description>
+</description>
+        <pubDate>Wed, 02 Sep 2020 16:21:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/02/yuebing/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/02/yuebing/</guid>
+        
+        <category>coffee</category>
+        
+        
+        <category>日记</category>
+        
+      </item>
+    
+      <item>
+        <title>Linux使用clash</title>
+        <description>
+</description>
+        <pubDate>Fri, 17 Jul 2020 20:42:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/07/17/clash/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/07/17/clash/</guid>
+        
+        <category>clash</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>JavaScript学习</title>
+        <description>
+</description>
+        <pubDate>Wed, 01 Jul 2020 12:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/07/01/js/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/07/01/js/</guid>
+        
+        <category>web</category>
+        
+        <category>JavaScript</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>使用cloudflare加速博客访问/免费搭建谷歌镜像</title>
+        <description>
+</description>
+        <pubDate>Sat, 02 May 2020 08:39:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/05/02/cloudflare/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/05/02/cloudflare/</guid>
+        
+        <category>cdn</category>
+        
+        <category>web</category>
+        
+        <category>Google</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>关于FFT变换的一些思考</title>
+        <description>
+</description>
+        <pubDate>Wed, 22 Apr 2020 12:22:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/04/22/fft/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/22/fft/</guid>
+        
+        <category>FFT</category>
+        
+        
+        <category>Quantum-Espresso</category>
+        
+        <category>Fortran</category>
+        
+        <category>R</category>
+        
+        <category>FFT</category>
+        
+      </item>
+    
+      <item>
+        <title>使用Bunlder搭建Jekyll(Github-pages)服务</title>
+        <description>
+</description>
+        <pubDate>Sat, 18 Apr 2020 11:39:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/04/18/ruby/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04/18/ruby/</guid>
+        
+        <category>Ruby</category>
+        
+        <category>Gems</category>
+        
+        <category>bundler</category>
+        
+        
+        <category>Ruby</category>
+        
+        <category>Gems</category>
+        
+        <category>bundler</category>
+        
+      </item>
+    
+  </channel>
+</rss>

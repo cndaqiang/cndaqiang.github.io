@@ -39,12 +39,13 @@ Ubuntu 16.04.5 LTS<br>
 ### 依赖
 ```
 sudo apt update
-sudo apt-get install libcurl4-openssl-dev
-apt-get install libevent-dev
-sudo apt-get install zlib1g
-sudo apt-get install zlib1g.dev
-sudo apt install libssh-dev
-sudo apt-get install intltool
+sudo apt-get -y  install libcurl4-openssl-dev
+sudo apt-get -y  install libevent-dev
+sudo apt-get -y  install zlib1g
+sudo apt-get -y  install zlib1g.dev
+sudo apt-get -y  install libssh-dev
+sudo apt-get -y  install intltool
+sudo apt-get -y  install libssh-dev
 ```
 ### 编译
 下载

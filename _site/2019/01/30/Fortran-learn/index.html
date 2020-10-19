@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Fortran 学习笔记</title>
+    <meta name="description" content="虽然整理成博客，很浪费时间，不过，每次忘记后，再捡起来，还要好久，还是继续把笔记整理成文章该文不完全，看siesta代码中遇到其他的语法再添进来">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2019/01/30/Fortran-learn/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2019/01/30/Fortran-learn/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2019/01/30/Fortran-learn/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2019/01/30/Fortran-learn/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Fortran 学习笔记</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-01-30
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Fortran" title="Category: Fortran" rel="category">Fortran</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#注意" id="markdown-toc-注意">注意</a></li>
+  <li><a href="#语法规则" id="markdown-toc-语法规则">语法规则</a>    <ul>
+      <li><a href="#语句规则和特点" id="markdown-toc-语句规则和特点">语句规则和特点</a></li>
+      <li><a href="#程序单元" id="markdown-toc-程序单元">程序单元</a></li>
+      <li><a href="#模块" id="markdown-toc-模块">模块</a></li>
+    </ul>
+  </li>
+  <li><a href="#数据类型" id="markdown-toc-数据类型">数据类型</a>    <ul>
+      <li><a href="#变量定义" id="markdown-toc-变量定义">变量定义</a></li>
+      <li><a href="#类型" id="markdown-toc-类型">类型</a></li>
+      <li><a href="#属性" id="markdown-toc-属性">属性</a>        <ul>
+          <li><a href="#数值型kind" id="markdown-toc-数值型kind">数值型kind</a></li>
+          <li><a href="#字符型len" id="markdown-toc-字符型len">字符型len</a></li>
+        </ul>
+      </li>
+      <li><a href="#形容词" id="markdown-toc-形容词">形容词</a></li>
+      <li><a href="#数值型" id="markdown-toc-数值型">数值型</a>        <ul>
+          <li><a href="#赋值" id="markdown-toc-赋值">赋值</a></li>
+          <li><a href="#运算" id="markdown-toc-运算">运算</a></li>
+          <li><a href="#逻辑运算" id="markdown-toc-逻辑运算">逻辑运算</a>            <ul>
+              <li><a href="#关系运算" id="markdown-toc-关系运算">关系运算</a></li>
+              <li><a href="#逻辑运算-1" id="markdown-toc-逻辑运算-1">逻辑运算</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#字符串" id="markdown-toc-字符串">字符串</a></li>
+      <li><a href="#数组" id="markdown-toc-数组">数组</a>        <ul>
+          <li><a href="#定义" id="markdown-toc-定义">定义</a></li>
+          <li><a href="#赋值-1" id="markdown-toc-赋值-1">赋值</a></li>
+          <li><a href="#调用" id="markdown-toc-调用">调用</a></li>
+          <li><a href="#运算-1" id="markdown-toc-运算-1">运算</a></li>
+          <li><a href="#数组查询" id="markdown-toc-数组查询">数组查询</a></li>
+        </ul>
+      </li>
+      <li><a href="#结构体-type" id="markdown-toc-结构体-type">结构体 TYPE</a>        <ul>
+          <li><a href="#定义-1" id="markdown-toc-定义-1">定义</a></li>
+          <li><a href="#调用-1" id="markdown-toc-调用-1">调用</a></li>
+          <li><a href="#赋值-2" id="markdown-toc-赋值-2">赋值</a></li>
+        </ul>
+      </li>
+      <li><a href="#类" id="markdown-toc-类">类</a></li>
+      <li><a href="#指针" id="markdown-toc-指针">指针</a></li>
+      <li><a href="#数据类型转换" id="markdown-toc-数据类型转换">数据类型转换</a></li>
+    </ul>
+  </li>
+  <li><a href="#流程控制-if-select" id="markdown-toc-流程控制-if-select">流程控制 IF SELECT</a>    <ul>
+      <li><a href="#if" id="markdown-toc-if">IF</a></li>
+      <li><a href="#select" id="markdown-toc-select">SELECT</a></li>
+    </ul>
+  </li>
+  <li><a href="#循环" id="markdown-toc-循环">循环</a>    <ul>
+      <li><a href="#cycle-进入下一循环" id="markdown-toc-cycle-进入下一循环">CYCLE 进入下一循环</a></li>
+      <li><a href="#exit-结束循环" id="markdown-toc-exit-结束循环">EXIT 结束循环</a></li>
+      <li><a href="#do" id="markdown-toc-do">DO</a></li>
+      <li><a href="#do-while" id="markdown-toc-do-while">DO WHILE()</a></li>
+      <li><a href="#forall屏蔽赋值" id="markdown-toc-forall屏蔽赋值">FORALL屏蔽赋值</a></li>
+    </ul>
+  </li>
+  <li><a href="#where" id="markdown-toc-where">WHERE</a></li>
+  <li><a href="#格式化输入输出" id="markdown-toc-格式化输入输出">格式化输入输出</a>    <ul>
+      <li><a href="#readunit设备号字符串名称fmt格式或行号-格式化输入" id="markdown-toc-readunit设备号字符串名称fmt格式或行号-格式化输入">READ(unit=设备号/字符串名称,fmt=格式或行号) 格式化输入</a></li>
+      <li><a href="#writeunit设备号字符串名称fmt格式-格式化输出" id="markdown-toc-writeunit设备号字符串名称fmt格式-格式化输出">WRITE(unit=设备号/字符串名称,fmt=格式) 格式化输出</a></li>
+      <li><a href="#格式化输出控制" id="markdown-toc-格式化输出控制">格式化输出控制</a></li>
+    </ul>
+  </li>
+  <li><a href="#函数" id="markdown-toc-函数">函数</a>    <ul>
+      <li><a href="#function" id="markdown-toc-function">function</a>        <ul>
+          <li><a href="#定义-2" id="markdown-toc-定义-2">定义</a></li>
+          <li><a href="#使用" id="markdown-toc-使用">使用</a></li>
+        </ul>
+      </li>
+      <li><a href="#subroutine" id="markdown-toc-subroutine">subroutine</a>        <ul>
+          <li><a href="#定义-3" id="markdown-toc-定义-3">定义</a></li>
+          <li><a href="#使用-1" id="markdown-toc-使用-1">使用</a></li>
+        </ul>
+      </li>
+      <li><a href="#使用前的声明" id="markdown-toc-使用前的声明">使用前的声明</a>        <ul>
+          <li><a href="#interface" id="markdown-toc-interface">interface</a></li>
+          <li><a href="#contains" id="markdown-toc-contains">contains</a></li>
+          <li><a href="#module-内部函数互相调用不用声明" id="markdown-toc-module-内部函数互相调用不用声明">module 内部函数互相调用不用声明</a></li>
+        </ul>
+      </li>
+      <li><a href="#参数传递在函数内解释参数" id="markdown-toc-参数传递在函数内解释参数">参数传递：在函数内解释参数</a>        <ul>
+          <li><a href="#传递字符串" id="markdown-toc-传递字符串">传递字符串</a></li>
+          <li><a href="#传递数组-数组地址维度大小都会传过来" id="markdown-toc-传递数组-数组地址维度大小都会传过来">传递数组-数组地址维度大小都会传过来</a></li>
+          <li><a href="#传递结构体-用module" id="markdown-toc-传递结构体-用module">传递结构体-用module</a></li>
+          <li><a href="#传递函数" id="markdown-toc-传递函数">传递函数</a></li>
+        </ul>
+      </li>
+      <li><a href="#特殊用法" id="markdown-toc-特殊用法">特殊用法</a>        <ul>
+          <li><a href="#save属性" id="markdown-toc-save属性">save属性</a></li>
+          <li><a href="#虚参的-intent-属性需要-interface" id="markdown-toc-虚参的-intent-属性需要-interface">虚参的 Intent 属性（需要 Interface）</a></li>
+          <li><a href="#虚参的-value-属性需要-interface" id="markdown-toc-虚参的-value-属性需要-interface">虚参的 value 属性（<strong>需要 Interface</strong>）</a></li>
+          <li><a href="#可选参数optional需要-interface" id="markdown-toc-可选参数optional需要-interface">可选参数optional（<strong>需要 Interface</strong>）</a></li>
+          <li><a href="#更改参数顺序需要-interface" id="markdown-toc-更改参数顺序需要-interface">更改参数顺序（需要 Interface）</a></li>
+          <li><a href="#result-指定返回值变量" id="markdown-toc-result-指定返回值变量">result 指定返回值变量</a></li>
+          <li><a href="#pure-并行有关暂略" id="markdown-toc-pure-并行有关暂略">pure 并行有关，暂略</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#数据共享" id="markdown-toc-数据共享">数据共享</a>    <ul>
+      <li><a href="#函数的传址调用" id="markdown-toc-函数的传址调用">函数的传址调用</a></li>
+      <li><a href="#common-不推荐-略" id="markdown-toc-common-不推荐-略">common-不推荐-略</a></li>
+      <li><a href="#module-见下" id="markdown-toc-module-见下">module 见下</a></li>
+    </ul>
+  </li>
+  <li><a href="#module数据函数过程共享" id="markdown-toc-module数据函数过程共享">module：数据/函数(过程)共享</a>    <ul>
+      <li><a href="#定义-4" id="markdown-toc-定义-4">定义</a></li>
+      <li><a href="#使用-2" id="markdown-toc-使用-2">使用</a></li>
+      <li><a href="#权限形容词在contains前写" id="markdown-toc-权限形容词在contains前写">权限形容词，在<code class="highlighter-rouge">contains</code>前写</a></li>
+    </ul>
+  </li>
+  <li><a href="#文件读写" id="markdown-toc-文件读写">文件读写</a>    <ul>
+      <li><a href="#open通道号file文件名" id="markdown-toc-open通道号file文件名">open(通道号,file=”文件名”)</a></li>
+      <li><a href="#read" id="markdown-toc-read">read</a>        <ul>
+          <li><a href="#顺序读写有格式文件文本文件" id="markdown-toc-顺序读写有格式文件文本文件">顺序读写有格式文件（文本文件）</a></li>
+          <li><a href="#直接读写有格式文件文本文件" id="markdown-toc-直接读写有格式文件文本文件">直接读写有格式文件（文本文件）</a></li>
+          <li><a href="#顺序读写无格式文件二进制文件" id="markdown-toc-顺序读写无格式文件二进制文件">顺序读写无格式文件（二进制文件）</a></li>
+          <li><a href="#直接读写无格式文件二进制文件" id="markdown-toc-直接读写无格式文件二进制文件">直接读写无格式文件（二进制文件）</a></li>
+          <li><a href="#流文件读写无格式文件二进制文件" id="markdown-toc-流文件读写无格式文件二进制文件">流文件读写无格式文件（二进制文件）</a></li>
+          <li><a href="#内部文件" id="markdown-toc-内部文件">内部文件</a></li>
+          <li><a href="#read读写错误结束时操作" id="markdown-toc-read读写错误结束时操作">read读写错误/结束时操作</a></li>
+          <li><a href="#禁止标准输出或者重定向标准输出到制定文件" id="markdown-toc-禁止标准输出或者重定向标准输出到制定文件">禁止标准输出/或者重定向标准输出到制定文件</a></li>
+        </ul>
+      </li>
+      <li><a href="#利用namelist复制变量" id="markdown-toc-利用namelist复制变量">利用NAMELIST复制变量</a></li>
+      <li><a href="#backspce-回到上一行位置endfile-删除下面所有行" id="markdown-toc-backspce-回到上一行位置endfile-删除下面所有行">BACKSPCE 回到上一行/位置<br />ENDFILE 删除下面所有行</a></li>
+    </ul>
+  </li>
+  <li><a href="#有趣的命令" id="markdown-toc-有趣的命令">有趣的命令</a>    <ul>
+      <li><a href="#调用系统shell命令" id="markdown-toc-调用系统shell命令">调用系统shell命令</a></li>
+      <li><a href="#时间命令" id="markdown-toc-时间命令">时间命令</a></li>
+      <li><a href="#暂停一段时间再执行" id="markdown-toc-暂停一段时间再执行">暂停一段时间再执行</a></li>
+      <li><a href="#读入命令行参数" id="markdown-toc-读入命令行参数">读入命令行参数</a></li>
+      <li><a href="#更改默认的标准输出位置" id="markdown-toc-更改默认的标准输出位置">更改默认的标准输出位置</a></li>
+      <li><a href="#get_environment_variable读取系统shell的环境变量" id="markdown-toc-get_environment_variable读取系统shell的环境变量">get_environment_variable读取系统/shell的环境变量</a></li>
+      <li><a href="#fortran内置函数" id="markdown-toc-fortran内置函数">Fortran内置函数</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>虽然整理成博客，很浪费时间，不过，每次忘记后，再捡起来，还要好久，还是继续把笔记整理成文章<br />
+该文不完全，看siesta代码中遇到其他的语法再添进来<br /></p>
+
+<h2 id="参考">参考</h2>
+<p>Fortran95程序设计【彭国伦】<br />
+<a href="http://v.fcode.cn/">《Fortran实用编程》系列视频教程 - Fortran Coder 研讨团队</a><br />
+<a href="http://blog.sciencenet.cn/blog-287062-269811.html">详论fortran格式化输出</a></p>
+
+<h2 id="注意">注意</h2>
+<ul>
+  <li><strong>大坑,定义的变量在计算前要手动赋值初始化，重复掉用此函数，即使在定义变量时初始化，有时候变量里面也有值，累加大忌</strong></li>
+  <li><strong>DO i=start,end循环结束后,i=end+1</strong></li>
+</ul>
+
+<h2 id="语法规则">语法规则</h2>
+<p>代码结构<br />
+语句 =&gt;<strong>程序单元(主程序program,子例程序subroutine,函数function )</strong> =&gt; 模块（module） =&gt; 程序</p>
+<h3 id="语句规则和特点">语句规则和特点</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>固定格式</th>
+      <th style="text-align: left">自由格式</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>英文</td>
+      <td>Fixed-format</td>
+      <td style="text-align: left">Free-format</td>
+    </tr>
+    <tr>
+      <td>扩展名</td>
+      <td><code class="highlighter-rouge">.for      .f   ... </code></td>
+      <td style="text-align: left"><code class="highlighter-rouge">.f90   .f95   .f03 ... </code></td>
+    </tr>
+    <tr>
+      <td>语法</td>
+      <td>F66、F77、F90、F95、F03、F08</td>
+      <td style="text-align: left">F66、F77、F90、F95、F03、F08</td>
+    </tr>
+    <tr>
+      <td>格式</td>
+      <td>代码从第7格开始</td>
+      <td style="text-align: left">任意</td>
+    </tr>
+    <tr>
+      <td>续行</td>
+      <td>在第6格键入一个非0字符</td>
+      <td style="text-align: left">上一行结束下一行开头加入   &amp;</td>
+    </tr>
+    <tr>
+      <td>行宽</td>
+      <td>72</td>
+      <td style="text-align: left">132</td>
+    </tr>
+    <tr>
+      <td>注释</td>
+      <td>行首打  C 或    c 或 <code class="highlighter-rouge">* </code></td>
+      <td style="text-align: left">注释前打感叹号   !</td>
+    </tr>
+    <tr>
+      <td>说明</td>
+      <td>不推荐，已废止</td>
+      <td style="text-align: left">推荐</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>不区分大小写，字符串的里的大小写区分(ASCII码不同)</li>
+  <li>语句结束时不用添加结束标志</li>
+  <li>编译器可取消行宽限制<code class="highlighter-rouge">gfortran -ffree-line-length-none</code></li>
+  <li>编译器向下兼容Fortran语法</li>
+  <li>数组下标从1开始</li>
+  <li><strong>函数子例程序都是传址调用，不要随便修改传入变量</strong></li>
+  <li>程序单元内声明语句必须放在执行语句前</li>
+  <li>变量/数组的定义和调用直接用变量名</li>
+  <li>编译器默认根据拓展名判断语法格式<img src="/upload/2019/01/fortran.png" alt="" /></li>
+  <li>将Module写成一个文件，调用时要加<code class="highlighter-rouge">USE ModuleName</code></li>
+  <li>将subroutine写成一个文件，可以直接调用</li>
+  <li><code class="highlighter-rouge">real(dp)</code>中的<code class="highlighter-rouge">dp</code>必须是<code class="highlighter-rouge">parameter</code>类型，不然会报错</li>
+</ul>
+
+<h3 id="程序单元">程序单元</h3>
+<p>程序单元可以写在不同的文件内进行编译，最后把分别编译的Obj链接成一个可执行文件与把他们写在一个文件里面编译等价</p>
+<ul>
+  <li>写在不同的文件内，可以提高编译速度，修改部分代码，仅需编译修改代码所在文件</li>
+</ul>
+
+<p>主程序program，有且仅有一个，作为程序入口<br />
+子例程序subroutine，没有返回值的函数</p>
+
+<h3 id="模块">模块</h3>
+<p>一组程序单元及一组相关联的变量，可组成模块（module）</p>
+
+<h2 id="数据类型">数据类型</h2>
+<p>默认ijklmn开头的变量为为整型，其他为实型，通过下面命令取消此默认规定</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Implicit None 
+</code></pre></div></div>
+<h3 id="变量定义">变量定义</h3>
+<p>常用:<strong>类型( 属性 ) , 形容词 , 形容词 …  :: 变量名（数组外形）= 值 , 变量名2（数组外形）= 值</strong></p>
+
+<p><strong>定义多个变量用<code class="highlighter-rouge">,</code>隔开，用空格不行</strong></p>
+
+<h3 id="类型">类型</h3>
+
+<ul>
+  <li>整型（Integer）</li>
+  <li>实型（Real）</li>
+  <li>复数Complex 类型（本质上是real）</li>
+  <li>字符型（Character）</li>
+  <li>派生（type）类型</li>
+</ul>
+
+<p>例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Real(Kind=8) , parameter , private :: rVar = 20.0d0
+Character(Len=32) , Intent( IN ) :: cStr(5,8)
+Integer , save :: n = 30 , m = 40
+Integer m
+complex :: com
+#如果( , )构造复数报错，可以使用cmplx(real,image)函数
+yc(i)=cmplx(yr(i),yi(i)) 
+
+</code></pre></div></div>
+
+<h3 id="属性">属性</h3>
+
+<h4 id="数值型kind">数值型kind</h4>
+<p>用于解决不同编译器默认表达范围不一致问题<br />
+整形最大可表示i位示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>! k = Selected_Int_Kind( i )  可以用这个函数来选择能满足要求的Kind
+! i 表示需要最大的十进制位数
+! k 表示返回的能满足范围的最小的Kind值	
+! Selected_Int_Kind( i )函数可以放在声明语句里
+integer , parameter :: KI=selected_int_kind(10)
+integer(kind=KI) :: i1 i2 i3
+</code></pre></div></div>
+<p>实数精度</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>! k = Selected_Real_Kind( r , p )  可以用这个函数来选择能满足要求的Kind
+! r 表示需要最大的十进制位数 , p 表示最小的有效位数 p位*E^r
+! k 表示返回的能满足范围的最小的Kind值
+integer , parameter :: DP=selected_real_kind(r=50,p=14)
+real(kind=DP) :: r1 r2
+</code></pre></div></div>
+<p>复数精度</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>双精准度 - 使用两个双精准浮点数 
+complex(kind=8) a ! F90新增作法 
+complex(8)      a ! 
+COMPLEX*16      a ! F77传统作法
+</code></pre></div></div>
+
+<p><strong>在数值后面加kind数值，表明数值类型</strong>，如siesta</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>! Initialize some variables(Double precision:dp=8)
+      DUext = 0.0_dp
+      Eharrs = 0.0_dp
+      Eharrs1 = 0.0_dp
+</code></pre></div></div>
+<p>若一个函数要求输入双精度实数，要传递<code class="highlighter-rouge">xxx.xx_dp</code>给这个函数，否则会结果异常，如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dp=8
+call Pdgemm("N","N",2,8,2,1.0_dp,A,1,1,DESCA,B,1,1,DESCB,0.0_dp,C,1,1,DESCC)
+</code></pre></div></div>
+<p>平方根函数要求<code class="highlighter-rouge">sqrt()</code>输入为实数或复数，因此<code class="highlighter-rouge">sqrt(2)</code>会报错，而<code class="highlighter-rouge">sqrt(2.0)</code>才是正确的
+complex与实数kind一样</p>
+
+<h4 id="字符型len">字符型len</h4>
+<p>kind默认为1(ASCII码格式)，也可通过Selected_Char_Kind( ‘ASCII’ )确定<br />
+len表示长度</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>character(len=32) :: str
+</code></pre></div></div>
+
+<h3 id="形容词">形容词</h3>
+<p>parameter 常量</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>形容词</th>
+      <th>功能</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>parameter</td>
+      <td>常量</td>
+    </tr>
+    <tr>
+      <td>save</td>
+      <td>函数内定义，当函数再次被调用时，使用上次该函数被调用的值</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="数值型">数值型</h3>
+
+<h4 id="赋值">赋值</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>complex :: com
+com=(实部,虚部)
+</code></pre></div></div>
+
+<h4 id="运算">运算</h4>
+
+<p>直接<code class="highlighter-rouge">+ - * \( )</code></p>
+
+<p>乘方<code class="highlighter-rouge">**</code></p>
+
+<p>取余<code class="highlighter-rouge">mod(x,y)</code>为x/y的余数，y!=0</p>
+
+<p><br /></p>
+
+<h4 id="逻辑运算">逻辑运算</h4>
+<p>参考<a href="http://micro.ustc.edu.cn/Fortran/ZJDing/Sec2-2.htm">逻辑运算</a></p>
+
+<h5 id="关系运算">关系运算</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th>关系运算符英文</th>
+      <th>符号</th>
+      <th>英语含义</th>
+      <th>中文含义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>.GT.</td>
+      <td><code class="highlighter-rouge">&gt;</code></td>
+      <td>Greater Than</td>
+      <td>＞ (大于)</td>
+    </tr>
+    <tr>
+      <td>.GE.</td>
+      <td><code class="highlighter-rouge">&gt;=</code></td>
+      <td>Greater than or Equal to</td>
+      <td>≥ (大于或等于)</td>
+    </tr>
+    <tr>
+      <td>.LT.</td>
+      <td><code class="highlighter-rouge">&lt;</code></td>
+      <td>Less Than</td>
+      <td>＜ (小于)</td>
+    </tr>
+    <tr>
+      <td>.LE.</td>
+      <td><code class="highlighter-rouge">&lt;=</code></td>
+      <td>Less than or Equal to</td>
+      <td>≤ (小于或等于)</td>
+    </tr>
+    <tr>
+      <td>.EQ.</td>
+      <td><code class="highlighter-rouge">==</code></td>
+      <td>EQual to</td>
+      <td>＝ (等于)</td>
+    </tr>
+    <tr>
+      <td>.NE.</td>
+      <td><code class="highlighter-rouge">/=</code></td>
+      <td>Not Equal to</td>
+      <td>≠ (不等于)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>符号和英文都可以写</strong></p>
+
+<h5 id="逻辑运算-1">逻辑运算</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th>关系运算符</th>
+      <th>含义</th>
+      <th>逻辑运算例</th>
+      <th>例子含义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>.AND.</td>
+      <td>逻辑与</td>
+      <td>A.AND.B</td>
+      <td>A，B为真时，则A.AND.B为真</td>
+    </tr>
+    <tr>
+      <td>.OR.</td>
+      <td>逻辑或</td>
+      <td>A.OR.B</td>
+      <td>A，B之一为真，则A.OR.B为真</td>
+    </tr>
+    <tr>
+      <td>.NOT.</td>
+      <td>逻辑非</td>
+      <td>.NOT.A</td>
+      <td>A为真，则.NOT.A为假</td>
+    </tr>
+    <tr>
+      <td>.EQV.</td>
+      <td>逻辑等价</td>
+      <td>A.EQV.B</td>
+      <td>A和B值为同一逻辑常量时，A.EQV.B为真</td>
+    </tr>
+    <tr>
+      <td>.NEQV.</td>
+      <td>逻辑不等价</td>
+      <td>A.NEQV.B</td>
+      <td>A和B的值为不同的逻辑常量，则A.NEQV.B为真</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>注意不要将.AND.与.EQV.混淆：A.AND.B是当A和B均为真时才为真；A.EQV.B是当A和B均为真或均为假时为真。</strong></p>
+
+<h3 id="字符串">字符串</h3>
+<p>声明</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>character(len=字符串长度) :: str
+</code></pre></div></div>
+<p>赋值与调用，<strong>下标从1开始</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>character(len=7) ::str
+str="hello!!"
+!gfortran 对这种写法报错 str(2)="12345"
+!str(n:m)即可用于赋值，也可用来掉用
+!str等价str(1:len(str))
+!str(n:)等价str(n:len(str))
+str(2:3)="tr"
+write(*,*) str(3:3)
+</code></pre></div></div>
+<p>字符串函数</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>函数</th>
+      <th>功能</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CHAR(num)</td>
+      <td>返回数值num对应的ASCII码字符</td>
+    </tr>
+    <tr>
+      <td>ICHAR(char)</td>
+      <td>字符转数字</td>
+    </tr>
+    <tr>
+      <td>LEN(str)</td>
+      <td>字符串长度</td>
+    </tr>
+    <tr>
+      <td>LEN_TRIM(str)</td>
+      <td>去除字符串尾部的空格的字符串长度(实际长度，例如后面几个没赋值)</td>
+    </tr>
+    <tr>
+      <td>INDEX(str,key)</td>
+      <td>str中第一次出现字符串key的位置<br />可用于文件读取时，由某个数据的前后索引，确定数据的下标</td>
+    </tr>
+    <tr>
+      <td>TRIM(str)</td>
+      <td>清除str尾部的空格后的字符串</td>
+    </tr>
+    <tr>
+      <td>str1 // str2</td>
+      <td>连接字符串</td>
+    </tr>
+    <tr>
+      <td>adjustl(str)</td>
+      <td>清除st前的空格后，就是左移，并在后面补空格</td>
+    </tr>
+    <tr>
+      <td>adjustr(str)</td>
+      <td>清除st后的空格后，就是右移，并在前面补空格</td>
+    </tr>
+    <tr>
+      <td>trim(adjustl(syslab))</td>
+      <td>组合用提取字符串部分</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    syslab="  ---abc==="
+    write(*,*) "adjustl"//adjustl(syslab)//"end"
+    write(*,*) "adjustr"//adjustr(syslab)//"end"
+    write(*,*) "trim"//trim(syslab)//"end"
+    write(*,*) "trim(adjustl)"//trim(adjustl(syslab))//"end"
+</code></pre></div></div>
+<p>结果</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> #     |&lt;                            &gt;!
+ adjustl---abc===                     end
+ adjustr                     ---abc===end
+ trim  ---abc===end
+ trim(adjustl)---abc===end
+</code></pre></div></div>
+<p>INDEX示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>str="hello,world"
+WRITE(*,*) INDEX(str,"llo") !返回结果为3,即str中第3个元素及之后是llo
+</code></pre></div></div>
+
+<h3 id="数组">数组</h3>
+
+<h4 id="定义">定义</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>类型,形容词 :: 数组名(n1,n2,n3...维度)
+类型,形容词 :: 数组名(n0:n1,m0:m1,...) 也可以，n0,m0也可从负数开始
+</code></pre></div></div>
+
+<p><strong>动态数组</strong></p>
+
+<p>加上<code class="highlighter-rouge">allocatable</code>形容词</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>类型,allocatable,其他形容词 :: 数组名(:,:,:....) !用:
+!分配大小
+allocate(array(N))
+!释放空间
+deallocate(array)
+</code></pre></div></div>
+
+<p><strong>ALLOCATE分配的数据边界可以是正数，负数，０</strong><br />
+参考<a href="http://micro.ustc.edu.cn/Fortran/ZJDing/Sec5-2.htm">数组赋值与运算</a><br />
+可用在倒格失的定义当中如qe的<code class="highlighter-rouge">FFTXlib/stick_base.f90</code>文件</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ALLOCATE(array(lb:ub))
+</code></pre></div></div>
+<p>示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ALLOCATE(b(-4:4))
+DO i = -4,4
+b(i) = i
+ENDDO
+WRITE(*,*) "b(-2:0)",b(-2:0)
+</code></pre></div></div>
+<p>输出</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>b(-2:0)          -2          -1           0
+</code></pre></div></div>
+
+<p>内存中的存储顺序为array(1,1,1)-&gt;array(2,1,1)-&gt;array(3,1,1)-&gt;array(1,2,1)<br />
+所以<code class="highlighter-rouge">do r=1,n1 sum=sum+array(r,1,1) </code>比<code class="highlighter-rouge">do r=1,n1 sum=sum+array(1,1,r) </code>的语法就是最快的<br />
+同理，不建议高维数组</p>
+
+<h4 id="赋值-1">赋值</h4>
+
+<p><strong><code class="highlighter-rouge">data</code>只能用来赋初值，已赋值后，调用无效</strong></p>
+
+<p><strong><code class="highlighter-rouge">data</code>的顺序</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  data((A(i,j),i=1,2),j=1,3) /1,2,3,4,5,6/
+A=  
+   1.00000000       3.00000000       5.00000000
+   2.00000000       4.00000000       6.00000000
+integer :: array(5),A(2,3)
+!使用data赋值，后面的值要和前面的一一对应
+array(1)=1
+array(2:5)=3
+data array /1,2,3,4,5/
+data array /5*5/   !*表重复 /5,5,5,5,5/
+data((A(i,j),i=1,2),j=1,3) /1,2,3,4,5,6/
+！(f(I),i=1,5)就代表一组循环,i从1到5，输出f(i)，例如
+A=(/(I*I,I=1,6)/)
+</code></pre></div></div>
+
+<h4 id="调用">调用</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!可直接进行调用或赋值
+array(n,m)
+array(n,:)
+array(:)
+A(:,:)
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">array(:,n)</code>与<code class="highlighter-rouge">array(n,:)</code>都视为一行矩阵，可以互相赋值，即列和行可以互相赋值</p>
+
+<h4 id="运算-1">运算</h4>
+
+<p><code class="highlighter-rouge">+-*/function()</code> 都是对应元素操作，不是数学矩阵操作</p>
+
+<p><code class="highlighter-rouge">&gt; &lt;</code>返回逻辑值，也是对应元素比较</p>
+
+<p><strong>可以 <code class="highlighter-rouge">b=2*a</code>等价于<code class="highlighter-rouge">b(i)=2*a(i)</code>，加减乘除都行</strong></p>
+
+<p><strong>也可以<code class="highlighter-rouge">a*b</code>不过是matlab中的点乘</strong></p>
+
+<h4 id="数组查询">数组查询</h4>
+<p><strong>维度查询</strong><br />
+<a href="https://docs.oracle.com/cd/E19205-01/820-1202/aetke/index.html">2.1.15 数组查询函数</a>
+<br /><a href="http://gcc.1065356.n8.nabble.com/default-return-value-of-ubound-and-lbound-td750059.html">default return value of ubound and lbound</a></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>通用内函数名</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>ALLOCATED (ARRAY)</strong></td>
+      <td>数组分配状态</td>
+    </tr>
+    <tr>
+      <td><strong>LBOUND (ARRAY [, DIM])</strong></td>
+      <td>数组的维数下界,就是1</td>
+    </tr>
+    <tr>
+      <td><strong>SHAPE (SOURCE)</strong></td>
+      <td>数组或标量的形式</td>
+    </tr>
+    <tr>
+      <td><strong>SIZE (ARRAY [, DIM])</strong></td>
+      <td>数组中的元素总数</td>
+    </tr>
+    <tr>
+      <td><strong>UBOUND (ARRAY [, DIM])</strong></td>
+      <td>数组的维数上界</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>注意LBOUND和UBOUND默认返回的都是一维数组,即使是一个元素也是数组,不能赋值给整形变量<br />
+可以按照下面的方式提取维度</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INTEGER     :: a(N),bound(1),i
+bound=UBOUND(a)
+i=bound(1)
+i=UBOUND(a,1)
+</code></pre></div></div>
+
+<p><strong>最大值,最小值,及其位置</strong><br />
+具体参数，参考下面的manual<br />
+<a href="https://gcc.gnu.org/onlinedocs/gfortran/MAXLOC.html#MAXLOC">MAXLOC</a><br />
+<a href="https://gcc.gnu.org/onlinedocs/gfortran/MAXVAL.html">MAXVAL</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WRITE(*,"(A,I1,A,I4)") "max is a(",MAXLOC(a),"), which is",MAXVAL(a)
+WRITE(*,"(A,I1,A,I4)") "min is a(",MINLOC(a),"), which is",MINVAL(a)
+</code></pre></div></div>
+<p><strong>用<code class="highlighter-rouge">ANY</code>判断数组元素</strong><br />
+<a href="https://gcc.gnu.org/onlinedocs/gcc-6.1.0/gfortran/ANY.html">ANY</a></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>RESULT = ANY(MASK [, DIM])
+ANY( (/.true., .false., .true./) )
+</code></pre></div></div>
+
+<p>可以返回是否有成立值，应该不仅可以用来判断整数，逻辑数组都可以，如</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF( ANY( a .EQ. 0 ) ) WRITE(*,*) "At least one 0 in a"
+IF( .NOT. ANY( a &gt; 90 ) ) WRITE(*,*) "No one &gt; 90 in a"
+</code></pre></div></div>
+
+<h3 id="结构体-type">结构体 TYPE</h3>
+
+<h4 id="定义-1">定义</h4>
+
+<p>结构体，type内只有变量<br />type内含有方法(函数)时，就是类了-&gt;面向对象编程了<br /></p>
+
+<p>定义结构体类型</p>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">TYPE</span><span class="w"> </span><span class="p">,</span><span class="err">形容词</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="err">结构体名</span><span class="w">
+</span><span class="err">变量表</span><span class="p">(</span><span class="err">声明语句</span><span class="p">)</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">TYPE</span><span class="w">
+</span></code></pre></div></div>
+
+<p>将结构体实体化，也可实体化为数组</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TYPE(结构体名) :: 变量名
+</code></pre></div></div>
+
+<p>示例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      type :: student
+              character :: nickname,address
+              integer :: num,score
+      end type
+    
+      type(student) :: xiaoming
+</code></pre></div></div>
+
+<h4 id="调用-1">调用</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>结构体名%成员名 ！优先使用
+结构体名.成员名 !gfortran好像不支持
+xiaoming%nickname
+xiaoming.num
+</code></pre></div></div>
+
+<h4 id="赋值-2">赋值</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TYPE(student)::xiaoming=student (“xiaoming","china",1,90), S2, S3
+xiaoming.score=95
+</code></pre></div></div>
+
+<h3 id="类">类</h3>
+
+<p>类是在结构体的基础上，面向对象的拓展</p>
+
+<h3 id="指针">指针</h3>
+<ul>
+  <li>指针<code class="highlighter-rouge">POINTER</code>属性</li>
+  <li>被指针指向的变量<code class="highlighter-rouge">TARGET属性</code></li>
+</ul>
+
+<p>指向变量<code class="highlighter-rouge">p1=&gt;t1</code>,检查是否指向TARGET变量<code class="highlighter-rouge">ASSOCIATED(POINTER,[TARGET])</code>,示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PROGRAM pointer_
+IMPLICIT NONE
+INTEGER,POINTER :: p1
+INTEGER,TARGET :: i1,i2
+!
+NULLIFY(p1)
+i1=1; i2=2
+p1=&gt;i1 ; WRITE(*,*) p1,ASSOCIATED(p1),ASSOCIATED(p1,i1),ASSOCIATED(p1,i2)
+p1=&gt;i1 ; WRITE(*,*) p1,ASSOCIATED(p1),ASSOCIATED(p1,i1),ASSOCIATED(p1,i2)
+NULLIFY(p1) ; WRITE(*,*) p1,ASSOCIATED(p1),ASSOCIATED(p1,i1),ASSOCIATED(p1,i2)
+END PROGRAM
+</code></pre></div></div>
+<p>运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/test$ gfortran point.f90 ; ./a.out 
+           1 T T F
+           1 T T F
+           0 F F F
+</code></pre></div></div>
+<h3 id="数据类型转换">数据类型转换</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!1，数字转字符
+write(str1,"(i4.4)") num ! 如有需要，不足四位前面补零
+print*,str1
+!2，字符转数字
+read(str1,"(i2)") num
+print*,str1
+</code></pre></div></div>
+
+<h2 id="流程控制-if-select">流程控制 IF SELECT</h2>
+<h3 id="if">IF</h3>
+<p>单行版</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF(条件) 执行语句
+</code></pre></div></div>
+<p>多行版</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF (条件) THEN
+执行语句
+ELSE IF (条件) THEN
+执行语句
+ELSE IF (条件) THEN
+执行语句
+ELSE
+执行语句
+END IF
+!ELSE IF与ELSE可不写
+</code></pre></div></div>
+
+<h3 id="select">SELECT</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT case (表达式)
+case(A)
+执行语句
+case(B)
+执行语句
+END SELECT
+!好像表达式结果只能为整数或字符串，A,B...也要对应
+</code></pre></div></div>
+
+<h2 id="循环">循环</h2>
+<h3 id="cycle-进入下一循环">CYCLE 进入下一循环</h3>
+<h3 id="exit-结束循环">EXIT 结束循环</h3>
+<h3 id="do">DO</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DO i=start,end [,step]
+!步长step默认为1，可设置为正,负
+！不写i=1,end 无穷循环
+执行语句
+END DO
+</code></pre></div></div>
+<p><strong>结束后i=end+1</strong></p>
+
+<h3 id="do-while">DO WHILE()</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DO WHILE(条件)
+执行语句
+END DO
+</code></pre></div></div>
+<h3 id="forall屏蔽赋值">FORALL屏蔽赋值</h3>
+<p><a href="http://micro.ustc.edu.cn/Fortran/ZJDing/Sec5-2.htm">数组赋值与运算</a><br /></p>
+<blockquote>
+  <p>FORALL是F95的新增功能。它是数组屏蔽赋值（WHERE语句和构造）功能的一对一元素的推广，其方式有FORALL语句和FORALL构造。
+<br />FORALL语句的一般形式为：<code class="highlighter-rouge">FORALL(循环三元下标[,循环三元下标]…[,屏蔽表达式]) 赋值语句</code>
+<br />FORALL构造的一般形式为：</p>
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[构造名:] FORALL(循环三元下标[,循环三元下标]…[,屏蔽表达式])
+[块]
+END FORALL [构造名]
+</code></pre></div>  </div>
+  <p>屏蔽表达式是数组逻辑表达式，缺省值为.TRUE.。块是赋值语句，或为WHERE语句或构造，或为FORALL语句或构造。
+<br />循环三元下标的形式为：循环变量=下界:上界[:步长]。循环变量是整型的。步长不能为0，缺省值为1。</p>
+</blockquote>
+
+<p>示例</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">PROGRAM</span><span class="w"> </span><span class="n">forallT</span><span class="w">
+</span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="n">b</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w">
+</span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">i</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="w">
+    </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="w">
+</span><span class="k">FORALL</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="mi">6</span><span class="w">
+</span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">PROGRAM</span><span class="w">
+</span></code></pre></div></div>
+<p>执行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/test$ gfortran forall.f90 ; ./a.out 
+           0           0           0           0           0
+           6           6           6           6           6
+</code></pre></div></div>
+
+<h2 id="where">WHERE</h2>
+<p>可以找到数组中符合条件的项，然后操作另一数组中相同的项,如</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">PROGRAM</span><span class="w"> </span><span class="n">whereT</span><span class="w">
+</span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="n">b</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w">
+</span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">i</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="w">
+    </span><span class="n">a</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="w">
+</span><span class="k">WHERE</span><span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">)</span><span class="w">
+    </span><span class="n">b</span><span class="o">=</span><span class="mi">6</span><span class="w">
+</span><span class="k">ELSEWHERE</span><span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="mi">3</span><span class="p">)</span><span class="w">
+    </span><span class="n">b</span><span class="o">=</span><span class="mi">4</span><span class="w">
+</span><span class="k">ELSEWHERE</span><span class="w">
+    </span><span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="w">
+</span><span class="k">ENDWHERE</span><span class="w">
+</span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">b</span><span class="w">
+</span><span class="k">WHERE</span><span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="w">
+</span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">PROGRAM</span><span class="w">
+</span></code></pre></div></div>
+<p>执行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/test$ gfortran where.f90 ; ./a.out 
+           1           1           1           4           4
+           6           6           6           6           6
+           1           2           3           4           5
+           0           0           0           0           0
+</code></pre></div></div>
+
+<h2 id="格式化输入输出">格式化输入输出</h2>
+
+<h3 id="readunit设备号字符串名称fmt格式或行号-格式化输入">READ(unit=设备号/字符串名称,fmt=格式或行号) 格式化输入</h3>
+<p>读取一行数据，且存到矩阵</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     read(unit,*) ika, ((eig(ib,is), ib = 1, nband), is = 1, nspin)
+                        #此处先进行ib循环，再进行is循环
+</code></pre></div></div>
+
+<h3 id="writeunit设备号字符串名称fmt格式-格式化输出">WRITE(unit=设备号/字符串名称,fmt=格式) 格式化输出</h3>
+
+<ul>
+  <li>默认设备是键盘，用<code class="highlighter-rouge">5</code>或<code class="highlighter-rouge">*</code>表示,还可以是外部文件（open文件时指定设备号）</li>
+  <li>输入输出为字符串时，等价于将字符串视为文件，称为内部文件<br />实现整数/实数&lt;=&gt;字符串</li>
+  <li>格式适合一次控制，<code class="highlighter-rouge">"格式内容"</code></li>
+  <li>行号可以在很多次输出都采用统一格式时，减少书写量</li>
+  <li><code class="highlighter-rouge">READ(设备号,格式行号)</code>也可以</li>
+  <li><code class="highlighter-rouge">READ(*,*)</code>  <code class="highlighter-rouge">*</code>分别表示默认键盘和不指定格式</li>
+  <li><code class="highlighter-rouge">READ(*,*) a,b,c</code> 一次读取多个数据赋值给a,b,c</li>
+</ul>
+
+<h3 id="格式化输出控制">格式化输出控制</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>格式</th>
+      <th>含义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">Iw[.m]</code></td>
+      <td>以w个字符的宽度来输出整数[至少输出m个数]，宽度不够补空格，以下同理</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">Fw.d</code></td>
+      <td>以w个字符文本框来输出浮点数，小数部分占d个字符宽，</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">Ew.d[Ee]</code></td>
+      <td>用科学计数法，以w个字符宽来输出浮点数，小数部分占d个字符宽，[指数部分最少输出e个数字]</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">Dw.d</code></td>
+      <td>使用方法同Ew.d，差别在于输出时用来代表指数的字母由E换成D</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">Aw</code></td>
+      <td>以w个字符宽来输出字符串</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">nX</code></td>
+      <td>输出位置向右移动n位。<code class="highlighter-rouge">write(*,"(5X,I3)") 100 </code>; 将先填5个空格，再输出整数。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">Lw</code></td>
+      <td>以w个字符宽来输出T或F的真假值。<code class="highlighter-rouge">write(*,"(L4)") .true. </code>;程序会输出3个空格和一个T</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/</code> 换行输出</td>
+      <td><code class="highlighter-rouge">write(*,"(I3//3)") 10,10</code> 程序会得出4行，中间两行空格是从除号<code class="highlighter-rouge">/</code>得到的。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">Tc</code></td>
+      <td>把输出的位置移动到本行的第c个字节</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">TLn</code></td>
+      <td>输出位置向左相对移动n个字节。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">TRn</code></td>
+      <td>输出位置向右相对移动n个字节。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">SP、SS</code></td>
+      <td>加了SP后，输出数字时如数值为正则加上<code class="highlighter-rouge">+</code>，SS则是用来取消SP的功能。   如 <code class="highlighter-rouge">write(*,"(SP , I5 , I5 , SS , I5)") 5 , 5 , 5</code> 输出：<code class="highlighter-rouge">+5   +5   5</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>示例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     write(*,100) 5
+100  format(I5)
+     write(*,"(spi5/ssf10.2)") 34 , 23.456
+</code></pre></div></div>
+<p>结果</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    5
+  +34
+     23.46
+</code></pre></div></div>
+
+<p>默认WRITE后会换行，<strong>设置<code class="highlighter-rouge">advance="no"</code>取消换行</strong>，如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WRITE(funit,9035,advance="no") 
+</code></pre></div></div>
+
+<h2 id="函数">函数</h2>
+
+<ul>
+  <li>函数与主程序program并列</li>
+  <li>主程序和函数无先后次序</li>
+  <li>function 与subroutine除了返回值，和声明方式，没有区别</li>
+  <li>函数都是传址调用</li>
+</ul>
+
+<h3 id="function">function</h3>
+
+<h4 id="定义-2">定义</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[形容词][,返回类型] function 名称([虚参列表])
+	[虚参声明]
+	[局部变量定义]
+	执行语句
+	名称=返回值
+	[return]
+End [function [名称]]
+</code></pre></div></div>
+
+<h4 id="使用">使用</h4>
+
+<p>用前要声明</p>
+
+<ul>
+  <li><code class="highlighter-rouge">external</code></li>
+  <li><code class="highlighter-rouge">interface</code></li>
+  <li><code class="highlighter-rouge">contains</code>包含在程序单元内</li>
+  <li>用<code class="highlighter-rouge">module</code>引入</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>返回变量=名称([实参列表])
+</code></pre></div></div>
+<p>调用外部函数function,要在变量定义区指明，子程序subroutine不用</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CHARACTER(len=6), EXTERNAL :: int_to_char
+</code></pre></div></div>
+<p>不然会</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error: Function ‘int_to_char’ at (1) has no IMPLICIT type
+td_analysis.f90:90:89:
+
+</code></pre></div></div>
+
+<h3 id="subroutine">subroutine</h3>
+
+<h4 id="定义-3">定义</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[形容词] subroutine 名称([虚参列表])
+	[虚参声明][局部变量定义]
+	执行语句
+	名称=返回值
+	[return]
+End [subroutine [名称]]
+</code></pre></div></div>
+<h4 id="使用-1">使用</h4>
+
+<p>直接<code class="highlighter-rouge">call</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>call 名称([实参列表])
+</code></pre></div></div>
+
+<h3 id="使用前的声明">使用前的声明</h3>
+
+<p>使用function前用<code class="highlighter-rouge">external</code>声明，或使用<code class="highlighter-rouge">interface</code>声明</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program externalOrinterface
+      implicit none
+      real :: x,y
+      real ,external :: fun !函数要声明
+      x=1.0
+      y=fun(x)
+      write(*,*) y
+      call sub(x)
+end program externalOrinterface
+
+real function fun(x)
+      real :: x
+      fun=x*x+1.0
+end function fun
+
+subroutine sub(x)
+        real :: x,y
+        y=x*x+1.0
+        write(*,*) y
+end subroutine sub
+</code></pre></div></div>
+
+<h4 id="interface">interface</h4>
+
+<p>fun也可使用<code class="highlighter-rouge">interface</code> 代替<code class="highlighter-rouge">external</code>，有些特殊用法需要用interface声明</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      interface 
+             real function  fun(x)
+                     real :: x
+             end function fun
+      end interface
+</code></pre></div></div>
+
+<p>使用以下用法时，必须使用 interface：</p>
+
+<p>• 函数返回值是数组、指针</p>
+
+<p>• 参数为假定形状数组</p>
+
+<p>• 参数具有 intent、value 属性</p>
+
+<p>• 参数有可选参数、改变参数顺序</p>
+
+<p>以下用法时，虽然不强制要求，但也推荐使用 interface</p>
+
+<p>• 函数名作为虚参和虚参</p>
+
+<p>实际上，我们建议在任何函数调用时，都使用接口！</p>
+
+<p><strong>每个程序单元调用其他函数时都要interface，用module可以减少书写那么多interface</strong></p>
+
+<p><strong>interface同名函数重构</strong><br />
+使用<code class="highlighter-rouge">interface </code>和<code class="highlighter-rouge">module procedure</code> 定义同名函数，会根据函数输入变量类型自动匹配</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python27) ~/code/TDQE/Fortran/module_interface $ cat main.f90 
+program main
+    use m_interface
+    integer :: aa(5),bb(5)
+    aa=1
+    bb=2
+    call my_sum(aa(1),bb(1))
+    call my_sum(aa,bb)
+end program(python27) ~/code/TDQE/Fortran/module_interface $ cat module.f90 
+module m_interface
+    interface my_sum
+     module procedure my_sum_integer
+     module procedure my_sum_array
+    end interface
+contains
+    subroutine my_sum_integer(a,b)
+        INTEGER :: a,b
+        write(*,*) "my_sum_integer:",a+b
+    end subroutine
+    subroutine my_sum_array(a,b)
+        INTEGER ::a(:),b(:)
+        write(*,*) "my_sum_array",a+b
+    end subroutine
+end module
+</code></pre></div></div>
+<p>编译</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpif90 -c -g -O2 -ffree-line-length-none     module.f90
+mpif90 -c -g -O2 -ffree-line-length-none     main.f90
+mpif90  -g -O2 -ffree-line-length-none  -o interface  main.o module.o
+./interface
+ my_sum_integer:           3
+ my_sum_array           3           3           3           3           3
+</code></pre></div></div>
+
+<h4 id="contains">contains</h4>
+
+<p>在程序单元(主程序，function，subroutine)内使用<code class="highlighter-rouge">contains</code>，contains后面跟的函数，仅可以被此程序单元调用，<strong>且不用声明</strong></p>
+
+<p><code class="highlighter-rouge">module</code>内部的函数也用<code class="highlighter-rouge">contains</code>，<code class="highlighter-rouge">use module_name</code>后，可以调用</p>
+
+<p><code class="highlighter-rouge">contains</code>后面的函数可以直接调用程序单元和<code class="highlighter-rouge">module</code>里的变量</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>real function fun(x)
+      implicit none
+      real ::x,y
+      y=23.0
+      fun=x*3.0
+      fun=two(fun)
+contains      !使用contains
+      real function two(x)
+        real ::x
+        two=x*2.0+y !可以直接调用程序单元或module里的变量
+    end function two
+end function fun 
+</code></pre></div></div>
+
+<h4 id="module-内部函数互相调用不用声明">module 内部函数互相调用不用声明</h4>
+
+<h3 id="参数传递在函数内解释参数">参数传递：在函数内解释参数</h3>
+
+<h4 id="传递字符串">传递字符串</h4>
+
+<p><strong>声明时<code class="highlighter-rouge">len=*</code></strong>，siesta得代码中常见</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program strsub
+      implicit none
+      character(len=20)::str
+      str="hello,world!"
+      call sub(str)
+      contains
+              subroutine sub(strr)
+                      implicit none
+                      character(len=*) :: strr
+                      write(*,*) trim(strr)
+              end subroutine sub
+end program strsub
+</code></pre></div></div>
+
+<h4 id="传递数组-数组地址维度大小都会传过来">传递数组-数组地址维度大小都会传过来</h4>
+
+<p>推荐方式</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program pro
+      implicit none
+      real :: array(10),total
+      integer I
+      array=(/(I,I=1,10)/)
+      total=sum(array(2:3))
+      write(*,*) total
+end program pro
+
+real  function sum(a)
+     real::a(:)   !多维时a(:,:)，传入参数的下标变为1,2,3...,size(a,dim=n)，上限自动计算，下线也可指定
+     !real::a(n)取出传过来的数组的前n个元素作为一个数组
+     integer :: i
+     sum=0
+     do i=1,size(a,dim=1)
+      sum=sum+a(i)
+     end do
+end function sum
+</code></pre></div></div>
+
+<p>也可以把数组维度作为参数传入</p>
+
+<p><strong>也有用<code class="highlighter-rouge">real :: a(*)</code>，老程序中有，会将输入数组变为1维,适合于不同维度的矩阵运算</strong>，如不同维度矩阵相加</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module m_matradd
+    implicit none
+    contains
+    subroutine matradd(m,n,A,B,C,lds)
+    implicit none
+    integer :: m,n,i,j,lds
+    real:: A(*),B(*),C(*)
+
+    !其实fortran直接 C=A+B 就可以
+    !C(1:m*n)=A(1:m*n)+B(1:m*n)
+    DO j=0,n-1
+        DO i=1,m
+            C(i+j*lds)=A(i+j*lds)+B(i+j*lds)
+        end DO
+    end DO
+    end subroutine matradd
+end module m_matrad
+</code></pre></div></div>
+
+<h4 id="传递结构体-用module">传递结构体-用module</h4>
+
+<p>主程序和子程序需使用同一个结构体定义，使用module</p>
+
+<p><strong>modele里面<code class="highlighter-rouge">include </code>mpif.h<code class="highlighter-rouge">后，调用该module的程序不用include了**
+**module里面</code>inplicit none`后，对调用该module的程序无影响</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module typedef
+      implicit none
+      type :: student
+              character(len=10) :: nickname
+              integer :: num,score
+      end type
+end module typedef
+
+program cndaqiang
+      use typedef
+!use module名 要在其他语句之前
+      implicit none
+      type(student)::xiaoming
+      xiaoming%nickname="xiaoming"
+      xiaoming%num=1
+      xiaoming%score=95
+      call sub(xiaoming)
+end program
+
+subroutine sub(who)
+        use typedef
+        implicit none
+        type(student)::who
+        write(*,*) who%nickname(:),who%num
+end subroutine
+
+</code></pre></div></div>
+
+<h4 id="传递函数">传递函数</h4>
+
+<p>在函数体内用<code class="highlighter-rouge">interface</code>声明传入参数的类型</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module mod_fun
+    !real :: x,y
+contains
+real function fun(test,x)
+      implicit none
+      interface !函数作为参数时，要用interface声明(解释)函数类型
+      real function test(x)
+      real ::x
+      end function
+      end interface
+      real :: x
+      fun=test(x)+x
+end function fun      
+
+real function test(x)
+      implicit none
+      real :: x
+      test=x*x+x
+end function test
+
+end module mod_fun
+
+program inter
+    use mod_fun   !使用module导入的函数，不用声明
+    implicit none
+    real :: x,y
+    x=3.0
+    y=fun(test,x)
+    write(*,*) y
+end program inter
+</code></pre></div></div>
+
+<h3 id="特殊用法">特殊用法</h3>
+
+<h4 id="save属性">save属性</h4>
+
+<p>函数执行完后，空间不释放，下次执行该函数时作为初值</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Integer , save :: var
+Integer :: var = 0  !// 虽然没有书写 save ，但定义时初始化值，有具有 save 属性
+</code></pre></div></div>
+
+<h4 id="虚参的-intent-属性需要-interface">虚参的 Intent 属性（需要 Interface）</h4>
+
+<p>明确指定虚参的目的：输入参数、输出参数、中性参数</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!//输入参数，在子程序内部不允许改变  
+Integer , Intent( IN ) :: input_arg   
+!//输出参数，子程序返回前必须改变（对应实参不能是常数，也不能是表达式）
+Integer , Intent( OUT ) :: output_arg 
+!//中性参数
+Integer , Intent( INOUT ) :: neuter_arg
+Integer :: neuter_arg !// 未指定 Intent 则为中性
+请注意：Intent 的检查是在编译时进行，而非运行时检查
+建议对每一个虚参都指定 Intent 属性！
+</code></pre></div></div>
+
+<h4 id="虚参的-value-属性需要-interface">虚参的 value 属性（<strong>需要 Interface</strong>）</h4>
+<p>指定该参数为传值参数，而非传址参数。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!//传值参数，只能作为输入参数。改变后不影响实参。  
+Integer , value :: by_value_arg
+
+请注意：除混编之外，一般不使用 value 属性
+</code></pre></div></div>
+
+<h4 id="可选参数optional需要-interface">可选参数optional（<strong>需要 Interface</strong>）</h4>
+
+<p>虚参可传可不传</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program op
+      call opop(1)
+      call opop()
+
+contains
+subroutine opop(a)
+      integer,optional ::a   !a为可选参数
+      if (present(a)) then
+              write(*,*) "a=",a
+      else
+              write(*,*) "none"
+      end if
+end subroutine opop
+
+end program op
+</code></pre></div></div>
+
+<h4 id="更改参数顺序需要-interface">更改参数顺序（需要 Interface）</h4>
+
+<p>更改参数顺序：即，函数的实参、虚参可以不按照顺序对应。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>call writeresult( Data = var , file = "res.txt" , size = 1000 ) 
+call writeresult( var , 1000 , "res.txt") 
+</code></pre></div></div>
+
+<h4 id="result-指定返回值变量">result 指定返回值变量</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>real function jifen(fun,down,up,step) result(y)
+</code></pre></div></div>
+
+<p>函数体内不能再次声明y(已经在定义时生命力)</p>
+
+<h4 id="pure-并行有关暂略">pure 并行有关，暂略</h4>
+
+<h2 id="数据共享">数据共享</h2>
+
+<h3 id="函数的传址调用">函数的传址调用</h3>
+
+<h3 id="common-不推荐-略">common-不推荐-略</h3>
+
+<p>在程序单元内，用<code class="highlighter-rouge">common 变量列表</code></p>
+
+<p>变量名不必一致，按顺序排列</p>
+
+<p>就是划了一块公共的内存区域，不同的程序单元内按顺序读取</p>
+
+<h3 id="module-见下">module 见下</h3>
+
+<h2 id="module数据函数过程共享">module：数据/函数(过程)共享</h2>
+
+<ul>
+  <li>module 中可以定义若干变量、若干函数</li>
+  <li>子程序可以使用module内的变量，子程序内部局部变量互相隔离</li>
+  <li>module内部程序可以互相调用，不用interface</li>
+  <li>所有 use 了这个 module 的程序单元，可以自由使用 public 的变量和函数、只读的使用 protected 的变量<br />private 的变量和函数，仅供 module 内部使用</li>
+  <li><strong>先将module所在的文件，编译成对象文件<code class="highlighter-rouge">xxx.o</code>和模块描述文件<code class="highlighter-rouge">模块名.mod</code>，在将对象<code class="highlighter-rouge">xxx.o</code>和主程序连接</strong></li>
+</ul>
+
+<h3 id="定义-4">定义</h3>
+
+<p><strong><code class="highlighter-rouge">module</code>内部不能有执行语句</strong>，初值可在定义时赋予</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module 名称
+implicit none
+变量声明
+!不能写任何执行语句
+contains
+函数定义
+end module 名称
+</code></pre></div></div>
+
+<h3 id="使用-2">使用</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>use module名称
+!也可以使用module了内的某些，如下
+use smartHome, only : tv , pc
+!ONLY:使用名=&gt;module中的名字
+use smartHome, only : screen =&gt; tv , b ！使用并重命名
+</code></pre></div></div>
+
+<p><strong>module内也可以use其他module，实现继承</strong></p>
+
+<h3 id="权限形容词在contains前写">权限形容词，在<code class="highlighter-rouge">contains</code>前写</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>变量</th>
+      <th>子程序</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>public</td>
+      <td>外部可以读取   可以修改</td>
+      <td>外部可以   调用</td>
+    </tr>
+    <tr>
+      <td>protected</td>
+      <td>外部只能读取   不能修改</td>
+      <td>–</td>
+    </tr>
+    <tr>
+      <td>private</td>
+      <td>外部无法访问</td>
+      <td>外部无法调用</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>默认全是<code class="highlighter-rouge">public</code>，更改默认为<code class="highlighter-rouge">Private</code>，在<code class="highlighter-rouge">implict none</code>和声明语句之间加一行<code class="highlighter-rouge">Private</code>默认全私有，<strong>警告：全局private时，子程序要使用public声明才能被调用，如下</strong></p>
+
+<p>例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module m_init
+      private
+      public :: init1,init2
+      contains
+              subroutine init1()
+                      write(*,*) "init1 begin"
+              end subroutine init1
+              subroutine init2()
+                      write(*,*) "init2 gegin"
+              end subroutine init2
+end module m_init
+</code></pre></div></div>
+
+<h2 id="文件读写">文件读写</h2>
+
+<ul>
+  <li>Open  打开文件</li>
+  <li>Write  写入</li>
+  <li>Read  读取</li>
+  <li>Close  关闭文件</li>
+</ul>
+
+<h3 id="open通道号file文件名">open(通道号,file=”文件名”)</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Open( 子句 = 值 , 子句 = 值 , 子句 = 值 )
+！它有二十多个子句，每一个都有各自的作用
+!真正有必要的，只有两个：
+Open( Unit = 通道号 , File = "文件名" )
+Open( 通道号 , File = "文件名" )
+!文件通道号，由程序员给定，一般用大于10的数字。
+!10以下的数字由不同编译器预留（一些编译器用5，6表示标准输入输出）
+!在 OPEN 语句中指定 STATUS=’SCRATCH’ 会打开一个名称形式为 tmp.FAAAxnnnnn 的文件，其中 nnnnn 用当前进程 ID 替换，AAA 是一个包含三个字符的字符串，x 是一个字母；AAA 和 x 可确保文件名唯一
+!该文件在程序终止或执行 CLOSE 语句时被删除,如
+open (is1,               form='formatted',status='scratch')
+
+</code></pre></div></div>
+
+<h3 id="read">read</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read(通道号,格式) 变量列表
+read(字符串,格式) 变量列表 ！可将一行数据用字符纯的方式读入后，在处理字符串内的数据
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>文本文件   （有格式文件）</th>
+      <th>二进制文件   （无格式文件）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>顺序读取</td>
+      <td>**顺序读取有格式文件   （用得最多）   **</td>
+      <td>顺序读取无格式文件   (在记录前后各增加4字节，表示记录长度)</td>
+    </tr>
+    <tr>
+      <td>直接读取</td>
+      <td>直接读取有格式文件   （要求每行一样长）</td>
+      <td><strong>直接读取无格式文件   （用得较多）</strong></td>
+    </tr>
+    <tr>
+      <td>直接读取</td>
+      <td>直接读取有格式文件   （要求每行一样长）</td>
+      <td>直接读取无格式文件   （用得较多）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="顺序读写有格式文件文本文件">顺序读写有格式文件（文本文件）</h4>
+
+<p><strong>星号，表示表控格式（list-direct），既让变量列表自动控制格式，空格和逗号分隔数据</strong></p>
+
+<p>也可以使用其他格式，多用<code class="highlighter-rouge">*</code></p>
+
+<p>如果不特殊指定格式，那么每个read 语句读取整的 N 行，即读取了3行中间，下次直接从第四行开始读</p>
+
+<p><strong>推荐：一次只读取一行</strong>，</p>
+
+<p>不写参量列表，也会读取，可用于跳过一行</p>
+
+<p>赋给无用变量，可用于跳过某一列</p>
+
+<p><strong>可以读到字符串型中，再从字符串中读取</strong></p>
+
+<p>如,file.txt</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>11 12 13
+21 22 23
+31 32 33
+</code></pre></div></div>
+
+<p>程序</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program re
+      implicit none
+      real :: a,b,c,d,e,f
+      integer :: i
+      i=20
+      open(i,file="file.txt")
+      read(i,*) a,b,c,d !读到了1行多（即，第二行）
+      read(i,*) e,f     !下一次从第三行读取
+      write(*,*) a,b,c,d
+      write(*,*) e,f
+      close(i)
+end program re      
+</code></pre></div></div>
+
+<p>结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   11.0000000       12.0000000       13.0000000       21.0000000
+   31.0000000       32.0000000
+</code></pre></div></div>
+
+<h4 id="直接读写有格式文件文本文件">直接读写有格式文件（文本文件）</h4>
+
+<p><strong>需固定长度</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open(unit=通道号,form="formatted"，access="Direct",RecL=64)	
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>form=”formatted”：指定它是有格式文件（文本文件）<br />  在顺序读取时，它是默认值，因此可以不指定</p>
+  </li>
+  <li>
+    <p>access=”Direct”：指定它是直接读取方式<br />顺序读取时，可以指定’SEQUENTIAL’，它是默认值，因此可以不指定</p>
+  </li>
+  <li>
+    <p>RecL=64：指定记录长度（Record Length）是 64（字节）<br /> 仅在直接读取时指定。</p>
+  </li>
+</ul>
+
+<h4 id="顺序读写无格式文件二进制文件">顺序读写无格式文件（二进制文件）</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      open(unit=i,file="file.bin",form="unformatted")
+      write(i) a,str 
+</code></pre></div></div>
+
+<p><strong>因为是无格式，read和write里面只有unit，没有格式控制</strong></p>
+
+<p>Fortran顺序写入无格式文件，以记录为基本单元，读写过程分若干笔记录：</p>
+
+<p>每次一笔记录，在记录前后各多出4个字节，用来记录本次写入的长度。</p>
+
+<p>顺序读取时，通过这4个字节知悉当前记录的长度，按照长度读取数据，再与最后的4个字节进行校对</p>
+
+<p>示例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program re
+      implicit none
+      integer :: a,b,i
+      character(len=5) :: str
+      a=1
+      b=2
+      str="hello"
+      i=20
+      open(unit=i,file="file.bin",form="unformatted")
+      write(i) a,str !4+5=9个数据
+      write(i) b
+      close(i)
+      a=0
+      b=0
+      str="00000"
+      open(unit=i,file="file.bin",form="unformatted")
+      read(i) a,str  !读的时候，也要按相应数据长度
+      read(i) b
+      close(i)
+      write(*,*) a,str,b
+end program re
+
+</code></pre></div></div>
+
+<p>对应的二进制文件</p>
+
+<p><img src="/uploads/2019/01/file.jpg" alt="" /></p>
+
+<h4 id="直接读写无格式文件二进制文件">直接读写无格式文件（二进制文件）</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      open(unit=i,file="file.bin",form="unformatted",access="direct",recl=10)
+      write(i,rec=1) a,str
+</code></pre></div></div>
+
+<ul>
+  <li><code class="highlighter-rouge">recl</code>指定数据记录长度</li>
+  <li>随便跳转到任何整记录读写，也可以一边读一边写</li>
+  <li>写入记录不够时，会用0填满后面的（即使之前里面非空）</li>
+  <li>读取时，不一定按照写入时候的顺序，一个数据长度，爱咋读咋读</li>
+</ul>
+
+<p><img src="/uploads/2019/01/file2.jpg" alt="" /></p>
+
+<h4 id="流文件读写无格式文件二进制文件">流文件读写无格式文件（二进制文件）</h4>
+
+<p><strong>按照给定参数，决定读取长度</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open(unit=i,file="file.bin",form="unformatted",access="stream")
+write(i) a,str
+      
+read(i,pos=5) !跳到第5个字节处开始读
+inquire(i,pos=b)  !将当前位置返回到b
+</code></pre></div></div>
+
+<p><img src="/uploads/2019/01/file3.jpg" alt="" /></p>
+
+<p>也可用于读入顺序读写的文件，无非就是在变量列表两边各添加一个n(4字节变量/整型)</p>
+
+<h4 id="内部文件">内部文件</h4>
+
+<p>就是直接读取字符串文件，把字符串当成有格式文件的一行，一次写入就写满一行，不足数据用空格补全</p>
+
+<p>同样也可以读，实现字符串和数值的互转</p>
+
+<p>结合字符串，格式化读写的相关操作</p>
+
+<p><strong>可用于先将用户输入数据读入字符串，在判断字符串里的内容是否符合规则：整/实数，避免输入不符造成程序终止</strong></p>
+
+<p>示例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program str
+      implicit none
+      integer::filenum(5)
+      integer::i,uid
+      character(len=10) :: filename
+      data filenum /1,12,123,1234,12345/
+      uid=20
+      do i=1,5
+      write(filename,"(i6.5a4)") filenum(i),".txt" !把str当成文件来读写
+      open(uid,file=filename)
+      write(uid,*) filenum(i)
+      close(uid)
+      end do
+end program str
+</code></pre></div></div>
+
+<p>生成</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>' 00001.txt'  ' 00012.txt'  ' 00123.txt'  ' 01234.txt'  ' 12345.txt'
+</code></pre></div></div>
+
+<p>示例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program now1
+      implicit none
+      character(len=255)  :: now,r
+      integer::hh,mm,ss
+      call date_and_time(time=now)   !获取系统时间函数
+      read(now,"(i2i2i2)") hh,mm,ss
+      write(*,"(a8,i2,a1,i2,a1,i2)") "now is: ",hh,":",mm,":",ss
+end program now1
+</code></pre></div></div>
+
+<p>结果</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>now is: 11:52:26
+</code></pre></div></div>
+
+<h4 id="read读写错误结束时操作">read读写错误/结束时操作</h4>
+<p><strong>Fortran的一行定义为: 有字母数字的意义行</strong>
+<br />多行的空白,逗号等会被忽略，不算行，会被跳过,不算读取位置
+<br />如果两行之间有很多回车空白，Fortran会直接跳过这些内容进行读取
+<br />Fortran中的结束行定义为:没有内容,或后面只有空格回车等无意义内容
+<br /><strong>若读到end,就肯定没有读到任何数据</strong></p>
+
+<p>读取文件，自动判断结尾或读取错误之后的数组赋值为0,示例：<br />
+可用于从文件中读取电场</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PROGRAM readdata
+IMPLICIT NONE
+INTEGER,PARAMETER   :: N=5
+INTEGER     :: a(N)
+a=100
+CALL readarray(a,N,"data")
+WRITE(*,*) "a:",a
+
+CONTAINS
+    SUBROUTINE readarray(a,N_,file)
+    IMPLICIT NONE
+    INTEGER :: N_,a(N_)
+    CHARACTER(*)  :: file
+    !Local
+    INTEGER :: unit_io=666,N,i
+    N=MIN(N_,UBOUND(a,1))
+
+    OPEN(unit=unit_io,file=TRIM(file))
+    DO i=1,N
+    READ(unit_io,*,ERR=10,END=20) a(i)
+    goto 30
+    !读取错误执行goto 10
+    !读取结束goto 20
+    !正常读取goto 30,在此处直接写CYCLE也可以
+    !结束行是没有内容的
+    !Fortran的一行定义为: 有字母数字的意义行
+    !多行的空白,逗号等会被忽略，不算行，不算读取位置
+    !即　如果两行之间有很多回车空白，Fortran会直接跳过这些内容进行读取
+    !即　Fortran中的结束行定义为:没有内容,或后面只有空格回车等无意义内容
+    !即　若读到end, 就肯定没有读到任何数据,a(i)不会被改变
+    10 WRITE(*,*) "ERR at:",i,"line" 
+    goto 25
+    20 WRITE(*,*) "END at:",i,"line" 
+25    a(i:N)=0
+    EXIT
+
+    30 CYCLE
+    ENDDO
+    END SUBROUTINE readarray
+END PROGRAM
+</code></pre></div></div>
+<p>运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/test$ cat data ; echo "+++"; gfortran read.f90 ; ./a.out 
+1
+2
+  
+
+5
+
++++
+ END at:           4 line
+ a:           1           2           5           0           0
+</code></pre></div></div>
+
+<h4 id="禁止标准输出或者重定向标准输出到制定文件">禁止标准输出/或者重定向标准输出到制定文件</h4>
+<p>默认
+标准输出： 屏幕/控制台  /dev/fd/1
+标准错误输出： 屏幕/控制台  /dev/fd/1
+标准输入： /dev/fd/0</p>
+
+<p>禁止输出，如fortran中将stdout指向/dev/null</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./environment.f90:116:          OPEN ( unit = stdout, file='/dev/null', status='unknown' )
+</code></pre></div></div>
+<p>改变输出</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>         stdout_file = cla_get_output()
+         if ( stdout_file /= ' ' ) then
+            close(unit=6)
+            open(unit=6,file=trim(stdout_file),form="formatted",
+     &amp;           position="rewind", action="write",status="unknown")
+         end if
+</code></pre></div></div>
+
+<h3 id="利用namelist复制变量">利用NAMELIST复制变量</h3>
+<p>参考自<a href="https://www.quantum-espresso.org/">quantum-espresso</a><br />
+<strong>注意输入文件的NAMELIST最后要有一个空行，!开头的行也行，不然会报错</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python27) ~/code/TDQE/Fortran $ cat namelist.f90 
+program namelist
+INTEGER	:: a,b,c
+NAMELIST  /NAME/ a,b
+NAMELIST  /YES/ c
+a=0
+b=0
+c=0
+READ(*,NAME)
+READ(*,YES)
+write(*,*) a,b,c
+END program namelist
+(python27) ~/code/TDQE/Fortran $ cat data 
+&amp;NAME
+	a=10
+	b=9
+/
+&amp;YES
+	c=1
+/
+#注意输入文件最后要有一个空行，!开头的行也行，不然会报错
+(python27) ~/code/TDQE/Fortran $ gfortran namelist.f90 
+(python27) ~/code/TDQE/Fortran $ ./a.out &lt; data 
+          10           9           1
+</code></pre></div></div>
+
+<h3 id="backspce-回到上一行位置endfile-删除下面所有行">BACKSPCE 回到上一行/位置<br />ENDFILE 删除下面所有行</h3>
+<p><a href="https://blog.csdn.net/chd_lkl/article/details/84891616">fortran文件操作之’append’; ‘backspace’; ‘endfile’;</a><br />
+代码</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PROGRAM file
+IMPLICIT NONE
+INTEGER :: i,unit_io
+unit_io=666
+OPEN(unit=unit_io,file="data")
+!读入当前行,并把位置下移一行
+READ(unit_io,*) i
+WRITE(*,*) i
+!回到上一行
+BACKSPACE(unit_io)
+!
+READ(unit_io,*) i
+WRITE(*,*) i
+
+ENDFILE(unit_io) !清除当前位置到最后的所有行,此处为&gt;2行的所有数据
+CLOSE(unit_io)
+
+END PROGRAM
+</code></pre></div></div>
+<p>执行,可以看到BACKSPACE的回退,和ENDFILE的删除操作</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/test$ cat data ; echo "++++" ; gfortran file.f90 ; ./a.out ;echo "---"; cat data 
+1
+2
+3
+4
+++++
+           1
+           1
+---
+1
+2
+</code></pre></div></div>
+
+<h2 id="有趣的命令">有趣的命令</h2>
+
+<h3 id="调用系统shell命令">调用系统shell命令</h3>
+
+<p><a href="https://gcc.gnu.org/onlinedocs/gfortran/SYSTEM.html">9.264 <code class="highlighter-rouge">SYSTEM</code> — Execute a shell command</a></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>system("command"[,]状态)
+</code></pre></div></div>
+
+<p>command为字符型变量，状态为整形，执行正常，状态变量被赋予0</p>
+
+<p>执行后，命令结果被输出到屏幕</p>
+
+<p>例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>call system("date",hh)
+</code></pre></div></div>
+
+<h3 id="时间命令">时间命令</h3>
+
+<p><a href="https://gcc.gnu.org/onlinedocs/gfortran/DATE_005fAND_005fTIME.html">9.82 <code class="highlighter-rouge">DATE_AND_TIME</code> — Date and time subroutine</a></p>
+
+<p><code class="highlighter-rouge">DATE_AND_TIME(DATE, TIME, ZONE, VALUES)</code> gets the corresponding date and time information from the real-time system clock.</p>
+
+<ul>
+  <li>DATE is<code class="highlighter-rouge">INTENT(OUT)</code> and has form ccyymmdd.</li>
+  <li>TIME is <code class="highlighter-rouge">INTENT(OUT)</code> and has form hhmmss.sss.</li>
+  <li>ZONE is <code class="highlighter-rouge">INTENT(OUT)</code> and has form (+-)hhmm, representing the difference with respect to Coordinated Universal Time (UTC).</li>
+  <li>VALUE 参考上面给的参考链接，此处略</li>
+</ul>
+
+<p>程序计时示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    INTEGER :: starttime,endtime
+    call SYSTEM_CLOCK(starttime)
+    代码部分
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000
+</code></pre></div></div>
+
+<p>其他时间<a href="https://gcc.gnu.org/onlinedocs/gfortran/CPU_005fTIME.html#CPU_005fTIME">CPU_TIME</a>与<a href="https://gcc.gnu.org/onlinedocs/gfortran/SYSTEM_005fCLOCK.html#SYSTEM_005fCLOCK">SYSTEM_CLOCK</a></p>
+
+<h3 id="暂停一段时间再执行">暂停一段时间再执行</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>call sleep(n) !暂停n秒
+</code></pre></div></div>
+<h3 id="读入命令行参数">读入命令行参数</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>在Fortran中主函数是没有参数的，所以要获取命令行参数需要额外调用其他的函数。
+agrc=iargc()：
+返回命令行参数的个数
+
+call getarg(i,buffer)：
+读取命令行的第i个参数，并将其存储到buffer中，其中命令本身是第0个参数
+
+对于Fortran2003及其之后，使用GET_COMMAND_ARGUMENT来获取参数
+</code></pre></div></div>
+
+<h3 id="更改默认的标准输出位置">更改默认的标准输出位置</h3>
+<p>使得只有Ionode输出</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OPEN ( unit = stdout, file='/dev/null', status='unknown' )
+</code></pre></div></div>
+
+<h3 id="get_environment_variable读取系统shell的环境变量">get_environment_variable读取系统/shell的环境变量</h3>
+<p><a href="https://stackoverflow.com/questions/10075225/fortran-get-environment-variable-intrinsic-returns-nothing">Fortran get_environment_variable intrinsic returns nothing</a><br />
+示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program main
+  implicit none
+  character(len=10) :: time
+
+  call get_environment_variable("t", time)
+  write(6,*) time
+end program main
+</code></pre></div></div>
+<p>在shell中设置</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export t=2010010100
+</code></pre></div></div>
+
+<h3 id="fortran内置函数">Fortran内置函数</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>通用内函数名</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ABS (A)</td>
+      <td>绝对值</td>
+    </tr>
+    <tr>
+      <td>AIMAG (Z)</td>
+      <td>复数的虚部</td>
+    </tr>
+    <tr>
+      <td>AINT (A [, KIND])</td>
+      <td>整数截尾</td>
+    </tr>
+    <tr>
+      <td>ANINT (A [, KIND])</td>
+      <td>最近的整数</td>
+    </tr>
+    <tr>
+      <td>CEILING (A [, KIND])</td>
+      <td>大于或等于数值的最小整数</td>
+    </tr>
+    <tr>
+      <td>CMPLX (X [, Y, KIND])</td>
+      <td>转换为复数类型</td>
+    </tr>
+    <tr>
+      <td>CONJG (Z)</td>
+      <td>共轭复数</td>
+    </tr>
+    <tr>
+      <td>DBLE (A)</td>
+      <td>转换为双精度实数类型</td>
+    </tr>
+    <tr>
+      <td>DIM (X, Y)</td>
+      <td>正偏差</td>
+    </tr>
+    <tr>
+      <td>DPROD (X, Y)</td>
+      <td>双精度实数乘积</td>
+    </tr>
+    <tr>
+      <td>FLOOR (A [, KIND])</td>
+      <td>小于或等于数值的最大整数</td>
+    </tr>
+    <tr>
+      <td>INT (A [, KIND])</td>
+      <td>转换为整数类型</td>
+    </tr>
+    <tr>
+      <td>MAX (A1, A2 [, A3,…])</td>
+      <td>最大值</td>
+    </tr>
+    <tr>
+      <td>MIN (A1, A2 [, A3,…])</td>
+      <td>最小值</td>
+    </tr>
+    <tr>
+      <td>MOD (A, P)</td>
+      <td>余数函数</td>
+    </tr>
+    <tr>
+      <td>MODULO (A, P)</td>
+      <td>模数函数</td>
+    </tr>
+    <tr>
+      <td>NINT (A [, KIND])</td>
+      <td>最近的整数</td>
+    </tr>
+    <tr>
+      <td>REAL (A [, KIND])</td>
+      <td>转换为实数类型</td>
+    </tr>
+    <tr>
+      <td>SIGN (A, B)</td>
+      <td>符号传输,i.e. ABS(A)*sign(B)<br />注意A,B的类型要一致<br /><code class="highlighter-rouge">sign(-10.0,1.0)==10.0; sign(10,-1)==-10</code></td>
+    </tr>
+  </tbody>
+</table>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2018/12/21/gcc-octopus8/">Gcc OPENMPI 编译octopus-8 遇到的问题和解决方案</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/02/01/Fortran-debug/">Fortran 的gdb命令行调试</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>
