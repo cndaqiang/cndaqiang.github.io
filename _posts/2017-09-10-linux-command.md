@@ -1022,9 +1022,29 @@ Binary files siesta1.RHO and TDStep/siesta2.RHO differ
 
 ### 显示进度条的复制 `alias cp="rsync -avPh"`
 
-````
+```bash
 rsync -avPh  Accelrys_Materials_Studio_8.0_Win.iso  /home/data/sf10nas/
 ```
+
+### 查看系统重启运行时间
+```bash
+cndaqiang@mboy:~$ who -b
+         system boot  2020-10-20 09:00
+cndaqiang@mboy:~$ who -r
+         run-level 5  2020-10-20 09:00
+```
+### 查看发行版,内核,位数
+```
+cndaqiang@mboy:~$ cat /etc/issue
+Linux Mint 19 Tara \n \l
+
+cndaqiang@mboy:~$ cat /proc/version
+Linux version 4.15.0-20-generic (buildd@lgw01-amd64-039) (gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3)) #21-Ubuntu SMP Tue Apr 24 06:16:15 UTC 2018
+
+cndaqiang@mboy:~$ getconf LONG_BIT
+64
+```
+
 
 ### montage 合并，拆解图片
 合并图片
@@ -1044,5 +1064,5 @@ montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行
 
 [tar命令](http://man.linuxde.net/tar)
 
-
+[Linux查看系统开机时间](https://developer.aliyun.com/article/34206)
 

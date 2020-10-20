@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>[挖坑]QE代码阅读: 计算参数</title>
+    <meta name="description" content="QE代码阅读系列，个人学习记录，仅供参考。代码仓库QE-6.4.1@cndaqiang">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2020/04/14/qe-input/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2020/04/14/qe-input/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2020/04/14/qe-input/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2020/04/14/qe-input/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>[挖坑]QE代码阅读: 计算参数</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-04-14
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Quantum-Espresso" title="Category: Quantum-Espresso" rel="category">Quantum-Espresso</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a-->
+        <a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a>&nbsp;
+    
+        <!--a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a-->
+        <a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a>&nbsp;
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#read_input_file读入输入文件" id="markdown-toc-read_input_file读入输入文件"><strong>read_input_file</strong>读入输入文件</a>    <ul>
+      <li><a href="#read_namelists" id="markdown-toc-read_namelists"><code class="highlighter-rouge">read_namelists</code></a></li>
+      <li><a href="#read_cards" id="markdown-toc-read_cards"><code class="highlighter-rouge">read_cards</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#input_parameters中的变量" id="markdown-toc-input_parameters中的变量"><code class="highlighter-rouge">input_parameters</code>中的变量</a></li>
+  <li><a href="#control_flags中的变量" id="markdown-toc-control_flags中的变量"><code class="highlighter-rouge">control_flags</code>中的变量</a></li>
+  <li><a href="#constants常量" id="markdown-toc-constants常量"><code class="highlighter-rouge">constants</code>常量</a></li>
+  <li><a href="#k点" id="markdown-toc-k点">k点</a>    <ul>
+      <li><a href="#module-klist" id="markdown-toc-module-klist">MODULE klist</a></li>
+    </ul>
+  </li>
+  <li><a href="#常用变量表" id="markdown-toc-常用变量表">常用变量表</a>    <ul>
+      <li><a href="#晶格相关cell_base" id="markdown-toc-晶格相关cell_base">晶格相关cell_base</a></li>
+      <li><a href="#原子相关ions_base" id="markdown-toc-原子相关ions_base">原子相关ions_base</a></li>
+    </ul>
+  </li>
+  <li><a href="#pwcomf90" id="markdown-toc-pwcomf90"><code class="highlighter-rouge">pwcom.f90</code></a>    <ul>
+      <li><a href="#module-ener能量模块" id="markdown-toc-module-ener能量模块"><code class="highlighter-rouge">MODULE ener</code>能量模块</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/QEF/q-e.git">q-e code</a><br /></p>
+
+<h2 id="read_input_file读入输入文件"><strong>read_input_file</strong>读入输入文件</h2>
+<p>File:<code class="highlighter-rouge">Modules/read_input.f90</code><br />
+<strong>读入输入文件，设置<code class="highlighter-rouge">MODULE input_parameters</code>中的变量(NAMELIST,CARD)</strong></p>
+
+<ul class="task-list">
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />MODULE read_input</p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><strong><code class="highlighter-rouge">SUBROUTINE read_input_file( prog, input_file_ )</code></strong><br />
+    调用的模式如PWscf的”PW”, manypwscf的”PW”,i-PI的”PW+iP”i,neb的”PW”,manycp的”CP”<br /> 对于电子结构计算都是按照”PW”的模式读入</p>
+
+    <ul class="task-list">
+      <li class="task-list-item">
+        <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">ierr = open_input_file( input_file_, xmlinput )</code> 打开输入文件</p>
+      </li>
+      <li class="task-list-item">
+        <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL read_namelists( prog, qestdin )</code> 读入NAMELIST型变量<code class="highlighter-rouge">&amp;NAMELIST ... /</code><br /></p>
+
+        <p>File:<code class="highlighter-rouge">Modules/read_namelists.f90</code><br /></p>
+
+        <p>有读入顺序，使用Fortran语法读入<code class="highlighter-rouge">READ( unit_loc, NAMELIST, iostat = ios )</code></p>
+
+        <p><strong>“PW+ipi”相比”PW”只是多读了一个<code class="highlighter-rouge">&amp;INOS /</code>而已</strong>，无用的NAMELIST会warning</p>
+
+        <p><strong>这里虽然只差了一个IONS,但是你在计算ipi的时候不设置IONS会终止, 设置空可能会得到错误的结论</strong></p>
+      </li>
+      <li class="task-list-item">
+        <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><code class="highlighter-rouge">CALL read_cards ( prog(1:2), qestdin )</code> 读入CARD型变量<br /></p>
+
+        <p>File:<code class="highlighter-rouge">Modules/read_cards.f90</code><br /></p>
+
+        <p>此处可以看到,对于pwscf,manypwscf,ipi,neb计算都按照PW读入卡片</p>
+      </li>
+    </ul>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" /><strong>END SUBROUTINE read_input_file</strong></p>
+  </li>
+  <li class="task-list-item">
+    <p><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />END MODULE read_input</p>
+  </li>
+</ul>
+
+<h3 id="read_namelists"><code class="highlighter-rouge">read_namelists</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/read_namelists.f90</code>&lt;br
+主要读入<code class="highlighter-rouge">MODULE input_parameters</code>中的NAMELIST(<code class="highlighter-rouge">&amp; /</code>)型变量变量<br />
+以<code class="highlighter-rouge">control</code>NAMELIST为例</p>
+<ul>
+  <li><code class="highlighter-rouge">CALL control_defaults( prog )</code>默认值　</li>
+  <li><strong><code class="highlighter-rouge">READ( unit_loc, control, iostat = ios )</code>读入输入文件</strong></li>
+  <li><code class="highlighter-rouge">CALL check_namelist_read(ios, unit_loc, "control")</code>检查问题</li>
+  <li><code class="highlighter-rouge">CALL control_bcast( )</code>广播变量</li>
+  <li><code class="highlighter-rouge">CALL control_checkin( prog )</code>检查输入值是否在指定区间</li>
+  <li><code class="highlighter-rouge">CALL fixval( prog )</code>计算一些值</li>
+</ul>
+
+<p>其他的NAMELIST如system,electrons,ions,cell,这些NAMELIST中<strong>还定义很多变量，他们可能并没有出现在QE的手册里面</strong>，可能是debug的参数,可以进行设置计算。</p>
+
+<h3 id="read_cards"><code class="highlighter-rouge">read_cards</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/read_cards.f90</code><br /></p>
+
+<ul>
+  <li>设置默认值</li>
+  <li>跳过<code class="highlighter-rouge">#,!</code>来头行，录入有效信息</li>
+  <li>读入选项卡</li>
+</ul>
+
+<h2 id="input_parameters中的变量"><code class="highlighter-rouge">input_parameters</code>中的变量</h2>
+<p>File:<code class="highlighter-rouge">Modules/input_parameters.f90</code><br />
+存储输入参数的变量表,变量名和输入名基本上都是一样的</p>
+
+<h2 id="control_flags中的变量"><code class="highlighter-rouge">control_flags</code>中的变量</h2>
+<p>File:<code class="highlighter-rouge">Modules/control_flags.f90</code><br />
+很多程序都用<code class="highlighter-rouge">control_flags</code>中的变量, <strong>控制整个计算执行的基本参数</strong>。<br />
+在正式计算前被定义个使用，<code class="highlighter-rouge">iosys()</code>和<code class="highlighter-rouge">setup()</code>中被具体设置</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">io_level = 1</code>, 控制buffer保存到内存还是文件,由<code class="highlighter-rouge">disk_io</code>输入参数控制       ! variable controlling the amount of I/O to file
+<br /> io_level &gt; 1打开文件,否则,打开内存缓冲区</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">smallmem      = .FALSE. </code> the memory per task is small
+由<code class="highlighter-rouge">&amp;CONTROL</code>中的<code class="highlighter-rouge">memory='small', 'default', 'large'</code>决定，采用不同的算法，官方手册中没有写<br />
+<code class="highlighter-rouge">smallmem = ( TRIM( memory ) == 'small' )</code></p>
+  </li>
+</ul>
+
+<h2 id="constants常量"><code class="highlighter-rouge">constants</code>常量</h2>
+<p>File:<code class="highlighter-rouge">Modules/constants.f90</code></p>
+
+<ul>
+  <li>
+    <p>… Mathematical constants</p>
+
+    <ul>
+      <li>pi     = 3.14159265358979323846_DP</li>
+      <li>tpi    = 2.0_DP * pi</li>
+      <li>fpi    = 4.0_DP * pi</li>
+      <li>sqrtpi = 1.77245385090551602729_DP</li>
+      <li>sqrtpm1= 1.0_DP / sqrtpi</li>
+      <li>sqrt2  = 1.41421356237309504880_DP</li>
+    </ul>
+  </li>
+  <li>… Physical constants, SI (NIST CODATA 2006), Web Version 5.1
+  http://physics.nist.gov/constants
+    <ul>
+      <li>H_PLANCK_SI      = 6.62606896E-34_DP  - J s</li>
+      <li>K_BOLTZMANN_SI   = 1.3806504E-23_DP   - J K^-1</li>
+      <li>ELECTRON_SI      = 1.602176487E-19_DP - C</li>
+      <li>ELECTRONVOLT_SI  = 1.602176487E-19_DP - J</li>
+      <li>ELECTRONMASS_SI  = 9.10938215E-31_DP  - Kg</li>
+      <li>HARTREE_SI       = 4.35974394E-18_DP  - J</li>
+      <li>RYDBERG_SI       = HARTREE_SI/2.0_DP  - J</li>
+      <li>BOHR_RADIUS_SI   = 0.52917720859E-10_DP ! m</li>
+      <li>AMU_SI           = 1.660538782E-27_DP - Kg</li>
+      <li>C_SI             = 2.99792458E+8_DP   - m sec^-1</li>
+      <li>MUNOUGHT_SI      = fpi*1.0E-7_DP      - N A^-2</li>
+      <li>EPSNOUGHT_SI     = 1.0_DP / (MUNOUGHT_SI * &amp;
+                                                 C_SI**2) ! F m^-1</li>
+    </ul>
+  </li>
+  <li>
+    <p>… Physical constants, atomic units:
+  … AU for “Hartree” atomic units (e = m = hbar = 1)
+  … RY for “Rydberg” atomic units (e^2=2, m=1/2, hbar=1)</p>
+
+    <ul>
+      <li>K_BOLTZMANN_AU   = K_BOLTZMANN_SI / HARTREE_SI</li>
+      <li>K_BOLTZMANN_RY   = K_BOLTZMANN_SI / RYDBERG_SI</li>
+    </ul>
+  </li>
+  <li>… Unit conversion factors: energy and masses
+    <ul>
+      <li>AUTOEV           = HARTREE_SI / ELECTRONVOLT_SI</li>
+      <li>RYTOEV           = AUTOEV / 2.0_DP</li>
+      <li>AMU_AU           = AMU_SI / ELECTRONMASS_SI</li>
+      <li>AMU_RY           = AMU_AU / 2.0_DP</li>
+    </ul>
+  </li>
+  <li>… Unit conversion factors: atomic unit of time, in s and ps
+    <ul>
+      <li>AU_SEC           = H_PLANCK_SI/tpi/HARTREE_SI</li>
+      <li>AU_PS            = AU_SEC * 1.0E+12_DP</li>
+    </ul>
+  </li>
+  <li>… Unit conversion factors: pressure (1 Pa = 1 J/m^3, 1GPa = 10 Kbar )
+    <ul>
+      <li>AU_GPA           = HARTREE_SI / BOHR_RADIUS_SI ** 3 &amp;
+                                      / 1.0E+9_DP</li>
+      <li>RY_KBAR          = 10.0_DP * AU_GPA / 2.0_DP</li>
+    </ul>
+  </li>
+  <li>… Unit conversion factors: 1 debye = 10^-18 esu*cm</li>
+  <li>…                                  = 3.3356409519*10^-30 C*m</li>
+  <li>…                                  = 0.208194346 e*A</li>
+  <li>… ( 1 esu = (0.1/c) Am, c=299792458 m/s)
+    <ul>
+      <li>DEBYE_SI         = 3.3356409519_DP * 1.0E-30_DP ! C*m</li>
+      <li>AU_DEBYE         = ELECTRON_SI * BOHR_RADIUS_SI / &amp;
+                                      DEBYE_SI</li>
+      <li>eV_to_kelvin = ELECTRONVOLT_SI / K_BOLTZMANN_SI</li>
+      <li>ry_to_kelvin = RYDBERG_SI / K_BOLTZMANN_SI</li>
+    </ul>
+  </li>
+  <li>.. Unit conversion factors: Energy to wavelength
+    <ul>
+      <li>EVTONM = 1E+9_DP * H_PLANCK_SI * C_SI / &amp;
+                            &amp;ELECTRONVOLT_SI</li>
+      <li>RYTONM = 1E+9_DP * H_PLANCK_SI * C_SI / RYDBERG_SI</li>
+    </ul>
+  </li>
+  <li>Speed of light in atomic units
+    <ul>
+      <li>C_AU             = C_SI / BOHR_RADIUS_SI * AU_SEC</li>
+    </ul>
+  </li>
+  <li>… zero up to a given accuracy
+    <ul>
+      <li>eps4  = 1.0E-4_DP</li>
+      <li>eps6  = 1.0E-6_DP</li>
+      <li>eps8  = 1.0E-8_DP</li>
+      <li>eps12 = 1.0E-12_DP</li>
+      <li>eps14 = 1.0E-14_DP</li>
+      <li>eps16 = 1.0E-16_DP</li>
+      <li>eps24 = 1.0E-24_DP</li>
+      <li>
+        <p>eps32 = 1.0E-32_DP</p>
+      </li>
+      <li>
+        <p>gsmall = 1.0E-12_DP</p>
+      </li>
+      <li>e2 = 2.0_DP     - the square of the electron charge</li>
+      <li>degspin = 2.0_DP ! the number of spins per level</li>
+    </ul>
+  </li>
+  <li>
+    <p>!!!!! COMPATIBIILITY</p>
+
+    <ul>
+      <li>BOHR_RADIUS_CM = BOHR_RADIUS_SI * 100.0_DP</li>
+      <li>BOHR_RADIUS_ANGS = BOHR_RADIUS_CM * 1.0E8_DP</li>
+      <li>ANGSTROM_AU = 1.0_DP/BOHR_RADIUS_ANGS</li>
+      <li>DIP_DEBYE = AU_DEBYE</li>
+      <li>AU_TERAHERTZ  = AU_PS</li>
+      <li>AU_TO_OHMCMM1 = 46000.0_DP ! (ohm cm)^-1</li>
+      <li>RY_TO_THZ = 1.0_DP / AU_TERAHERTZ / FPI</li>
+      <li>RY_TO_GHZ = RY_TO_THZ*1000.0_DP</li>
+      <li>RY_TO_CMM1 = 1.E+10_DP * RY_TO_THZ / C_SI
+  !</li>
+      <li>AVOGADRO = 6.02214129D+23</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="k点">k点</h2>
+<h3 id="module-klist">MODULE klist</h3>
+<p>File:<code class="highlighter-rouge">PW/src/pwcom.f90</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>变量</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">xk(3,npk)</code></td>
+      <td>coordinates of k points ,单位是<code class="highlighter-rouge">2pi/alat</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">wk(npk)</code></td>
+      <td>weight of k points</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">nks</code></td>
+      <td>number of k points in this pool</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">nkstot</code></td>
+      <td>total number of k points</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">ngauss</code></td>
+      <td>type of smearing technique</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong><code class="highlighter-rouge">xk</code>的单位是<code class="highlighter-rouge">2pi/alat</code>,在pwscf.KP中的k点坐标为<code class="highlighter-rouge">xk*tpiba</code>，单位是Bohr^-1,与siesta.KP一样</strong></p>
+
+<h2 id="常用变量表">常用变量表</h2>
+
+<h3 id="晶格相关cell_base">晶格相关cell_base</h3>
+<p>File:<code class="highlighter-rouge">Modules/cell_base.f90</code><br />
+使用:<code class="highlighter-rouge">USE cell_base,  ONLY : at</code><br />
+单位换算</p>
+<ul>
+  <li><code class="highlighter-rouge">1 Ang = 1.8897261 Bohr</code></li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>输入参数</th>
+      <th>含义</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge"> REAL(DP) :: alat = 0.0_DP </code></td>
+      <td><code class="highlighter-rouge">alat</code>晶格常数 晶格缩放系数, <code class="highlighter-rouge">at</code>的长度单位</td>
+      <td>物理含义为输入参数的A,<strong>单位是Bohr</strong>， 数值上<code class="highlighter-rouge">alat = A*1.889727</code>,<br />输出到屏幕上 <br /><code class="highlighter-rouge">lattice parameter (alat)  =       6.0288  a.u.</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge"> REAL(DP) :: at(3,3) = RESHAPE( (/ 0.0_DP /), (/ 3, 3 /), (/ 0.0_DP /) ) </code></td>
+      <td>原胞晶格, 单位是<code class="highlighter-rouge">实际长度/alat</code></td>
+      <td><strong>程序中数值单位是1</strong>, 等于输入的<code class="highlighter-rouge">at[Ang]/A[Ang]</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge"> REAl(DP) :: omega = 0.0_DP  </code></td>
+      <td>原胞体积</td>
+      <td>单位<code class="highlighter-rouge">Bohr^3</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge"> REAL(DP) :: tpiba  = 0.0_DP, tpiba2 = 0.0_DP  </code></td>
+      <td><code class="highlighter-rouge">tpiba = 2pi/alat </code>, <code class="highlighter-rouge">tpiba2=tpiba^2</code>, <code class="highlighter-rouge">tpiba</code>是倒格失单位</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge"> REAL(DP) :: bg(3,3) = RESHAPE( (/ 0.0_DP /), (/ 3, 3 /), (/ 0.0_DP /) )  </code></td>
+      <td>倒格失, 单位是<code class="highlighter-rouge">实际长度/thiba</code></td>
+      <td><strong>程序中数值单位是1</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>相关推导:
+<code class="highlighter-rouge">at_real,bg_real</code>分别表示实际的晶格矢量, 倒格失<br />
+<code class="highlighter-rouge">at,bg</code>分别是”相对”的晶格矢量, 倒格失
+=&gt; <code class="highlighter-rouge">at_real*bg_real=2*PI</code><br />
+=&gt; <code class="highlighter-rouge">at*(alat)*bg*(thiba)=2*PI</code><br />
+=&gt; <code class="highlighter-rouge">thiba = 2*PI/alat</code><br />
+=&gt; <strong><code class="highlighter-rouge">at*bg=1</code></strong></p>
+
+<p>The lattice parameter alat = A (in ANGSTROM )</p>
+
+<h3 id="原子相关ions_base">原子相关ions_base</h3>
+<p>File:<code class="highlighter-rouge">Modules/ions_base.f90</code></p>
+
+<ul>
+  <li><code class="highlighter-rouge">nsp   </code>          元素数,i.e. ntype, number of species</li>
+  <li><code class="highlighter-rouge">na(is)</code>          元素is有多少种原子,number of atoms of species is</li>
+  <li><code class="highlighter-rouge">nax   </code>          max number of atoms of a given species</li>
+  <li><code class="highlighter-rouge">nat   </code>          输入参数原子数nat, total number of atoms of all species</li>
+  <li><code class="highlighter-rouge">ityp( i )</code>       元素类型,1…ntype, the type of i-th atom in stdin</li>
+  <li><code class="highlighter-rouge">atm( j )</code>        <code class="highlighter-rouge">CHARACTER(LEN=3)</code>,name of the type of the j-th atomic specie</li>
+  <li><code class="highlighter-rouge">tau( 1:3, i )</code>   position of the i-th atom</li>
+</ul>
+
+<h2 id="pwcomf90"><code class="highlighter-rouge">pwcom.f90</code></h2>
+<h3 id="module-ener能量模块"><code class="highlighter-rouge">MODULE ener</code>能量模块</h3>
+<p>REAL(DP)</p>
+<ul>
+  <li><code class="highlighter-rouge">etot</code>           <br /> the total Kohn-Sham energy of the solid</li>
+  <li><code class="highlighter-rouge">hwf_energy</code>     <br /> this is the Harris-Weinert-Foulkes energy</li>
+  <li><code class="highlighter-rouge">eband</code>          <br /> the band energy</li>
+  <li><code class="highlighter-rouge">deband</code>         <br /> scf correction to have variational energy</li>
+  <li><code class="highlighter-rouge">ehart</code>          <br /> the hartree energy</li>
+  <li><code class="highlighter-rouge">etxc</code>           <br /> the exchange and correlation energy</li>
+  <li><code class="highlighter-rouge">vtxc</code>           <br /> another exchange-correlation energy</li>
+  <li><code class="highlighter-rouge">etxcc</code>          <br /> the nlcc exchange and correlation</li>
+  <li><code class="highlighter-rouge">ewld</code>           <br /> the ewald energy</li>
+  <li><code class="highlighter-rouge">elondon</code>        <br /> the semi-empirical dispersion energy</li>
+  <li><code class="highlighter-rouge">edftd3</code>         <br /> the grimme-d3 dispersion energy</li>
+  <li><code class="highlighter-rouge">exdm</code>           <br /> the XDM dispersion energy</li>
+  <li><code class="highlighter-rouge">demet</code>          <br /> variational correction (“-TS”) for metals
+<br /> 在<code class="highlighter-rouge">CALL weights ( )</code>中计算</li>
+  <li><code class="highlighter-rouge">epaw</code>           <br /> sum of one-center paw contributions</li>
+  <li><code class="highlighter-rouge">ef，ef_up，ef_dw</code><br /> the fermi energy (up and dw if two_fermi_energies=.T.)
+<br /> 在<code class="highlighter-rouge">CALL weights ( )</code>中计算,Fermi能ef，不同自旋的fermi能</li>
+</ul>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/09/20/qe-spin/">QE代码阅读: 自旋相关
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/04/14/qe-electrons/">QE代码阅读: 电子自洽计算electrons</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/04/14/bluetooth/">Mint 使用蓝牙鼠标问题</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

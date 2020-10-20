@@ -221,6 +221,14 @@
                 
                     
                 
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
         </nav>
     </div>
@@ -413,6 +421,8 @@
       <li><a href="#判断文件夹存在变量相等" id="markdown-toc-判断文件夹存在变量相等">判断文件(夹)存在，变量相等</a></li>
       <li><a href="#挖坑diff比较文件差异" id="markdown-toc-挖坑diff比较文件差异">[挖坑]diff比较文件差异</a></li>
       <li><a href="#显示进度条的复制-alias-cprsync--avph" id="markdown-toc-显示进度条的复制-alias-cprsync--avph">显示进度条的复制 <code class="highlighter-rouge">alias cp="rsync -avPh"</code></a></li>
+      <li><a href="#查看系统重启运行时间" id="markdown-toc-查看系统重启运行时间">查看系统重启运行时间</a></li>
+      <li><a href="#查看发行版内核位数" id="markdown-toc-查看发行版内核位数">查看发行版,内核,位数</a></li>
       <li><a href="#montage-合并拆解图片" id="markdown-toc-montage-合并拆解图片">montage 合并，拆解图片</a></li>
     </ul>
   </li>
@@ -1373,8 +1383,25 @@ Binary files siesta1.RHO and TDStep/siesta2.RHO differ
 
 <h3 id="显示进度条的复制-alias-cprsync--avph">显示进度条的复制 <code class="highlighter-rouge">alias cp="rsync -avPh"</code></h3>
 
-<pre><code class="language-`">rsync -avPh  Accelrys_Materials_Studio_8.0_Win.iso  /home/data/sf10nas/
-</code></pre>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rsync <span class="nt">-avPh</span>  Accelrys_Materials_Studio_8.0_Win.iso  /home/data/sf10nas/
+</code></pre></div></div>
+
+<h3 id="查看系统重启运行时间">查看系统重启运行时间</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mboy:~<span class="nv">$ </span><span class="nb">who</span> <span class="nt">-b</span>
+         system boot  2020-10-20 09:00
+cndaqiang@mboy:~<span class="nv">$ </span><span class="nb">who</span> <span class="nt">-r</span>
+         run-level 5  2020-10-20 09:00
+</code></pre></div></div>
+<h3 id="查看发行版内核位数">查看发行版,内核,位数</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mboy:~$ cat /etc/issue
+Linux Mint 19 Tara \n \l
+
+cndaqiang@mboy:~$ cat /proc/version
+Linux version 4.15.0-20-generic (buildd@lgw01-amd64-039) (gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3)) #21-Ubuntu SMP Tue Apr 24 06:16:15 UTC 2018
+
+cndaqiang@mboy:~$ getconf LONG_BIT
+64
+</code></pre></div></div>
 
 <h3 id="montage-合并拆解图片">montage 合并，拆解图片</h3>
 <p>合并图片</p>
@@ -1392,6 +1419,8 @@ montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行
 <p><a href="http://www.linuxidc.com/Linux/2012-07/65455.htm">Ubuntu终端彻底删除软件</a></p>
 
 <p><a href="http://man.linuxde.net/tar">tar命令</a></p>
+
+<p><a href="https://developer.aliyun.com/article/34206">Linux查看系统开机时间</a></p>
 
 
         </article>
@@ -1428,15 +1457,6 @@ montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行
                     
                 
             
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
                 
                     
                 
@@ -1451,24 +1471,6 @@ montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行
                 
                     
                 
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
             
                 
                     
@@ -1506,12 +1508,6 @@ montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行
                     
                 
             
-                
-                    
-                
-                    
-                
-            
         
             
             
@@ -1529,6 +1525,33 @@ montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行
                 
                     
                 
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
             
                 
                     

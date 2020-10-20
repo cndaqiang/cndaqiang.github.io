@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>非绝热动力学</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2020/05/12/nonadibatic/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2020/05/12/nonadibatic/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2020/05/12/nonadibatic/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2020/05/12/nonadibatic/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>非绝热动力学</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-05-12
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#PHY" title="Category: PHY" rel="category">PHY</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#PHY" title="Tag: PHY" rel="tag">PHY</a-->
+        <a href="/tag/#PHY" title="Tag: PHY" rel="tag">PHY</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#概念" id="markdown-toc-概念"><center>~~~~~<br />概念<br />~~~~~</center></a></li>
+  <li><a href="#电子态基失表象" id="markdown-toc-电子态基失表象">电子态基失/表象</a>    <ul>
+      <li><a href="#绝热态基失" id="markdown-toc-绝热态基失">绝热态基失</a></li>
+      <li><a href="#透热态基失" id="markdown-toc-透热态基失">透热态基失</a>        <ul>
+          <li><a href="#透热态基失的构造" id="markdown-toc-透热态基失的构造">透热态基失的构造</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#势能面pes" id="markdown-toc-势能面pes">势能面PES</a>    <ul>
+      <li><a href="#势能面交叉" id="markdown-toc-势能面交叉">势能面交叉</a></li>
+    </ul>
+  </li>
+  <li><a href="#非绝热过程" id="markdown-toc-非绝热过程"><center>~~~~~<br />非绝热过程<br />~~~~~</center></a></li>
+  <li><a href="#bo近似和绝热过程" id="markdown-toc-bo近似和绝热过程">BO近似和绝热过程</a>    <ul>
+      <li><a href="#公式" id="markdown-toc-公式">公式</a></li>
+      <li><a href="#bo近似的局限" id="markdown-toc-bo近似的局限">BO近似的局限</a></li>
+    </ul>
+  </li>
+  <li><a href="#非绝热过程及方法" id="markdown-toc-非绝热过程及方法">非绝热过程及方法</a></li>
+  <li><a href="#全量子动力学方法" id="markdown-toc-全量子动力学方法">全量子动力学方法</a></li>
+  <li><a href="#半经典动力学" id="markdown-toc-半经典动力学">半经典动力学</a>    <ul>
+      <li><a href="#ehrenfest平均场方法" id="markdown-toc-ehrenfest平均场方法"><strong>Ehrenfest</strong>平均场方法</a>        <ul>
+          <li><a href="#框架" id="markdown-toc-框架"><strong>框架</strong></a></li>
+          <li><a href="#ehrenfest实施方法" id="markdown-toc-ehrenfest实施方法">Ehrenfest实施方法</a></li>
+          <li><a href="#ehrenfest动力学推导" id="markdown-toc-ehrenfest动力学推导">Ehrenfest动力学推导</a>            <ul>
+              <li><a href="#tddft-ehrenfest" id="markdown-toc-tddft-ehrenfest">TDDFT-Ehrenfest</a></li>
+            </ul>
+          </li>
+          <li><a href="#缺陷" id="markdown-toc-缺陷"><strong>缺陷</strong></a></li>
+        </ul>
+      </li>
+      <li><a href="#surface-hopping面跳跃方法" id="markdown-toc-surface-hopping面跳跃方法"><strong>surface hopping</strong>面跳跃方法</a></li>
+      <li><a href="#路径积分分子动力学pimd" id="markdown-toc-路径积分分子动力学pimd"><strong>路径积分分子动力学PIMD</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#激发态电子态计算方法" id="markdown-toc-激发态电子态计算方法">激发态电子态计算方法</a></li>
+  <li><a href="#代表问题" id="markdown-toc-代表问题">代表问题</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<ul>
+  <li>[1] 胡德平,谢宇,黄静,杜利凯,郑杰,兰峥岗.化学动力学中的非绝热过程及其理论研究[J].中国科学:化学,2015,45(08):777-799.</li>
+  <li>[2] 彭佳伟,谢宇,胡德平,杜利凯,兰峥岗.利用基于直接动力学的轨线面跳跃方法处理非绝热过程[J].物理化学学报,2019,35(01):28-48.</li>
+  <li>[3] 过渡金属二硫化物异质结中超快电荷转移的非绝热动力学研究_郑奇靖</li>
+  <li>[4] 光催化中超快电荷转移的非绝热动力学研究_褚维斌</li>
+  <li>[5] Nonadiabatic effects in electronic and nuclear dynamics,https://doi.org/10.1063/1.4996816</li>
+  <li>[6] <a href="https://en.wikipedia.org/wiki/Path_integral_molecular_dynamics">Path integral molecular dynamics@wikipedia</a></li>
+</ul>
+
+<h2 id="概念"><center>~~~~~<br />概念<br />~~~~~</center></h2>
+<ul>
+  <li>电子态: 应该是电子的多体波函数/态</li>
+  <li>只有在DFT或者其他单粒子近似方法中才把多体电子波函数转为多个单粒子态</li>
+</ul>
+
+<h2 id="电子态基失表象">电子态基失/表象</h2>
+<p>基失(or 表象, representation): <strong>绝热态(adiabatic)</strong>、<strong>透热态(diabatic)</strong>、…还有很多<br />
+常用上标a表示绝热态，用上标a表示透热基组<br /><br /></p>
+
+<h3 id="绝热态基失">绝热态基失</h3>
+<p>对于分子体系，多体含时薛定锷方程为
+\begin{array}{l}
+\label{eq.q.1}
+i\hbar\cfrac{d}{dt}\varPsi(\mathbf{R},\mathbf{r},t)=\mathbf{H}\varPsi(\mathbf{R},\mathbf{r},t)
+\tag{q.1}
+\end{array}
+其中<script type="math/tex">\mathbf{H}</script>包含原子核和电子两部分，称为总体哈密顿
+\begin{array}{l}
+\label{eq.q.2}
+\mathbf{H}=\mathbf{T}_n + \mathbf{H}_e
+\tag{q.2}
+\end{array}
+<script type="math/tex">\mathbf{H}_n</script>是原子核的动能, <br />
+<script type="math/tex">\mathbf{H}_e</script>是电子哈密顿,也称为BO哈密顿,包含电子动能,原子核间排斥作用，电子间排斥作用，以及电子与核之间的吸引作用</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.3}
+\mathbf{H}_e=\mathbf{T}_e + \mathbf{V}_{nn}(\mathbf{R}) +\mathbf{V}_{ne}(\mathbf{R},\mathbf{r})+\mathbf{V}_{ee}(\mathbf{r})
+\tag{q.3}
+\end{array}</script>
+
+<p><script type="math/tex">\mathbf{H}_e</script>的本征态是绝热态adiabatic基组，<br />
+显然绝热态波函数仅与原子坐标<script type="math/tex">\mathbf{R}</script>有关，<em>与时间无关</em></p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.4}
+\mathbf{H}_e \phi_i(\mathbf{r};\mathbf{R}) = E_i(\mathbf{R})\phi_i(\mathbf{r};\mathbf{R})
+\tag{q.4}
+\end{array}</script>
+
+<p>由<strong>波恩-奥本海默-黄展开</strong>,整体波函数可以使用绝热态电子波函数<strong>严格展开</strong></p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.5}
+\varPsi(\mathbf{R},\mathbf{r},t)=\sum_i \chi_i(\mathbf{R},t)\phi_i(\mathbf{r};\mathbf{R})
+\tag{q.5}
+\end{array}</script>
+
+<p>其中<script type="math/tex">\chi_i(\mathbf{R},t)</script>为原子核波函数, <script type="math/tex">\phi_i(\mathbf{r};\mathbf{R})</script>为绝热态电子的波函数.
+<br /></p>
+
+<p>将方程<script type="math/tex">\eqref{eq.q.5}</script>带入<script type="math/tex">\eqref{eq.q.1}</script>,并左乘<script type="math/tex">\langle \phi_i(\mathbf{r};\mathbf{R}) |</script>积分得
+<img src="/uploads/2020/05/boh.jpg" alt="" />
+即</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+\label{eq.q.6}
+i\hbar\cfrac{d}{dt}\chi_i(\mathbf{R},t) 
+&=-\cfrac{\hbar^2}{2M}\sum_j \left ( G_{ij}( \mathbf{R} ) + 2\mathbf{F}_{ij}(\mathbf{R})\cdot \nabla_R \right ) \chi_j(\mathbf{R},t) \\
+&+ \left( -\cfrac{\hbar^2}{2M} \nabla_R^2 + E_i(\mathbf{R}) \right )\chi_i(\mathbf{R},t)
+\tag{q.6}
+\end{array} %]]></script>
+
+<p>其中<script type="math/tex">\mathbf{F}_{ij}</script>为电子态波函数<script type="math/tex">\phi_i</script>的一阶耦合<strong>矢量</strong>, <script type="math/tex">G_ij</script>是二阶耦合<strong>系数</strong></p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.7}
+\mathbf{F}_{ij}(\mathbf{R}) = \langle \phi_i(\mathbf{r};\mathbf{R})| \nabla_\mathbf{R} | \phi_j(\mathbf{r};\mathbf{R}) \rangle 
+\tag{q.7}
+\end{array}</script>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.8}
+G_{ij}(\mathbf{R}) = \langle \phi_i(\mathbf{r};\mathbf{R})| \nabla_\mathbf{R}^2 | \phi_j(\mathbf{r};\mathbf{R}) \rangle
+\tag{q.8}
+\end{array}</script>
+
+<p>下面证明<script type="math/tex">\mathbf{F}_{ij}</script>的另一种形式, 由</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+\label{eq.q.9}
+& \nabla_R \langle \phi_i(\mathbf{r};\mathbf{R})| \mathbf{H}_e | \phi_j(\mathbf{r};\mathbf{R}) \rangle \\
+& =  \langle \phi_i(\mathbf{r};\mathbf{R})| \nabla \mathbf{H}_e | \phi_j(\mathbf{r};\mathbf{R})  \rangle
++ E_i\mathbf{F}_{ij} +  E_j \mathbf{F}_{ji}^{\ast}
+\tag{q.9}
+\end{array} %]]></script>
+
+<p>由<script type="math/tex">\langle \phi_i(\mathbf{r};\mathbf{R})| \phi_j(\mathbf{r};\mathbf{R}) \rangle = \delta_{ij}</script>, 得: 
+<script type="math/tex">\nabla_R \langle \phi_i(\mathbf{r};\mathbf{R})| \phi_j(\mathbf{r};\mathbf{R}) \rangle = 0</script>,即: 
+<script type="math/tex">\mathbf{F}_{ij} (\mathbf{R}) = - \mathbf{F}_{ji}^{\ast}</script></p>
+
+<p>所以由<script type="math/tex">\eqref{eq.q.9}</script>得</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.10}
+\mathbf{F}_{ij}= \cfrac{ \langle \phi_i(\mathbf{r};\mathbf{R})| \nabla \mathbf{H}_e | \phi_j(\mathbf{r};\mathbf{R})  \rangle}{ E_i(\mathbf{R}) - E_j (\mathbf{R})}
+\tag{q.10}
+\end{array}</script>
+
+<p>由<script type="math/tex">\eqref{eq.q.10}</script>可以看出，到那个两个电子态的能量差接近于0时, 一阶耦合矢量会趋于无穷大,因此在势能面交叉点附近,很容易发生非绝热跃迁.<br /></p>
+
+<p>在不同的文献中,常把<script type="math/tex">\mathbf{R}</script>展开为每个原子,如@[3],中的推导
+<img src="/uploads/2020/05/zqj1.png" alt="" />
+<img src="/uploads/2020/05/zqj2.png" alt="" />
+<img src="/uploads/2020/05/zqj3.png" alt="" />
+<img src="/uploads/2020/05/zqj4.png" alt="" />
+<img src="/uploads/2020/05/zqj5.png" alt="" /></p>
+
+<h3 id="透热态基失">透热态基失</h3>
+<p>当一阶耦合矢量发散时，很难将其用于量子动力学演化，为例规避这一问题，可以引入另一组正交归一的基组-<strong>透热电子态</strong>.<br />
+在透热电子态基组下，透热态波函数随R缓慢变化，要求非绝热耦合项<script type="math/tex">\eqref{eq.q.7},\eqref{eq.q.8}</script>等于0或非常小, 严格的透热态定义为</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.11}
+\mathbf{F}_{ij}^d=\langle \phi_i^d(\mathbf{r};\mathbf{R})| \nabla_\mathbf{R_\alpha} | \phi_j^d(\mathbf{r};\mathbf{R}) \rangle == 0, \; \; \forall i,j,R_\alpha 
+\tag{q.11}
+\end{array}</script>
+
+<p>注意，透热态基失不再是电子哈密顿量的本征态，<br />
+同<script type="math/tex">\eqref{eq.q.4}</script>,使用透热态展开体系波函数,带入<script type="math/tex">\eqref{eq.q.1}</script>,同理可得原子核波函数演化方程</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+\label{eq.q.12}
+i\hbar\cfrac{d}{dt}\chi_i^d(\mathbf{R},t) 
+&=  -\cfrac{\hbar^2}{2M} \nabla_R^2 \chi_i(\mathbf{R},t) \\
+&+ \sum_j \langle \phi_i^d(\mathbf{r};\mathbf{R}) | \mathbf{H}_e | \phi_j^d(\mathbf{r};\mathbf{R}) \rangle 
+\tag{q.12}
+\end{array} %]]></script>
+
+<h4 id="透热态基失的构造">透热态基失的构造</h4>
+<blockquote>
+  <p>@[2] 尽管利用透热态可以避免一阶耦合矢量发散的问题， 但是对于分子体系， 透热态构建本身并不容易。严格意义上的透热态只有在双原子分子体系和电子态完备的多原子体系中才能够得到，而通常所说的透热态都是近似的</p>
+</blockquote>
+
+<p>分离电子哈密顿量构造如@[3]
+<img src="/uploads/2020/05/zqj6.png" alt="" /></p>
+
+<p>将绝热态电子波函数进行酉变换得到一组一阶耦合不发散的电子态,即<strong>透热态</strong></p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.13}
+\phi_i^d(\mathbf{r};\mathbf{R}) = \sum_j U_{ij}(\mathbf{R})\phi_i(\mathbf{r};\mathbf{R}) 
+\tag{q.13}
+\end{array}</script>
+
+<p>通常是很难的</p>
+
+<h2 id="势能面pes">势能面PES</h2>
+<p>本征电子态能量在原子核坐标为<script type="math/tex">\mathbf{R}</script>下的能量,如</p>
+<ul>
+  <li>绝热态能量<script type="math/tex">E_i^a</script>的能量随原子坐标的变化</li>
+  <li>透热态能量<script type="math/tex">E_i^d</script>的能量随原子坐标的变化</li>
+</ul>
+
+<p>绝热态和透热态的势能面是不随时间变化的，但是原子波函数在势能面上演化时，在不同势能面上的分量是与动力学过程相关的.<br /></p>
+
+<p>在Ehrenfest动力学中，原子核波函数在平均势能面上演化</p>
+
+<h3 id="势能面交叉">势能面交叉</h3>
+<p>一般指绝热势能面的交叉</p>
+<ul>
+  <li>conical intersection锥形交叉: 当两个电子态自旋相同时， 出现的势能面相交称为锥形交叉</li>
+  <li>不同自旋的交叉</li>
+  <li>避免交叉</li>
+</ul>
+
+<h2 id="非绝热过程"><center>~~~~~<br />非绝热过程<br />~~~~~</center></h2>
+
+<blockquote>
+  <p>@[1] .伴随着原子核的运动出现的电子态之间的跃迁, 被称为非绝热过程.</p>
+</blockquote>
+
+<h2 id="bo近似和绝热过程">BO近似和绝热过程</h2>
+<p>明天上午整理</p>
+<h3 id="公式">公式</h3>
+<blockquote>
+  <p>@[3]
+<img src="/uploads/2020/05/zqj7.png" alt="" />
+<img src="/uploads/2020/05/zqj8.png" alt="" />
+<img src="/uploads/2020/05/zqj9.png" alt="" /></p>
+</blockquote>
+
+<h3 id="bo近似的局限">BO近似的局限</h3>
+<p>BO近似下的绝热过程, 适用于不同电子态的一阶、二阶耦合比较小的情况，如下图所示，不同电子态间的势能面相距较远，从公式可以看出，原子核演化波函数仅与特定的电子态相关，即<strong>原子在一个单一的势能面上演化</strong>.
+<img src="/uploads/2020/05/bopes.jpg" alt="" />
+如上图，在化学反应随着原子核的运动，不同<strong>电子态可能会相互靠近</strong>，
+出现势能面交叉或者避免交叉的情况，
+在接近交叉的区域，不同<strong>电子态之间的相互作用</strong>，
+使得体系可能<strong>从一个电子态跃迁到另一电子态</strong>，
+此时原子不在保持在单一势能面上演化，BO近似不再成立</p>
+
+<h2 id="非绝热过程及方法">非绝热过程及方法</h2>
+<blockquote>
+  <p>@[2] 在化学反应在很多分子体系中, 伴随着原子核的运动(如分子振动), 
+不同电子态可能会相互靠近, 由此出现势能面交叉或避免交叉. 在接近交叉的区域, 
+由于不同电子态之间强烈的相互作用, 分子体系会快速地从一个电子态“跳跃”到另外一个电子态, 
+即发生超快的非绝热跃迁.</p>
+</blockquote>
+
+<p>非绝热过程发生在不同电子态之间发生相互作用，系统在不同电子态间进行跳跃，为了描述非绝热过程，我们可以采用</p>
+<ul>
+  <li><strong>全量子动力学方法</strong><br />
+使用完全的量子力学方法计算电子和核的演化
+    <ul>
+      <li>传统量子动力学方法</li>
+      <li>多组态含时Hartree(MCTDH)方法</li>
+      <li>多层MCTDH(ML-MCTDH)方法</li>
+      <li>基于高斯波包的动力学方法等</li>
+    </ul>
+  </li>
+  <li><strong>半经典动力学方法</strong><br />
+把电子进行量子处理，原子核采用静电处理，那么<br />
+<strong>我们的方法必须能考虑到不同电子态之间的相互作用对原子核演化的影响</strong>
+    <ul>
+      <li>Ehrenfest平均场方法<br />
+  把不同的电子态进行平均，让体系/原子核在平均的势能面上演化.</li>
+      <li>面跳跃方法<br />
+  采用多条经典轨线，描述体系在不同电子态上的演化</li>
+      <li>Wignerbi的混合-量子经典方法<br />
+   (从体系的密度算符和刘维尔方程出发)</li>
+      <li>半经典初值表象理论</li>
+    </ul>
+  </li>
+  <li><strong>全经典方法</strong><br />
+  @[5]
+    <ul>
+      <li>MS-ARMD:Multisurface adiabatic reactive molecular dynamics</li>
+    </ul>
+  </li>
+  <li><strong>量子耗散动力学方法</strong>
+    <blockquote>
+      <p>@[2]对于处理复杂体系，一类常见的方法是使用
+量子耗散动力学，考察体系的约化密度矩阵随时
+间的演化，包括 Redfield 方法 、级联运动方程
+(HEOM)方法 以及<strong>各种基于路径积分</strong>的方法 
+等； 这些方法往往偏重于对物理模型的理解， 需要
+使用特定的哈密顿形式。</p>
+    </blockquote>
+  </li>
+  <li><strong>路径积分分子动力学PIMD ??</strong>
+    <ul>
+      <li>Centroid Molecular Dynamics (CMD)</li>
+      <li>Ring Polymer Molecular Dynamics (<strong>RPMD</strong>)<br />
+  环形多链分子动力学</li>
+      <li>Quasi-Classical Wigner (FK-QCW) method</li>
+      <li>path integral Monte Carlo (PIMC)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>其他方法</p>
+<ul>
+  <li>波包演化
+    <ul>
+      <li>分裂算符法 split operator<br />
+  @[5],@量子含时波包方法在若干体系中的应用_侯佳怡
+  @小分子飞秒动力学和量子模拟计算_孙志刚</li>
+      <li>二阶差分法 Second Order difference<br />
+  @量子含时波包方法在若干体系中的应用_侯佳怡,@小分子飞秒动力学和量子模拟计算_孙志刚</li>
+      <li>chebychev多项式展开法 chebychev Polynomial method<br />
+  @量子含时波包方法在若干体系中的应用_侯佳怡,@小分子飞秒动力学和量子模拟计算_孙志刚</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="全量子动力学方法">全量子动力学方法</h2>
+<blockquote>
+  <p>@[1]全量子动力学本质上就是求解含时薛定谔方程,原则上是<strong>将核和电子都采用量子力学来进行处理</strong>.
+<strong>首先写出核和电子耦合的运动方程</strong>, 即核的波函数在耦合势能面上的演化方程, <strong>然后再进行求解</strong>. 
+全量子动力学可以对非绝热动力学给出精确描述</p>
+</blockquote>
+
+<h2 id="半经典动力学">半经典动力学</h2>
+<p>将核和电子分别使用经典和量子处理,<br />
+下面的方法主要微绕如何分别处理<strong>电子态的演化</strong>和<strong>原子核的运动</strong><br />
+把电子态之间的相互作用引入到经典的原子核运动中去.</p>
+
+<blockquote>
+  <p>@[1] <strong>Ehrenfest 平均场方法和面跳跃方法(surface hopping method)实用性强,可以处理复杂体系, 但这些理论方法本身存在缺陷,只能对非绝热跃迁给出定性的描述</strong>. 
+例如,</p>
+  <ul>
+    <li><strong>Ehrenfest</strong>平均场方法
+ <br /><strong>原子核的演化是在不同电子态构成的“平均”势能面上进行</strong>, 很多时候无法给出化学过程中反应通道的信息. <strong>特别是不同通道差异较大时(如解离态和束缚态并存时), 平均势能面的概念本身就存在着严重缺陷</strong>.</li>
+    <li><strong>surface hopping method</strong> 面跳跃动力学方法
+  <br /> 首先该方法考虑<strong>核的运动是经典的, 用经典轨线在当前所处的势能面上的演化</strong>进行描述,而<strong>电子运动则用含时的薛定谔方程描述</strong>. 
+  <br />非绝热跃迁由轨线在不同势能面间的跳跃描述, 其跳跃几率和电子演化有关. 由于数学处理相对简单, 面跳跃方法可以比较好地给出反应通道等信息, 因此作为一种实用性很强的方法获得了很大的关注. 
+  <br />但是面跳跃动力学方法存在许多问题, 如不能正确处理电子的量子相干、面跳跃前后引起动量突然改变、无法处理量子隧穿等. 因此, 它对非绝热动力学的描述也只能是高度定性的</li>
+    <li>路径积分
+<br /> 通过各种近似也可以获得一系列半经典动力学理论方法, 如半经典初值表象方法(SC-IVR 和其衍生出来的各种方法). 这类方法<em>可以较严格地描述非绝热动力学</em>. 它们不光对电子运动给出较严格的理论描述, 也可以部分描述核动力学中出现的量子效应. 但是该类方法的<em>数值计算量大</em>, 目前更多的用于理解模型哈密顿的动力学, 难以在真实体系中使用</li>
+  </ul>
+</blockquote>
+
+<h3 id="ehrenfest平均场方法"><strong>Ehrenfest</strong>平均场方法</h3>
+<p><img src="/uploads/2020/05/ehren.png" alt="" /></p>
+
+<h4 id="框架"><strong>框架</strong></h4>
+<p>假设体系的总的波函数为</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.14}
+\Psi(\mathbf{r},\mathbf{R},t)=\Phi(\mathbf{r},t)\Omega(\mathbf{R},t)\exp{\left [ \cfrac{i}{\hbar} \int_{t_0}^t E_{el}(t')dt' \right ]}
+\tag{q.14}
+\end{array}</script>
+
+<p>其中<script type="math/tex">\Phi(\mathbf{r},t)</script>描述了电子部分的含时波函数，并不显性的依赖原子坐标<script type="math/tex">\mathbf{R}</script>, <script type="math/tex">\Omega(\mathbf{R},t)</script>描述了原子核部分的含时波函数,两部分在任意时刻都是归一的.<br />
+带入体系的薛定谔方程<script type="math/tex">\eqref{eq.q.1}</script>,经过一些列的推导可得</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+\label{eq.q.15}
+i\hbar\cfrac{\partial \Phi(\mathbf{r},t) }{\partial t} &= -\cfrac{\hbar^2}{2}\sum_j \nabla_j^2 \Phi(\mathbf{r},t)  \\
+&+ \left \lbrace \int d\mathbf{R} \,\Omega^{\ast}(\mathbf{R},t) V(\mathbf{r},\mathbf{R})\Omega(\mathbf{R},t)   \right  \rbrace \Phi(\mathbf{r},t)
+\tag{q.15}
+\end{array} %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+\label{eq.q.16}
+i\hbar\cfrac{\partial \Omega(\mathbf{R},t)  }{\partial t} &= -\cfrac{\hbar^2}{2}\sum_\alpha M_j^{-1}\nabla_\alpha^2 \Omega(\mathbf{R},t)  \\
+&+ \left \lbrace \int d\mathbf{r} \,\Phi^{\ast}(\mathbf{r},t) H_{el}(\mathbf{r},\mathbf{R})\Phi(\mathbf{r},t)  \right  \rbrace  \Omega(\mathbf{R},t)
+\tag{q.16}
+\end{array} %]]></script>
+
+<p>从<script type="math/tex">\eqref{eq.q.15}</script>, <script type="math/tex">\eqref{eq.q.17}</script>可以看出,电子在原子核的平均势场上演化，原子核也在电子的平均势场上演化，这是一个平均场的方法，电子和原子核之间的相互反馈都包含在里面</p>
+
+<p>通过引入原子核波函数的极坐标表达式</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.17}
+\Omega(\mathbf{R},t) = A(\mathbf{R},t)\exp{ \left [ \cfrac{i}{\hbar} S(\mathbf{R},t) \right ] }
+\tag{q.17}
+\end{array}</script>
+
+<p>其中振幅<script type="math/tex">A(\mathbf{R},t)</script>和相位<script type="math/tex">S(\mathbf{R},t)</script>都是实函数，经过一系列推导变换可以得到</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.18}
+M_\alpha \ddot{\mathbf{R}}_\alpha = 
+- \nabla_\alpha \left [  \int d\mathbf{r} \,\Phi^{\ast}(\mathbf{r},t) H_{el}(\mathbf{r},\mathbf{R})\Phi(\mathbf{r},t)   \right ]
+\tag{q.18}
+\end{array}</script>
+
+<p>把<script type="math/tex">\Omega(\mathbf{R},t) = \sum_\alpha \delta( \mathbf{R}(t) - \mathbf{R}_\alpha(t) )</script>带入<script type="math/tex">\eqref{eq.q.15}</script>得</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.19}
+i\hbar\cfrac{\partial \Phi(\mathbf{r},\mathbf{R},t) }{\partial t} = H_{el}(\mathbf{r};\mathbf{R})\Phi(\mathbf{r},\mathbf{R},t)
+\tag{q.19}
+\end{array}</script>
+
+<blockquote>
+  <p>注意，这里是<script type="math/tex">\Phi(\mathbf{r},\mathbf{R},t)</script></p>
+</blockquote>
+
+<blockquote>
+  <p>@[3]Tully指出,如果<script type="math/tex">\Phi(\mathbf{r},\mathbf{R},t)</script>是式<script type="math/tex">\eqref{eq.q.19}</script>的解，那么<script type="math/tex">\eqref{eq.q.18}</script>等价于</p>
+</blockquote>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq.q.20}
+M_\alpha \ddot{\mathbf{R}}_\alpha = 
+ \left [  \int d\mathbf{r} \,\Phi^{\ast}(\mathbf{r},t) [ - \nabla_\alpha H_{el}(\mathbf{r},\mathbf{R})] \Phi(\mathbf{r},t)   \right ]
+\tag{q.20}
+\end{array}</script>
+
+<p>注意<script type="math/tex">\eqref{eq.q.20}</script>与Hellmann-Feynman定理是一致的,但是两者是没有任何关联的, Hellmann-Feynman定理要求<script type="math/tex">\Phi(\mathbf{r},t)</script>为<script type="math/tex">H_{el}</script>的本征态, 而在Ehrenfest里面,<script type="math/tex">\Phi(\mathbf{r},t)</script>是按照<script type="math/tex">\eqref{eq.q.20}</script>含时演化的电子态.</p>
+
+<p><strong><script type="math/tex">\eqref{eq.q.19}</script>和<script type="math/tex">\eqref{eq.q.20}</script>是Ehrenfest的电子波函数和原子核轨迹的动力学方程</strong></p>
+
+<blockquote>
+  <p><strong>目前TDAP采用的方案</strong><br />
+@[5]Ehrenfest方法很容易和TD-DFT方法结合，<script type="math/tex">\eqref{eq.q.19}</script>中的<script type="math/tex">\Phi(\mathbf{r},\mathbf{R},t)</script>可以使用含时KS无相互作用轨道的slater行列式表示，使用Hellmann-Feynman定理计算原子核轨迹的受力，实时(on-the-fly)计算<script type="math/tex">\eqref{eq.q.19}</script>和<script type="math/tex">\eqref{eq.q.20}</script>.</p>
+</blockquote>
+
+<h4 id="ehrenfest实施方法">Ehrenfest实施方法</h4>
+<blockquote>
+  <p>@[3] Ehrenfest的具体实施方法有两种:</p>
+  <ul>
+    <li>用基组展开电子波函数</li>
+    <li>使用TDDFT-Ehrenfest方法
+<img src="/uploads/2020/05/zqj21.png" alt="" /></li>
+  </ul>
+</blockquote>
+
+<h4 id="ehrenfest动力学推导">Ehrenfest动力学推导</h4>
+
+<blockquote>
+  <p>更详细的证明见@[3]
+<img src="/uploads/2020/05/zqj10.png" alt="" />
+<img src="/uploads/2020/05/zqj11.png" alt="" />
+<img src="/uploads/2020/05/zqj12.png" alt="" />
+<img src="/uploads/2020/05/zqj13.png" alt="" />
+<img src="/uploads/2020/05/zqj14.png" alt="" />
+<img src="/uploads/2020/05/zqj15.png" alt="" />
+<img src="/uploads/2020/05/zqj16.png" alt="" />
+<img src="/uploads/2020/05/zqj17.png" alt="" />
+<img src="/uploads/2020/05/zqj18.png" alt="" />
+<img src="/uploads/2020/05/zqj19.png" alt="" />
+<img src="/uploads/2020/05/zqj20.png" alt="" /></p>
+</blockquote>
+
+<h5 id="tddft-ehrenfest">TDDFT-Ehrenfest</h5>
+<p><img src="/uploads/2020/05/zqj22.png" alt="" />
+<img src="/uploads/2020/05/zqj23.png" alt="" />
+<img src="/uploads/2020/05/zqj24.png" alt="" />
+<img src="/uploads/2020/05/zqj25.png" alt="" />
+<img src="/uploads/2020/05/zqj26.png" alt="" /></p>
+
+<h4 id="缺陷"><strong>缺陷</strong></h4>
+<p>Ehrenfest的前提是各个电子态特征相差不大，作用在原子核上的力比较接近，<strong>若绝热势能面相差太大，如束缚态和解离态，用一条平均的轨迹去描述，就失去了物理意义</strong>,如下图,来自@[4]
+<img src="/uploads/2020/05/cxb1.png" alt="" /></p>
+
+<blockquote>
+  <p>@[3]
+<img src="/uploads/2020/05/zqj27.png" alt="" />
+<img src="/uploads/2020/05/zqj28.png" alt="" /></p>
+</blockquote>
+
+<h3 id="surface-hopping面跳跃方法"><strong>surface hopping</strong>面跳跃方法</h3>
+<p><img src="/uploads/2020/05/surfacehopping.png" alt="" />
+赵谨老师</p>
+
+<h3 id="路径积分分子动力学pimd"><strong>路径积分分子动力学PIMD</strong></h3>
+<blockquote>
+  <p>@[6]From wikipedis, Path integral molecular dynamics (PIMD) 是一个使用Feynman path integral把量子力学方法整合到分子动力学模拟的一种方法. 在PIMD中，我们使用BO近似把你哦函数分离成原子核与电子部分.通过映射每个量子的核到一个经典的系统来使用量子力学的方法处理原子核，这个经典的系统分成很多个由弹簧相连接的部分，被一个由feynman路径积分计算的有效hamilontionian决定.<br />
+现在使用路径积分公式的常用凝聚态计算模拟方法有</p>
+  <ul>
+    <li>Centroid Molecular Dynamics (CMD)</li>
+    <li>Ring Polymer Molecular Dynamics (RPMD)</li>
+    <li>Quasi-Classical Wigner (FK-QCW) method</li>
+    <li>path integral Monte Carlo (PIMC)</li>
+  </ul>
+</blockquote>
+
+<h2 id="激发态电子态计算方法">激发态电子态计算方法</h2>
+<ul>
+  <li>CI组态相互作用</li>
+  <li>多组态和多参考态方法</li>
+  <li>半经验</li>
+  <li><strong>密度泛函理论</strong>
+    <ul>
+      <li><strong>TDDFT</strong></li>
+      <li>结合 CI 方法处理激发态etc.</li>
+    </ul>
+  </li>
+  <li>耦合簇理论和传播方法</li>
+</ul>
+
+<h2 id="代表问题">代表问题</h2>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/05/27/basis/">原子物理
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/05/02/cloudflare/">使用cloudflare加速博客访问/免费搭建谷歌镜像</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/05/18/formula/">使用的物理数学公式</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

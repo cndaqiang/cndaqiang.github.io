@@ -12,7 +12,7 @@ mathjax: true
 
 
 
-```bash
+```shell
 #-------------------------------------------------------------
 #加载编译环境
 module swap gnu4 gnu8/8.3.0
@@ -24,6 +24,7 @@ cd ~/soft/gnu8-openmpi/
 ROOT=$PWD
 mkdir $ROOT/source
 #创建编译脚本
+cd $ROOT/source
 cat << EOF > ./make.sh
 #!/bin/bash
 #SBATCH -J make
@@ -67,7 +68,9 @@ tar xzvf libxc-2.0.0.tar.gz
 cd libxc-2.0.0
 ./configure --prefix=$ROOT/libxc-2.0.0  CC=gcc CXX=g++ FC=gfortran
 qsub ../make.sh
-#解决libxc编译错误http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/
+#解决libxc编译错误
+#按照 http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/
+#删除src/libxc.f90中的/* */以其之间的注释部分就可以编译了
 qsub ../make.sh
 
 #gsl
@@ -77,7 +80,7 @@ tar xzvf gsl-1.14.tar.gz
 cd gsl-1.14
 mkdir build; cd build
 ../configure --prefix=$ROOT/gsl-1.14
-qsub ../make.sh
+qsub ../../make.sh
 
 #fft
 cd $ROOT/source
@@ -144,7 +147,7 @@ cd octopus-4.1.2
 
 qsub ../make.sh
 #提交作业报错终止后
-#解决libxc编译错误http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/
+#使用下面命令解决报错，参考来源 http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/
 cat << EOF > ./cnq.sh
 #!/bin/bash
 for i in basic  math   species   ions   grid   poisson   states   xc   hamiltonian   system   scf   td   opt_control   td   sternheimer   main

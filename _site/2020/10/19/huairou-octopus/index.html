@@ -221,6 +221,14 @@
                 
                     
                 
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>
         </nav>
     </div>
@@ -306,7 +314,7 @@
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
         
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#-------------------------------------------------------------</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#-------------------------------------------------------------</span>
 <span class="c">#加载编译环境</span>
 module swap gnu4 gnu8/8.3.0
 module load gnu8/8.3.0
@@ -317,6 +325,7 @@ module load openmpi3/3.1.4
 <span class="nv">ROOT</span><span class="o">=</span><span class="nv">$PWD</span>
 <span class="nb">mkdir</span> <span class="nv">$ROOT</span>/source
 <span class="c">#创建编译脚本</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
 <span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh"> &gt; ./make.sh
 #!/bin/bash
 #SBATCH -J make
@@ -360,7 +369,9 @@ wget https://cndaqiang.gitee.io/packages//mirrors/libxc/libxc-2.0.0.tar.gz
 <span class="nb">cd </span>libxc-2.0.0
 ./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-2.0.0  <span class="nv">CC</span><span class="o">=</span>gcc <span class="nv">CXX</span><span class="o">=</span>g++ <span class="nv">FC</span><span class="o">=</span>gfortran
 qsub ../make.sh
-<span class="c">#解决libxc编译错误http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/</span>
+<span class="c">#解决libxc编译错误</span>
+<span class="c">#按照 http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/</span>
+<span class="c">#删除src/libxc.f90中的/* */以其之间的注释部分就可以编译了</span>
 qsub ../make.sh
 
 <span class="c">#gsl</span>
@@ -370,7 +381,7 @@ wget https://cndaqiang.gitee.io/packages//mirrors/gs/gsl-1.14.tar.gz
 <span class="nb">cd </span>gsl-1.14
 <span class="nb">mkdir </span>build<span class="p">;</span> <span class="nb">cd </span>build
 ../configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/gsl-1.14
-qsub ../make.sh
+qsub ../../make.sh
 
 <span class="c">#fft</span>
 <span class="nb">cd</span> <span class="nv">$ROOT</span>/source
@@ -437,7 +448,7 @@ wget https://cndaqiang.gitee.io/packages//mirrors/octopus/octopus-4.1.2.tar.gz
 
 qsub ../make.sh
 <span class="c">#提交作业报错终止后</span>
-<span class="c">#解决libxc编译错误http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/</span>
+<span class="c">#使用下面命令解决报错，参考来源 http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/</span>
 <span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh"> &gt; ./cnq.sh
 #!/bin/bash
 for i in basic  math   species   ions   grid   poisson   states   xc   hamiltonian   system   scf   td   opt_control   td   sternheimer   main
@@ -488,15 +499,6 @@ qsub ../make.sh
                     
                 
             
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
                 
                     
                 
@@ -511,24 +513,6 @@ qsub ../make.sh
                 
                     
                 
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
             
                 
                     
@@ -566,6 +550,33 @@ qsub ../make.sh
                     
                 
             
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
                 
                     
                 
@@ -596,14 +607,14 @@ qsub ../make.sh
                     
                 
             
-                
-                    
-                
-                    
-                
-            
         
             
+            
+                
+                    
+                
+                    
+                
             
                 
                     
@@ -619,7 +630,7 @@ qsub ../make.sh
         <div class="post-recent">
     <div class="pre">
         
-        <p><strong>上一篇</strong> <a href="/2020/09/03/aseuse/">ASE快速上手</a></p>
+        <p><strong>上一篇</strong> <a href="/2020/09/20/qe-spin/">QE代码阅读: 自旋相关</a></p>
         
     </div>
     <div class="nex">

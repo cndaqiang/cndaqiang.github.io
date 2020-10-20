@@ -5,8 +5,8 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 19 Oct 2020 22:13:40 +0800</pubDate>
-    <lastBuildDate>Mon, 19 Oct 2020 22:13:40 +0800</lastBuildDate>
+    <pubDate>Tue, 20 Oct 2020 10:55:45 +0800</pubDate>
+    <lastBuildDate>Tue, 20 Oct 2020 10:55:45 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -23,6 +23,28 @@
         
         
         <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>QE代码阅读: 自旋相关</title>
+        <description>
+QE代码阅读系列，个人学习记录，仅供参考。&lt;br /&gt;
+代码仓库&lt;a href=&quot;https://gitee.com/cndaqiang/QE-6.4.1/tree/master&quot;&gt;QE-6.4.1@cndaqiang&lt;/a&gt;&lt;br /&gt;
+
+</description>
+        <pubDate>Sun, 20 Sep 2020 10:14:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/20/qe-spin/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/20/qe-spin/</guid>
+        
+        <category>QE</category>
+        
+        <category>DFT</category>
+        
+        <category>Fortran</category>
+        
+        
+        <category>Quantum-Espresso</category>
         
       </item>
     
@@ -125,65 +147,36 @@
       </item>
     
       <item>
-        <title>使用cloudflare加速博客访问/免费搭建谷歌镜像</title>
+        <title>原子物理</title>
         <description>
 </description>
-        <pubDate>Sat, 02 May 2020 08:39:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/05/02/cloudflare/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/05/02/cloudflare/</guid>
+        <pubDate>Wed, 27 May 2020 22:52:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/05/27/basis/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/05/27/basis/</guid>
         
-        <category>cdn</category>
-        
-        <category>web</category>
-        
-        <category>Google</category>
+        <category>PHY</category>
         
         
-        <category>web</category>
+        <category>PHY</category>
         
       </item>
     
       <item>
-        <title>关于FFT变换的一些思考</title>
+        <title>RPMD:ring polymer molecular dynamics</title>
         <description>
 </description>
-        <pubDate>Wed, 22 Apr 2020 12:22:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/04/22/fft/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/22/fft/</guid>
+        <pubDate>Tue, 19 May 2020 20:54:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/05/19/RPMD/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/05/19/RPMD/</guid>
         
-        <category>FFT</category>
+        <category>PIMD</category>
         
-        
-        <category>Quantum-Espresso</category>
-        
-        <category>Fortran</category>
-        
-        <category>R</category>
-        
-        <category>FFT</category>
-        
-      </item>
-    
-      <item>
-        <title>使用Bunlder搭建Jekyll(Github-pages)服务</title>
-        <description>
-</description>
-        <pubDate>Sat, 18 Apr 2020 11:39:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/04/18/ruby/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/04/18/ruby/</guid>
-        
-        <category>Ruby</category>
-        
-        <category>Gems</category>
-        
-        <category>bundler</category>
+        <category>RPMD</category>
         
         
-        <category>Ruby</category>
+        <category>PIMD</category>
         
-        <category>Gems</category>
-        
-        <category>bundler</category>
+        <category>RPMD</category>
         
       </item>
     

@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>QE代码阅读: sum_band</title>
+    <meta name="description" content="QE代码阅读系列，个人学习记录，仅供参考。代码仓库QE-6.4.1@cndaqiang">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2020/04/24/qe-sum_band/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2020/04/24/qe-sum_band/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2020/04/24/qe-sum_band/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2020/04/24/qe-sum_band/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>QE代码阅读: sum_band</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-04-24
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Quantum-Espresso" title="Category: Quantum-Espresso" rel="category">Quantum-Espresso</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a-->
+        <a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a>&nbsp;
+    
+        <!--a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a-->
+        <a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a>&nbsp;
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#简介" id="markdown-toc-简介">简介</a></li>
+  <li><a href="#程序" id="markdown-toc-程序">程序</a>    <ul>
+      <li><a href="#weights计算权重wgibndik" id="markdown-toc-weights计算权重wgibndik"><code class="highlighter-rouge">weights</code>计算权重<code class="highlighter-rouge">wg(ibnd,ik)</code></a></li>
+      <li><a href="#btype精度控制" id="markdown-toc-btype精度控制">btype精度控制</a></li>
+      <li><a href="#lda_u-略" id="markdown-toc-lda_u-略">lda_u 略</a></li>
+      <li><a href="#初始化betapsi变量becp" id="markdown-toc-初始化betapsi变量becp">初始化<code class="highlighter-rouge">&lt;beta|psi&gt;</code>变量<code class="highlighter-rouge">becp</code></a></li>
+      <li><a href="#能带eband密度rho计算" id="markdown-toc-能带eband密度rho计算">能带<code class="highlighter-rouge">eband</code>,密度<code class="highlighter-rouge">rho</code>计算</a>        <ul>
+          <li><a href="#sum_band_k" id="markdown-toc-sum_band_k"><code class="highlighter-rouge">sum_band_k</code></a></li>
+          <li><a href="#并行对eabndrho_of_rbescum等求和" id="markdown-toc-并行对eabndrho_of_rbescum等求和">并行对<code class="highlighter-rouge">eabnd</code>,<code class="highlighter-rouge">rho%_of_r</code>,<code class="highlighter-rouge">bescum</code>等求和</a></li>
+          <li><a href="#确定最终的rho" id="markdown-toc-确定最终的rho">确定最终的<code class="highlighter-rouge">rho</code></a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="简介">简介</h2>
+<p>File:<code class="highlighter-rouge">PW/src/sum_band.f90</code><br />
+<strong>注意，更新电荷密度，保存到<code class="highlighter-rouge">rho</code>变量中去</strong><br />
+<strong>计算<code class="highlighter-rouge">ebnd</code>,i.e.<script type="math/tex">E_s[V^{in}[n^{in}]] = \sum_{i,\sigma}^{occ}  \epsilon_i^{\sigma}</script></strong><br /></p>
+
+<h2 id="程序">程序</h2>
+
+<h3 id="weights计算权重wgibndik"><code class="highlighter-rouge">weights</code>计算权重<code class="highlighter-rouge">wg(ibnd,ik)</code></h3>
+<p>File:<code class="highlighter-rouge">PW/src/weights.f90</code><br /></p>
+<blockquote>
+  <p>calculates weights of Kohn-Sham orbitals used in calculation of rho,
+<br /> Fermi energies, HOMO and LUMO, “-TS” term (gaussian)</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>计算波函数权重<code class="highlighter-rouge">qg(ibnd,ik)</code>,以及Fermi能量<code class="highlighter-rouge">ef，ef_up，ef_dw</code>,金属的TS修正项<code class="highlighter-rouge">demet</code></strong></p>
+</blockquote>
+
+<ul>
+  <li>k点权重<code class="highlighter-rouge">wk(ik)</code>,QE的k点包含kSample与spin双重属性
+    <ul>
+      <li>k点总数<code class="highlighter-rouge">nkstot</code></li>
+      <li>wk之和<code class="highlighter-rouge">\sum_ik wk(ik) = 2</code></li>
+      <li>K-Sample由输入文件的<code class="highlighter-rouge">K_POINTS {automatic}</code>决定</li>
+      <li><code class="highlighter-rouge">nspin=1</code>,k数=kSample数*1</li>
+      <li><code class="highlighter-rouge">nspin=2</code>,k数=kSample数*2
+  <br />i.e. nkstot(nspin=2) = 2 * nsktot(nspin=1)
+  <br /> 相应的wk必然要减半</li>
+    </ul>
+  </li>
+  <li>HOMO,以绝缘体为例
+    <ul>
+      <li><code class="highlighter-rouge">nspin=1</code>,一个band占据2个,<code class="highlighter-rouge">HOMO=电子数/2</code></li>
+      <li><code class="highlighter-rouge">nspin=2</code>,k点数加倍,一个band占据一个,<code class="highlighter-rouge">HOMO=电子数/2</code></li>
+      <li>综上<code class="highlighter-rouge">nbnd &gt;= 电子数/2</code></li>
+    </ul>
+  </li>
+  <li>wk之和<code class="highlighter-rouge">\sum_ik wk(ik) = 2</code>的原因:
+    <ul>
+      <li>一条nspin=1的能带占据两个电子</li>
+      <li>一对nspin=2的能带各自占据一个电子，共两个电子</li>
+      <li>对半导体而言,很多kSample形成的一条(对)能带<script type="math/tex">E_i(kSample)</script>
+  <br />上面就占据了两个电子,平均每个k点占据<code class="highlighter-rouge">wg(iband,ik)=wk(ik)</code>
+  <br />这就是wk之和<code class="highlighter-rouge">\sum_ik wk(ik) = 2</code>的原因</li>
+    </ul>
+  </li>
+  <li>波函数权重<code class="highlighter-rouge">wg(ibnd,ik)</code>计算<br />
+    <ul>
+      <li>以半导体为例，同上就是低于费米能量的波函数<code class="highlighter-rouge">wg(iband,ik)=wk(ik)</code></li>
+      <li>金属要考虑smearing</li>
+      <li>热力学的TS</li>
+      <li>等满足Fermi-Dirac函数形式</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="btype精度控制">btype精度控制</h3>
+<p>默认<code class="highlighter-rouge">diago_full_acc=.False.</code>,后续对占据态的计算会使用高精度<code class="highlighter-rouge">btype(ibnd&lt;=HOMO,ik)=1</code>
+空态使用低精度<code class="highlighter-rouge">btype(ibnd&gt;HOMO,ik)=0</code></p>
+
+<p>可以在输入参数设置<code class="highlighter-rouge">diago_full_acc=.True.</code>,采用相同高精度</p>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="ow">.NOT.</span><span class="w"> </span><span class="n">diago_full_acc</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+     </span><span class="k">FORALL</span><span class="p">(</span><span class="w"> </span><span class="n">ik</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="n">nks</span><span class="p">,</span><span class="w"> </span><span class="n">wk</span><span class="p">(</span><span class="n">ik</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.D0</span><span class="w"> </span><span class="p">)</span><span class="w">
+        </span><span class="k">WHERE</span><span class="p">(</span><span class="w"> </span><span class="n">wg</span><span class="p">(:,</span><span class="n">ik</span><span class="p">)</span><span class="w"> </span><span class="p">/</span><span class="w"> </span><span class="n">wk</span><span class="p">(</span><span class="n">ik</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.01D0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">btype</span><span class="p">(:,</span><span class="n">ik</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">
+     </span><span class="k">END</span><span class="w"> </span><span class="k">FORALL</span><span class="w">
+  </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="lda_u-略">lda_u 略</h3>
+
+<h3 id="初始化betapsi变量becp">初始化<code class="highlighter-rouge">&lt;beta|psi&gt;</code>变量<code class="highlighter-rouge">becp</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/becmod.f90</code><br /></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">okvan</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">CALL</span><span class="w"> </span><span class="n">allocate_bec_type</span><span class="w"> </span><span class="p">(</span><span class="n">nkb</span><span class="p">,</span><span class="n">nbnd</span><span class="p">,</span><span class="w"> </span><span class="n">becp</span><span class="p">,</span><span class="n">intra_bgrp_comm</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p><code class="highlighter-rouge">bec%k( jkb, ibnd )</code>=<script type="math/tex">% <![CDATA[
+<\beta_{jkb}\|\psi_{ibnd}> %]]></script><br />
+ALLOCATE<code class="highlighter-rouge">TYPE (bec_type) :: becp</code>中的变量<code class="highlighter-rouge">bec%k</code></p>
+
+<p>详见<a href="/2020/04/05/qe-upf/">QE代码阅读: 赝势</a></p>
+
+<h3 id="能带eband密度rho计算">能带<code class="highlighter-rouge">eband</code>,密度<code class="highlighter-rouge">rho</code>计算</h3>
+<ul>
+  <li><code class="highlighter-rouge">eband</code> = <script type="math/tex">\sum_k \sum_i wg(i,ik)*et(i,ik)</script></li>
+  <li>计算电荷密度<code class="highlighter-rouge">rho%of_r</code>=<script type="math/tex">n(r)</script>,以及<code class="highlighter-rouge">rho%of_g</code>=<script type="math/tex">n(G)</script></li>
+</ul>
+
+<p>完整的电荷密度公式为<script type="math/tex">\eqref{us1}</script>,NC赝势就没有缀加的Q的项目<br />
+USPP和NC相同之处都计算<script type="math/tex">\|\psi_i(r)\|^2</script><br /></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+\label{us1}
+n(r) &= \sum_i^{occ} \left [ |\psi_i(r)|^2 + \sum_{n,m,I} Q_{n,m}^{I}(r) \langle \psi_i | \beta_n^I \rangle  \langle  \beta_m^I 
+| \psi_i  \rangle  \right ] \tag{us-1} \\
+     &= \sum_i^{occ}|\psi_i(r)|^2 
+     +  \sum_{n,m,I} Q_{n,m}^{I}(r)  \sum_i^{occ}  \langle \psi_i | \beta_n^I \rangle  \langle  \beta_m^I | \psi_i  \rangle 
+\end{array} %]]></script>
+
+<h4 id="sum_band_k"><code class="highlighter-rouge">sum_band_k</code></h4>
+<p>计算</p>
+<ul>
+  <li><code class="highlighter-rouge">eband</code> = <script type="math/tex">\sum_k \sum_i wg(i,ik)*et(i,ik)</script>、
+    <ul>
+      <li>细节: 直接加权求和
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  eband = eband + et( ibnd, ik ) * wg( ibnd, ik )
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">rho%_of_r</code>=<script type="math/tex">\sum_k \sum_i \cfrac{wg(i,ik)}{\Omega} \|\psi_i(r)\|^2</script>
+    <ul>
+      <li>细节: 提取倒空间波函数<script type="math/tex">\psi_i(k+G)</script>,<code class="highlighter-rouge">evc</code>,进行傅利叶变换到实空间<script type="math/tex">\psi_i(r)</script><br />
+  在实空间直接加权平均计算<script type="math/tex">\sum_k \sum_i \cfrac{wg(i,ik)}{\Omega} \|\psi_i(r)\|^2</script>
+        <div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="n">w1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wg</span><span class="p">(</span><span class="n">ibnd</span><span class="p">,</span><span class="n">ik</span><span class="p">)</span><span class="w"> </span><span class="p">/</span><span class="w"> </span><span class="n">omega</span><span class="err">...</span><span class="w">
+</span><span class="n">psic</span><span class="p">(</span><span class="n">dffts</span><span class="o">%</span><span class="n">nl</span><span class="p">(</span><span class="n">igk_k</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">ik</span><span class="p">)))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">evc</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">ibnd</span><span class="p">)</span><span class="w"> </span><span class="err">...</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">invfft</span><span class="w"> </span><span class="p">(</span><span class="s1">'Wave'</span><span class="p">,</span><span class="w"> </span><span class="n">psic</span><span class="p">,</span><span class="w"> </span><span class="n">dffts</span><span class="p">)</span><span class="w"> </span><span class="err">...</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">get_rho</span><span class="p">(</span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(:,</span><span class="n">current_spin</span><span class="p">),</span><span class="w"> </span><span class="n">dffts</span><span class="o">%</span><span class="n">nnr</span><span class="p">,</span><span class="w"> </span><span class="n">w1</span><span class="p">,</span><span class="w"> </span><span class="n">psic</span><span class="p">)</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">get_rho</span><span class="p">(</span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(:,</span><span class="n">current_spin</span><span class="p">),</span><span class="w"> </span><span class="n">dffts</span><span class="o">%</span><span class="n">nnr</span><span class="p">,</span><span class="w"> </span><span class="n">w1</span><span class="p">,</span><span class="w"> </span><span class="n">psic</span><span class="p">)</span><span class="w">
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>USPP还会计算<script type="math/tex">\langle \psi_i \| \beta_n^I \rangle  \langle  \beta_m^I  \| \psi_i  \rangle</script>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        IF ( okvan ) CALL sum_bec ( ik, current_spin, ibnd_start,ibnd_end,this_bgrp_nbnd ) 
+</code></pre></div>    </div>
+    <ul>
+      <li><code class="highlighter-rouge">sum_bec</code>先算<script type="math/tex">\eqref{us1}</script>中的<script type="math/tex">\langle  \beta_m^I \| \psi_i  \rangle</script><code class="highlighter-rouge">becp</code><br />
+  即<code class="highlighter-rouge">becp%k( jkb, ibnd )</code>=<script type="math/tex">% <![CDATA[
+<\beta_{jkb}\|\psi_{ibnd}> %]]></script></li>
+      <li><code class="highlighter-rouge">sum_bec</code>然后计算<script type="math/tex">\eqref{us1}</script>中的<script type="math/tex">\sum_i^{occ}  \langle \psi_i \| \beta_n^I \rangle  \langle  \beta_m^I \| \psi_i  \rangle</script> <br />
+  即<code class="highlighter-rouge">becsum(ijh,na,current_spin)</code> = <script type="math/tex">% <![CDATA[
+\sum_k  \sum_i <\psi_i \| \beta_{limi}>\cfrac{wg(i,ik)}{\Omega}<\beta_{ljmj} \| \psi_i> %]]></script></li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="并行对eabndrho_of_rbescum等求和">并行对<code class="highlighter-rouge">eabnd</code>,<code class="highlighter-rouge">rho%_of_r</code>,<code class="highlighter-rouge">bescum</code>等求和</h4>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">CALL</span><span class="w"> </span><span class="n">mp_sum</span><span class="p">(</span><span class="w"> </span><span class="n">eband</span><span class="p">,</span><span class="w"> </span><span class="n">inter_pool_comm</span><span class="w"> </span><span class="p">)</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">mp_sum</span><span class="p">(</span><span class="w"> </span><span class="n">eband</span><span class="p">,</span><span class="w"> </span><span class="n">inter_bgrp_comm</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="err">...</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">mp_sum</span><span class="p">(</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">,</span><span class="w"> </span><span class="n">inter_pool_comm</span><span class="w"> </span><span class="p">)</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">mp_sum</span><span class="p">(</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">,</span><span class="w"> </span><span class="n">inter_bgrp_comm</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="err">...</span><span class="w">
+     </span><span class="k">CALL</span><span class="w"> </span><span class="n">mp_sum</span><span class="p">(</span><span class="n">becsum</span><span class="p">,</span><span class="w"> </span><span class="n">inter_bgrp_comm</span><span class="w"> </span><span class="p">)</span><span class="w">
+     </span><span class="k">CALL</span><span class="w"> </span><span class="n">mp_sum</span><span class="p">(</span><span class="n">becsum</span><span class="p">,</span><span class="w"> </span><span class="n">inter_pool_comm</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="确定最终的rho">确定最终的<code class="highlighter-rouge">rho</code></h4>
+<ul>
+  <li><script type="math/tex">\rho(G)=\mathbf{FFT}[\rho(r)]</script><br />
+使用<strong>dffts</strong>网格(对角化使用的soft 网格)<br />
+对于USPP,此时的<script type="math/tex">\rho</script>还是软的<script type="math/tex">\rho=\sum_k \sum_i \cfrac{wg(i,ik)}{\Omega} \|\psi_i(r)\|^2</script>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   CALL fwfft ('Rho', psic, dffts)
+</code></pre></div>    </div>
+  </li>
+  <li>USPP在G空间加上附加Q项引起的密度
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   CALL addusdens(rho%of_g(:,:))
+</code></pre></div>    </div>
+    <p>注,PAW还做了<code class="highlighter-rouge">rho%bec(:,:,:) = becsum(:,:,:)</code></p>
+  </li>
+  <li>根据晶格对称性调整<script type="math/tex">\rho(G)</script><br />
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL sym_rho ( nspin_mag, rho%of_g )
+</code></pre></div>    </div>
+  </li>
+  <li><script type="math/tex">\rho(r)=\mathbf{IFFT}[\rho(G)]</script>,<br />
+使用<strong>dfftp</strong>网格(密度势能网格)
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL invfft ('Rho', psic, dfftp)
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/09/20/qe-spin/">QE代码阅读: 自旋相关
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/04/24/qe-cband/">QE代码阅读: cbands对角化</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/04/26/delta/">关于变分法的一些整理</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

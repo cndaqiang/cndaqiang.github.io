@@ -1,0 +1,2585 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>QE代码阅读: 赝势</title>
+    <meta name="description" content="QE代码阅读系列，个人学习记录，仅供参考。代码仓库QE-6.4.1@cndaqiang">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2020/04/05/qe-upf/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2020/04/05/qe-upf/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2020/04/05/qe-upf/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2020/04/05/qe-upf/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>QE代码阅读: 赝势</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-04-05
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Quantum-Espresso" title="Category: Quantum-Espresso" rel="category">Quantum-Espresso</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a-->
+        <a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a>&nbsp;
+    
+        <!--a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a-->
+        <a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a>&nbsp;
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#注" id="markdown-toc-注">注</a></li>
+  <li><a href="#" id="markdown-toc-"><center>~~~~~~~~~~~</center></a></li>
+  <li><a href="#物理部分" id="markdown-toc-物理部分"><center>物理部分</center></a></li>
+  <li><a href="#参考-1" id="markdown-toc-参考-1">参考</a></li>
+  <li><a href="#旧的内容" id="markdown-toc-旧的内容">旧的内容</a>    <ul>
+      <li><a href="#赝势" id="markdown-toc-赝势">赝势</a></li>
+      <li><a href="#非线性核修正nlcc" id="markdown-toc-非线性核修正nlcc">非线性核修正(NLCC)</a></li>
+    </ul>
+  </li>
+  <li><a href="#uspp" id="markdown-toc-uspp">USPP</a>    <ul>
+      <li><a href="#uspp下的ks方程" id="markdown-toc-uspp下的ks方程">USPP下的KS方程</a>        <ul>
+          <li><a href="#电荷密度" id="markdown-toc-电荷密度">电荷密度</a></li>
+          <li><a href="#能量泛函" id="markdown-toc-能量泛函">能量泛函</a></li>
+          <li><a href="#ks单体系统" id="markdown-toc-ks单体系统">KS单体系统</a></li>
+        </ul>
+      </li>
+      <li><a href="#uspp赝势推导构造" id="markdown-toc-uspp赝势推导构造">USPP赝势推导/构造</a></li>
+    </ul>
+  </li>
+  <li><a href="#-1" id="markdown-toc--1"><center>~~~~~~~~~~~</center></a></li>
+  <li><a href="#程序部分" id="markdown-toc-程序部分"><center>程序部分</center></a></li>
+  <li><a href="#相关文件" id="markdown-toc-相关文件">相关文件</a>    <ul>
+      <li><a href="#读入赝势" id="markdown-toc-读入赝势">读入赝势</a></li>
+      <li><a href="#赝势定义" id="markdown-toc-赝势定义">赝势定义</a></li>
+    </ul>
+  </li>
+  <li><a href="#赝势结构体定义" id="markdown-toc-赝势结构体定义">赝势结构体定义</a>    <ul>
+      <li><a href="#基本信息" id="markdown-toc-基本信息">基本信息</a></li>
+      <li><a href="#wavefunctions-and-projectors" id="markdown-toc-wavefunctions-and-projectors">Wavefunctions and projectors</a></li>
+      <li><a href="#minimal-radial-grid" id="markdown-toc-minimal-radial-grid">Minimal radial grid:</a></li>
+      <li><a href="#pseudized-core-charge" id="markdown-toc-pseudized-core-charge">Pseudized core charge</a></li>
+      <li><a href="#local-potential" id="markdown-toc-local-potential">Local potential</a></li>
+      <li><a href="#augmentation" id="markdown-toc-augmentation">Augmentation</a></li>
+      <li><a href="#wfc" id="markdown-toc-wfc">wfc</a></li>
+      <li><a href="#soc" id="markdown-toc-soc">SOC</a></li>
+      <li><a href="#paw" id="markdown-toc-paw">PAW:</a></li>
+      <li><a href="#gipaw" id="markdown-toc-gipaw">GIPAW:</a></li>
+      <li><a href="#md5" id="markdown-toc-md5">MD5</a></li>
+    </ul>
+  </li>
+  <li><a href="#其他需要的结构体" id="markdown-toc-其他需要的结构体">其他需要的结构体</a>    <ul>
+      <li><a href="#radial_grid_type-结构体信息" id="markdown-toc-radial_grid_type-结构体信息">radial_grid_type 结构体信息</a></li>
+    </ul>
+  </li>
+  <li><a href="#相关变量" id="markdown-toc-相关变量">相关变量</a>    <ul>
+      <li><a href="#module-uspp_param" id="markdown-toc-module-uspp_param"><code class="highlighter-rouge">MODULE uspp_param</code></a></li>
+      <li><a href="#module-uspp" id="markdown-toc-module-uspp"><code class="highlighter-rouge">MODULE uspp</code></a>        <ul>
+          <li><a href="#cg系数计算" id="markdown-toc-cg系数计算">CG系数计算</a></li>
+        </ul>
+      </li>
+      <li><a href="#module-us" id="markdown-toc-module-us"><code class="highlighter-rouge">MODULE us</code></a></li>
+      <li><a href="#module-vlocal" id="markdown-toc-module-vlocal">MODULE vlocal</a></li>
+      <li><a href="#module-becmod" id="markdown-toc-module-becmod">MODULE becmod</a>        <ul>
+          <li><a href="#type-bec_type" id="markdown-toc-type-bec_type">TYPE bec_type</a></li>
+          <li><a href="#allocate_bec_type" id="markdown-toc-allocate_bec_type">allocate_bec_type</a></li>
+          <li><a href="#interface-calbec" id="markdown-toc-interface-calbec">INTERFACE calbec</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#upf文件内容" id="markdown-toc-upf文件内容">UPF文件内容</a>    <ul>
+      <li><a href="#oncvpsp赝势结构" id="markdown-toc-oncvpsp赝势结构">ONCVPSP赝势结构</a></li>
+    </ul>
+  </li>
+  <li><a href="#readppiosys-赝势读取" id="markdown-toc-readppiosys-赝势读取">readpp(iosys) 赝势读取</a>    <ul>
+      <li><a href="#读入流程" id="markdown-toc-读入流程">读入流程</a></li>
+      <li><a href="#初始化" id="markdown-toc-初始化">初始化</a></li>
+      <li><a href="#读入赝势-read_upf" id="markdown-toc-读入赝势-read_upf">读入赝势: read_upf</a>        <ul>
+          <li><a href="#read_upf_v2" id="markdown-toc-read_upf_v2">read_upf_v2</a>            <ul>
+              <li><a href="#pp_nonlocal" id="markdown-toc-pp_nonlocal">PP_NONLOCAL</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#设置参数" id="markdown-toc-设置参数">设置参数</a></li>
+    </ul>
+  </li>
+  <li><a href="#setup继续设置" id="markdown-toc-setup继续设置">(setup)继续设置</a>    <ul>
+      <li><a href="#call-pre_init-beta函数统计" id="markdown-toc-call-pre_init-beta函数统计"><code class="highlighter-rouge">CALL pre_init()</code> beta函数统计</a></li>
+    </ul>
+  </li>
+  <li><a href="#hinit0继续设置" id="markdown-toc-hinit0继续设置">(hinit0)继续设置</a>    <ul>
+      <li><a href="#init_vloc初始化局域赝势" id="markdown-toc-init_vloc初始化局域赝势"><code class="highlighter-rouge">init_vloc()</code>初始化局域赝势</a></li>
+      <li><a href="#setlocal设置实空间局域赝势" id="markdown-toc-setlocal设置实空间局域赝势"><code class="highlighter-rouge">setlocal</code>设置实空间局域赝势</a></li>
+      <li><a href="#init_us_1初始化可分离赝势" id="markdown-toc-init_us_1初始化可分离赝势"><code class="highlighter-rouge">init_us_1</code>初始化可分离赝势</a></li>
+    </ul>
+  </li>
+  <li><a href="#init_us_2" id="markdown-toc-init_us_2"><code class="highlighter-rouge">init_us_2</code></a></li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://www.quantum-espresso.org/pseudopotentials/unified-pseudopotential-format">QE-UNIFIED PSEUDOPOTENTIAL FORMAT</a><br />
+<a href="https://github.com/QEF/q-e.git">q-e code</a><br /></p>
+
+<h2 id="注">注</h2>
+<ul>
+  <li>本文目前仅记录v2的UPF赝势读入过程</li>
+  <li>使用的赝势主要摸守恒赝势<a href="https://github.com/pipidog/ONCVPSP">ONCVPSP</a></li>
+</ul>
+
+<h2><center>~~~~~~~~~~~</center></h2>
+<h2 id="物理部分"><center>物理部分</center></h2>
+
+<p><strong>下面的公式推导中很多矢量没有标粗或加箭头</strong></p>
+
+<h2 id="参考-1">参考</h2>
+<ul>
+  <li>Walker B, Gebauer R. Ultrasoft pseudopotentials in time-dependent density-functional theory[J]. The Journal of chemical physics, 2007, 127(16): 164106.</li>
+</ul>
+
+<h2 id="旧的内容">旧的内容</h2>
+<h3 id="赝势">赝势</h3>
+<p>中心立场的波函数具有 $ \psi (\overrightarrow{r}) = R(r)Y_{lm} $ 的形式,<br />
+其中 $ Y_{lm} $ 是球谐函数，将$ \psi $表达式带入中心立场的薛定谔方程，得到$ R(r) $满足的方程，其感受的势场与角动量$ l,m $有关<br />
+而且，l相同的态是能量简并态(对于1/r库伦形式的势场，相同的n不同的l也是能量简并)<br />
+反向推导可得出赝势与角动量有关，进一步赝势可以分为局域部分(径向)和非局域部分(角向相关)</p>
+
+<script type="math/tex; mode=display">V_{pp}(r)=V_{local}(r) + \delta V_{non-local}(r)</script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\delta V_{non-local}(r) = \sum_{lm} | Y_{lm} > V_{l}(r) < Y_{lm} | %]]></script>
+
+<p>KB可分离赝势</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\delta V_{non-local}(r) = \sum_{lm}  \left [        \sum_{s,s^{,} }  B_{s,s^{,} }  | \beta_{s} >  < \beta_{s^{,}}     |  \right ] _{lm} %]]></script>
+
+<p>对于USPP,如下, <strong>在QE中都使用USPP的方式读入USPP/NC/等赝势</strong>
+<br />局域<strong>PP_LOCAL</strong>
+<br />非局域:
+<br /><strong>PP_NONLOCAL/PP_BETA</strong> $ | \beta_{s} &gt; $
+<br /><strong>PP_NONLOCAL/PP_DIJ</strong> $ D_{s,s^{,} } $</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\delta V_{NL}^{US}(r) =      \sum_{s,s^{,} }  D_{s,s^{,} }  | \beta_{s} >  < \beta_{s^{,}}     | %]]></script>
+
+<h3 id="非线性核修正nlcc">非线性核修正(NLCC)</h3>
+<p>参考:<br /></p>
+<ul>
+  <li>Castep 软件中的理论知识@西安交大 周朝晖</li>
+  <li>电子结构理论与计算@中国科学技术大学李震宇</li>
+</ul>
+
+<blockquote>
+  <p>Non linear core corrections<br />
+在赝势方法中，认为离子实是冻结的。这就意味着分子和固体性质的计算是基于这样的假设：离子实并不参与化学成键，也不随着结构的改变而改变。<br />
+电荷密度被划分成芯电子和价电子的贡献。芯区的能量被假设为常数，并被从总能中减去。</p>
+</blockquote>
+
+<p>因此价电子感受到的赝势能是总的赝势减去价电子的贡献(Hartree&amp;xc)，得到只含有原子核与内层电子作用的离子赝势，这就叫做去屏蔽：<br /></p>
+<center>
+$$v_l^{PS}=v_l^{tot}-v^H[\rho_0^{PS}]-v^{xc}[\rho_0^{PS}]$$
+</center>
+<p><br />
+其中<script type="math/tex">\rho_0^{PS}</script>是价电子的电荷密度</p>
+
+<p>与Hartree势不同，xc势并不是简单的线性叠加, i,e, <br /></p>
+<center>
+$$v^{xc}[\rho]=v^{xc}[\rho^{core}+\rho_0^{PS}] \neq v^{xc}[\rho^{core}] + v^{xc}[\rho_0^{PS}]$$
+</center>
+<p><br />
+因此会存在误差，所以通常把所有的交换关联势都去掉,i.e.<br /></p>
+<center>
+$$v_l^{PS}=v_l^{tot}-v^H[\rho_0^{PS}]-v^{xc}[\rho^{core}+\rho_0^{PS}]$$
+</center>
+<p><br />
+又因为仅在芯电荷和价电荷只有在重叠区域才存在上面的非线性问题,深层(不重叠区域)的<script type="math/tex">v^{xc}=v^{xc}(\rho^{core})</script>,<br />
+所以仅需要对把一部分芯电荷<code class="highlighter-rouge">rhog_core</code>移除.这就是NLCC修正,<br /></p>
+<blockquote>
+  <p><strong>QE:移除的电荷是不平滑的,FFT变化时可能出现负值</strong></p>
+</blockquote>
+
+<p>因此<strong>在计算价电子感受到的电场时,价电子感受到的xc势是由<code class="highlighter-rouge">rhog_core</code>与<code class="highlighter-rouge">rho</code>共同决定.</strong><br /></p>
+
+<p>综上:赝势包含了原子核与芯电子对价电子的作用减去部分芯电子产生的xc势，计算总能量时要把部分芯电子的xc势加上，芯电子与核的能量是常数不影响总能量收敛。</p>
+
+<p>在QE的赝势中若普遍采用NLCC,通过<code class="highlighter-rouge">upf%nlcc</code>判断，赝势文件中存在<strong>NLCC</strong>标签，用于芯修正,见下。</p>
+
+<h2 id="uspp">USPP</h2>
+<p>Vanderbilt 于 1990年引入，也有称为Vanderbilt赝势
+赝势(外势)是作用在多体系统上的,不受系统(密度)的影响。单体的KS系统有效势中的外势与密度作用的能量的变分<br />
+是对多体系统USPP的赝势构造也是如此,<strong>USPP的特别之处变分之后作用在KS上的非局域部分与电荷密度关</strong></p>
+
+<h3 id="uspp下的ks方程">USPP下的KS方程</h3>
+<h4 id="电荷密度">电荷密度</h4>
+<p>使用KS方程解出来的KS轨道,<script type="math/tex">|\phi_i \rangle</script>,不再正交化<script type="math/tex">\langle \phi_i | \phi_j \rangle \neq \delta{i,j}</script>,而是<script type="math/tex">\langle \phi_i | S | \phi_j \rangle = \delta_{i,j}</script>. 且模不守衡
+\begin{equation}
+\label{us1}
+n(r) = \sum_i^{occ} \left [ |\phi_i(r)|^2 + \sum_{n,m,I} Q_{n,m}^{I}(r) \langle \phi_i | \beta_n^I \rangle  \langle  \beta_m^I 
+| \phi_i  \rangle  \right ] \tag{us-1}
+\end{equation}</p>
+
+<p>where, <script type="math/tex">I</script>是原子编号,原子<script type="math/tex">I</script>的赝势用<script type="math/tex">\beta_n^i=\beta_n(\mathbf{r-R_I})</script>,<script type="math/tex">Q_{n,m}^I</script>来描述.
+<br /><strong>能量泛函中的密度项如<script type="math/tex">E_{Hartree}</script>依然用密度描述，而势能项采用软的波函数<script type="math/tex">|\phi_i(r) \rangle</script>计算</strong></p>
+<blockquote>
+  <p><strong>注意:<script type="math/tex">Q_{n,m}^I(r)</script>与实际的波函数无关,在自洽计算时只需要更新各个原子<script type="math/tex">I</script>的beta函数和单体波函数的内积<script type="math/tex">\langle \phi_i \| \beta_n^I \rangle  \langle  \beta_m^I \| \phi_i  \rangle</script>. 即<code class="highlighter-rouge">sum_band.f90</code></strong></p>
+</blockquote>
+
+<p>USPP的密度第一部分在时空间容易,第二部分在倒空间容易计算，具体计算过程见<a href="2020/04/24/qe-sum_band">QE代码阅读: sum_band</a></p>
+
+<h4 id="能量泛函">能量泛函</h4>
+<p>多体系统的总能量泛函, 使用单粒子态<script type="math/tex">\phi_i</script>与密度<script type="math/tex">\eqref{us1}</script>表示,<script type="math/tex">E_{Hartree}[n],\, E_{xc}[n]</script>与<a href="/2020/04/24/delta/">关于变分法的一些整理</a>中KS能量的定义.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin {array}{l}
+\label{us2}
+E_{tot}[n] &= \sum_i \langle \phi_i | \hat{T}  + V_{NL} |\phi_i \rangle \\
+    &+  E_{Hartree}[n] +E_{xc}[n] \\
+    &+ \int drV_{loc}(r)n(r) +E_{II}
+\tag{us-2}
+\end{array} %]]></script>
+
+<p>where,赝势的局域部分<script type="math/tex">V_{loc}(r)</script>,非局域部分
+\begin{array}{l}
+\label{us3}
+V_{NL} = \sum_{n,m,I} D_{n,m}^{(0)}  | \beta_n^I \rangle \langle \beta_m^I | \tag{us-3}
+\end{array}</p>
+
+<p><script type="math/tex">D_n{n,m}^{(0)}</script>是原子的<script type="math/tex">I</script>的性质,与元素/赝势有关,对应UPF赝势中的<strong>PP_DIJ</strong>标签,共<script type="math/tex">N_{\beta}^2</script>个.<br />
+<script type="math/tex">\beta_n^I</script>,赝势输入参数,<script type="math/tex">beta_n^I(r)</script>对应UPF赝势中的<strong>PP_BETA.n</strong>标签<br />
+USPP赝势的推导，有空再填坑</p>
+
+<h4 id="ks单体系统">KS单体系统</h4>
+<p>下面进行变分时我们会用到<a href="/2020/04/30/functionals/#泛函的导数">泛函及泛函变分</a>和<a href="/2020/04/24/delta/">关于变分法的一些整理</a>中提到的<script type="math/tex">\eqref{eq8}</script>链式变分法则</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\label{eq8}
+= \displaystyle{ 
+\int dx
+\cfrac{\delta F[G(\rho )]}{\delta G[\rho] (x)} \cfrac {\delta G[\rho ](x)}{\delta \rho (y)} 
+}
+\tag{0.8}
+\end{array}</script>
+
+<p><br /><br /></p>
+
+<p><script type="math/tex">\eqref{us1}</script>中<script type="math/tex">n</script>对<script type="math/tex">\phi_i(r)</script>的变分为</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+\label{us4}
+\cfrac{\delta n(r')  } {\delta \psi_i^{\ast} (r)  } 
+&=   \phi_i(r) \delta(r-r') + \cfrac{ \delta \sum_{n,m,I} Q_{n,m}^{I}(r') \int dr'' \langle \phi_i | r'' \rangle \langle r''  | \beta_n^I \rangle \langle \beta_m^I | \phi_i  \rangle }{\delta  \psi_i^{\ast} (r)} \\
+&= \phi_i(r) \delta(r-r') + \sum_{n,m,I} Q_{n,m}^{I}(r') \langle r  | \beta_n^I \rangle \langle \beta_m^I  | \phi_i  \rangle \\
+&= \phi_i(r) \delta(r-r') + \sum_{n,m,I} Q_{n,m}^{I}(r')  \beta_n^I(r) \langle \beta_m^I | \phi_i  \rangle  \\
+&= \phi_i(r)  \delta(r-r') +  \mathcal{W}
+\tag{us-4}
+\end{array} %]]></script>
+
+<p>这里用<script type="math/tex">\mathcal{W}</script>表示那一堆相比模守恒变分多出来的项</p>
+
+<p>类似的</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\cfrac{ \delta \sum_{i=1}^N \langle \phi_i | V_{NL} | \psi_i \rangle }{\delta \psi_i^{\ast}(r)} 
+= \sum_{n,m,I} D_{n,m}^{(0)}  \beta_n^I(r) \langle \beta_m^I | \phi_i  \rangle 
+\end{array}</script>
+
+<script type="math/tex; mode=display">T^s[n] = \sum_{i=1}^N \langle \phi_i | \hat{T} | \psi_i \rangle = \sum_{i=1}^N \langle \phi_i | \int dr' | r' \rangle \langle r' | \hat{T} | \psi_i \rangle</script>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\cfrac{\delta T^s[n]}{\delta \psi_i^{\ast}(r)} = \langle r | \hat{T} | \psi_i \rangle = -\cfrac{1}{2}\nabla^2  \psi_i(r)
+\end{array}</script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+\cfrac{\delta E_H[n]}{\delta \psi_i^{\ast}(r)} &= \int dr' \cfrac{\delta E_H[n]}{ \delta n(r')}\cfrac{\delta n(r')}{\delta \psi_i^{\ast}(r) } \\
+& = \int dr' V_H[n](r')  ( \psi_i(r)\delta(r'-r) + \mathcal{W} )\\
+&= V_H[n](r) \psi_i(r) +  \int dr' V_H[n](r')  \mathcal{W}
+\end{array} %]]></script>
+
+<p>同理</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\cfrac{\delta E_{xc}[n]}{\delta \psi_i^{\ast}(r)} = V_{xc}[n](r) \psi_i(r) +  \int dr' V_{xc}[n](r')  \mathcal{W}
+\end{array}</script>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\cfrac{\delta \int V_{loc}(r')n(r')dr'}{\delta \psi_i^{\ast}(r)} = V_{loc}(r) \psi_i(r)   +  \int dr' V_{loc}[n](r')  \mathcal{W}
+\end{array}</script>
+
+<p>归一化条件</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\langle \psi_i | S | \psi_j \rangle = \delta_{i,j} \\
+S=1+\sum_{n,m,I}q_{n,m}^{I} | \beta_n^I \rangle \langle \beta_m^I |
+\end{array}</script>
+
+<p>where <script type="math/tex">q_{n,m}^{I}  = \int dr Q_{n,m}^{I}</script>, 变分</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+\cfrac{\delta \sum_i \langle \psi_i | S | \psi_i \rangle }{\delta \psi_i^{\ast}(r)} =  \langle r | S | \psi_i \rangle 
+\end{array}</script>
+
+<p>定义<script type="math/tex">V_{eff}[n]=V_H[n]+V_{xc}[n]+V_{loc}</script>,</p>
+
+<p>使用拉格朗日乘子法定义泛函</p>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+L[n] = E[n] - \epsilon ( \sum_i \langle \psi_i | S | \psi_i \rangle  - N )
+\end{array}</script>
+
+<p>将<script type="math/tex">L[n]</script>对<script type="math/tex">\psi_i^{\ast}(r)</script>变分得</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+\cfrac{\delta L[n]}{\delta \psi_i^{\ast}(r)} &=
+ \langle r | \hat{T} | \psi_i \rangle
++ V_{eff}(r) \psi_i(r) \\
+& + \sum_{n,m,I} D_{n,m}^{(0)}  \beta_n^I(r) \langle \beta_m^I | \phi_i  \rangle \\
+& + \int dr' V_{eff}[n](r')  \mathcal{W} \\
+& - \langle r | S | \psi_i >
+\end{array} %]]></script>
+
+<p>where</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+& \sum_{n,m,I} D_{n,m}^{(0)}  \beta_n^I(r) \langle \beta_m^I | \phi_i  \rangle 
++ \int dr' V_{eff}[n](r')  \mathcal{W} \\
+& \; \; \; \;=  \sum_{n,m,I} D_{n,m}^{(0)}  \beta_n^I(r) \langle \beta_m^I | \phi_i  \rangle +  \int dr' V_{eff}[n](r')  \sum_{n,m,I} Q_{n,m}^{I}(r')  \beta_n^I(r) \langle \beta_m^I | \phi_i  \rangle  \\
+& \; \; \; \;=  \sum_{n,m,I} \left \lbrace D_{n,m}^{(0)} + \int dr' V_{eff}[n](r')   Q_{n,m}^{I}(r') \right \rbrace  \beta_n^I(r) \langle \beta_m^I | \phi_i  \rangle \\
+& \; \; \; \;=   \sum_{n,m,I} D_{n,m}^{I}  \beta_n^I(r) \langle \beta_m^I | \phi_i  \rangle \\
+& \; \; \; \;=  \langle r |  \sum_{n,m,I} D_{n,m}^{I}  | \beta_n^I \rangle  \langle \beta_m^I | \phi_i  \rangle 
+\end{array} %]]></script>
+
+<p>取极值的条件是<script type="math/tex">\cfrac{\delta L[n]}{\delta \psi_i^{\ast}(r)}=0</script>,即</p>
+<blockquote>
+  <p>这里有点别扭,不思考了，等待后续看到再来填坑</p>
+</blockquote>
+
+<script type="math/tex; mode=display">H | \phi_i \rangle = \epsilon_i S | \phi_i \rangle \tag{us-5}</script>
+
+<p>Hamilton is</p>
+
+<script type="math/tex; mode=display">H =  -\cfrac{1}{2}\nabla^2 + V_{eff}(r) + \sum_{n,m,I}D_{n,m}^I | \beta_n^I \rangle \langle \beta_m^I |</script>
+
+<p>where <script type="math/tex">V_{eff}(r)</script>就是QE中的<code class="highlighter-rouge">vrs</code>变量, <script type="math/tex">V_{loc}</script>是<code class="highlighter-rouge">vltot</code>,Hartree和XC等对应<code class="highlighter-rouge">v%of_r</code></p>
+
+<script type="math/tex; mode=display">V_{eff}(r) = V_{loc}[ \lbrace \mathbf{R_I} \rbrace ] + V_{Hartree}[n] + V_{xc}[n+n_{nlcc}]</script>
+
+<p><strong>注意</strong><script type="math/tex">\bf D_{n,m}^I[R_I] \neq D_{n,m}^{(0)}[R_I]</script>,需要在每一步自洽计算，为</p>
+
+<script type="math/tex; mode=display">D_{n,m}^I = D_{n,m}^{(0)} + \int drV_{eff}Q_{n,m}^I(r)</script>
+
+<h3 id="uspp赝势推导构造">USPP赝势推导/构造</h3>
+
+<h2 id="-1"><center>~~~~~~~~~~~</center></h2>
+<h2 id="程序部分"><center>程序部分</center></h2>
+
+<h2 id="相关文件">相关文件</h2>
+<h3 id="读入赝势">读入赝势</h3>
+<ul>
+  <li><code class="highlighter-rouge">Modules/read_pseudo.f90 -&gt; SUBROUTINE readpp</code> 赝势读取入口:调用各种形式的赝势</li>
+  <li><code class="highlighter-rouge">Modules/upf.f90 -&gt; SUBROUTINE read_upf</code> UPF赝势读取入口:调用各个版本的UPF赝势</li>
+  <li><code class="highlighter-rouge">Modules/read_upf_v2.f90 -&gt; SUBROUTINE read_upf_v2</code> Version 2 的UPF赝势读取入口:读入Mesh,Local,Non-Local,Beta Fun, Wfc等<br />
+其他版本的UPF略</li>
+  <li><code class="highlighter-rouge">FoX/lib/*</code>,读取UPF格式使用Fox辅助读入,编译自<code class="highlighter-rouge">archive/fox.tgz</code></li>
+</ul>
+
+<h3 id="赝势定义">赝势定义</h3>
+<ul>
+  <li><code class="highlighter-rouge">Modules/uspp.f90 -&gt; TYPE (pseudo_upf),  ALLOCATABLE, TARGET :: upf(:)</code>赝势定义<br />
+<code class="highlighter-rouge">MODULE uspp</code>:USPP和NCPP的upf参数模块</li>
+  <li><code class="highlighter-rouge">Modules/pseudo_types.f90 -&gt; TYPE pseudo_upf</code>赝势结构体各个参数定义:Mesh,Local,Non-Local,Beta Fun, Wfc<br />
+后期代码调用赝势可以从这里找注释，下面表格中有具体解释和输入示例</li>
+  <li><code class="highlighter-rouge">Modules/atom.f90 -&gt; type(radial_grid_type), allocatable, target :: rgrid(:)</code>赝势径向坐标结构体定义<br />
+<code class="highlighter-rouge">upf(nt)%grid =&gt; rgrid(nt)</code></li>
+  <li><code class="highlighter-rouge">Modules/radial_grids.f90 -&gt; TYPE radial_grid_type</code> 径向坐标结构体各个参数定义
+<code class="highlighter-rouge">r,rab,r^2...</code></li>
+</ul>
+
+<h2 id="赝势结构体定义">赝势结构体定义</h2>
+<p>参考自<code class="highlighter-rouge">Modules/pseudo_types.f90</code><br />
+下面表格中来源列的:</p>
+<ul>
+  <li><strong>PP_HEADER</strong> 来自赝势文件中的PP_HEADER节点的信息,以下同理</li>
+  <li><strong>MESH</strong></li>
+  <li><strong>PP_LOCAL</strong></li>
+  <li><strong>PP_NONLOCAL</strong></li>
+  <li><strong>PP_NLCC</strong></li>
+  <li><strong>PP_PWSCF</strong></li>
+  <li><strong>PP_SPIN_ORB</strong></li>
+  <li><strong>PP_RHOATOM</strong></li>
+</ul>
+
+<h3 id="基本信息">基本信息</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CHARACTER(LEN=80)</td>
+      <td>generated=’ ‘</td>
+      <td>generator software</td>
+      <td>PP_HEADER <br /> generated=”Generated using ONCVPSP code by D. R. Hamann”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=80)</td>
+      <td>author=’anonymous’</td>
+      <td>pseudopotential’s author</td>
+      <td>PP_HEADER <br />  author=”anonymous”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=80)</td>
+      <td>date=’ ‘</td>
+      <td>generation date</td>
+      <td>PP_HEADER <br /> date=”170818”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=80)</td>
+      <td>comment=’ ‘</td>
+      <td>author’s comment</td>
+      <td>PP_HEADER <br /> comment=””</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=2)</td>
+      <td>psd=’ ‘</td>
+      <td>Element label</td>
+      <td>PP_HEADER <br /> element=”O “</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=20)</td>
+      <td>typ=’ ‘</td>
+      <td>Pseudo type ( NC or US or PAW)</td>
+      <td>PP_HEADER <br /> pseudo_type=”NC”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(len=6)</td>
+      <td>rel=’ ‘</td>
+      <td>relativistic:<code class="highlighter-rouge"> {no|scalar|full}</code></td>
+      <td>PP_HEADER <br />  relativistic=”full”</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>tvanp</td>
+      <td>.true. if Ultrasoft</td>
+      <td>PP_HEADER <br />  is_ultrasoft=”F”</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>tcoulombp</td>
+      <td>.true. if Coulomb 1/r potential</td>
+      <td>PP_HEADER <br />  is_coulomb=”F”</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>nlcc</td>
+      <td>Non linear core corrections</td>
+      <td>PP_HEADER <br />  core_correction=”T” <br />为T，则存在<strong>NLCC</strong>修正标签</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>is_gth</td>
+      <td>.true. if Goedecker-Teter-Hutter</td>
+      <td>v2UPF是False</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>is_multiproj</td>
+      <td>.true. if multiple projectors per l <br /> (for NC PP only; US-PP and PAW are assumed to be multi-projector)</td>
+      <td>v2UPF是.True.</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=25)</td>
+      <td>dft</td>
+      <td>Exch-Corr type</td>
+      <td>PP_HEADER <br />   functional=”PBE”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>zp</td>
+      <td>z valence</td>
+      <td>PP_HEADER <br />  z_valence=”    6.00”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>etotps</td>
+      <td>total energy</td>
+      <td>PP_HEADER <br />  total_psenergy=”  -3.15123440404E+01”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>ecutwfc</td>
+      <td>suggested cut-off for wfc</td>
+      <td>PP_HEADER <br />  wfc_cutoff=”?”, oncv没提供</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>ecutrho</td>
+      <td>suggested cut-off for rho</td>
+      <td>PP_HEADER <br />   rho_cutoff=”   9.35000000000E+00”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(len=11)</td>
+      <td>nv</td>
+      <td>UPF file three-digit version i.e. 2.0.0</td>
+      <td>PP_HEADER <br />  <code class="highlighter-rouge">&lt;UPF version="2.0.1"&gt;</code></td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>lmax</td>
+      <td>maximum l component in beta</td>
+      <td>PP_HEADER <br />  l_max=”2”</td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>lmax_rho</td>
+      <td>max l component in charge (should be <code class="highlighter-rouge">2*lmax</code>)</td>
+      <td>PP_HEADER <br />  l_max_rho = “?”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>vnl(:,:,:)</td>
+      <td><code class="highlighter-rouge">vnl(i,l,s) = V(r_i)_{ls}</code><br />(semilocal form) only for single-channel NC PP<br /></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="wavefunctions-and-projectors">Wavefunctions and projectors</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER</td>
+      <td>nwfc</td>
+      <td>number of atomic wavefunctions</td>
+      <td>PP_HEADER <br />   number_of_wfc=”3”</td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nbeta</td>
+      <td>number of projectors</td>
+      <td>PP_HEADER <br />   number_of_proj=”8”</td>
+    </tr>
+    <tr>
+      <td>INTEGER,  POINTER</td>
+      <td>kbeta(:)</td>
+      <td>kbeta(nbeta) see below<br />kbeta&lt;=mesh is the number of grid points for each beta function<br />beta(r,nb) = 0 for r &gt; r(kbeta(nb))<br />beta函数的大小和网格一样，对于大于kbeta的beta函数部分都是0，从赝势文件中也可以看到一堆0 <br /> 就是每个PP_BETA有多少个数据点</td>
+      <td>PP_NONLOCAL/PP_BETA 属性<br /> cutoff_radius_index=” 152”</td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>kkbeta</td>
+      <td>kkbeta=max(kbeta(:))<br />kkbeta&lt;=mesh is the largest of such number so that for all beta<br />beta(r,nb) = 0 for r &gt; r(kkbeta) <br /> 各个输入PP_BETA最大的数据点有多少个</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER,  POINTER</td>
+      <td>lll(:)</td>
+      <td>lll(nbeta) l of each projector</td>
+      <td>PP_NONLOCAL/PP_BETA 属性<br /> angular_momentum=”0”   <br /> PP_SPIN_ORB/PP_RELBETA 属性<br /> lll=”0”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>beta(:,:)</td>
+      <td>beta(mesh,nbeta) projectors</td>
+      <td>PP_NONLOCAL/PP_BETA 数据</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=2), POINTER</td>
+      <td>els(:)</td>
+      <td>els(nwfc) label of wfc</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br /> label=”2S”</td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=2), POINTER</td>
+      <td>els_beta(:)=”Xn”</td>
+      <td>els(nbeta) label of beta</td>
+      <td>PP_NONLOCAL/PP_BETA 属性<br />  label=”?”</td>
+    </tr>
+    <tr>
+      <td>INTEGER, POINTER</td>
+      <td>nchi(:)</td>
+      <td>lchi(nwfc) value of pseudo-n for wavefcts</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br />   n=”?”</td>
+    </tr>
+    <tr>
+      <td>INTEGER, POINTER</td>
+      <td>lchi(:)</td>
+      <td>lchi(nwfc) value of l for wavefcts</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br />  l=”0”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>oc(:)</td>
+      <td>oc(nwfc) occupancies for wavefcts</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br />   occupation=” 2.000”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>epseu(:)</td>
+      <td>pseudo one-particle energy (nwfc)</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br />  pseudo_energy=”   -0.1761094801E+01”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rcut_chi(:)</td>
+      <td>rcut_chi(nwfc) cutoff inner radius</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br /> cutoff_radius=”?”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rcutus_chi(:)</td>
+      <td>rcutus_chi(nwfc) ultrasoft outer radius</td>
+      <td>PP_PWSCF/PP_CHI 属性 <br />  ultrasoft_cutoff_radius=”?”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>chi(:,:)</td>
+      <td>chi(mesh,nwfc) atomic wavefcts<br />Chi and rho_at are only used for initial density and initial wfcs:</td>
+      <td>PP_PWSCF/PP_CHI 值</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rho_at(:)</td>
+      <td>rho_at(mesh) atomic charge<br />Chi and rho_at are only used for initial density and initial wfcs:</td>
+      <td>PP_RHOATOM 值</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="minimal-radial-grid">Minimal radial grid:</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER</td>
+      <td>mesh</td>
+      <td>number of points in the radial mesh</td>
+      <td>PP_HEADER <br />  mesh_size=”   936”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>xmin</td>
+      <td>the minimum x of the linear mesh</td>
+      <td>MESH属性</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>rmax</td>
+      <td>the maximum radius of the mesh</td>
+      <td>MESH属性</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>zmesh</td>
+      <td>the nuclear charge used for mesh</td>
+      <td>MESH属性</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>dx</td>
+      <td>the deltax of the linear mesh</td>
+      <td>MESH属性</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>r(:)</td>
+      <td>r(mesh)  radial grid</td>
+      <td>upf%r(1:upf%mesh) = PP_MESH/PP_R</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rab(:)</td>
+      <td>rab(mesh) dr(x)/dx (x=linear grid)</td>
+      <td>upf%rab(1:upf%mesh) = PP_MESH/PP_RAB</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>这个rab有点意思,线性网格x我们用<code class="highlighter-rouge">i=1,2,3,....</code>表示<br /></p>
+<ul>
+  <li>线性网格(ONCV赝势采用)</li>
+</ul>
+
+<script type="math/tex; mode=display">\begin{array}{l}
+r(i) = i\Delta x \\
+r_{ab} = \cfrac{dr}{di} = \cfrac{(i+1)\Delta x - i\Delta x}{i+1 - i} = \Delta x 
+\end{array}</script>
+
+<ul>
+  <li>指数网格(USPP采用)<br /></li>
+</ul>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{array}{l}
+r(i) &= r_0 \exp((i-1)\Delta x) \\
+r_{ab} &= \cfrac{dr}{di} = r_0 \cfrac{\exp(i\Delta x) - \exp((i-1)\Delta x) }{i+1 - i} \\
+&= r_0 ( \exp(i\Delta x) - \exp((i-1)\Delta x) ) \\
+&= r_0 \exp((i-1)\Delta x) \Delta x \\
+&= r(i) \Delta x \\
+\text{泰勒展开}
+\end{array} %]]></script>
+
+<h3 id="pseudized-core-charge">Pseudized core charge</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rho_atc(:)</td>
+      <td>rho_atc(mesh) atomic core charge</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="local-potential">Local potential</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER</td>
+      <td>lloc</td>
+      <td>L of channel used to generate local potential<br />(if &lt; 0 it was generated by smoothing AE potential)</td>
+      <td>PP_HEADER <br />   l_local=”-1”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>rcloc</td>
+      <td>vloc = v_ae for r &gt; rcloc</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>vloc(:)</td>
+      <td>vloc(mesh) local atomic potential</td>
+      <td>PP_LOCAL值</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>dion(:,:)</td>
+      <td>dion(nbeta,nbeta) atomic D_{mu,nu}</td>
+      <td>PP_NONLOCAL/PP_DIJ 值</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="augmentation">Augmentation</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LOGICAL</td>
+      <td>q_with_l</td>
+      <td>if .true. qfunc is pseudized in different ways for different</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nqf</td>
+      <td>number of Q coefficients</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>nqlc</td>
+      <td>number of angular momenta in Q</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP)</td>
+      <td>qqq_eps</td>
+      <td>qfunc is null if its norm is .lt. qqq_eps</td>
+      <td>非us and 非 paw qqq_eps=-1._dp</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rinner(:)</td>
+      <td><code class="highlighter-rouge">rinner(0:2*lmax)</code> r_L</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>qqq(:,:)</td>
+      <td>qqq(nbeta,nbeta)  q_{mu,nu}</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>qfunc(:,:)</td>
+      <td><code class="highlighter-rouge">qfunc(mesh,nbeta*(nbeta+1)/2)</code><br />Augmentation without L dependecy<br /> <code class="highlighter-rouge">Q_{mu,nu}(|r|) function for |r|&gt; r_L</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>qfuncl(:,:,:)</td>
+      <td><code class="highlighter-rouge">qfuncl(mesh,nbeta*(nbeta+1)/2,l)</code><br />Augmentation depending on L (optional, compulsory for PAW)<br /><code class="highlighter-rouge">Q_{mu,nu}(|r|) function for |r|&gt; r_L</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>qfcoef(:,:,:,:)</td>
+      <td><code class="highlighter-rouge">qfcoef(nqf,0:2*lmax,nbeta,nbeta)</code><br />Analitycal coeffs cor small r expansion of qfunc (Vanderbilt’s code) <br /> <code class="highlighter-rouge">coefficients for Q for |r|&lt;r_L</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="wfc">wfc</h3>
+<p>All electron and pseudo wavefunction, pswfc differ from chi as they are   one for each beta, not just some choosen for initial conditions</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LOGICAL</td>
+      <td>has_wfc</td>
+      <td>if true, UPF contain AE and PS wfc for each beta</td>
+      <td>PP_HEADER <br />  has_wfc=”F”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>aewfc(:,:)</td>
+      <td>wfc(mesh,nbeta) all-electron wfc</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>pswfc(:,:)</td>
+      <td>wfc(mesh,nbeta) pseudo wfc</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="soc">SOC</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LOGICAL</td>
+      <td>has_so</td>
+      <td>if .true. includes spin-orbit</td>
+      <td>PP_HEADER <br />  has_so=”T”</td>
+    </tr>
+    <tr>
+      <td>INTEGER, POINTER</td>
+      <td>nn(:)</td>
+      <td>nn(nwfc) quantum number of wfc</td>
+      <td>PP_SPIN_ORB/PP_RELWFC 属性<br /> nn=”1”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rcut(:)</td>
+      <td>cut-off radius(nbeta)</td>
+      <td>PP_NONLOCAL/PP_BETA 属性<br />  cutoff_radius=”    1.5100000000E+00”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>rcutus(:)</td>
+      <td>ultrasoft cut-off radius (nbeta)</td>
+      <td>PP_NONLOCAL/PP_BETA 属性<br />  norm_conserving_radius=”?”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>jchi(:)</td>
+      <td>jchi(nwfc) j=l+1/2 or l-1/2 of wfc</td>
+      <td>PP_SPIN_ORB/PP_RELWFC 属性<br />  jchi=”0.5”</td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>jjj(:)</td>
+      <td>jjj(nbeta) j=l+1/2 or l-1/2 of beta</td>
+      <td>PP_SPIN_ORB/PP_RELBETA 属性<br /> jjj=”0.5”</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="paw">PAW:</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INTEGER</td>
+      <td>paw_data_format</td>
+      <td>The version of the format</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>tpawp</td>
+      <td>true if atom is PAW, PAW data must be present</td>
+      <td>PP_HEADER <br />   is_paw=”F”</td>
+    </tr>
+    <tr>
+      <td>TYPE(paw_in_upf)</td>
+      <td>paw</td>
+      <td>additional data for PAW (see above)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>TYPE(radial_grid_type),POINTER</td>
+      <td>grid</td>
+      <td>pointer to the corresponding grid in radial_grids module</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="gipaw">GIPAW:</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LOGICAL</td>
+      <td>has_gipaw</td>
+      <td>Whether GIPAW data is included</td>
+      <td>PP_HEADER <br />   has_gipaw=”F”</td>
+    </tr>
+    <tr>
+      <td>LOGICAL</td>
+      <td>paw_as_gipaw        !EMINE</td>
+      <td> </td>
+      <td>PP_HEADER <br />  paw_as_gipaw=”?”</td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>gipaw_data_format</td>
+      <td>The version of the format</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>gipaw_ncore_orbitals</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_core_orbital_n(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_core_orbital_l(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=2), POINTER</td>
+      <td>gipaw_core_orbital_el(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_core_orbital(:,:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_vlocal_ae(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_vlocal_ps(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER</td>
+      <td>gipaw_wfs_nchannels</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>CHARACTER(LEN=2), POINTER</td>
+      <td>gipaw_wfs_el(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>INTEGER, POINTER</td>
+      <td>gipaw_wfs_ll(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_wfs_ae(:,:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_wfs_rcut(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_wfs_rcutus(:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>REAL(DP), POINTER</td>
+      <td>gipaw_wfs_ps(:,:)</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="md5">MD5</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>变量名[=默认值]</th>
+      <th>备注</th>
+      <th>来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CHARACTER(len=32)</td>
+      <td>MD5_cksum = ‘NOT SET’</td>
+      <td>MD5 checksum … used to verify integrity of the information contained<br />in the pseudopotential file w.r.t previous run</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="其他需要的结构体">其他需要的结构体</h2>
+<h3 id="radial_grid_type-结构体信息">radial_grid_type 结构体信息</h3>
+<p>参考自<code class="highlighter-rouge">Modules/radial_grids.f90</code></p>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">TYPE</span><span class="w"> </span><span class="n">radial_grid_type</span><span class="w">
+
+  </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">mesh</span><span class="w">          </span><span class="c1">! the actual number of mesh points</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="k">POINTER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">r</span><span class="p">(:),</span><span class="w">    </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the radial mesh</span><span class="w">
+       </span><span class="n">r2</span><span class="p">(:),</span><span class="w">   </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the square of the radial mesh</span><span class="w">
+       </span><span class="n">rab</span><span class="p">(:),</span><span class="w">  </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! d r(x) / d x where x is the linear grid　！相邻网格0-&gt;--&gt;A-&gt;B-&gt;--&gt;N的差R(B)-R(A)</span><span class="w">
+       </span><span class="n">sqr</span><span class="p">(:),</span><span class="w">  </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the square root of the radial mesh</span><span class="w">
+       </span><span class="n">rm1</span><span class="p">(:),</span><span class="w">  </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! 1 / r</span><span class="w">
+       </span><span class="n">rm2</span><span class="p">(:),</span><span class="w">  </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! 1 / r**2</span><span class="w">
+       </span><span class="n">rm3</span><span class="p">(:)</span><span class="w">     </span><span class="c1">! 1 / r**3</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">xmin</span><span class="p">,</span><span class="w">       </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the minimum x</span><span class="w">
+       </span><span class="n">rmax</span><span class="p">,</span><span class="w">       </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the maximum radial point</span><span class="w">
+       </span><span class="n">zmesh</span><span class="p">,</span><span class="w">      </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! the ionic charge used for the mesh</span><span class="w">
+       </span><span class="n">dx</span><span class="w">            </span><span class="c1">! the deltax of the linear mesh</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">radial_grid_type</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="相关变量">相关变量</h2>
+<h3 id="module-uspp_param"><code class="highlighter-rouge">MODULE uspp_param</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/uspp.f90</code><br /></p>
+<blockquote>
+  <p>Ultrasoft and Norm-Conserving pseudopotential parameters
+存储赝势的各个变量数组大小</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>变量</th>
+      <th>含义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">TYPE (pseudo_upf),  ALLOCATABLE, TARGET    upf(:)</code></td>
+      <td>pseudo potential</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    nh(npsx),</code></td>
+      <td>number of beta functions per atomic type <br /> <code class="highlighter-rouge">nh (nt) = sum_{l} 2*l + 1 = sum_{nb = 1, upf(nt)%nbeta}  2 * upf(nt)%lll(nb) + 1</code> <br />并不是赝势文件中的beta函数数</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    nhm,</code></td>
+      <td>max number of different beta functions per atom<br /><code class="highlighter-rouge">nhm = MAXVAL (nh (1:nsp))</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    nbetam,</code></td>
+      <td>max number of beta functions <br /> <code class="highlighter-rouge">nbetam = MAXVAL (upf(:)%nbeta)</code><br />是输入赝势中的beta函数数</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    iver(3,npsx)</code></td>
+      <td>version of the atomic code</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    lmaxkb,</code></td>
+      <td>max angular momentum <br /> <code class="highlighter-rouge">lmaxkb = MAX (lmaxkb, upf(nt)%lll(nb) )</code><br />所有beta函数的最大角动量l</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    lmaxq</code></td>
+      <td>max angular momentum + 1 for Q functions  <br /> <code class="highlighter-rouge">lmaxq = 2*lmaxkb+1</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER    nvb,</code></td>
+      <td>number of species with Vanderbilt PPs (CPV) <br />使用USPP的元素数</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">INTEGER   ish(npsx)</code></td>
+      <td>for each specie the index of the first beta  <br /> function: ish(1)=1, ish(i)=1+SUM(nh(1:i-1))</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="module-uspp"><code class="highlighter-rouge">MODULE uspp</code></h3>
+<p>File:<code class="highlighter-rouge">Modules/uspp.f90</code><br /></p>
+<blockquote>
+  <p>Ultrasoft PPs:</p>
+  <ul>
+    <li>Clebsch-Gordan coefficients “ap”, auxiliary variables “lpx”, “lpl”</li>
+    <li>beta and q functions of the solid
+赝势各个变量,维度由uspp_param控制</li>
+  </ul>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">dvan(:,:,:)  </code>      the D functions of the solid</li>
+  <li><code class="highlighter-rouge">deeq(:,:,:,:)</code>      the integral of V_eff and Q_{nm}</li>
+  <li><code class="highlighter-rouge">qq_nt(:,:,:) </code>      the integral of q functions in the solid (ONE PER NTYP) used to be the qq array</li>
+  <li><code class="highlighter-rouge">qq_at(:,:,:)</code>       the integral of q functions in the solid (ONE PER ATOM !!!!)</li>
+  <li><code class="highlighter-rouge">nhtoj(:,:)  </code>       correspondence n &lt;-&gt; total angular momentum</li>
+</ul>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="kt">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="k">PARAMETER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">nlx</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">lmaxx</span><span class="mi">+1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="c1">! maximum number of combined angular momentum</span><span class="w">
+       </span><span class="n">mx</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">lqmax</span><span class="mi">-1</span><span class="w">      </span><span class="c1">! maximum magnetic angular momentum of Q</span><span class="w">
+  </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w">             </span><span class="p">&amp;</span><span class="c1">! for each pair of combined momenta lm(1),lm(2): </span><span class="w">
+       </span><span class="n">lpx</span><span class="p">(</span><span class="n">nlx</span><span class="p">,</span><span class="n">nlx</span><span class="p">),</span><span class="w">     </span><span class="p">&amp;</span><span class="c1">! maximum combined angular momentum LM</span><span class="w">
+       </span><span class="n">lpl</span><span class="p">(</span><span class="n">nlx</span><span class="p">,</span><span class="n">nlx</span><span class="p">,</span><span class="n">mx</span><span class="p">)</span><span class="w">    </span><span class="c1">! list of combined angular momenta  LM</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">ap</span><span class="p">(</span><span class="n">lqmax</span><span class="o">*</span><span class="n">lqmax</span><span class="p">,</span><span class="n">nlx</span><span class="p">,</span><span class="n">nlx</span><span class="p">)</span><span class="w">
+  </span><span class="c1">! Clebsch-Gordan coefficients for spherical harmonics</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">nkb</span><span class="p">,</span><span class="w">        </span><span class="p">&amp;</span><span class="c1">! total number of beta functions, with struct.fact.</span><span class="w">
+                         </span><span class="c1">!==在pre_init()中计算 = sum_l (2*l)+1</span><span class="w">
+             </span><span class="n">nkbus</span><span class="w">        </span><span class="c1">! as above, for US-PP only</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::&amp;</span><span class="w">
+       </span><span class="n">indv</span><span class="p">(:,:),</span><span class="w">        </span><span class="p">&amp;</span><span class="c1">! indes linking  atomic beta's to beta's in the solid</span><span class="w">
+       </span><span class="n">nhtol</span><span class="p">(:,:),</span><span class="w">       </span><span class="p">&amp;</span><span class="c1">! correspondence n &lt;-&gt; angular momentum l</span><span class="w">
+       </span><span class="n">nhtolm</span><span class="p">(:,:),</span><span class="w">      </span><span class="p">&amp;</span><span class="c1">! correspondence n &lt;-&gt; combined lm index for (l,m)</span><span class="w">
+       </span><span class="n">ijtoh</span><span class="p">(:,:,:),</span><span class="w">     </span><span class="p">&amp;</span><span class="c1">! correspondence beta indexes ih,jh -&gt; composite index ijh</span><span class="w">
+       </span><span class="n">indv_ijkb0</span><span class="p">(:)</span><span class="w">      </span><span class="c1">! first beta (index in the solid) for each atom </span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">LOGICAL</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">okvan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">.FALSE.</span><span class="p">,&amp;</span><span class="w">  </span><span class="c1">! if .TRUE. at least one pseudo is Vanderbilt</span><span class="w">
+       </span><span class="n">nlcc_any</span><span class="o">=</span><span class="kc">.FALSE.</span><span class="w">   </span><span class="c1">! if .TRUE. at least one pseudo has core corrections</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="p">,</span><span class="w"> </span><span class="k">TARGET</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">vkb</span><span class="p">(:,:)</span><span class="w">                </span><span class="c1">! all beta functions in reciprocal space</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">becsum</span><span class="p">(:,:,:)</span><span class="w">           </span><span class="c1">! \sum_i f(i) &lt;psi(i)|beta_l&gt;&lt;beta_m|psi(i)&gt;</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">ebecsum</span><span class="p">(:,:,:)</span><span class="w">          </span><span class="c1">! \sum_i f(i) et(i) &lt;psi(i)|beta_l&gt;&lt;beta_m|psi(i)&gt;</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">dvan</span><span class="p">(:,:,:),</span><span class="w">           </span><span class="p">&amp;</span><span class="c1">! the D functions of the solid</span><span class="w">
+       </span><span class="n">deeq</span><span class="p">(:,:,:,:),</span><span class="w">         </span><span class="p">&amp;</span><span class="c1">! the integral of V_eff and Q_{nm} </span><span class="w">
+       </span><span class="n">qq_nt</span><span class="p">(:,:,:),</span><span class="w">          </span><span class="p">&amp;</span><span class="c1">! the integral of q functions in the solid (ONE PER NTYP) used to be the qq array</span><span class="w">
+       </span><span class="n">qq_at</span><span class="p">(:,:,:),</span><span class="w">          </span><span class="p">&amp;</span><span class="c1">! the integral of q functions in the solid (ONE PER ATOM !!!!) </span><span class="w">
+       </span><span class="n">nhtoj</span><span class="p">(:,:)</span><span class="w">              </span><span class="c1">! correspondence n &lt;-&gt; total angular momentum</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">! variables for spin-orbit/noncolinear case:</span><span class="w">
+       </span><span class="n">qq_so</span><span class="p">(:,:,:,:),</span><span class="w">           </span><span class="p">&amp;</span><span class="c1">! Q_{nm}</span><span class="w">
+       </span><span class="n">dvan_so</span><span class="p">(:,:,:,:),</span><span class="w">         </span><span class="p">&amp;</span><span class="c1">! D_{nm}</span><span class="w">
+       </span><span class="n">deeq_nc</span><span class="p">(:,:,:,:)</span><span class="w">           </span><span class="c1">! \int V_{eff}(r) Q_{nm}(r) dr </span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="c1">! spin-orbit coupling: qq and dvan are complex, qq has additional spin index</span><span class="w">
+  </span><span class="c1">! noncolinear magnetism: deeq is complex (even in absence of spin-orbit)</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">beta</span><span class="p">(:,:,:)</span><span class="w">           </span><span class="c1">! beta functions for CP (without struct.factor)</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">dbeta</span><span class="p">(:,:,:,:,:)</span><span class="w">      </span><span class="c1">! derivative of beta functions w.r.t. cell for CP (without struct.factor)</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+</span></code></pre></div></div>
+<p>初始化<br />
+File:<code class="highlighter-rouge">PW/src/allocate_nlpot.f90</code><br /></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">indv</span><span class="p">(</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">nhtol</span><span class="p">(</span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">nhtolm</span><span class="p">(</span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">nhtoj</span><span class="p">(</span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">ijtoh</span><span class="p">(</span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">indv_ijkb0</span><span class="p">(</span><span class="n">nat</span><span class="p">))</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">deeq</span><span class="p">(</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nat</span><span class="p">,</span><span class="w"> </span><span class="n">nspin</span><span class="p">))</span><span class="w">
+  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">noncolin</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+     </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">deeq_nc</span><span class="p">(</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nat</span><span class="p">,</span><span class="w"> </span><span class="n">nspin</span><span class="p">))</span><span class="w">
+  </span><span class="k">ENDIF</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">qq_at</span><span class="p">(</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nat</span><span class="p">))</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">qq_nt</span><span class="p">(</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">lspinorb</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+    </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">qq_so</span><span class="p">(</span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+    </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">dvan_so</span><span class="p">(</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nspin</span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+    </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">fcoef</span><span class="p">(</span><span class="n">nhm</span><span class="p">,</span><span class="n">nhm</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">nsp</span><span class="p">))</span><span class="w">
+  </span><span class="k">ELSE</span><span class="w">
+    </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">dvan</span><span class="p">(</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nhm</span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+  </span><span class="k">ENDIF</span><span class="w">
+  </span><span class="c1">! GIPAW needs a slighly larger q-space interpolation for quantities calculated</span><span class="w">
+  </span><span class="c1">! at k+q_gipaw, and I'm using the spline_ps=.true. flag to signal that</span><span class="w">
+  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">spline_ps</span><span class="w"> </span><span class="ow">.and.</span><span class="w"> </span><span class="n">cell_factor</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1.1d0</span><span class="p">)</span><span class="w"> </span><span class="n">cell_factor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.1d0</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="c1">! This routine is called also by the phonon code, in which case it should</span><span class="w">
+  </span><span class="c1">! allocate an array that includes q+G vectors up to |q+G|_max &lt;= |Gmax|+|q|</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="n">nqxq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">gcutm</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">qnorm</span><span class="p">)</span><span class="w"> </span><span class="p">/</span><span class="w"> </span><span class="n">dq</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cell_factor</span><span class="w"> </span><span class="p">)</span><span class="w">
+  </span><span class="n">lmaxq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">lmaxkb</span><span class="mi">+1</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">lmaxq</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">qrad</span><span class="p">(</span><span class="w"> </span><span class="n">nqxq</span><span class="p">,</span><span class="w"> </span><span class="n">nbetam</span><span class="o">*</span><span class="p">(</span><span class="n">nbetam</span><span class="mi">+1</span><span class="p">)/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">lmaxq</span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">vkb</span><span class="p">(</span><span class="w"> </span><span class="n">npwx</span><span class="p">,</span><span class="w">  </span><span class="n">nkb</span><span class="p">))</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">becsum</span><span class="p">(</span><span class="w"> </span><span class="n">nhm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">nhm</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">nat</span><span class="p">,</span><span class="w"> </span><span class="n">nspin</span><span class="p">))</span><span class="w">
+  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tqr</span><span class="p">)</span><span class="w"> </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">ebecsum</span><span class="p">(</span><span class="w"> </span><span class="n">nhm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">nhm</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">nat</span><span class="p">,</span><span class="w"> </span><span class="n">nspin</span><span class="p">))</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="c1">! Calculate dimensions for array tab (including a possible factor</span><span class="w">
+  </span><span class="c1">! coming from cell contraction during variable cell relaxation/MD)</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="n">nqx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="nb">sqrt</span><span class="w"> </span><span class="p">(</span><span class="n">ecutwfc</span><span class="p">)</span><span class="w"> </span><span class="p">/</span><span class="w"> </span><span class="n">dq</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cell_factor</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">tab</span><span class="p">(</span><span class="w"> </span><span class="n">nqx</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nbetam</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+
+  </span><span class="c1">! d2y is for the cubic splines</span><span class="w">
+  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">spline_ps</span><span class="p">)</span><span class="w"> </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">tab_d2y</span><span class="p">(</span><span class="w"> </span><span class="n">nqx</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nbetam</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+
+  </span><span class="n">nwfcm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">maxval</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">nsp</span><span class="p">)</span><span class="o">%</span><span class="n">nwfc</span><span class="w"> </span><span class="p">)</span><span class="w">
+  </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">tab_at</span><span class="p">(</span><span class="w"> </span><span class="n">nqx</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nwfcm</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">nsp</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="cg系数计算">CG系数计算</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>subroutine aainit(lli)
+</code></pre></div></div>
+<p>计算<code class="highlighter-rouge">li=1,lli,lj=1,lli</code>形成的<code class="highlighter-rouge">l</code>的CG系数
+<br /> |Y_lm&gt;    -&gt; li 程序中的l代表物理的lm
+<br /> |Y_l’m’&gt;  -&gt; lj 程序中的l代表物理的lm
+<br /> |Y_LM&gt;    -&gt; l  程序中的l代表物理的lm
+<br /> |Y_lm&gt; |Y_l’m’&gt; =&gt; |Y_{L,M=m+m’}&gt;  M=m+m’, L = m+m’, m+m’+1, …, l+l’
+<br /> ap(l,li,lj) = &lt;Y_l|(|Y_li&gt;|Y_lj&gt;)
+<br /> lpx(li,lj) = numbers of L = m+m’, m+m’+1, …, l+l’,
+<br /> lpl = l of each L lpl(li,lj,1:lpx) =  L = m+m’, m+m’+1, …, l+l’
+<br /> The indices limi,ljmj and LM assume the order for real spherical
+<br /> harmonics given in routine ylmr2</p>
+
+<h3 id="module-us"><code class="highlighter-rouge">MODULE us</code></h3>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">MODULE</span><span class="w"> </span><span class="n">us</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="c1">! ... These parameters are needed with the US pseudopotentials</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="k">USE</span><span class="w"> </span><span class="n">kinds</span><span class="p">,</span><span class="w">      </span><span class="k">ONLY</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">DP</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="k">SAVE</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">nqxq</span><span class="p">,</span><span class="w">            </span><span class="p">&amp;</span><span class="c1">! size of interpolation table</span><span class="w">
+       </span><span class="n">nqx</span><span class="w">               </span><span class="c1">! number of interpolation points</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">PARAMETER</span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">dq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01D0</span><span class="w">        </span><span class="c1">! space between points in the pseudopotential tab.</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">qrad</span><span class="p">(:,:,:,:),</span><span class="w">   </span><span class="p">&amp;</span><span class="c1">! radial FT of Q functions</span><span class="w">
+       </span><span class="n">tab</span><span class="p">(:,:,:),</span><span class="w">      </span><span class="p">&amp;</span><span class="c1">! interpolation table for PPs</span><span class="w">
+       </span><span class="n">tab_at</span><span class="p">(:,:,:)</span><span class="w">     </span><span class="c1">! interpolation table for atomic wfc</span><span class="w">
+  </span><span class="kt">LOGICAL</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">spline_ps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">.false.</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">tab_d2y</span><span class="p">(:,:,:)</span><span class="w">    </span><span class="c1">! for cubic splines</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">MODULE</span><span class="w"> </span><span class="n">us</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="module-vlocal">MODULE vlocal</h3>
+<p>File:<code class="highlighter-rouge">PW/src/pwcom.f90</code></p>
+<blockquote>
+  <p>The variables needed for the local potential in reciprocal space</p>
+</blockquote>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">strf</span><span class="p">(:,:)</span><span class="w">              </span><span class="c1">! the structure factor</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">vloc</span><span class="p">(:,:)</span><span class="w">              </span><span class="c1">! the local potential for each atom type</span><span class="w">
+       </span><span class="c1">!局域赝势的径向倒空间形式vloc(ngl,nt)</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">starting_charge</span><span class="p">(</span><span class="n">ntypx</span><span class="p">)</span><span class="w"> </span><span class="c1">! the atomic charge used to start with</span><span class="w">
+</span></code></pre></div></div>
+
+<p><code class="highlighter-rouge">strf (ing, int) </code>为<script type="math/tex">s_G=\sum_{j=1}^{s} \exp(-i \overrightarrow{r_j} \cdot \overrightarrow{G} )</script><br />
+求和仅对同一元素<br />
+在计算局域赝势时:会把所有原子的局域赝势进行价格,同一元素,不同原子的加和区别就是<code class="highlighter-rouge">strf</code><br />
+在<code class="highlighter-rouge">PW/src/struct_fact.f90</code>中计算</p>
+
+<h3 id="module-becmod">MODULE becmod</h3>
+<p>File:<code class="highlighter-rouge">Modules/becmod.f90</code><br /></p>
+<blockquote>
+  <p><em>bec</em> contain <code class="highlighter-rouge">&lt;beta|psi&gt;</code> - used in h_psi, s_psi, many other places
+<br />calbec( npw, beta, psi, betapsi [, nbnd ] ) is an interface calculating
+<br />betapsi(i,j)  = <code class="highlighter-rouge">&lt;beta(i)|psi(j)&gt;</code>   (the sum is over npw components)
+<br />or betapsi(i,s,j)= <code class="highlighter-rouge">&lt;beta(i)|psi(s,j)&gt;</code> (s=polarization index)</p>
+</blockquote>
+
+<h4 id="type-bec_type">TYPE bec_type</h4>
+<p><script type="math/tex">% <![CDATA[
+<\beta_{jkb}\|\psi_{ibnd}> %]]></script>=<code class="highlighter-rouge">bec%k( jkb, ibnd )</code>的类型</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">TYPE</span><span class="w"> </span><span class="n">bec_type</span><span class="w">
+     </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w">   </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">r</span><span class="p">(:,:)</span><span class="w">    </span><span class="c1">!gamma_only情况 bec%r( nkb, nbnd_siz )</span><span class="w">
+     </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">k</span><span class="p">(:,:)</span><span class="w">    </span><span class="c1">!通常情况        bec%k( nkb, nbnd_siz ) </span><span class="w">
+     </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">nc</span><span class="p">(:,:,:)</span><span class="w"> </span><span class="c1">!noncolin情况   bec%nc( nkb, npol, nbnd_siz )  </span><span class="w">
+     </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">comm</span><span class="w">  </span><span class="c1">! intra_bgrp_comm,平面波comm, </span><span class="w">
+                      </span><span class="c1">! 不开nyfft时，所有平面波在一个intra_bgrp_comm  </span><span class="w">
+     </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">nbnd</span><span class="w">       </span><span class="c1">! nbnd = nbnd_siz 总band数       </span><span class="w">
+     </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">nproc</span><span class="w">      </span><span class="c1">! bec%nproc = mp_size( comm )        </span><span class="w">
+     </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">mype</span><span class="w">       </span><span class="c1">! bec%mype  = mp_rank( bec%comm )       </span><span class="w">
+     </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">nbnd_loc</span><span class="w">   </span><span class="c1">! bec%nbnd_loc   </span><span class="w">
+                           </span><span class="c1">! = ldim_block( becp%nbnd , bec%nproc, bec%mype )           </span><span class="w">
+     </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">ibnd_begin</span><span class="w"> </span><span class="c1">! bec%ibnd_begin </span><span class="w">
+                           </span><span class="c1">! = gind_block( 1,  becp%nbnd, bec%nproc, bec%mype )             </span><span class="w">
+  </span><span class="k">END</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="n">bec_type</span><span class="w">
+</span><span class="k">TYPE</span><span class="w"> </span><span class="p">(</span><span class="n">bec_type</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">becp</span><span class="w">  </span><span class="c1">! &lt;beta|psi&gt;</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="allocate_bec_type">allocate_bec_type</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> SUBROUTINE allocate_bec_type ( nkb, nbnd, bec, comm )
+</code></pre></div></div>
+<p>按照上面<code class="highlighter-rouge">TYPE bec_type</code>注释的内容,ALLOCATE相应变量:<code class="highlighter-rouge">r/k/nc</code>,设置并行信息``</p>
+
+<h4 id="interface-calbec">INTERFACE calbec</h4>
+<p>计算<script type="math/tex">\beta_{lm}</script>与对角化得到的波函数<code class="highlighter-rouge">evc</code>的内积,是一个确定的结果,可用于构造电荷密度
+如:<script type="math/tex">% <![CDATA[
+<\beta_{jkb}\|\psi_{ibnd}> %]]></script>=<code class="highlighter-rouge">becp%k( jkb, ibnd )</code>的类型</p>
+<blockquote>
+  <p><br />  calbec( npw, beta, psi, betapsi [, nbnd ] ) is an interface calculating
+<br />     betapsi(i,j)  = &lt;beta(i)|psi(j)&gt;   (the sum is over npw components)
+<br />  or betapsi(i,s,j)= &lt;beta(i)|psi(s,j)&gt; (s=polarization index)</p>
+</blockquote>
+
+<h2 id="upf文件内容">UPF文件内容</h2>
+<h3 id="oncvpsp赝势结构"><a href="https://github.com/pipidog/ONCVPSP">ONCVPSP</a>赝势结构</h3>
+<p>文件名</p>
+<ul>
+  <li>xx_ONCV_PBE_sr.upf =&gt; scalar relativistic (for non-spin-orbit calculations)</li>
+  <li>xx_ONCV_PBE_fr.upf =&gt; fully relativistic (for spin-orbit calculatons)</li>
+</ul>
+
+<p>文件结构:<br />
+以<a href="/web/file/2020/O_ONCV_PBE_fr.upf">O_ONCV_PBE_fr.upf</a>为例<br />
+截图来自 代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br />
+<img src="/uploads/2020/04/oncv.png" alt="" /></p>
+
+<h2 id="readppiosys-赝势读取">readpp(iosys) 赝势读取</h2>
+<p>File:<code class="highlighter-rouge">Modules/read_pseudo.f90</code><br /></p>
+
+<h3 id="读入流程">读入流程</h3>
+<ol>
+  <li><code class="highlighter-rouge">iosys(PW/src/input.f90 )</code></li>
+  <li><code class="highlighter-rouge">readpp(Modules/read_pseudo.f90)</code></li>
+  <li><code class="highlighter-rouge">readupf(Modules/upf.f90)</code></li>
+  <li><code class="highlighter-rouge">read_upf_v2(Modules/read_upf_v2.f90)</code></li>
+</ol>
+
+<ul>
+  <li><strong>初始化</strong><br />
+根据元素数<code class="highlighter-rouge">ntyp</code>分配<code class="highlighter-rouge">upf(ntyp),grid(ntyp)</code>内存<br />
+判断各个元素的位置, 检查是否存在</li>
+  <li><strong>读入赝势</strong>:调用UPF赝势读取入口<code class="highlighter-rouge">read_upf</code>,循环依次读入各个元素</li>
+  <li><strong>设置参数</strong></li>
+</ul>
+
+<p>参数: <code class="highlighter-rouge">readpp ( input_dft, printout, ecutwfc_pp, ecutrho_pp )</code></p>
+<ul>
+  <li><code class="highlighter-rouge">CHARACTER(len=*), INTENT(INOUT) :: input_dft</code><br />
+PW输入参数<code class="highlighter-rouge">input_dft=</code>,即是否指定计算使用的Exc泛函,默认从赝势中读取</li>
+  <li><code class="highlighter-rouge">LOGICAL, OPTIONAL, INTENT(IN) :: printout</code><br />
+,额外多向屏幕输出一些信息</li>
+  <li><code class="highlighter-rouge">REAL(DP), OPTIONAL, INTENT(OUT) :: ecutwfc_pp, ecutrho_pp</code><br />
+波函数截断能，电荷截断能</li>
+</ul>
+
+<p>用法: <code class="highlighter-rouge">USE read_pseudo_mod,       ONLY : readpp</code><br />
+示例: <code class="highlighter-rouge">CALL readpp ( input_dft, .FALSE., ecutwfc_pp, ecutrho_pp )</code><br /></p>
+
+<h3 id="初始化">初始化</h3>
+<p>根据元素数<code class="highlighter-rouge">ntyp</code>分配<code class="highlighter-rouge">upf(ntyp),grid(ntyp)</code>内存<br />
+判断各个元素的位置, 检查是否存在</p>
+
+<h3 id="读入赝势-read_upf">读入赝势: read_upf</h3>
+<p>File:<code class="highlighter-rouge">Modules/upf.f90</code><br />
+功能</p>
+<ul>
+  <li>使用Fox库, 打开upf文件</li>
+  <li>根据UPF Node的version属性，调用相应版本的UPF读入函数,如:<br />
+<code class="highlighter-rouge">&lt;UPF version="2.0.1"&gt;</code>调用<code class="highlighter-rouge">read_upf_v2</code></li>
+</ul>
+
+<p>参数: <code class="highlighter-rouge">read_upf(upf, grid, ierr, unit,  filename)</code></p>
+<ul>
+  <li><code class="highlighter-rouge">INTEGER,INTENT(IN), OPTIONAL  :: unit</code>
+<br />   i/o unit</li>
+  <li><code class="highlighter-rouge">CHARACTER(len=*),INTENT(IN),OPTIONAL :: filename</code>
+<br />   i/o filename</li>
+  <li><code class="highlighter-rouge">TYPE(pseudo_upf),INTENT(INOUT) :: upf</code>
+<br />   upf变量, the derived type storing the pseudo data</li>
+  <li><code class="highlighter-rouge">TYPE(radial_grid_type),OPTIONAL,INTENT(INOUT),TARGET :: grid</code>
+<br />   derived type where is possible to store data on the radial mesh</li>
+  <li><code class="highlighter-rouge">INTEGER,INTENT(INOUT) :: ierr</code>
+<br />错误代码
+ <br />   On input:
+ <br />   ierr =0:   return if not a valid xml schema or UPF v.2 file
+ <br />   ierr/=0: continue if not a valid xml schema or UPF v.2 file
+ <br />   On output:
+ <br />   ierr=0: xml schema, ierr=-1: UPF v.1,  ierr=-2: UPF v.2
+ <br />   ierr&gt;0: error reading PP file
+ <br />   ierr=-81: error reading PP file, possibly UPF fix needed</li>
+</ul>
+
+<p>用法:<code class="highlighter-rouge">USE upf_module,   ONLY: read_upf</code><br />
+示例:<code class="highlighter-rouge">CALL  read_upf(upf(nt), rgrid(nt), isupf, filename = file_pseudo )</code></p>
+
+<h4 id="read_upf_v2">read_upf_v2</h4>
+<p>File:<code class="highlighter-rouge">Modules/read_upf_v2.f90</code><br />
+功能:直接读入v2版UPF文件</p>
+<ul>
+  <li>读入<strong>PP_HEADER</strong>节点,设置参数:<code class="highlighter-rouge">CALL read_upf_header(u, upf)</code></li>
+  <li>读入<strong>PP_MESH</strong>节点,设置grif等参数:<code class="highlighter-rouge">CALL read_upf_mesh(u, upf, grid)</code></li>
+  <li>读入<strong>PP_NLCC</strong>节点:<code class="highlighter-rouge">CALL extractDataContent(auxNode, upf%rho_atc)</code></li>
+  <li>读入<strong>PP_LOCAL</strong>节点:<code class="highlighter-rouge">CALL extractDataContent(auxNode, upf%vloc)</code></li>
+  <li>读入<strong>PP_NONLOCAL</strong>节点:<code class="highlighter-rouge">CALL read_upf_nonlocal(u, upf)</code></li>
+  <li>读入<strong>PP_PSWFC/PP_CHI</strong>节点:<code class="highlighter-rouge">CALL read_upf_pswfc(u, upf)</code></li>
+  <li>读入<strong>PP_FULL_WFC</strong>节点:<code class="highlighter-rouge">CALL read_upf_full_wfc(u, upf)</code>,ONCV赝势中没有此项</li>
+  <li>读入<strong>PP_RHOATOM</strong>节点:<code class="highlighter-rouge">CALL extractDataContent(auxNode, upf%rho_at)</code></li>
+  <li>读入<strong>PP_SPIN_ORB</strong>节点:<code class="highlighter-rouge">CALL read_upf_spin_orb(u, upf)</code>,SOC可选</li>
+  <li>读入<strong>PP_PAW</strong>节点:<code class="highlighter-rouge">CALL read_upf_paw(u, upf)</code>,ONCV赝势中没有此项</li>
+  <li>读入<strong>PP_GIPAW</strong>节点:<code class="highlighter-rouge">CALL read_upf_gipaw(u, upf)</code>,ONCV赝势中没有此项</li>
+</ul>
+
+<p>参数: <code class="highlighter-rouge">read_upf_v2(u, upf, grid, ierr) </code></p>
+<ul>
+  <li>u 赝势文件节点变量</li>
+  <li>upf 同上赝势变量</li>
+  <li>grid 同上网格</li>
+  <li>ierr 错误代码</li>
+</ul>
+
+<p>用法:<code class="highlighter-rouge">USE read_upf_v2_module,ONLY: read_upf_v2</code>
+示例:<code class="highlighter-rouge">CALL read_upf_v2( u, upf, grid, ierr )</code></p>
+
+<h5 id="pp_nonlocal">PP_NONLOCAL</h5>
+<p><code class="highlighter-rouge">CALL read_upf_nonlocal(u, upf)</code><br /></p>
+
+<p><strong>PP_BETA.nb</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;PP_BETA.1 index="1" label="1S" angular_momentum="0" cutoff_radius_index="571" cutoff_radius="8.000000000000e-1" ultrasoft_cutoff_radius="1.000000000000e0"&gt;
+</code></pre></div></div>
+<ul>
+  <li>提取<strong>PP_BETA.nb</strong>包含的数据,放入<code class="highlighter-rouge">upf%beta(:, nb)</code></li>
+  <li>label<code class="highlighter-rouge">label="1S"</code>放入<code class="highlighter-rouge">upf%els_beta(nb)</code></li>
+  <li>角动量<code class="highlighter-rouge">angular_momentum="0"</code>放入<code class="highlighter-rouge">upf%lll(nb)</code></li>
+  <li><code class="highlighter-rouge">upf%beta(:, nb)</code>中前<code class="highlighter-rouge">cutoff_radius_index="571"</code>(<code class="highlighter-rouge">upf%kbeta(nb)</code>)为有效数据点</li>
+  <li>截断半径<code class="highlighter-rouge">cutoff_radius="8.000000000000e-1"</code>,即<code class="highlighter-rouge">upf%rcut(nb)</code>，<br />
+也是网格点grid的第<code class="highlighter-rouge">cutoff_radius_index</code>个坐标对应的<code class="highlighter-rouge">grid%r(cutoff_radius_index)</code></li>
+  <li>USPP截断半径<code class="highlighter-rouge">ultrasoft_cutoff_radius="1.000000000000e0"</code> 放入<code class="highlighter-rouge"> upf%rcutus(nb)</code></li>
+</ul>
+
+<p><strong>PP_DIJ</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;PP_DIJ&gt;
+</code></pre></div></div>
+<ul>
+  <li>读入<strong>PP_DIJ</strong>包含数据,放入<code class="highlighter-rouge">upf%dion</code></li>
+</ul>
+
+<p><strong>下面为缀加密度专属:USPP/PAW</strong><br />
+<strong>augmentation : IF(upf%tvanp .or. upf%tpawp) THEN</strong><br />
+<strong>PP_AUGMENTATION</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;PP_AUGMENTATION q_with_l="true" nqf="0" nqlc="1" shape="PSQ" cutoff_r="-1.000000000000000e0" cutoff_r_index="579" augmentation_epsilon="1.000000000000000e-12" l_max_aug="0"&gt;
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">q_with_l="true"</code> =&gt; <code class="highlighter-rouge">upf%q_with_l</code></li>
+  <li><code class="highlighter-rouge">nqf</code> =&gt; <code class="highlighter-rouge">upf%nqf</code></li>
+  <li><code class="highlighter-rouge">nqlc="1"</code> =&gt; <code class="highlighter-rouge">upf%nqlc</code>,赝势中提供的好像是<code class="highlighter-rouge">2*最大角动量+1</code> <br />
+ELSE <code class="highlighter-rouge">upf%nqlc =2*upf%lmax+1</code><br /></li>
+  <li><code class="highlighter-rouge">IF (upf%tpawp) THEN</code>
+    <ul>
+      <li><code class="highlighter-rouge">shape="PSQ"</code> =&gt; <code class="highlighter-rouge">upf%paw%augshape</code></li>
+      <li><code class="highlighter-rouge">CALL extractDataAttribute(locNode,'cutoff_r',       upf%paw%raug )</code></li>
+      <li><code class="highlighter-rouge">CALL extractDataAttribute(locNode,'cutoff_r_index', upf%paw%iraug)</code> <br />
+ ELSE, <code class="highlighter-rouge">upf%paw%iraug =upf%mesh</code></li>
+      <li><code class="highlighter-rouge">CALL extractDataAttribute(locNode,'l_max_aug',      upf%paw%lmax_aug)</code><br />
+ ELSE, <code class="highlighter-rouge">upf%paw%lmax_aug   =upf%lmax_rho</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">CALL extractDataAttribute(locNode,'augmentation_epsilon',upf%qqq_eps)</code><br />
+ELSE, ` upf%qqq_eps = -1._dp`</li>
+  <li><code class="highlighter-rouge">upf%qfuncl</code> or <code class="highlighter-rouge">upf%qfunc</code>
+    <div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">       </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">q_with_l</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+          </span><span class="k">ALLOCATE</span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">qfuncl</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">mesh</span><span class="p">,</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="o">*</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="mi">+1</span><span class="p">)/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">upf</span><span class="o">%</span><span class="n">lmax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+          </span><span class="n">upf</span><span class="o">%</span><span class="n">qfuncl</span><span class="o">=</span><span class="mf">0._dp</span><span class="w">
+       </span><span class="k">ELSE</span><span class="w">
+          </span><span class="k">ALLOCATE</span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">qfunc</span><span class="w"> </span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">mesh</span><span class="p">,</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="o">*</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="mi">+1</span><span class="p">)/</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+       </span><span class="k">ENDIF</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li><strong>PP_Q</strong>
+Read the integrals of the Q functions，Q的积分 ?= 小q<br />
+数据是对称的，即<code class="highlighter-rouge">upf%qqq(m,n)=upf%qqq(n,m)</code>
+大小<code class="highlighter-rouge">upf%nbeta * upf%nbeta</code>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;PP_Q&gt;
+      9.228117074244505e-3 9.187630667222837e-3 9.187630667222837e-3 9.129545931151867e-3
+      &lt;/PP_Q&gt;
+</code></pre></div>    </div>
+    <p>把<strong>PP_Q</strong>中的<code class="highlighter-rouge">nbeta*nbeta</code>数据存到<code class="highlighter-rouge">upf%qqq   ( upf%nbeta, upf%nbeta )</code></p>
+  </li>
+  <li><strong>PP_MULTIPOLES</strong>
+大小<code class="highlighter-rouge">upf%nbeta * upf%nbeta * (2*upf%lmax+1)</code>,如H<code class="highlighter-rouge">2*2*(2*0+1)=4</code>与PP_Q相等是特例
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;PP_MULTIPOLES&gt;
+      9.228117074244505e-3 9.187630667222837e-3 9.187630667222837e-3 9.129545931151867e-3
+      &lt;/PP_MULTIPOLES&gt;
+</code></pre></div>    </div>
+    <p>仅在PAW赝势,存到<code class="highlighter-rouge">upf%paw%augmom</code></p>
+    <div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">       </span><span class="c1">! read charge multipoles (only if PAW)</span><span class="w">
+       </span><span class="k">IF</span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">tpawp</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">   
+          </span><span class="k">ALLOCATE</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">paw</span><span class="o">%</span><span class="n">augmom</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="p">,</span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">upf</span><span class="o">%</span><span class="n">lmax</span><span class="p">))</span><span class="w">
+          </span><span class="c1">!=== 注意编号从0开始</span><span class="w">
+          </span><span class="k">ALLOCATE</span><span class="p">(</span><span class="w"> </span><span class="n">tmp_dbuffer</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="o">*</span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">upf</span><span class="o">%</span><span class="n">lmax</span><span class="mi">+1</span><span class="p">))</span><span class="w"> </span><span class="p">)</span><span class="w">
+          </span><span class="n">locNode2</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">item</span><span class="p">(</span><span class="w"> </span><span class="n">getElementsByTagname</span><span class="p">(</span><span class="n">locNode</span><span class="p">,</span><span class="s1">'PP_MULTIPOLES'</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">
+          </span><span class="k">CALL</span><span class="w"> </span><span class="n">extractDataContent</span><span class="p">(</span><span class="n">locNode2</span><span class="p">,</span><span class="w"> </span><span class="n">tmp_dbuffer</span><span class="p">)</span><span class="w">
+          </span><span class="n">upf</span><span class="o">%</span><span class="n">paw</span><span class="o">%</span><span class="n">augmom</span><span class="o">=</span><span class="nb">reshape</span><span class="p">(</span><span class="n">tmp_dbuffer</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="p">,</span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">upf</span><span class="o">%</span><span class="n">lmax</span><span class="mi">+1</span><span class="p">])</span><span class="w">
+          </span><span class="k">DEALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">tmp_dbuffer</span><span class="p">)</span><span class="w">
+       </span><span class="k">ENDIF</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li><code class="highlighter-rouge">upf%qfcoef</code>
+对于<code class="highlighter-rouge">H.pbe-kjpaw_psl.1.0.0.UPF</code>,<code class="highlighter-rouge">S.pbe-kjpaw_psl.1.0.0.UPF</code>而言,<code class="highlighter-rouge">nqf = 0</code>
+    <div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">       </span><span class="c1">! Read polinomial coefficients for Q_ij expansion at small radius</span><span class="w">
+       </span><span class="k">IF</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">nqf</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+          </span><span class="n">upf</span><span class="o">%</span><span class="n">rinner</span><span class="p">(:)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0._dp</span><span class="w">
+          </span><span class="k">ALLOCATE</span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">qfcoef</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+          </span><span class="n">upf</span><span class="o">%</span><span class="n">qfcoef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0._dp</span><span class="w">
+       </span><span class="k">ELSE</span><span class="w">
+          </span><span class="k">ALLOCATE</span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">qfcoef</span><span class="p">(</span><span class="w"> </span><span class="nb">MAX</span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">nqf</span><span class="p">,</span><span class="mi">1</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">nqlc</span><span class="p">,</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="p">,</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+          </span><span class="k">ALLOCATE</span><span class="p">(</span><span class="n">tmp_dbuffer</span><span class="p">(</span><span class="nb">MAX</span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">nqf</span><span class="p">,</span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="o">*</span><span class="n">upf</span><span class="o">%</span><span class="n">nqlc</span><span class="o">*</span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="o">*</span><span class="n">upf</span><span class="o">%</span><span class="n">nbeta</span><span class="p">))</span><span class="w">
+          </span><span class="n">locNode2</span><span class="o">=&gt;</span><span class="w"> </span><span class="n">item</span><span class="p">(</span><span class="n">getElementsByTagname</span><span class="p">(</span><span class="n">locNode</span><span class="p">,</span><span class="w"> </span><span class="s1">'PP_QFCOEF'</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span><span class="w"> 
+          </span><span class="k">CALL</span><span class="w"> </span><span class="n">extractDataContent</span><span class="p">(</span><span class="n">locNode2</span><span class="p">,</span><span class="w"> </span><span class="n">tmp_dbuffer</span><span class="p">)</span><span class="w">
+          </span><span class="n">upf</span><span class="o">%</span><span class="n">qfcoef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">reshape</span><span class="p">(</span><span class="n">tmp_dbuffer</span><span class="p">,[</span><span class="nb">size</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">qfcoef</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="nb">size</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">qfcoef</span><span class="p">,</span><span class="mi">2</span><span class="p">),&amp;</span><span class="w">
+                                         </span><span class="nb">size</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">qfcoef</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="nb">size</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">qfcoef</span><span class="p">,</span><span class="mi">4</span><span class="p">)])</span><span class="w">
+          </span><span class="k">DEALLOCATE</span><span class="p">(</span><span class="n">tmp_dbuffer</span><span class="p">)</span><span class="w">
+          </span><span class="n">locNode2</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">item</span><span class="p">(</span><span class="n">getElementsByTagname</span><span class="p">(</span><span class="n">locNode</span><span class="p">,</span><span class="w"> </span><span class="s1">'PP_RINNER'</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span><span class="w">
+          </span><span class="k">CALL</span><span class="w"> </span><span class="n">extractDataContent</span><span class="p">(</span><span class="n">locNode2</span><span class="p">,</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">rinner</span><span class="p">)</span><span class="w">
+       </span><span class="k">ENDIF</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li><strong>PP_QIJL.m.n.?</strong>
+Read augmentation charge Q_ij, 大Q ?<br />
+共有<code class="highlighter-rouge">nbeta + (nbeta - 1) + ... + 1 = nbeta(nbeta-1)/2</code>个,不像PP_Q包含重复数据，这里无重复数据<br />
+满足的条件有 <script type="math/tex">% <![CDATA[
+| l_I - l_J | <= l <= | l_I + l_J | \, \text{AND} \, I= l + l_I + l_J \text{为偶数} %]]></script>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;PP_QIJL.1.1.0 first_index="1" second_index="1" composite_index="1" angular_momentum="0"&gt;
+&lt;PP_QIJL.1.2.0 first_index="1" second_index="2" composite_index="2" angular_momentum="0"&gt;
+&lt;PP_QIJL.2.2.0 first_index="2" second_index="2" composite_index="3" angular_momentum="0"&gt;
+</code></pre></div>    </div>
+    <p>若有角动量:保存到<code class="highlighter-rouge">upf%qfuncl(:, composite_index,angular_momentum)</code><br /> 
+若无角动量:保存到<code class="highlighter-rouge">upf%qfuncl(:, composite_index)</code><br /></p>
+    <div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">       </span><span class="c1">! Read augmentation charge Q_ij</span><span class="w">
+       </span><span class="n">ultrasoft_or_paw</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="k">IF</span><span class="p">(</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">tvanp</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+          </span><span class="n">locNode3</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">getFirstChild</span><span class="p">(</span><span class="n">locNode</span><span class="p">)</span><span class="w">
+          </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">q_with_l</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w"> 
+             </span><span class="n">upf</span><span class="o">%</span><span class="n">qfuncl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0._dp</span><span class="w">
+          </span><span class="k">ELSE</span><span class="w"> 
+             </span><span class="n">upf</span><span class="o">%</span><span class="n">qfunc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0._dp</span><span class="w">
+          </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+          </span><span class="n">search_for_qij</span><span class="p">:</span><span class="w"> </span><span class="k">DO</span><span class="w"> 
+             </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="ow">.NOT.</span><span class="w"> </span><span class="nb">ASSOCIATED</span><span class="p">(</span><span class="n">locNode3</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">EXIT</span><span class="w"> </span><span class="n">search_for_qij</span><span class="w">
+             </span><span class="n">locNode2</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">locNode3</span><span class="w">
+             </span><span class="n">locNode3</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">getNextSibling</span><span class="p">(</span><span class="n">locNode2</span><span class="p">)</span><span class="w">
+             </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">getNodeType</span><span class="p">(</span><span class="n">locNode2</span><span class="p">)</span><span class="w"> </span><span class="ow">.NE.</span><span class="w"> </span><span class="n">ELEMENT_NODE</span><span class="p">)</span><span class="w"> </span><span class="k">CYCLE</span><span class="w"> </span><span class="n">search_for_qij</span><span class="w">
+             </span><span class="c1">!</span><span class="w">
+             </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">INDEX</span><span class="p">(</span><span class="w"> </span><span class="n">getTagName</span><span class="p">(</span><span class="n">locNode2</span><span class="p">),</span><span class="w"> </span><span class="s1">'PP_QIJ'</span><span class="p">)</span><span class="w"> </span><span class="ow">.LE.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">CYCLE</span><span class="w"> </span><span class="n">search_for_qij</span><span class="w">
+             </span><span class="k">CALL</span><span class="w"> </span><span class="n">extractDataAttribute</span><span class="p">(</span><span class="n">locNode2</span><span class="p">,</span><span class="w"> </span><span class="s1">'composite_index'</span><span class="p">,</span><span class="w"> </span><span class="n">nmb</span><span class="p">)</span><span class="w">
+             </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">q_with_l</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w"> 
+                </span><span class="k">CALL</span><span class="w"> </span><span class="n">extractDataAttribute</span><span class="p">(</span><span class="n">locNode2</span><span class="p">,</span><span class="w"> </span><span class="s1">'angular_momentum'</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">)</span><span class="w">
+                </span><span class="k">CALL</span><span class="w"> </span><span class="n">extractDataContent</span><span class="p">(</span><span class="w"> </span><span class="n">locNode2</span><span class="p">,</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">qfuncl</span><span class="p">(:,</span><span class="w"> </span><span class="n">nmb</span><span class="p">,</span><span class="n">l</span><span class="p">))</span><span class="w">
+                </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">tpawp</span><span class="p">)</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">qfuncl</span><span class="p">(</span><span class="n">upf</span><span class="o">%</span><span class="n">paw</span><span class="o">%</span><span class="n">iraug</span><span class="mi">+1</span><span class="p">:,</span><span class="n">nmb</span><span class="p">,</span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0._DP</span><span class="w">
+             </span><span class="k">ELSE</span><span class="w">
+                </span><span class="k">CALL</span><span class="w"> </span><span class="n">extractDataContent</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">locNode2</span><span class="p">,</span><span class="w"> </span><span class="n">upf</span><span class="o">%</span><span class="n">qfunc</span><span class="p">(:,</span><span class="n">nmb</span><span class="p">))</span><span class="w">
+             </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+          </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w"> </span><span class="n">search_for_qij</span><span class="w">     
+          </span><span class="c1">!</span><span class="w">
+       </span><span class="k">ENDIF</span><span class="w"> </span><span class="n">ultrasoft_or_paw</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="设置参数">设置参数</h3>
+<p>File:<code class="highlighter-rouge">Modules/read_pseudo.f90</code>本文件<br /></p>
+<ul>
+  <li>设置核电荷数:<code class="highlighter-rouge">zv(nt) = upf(nt)%zp</code></li>
+  <li>统计vb赝势(USPP)的数量:<code class="highlighter-rouge">IF (upf(nt)%tvanp) nvb=nvb+1</code></li>
+  <li>从赝势设置泛函:<code class="highlighter-rouge">CALL set_dft_from_name( upf(nt)%dft )</code><br />
+不同赝势的泛函要相同</li>
+  <li>计算截断网格点<code class="highlighter-rouge">msh (nt)</code><br />
+只用赝势提供的网格点中小于<code class="highlighter-rouge">10 a.u.</code>范围内的数据,计算最大有效数据点编号,必是奇数</li>
+  <li>判断是否有USPP.<code class="highlighter-rouge">okvan = ( nvb &gt; 0 )</code></li>
+  <li>判断是否有芯修正.<code class="highlighter-rouge">nlcc_any = ANY ( upf(1:ntyp)%nlcc )</code></li>
+  <li>[可选]读入截断能<code class="highlighter-rouge">ecutwfc</code>，<code class="highlighter-rouge">ecutrho</code></li>
+</ul>
+
+<h2 id="setup继续设置">(setup)继续设置</h2>
+<h3 id="call-pre_init-beta函数统计"><code class="highlighter-rouge">CALL pre_init()</code> beta函数统计</h3>
+<p>File:<code class="highlighter-rouge">PW/src/init_run.f90</code>
+<br /> 设置beta函数数量:<code class="highlighter-rouge">2*l+1</code>
+<br /> 各元素的lm组合(代码中说的是包含结构因子)<script type="math/tex">\beta</script>函数<code class="highlighter-rouge">do nt =1,nsp ; nh (nt) = sum_{l} 2*l + 1 = sum_{nb = 1, upf(nt)%nbeta}  2 * upf(nt)%lll(nb) + 1</code>
+<br /> <code class="highlighter-rouge">lmaxkb = MAX (lmaxkb, upf(nt)%lll(nb) )</code>所有beta函数的最大角动量l
+<br /> <code class="highlighter-rouge">nhm = MAXVAL (nh (1:nsp))</code>,最大的<code class="highlighter-rouge">nh</code>
+<br /> <code class="highlighter-rouge">nbetam = MAXVAL (upf(:)%nbeta)</code>输入赝势中beta函数的最大数量
+<br /> 所有原子的beta函数数量之和<code class="highlighter-rouge">do na = 1, nat ; nkb = nkb + nh (nt=ityp(na))</code> 
+<br /> USPP还会设置uspp的beta函数只和nkbus，同nkb<code class="highlighter-rouge">if (upf(nt)%tvanp) nkbus = nkbus + nh (nt)</code></p>
+
+<h2 id="hinit0继续设置">(hinit0)继续设置</h2>
+<h3 id="init_vloc初始化局域赝势"><code class="highlighter-rouge">init_vloc()</code>初始化局域赝势</h3>
+<p>File:<code class="highlighter-rouge">PW/src/init_vloc.f90</code><br /></p>
+<blockquote>
+  <p>将径向实空间的局域密度<code class="highlighter-rouge">upf(nt)%vloc()</code>转换到径向倒空间<code class="highlighter-rouge">vloc (ngl,nt)</code></p>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">vloc (ngl,nt)</code>: the fourier transform of the potential</li>
+  <li><script type="math/tex">V_{loc}(G=0) = \int (V_{loc}(r)+ Ze^2/r) 4pi r^2 dr</script><br />
+ 对应程序<code class="highlighter-rouge">r (ir) * (  r (ir) * vloc_at (ir) + zp * e2)</code>然后使用辛普森进行积分</li>
+</ul>
+
+<p>正常情况</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">        </span><span class="k">call</span><span class="w"> </span><span class="n">vloc_of_g</span><span class="w"> </span><span class="p">(</span><span class="n">rgrid</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span><span class="o">%</span><span class="n">mesh</span><span class="p">,</span><span class="w"> </span><span class="n">msh</span><span class="w"> </span><span class="p">(</span><span class="n">nt</span><span class="p">),</span><span class="w"> </span><span class="n">rgrid</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span><span class="o">%</span><span class="n">rab</span><span class="p">,</span><span class="w"> </span><span class="n">rgrid</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span><span class="o">%</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+            </span><span class="n">upf</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span><span class="o">%</span><span class="n">vloc</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">upf</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span><span class="o">%</span><span class="n">zp</span><span class="p">,</span><span class="w"> </span><span class="n">tpiba2</span><span class="p">,</span><span class="w"> </span><span class="n">ngl</span><span class="p">,</span><span class="w"> </span><span class="n">gl</span><span class="p">,</span><span class="w"> </span><span class="n">omega</span><span class="p">,</span><span class="w"> </span><span class="n">vloc</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nt</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p>File:<code class="highlighter-rouge">PW/src/vloc_of_g.f90</code><br /></p>
+
+<blockquote>
+  <p>SUBROUTINE vloc_of_g <br />
+This routine computes the Fourier transform of the local
+part of an atomic pseudopotential, given in numerical form.
+A term erf(r)/r is subtracted in real space (thus making the
+function short-ramged) and added again in G space (for G&lt;&gt;0)
+The G=0 term contains \int (V_loc(r)+ Ze^2/r) 4pi r^2 dr.
+This is the “alpha” in the so-called “alpha Z” term of the energy.
+Atomic Ry units everywhere.</p>
+</blockquote>
+
+<h3 id="setlocal设置实空间局域赝势"><code class="highlighter-rouge">setlocal</code>设置实空间局域赝势</h3>
+<p>File:<code class="highlighter-rouge">PW/src/setlocal.f90</code><br /></p>
+<blockquote>
+  <p>v_of_0 is (Vloc)(G=0)</p>
+</blockquote>
+
+<p>遍历所有的<code class="highlighter-rouge">dfftp</code>中的所有G点，找到对应径向倒格空间(G-shell)中的局域赝势,使用结构因子<code class="highlighter-rouge">strf</code><br />
+<script type="math/tex">s_G=\sum_{j=1}^{s} \exp(-i \overrightarrow{r_j} \cdot \overrightarrow{G} )</script><br />
+把所有原子的径向倒空间的局域赝势<code class="highlighter-rouge">vloc (ngl,nt)</code>进行加和<br />
+然后使用IFFT<code class="highlighter-rouge">CALL invfft ('Rho', aux, dfftp)</code>变换到实空间，存储在<code class="highlighter-rouge">vltot(dfftp%nnr)</code><br />
+<code class="highlighter-rouge">REAL(dp) :: v_of_0</code>是所有原子G空间局域赝势求和中的<code class="highlighter-rouge">G=0</code>对应的局域赝势,是一个数</p>
+
+<p><strong>还包括电磁场</strong>
+电场仅在每个MD开始前计算一次，每个MD内的自洽循环仅在<code class="highlighter-rouge">v_of_rho.f90</code>中只把之前计算的结果进行添加.<br />
+第一个MD在此处<code class="highlighter-rouge">/PW/src/hinit0.f90</code>调用<code class="highlighter-rouge">setlocal</code>,计算第一个MD前的电场<code class="highlighter-rouge">/PW/src/add_efield.f90</code><br />
+第二及以后的MD，会在<code class="highlighter-rouge">/PW/src/hinit1.f90</code>中调用<code class="highlighter-rouge">setlocal</code>计算</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tefield</span><span class="w"> </span><span class="ow">.AND.</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="ow">.NOT.</span><span class="w"> </span><span class="n">dipfield</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="p">&amp;</span><span class="w">
+      </span><span class="k">CALL</span><span class="w"> </span><span class="n">add_efield</span><span class="p">(</span><span class="n">vltot</span><span class="p">,</span><span class="n">etotefield</span><span class="p">,</span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">,</span><span class="kc">.TRUE.</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="init_us_1初始化可分离赝势"><code class="highlighter-rouge">init_us_1</code>初始化可分离赝势</h3>
+<p>File:<code class="highlighter-rouge">PW/src/init_us_1.f90</code><br />
+下面的<script type="math/tex">\|</script>都是一个<code class="highlighter-rouge">|</code>的含义,latex和md的语法有冲突才这样写的<br /></p>
+
+<blockquote>
+  <p>该subroutine的作用就是<strong>PP_BETA,PP_DIJ,PP_QIJL.Ib.Jb.L</strong>中的数据转化到与角动量有关的<script type="math/tex">\beta_{lm}</script>函数,径向的实空间倒空间(叫傅利叶变换更贴切)形式，前面的系数<script type="math/tex">Q_{limi,ljmj}</script>,<script type="math/tex">qq_{limi,ljmj}</script>,具体项目如下</p>
+</blockquote>
+
+<blockquote>
+  <p><em>下面的公式,尤其是辛普森积分公式,关于<code class="highlighter-rouge">rab</code>积分的结果仍带商榷.</em></p>
+</blockquote>
+
+<p>QE该部分的物理公式支持还没找到，先记录一些自己的猜想,下面以<code class="highlighter-rouge">S.pbe-n-kjpaw_psl.1.0.0.UPF</code>为例</p>
+<ul>
+  <li><script type="math/tex">\beta_{nb}(r)</script>函数具有角动量<script type="math/tex">l</script>分辨,<script type="math/tex">m</script>简并,由赝势文件中的<strong>PP_BETA.</strong>输入,<br />
+    <ul>
+      <li>共<code class="highlighter-rouge">upf(nt)%nbeta</code>个简并<script type="math/tex">\beta_{nb}</script>函数，与赝势输入相同<br />
+  程序注释为<code class="highlighter-rouge">number of projectors</code><br />
+  <strong>程序把<script type="math/tex">\beta_{nb}</script>叫做投影算符, 下面称为<script type="math/tex">\beta_{nb}</script>投影算符</strong><br />
+(例外:提供SOC的<script type="math/tex">\beta_{nb}</script>函数，计算不采用SOC时，会删除一些<script type="math/tex">\beta_{nb}</script>函数)</li>
+      <li><script type="math/tex">l</script>为<code class="highlighter-rouge">upf(nt)%lll(nb)</code></li>
+      <li>径向实空间<script type="math/tex">\beta_{nb}(r)</script>存储在变量<code class="highlighter-rouge">upf(nt)%beta (ir, nb)</code>中</li>
+      <li>径向倒空间<script type="math/tex">\beta_{nb}(G)</script>存储在变量<code class="highlighter-rouge">tab (iq, nb, nt)</code>中</li>
+      <li>径向实-倒空间转换<script type="math/tex">\beta_{nb}(G)=\cfrac{4\pi}{Omega} \int \beta_{nb}(r)fj(G_0r)r^2dr</script><br />
+where <script type="math/tex">fj(Gr)</script>为球bessel函数,使用<code class="highlighter-rouge">sph_bes(...)</code>计算,<script type="math/tex">G_0=0</script><br />
+从赝势中读入实空间<code class="highlighter-rouge">upf(nt)%beta (ir, nb)</code>在<code class="highlighter-rouge">init_us_1</code>中转换为倒空间</li>
+    </ul>
+  </li>
+  <li><script type="math/tex">Y_{lm}</script>球谐函数</li>
+  <li>
+    <p>给<script type="math/tex">\beta_{nb}</script>投影算符，考虑上<script type="math/tex">m</script>,就共有<script type="math/tex">\sum_{nb=1,nbeta} 2l_{nb}+1</script>种，即<code class="highlighter-rouge">nh(nt)</code><br />
+程序注释为<code class="highlighter-rouge">nh:number of beta functions per atomic type</code><br />
+下面<strong>称<script type="math/tex">\beta_{lm}</script>为<script type="math/tex">\beta_{lm}</script>函数</strong></p>
+  </li>
+  <li><script type="math/tex">\beta_{lm}</script>函数
+    <ul>
+      <li>下面用<code class="highlighter-rouge">IJL</code>表示角动量<script type="math/tex">l_I,l_J,l_L</script><br /></li>
+      <li>用<code class="highlighter-rouge">ih,jh=1,nh</code>表示<script type="math/tex">\|l_I, m_I \rangle</script>与<script type="math/tex">\|l_J, m_J \rangle</script>的一维index<br /></li>
+      <li>用<code class="highlighter-rouge">nhtol,nhtolm</code>把<script type="math/tex">\|l_I, m_I \rangle</script>的一维index<code class="highlighter-rouge">ih</code>分别转化为他们的<script type="math/tex">l_I</script>, <script type="math/tex">l_I,m_I</script><br /></li>
+      <li>用<code class="highlighter-rouge">indv  (ih, nt) = nb</code>把<script type="math/tex">\beta_{lm}</script>函数转为<script type="math/tex">\beta_{nb}</script>投影算符编号<code class="highlighter-rouge">nh</code>
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> !== l 索引,   nhtol (ih, nt) = l     !== lm的 m
+ !== lm 索引,   nhtolm(ih, nt) = l*l+m !== 0 ～ l-1 共有l*l种 lm组合，这里是lm索引
+ !== beta 索引,   indv  (ih, nt) = nb    !== beta函数编号
+</code></pre></div>        </div>
+      </li>
+      <li>用<code class="highlighter-rouge">ijtoh</code>表示<script type="math/tex">\beta_{lm}</script>组合：<script type="math/tex">\| l_I, m_I \rangle \langle l_J, m_J\|</script>的编号的一维index,<br />
+   用<code class="highlighter-rouge">ijv</code>表示<script type="math/tex">\| l_I, m_I \rangle \langle l_J, m_J\|</script>的组合编号
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   ijtoh(ih,jh,nt) = ijv   !== (lmi,lmj) 转 一维索引 ijv
+   ijtoh(jh,ih,nt) = ijv   !== (lmi,lmj) 转 一维索引 ijv
+</code></pre></div>        </div>
+      </li>
+      <li><script type="math/tex">\beta_{lm}</script>函数的组合<script type="math/tex">D</script>系数为:<script type="math/tex">D(\beta_{limi},\beta_{ljmj})=D(\beta_i,\beta_j)=\delta_{l_I,l_J}</script>,对应变量
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dvan (ih, jh, nt) = upf(nt)%dion (ir=indv (ih, nt), is=indv (jh, nt))
+</code></pre></div>        </div>
+        <p>其中<script type="math/tex">D(\beta_i,\beta_j)</script>,i.e. <code class="highlighter-rouge">upf(nt)%dion</code>是从赝势中<strong>PP_DIJ</strong>读入,共<code class="highlighter-rouge">nbeta*nbeta</code>个<br />
+ 只有角动量相同的投影算符的<script type="math/tex">D</script>才不为0</p>
+      </li>
+    </ul>
+  </li>
+  <li>角动量耦合:
+    <ul>
+      <li>角动量<script type="math/tex">\| l_I, m_I\rangle</script>与<script type="math/tex">\| l_J, m_J\rangle</script>的<br />
+非耦合表象<script type="math/tex">\| l_I, m_I\rangle \bigotimes \| l_J, m_J \rangle</script></li>
+      <li>耦合表象<script type="math/tex">\| I_L, m_L\rangle</script>,变换关系<script type="math/tex">% <![CDATA[
+\| l_I - l_J \| <= l_L <= \|l_I + l_J \| ,\; m_L = m_I+m_J %]]></script>,<br />
+在QE里面在处理<script type="math/tex">Q</script>函数时，还要求<script type="math/tex">I+J+L=l_I+l_J+l_L</script>为偶数</li>
+      <li>表象变换系数/CG系数<script type="math/tex">C_{l_I, m_L, l_J, m_J}^{I_Lm}=\langle I_L, m_L \| (\| l_I, m_I\rangle \bigotimes \| l_J, m_J \rangle)</script><br /></li>
+    </ul>
+  </li>
+  <li>球谐函数的CG系数: <code class="highlighter-rouge">aainit(lli)</code>计算
+计算<code class="highlighter-rouge">li=1,lli,lj=1,lli</code>形成的<code class="highlighter-rouge">l</code>的CG系数<br />
+    <ul>
+      <li><code class="highlighter-rouge">|Y_lm&gt;</code>    -&gt; li 程序中的<code class="highlighter-rouge">li</code>代表物理的<script type="math/tex">l_I,m_I</script><br /></li>
+      <li><code class="highlighter-rouge">|Y_l'm'&gt;</code>  -&gt; lj 程序中的<code class="highlighter-rouge">lj</code>代表物理的<script type="math/tex">l_J,m_J</script><br /></li>
+      <li><code class="highlighter-rouge">|Y_LM&gt;</code>    -&gt; l  程序中的l代表物理的<script type="math/tex">l_L,m_L</script>,是耦合基矢<br />
+    <code class="highlighter-rouge">|Y_lm&gt; |Y_l'm'&gt;</code> =&gt; <code class="highlighter-rouge">|Y_{L,M=m+m'}&gt;  M=m+m', L = m+m', m+m'+1, ..., l+l'</code><br /></li>
+      <li>CG系数<script type="math/tex">C_{l_I, m_L, l_J, m_J}^{l_L,m_L}=\langle I_L, m_L \| (\| l_I, m_I\rangle \bigotimes \| l_J, m_J \rangle)</script><br />
+   对应变量 <code class="highlighter-rouge">ap(l,li,lj) = &lt;Y_l|(|Y_li&gt;|Y_lj&gt;</code><br /></li>
+      <li>耦合对应关系: <script type="math/tex">m_L=m_I+m_J</script>是固定的, <code class="highlighter-rouge">lpx(li,lj)</code>代表有几种组合的<script type="math/tex">l_L</script><br />
+   <script type="math/tex">l_L</script>的编号<code class="highlighter-rouge">lpl(li,lj,1:lpx)</code>
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   lpx(li,lj) = numbers of L = m+m', m+m'+1, ..., l+l'
+   lpl = l of each L lpl(li,lj,1:lpx) =  L = m+m', m+m'+1, ..., l+l'
+   The indices limi,ljmj and LM assume the order for real spherical
+   harmonics given in routine ylmr2
+</code></pre></div>        </div>
+      </li>
+      <li>用途:转换耦合与非耦合情况<code class="highlighter-rouge">Y_limi(r) * Y_ljmj(r) = \sum_LM  ap(LM,limi,ljmj)  Y_LM(r)</code></li>
+    </ul>
+  </li>
+  <li><script type="math/tex">Q_{(l_I,m_I),(l_J,m_J))}</script>是<script type="math/tex">\| l_I, m_I \rangle \langle l_J, m_J\|</script>组合函数的<script type="math/tex">Q</script>函数<br />
+  应该对应公式<script type="math/tex">\eqref{us-1}</script>中的<script type="math/tex">Q_{n,m}^I i.e. Q_{(l_I,m_I),(l_J,m_J))}^{nt}</script>
+    <ul>
+      <li>赝势提供的<strong>PP_QIJL.Ib.Jb.L</strong>为耦合表象的<script type="math/tex">Q_{IJL}</script><br />
+   即<script type="math/tex">l_I,m_I</script>与<script type="math/tex">l_J,m_J</script>耦合的<script type="math/tex">l_L,m_L</script>,关系同角动量耦合中提到的<br />
+   <script type="math/tex">% <![CDATA[
+\| l_I - l_J \| <= I_L <= \|l_I + l_J \| ,\; m_L = m_I+m_J\; \text{and} \; I+J+L \, \text{为偶数} %]]></script><br />
+   赝势提供的<script type="math/tex">Q_{IJL}</script>只有角动量<script type="math/tex">l</script>分辨<br />
+   再将耦合表象的<script type="math/tex">Q_{IJL}</script>变换到非耦合<script type="math/tex">\beta</script>函数组合<script type="math/tex">Q_{IJ}</script>时,要考虑<script type="math/tex">m</script>分辨</li>
+      <li>径向实空间<script type="math/tex">Q_{IJL}(r)</script>对应变量<code class="highlighter-rouge">upf(nt)%qfuncl(1:upf(nt)%kkbeta,ijv,l)</code>,从赝势<strong>PP_QIJL.Ib.Jb.L</strong>读入<br />
+ 注意:<code class="highlighter-rouge">upf%qfuncl ( upf%mesh, upf%nbeta*(upf%nbeta+1)/2, 0:2*upf%lmax )</code>的<code class="highlighter-rouge">l</code>取值从0起始</li>
+      <li>径向倒空间<script type="math/tex">Q_{IJL}(G)</script>对应变量<code class="highlighter-rouge">qrad(iq,ijv,l + 1, nt)</code><br />
+ 注意<code class="highlighter-rouge">qrad( nqxq, nbetam*(nbetam+1)/2, lmaxq, nsp)</code>的<code class="highlighter-rouge">l</code>从1开始,因此这里通过<code class="highlighter-rouge">l+1</code>调用存储的<code class="highlighter-rouge">l</code></li>
+      <li>径向实-倒空间转换<script type="math/tex">Q_{IJL}(G)=\cfrac{4\pi}{\Omega}\int Q_IJL(r) jl(Gr)  r dx</script><br />
+  where <script type="math/tex">fj(Gr)</script>为球bessel函数,<strong>这里不是<script type="math/tex">r^2dr</script>,感到很奇怪，没有找到物理公式，先存疑</strong></li>
+    </ul>
+  </li>
+  <li><script type="math/tex">q_{(l_I,m_I),(l_J,m_J)}</script>是<script type="math/tex">Q_{(l_I,m_I),(l_J,m_J)}</script>的积分<br />
+    <ul>
+      <li><script type="math/tex">q_{(l_I,m_I),(l_J,m_J)}</script>是<script type="math/tex">\| l_I, m_I \rangle \langle l_J, m_J\|</script>的系数<br />
+  就是<script type="math/tex">S=1+\sum_{n,m,I}q_{n,m}^{I} \| \beta_n^I \rangle \langle \beta_m^I \|</script>中的<script type="math/tex">q_{n,m}</script></li>
+      <li>对应变量<code class="highlighter-rouge">qq_nt(limi,ljmj,nt)=qq_nt(ih,jh,nt)</code></li>
+      <li>元素相同的原子的<code class="highlighter-rouge">qq_at(:,:, na) = qq_nt(:,:,ityp(na))</code></li>
+      <li>但是赝势提供的是耦合的<script type="math/tex">QQ_{IJL}</script>是耦合表象,需要将耦合表象变到非耦合的组合表象</li>
+      <li>耦合变换公式:<strong>以下为猜测</strong><br />
+   <script type="math/tex">q_{(l_I,m_I),(l_J,m_J)} = \int Q_{(l_I,m_I),(l_J,m_J)}(r) dr</script> <br />
+   <script type="math/tex">= Y_{l_I,m_I}(G=0)  Y_{l_J,m_J}(G=0) Q_{(l_I,m_I),(l_J,m_J)}(G=0)</script> <br />
+   <script type="math/tex">= \sum_{l_L,m_L} (-i)^{l_L} C_{l_I, m_L, l_J, m_J}^{l_L,m_L} Y_{l_L,m_L}(G=0) Q_{(l_I,m_I),(l_J,m_J)}(G=0)</script> <br />
+   实际上没有直接用<script type="math/tex">Q_{(l_I,m_I),(l_J,m_J)}(G=0)</script> i.e. <code class="highlighter-rouge">qrad</code>,而是如下,<em>暂时不明跳过</em>
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     work = qrad (i0, ijv, l, np) * uvx * wx + &amp;
+            qrad (i1, ijv, l, np) * pwx * vx - &amp;
+            qrad (i2, ijv, l, np) * pwx * ux + &amp;
+            qrad (i3, ijv, l, np) * px * uvx
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="init_us_2"><code class="highlighter-rouge">init_us_2</code></h2>
+<p>File:<code class="highlighter-rouge">PW/src/init_us_2.f90</code><br />
+<strong>与k点有关</strong><br /></p>
+<blockquote>
+  <p><em>应该在进行kb可分离赝势计算</em>,即计算所有原子的<script type="math/tex">\beta_{lm}^I(k+G)</script>函数c乘上结构因子
+把<script type="math/tex">\|Y_{l_I,m_I}\rangle</script>与他们对应的投影算符<script type="math/tex">\beta_{nb}</script>组合起来，得到<br />
+<script type="math/tex">v_{kb}(G,l_I,m_I,R_{atom})=(-i)^{l_I}\exp(iGR_{atom})\|Y_{l_I,m_I}\rangle(G)\beta_{nb}(G)</script>
+这里的<script type="math/tex">\beta_{nb}(G)</script>实际上用的是如下，<em>暂时不明跳过</em></p>
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                    vq (ig) = tab (i0, nb, nt) * ux * vx * wx / 6.d0 + &amp;
+                              tab (i1, nb, nt) * px * vx * wx / 2.d0 - &amp;
+                              tab (i2, nb, nt) * px * ux * wx / 2.d0 + &amp;
+                              tab (i3, nb, nt) * px * ux * vx / 6.d0
+</code></pre></div>  </div>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IF ( nkb &gt; 0 ) CALL init_us_2( ngk(ik), igk_k(1,ik), xk(1,ik), vkb )
+</code></pre></div></div>
+
+<ul>
+  <li>所有原子共有<script type="math/tex">\beta_{lm}</script>数<code class="highlighter-rouge">nkb</code>个<br />
+在<code class="highlighter-rouge">CALL pre_init()</code>中计算<code class="highlighter-rouge">do na = 1, nat ; nkb = nkb + nh (nt=ityp(na))</code></li>
+  <li>计算<code class="highlighter-rouge">vkb(ig,jkb=1:nkb)</code>,其中<code class="highlighter-rouge">ig</code>对应<script type="math/tex">G=k+G(ig)</script><br />
+在不同的k点间不同,因此此subroutine在自洽k点循环下面计算</li>
+</ul>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/09/20/qe-spin/">QE代码阅读: 自旋相关
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/04/05/qe-pwscf/">QE代码阅读: pwscf框架</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/04/06/coffee/">[更新中...]37种速溶咖啡(Instant coffee)品尝</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

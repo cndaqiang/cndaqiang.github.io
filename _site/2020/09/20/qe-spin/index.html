@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>QE代码阅读: 自旋相关</title>
+    <meta name="description" content="QE代码阅读系列，个人学习记录，仅供参考。代码仓库QE-6.4.1@cndaqiang">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2020/09/20/qe-spin/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2020/09/20/qe-spin/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2020/09/20/qe-spin/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2020/09/20/qe-spin/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>QE代码阅读: 自旋相关</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-09-20
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Quantum-Espresso" title="Category: Quantum-Espresso" rel="category">Quantum-Espresso</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a-->
+        <a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a>&nbsp;
+    
+        <!--a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a-->
+        <a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a>&nbsp;
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#物理相关" id="markdown-toc-物理相关"><br /><center>物理相关</center><br /></a></li>
+  <li><a href="#pauil矩阵" id="markdown-toc-pauil矩阵">Pauil矩阵</a></li>
+  <li><a href="#二分量波函数" id="markdown-toc-二分量波函数">二分量波函数</a></li>
+  <li><a href="#磁矩" id="markdown-toc-磁矩">磁矩</a></li>
+  <li><a href="#代码模块" id="markdown-toc-代码模块"><br /><center>代码模块</center><br /></a></li>
+  <li><a href="#lsda_mod" id="markdown-toc-lsda_mod">lsda_mod</a></li>
+  <li><a href="#波函数" id="markdown-toc-波函数">波函数</a>    <ul>
+      <li><a href="#波函数变量" id="markdown-toc-波函数变量">波函数变量</a></li>
+      <li><a href="#k点和band占据情况" id="markdown-toc-k点和band占据情况">k点和band占据情况</a></li>
+    </ul>
+  </li>
+  <li><a href="#noncoline时的ks方程" id="markdown-toc-noncoline时的ks方程">noncoline时的KS方程</a></li>
+  <li><a href="#lsda时的ks方程" id="markdown-toc-lsda时的ks方程">lsda时的KS方程</a></li>
+  <li><a href="#电荷密度" id="markdown-toc-电荷密度">电荷密度</a>    <ul>
+      <li><a href="#noncollinear的磁密度" id="markdown-toc-noncollinear的磁密度">noncollinear的磁密度</a></li>
+      <li><a href="#lsda密度" id="markdown-toc-lsda密度">lsda密度</a></li>
+    </ul>
+  </li>
+  <li><a href="#noncollin_module" id="markdown-toc-noncollin_module">noncollin_module</a></li>
+  <li><a href="#spin_orb-模块" id="markdown-toc-spin_orb-模块">spin_orb 模块</a></li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/QEF/q-e.git">q-e code</a><br /></p>
+
+<h2 id="物理相关"><br /><center>物理相关</center><br /></h2>
+<h2 id="pauil矩阵">Pauil矩阵</h2>
+<p><img src="/uploads/2020/09/pauil.png" alt="" /></p>
+<blockquote>
+  <p>@曹老师.数理史上的绝妙证明：电子自旋是相对论性质——贤说八道
+<img src="/uploads/2020/09/pauilplus.png" alt="" /></p>
+</blockquote>
+
+<h2 id="二分量波函数">二分量波函数</h2>
+<p><img src="/uploads/2020/09/psi2.png" alt="" /></p>
+
+<h2 id="磁矩">磁矩</h2>
+<p>QE的自旋密度就来自自旋磁矩的计算公式<br />
+途中$\mu$为电子质量$m$
+<img src="/uploads/2020/09/m.png" alt="" /></p>
+
+<h2 id="代码模块"><br /><center>代码模块</center><br /></h2>
+<h2 id="lsda_mod">lsda_mod</h2>
+<p>File:<code class="highlighter-rouge">PW/src/pwcom.f90</code><br />
+控制lsda计算的变量</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="kt">LOGICAL</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">lsda</span><span class="w"> </span><span class="c1">!只有nspin=2时, lsda  == T, 其他不考虑自旋和nonclinear情况 lsda == F</span><span class="w">
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">magtot</span><span class="p">,</span><span class="w">                       </span><span class="p">&amp;</span><span class="c1">! total magnetization</span><span class="w">
+       </span><span class="n">absmag</span><span class="p">,</span><span class="w">                       </span><span class="p">&amp;</span><span class="c1">! total absolute magnetization</span><span class="w">
+       </span><span class="n">starting_magnetization</span><span class="p">(</span><span class="n">ntypx</span><span class="p">)</span><span class="w">  </span><span class="c1">! the magnetization used to start with</span><span class="w">
+  </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">nspin</span><span class="p">,</span><span class="w">           </span><span class="p">&amp;</span><span class="c1">! number of spin polarization: 2 if lsda, 1 other</span><span class="w">
+       </span><span class="c1">!无自旋 nspin=0, lsda nspin=2, nonclinear nspin=4</span><span class="w">
+       </span><span class="c1">!读入的nspin会被实际情况nospin/lsda/nonclinear 替换掉</span><span class="w">
+       </span><span class="n">current_spin</span><span class="p">,</span><span class="w">    </span><span class="p">&amp;</span><span class="c1">! spin of the current kpoint,</span><span class="w">
+       </span><span class="c1">!仅在lsda时current=1,2其他情况current_spin==1</span><span class="w">
+       </span><span class="n">isk</span><span class="p">(</span><span class="n">npk</span><span class="p">)</span><span class="w">          </span><span class="c1">! for each k-point: 1=spin up, 2=spin down</span><span class="w">
+       </span><span class="c1">!经常这样使用 IF ( lsda ) current_spin = isk(ik)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="波函数">波函数</h2>
+<p><img src="/uploads/2020/09/nbnd.png" alt="" /></p>
+<h3 id="波函数变量">波函数变量</h3>
+<p>File:<code class="highlighter-rouge">Modules/wavefunctions.f90</code></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">     </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="p">,</span><span class="w"> </span><span class="k">TARGET</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">evc</span><span class="p">(:,:)</span><span class="w">     </span><span class="c1">! wavefunctions in the PW basis set</span><span class="w">
+                    </span><span class="c1">! noncolinear case: first index</span><span class="w">
+                    </span><span class="c1">! is a combined PW + spin index</span><span class="w">
+     </span><span class="c1">!</span><span class="w">
+     </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="p">,</span><span class="w"> </span><span class="k">TARGET</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+       </span><span class="n">psic</span><span class="p">(:),</span><span class="w"> </span><span class="p">&amp;</span><span class="w">      </span><span class="c1">! additional memory for FFT</span><span class="w">
+       </span><span class="n">psic_nc</span><span class="p">(:,:)</span><span class="w">    </span><span class="c1">! as above for the noncolinear case</span><span class="w">
+     </span><span class="c1">!</span><span class="w">
+</span></code></pre></div></div>
+<p>单k点波函数<code class="highlighter-rouge">evc</code>
+File:<code class="highlighter-rouge">PW/src/allocate_wfc.f90</code></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!nc时npol=2,其他npol=1</span><span class="w">
+</span><span class="k">ALLOCATE</span><span class="p">(</span><span class="w"> </span><span class="n">evc</span><span class="p">(</span><span class="w"> </span><span class="n">npwx</span><span class="o">*</span><span class="n">npol</span><span class="p">,</span><span class="w"> </span><span class="n">nbnd</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p>提取用单k点单band波函数
+File:<code class="highlighter-rouge">PW/src/allocate_fft.f90</code></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">psic</span><span class="p">(</span><span class="w"> </span><span class="n">dfftp</span><span class="o">%</span><span class="n">nnr</span><span class="p">))</span><span class="w">
+</span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">noncolin</span><span class="p">)</span><span class="w"> </span><span class="k">ALLOCATE</span><span class="w"> </span><span class="p">(</span><span class="n">psic_nc</span><span class="p">(</span><span class="w"> </span><span class="n">dfftp</span><span class="o">%</span><span class="n">nnr</span><span class="p">,</span><span class="w"> </span><span class="n">npol</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+<p>使用</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DO</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">npw</span><span class="w">
+   </span><span class="n">psic</span><span class="p">(</span><span class="n">dffts</span><span class="o">%</span><span class="n">nl</span><span class="p">(</span><span class="n">igk_k</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">ik</span><span class="p">)))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">evc</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">ibnd</span><span class="p">)</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+
+</span><span class="k">DO</span><span class="w"> </span><span class="n">ig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">npw</span><span class="w">
+   </span><span class="n">psic_nc</span><span class="p">(</span><span class="n">dffts</span><span class="o">%</span><span class="n">nl</span><span class="p">(</span><span class="n">igk_k</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span><span class="n">ik</span><span class="p">)),</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">evc</span><span class="p">(</span><span class="n">ig</span><span class="w">     </span><span class="p">,</span><span class="n">ibnd</span><span class="p">)</span><span class="w">
+   </span><span class="n">psic_nc</span><span class="p">(</span><span class="n">dffts</span><span class="o">%</span><span class="n">nl</span><span class="p">(</span><span class="n">igk_k</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span><span class="n">ik</span><span class="p">)),</span><span class="mi">2</span><span class="p">)</span><span class="o">=</span><span class="n">evc</span><span class="p">(</span><span class="n">ig</span><span class="o">+</span><span class="n">npwx</span><span class="p">,</span><span class="n">ibnd</span><span class="p">)</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+</span></code></pre></div></div>
+<p><strong>从buffer中读取波函数,<code class="highlighter-rouge">nwordwfc</code>会根据<code class="highlighter-rouge">nspin</code>取具体的数值</strong><br />
+nwordwfc(nspin=1)==nwordwfc(nspin=2)==0.5*nwordwfc(nspin=4)</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">IF</span><span class="p">(</span><span class="w"> </span><span class="n">nks</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+   </span><span class="k">CALL</span><span class="w"> </span><span class="n">get_buffer</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">evc</span><span class="p">,</span><span class="w"> </span><span class="n">nwordwfc</span><span class="p">,</span><span class="w"> </span><span class="n">itdksf</span><span class="p">,</span><span class="w"> </span><span class="n">ik</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="k点和band占据情况">k点和band占据情况</h3>
+
+<p><strong>仅在<code class="highlighter-rouge">lsda</code>情况下，k点数量会加倍</strong>
+nks(nospin)=nks(nonclinear)=0.5*nks(lsda)</p>
+
+<p><strong><code class="highlighter-rouge">wg(ibnd,ik)</code></strong>占据情况,以两个电子单k点为例</p>
+<ul>
+  <li>nspin=1,wg=2,0,0,0 #每个态是简并的,最多占据两个电子</li>
+  <li>nspin=2/lsda,wg(ik=1)=1,0,0,0; wg(ik=2)=1,0,0,0 #加倍k点,每个k点代表一个自旋</li>
+  <li>nspin=4/nonclinear,wg=1,1,0,0 #不加倍k点,每个band是一种特殊的自旋状态,一个态上只有一个电子</li>
+</ul>
+
+<p><strong><code class="highlighter-rouge">wg(ibnd,ik)</code></strong>占据情况,以一个电子单k点为例</p>
+<ul>
+  <li>nspin=1,wg=1,0,0,0 #每个态是简并的,最多占据两个电子</li>
+  <li>nspin=2/lsda,wg(ik=1)=0.5,0,0,0; wg(ik=2)=0.5,0,0,0 #加倍k点,每个k点代表一个自旋</li>
+  <li>nspin=4/nonclinear,wg=1,0,0,0 #不加倍k点,每个band是一种特殊的自旋状态,一个态上只有一个电子</li>
+</ul>
+
+<h2 id="noncoline时的ks方程">noncoline时的KS方程</h2>
+<p><img src="/uploads/2020/09/ks4.png" alt="" />
+程序中的势能项处理:<br />
+在势能<code class="highlighter-rouge">vrs(:,1)</code>中保留$\delta^{\sigma,\sigma’}$的项,在<code class="highlighter-rouge">vrs(:,2:4)</code>中保存$\sigma_{x,y,z}$的系数$-\mu_B \, B_{tot} = -\mu_B ( B_{xc} + B_{external})$, 即</p>
+<ul>
+  <li>$-\mu_B \, B_{tot}(x)=vrs(2)$</li>
+  <li>$-\mu_B \, B_{tot}(y)=vrs(3)$</li>
+  <li>$-\mu_B \, B_{tot}(z)=vrs(4)$</li>
+</ul>
+
+<p>在<code class="highlighter-rouge">PW/src/v_of+rho.f90</code>中的<code class="highlighter-rouge">v_xc</code>计算
+$-\mu_B B_{xc,\alpha}=\mu_B \frac{\partial E_{xc} }{\partial m_\alpha} = \mu_B \frac{\partial E_{xc} }{\partial \left |  m \right | } \frac{m_\alpha}{\left |  m \right | }$</p>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!...</span><span class="w">
+</span><span class="n">amag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">SQRT</span><span class="p">(</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="c1">!...</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">xc_spin</span><span class="p">(</span><span class="w"> </span><span class="n">arhox</span><span class="p">,</span><span class="w"> </span><span class="n">zeta</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">,</span><span class="w"> </span><span class="n">ec</span><span class="p">,</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+           </span><span class="c1">!== arhox 总电荷密度</span><span class="w">
+           </span><span class="c1">!== zeta == +1</span><span class="w">
+           </span><span class="c1">!== xc_spin (rho, zeta, ex, ec, vxup, vxdw, vcup, vcdw)</span><span class="w">
+           </span><span class="c1">!== rho = rhoup(r)+rhodw(r)</span><span class="w">
+           </span><span class="c1">!== zeta=(rhoup(r)-rhodw(r))/rho</span><span class="w">
+           </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5D0</span><span class="o">*</span><span class="p">(</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+           </span><span class="c1">!</span><span class="w">
+           </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e2</span><span class="o">*</span><span class="p">(</span><span class="w"> </span><span class="mf">0.5D0</span><span class="o">*</span><span class="p">(</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+           </span><span class="c1">!V_XC</span><span class="w">
+           </span><span class="c1">!</span><span class="w">
+           </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">amag</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">vanishing_mag</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+              </span><span class="c1">!</span><span class="w">
+              </span><span class="k">DO</span><span class="w"> </span><span class="n">ipol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="w">
+                 </span><span class="c1">!</span><span class="w">
+                 </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">ipol</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">ipol</span><span class="p">)</span><span class="w"> </span><span class="p">/</span><span class="w"> </span><span class="n">amag</span><span class="w">
+                 </span><span class="c1">! \partial E_xc / \partial m_\alpha = - B_xc</span><span class="w">
+                 </span><span class="c1">!</span><span class="w">
+                 </span><span class="n">vtxc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vtxc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">ipol</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">ipol</span><span class="p">)</span><span class="w">
+                 </span><span class="c1">!</span><span class="w">
+              </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+              </span><span class="c1">!</span><span class="w">
+           </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+</span></code></pre></div></div>
+
+<p>在<code class="highlighter-rouge">PW/src/add_bfield.f90</code>中计算$-\mu_B B_{external}$</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">        </span><span class="k">DO</span><span class="w"> </span><span class="n">ipol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="w">
+           </span><span class="k">DO</span><span class="w"> </span><span class="n">ir</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">dfftp</span><span class="o">%</span><span class="n">nnr</span><span class="w">
+              </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">ipol</span><span class="mi">+1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">ipol</span><span class="mi">+1</span><span class="p">)</span><span class="o">-</span><span class="n">bfield</span><span class="p">(</span><span class="n">ipol</span><span class="p">)</span><span class="w">
+           </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+        </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+</span></code></pre></div></div>
+<p>在<code class="highlighter-rouge">PW/src/vloc_psi.f90</code>中的<code class="highlighter-rouge">vloc_psi_nc</code>计算$V_{tot}\,\psi$</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">DO</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">dffts</span><span class="o">%</span><span class="n">nnr</span><span class="w">
+ </span><span class="c1">!这里的v就是vrs</span><span class="w">
+   </span><span class="n">sup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">psic_nc</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">v</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+         </span><span class="n">psic_nc</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="mf">0.d0</span><span class="p">,</span><span class="mf">1.d0</span><span class="p">)</span><span class="o">*</span><span class="n">v</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="w">
+   </span><span class="n">sdwn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">psic_nc</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">v</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+          </span><span class="n">psic_nc</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mf">0.d0</span><span class="p">,</span><span class="mf">1.d0</span><span class="p">)</span><span class="o">*</span><span class="n">v</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="w">
+   </span><span class="n">psic_nc</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">sup</span><span class="w">
+   </span><span class="n">psic_nc</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">=</span><span class="n">sdwn</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span></code></pre></div></div>
+<p><img src="/uploads/2020/09/vpsi.jpg" alt="" /></p>
+
+<h2 id="lsda时的ks方程">lsda时的KS方程</h2>
+<p><img src="/uploads/2020/09/ks2.png" alt="" />
+程序中的势能项处理:<br />
+因为$\sigma_{z}$的数值特点<br />
+在势能<code class="highlighter-rouge">vrs(:,1)</code>中保留$\delta^{\sigma,\sigma’}$的项,与$\sigma_{z}$系数<br />
+在势能<code class="highlighter-rouge">vrs(:,2)</code>中保留$\delta^{\sigma,\sigma’}$的项,与$\sigma_{z}$系数的相反数<br /></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">        </span><span class="k">DO</span><span class="w"> </span><span class="n">ir</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">dfftp</span><span class="o">%</span><span class="n">nnr</span><span class="w">
+           </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">bfield</span><span class="p">(</span><span class="n">ipol</span><span class="p">)</span><span class="w">
+           </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">bfield</span><span class="p">(</span><span class="n">ipol</span><span class="p">)</span><span class="w">
+        </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+</span></code></pre></div></div>
+<p>因此在计算$V\,\psi$时,只要将该k点对应的<code class="highlighter-rouge">vrs(:,current_spin)</code>乘到波函数上就行了,<br />
+如在<code class="highlighter-rouge">PW/src/h_psi.f90</code>中调用的那样</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL vloc_psi_k ( lda, n, m, psi, vrs(1,current_spin), hpsi )
+</code></pre></div></div>
+
+<h2 id="电荷密度">电荷密度</h2>
+<p>File:<code class="highlighter-rouge">PW/src/scf_mod.f90</code></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">   </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(</span><span class="w"> </span><span class="n">dfftp</span><span class="o">%</span><span class="n">nnr</span><span class="p">,</span><span class="w"> </span><span class="n">nspin</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+   </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_g</span><span class="p">(</span><span class="w"> </span><span class="n">ngm</span><span class="p">,</span><span class="w"> </span><span class="n">nspin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>电荷密度的计算</strong>
+File:<code class="highlighter-rouge">PW/src/sum_band.f90</code></p>
+<ul>
+  <li>nspin=1,<code class="highlighter-rouge">rho%of_r( dfftp%nnr, 1)</code>为总电荷密度</li>
+  <li>nspin=2,<code class="highlighter-rouge">rho%of_r( dfftp%nnr, 1:2)</code>分别为自旋上下电荷密度,<strong>但是在sum_band最后会变换(up,down)-&gt;(up+down,up-down)</strong>
+    <div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">psic</span><span class="p">(</span><span class="n">dffts</span><span class="o">%</span><span class="n">nl</span><span class="p">(</span><span class="n">igk_k</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">ik</span><span class="p">)))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">evc</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">ibnd</span><span class="p">)</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">get_rho</span><span class="p">(</span><span class="n">rho</span><span class="o">%</span><span class="n">kin_r</span><span class="p">(:,</span><span class="n">current_spin</span><span class="p">),</span><span class="w"> </span><span class="n">dffts</span><span class="o">%</span><span class="n">nnr</span><span class="p">,</span><span class="w"> </span><span class="n">w1</span><span class="p">,</span><span class="w"> </span><span class="n">psic</span><span class="p">)</span><span class="w">
+</span><span class="c1">! ... if LSDA rho%of_r and rho%of_g are converted from (up,dw) to</span><span class="w">
+</span><span class="c1">! ... (up+dw,up-dw) format.</span><span class="w">
+</span><span class="c1">!</span><span class="w">
+</span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nspin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">CALL</span><span class="w"> </span><span class="n">rhoz_or_updw</span><span class="p">(</span><span class="w"> </span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="s1">'r_and_g'</span><span class="p">,</span><span class="w"> </span><span class="s1">'-&gt;rhoz'</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>nspin=4,<code class="highlighter-rouge">rho%of_r( dfftp%nnr, 1)</code>为总电荷密度, <code class="highlighter-rouge">rho%of_r( dfftp%nnr, 2:4)</code>为磁密度
+    <div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">psic_nc</span><span class="p">(</span><span class="n">dffts</span><span class="o">%</span><span class="n">nl</span><span class="p">(</span><span class="n">igk_k</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span><span class="n">ik</span><span class="p">)),</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="n">evc</span><span class="p">(</span><span class="n">ig</span><span class="w">     </span><span class="p">,</span><span class="n">ibnd</span><span class="p">)</span><span class="w">
+</span><span class="n">psic_nc</span><span class="p">(</span><span class="n">dffts</span><span class="o">%</span><span class="n">nl</span><span class="p">(</span><span class="n">igk_k</span><span class="p">(</span><span class="n">ig</span><span class="p">,</span><span class="n">ik</span><span class="p">)),</span><span class="mi">2</span><span class="p">)</span><span class="o">=</span><span class="n">evc</span><span class="p">(</span><span class="n">ig</span><span class="o">+</span><span class="n">npwx</span><span class="p">,</span><span class="n">ibnd</span><span class="p">)</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">ipol</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">npol</span><span class="w">
+ </span><span class="k">CALL</span><span class="w"> </span><span class="n">get_rho</span><span class="p">(</span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(:,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">dffts</span><span class="o">%</span><span class="n">nnr</span><span class="p">,</span><span class="w"> </span><span class="n">w1</span><span class="p">,</span><span class="w"> </span><span class="n">psic_nc</span><span class="p">(:,</span><span class="n">ipol</span><span class="p">))</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+</span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="n">domag</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="c1">!===== 计算三个方向的磁性</span><span class="w">
+ </span><span class="k">CALL</span><span class="w"> </span><span class="n">get_rho_domag</span><span class="p">(</span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(:,:),</span><span class="w"> </span><span class="n">dffts</span><span class="o">%</span><span class="n">nnr</span><span class="p">,</span><span class="w"> </span><span class="n">w1</span><span class="p">,</span><span class="w"> </span><span class="n">psic_nc</span><span class="p">(:,:))</span><span class="w">
+</span><span class="k">ELSE</span><span class="w">
+ </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(:,</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">)</span><span class="o">=</span><span class="mf">0.0_DP</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li><strong>综上:总电荷密度=<code class="highlighter-rouge">rho%of_r(:,1)</code></strong></li>
+</ul>
+
+<h3 id="noncollinear的磁密度">noncollinear的磁密度</h3>
+<p><code class="highlighter-rouge">sum_band_k()</code>中的<code class="highlighter-rouge">get_rho_domag</code>就是使用此公式进行计算,公式来自物理部分的推导
+<img src="/uploads/2020/09/mxyz.png" alt="" /></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">        </span><span class="k">DO</span><span class="w"> </span><span class="n">ir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nrxxs_loc</span><span class="w">
+           </span><span class="c1">!</span><span class="w">
+           </span><span class="n">rho_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rho_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w1_loc</span><span class="o">*</span><span class="mf">2.D0</span><span class="o">*</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+                          </span><span class="p">(</span><span class="nb">DBLE</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="w"> </span><span class="nb">DBLE</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+                          </span><span class="nb">AIMAG</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="nb">AIMAG</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span><span class="w">
+          </span><span class="c1">!这里就是psi^*(up)psi(down)+psi^*(down)psi(up)=2*Re(psi^*(up)psi(down))</span><span class="w">
+          </span><span class="c1">! =2*(REAL(psi(up))*REAL(psi(up) + IMAG(psi(up))*IMAG(psi(down))</span><span class="w">
+ 
+           </span><span class="n">rho_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rho_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w1_loc</span><span class="o">*</span><span class="mf">2.D0</span><span class="o">*</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+                          </span><span class="p">(</span><span class="nb">DBLE</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="nb">AIMAG</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+                           </span><span class="nb">DBLE</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="o">*</span><span class="nb">AIMAG</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span><span class="w">
+         </span><span class="c1">!== 是公式的my</span><span class="w">
+
+           </span><span class="n">rho_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rho_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w1_loc</span><span class="o">*</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+                          </span><span class="p">(</span><span class="nb">DBLE</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="nb">AIMAG</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+                          </span><span class="o">-</span><span class="nb">DBLE</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="nb">AIMAG</span><span class="p">(</span><span class="n">psic_loc</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="w">
+         </span><span class="c1">!=== 是公式的mz</span><span class="w">
+           </span><span class="c1">!</span><span class="w">
+        </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="lsda密度">lsda密度</h3>
+<p><img src="/uploads/2020/09/mlsda.png" alt="" />
+lsda时<code class="highlighter-rouge">rho%of_r( dfftp%nnr, 2)</code>存着自旋密度之差</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">nspin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">CALL</span><span class="w"> </span><span class="n">rhoz_or_updw</span><span class="p">(</span><span class="w"> </span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="s1">'r_and_g'</span><span class="p">,</span><span class="w"> </span><span class="s1">'-&gt;rhoz'</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="noncollin_module">noncollin_module</h2>
+<p>File:<code class="highlighter-rouge">Modules/noncol.f90</code></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+      </span><span class="n">npol</span><span class="p">,</span><span class="w">               </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">!  number of coordinates of wfc</span><span class="w">
+      </span><span class="n">report</span><span class="p">,</span><span class="w">             </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">!  print the local quantities (magnet. and rho)</span><span class="w">
+                            </span><span class="c1">!  every #report iterations</span><span class="w">
+      </span><span class="n">nspin_lsda</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">     </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">!  =1 when nspin=1,4 =2 when nspin=2 </span><span class="w">
+      </span><span class="n">nspin_mag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">      </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">!  =1 when nspin=1,4 (domag=.false.), =2 when</span><span class="w">
+                            </span><span class="c1">!   nspin=2, =4 nspin=4 (domag=.true.)</span><span class="w">
+      </span><span class="n">nspin_gga</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">      </span><span class="p">&amp;</span><span class="w"> </span><span class="c1">!  =1 when nspin=1,4 (domag=.false.)   </span><span class="w">
+                            </span><span class="c1">!  =2 when nspin=2,4 (domag=.true.) (needed with gga)</span><span class="w">
+      </span><span class="n">i_cons</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">            </span><span class="c1">!  indicator for constrained local quantities</span><span class="w">
+                            </span><span class="c1">!与输入参数constrained_magnetization对应</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">INTEGER</span><span class="p">,</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+  </span><span class="c1">!                         !  when spherical (non-overlapping) integration</span><span class="w">
+      </span><span class="n">pointlist</span><span class="p">(:)</span><span class="w">          </span><span class="c1">!  regions are defined around atoms this index</span><span class="w">
+                            </span><span class="c1">!  say for each point in the fft grid to which </span><span class="w">
+                            </span><span class="c1">!  atom it is assigned (0 if no atom is selected)</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">LOGICAL</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+      </span><span class="n">noncolin</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">           </span><span class="c1">!  true if noncollinear magnetism is allowed</span><span class="w">
+      </span><span class="n">lsign</span><span class="o">=</span><span class="kc">.FALSE.</span><span class="w">         </span><span class="c1">!  if true use the sign feature to calculate</span><span class="w">
+                            </span><span class="c1">!  rhoup and rhodw</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">REAL</span><span class="w"> </span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+      </span><span class="n">angle1</span><span class="p">(</span><span class="n">ntypx</span><span class="p">),</span><span class="w">       </span><span class="p">&amp;</span><span class="c1">!  Define the polar coordinates of the starting</span><span class="w">
+      </span><span class="n">angle2</span><span class="p">(</span><span class="n">ntypx</span><span class="p">),</span><span class="w">       </span><span class="p">&amp;</span><span class="c1">!  magnetization's direction for each atom</span><span class="w">
+      </span><span class="n">mcons</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">ntypx</span><span class="p">)</span><span class="o">=</span><span class="mf">0.d0</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="c1">!  constrained values for local variables</span><span class="w">
+
+
+      </span><span class="n">magtot_nc</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w">        </span><span class="p">&amp;</span><span class="c1">!  total magnetization</span><span class="w">
+      </span><span class="n">bfield</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">=</span><span class="mf">0.d0</span><span class="p">,</span><span class="w">      </span><span class="p">&amp;</span><span class="c1">!  magnetic field used in some cases</span><span class="w">
+      </span><span class="n">vtcon</span><span class="p">,</span><span class="w">               </span><span class="p">&amp;</span><span class="c1">!  contribution of the constraining fields to</span><span class="w">
+                            </span><span class="c1">!  the total energy</span><span class="w">
+      </span><span class="n">r_m</span><span class="p">(</span><span class="n">ntypx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0d0</span><span class="p">,</span><span class="w">  </span><span class="p">&amp;</span><span class="c1">!  Radius for local integrations for each type</span><span class="w">
+      </span><span class="n">lambda</span><span class="w">                </span><span class="c1">!  prefactor in the penalty functional </span><span class="w">
+                            </span><span class="c1">!  for constraints</span><span class="w">
+  </span><span class="c1">!</span><span class="w">
+  </span><span class="kt">REAL</span><span class="w"> </span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+      </span><span class="n">factlist</span><span class="p">(:),</span><span class="w">         </span><span class="p">&amp;</span><span class="c1">! weight factors for local integrations</span><span class="w">
+      </span><span class="n">r_loc</span><span class="p">(:),</span><span class="w">            </span><span class="p">&amp;</span><span class="c1">! local integrated charge </span><span class="w">
+      </span><span class="n">m_loc</span><span class="p">(:,:)</span><span class="w">            </span><span class="c1">! local integrated magnetization</span><span class="w">
+
+  </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w">     </span><span class="p">&amp;</span><span class="w">
+     </span><span class="n">ux</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w">                 </span><span class="c1">! versor for deciding signs in gga</span><span class="w">
+</span></code></pre></div></div>
+
+<p>i_cons的设置, constrained_magnetization=</p>
+<ul>
+  <li><code class="highlighter-rouge">none</code>, i_cons = 0</li>
+  <li><code class="highlighter-rouge">atomic</code>, i_cons = 1</li>
+  <li><code class="highlighter-rouge">atomic direction</code>, i_cons = 2</li>
+  <li><code class="highlighter-rouge">total</code>, i_cons=3</li>
+  <li><code class="highlighter-rouge">total direction</code>, i_cons=6</li>
+  <li><code class="highlighter-rouge">B_field != 0</code>, i_cons=4</li>
+</ul>
+
+<p>对应的受限制的固定的磁化<code class="highlighter-rouge">mcons</code>也因constrained_magnetization有相关的设置,如</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mcons</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nt</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">starting_magnetization</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span><span class="w">
+</span><span class="c1">!...</span><span class="w">
+</span><span class="n">mcons</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nt</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">starting_magnetization</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">cos</span><span class="p">(</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">mcons</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">nt</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">starting_magnetization</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">mcons</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">nt</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">starting_magnetization</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">cos</span><span class="p">(</span><span class="w"> </span><span class="n">theta</span><span class="w"> 
+</span></code></pre></div></div>
+
+<h2 id="spin_orb-模块">spin_orb 模块</h2>
+<p>File:<code class="highlighter-rouge">PW/src/pwcom.f90</code></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">MODULE</span><span class="w"> </span><span class="n">spin_orb</span><span class="w">
+
+  </span><span class="k">USE</span><span class="w"> </span><span class="n">kinds</span><span class="p">,</span><span class="w"> </span><span class="k">ONLY</span><span class="p">:</span><span class="w"> </span><span class="n">DP</span><span class="w">
+  </span><span class="k">USE</span><span class="w"> </span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="k">ONLY</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">lmaxx</span><span class="w">
+
+  </span><span class="k">SAVE</span><span class="w">
+
+  </span><span class="kt">LOGICAL</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="p">&amp;</span><span class="w">
+      </span><span class="n">lspinorb</span><span class="p">,</span><span class="w">            </span><span class="p">&amp;</span><span class="w">  </span><span class="c1">! if .TRUE. this is a spin-orbit calculation</span><span class="w">
+      </span><span class="n">lforcet</span><span class="p">,</span><span class="w">             </span><span class="p">&amp;</span><span class="w">  </span><span class="c1">! if .TRUE. apply Force Theorem to calculate MAE </span><span class="w">
+      </span><span class="n">starting_spin_angle</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="w">  </span><span class="c1">! if .TRUE. the initial wavefunctions are </span><span class="w">
+                              </span><span class="c1">! spin-angle functions. </span><span class="w">
+      </span><span class="n">domag</span><span class="w">                   </span><span class="c1">! if .TRUE. magnetization is computed</span><span class="w">
+
+
+  </span><span class="kt">COMPLEX</span><span class="w"> </span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">rot_ylm</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">lmaxx</span><span class="mi">+1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">lmaxx</span><span class="mi">+1</span><span class="p">)</span><span class="w">  </span><span class="c1">! transform real</span><span class="w">
+                         </span><span class="c1">! spherical harmonics into complex ones</span><span class="w">
+  </span><span class="kt">COMPLEX</span><span class="w"> </span><span class="p">(</span><span class="n">DP</span><span class="p">),</span><span class="w"> </span><span class="k">ALLOCATABLE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">fcoef</span><span class="p">(:,:,:,:,:)</span><span class="w"> </span><span class="c1">! function needed to</span><span class="w">
+                         </span><span class="c1">! account for spinors.</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">MODULE</span><span class="w"> </span><span class="n">spin_orb</span><span class="w">
+</span></code></pre></div></div>
+<p>在<code class="highlighter-rouge">PW/src/setup.f90</code>中设置<code class="highlighter-rouge">domag</code></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">noncolin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+  </span><span class="c1">!...</span><span class="w">
+     </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">lspinorb</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+        </span><span class="n">domag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">ANY</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nb">ABS</span><span class="p">(</span><span class="w"> </span><span class="n">starting_magnetization</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">ntyp</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">1.D-6</span><span class="w"> </span><span class="p">)</span><span class="w">
+     </span><span class="k">ELSE</span><span class="w">
+        </span><span class="n">domag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">.TRUE.</span><span class="w">
+     </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+  </span><span class="c1">!...</span><span class="w">
+  </span><span class="k">ENDIF</span><span class="w">
+</span></code></pre></div></div>
+<p><code class="highlighter-rouge">domag</code>决定<code class="highlighter-rouge">sum_band_k</code>中是否要计算$m_{x,y,z}$,计算公式见上noncolinear磁密度</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   IF (domag) THEN
+      CALL get_rho_domag(rho%of_r(:,:), dffts%nnr, w1, psic_nc(:,:))
+   ELSE
+      rho%of_r(:,2:4)=0.0_DP
+   END IF
+</code></pre></div></div>
+<p><code class="highlighter-rouge">domag</code>还决定是否根据$m_{x,y,z}$计算相应的交换关联磁势<br />
+File:<code class="highlighter-rouge">PW/src/v_of_rho.f90</code></p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CALL</span><span class="w"> </span><span class="n">xc_spin</span><span class="p">(</span><span class="w"> </span><span class="n">arhox</span><span class="p">,</span><span class="w"> </span><span class="n">zeta</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">,</span><span class="w"> </span><span class="n">ec</span><span class="p">,</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+           </span><span class="c1">!</span><span class="w">
+           </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5D0</span><span class="o">*</span><span class="p">(</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+           </span><span class="c1">!</span><span class="w">
+           </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e2</span><span class="o">*</span><span class="p">(</span><span class="w"> </span><span class="mf">0.5D0</span><span class="o">*</span><span class="p">(</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vx</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vc</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+           </span><span class="c1">!</span><span class="w">
+           </span><span class="k">IF</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">amag</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">vanishing_mag</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span><span class="w">
+              </span><span class="c1">!</span><span class="w">
+              </span><span class="k">DO</span><span class="w"> </span><span class="n">ipol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="w">
+                 </span><span class="c1">!</span><span class="w">
+                 </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">ipol</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">ipol</span><span class="p">)</span><span class="w"> </span><span class="p">/</span><span class="w"> </span><span class="n">amag</span><span class="w">
+                 </span><span class="c1">!</span><span class="w">
+                 </span><span class="n">vtxc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vtxc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">ipol</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">ipol</span><span class="p">)</span><span class="w">
+                 </span><span class="c1">!</span><span class="w">
+              </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+              </span><span class="c1">!</span><span class="w">
+           </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="w">
+           </span><span class="c1">!</span><span class="w">
+           </span><span class="n">etxc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">etxc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e2</span><span class="o">*</span><span class="p">(</span><span class="w"> </span><span class="n">ex</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ec</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rhox</span><span class="w">
+           </span><span class="n">vtxc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vtxc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">rho</span><span class="o">%</span><span class="n">of_r</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/09/03/aseuse/">ASE快速上手</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/10/19/huairou-octopus/">怀柔计算中心安装octopus10.1&4.1.2</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

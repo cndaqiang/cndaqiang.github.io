@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>QE代码阅读: MP并行框架</title>
+    <meta name="description" content="QE代码阅读系列，个人学习记录，仅供参考。代码仓库QE-6.4.1@cndaqiang">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2020/04/06/qe-mp/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2020/04/06/qe-mp/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2020/04/06/qe-mp/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2020/04/06/qe-mp/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>QE代码阅读: MP并行框架</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-04-06
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Quantum-Espresso" title="Category: Quantum-Espresso" rel="category">Quantum-Espresso</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a-->
+        <a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a>&nbsp;
+    
+        <!--a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a-->
+        <a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a>&nbsp;
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#相关文件" id="markdown-toc-相关文件">相关文件</a>    <ul>
+      <li><a href="#划分comm" id="markdown-toc-划分comm">划分COMM</a></li>
+    </ul>
+  </li>
+  <li><a href="#框架" id="markdown-toc-框架">框架</a>    <ul>
+      <li><a href="#intra和inter是processor-mesh的不同方向" id="markdown-toc-intra和inter是processor-mesh的不同方向">intra和inter是processor mesh的不同方向</a></li>
+      <li><a href="#代码示例" id="markdown-toc-代码示例">代码示例</a></li>
+      <li><a href="#qe中主要使用的comm" id="markdown-toc-qe中主要使用的comm">QE中主要使用的comm</a></li>
+    </ul>
+  </li>
+  <li><a href="#划分流程" id="markdown-toc-划分流程">划分流程</a>    <ul>
+      <li><a href="#mp_startup-划分的主入口控制中心" id="markdown-toc-mp_startup-划分的主入口控制中心"><strong>mp_startup</strong> 划分的主入口，控制中心</a>        <ul>
+          <li><a href="#mp_world_start-初始化mpi环境" id="markdown-toc-mp_world_start-初始化mpi环境"><strong>mp_world_start</strong> 初始化MPI环境</a></li>
+          <li><a href="#get_command_line-读入并行输入参数" id="markdown-toc-get_command_line-读入并行输入参数"><strong>get_command_line()</strong> 读入并行输入参数</a></li>
+          <li><a href="#mp_start_images--nimage_-world_comm--image并行环境" id="markdown-toc-mp_start_images--nimage_-world_comm--image并行环境"><strong>mp_start_images ( nimage_, world_comm )</strong> image并行环境</a></li>
+          <li><a href="#mp_start_pools-npool_-intra_image_comm--k点并行" id="markdown-toc-mp_start_pools-npool_-intra_image_comm--k点并行"><strong>mp_start_pools( npool_, intra_image_comm )</strong> k点并行</a></li>
+          <li><a href="#mp_start_bands--nband_-ntg_-nyfft_-intra_pool_comm--进一步划分pool" id="markdown-toc-mp_start_bands--nband_-ntg_-nyfft_-intra_pool_comm--进一步划分pool"><strong>mp_start_bands ( nband_, ntg_, nyfft_, intra_pool_comm )</strong> 进一步划分pool</a></li>
+          <li><a href="#mp_start_exx--nband_-ntg_-intra_pool_comm--进一步划分pool" id="markdown-toc-mp_start_exx--nband_-ntg_-intra_pool_comm--进一步划分pool"><strong>mp_start_exx ( nband_, ntg_, intra_pool_comm )</strong> 进一步划分pool</a></li>
+        </ul>
+      </li>
+      <li><a href="#fft_type_allocate-desc-at-bg-gcutm-comm-fft_fact-nyfft--划分fft网格" id="markdown-toc-fft_type_allocate-desc-at-bg-gcutm-comm-fft_fact-nyfft--划分fft网格"><strong>fft_type_allocate( desc, at, bg, gcutm, comm, fft_fact, nyfft  )</strong>划分FFT网格</a></li>
+    </ul>
+  </li>
+  <li><a href="#应用" id="markdown-toc-应用">应用</a></li>
+</ul>
+
+<p>QE代码阅读系列，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://gitee.com/cndaqiang/QE-6.4.1/tree/master">QE-6.4.1@cndaqiang</a><br /></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://github.com/QEF/q-e.git">q-e code</a><br />
+<a href="https://www.quantum-espresso.org/resources/developers-manual">DEVELOPERS’ MANUAL</a></p>
+
+<h2 id="相关文件">相关文件</h2>
+<h3 id="划分comm">划分COMM</h3>
+<ul>
+  <li><code class="highlighter-rouge">PW/src/pwscf.f90 -&gt; PROGRAM pwscf</code>主程序开始调用<code class="highlighter-rouge">CALL mp_startup ( start_images=.true.)</code></li>
+  <li><code class="highlighter-rouge">Modules/mp_global.f90 -&gt; mp_startup</code>并行划分的集中站点，调用一系列的划分函数</li>
+  <li><code class="highlighter-rouge">Modules/command_line_options.f90 -&gt; get_command_line</code>从命令行中读入并行划分方案</li>
+  <li><code class="highlighter-rouge">Modules/mp_world.f90 -&gt; mp_world_start/mp_world_end</code>初始化MPI环境,终止环境</li>
+  <li><code class="highlighter-rouge">Modules/mp_images.f90 -&gt; mp_start_images</code> 初始化image并行</li>
+  <li><code class="highlighter-rouge">Modules/mp_pools.f90 -&gt; mp_start_pools</code> 初始化k点平行</li>
+  <li><code class="highlighter-rouge">Modules/mp_bands.f90 -&gt; mp_start_bands</code> 注意:都是对pool的划分</li>
+  <li><code class="highlighter-rouge">Modules/mp_exx.f90 -&gt; mp_start_exx</code>     注意:都是对pool的划分</li>
+</ul>
+
+<h2 id="框架">框架</h2>
+<h3 id="intra和inter是processor-mesh的不同方向">intra和inter是processor mesh的不同方向</h3>
+<ul>
+  <li><code class="highlighter-rouge">intra_AAA_comm</code> 是图中的处理器mesh的列，processor在物理(主板)上相邻，共<code class="highlighter-rouge">naaa_</code>个
+<br />会对此一维列processor继续化成更更小的2维mesh, <code class="highlighter-rouge">intra_BBB_comm,inter_BBB_comm</code></li>
+  <li><code class="highlighter-rouge">inter_AAA_comm</code> 是图中的处理器mesh的行，用于同步通信</li>
+  <li>processor mesh图
+<img src="/uploads/2020/04/mp_2dmesh.jpg" alt="" /></li>
+  <li><code class="highlighter-rouge">inter_BBB_comm</code>和<code class="highlighter-rouge">intra_BBB_comm</code>都是对父COMM的<code class="highlighter-rouge">intra_AAA</code>进行的划分
+<br /> BBB processor mesh同上图,共<code class="highlighter-rouge">nbbb_</code>列</li>
+  <li>一共划分<code class="highlighter-rouge">nbbb_ (e.g. nimage_/npool_/nband_)</code>个<code class="highlighter-rouge">intra_BBB_comm</code>,每个进行一组计算</li>
+  <li>所有<code class="highlighter-rouge">intra_BBB_comm</code> 中编号相同的process构成一个<code class="highlighter-rouge">inter_BBB_comm</code>,i.e.图中一行</li>
+  <li><code class="highlighter-rouge">nbbb_ = 1</code>时: 只划分一个子COMM(<code class="highlighter-rouge">intra_BBB_comm</code>)
+<br /> 只有一个<code class="highlighter-rouge">intra_BBB_comm</code>和父COMM<code class="highlighter-rouge">intra_AAA</code>各属性一样
+<br /> 有很多个<code class="highlighter-rouge">inter_BBB_comm</code>， 每个<code class="highlighter-rouge">inter_BBB_comm</code>里面只有一个process</li>
+  <li>如果父子都不设置并行(i.e. nbbb_ = naaa_ =1 )那么
+<br />各个层次的<code class="highlighter-rouge">inter_AAA_comm</code>,``inter_BBB_comm`里面包含的processor也相同，都是上面processor mesh图的每一行
+<br />intra也相同，都是上面processor mesh图中的一列</li>
+</ul>
+
+<h3 id="代码示例">代码示例</h3>
+<p>变量</p>
+<ul>
+  <li><code class="highlighter-rouge">nBBB (e.g. nimage)</code> 划分的<code class="highlighter-rouge">intra_BBB_comm</code>数量,i.e.列数</li>
+  <li><code class="highlighter-rouge">nproc_BBB (e.g. nproc_image)</code>每个<code class="highlighter-rouge">intra_BBB_comm</code>内有几个processor,i.e.行数</li>
+  <li><code class="highlighter-rouge">me_BBB (e.g. me_image)</code> 我(processor)在<code class="highlighter-rouge">intra_BBB_comm</code>的顺序，相同的processor处在同一个<code class="highlighter-rouge">inter_BBB_comm</code>, i.e.同一行</li>
+  <li><code class="highlighter-rouge">root_BBB (e.g. root_image)</code> 各自<code class="highlighter-rouge">intra_BBB_comm</code>中的root processor,i.e.第一行</li>
+  <li><code class="highlighter-rouge">my_BBB_id (e.g. my_image_id)</code> 我是第几个image，相同的处在同一个<code class="highlighter-rouge">intra_BBB_comm</code>,i.e.列数</li>
+  <li><code class="highlighter-rouge">inter_BBB_comm (e.g. inter_image_comm)</code> 子comm,i.e.各行</li>
+  <li><code class="highlighter-rouge">intra_BBB_comm (e.g. intra_image_comm)</code> 子comm, 物理顺序排部的processor，会继续分给下级并行,i.e.各列</li>
+</ul>
+
+<p><img src="/uploads/2020/04/mp_image.png" alt="" /></p>
+
+<h3 id="qe中主要使用的comm">QE中主要使用的comm</h3>
+
+<p><img src="/uploads/2020/04/mp_comm.png" alt="" />
+<strong>每个CPU的数据G空间存储data(npw_i:npw_e,band_i:band_e,ik:ik_e)</strong><br />
+<strong>每个CPU的数据R空间存储data(nnr_i:nnr_e,band_i:band_e,ik:ik_e)</strong><br />
+<img src="/uploads/2020/04/mpfig1.jpg" alt="" />
+<img src="/uploads/2020/04/mpfig2.jpg" alt="" /></p>
+
+<h2 id="划分流程">划分流程</h2>
+<h3 id="mp_startup-划分的主入口控制中心"><strong>mp_startup</strong> 划分的主入口，控制中心</h3>
+<p>File:<code class="highlighter-rouge">Modules/mp_global.f90</code>
+划分的主入口，控制中心</p>
+
+<h4 id="mp_world_start-初始化mpi环境"><strong>mp_world_start</strong> 初始化MPI环境</h4>
+<p>File:<code class="highlighter-rouge">Modules/mp_world.f90</code><br />
+初始化MPI环境,如<code class="highlighter-rouge">MPI_Initialized</code></p>
+
+<h4 id="get_command_line-读入并行输入参数"><strong>get_command_line()</strong> 读入并行输入参数</h4>
+<p>File:<code class="highlighter-rouge">Modules/command_line_options.f90</code><br />
+输入示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 16 pw.x -i input.in -ni 4
+</code></pre></div></div>
+<p>更多参数</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>输入参数  <br />  示例(我使用过的)</th>
+      <th>含义</th>
+      <th>存储变量=默认值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">-i</code>, <code class="highlighter-rouge">-in</code>, <code class="highlighter-rouge">-inp</code>, <code class="highlighter-rouge">-input</code>   <br />   <code class="highlighter-rouge">-i input.in</code></td>
+      <td>输入文件名</td>
+      <td><code class="highlighter-rouge">input_file_=" "</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-ni</code>, <code class="highlighter-rouge">-nimage</code>, <code class="highlighter-rouge">-nimages</code>, <code class="highlighter-rouge">-npot</code>   <br />   <code class="highlighter-rouge">-ni 5</code></td>
+      <td>image并行数</td>
+      <td><code class="highlighter-rouge">nimage_=1</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-nk</code>, <code class="highlighter-rouge">-npool</code>, <code class="highlighter-rouge">-npools</code> <br />  <code class="highlighter-rouge">-npool 3</code></td>
+      <td>k点并行</td>
+      <td><code class="highlighter-rouge">npool_=1</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-nb</code>, <code class="highlighter-rouge">-nband</code>, <code class="highlighter-rouge">-nbgrp</code>, <code class="highlighter-rouge">-nband_group</code></td>
+      <td> </td>
+      <td><code class="highlighter-rouge">nband_=1</code>   <br /></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-nt</code>, <code class="highlighter-rouge">-ntg</code>, <code class="highlighter-rouge">-ntask_groups</code>, <code class="highlighter-rouge">-nyfft</code>  <br />  <code class="highlighter-rouge">-nt 2</code></td>
+      <td>fft高维网格并行,在<code class="highlighter-rouge">intra_bgrp_comm</code>内划分 <br /> meta-GGA和CG等方法不适用  <br />fftCPU网格,y方向有<code class="highlighter-rouge">nyfft</code>个processor，ｚ方向有nzfft=nproc/nyfft个processor <br /> 编译参数<code class="highlighter-rouge">ZCOMPACT</code> 控制cpu按照y还是z方向分配</td>
+      <td><code class="highlighter-rouge">ntg_=1</code>,<code class="highlighter-rouge">nyfft_=1</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-nd</code>, <code class="highlighter-rouge">-ndiag</code>, <code class="highlighter-rouge">-northo</code>, <code class="highlighter-rouge">-nproc_diag</code>, <code class="highlighter-rouge">-nproc_ortho</code></td>
+      <td>FFT网格并行</td>
+      <td><code class="highlighter-rouge">ndiag_=0</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="mp_start_images--nimage_-world_comm--image并行环境"><strong>mp_start_images ( nimage_, world_comm )</strong> image并行环境</h4>
+<p>File:<code class="highlighter-rouge">Modules/mp_images.f90</code><br />
+image并行环境</p>
+<ul>
+  <li>inter_image_comm image之间，可用于image并行时等待其他图像计算,i-pi&amp;TDDFT计算时用到</li>
+  <li>intra_image_comm 几个pwscf在一个image中计算(NEB)，<strong>一般只在一个image中进行一个计算(manypw,NEB,TDPW+ipi)</strong></li>
+</ul>
+
+<h4 id="mp_start_pools-npool_-intra_image_comm--k点并行"><strong>mp_start_pools( npool_, intra_image_comm )</strong> k点并行</h4>
+<p>File:<code class="highlighter-rouge">Modules/mp_pools.f90</code><br /></p>
+<ul>
+  <li>inter_pool_comm</li>
+  <li>intra_pool_comm 几个k点在一个pool中计算</li>
+</ul>
+
+<h4 id="mp_start_bands--nband_-ntg_-nyfft_-intra_pool_comm--进一步划分pool"><strong>mp_start_bands ( nband_, ntg_, nyfft_, intra_pool_comm )</strong> 进一步划分pool</h4>
+<p>File:<code class="highlighter-rouge">Modules/mp_bands.f90</code><br /></p>
+<ul>
+  <li>inter_bgrp_comm</li>
+  <li>intra_bgrp_comm 共有nband_个</li>
+  <li><code class="highlighter-rouge">ntask_groups = ntg_ ;nyfft = nyfft_</code></li>
+</ul>
+
+<h4 id="mp_start_exx--nband_-ntg_-intra_pool_comm--进一步划分pool"><strong>mp_start_exx ( nband_, ntg_, intra_pool_comm )</strong> 进一步划分pool</h4>
+<p>File:<code class="highlighter-rouge">Modules/mp_exx.f90</code><br />
+<strong>和bands的comm划分方案是相同的</strong></p>
+<ul>
+  <li>inter_egrp_comm 等价 inter_bgrp_comm</li>
+  <li>intra_egrp_comm 等价 intra_bgrp_comm 共有nband_个</li>
+  <li><code class="highlighter-rouge">ntask_groups = ntg_</code></li>
+</ul>
+
+<h3 id="fft_type_allocate-desc-at-bg-gcutm-comm-fft_fact-nyfft--划分fft网格"><strong>fft_type_allocate( desc, at, bg, gcutm, comm, fft_fact, nyfft  )</strong>划分FFT网格</h3>
+<p>File:<code class="highlighter-rouge">FFTXlib/fft_types.f90</code>
+把fft网格进一步划分，在同一个<code class="highlighter-rouge">intra_bgrp_comm</code>内划分，并行的信息保留在FFT网格结构体dfft中<br /></p>
+<ul>
+  <li><code class="highlighter-rouge">desc%comm</code>  父级COMM,即<code class="highlighter-rouge">intra_bgrp_comm</code></li>
+  <li><code class="highlighter-rouge">desc%comm3</code> 之间inter,同color, <code class="highlighter-rouge">color = MOD( mype, nyfft )</code></li>
+  <li><code class="highlighter-rouge">desc%comm2</code> 内部intra,同key，<code class="highlighter-rouge">key   = mype / nyfft</code></li>
+</ul>
+
+<p>详情参考<a href="/2020/04/07/qe-mesh/">QE代码阅读: PW and grids</a></p>
+
+<h2 id="应用">应用</h2>
+<ul>
+  <li>通常只划分image和pool并行comm</li>
+  <li>同一个pool内,xk等很多属性都存储，都相同<br />
+通常在pool内的计算不需要并行通信(大家都有这些变量),只需在<code class="highlighter-rouge">inter_pool_comm</code>通信计算<br />
+如在<code class="highlighter-rouge">PW/src/data_structure.f90</code>计算最大波函数截断能，就只<code class="highlighter-rouge">CALL mp_max (gkcut, inter_pool_comm )</code></li>
+  <li>一个pool内通常不继续划分<code class="highlighter-rouge">intra_bgrp_comm</code>,即一个pool内只有一个<code class="highlighter-rouge">intra_bgrp_comm</code>，负责所有平面波<strong>G</strong>的计算</li>
+</ul>
+
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/09/20/qe-spin/">QE代码阅读: 自旋相关
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/04/06/coffee/">[更新中...]37种速溶咖啡(Instant coffee)品尝</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/04/07/qe-mesh/">QE代码阅读: PW and grids</a></p>
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>
