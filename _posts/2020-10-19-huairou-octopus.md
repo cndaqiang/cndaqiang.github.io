@@ -35,7 +35,7 @@ cat << EOF > ./make.sh
 
 module load gnu8/8.3.0
 module load module load openmpi3/3.1.4
-if [ -e ./setup.py ]
+if [ -e ./netlib.py ]
 then
     ./setup.py --prefix=$PWD/../../math --downall
 else
