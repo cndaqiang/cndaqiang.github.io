@@ -334,11 +334,12 @@ module load openmpi3/3.1.4
 #SBATCH --ntasks-per-node=10
 #SBATCH -o make.out
 
+
 module load gnu8/8.3.0
 module load module load openmpi3/3.1.4
 if [ -e ./netlib.py ]
 then
-    ./setup.py --prefix=</span><span class="nv">$PWD</span><span class="sh">/../../math --downall
+    ./setup.py --prefix=</span><span class="nv">$ROOT</span><span class="sh">/math --downall
 else
     make -j10
     make install
@@ -372,6 +373,7 @@ qsub ../make.sh
 <span class="c">#解决libxc编译错误</span>
 <span class="c">#按照 http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/</span>
 <span class="c">#删除src/libxc.f90中的/* */以其之间的注释部分就可以编译了</span>
+vi src/libxc.f90
 qsub ../make.sh
 
 <span class="c">#gsl</span>
