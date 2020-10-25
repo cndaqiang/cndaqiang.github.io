@@ -328,6 +328,7 @@
           <li><a href="#计算输出" id="markdown-toc-计算输出">计算输出</a></li>
         </ul>
       </li>
+      <li><a href="#分子振荡频率" id="markdown-toc-分子振荡频率">分子振荡频率</a></li>
     </ul>
   </li>
   <li><a href="#附录" id="markdown-toc-附录">附录</a>    <ul>
@@ -525,6 +526,95 @@ pwscf.axsf         pwscf.path24  pwscf.path44
 pwscf.crd          pwscf.path25  pwscf.path45
 </code></pre></div></div>
 <p><strong>结果等待SSLAB中</strong></p>
+
+<h3 id="分子振荡频率">分子振荡频率</h3>
+<p>参考</p>
+
+<p><a href="http://blog.sciencenet.cn/blog-685489-846704.html">利用xcryden画出振动模式图</a></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#自洽计算
+mpirun -np 20 pw.x -i input.in | tee scf.result
+#ph.x
+mpirun -np 20 ph.x   -i ph.in | tee ph.result
+#dynmat.x用于展示
+dynmat.x -i dynmat.in | tee dynmat.result
+</code></pre></div></div>
+<p><code class="highlighter-rouge">ph.in</code>全部使用默认参数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUTPH
+!fildyn='matdyn'!保存用于后处理文件
+
+/
+0.0 0.0 0.0
+</code></pre></div></div>
+<p><code class="highlighter-rouge">dynmat.in</code>全部使用默认参数</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUT
+!fildyn='matdyn'
+!filxsf='dynmat.axsf'!输出展示文件
+/
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">ph.result</code>中会有计算的频率，如</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     Number of q in the star =    1
+     List of q in the star:
+          1   0.000000000   0.000000000   0.000000000
+
+     Diagonalizing the dynamical matrix
+
+     q = (    0.000000000   0.000000000   0.000000000 )
+
+ **************************************************************************
+     freq (    1) =     -14.644218 [THz] =    -488.478526 [cm-1]
+     freq (    2) =      -8.140480 [THz] =    -271.537168 [cm-1]
+     freq (    3) =      -5.368949 [THz] =    -179.088847 [cm-1]
+     freq (    4) =       0.895710 [THz] =      29.877684 [cm-1]
+     freq (    5) =       2.499426 [THz] =      83.371887 [cm-1]
+     freq (    6) =       2.853039 [THz] =      95.167128 [cm-1]
+     freq (    7) =       3.711773 [THz] =     123.811432 [cm-1]
+     freq (    8) =       8.804024 [THz] =     293.670634 [cm-1]
+     freq (    9) =       8.912682 [THz] =     297.295054 [cm-1]
+     freq (   10) =       9.407098 [THz] =     313.787011 [cm-1]
+     freq (   11) =      10.295129 [THz] =     343.408541 [cm-1]
+     freq (   12) =      10.601502 [THz] =     353.628028 [cm-1]
+     freq (   13) =      14.074680 [THz] =     469.480774 [cm-1]
+     freq (   14) =      14.668879 [THz] =     489.301137 [cm-1]
+!...
+</code></pre></div></div>
+<p><code class="highlighter-rouge">matdyn</code>中存着动力学矩阵和</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Dynamical matrix file
+default
+  2   26  0  1.8897261  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
+Basis vectors
+     15.000000000    0.000000000    0.000000000
+      0.000000000   15.000000000    0.000000000
+      0.000000000    0.000000000   15.000000000
+           1  'C   '    10947.083358978085
+           2  'H   '    918.68110941480279
+    1    1      8.9620845000      7.5901125000      6.9474930000
+    2    1      6.8089410000      6.2131635000      6.9404790000
+    3    1      7.5377250000      7.4348655000      9.0629715000
+    4    1      6.6948120000      8.7634470000      7.0483335000
+!...
+    Diagonalizing the dynamical matrix
+
+     q = (    0.000000000   0.000000000   0.000000000 )
+
+ **************************************************************************
+     freq (    1) =     -14.644218 [THz] =    -488.478526 [cm-1]
+ ( -0.101213  0.000000 -0.044156  0.000000  0.008792 -0.000000 )
+ (  0.047068 -0.000000  0.120832 -0.000000  0.020473 -0.000000 )
+ (  0.002552 -0.000000  0.027146 -0.000000 -0.109307  0.000000 )
+ (  0.069089 -0.000000 -0.110032  0.000000  0.011473 -0.000000 )
+ ( -0.077319  0.000000  0.104654 -0.000000  0.003597 -0.000000 )
+ ( -0.120746  0.000000 -0.024960  0.000000 -0.086464  0.000000 )
+ ( -0.036260  0.000000 -0.114091  0.000000  0.041932 -0.000000 )
+</code></pre></div></div>
+<p>使用xcrysden打开<code class="highlighter-rouge">dynmat.axsf</code>,display显示受力，Modify可以修改里的显示方式
+<img src="/uploads/2020/10/dyn.png" alt="" />
+提取<code class="highlighter-rouge">matdyn</code>中的频率画图,<br />
+下图为$NH_3$的振动频率和<a href="https://github.com/cndaqiang/DFT-EXERCISES">使用VASP计算:5.2 NH3 振动频率</a>的结果一致</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./matdyn.py
+</code></pre></div></div>
+<p><img src="/uploads/2020/10/matdyn.png" alt="" /></p>
 
 <h2 id="附录">附录</h2>
 <h3 id="xcrysden-help">xcrysden help</h3>

@@ -325,8 +325,7 @@
   </li>
   <li><a href="#centos7" id="markdown-toc-centos7">Centos7</a></li>
   <li><a href="#自己编译库" id="markdown-toc-自己编译库">自己编译库</a>    <ul>
-      <li><a href="#gcc-mvapich2-错误" id="markdown-toc-gcc-mvapich2-错误"><del>gcc mvapich2 错误</del></a></li>
-      <li><a href="#intel" id="markdown-toc-intel">intel</a></li>
+      <li><a href="#超算上编译" id="markdown-toc-超算上编译">超算上编译</a></li>
     </ul>
   </li>
   <li><a href="#macosx" id="markdown-toc-macosx">macosx</a></li>
@@ -434,98 +433,238 @@ library_dirs = ['/usr/lib64/openmpi/lib/']
 </code></pre></div></div>
 
 <h2 id="自己编译库">自己编译库</h2>
+<p>python同上</p>
 
-<h3 id="gcc-mvapich2-错误"><del>gcc mvapich2 错误</del></h3>
-<p><code class="highlighter-rouge">siteconfig.py</code></p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#fPIC参数是为了连接静态库
-compiler = 'mpicc -fPIC'
-mpicompiler = 'mpicc -fPIC'
-mpilinker = mpicompiler
+<h3 id="超算上编译">超算上编译</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#----------------加载编译环境---------------------------------------------</span>
+<span class="c">#### 加载编译环境1:怀柔gnu8&amp;openmpi</span>
+module swap gnu4 gnu8/8.3.0
+module load gnu8/8.3.0
+module load openmpi3/3.1.4
+<span class="c">#创建编译目录</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> ~/soft/gnu8-openmpi/
+<span class="nb">cd</span> ~/soft/gnu8-openmpi/
 
+<span class="c">#### 加载编译环境2:SSLAB gnu4&amp;mvapich</span>
+module load  mpi/mvapich2/gnu/2.3b
+<span class="nb">mkdir</span> <span class="nt">-p</span> ~/soft/gcc-MVAPICH/
+<span class="nb">cd</span> ~/soft/gnu8-openmpi/
+
+<span class="c">#### 加载编译环境3:怀柔</span>
+module unload gnu8/8.3.0
+module swap gnu8 gnu4/4.8.5
+module load gnu4/4.8.5
+module load mvapich2/2.3.1
+<span class="nb">mkdir</span> <span class="nt">-p</span> ~/soft/gnu4-mvapich
+<span class="nb">cd</span> ~/soft/gnu4-mvapich
+
+
+<span class="c">#----------------开始编译环境---------------------------------------------</span>
+
+<span class="nv">ROOT</span><span class="o">=</span><span class="nv">$PWD</span>
+<span class="nb">mkdir</span> <span class="nv">$ROOT</span>/source
+
+<span class="c">#创建编译脚本</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh"> &gt; ./make.sh
+#!/bin/bash
+#SBATCH -J make
+#SBATCH -p debug
+#SBATCH -N 1
+#SBATCH --ntasks-per-node=10
+#SBATCH -o make.out
+
+
+module load gnu8/8.3.0
+module load module load openmpi3/3.1.4
+if [ -e ./netlib.py ]
+then
+    ./setup.py --prefix=</span><span class="nv">$ROOT</span><span class="sh">/math --downall
+else
+    make -j10
+    make
+    make install
+fi
+</span><span class="no">EOF
+
+</span><span class="c">#把下面的执行结果复制到环境变量</span>
+<span class="nb">echo</span> <span class="s2">"
+#把下面的执行结果复制到环境变量
+MATHDIR=</span><span class="nv">$ROOT</span><span class="s2">/math/lib
+export LD_LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/libxc-4.3.4/lib:</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/fftw-3.3.3/lib:</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/math/lib:</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH
+export LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/libxc-4.3.4/lib:</span><span class="se">\$</span><span class="s2">LIBRARY_PATH
+export LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/fftw-3.3.3/lib:</span><span class="se">\$</span><span class="s2">LIBRARY_PATH
+export LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/math/lib:</span><span class="se">\$</span><span class="s2">LIBRARY_PATH
+export C_INCLUDE_PATH=</span><span class="nv">$ROOT</span><span class="s2">/libxc-4.3.4/include:</span><span class="se">\$</span><span class="s2">C_INCLUDE_PATH
+export C_INCLUDE_PATH=</span><span class="nv">$ROOT</span><span class="s2">/fftw-3.3.3/include:</span><span class="se">\$</span><span class="s2">C_INCLUDE_PATH
+export C_INCLUDE_PATH=</span><span class="nv">$ROOT</span><span class="s2">/math/include:</span><span class="se">\$</span><span class="s2">C_INCLUDE_PATH
+export PATH=</span><span class="nv">$ROOT</span><span class="s2">/fftw-3.3.3/bin:</span><span class="se">\$</span><span class="s2">PATH
+"</span>
+
+
+<span class="c">#libxc-4.3.4 for octopus-10.1</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/libxc/libxc-4.3.4.tar.gz
+<span class="nb">tar </span>xzvf libxc-4.3.4.tar.gz 
+<span class="nb">cd </span>libxc-4.3.4
+<span class="c">#--enable-shared 动态库</span>
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4  <span class="nv">CC</span><span class="o">=</span>gcc <span class="nv">CXX</span><span class="o">=</span>g++ <span class="nv">FC</span><span class="o">=</span>gfortran <span class="nt">--enable-shared</span> 
+qsub ../make.sh
+
+<span class="c">#fft</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/fftw/fftw-3.3.3.tar.gz
+<span class="nb">tar </span>xzvf fftw-3.3.3.tar.gz
+<span class="nb">cd </span>fftw-3.3.3/
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3 <span class="nt">--enable-mpi</span> <span class="nt">--enable-shared</span>
+qsub ../make.sh
+
+
+
+<span class="c">#从0编译动态库scalapack</span>
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-d</span> <span class="nv">$ROOT</span>/math <span class="o">]</span>
+<span class="k">then
+    </span><span class="nb">mkdir</span> <span class="nv">$ROOT</span>/math
+    <span class="nb">mkdir</span> <span class="nv">$ROOT</span>/math/lib
+    <span class="nb">mkdir</span> <span class="nv">$ROOT</span>/math/include
+<span class="k">fi
+
+</span><span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/math/lapack-3.8.0.tar.gz
+<span class="nb">rm</span> <span class="nt">-rf</span> lapack-3.8.0
+<span class="nb">tar </span>xzvf lapack-3.8.0.tar.gz
+<span class="nb">cd </span>lapack-3.8.0/
+<span class="c">#修改编译参数，并默认输出动态库</span>
+
+<span class="c">#BLAS&amp;LAPACK</span>
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"
+all:libblas.so
+libblas.so: </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+</span><span class="se">\t</span><span class="s2"> </span><span class="se">\$</span><span class="s2">(FORTRAN) -shared -Wl,-soname,</span><span class="se">\$</span><span class="s2">@ -o </span><span class="se">\$</span><span class="s2">@ </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+"</span> <span class="o">&gt;&gt;</span> BLAS/SRC/Makefile
+<span class="c">#TMG</span>
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"
+all:libtmg.so
+libtmg.so: </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+</span><span class="se">\t</span><span class="s2"> </span><span class="se">\$</span><span class="s2">(FORTRAN) -shared -Wl,-soname,</span><span class="se">\$</span><span class="s2">@ -o </span><span class="se">\$</span><span class="s2">@ </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+"</span> <span class="o">&gt;&gt;</span> TESTING/MATGEN/Makefile
+<span class="c">#LAPACK</span>
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"
+all: liblapack.so
+liblapack.so: </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+</span><span class="se">\t</span><span class="s2"> </span><span class="se">\$</span><span class="s2">(FORTRAN) -shared -Wl,-soname,</span><span class="se">\$</span><span class="s2">@ -o </span><span class="se">\$</span><span class="s2">@ </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+"</span> <span class="o">&gt;&gt;</span> SRC/Makefile
+
+<span class="nb">cp </span>make.inc.example make.inc
+<span class="nb">echo</span> <span class="s2">"OPTS += -fPIC"</span> <span class="o">&gt;&gt;</span> make.inc
+<span class="nb">echo</span> <span class="s2">"NOOPT += -fPIC"</span> <span class="o">&gt;&gt;</span> make.inc
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"
+MATHDIR=</span><span class="nv">$ROOT</span><span class="s2">/math/lib
+install: all
+</span><span class="se">\t</span><span class="s2"> cp </span><span class="nv">$PWD</span><span class="s2">/BLAS/SRC/libblas.so </span><span class="se">\$</span><span class="s2">(MATHDIR)
+</span><span class="se">\t</span><span class="s2"> cp </span><span class="nv">$PWD</span><span class="s2">/SRC/liblapack.so </span><span class="se">\$</span><span class="s2">(MATHDIR)
+</span><span class="se">\t</span><span class="s2"> cp </span><span class="nv">$PWD</span><span class="s2">/TESTING/MATGEN/libtmg.so </span><span class="se">\$</span><span class="s2">(MATHDIR)
+</span><span class="se">\t</span><span class="s2"> cp </span><span class="nv">$PWD</span><span class="s2">/*.a </span><span class="se">\$</span><span class="s2">(MATHDIR)
+"</span> <span class="o">&gt;&gt;</span> make.inc
+<span class="c">#安装</span>
+make <span class="nb">install</span>
+<span class="c">#注释Makefile中</span>
+<span class="c">#   all: lapack_install lib blas_testing lapack_testing</span>
+<span class="c">#为</span>
+<span class="c">#   all: lapack_install lib</span>
+<span class="c">#   #blas_testing lapack_testing</span>
+<span class="c">#可以跳过测试的过程，编译更快</span>
+
+<span class="c">#Scalapack</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/math/scalapack-2.0.2.tgz
+<span class="nb">rm</span> <span class="nt">-rf</span> scalapack-2.0.2
+<span class="nb">tar </span>xzvf scalapack-2.0.2.tgz
+<span class="nb">cd </span>scalapack-2.0.2
+
+<span class="c">#echo -e "</span>
+<span class="c">#ALLOBJ += \$(SLASRC) \$(DLASRC)  \$(CLASRC) \$(ZLASRC)  \</span>
+<span class="c">#\t   \$(SCLAUX) \$(DZLAUX) \$(ALLAUX)</span>
+<span class="c">#all:libscalapack.so</span>
+<span class="c">#libscalapack.so: \$(ALLOBJ)</span>
+<span class="c">#\t \$(FC) -shared -Wl,-soname,\$@ -o \$@ \$(ALLOBJ)</span>
+<span class="c">#" &gt;&gt; SRC/Makefile</span>
+
+<span class="c">#使用fPIC参数，这样静态库可以转为动态库</span>
+<span class="nb">cp </span>SLmake.inc.example SLmake.inc
+<span class="nb">echo</span> <span class="s2">"FC += -fPIC"</span> <span class="o">&gt;&gt;</span> SLmake.inc
+<span class="nb">echo</span> <span class="s2">"CC += -fPIC"</span> <span class="o">&gt;&gt;</span> SLmake.inc
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"
+MATHDIR=</span><span class="nv">$ROOT</span><span class="s2">/math/lib
+install: all
+</span><span class="se">\t</span><span class="s2"> </span><span class="se">\$</span><span class="s2">(FC) -shared -o </span><span class="nv">$PWD</span><span class="s2">/libscalapack.so -Wl,--whole-archive </span><span class="nv">$PWD</span><span class="s2">/libscalapack.a -Wl,--no-whole-archive
+</span><span class="se">\t</span><span class="s2"> cp </span><span class="nv">$PWD</span><span class="s2">/libscalapack.so </span><span class="se">\$</span><span class="s2">(MATHDIR)
+"</span> <span class="o">&gt;&gt;</span> SLmake.inc
+<span class="c">#不支持-j20,就得逐个编译，把每个库依次打包添加到libscalapack.a，没编译成功也有libscalapack.a</span>
+make  <span class="nb">install</span>
+
+
+<span class="c">#gapw git模式</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+git clone <span class="nt">-b</span> 20.10.0 https://gitlab.com/gpaw/gpaw.git
+<span class="nb">cd </span>gpaw
+<span class="c">#gapw下载模式</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://wiki.fysik.dtu.dk/gpaw/gpaw-20.10.1b1.tar.gz
+<span class="nb">rm</span> <span class="nt">-rf</span> gpaw-20.10.1b1#  清空编译历史，不然有很多未知事件
+<span class="nb">tar </span>xzvf gpaw-20.10.1b1.tar.gz
+<span class="nb">cd </span>gpaw-20.10.1b1
+
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh"> &gt; ./siteconfig.py
 fftw = True
 scalapack = True
+libraries += ['xc', 'blas', 'lapack', 'tmg', 'scalapack', 'fftw3']
+</span><span class="no">EOF
 
-
-FFTWDIR  ="/public/home/cndaqiang/soft/gcc-MVAPICH/fftw-3.3.3"
-LIBXCDIR ="/public/home/cndaqiang/soft/gcc-MVAPICH/libxc-4.3.4"
-MATHDIR  ="/public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib"
-MPIDIR="/public/software/mpi/mvapich2/gnu/2.3b"
-
-include_dirs=[ FFTWDIR+"/include", LIBXCDIR+"/include",MPIDIR+"/include"]
-library_dirs=[ FFTWDIR+"/lib", LIBXCDIR+"/lib" , MATHDIR,MPIDIR+"/lib"]
-#下面的二选一
-#libraries
-libraries=[ "fftw3_mpi", "fftw3","xc","refblas", "tmg", "reflapack", "scalapack"]
-#直接指出库位置
-BLAS_LIBS="/public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib/librefblas.a"
-LAPACK_LIBS="/public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib/libreflapack.a"
-LAPACK_LIBSS="/public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib/libtmg.a"
-SCALAPACK_LIBS="/public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib/libscalapack.a"
-extra_link_args += [ LIBXCDIR + '/lib/libxc.a' ]
-extra_link_args += [ FFTWDIR+'/lib/libfftw3.a',FFTWDIR+'/lib/libfftw3_mpi.a' ]
-extra_link_args += [ SCALAPACK_LIBS , LAPACK_LIBS,LAPACK_LIBSS, BLAS_LIBS ]
+</span>python setup.py <span class="nb">install
+</span>gpaw install-data pawdir
+<span class="c">#测试</span>
+gpaw  <span class="nb">test</span>
 </code></pre></div></div>
-<p>报错</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/public/home/cndaqiang/anaconda3/envs/python37/compiler_compat/ld: /public/home/cndaqiang/soft/gcc-MVAPICH/scalapack/lib/libscalapack.a(pbdtrst1.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-/public/home/cndaqiang/anaconda3/envs/python37/compiler_compat/ld: final link failed: nonrepresentable section on output
-</code></pre></div></div>
-<p>好像是因为静态库的原因，加上<code class="highlighter-rouge">-fPIC</code>也不行</p>
+<p>测试结果</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) [SSLAB cndaqiang@login2 gpaw-20.10.1b1]$gpaw test
+ -----------------------------------------------------------------------------------------------------------------------------------------------
+| python-3.7.3      /public/home/chendq/anaconda3/envs/python37/bin/python                                                                      |
+| gpaw-20.10.1b1    /public/home/chendq/soft/gcc-MVAPICH/source/gpaw-20.10.1b1/gpaw/                                                            |
+| ase-3.20.1        /public/home/chendq/anaconda3/envs/python37/lib/python3.7/site-packages/ase/                                                |
+| numpy-1.19.1      /public/home/chendq/anaconda3/envs/python37/lib/python3.7/site-packages/numpy/                                              |
+| scipy-1.5.2       /public/home/chendq/anaconda3/envs/python37/lib/python3.7/site-packages/scipy/                                              |
+| libxc-4.3.4       yes                                                                                                                         |
+| _gpaw             /public/home/chendq/soft/gcc-MVAPICH/source/gpaw-20.10.1b1/build/lib.linux-x86_64-3.7/_gpaw.cpython-37m-x86_64-linux-gnu.so |
+| MPI enabled       yes                                                                                                                         |
+| scalapack         yes                                                                                                                         |
+| Elpa              no                                                                                                                          |
+| FFTW              yes                                                                                                                         |
+| libvdwxc          no                                                                                                                          |
+| PAW-datasets (1)  /public/home/chendq/soft/intel17/gpaw/pawdir/gpaw-setups-0.9.20000                                                          |
+ -----------------------------------------------------------------------------------------------------------------------------------------------
+Doing a test calculation (cores: 1): ... Done
 
-<h3 id="intel">intel</h3>
-<p>加载编译器,fftw</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module load mpi/intelmpi/2017.4.239
-module load mathlib/fftw/intelmpi/3.3.7_double
-module load compiler/intel/intel-compiler-2017.5.239
-</code></pre></div></div>
-
-<p>编译libxc, <strong>加入动态库支持<code class="highlighter-rouge">--enable-shared</code></strong>,具体细节见<a href="/2018/09/15/gun-openmpi-octopus-4.1.2/"> centos6.5 gcc Openmpi 编译octopus-4.1.2</a></p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure --prefix=$PWD/../libxc-4.2.3 CC=icc CXX=icpc FC=ifort --enable-shared
-make -j8
-make install
-</code></pre></div></div>
-<p>环境变量</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LIBXCDIR=/public/home/cndaqiang/soft/intel17/libxc-4.2.3
-export PATH=$LIBXCDIR/bin:$PATH
-export LD_LIBRARY_PATH=$LIBXCDIR/lib:$LD_LIBRARY_PATH
-</code></pre></div></div>
-
-<p><code class="highlighter-rouge">siteconfig.py</code></p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>compiler = 'mpiicc -fPIC'
-mpicompiler = 'mpiicc -fPIC'
-mpilinker = mpicompiler
-
-fftw = True
-scalapack = True
-
-FFTWDIR  = "/public/software/mathlib/fftw/intelmpi/3.3.7_double"
-LIBXCDIR = "/public/home/cndaqiang/soft/intel17/libxc-4.2.3"
-MATHDIR  = "/public/software/compiler/intel/intel-compiler-2017.5.239/mkl/lib/intel64"
-MPIDIR   = "/public/software/mpi/intelmpi/2017.4.239/intel64"
-
-include_dirs=[ FFTWDIR+"/include", LIBXCDIR+"/include",MPIDIR+"/include"]
-library_dirs=[ FFTWDIR+"/lib", LIBXCDIR+"/lib" , MATHDIR,MPIDIR+"/lib"]
-libraries=[ "fftw3_mpi", "fftw3","xc", "mkl_intel_lp64", "mkl_sequential", "mkl_core", "pthread", "mkl_blacs_intelmpi_lp64" , "mkl_scalapack_lp64"]
-</code></pre></div></div>
-
-<p><strong>不过测试报错</strong></p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) [cndaqiang@login3 gpaw]$ !gp
-gpaw  test
--------------------------+-------------------------------------------------------------------------------------------------------
-python-3.7.3             | /public/home/cndaqiang/anaconda3/envs/python37/bin/python
-gpaw-20.1.1b1-96a66e3883 | /public/home/cndaqiang/soft/intel17/gpaw/gpaw/
-ase-3.19.1               | /public/home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/ase/
-numpy-1.19.1             | /public/home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/numpy/
-scipy-1.5.2              | /public/home/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/scipy/
-libxc-4.2.3              | yes
-_gpaw-96a66e3883         | /public/home/cndaqiang/soft/intel17/gpaw/build/lib.linux-x86_64-3.7/_gpaw.cpython-37m-x86_64-linux-gnu.so
-MPI enabled              | yes
-scalapack                | yes
-Elpa                     | no
-FFTW                     | yes
-libvdwxc                 | no
-PAW-datasets (1)         | /public/home/cndaqiang/soft/intel17/gpaw/pawdir/gpaw-setups-0.9.20000
--------------------------+-------------------------------------------------------------------------------------------------------
-Doing a test calculation (cores: 1): ... 段错误
+Test parallel calculation with "gpaw -P 4 test".
+(python37) [SSLAB cndaqiang@login2 gpaw-20.10.1b1]$gpaw -P 4 test
+ -----------------------------------------------------------------------------------------------------------------------------------------------
+| python-3.7.3      /public/home/chendq/anaconda3/envs/python37/bin/python                                                                      |
+| gpaw-20.10.1b1    /public/home/chendq/soft/gcc-MVAPICH/source/gpaw-20.10.1b1/gpaw/                                                            |
+| ase-3.20.1        /public/home/chendq/anaconda3/envs/python37/lib/python3.7/site-packages/ase/                                                |
+| numpy-1.19.1      /public/home/chendq/anaconda3/envs/python37/lib/python3.7/site-packages/numpy/                                              |
+| scipy-1.5.2       /public/home/chendq/anaconda3/envs/python37/lib/python3.7/site-packages/scipy/                                              |
+| libxc-4.3.4       yes                                                                                                                         |
+| _gpaw             /public/home/chendq/soft/gcc-MVAPICH/source/gpaw-20.10.1b1/build/lib.linux-x86_64-3.7/_gpaw.cpython-37m-x86_64-linux-gnu.so |
+| MPI enabled       yes                                                                                                                         |
+| scalapack         yes                                                                                                                         |
+| Elpa              no                                                                                                                          |
+| FFTW              yes                                                                                                                         |
+| libvdwxc          no                                                                                                                          |
+| PAW-datasets (1)  /public/home/chendq/soft/intel17/gpaw/pawdir/gpaw-setups-0.9.20000                                                          |
+ -----------------------------------------------------------------------------------------------------------------------------------------------
+Doing a test calculation (cores: 4): ... Done
 </code></pre></div></div>
 
 <h2 id="macosx">macosx</h2>

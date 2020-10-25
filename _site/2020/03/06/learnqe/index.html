@@ -347,6 +347,7 @@
           <li><a href="#加u--starting_ns_eigenvaluemispinityp" id="markdown-toc-加u--starting_ns_eigenvaluemispinityp">加U &amp; starting_ns_eigenvalue(m,ispin,ityp)</a></li>
         </ul>
       </li>
+      <li><a href="#光学吸收谱计算" id="markdown-toc-光学吸收谱计算">光学吸收谱计算</a></li>
     </ul>
   </li>
 </ul>
@@ -887,6 +888,44 @@ projwfc.x -i projwfc.FeO.in
 <p>通过比较能量，调整之后能量是更低了一些
 -735.172(+U &amp; starting_ns_eigenvalue ) &lt; -734.99424361(+U)</p>
 
+<h3 id="光学吸收谱计算">光学吸收谱计算</h3>
+<p>参考<a href="https://yyyu200.github.io/DFTbook/blogs/2019/04/01/HandsOn/#3-%E8%AE%A1%E7%AE%97%E6%B0%AE%E5%8C%96%E7%A1%BC%E7%9A%84%E5%85%89%E5%AD%A6%E6%80%A7%E8%B4%A8">QE实践详解</a></p>
+
+<p>手册<code class="highlighter-rouge">/PP/Doc/eps_man.pdf</code></p>
+
+<p>输入参数示例</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;inputpp
+  !outdir='./tmp'
+  calculation='eps'
+/
+&amp;energy_grid
+  smeartype='gauss'
+  intersmear=0.50 !这里0.5已经很大了，太大会出现峰特别宽，就像fft的dumpling取大了一样,用0.136好一些
+  intrasmear=0.0
+  wmin=0.0
+  wmax=60.0
+  nbndmin=1
+  nbndmax=0
+  nw=2000
+  shift=0.0
+/
+</code></pre></div></div>
+<p><code class="highlighter-rouge">calculation='eps'</code>时输出<code class="highlighter-rouge">epsr.dat, epsi.dat, eels.dat and ieps.dat</code></p>
+<ul>
+  <li><code class="highlighter-rouge">epsr.dat, epsi.dat</code>介电函数张量的实部虚部$\epsilon_{1,\alpha,\alpha}(\omega),\epsilon_{2,\alpha,\alpha}(\omega)$<br />
+虚部对应吸收谱</li>
+  <li><code class="highlighter-rouge">eels.dat</code>电子能量损失谱</li>
+  <li><code class="highlighter-rouge">ieps.dat</code> the diagonal components of dielectric tensor calculated on the imaginary axis of frequency (via London transformation) $\epsilon_{\alpha,\alpha}(i\omega)$</li>
+</ul>
+
+<p>运行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>epsilon.x -i epsilon.in | tee epsilon.out
+epsi_pwscf2gpaw.py epsi_pwscf.dat
+spectrum.gpaw.py ./gpaw.epsi_pwscf.dat
+vs ./gpaw.epsi_pwscf.dat.png
+</code></pre></div></div>
+<p><img src="/uploads/2020/10/gpaw.epsi_pwscf.dat.png" alt="" />
+所以<code class="highlighter-rouge">nbnd</code>要取多一些,不然能量的区间太小了</p>
 
         </article>
         <hr>

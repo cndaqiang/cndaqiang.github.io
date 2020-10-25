@@ -321,7 +321,9 @@
     </ul>
   </li>
   <li><a href="#计算示例" id="markdown-toc-计算示例">计算示例</a>    <ul>
-      <li><a href="#计算参数设置" id="markdown-toc-计算参数设置">计算参数设置</a></li>
+      <li><a href="#示例1" id="markdown-toc-示例1">示例1</a></li>
+      <li><a href="#示例2" id="markdown-toc-示例2">示例2</a></li>
+      <li><a href="#lr-tddft计算吸收光谱" id="markdown-toc-lr-tddft计算吸收光谱">Lr-TDDFT计算吸收光谱</a></li>
     </ul>
   </li>
   <li><a href="#报错" id="markdown-toc-报错">报错</a>    <ul>
@@ -356,6 +358,7 @@ mpiexec <span class="nt">-n</span> 8 python test.py
 </code></pre></div></div>
 
 <h2 id="计算示例">计算示例</h2>
+<h3 id="示例1">示例1</h3>
 <p>test.py</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
 </span><span class="kn">from</span> <span class="nn">ase</span> <span class="kn">import</span> <span class="n">Atoms</span>
@@ -376,7 +379,121 @@ mpiexec <span class="nt">-n</span> 8 python test.py
 </span><span class="n">atoms</span><span class="o">.</span><span class="n">get_total_energy</span><span class="p">()</span> <span class="c1">#计算总能量, 上一行已经计算过了，不重复计算
 </span></code></pre></div></div>
 
-<h3 id="计算参数设置">计算参数设置</h3>
+<h3 id="示例2">示例2</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="kn">from</span> <span class="nn">ase</span> <span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">GPAW</span>
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">mpi</span>
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">PW</span>
+
+<span class="n">rank</span> <span class="o">=</span> <span class="n">mpi</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">rank</span>
+
+<span class="c1">#------------------ STRUCTURE
+</span><span class="n">a</span><span class="o">=</span><span class="mi">15</span>
+<span class="n">RM</span><span class="o">=</span><span class="n">Atoms</span><span class="p">(</span><span class="s">'C3O1H6'</span><span class="p">,</span>
+        <span class="n">positions</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">[</span> <span class="mf">8.682901</span><span class="p">,</span>    <span class="mf">8.148500</span><span class="p">,</span>    <span class="mf">6.967300</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">7.500000</span><span class="p">,</span>    <span class="mf">7.500000</span><span class="p">,</span>    <span class="mf">7.500000</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">6.142400</span><span class="p">,</span>    <span class="mf">7.654800</span><span class="p">,</span>    <span class="mf">6.874200</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">8.451600</span><span class="p">,</span>    <span class="mf">6.780600</span><span class="p">,</span>    <span class="mf">6.762900</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">8.605600</span><span class="p">,</span>    <span class="mf">8.769301</span><span class="p">,</span>    <span class="mf">6.079600</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">9.518500</span><span class="p">,</span>    <span class="mf">8.385800</span><span class="p">,</span>    <span class="mf">7.619100</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">7.497300</span><span class="p">,</span>    <span class="mf">7.256200</span><span class="p">,</span>    <span class="mf">8.558300</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">5.572400</span><span class="p">,</span>    <span class="mf">6.733100</span><span class="p">,</span>    <span class="mf">6.970900</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">5.584000</span><span class="p">,</span>    <span class="mf">8.451500</span><span class="p">,</span>    <span class="mf">7.361100</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">6.233600</span><span class="p">,</span>    <span class="mf">7.887900</span><span class="p">,</span>    <span class="mf">5.815400</span> <span class="p">]</span>
+        <span class="p">],</span>
+        <span class="n">cell</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+        <span class="p">)</span>
+<span class="n">atoms</span><span class="o">=</span><span class="n">RM</span>
+
+<span class="c1">#------------------ PARAMETER
+</span><span class="n">calc</span> <span class="o">=</span> <span class="n">GPAW</span><span class="p">(</span><span class="c1">#nbands=2,       #nbands
+</span>            <span class="n">xc</span><span class="o">=</span><span class="s">'PBE'</span><span class="p">,</span>       <span class="c1">#XC
+</span>            <span class="n">basis</span><span class="o">=</span><span class="p">{},</span>       <span class="c1">#基组
+</span>            <span class="n">charge</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>     <span class="c1">#总电荷
+</span>            <span class="c1">#mode=PW(350),
+</span>            <span class="c1">#gpts=(24, 24, 24), #grid points in each direction
+</span>            <span class="n">h</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>          <span class="c1">#Grid spacing, gpts和h二选一
+</span>            <span class="c1">#kpts={'size': (1, 1, 1)}, #仅在周期性条件下使用 1x1x1 Monkhorst-pack,有其他形式
+</span>            <span class="c1">#occupations={'name': 'fermi-dirac',
+</span>            <span class="c1">#             'width': 0.05
+</span>            <span class="c1">#            },
+</span>            <span class="n">parallel</span><span class="o">=</span><span class="p">{},</span>    <span class="c1">#k点并行, nbnd并行等并行操作
+</span>            <span class="n">convergence</span><span class="o">=</span><span class="p">{</span>   <span class="c1">#收敛精度
+</span>                <span class="s">'energy'</span><span class="p">:</span> <span class="mf">0.0005</span><span class="p">,</span>  <span class="c1"># eV / electron
+</span>                <span class="s">'density'</span><span class="p">:</span> <span class="mf">1.0e-4</span><span class="p">,</span>
+                <span class="s">'eigenstates'</span><span class="p">:</span> <span class="mf">4.0e-8</span><span class="p">,</span>  <span class="c1"># eV^2 / electron
+</span>                <span class="s">'bands'</span><span class="p">:</span> <span class="s">'occupied'</span><span class="p">,</span>  <span class="c1">#'all','occupied',100,-10,'CBM+5.0'} 等,一般占据态收敛就可以
+</span>                <span class="s">'forces'</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="c1"># eV / Ang Max
+</span>                        <span class="p">},</span>
+                            <span class="c1"># add new
+</span>            <span class="n">txt</span><span class="o">=</span><span class="s">'result'</span>   <span class="c1">#result
+</span>            <span class="p">)</span> <span class="c1">#计算程序和参数, GPAW/NWCHem等
+</span><span class="n">atoms</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">calc</span>
+<span class="n">energy</span><span class="o">=</span><span class="n">atoms</span><span class="o">.</span><span class="n">get_total_energy</span><span class="p">()</span> <span class="c1">#执行计算get_total_energy,
+</span><span class="n">force</span><span class="o">=</span><span class="n">atoms</span><span class="o">.</span><span class="n">get_forces</span><span class="p">()</span><span class="c1">#执行计算 atoms.get_forces(), 上面计算过了不再重复计算
+</span><span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+    <span class="c1">#print(atoms.get_forces()) #这样也可以
+</span></code></pre></div></div>
+
+<h3 id="lr-tddft计算吸收光谱">Lr-TDDFT计算吸收光谱</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpiexec -n 8  gpaw python Lr-TDDFT.py
+</code></pre></div></div>
+<p><code class="highlighter-rouge">Lr-TDDFT.py</code>内容</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+</span><span class="s">"""
+ 
+@author: cndaqiang 2020-
+吸收光谱计算
+"""</span>
+
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">GPAW</span>
+<span class="kn">from</span> <span class="nn">ase</span> <span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">from</span> <span class="nn">ase.io</span> <span class="kn">import</span> <span class="n">read</span><span class="p">,</span> <span class="n">write</span>
+<span class="kn">from</span> <span class="nn">gpaw.lrtddft</span> <span class="kn">import</span> <span class="n">LrTDDFT</span><span class="p">,</span><span class="n">photoabsorption_spectrum</span>
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">mpi</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">rank</span> <span class="o">=</span> <span class="n">mpi</span><span class="o">.</span><span class="n">world</span><span class="o">.</span><span class="n">rank</span>
+
+<span class="n">POSCAR</span><span class="o">=</span><span class="s">"center.frac.car.roat.8883.vasp"</span>
+<span class="n">atoms</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">POSCAR</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="s">"vasp"</span><span class="p">)</span>
+<span class="c1">#atoms=Atoms('Na2', positions=((0.0, 0.0, 0.0), (3.12, 0.0, 0.0)))
+</span>
+
+<span class="n">calc</span> <span class="o">=</span> <span class="n">GPAW</span><span class="p">(</span><span class="n">xc</span><span class="o">=</span><span class="s">'PBE'</span><span class="p">,</span>
+            <span class="n">txt</span><span class="o">=</span><span class="s">'result'</span><span class="p">)</span>
+<span class="c1">#计算结果输出到result，屏幕上没有输出
+</span><span class="n">atoms</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">calc</span>
+
+<span class="c1">#执行计算，平面有输出
+</span><span class="n">energy</span><span class="o">=</span><span class="n">atoms</span><span class="o">.</span><span class="n">get_potential_energy</span><span class="p">()</span>
+<span class="c1">#执行完计算后，计算的结果保存到calc中
+</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LrTDDFT</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="n">xc</span><span class="o">=</span><span class="s">'PBE'</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'Omega_result.gz'</span><span class="p">)</span>
+
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LrTDDFT</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">'Omega_result.gz'</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">diagonalize</span><span class="p">()</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'excitations_result.gz'</span><span class="p">)</span>
+<span class="c1">#
+</span><span class="n">lr</span> <span class="o">=</span> <span class="n">LrTDDFT</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">'excitations_result.gz'</span><span class="p">)</span>
+<span class="n">photoabsorption_spectrum</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="s">'result_spectrum.dat'</span><span class="p">,</span> <span class="n">e_min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">e_max</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Save to result_spectrum.dat"</span><span class="p">)</span>
+
+<span class="n">LrTDDFT</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="n">istart</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">jend</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">atoms</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">"result.vasp"</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="s">"vasp"</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p>画图</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spectrum.gpaw.py result_spectrum.dat
+</code></pre></div></div>
 
 <h2 id="报错">报错</h2>
 <p>会提示的，看信息</p>

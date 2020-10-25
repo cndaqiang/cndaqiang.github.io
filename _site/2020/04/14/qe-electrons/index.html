@@ -900,6 +900,7 @@ HWF能量泛函的部分,参见本文<strong>物理部分</strong></p>
 <h5 id="pool并行回收et">pool并行,回收<code class="highlighter-rouge">et</code></h5>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL poolrecover( et, nbnd, nkstot, nks )
 </code></pre></div></div>
+<p><strong><code class="highlighter-rouge">poolrecover</code>会把所有pool的数据仅收集到ionode,其他node数据不会改变,可以放心多次recover</strong></p>
 <h5 id="sum_band"><code class="highlighter-rouge">sum_band()</code></h5>
 <p>File:<code class="highlighter-rouge">PW/src/sum_band.f90</code><br />
 <strong>注意，更新KS电荷密度，保存到<code class="highlighter-rouge">rho</code>变量中去</strong><br />

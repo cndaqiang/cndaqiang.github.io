@@ -1903,7 +1903,6 @@ end program re
 <p>顺序读取时，通过这4个字节知悉当前记录的长度，按照长度读取数据，再与最后的4个字节进行校对</p>
 
 <p>示例</p>
-
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program re
       implicit none
       integer :: a,b,i
@@ -1931,6 +1930,9 @@ end program re
 <p>对应的二进制文件</p>
 
 <p><img src="/uploads/2019/01/file.jpg" alt="" /></p>
+
+<p>并行读写示例(用来读写波函数)
+<a href="/web/file/2020/parallel.read.write.f90.tar.gz">parallel.read.write.f90.tar.gz</a></p>
 
 <h4 id="直接读写无格式文件二进制文件">直接读写无格式文件（二进制文件）</h4>
 

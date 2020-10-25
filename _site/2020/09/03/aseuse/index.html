@@ -317,6 +317,11 @@
   <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
   <li><a href="#modules" id="markdown-toc-modules">Modules</a>    <ul>
       <li><a href="#atoms" id="markdown-toc-atoms">ATOMS</a></li>
+      <li><a href="#读写vasp" id="markdown-toc-读写vasp">读写vasp</a></li>
+    </ul>
+  </li>
+  <li><a href="#组合操作示例" id="markdown-toc-组合操作示例">组合操作示例</a>    <ul>
+      <li><a href="#平移poscar中原子到中心" id="markdown-toc-平移poscar中原子到中心">平移POSCAR中原子到中心</a></li>
     </ul>
   </li>
 </ul>
@@ -357,6 +362,59 @@
 <span class="mf">0.0</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">atoms</span><span class="o">.</span><span class="n">get_total_energy</span><span class="p">()</span>
 <span class="o">-</span><span class="mf">6.627349275455906</span>
+</code></pre></div></div>
+
+<h3 id="读写vasp">读写vasp</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from ase import Atoms
+from ase.io import read, write
+molecule = read("center.frac.car.roat.8883.vasp",format="vasp")
+#write(molecule,"out.vasp",format="vasp")#这行报错???
+molecule.write("out.vasp")#保存到out.vasp
+</code></pre></div></div>
+<p>读取后就是Atoms类型</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; molecule
+Atoms(symbols='C10H16', pbc=True, cell=[15.0, 15.0, 15.0])
+</code></pre></div></div>
+<p>不过写出的结构,缺少原子标注，如10 16的上一行缺少 C H</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> C  H 
+ 1.0000000000000000
+    15.0000000000000000    0.0000000000000000    0.0000000000000000
+     0.0000000000000000   15.0000000000000000    0.0000000000000000
+     0.0000000000000000    0.0000000000000000   15.0000000000000000
+  10  16
+Cartesian
+  8.9822077500000006  7.5817357500000018  6.7195537500000002
+  6.8290642500000001  6.2047867500000002  6.7125397500000004
+  7.5578482500000010  7.4264887500000007  8.8350322500000011
+</code></pre></div></div>
+
+<h2 id="组合操作示例">组合操作示例</h2>
+<h3 id="平移poscar中原子到中心">平移POSCAR中原子到中心</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+</span><span class="s">"""
+ 
+@author: cndaqiang 2020-
+POSCAR中的原子坐标平移到中心
+"""</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="c1">#-----Input File
+</span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">inputfile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">inputfile</span> <span class="o">=</span> <span class="s">"POSCAR"</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">inputfile</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"read from"</span><span class="p">,</span><span class="n">inputfile</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">inputfile</span><span class="o">+</span><span class="s">" not exists"</span><span class="p">)</span>
+    <span class="nb">exit</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">ase</span> <span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">from</span> <span class="nn">ase.io</span> <span class="kn">import</span> <span class="n">read</span><span class="p">,</span><span class="n">write</span>
+<span class="n">atoms</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">inputfile</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="s">"vasp"</span><span class="p">)</span>
+<span class="n">atoms</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
+<span class="n">atoms</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">"center."</span><span class="o">+</span><span class="n">inputfile</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="s">"vasp"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Save center POSCAR to "</span><span class="o">+</span><span class="s">"center."</span><span class="o">+</span><span class="n">inputfile</span><span class="p">)</span>
 </code></pre></div></div>
 
         </article>

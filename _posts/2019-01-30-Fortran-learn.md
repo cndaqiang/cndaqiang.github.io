@@ -1287,7 +1287,6 @@ Fortran顺序写入无格式文件，以记录为基本单元，读写过程分�
 顺序读取时，通过这4个字节知悉当前记录的长度，按照长度读取数据，再与最后的4个字节进行校对
 
 示例
-
 ```
 program re
       implicit none
@@ -1316,6 +1315,9 @@ end program re
 对应的二进制文件
 
 ![](/uploads/2019/01/file.jpg)
+
+并行读写示例(用来读写波函数)
+[parallel.read.write.f90.tar.gz](/web/file/2020/parallel.read.write.f90.tar.gz)
 
 #### 直接读写无格式文件（二进制文件）
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "利用Lapack和ScaLapach进行带状矩阵计算"
+title:  "利用Lapack和ScaLapack进行带状矩阵计算"
 date:   2019-10-28 19:15:00 +0800
 categories: Fortran 
 tags:  Fortran Lapack ScaLapack
