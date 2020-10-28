@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>两台S9200WK服务器组Centos集群</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://localhost:4000/2020/10/28/Centos7/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://localhost:4000/feed.xml ">
+
+	
+	<!---
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script>
+		// 谷歌广告测试
+	//	(adsbygoogle = window.adsbygoogle || []).push({
+	//		google_ad_client: "ca-pub-8365330523291002",
+	//		enable_page_level_ads: true
+	//	});
+		</script>
+	--->
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-109057291-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+	
+
+</head>
+
+
+  <body>
+
+    <div class="wrapper">
+    <center>
+        <a href= http://www.gov.cn/zhengce/content/2020-04/03/content_5498472.htm>
+            <h1> </h1><b> </b>
+        </a>
+        本站镜像站点        
+        <a href="http://blog.cndaqiang.workers.dev//2020/10/28/Centos7/">cloudflare</a>,
+        <a href="http://cndaqiang.gitee.io//2020/10/28/Centos7/">gitee</a>,
+        <a href="https://cndaqiang.github.io//2020/10/28/Centos7/">Github</a>.
+        <a href="https://github.com/cndaqiang/cndaqiang.github.io/">博客源码</a>
+    </center>
+</div>
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>文章
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>收藏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>关于
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/Search/">
+                        
+                            <i class="fa fa-icon-sousuo"></i>Search
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>两台S9200WK服务器组Centos集群</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-10-28
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a-->
+        <a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#配置及注意事项" id="markdown-toc-配置及注意事项">配置及注意事项</a></li>
+  <li><a href="#重装系统centos7" id="markdown-toc-重装系统centos7">重装系统Centos7</a></li>
+  <li><a href="#配置源" id="markdown-toc-配置源">配置源</a></li>
+  <li><a href="#网络" id="markdown-toc-网络">网络</a></li>
+  <li><a href="#nisnfspbs" id="markdown-toc-nisnfspbs">NIS,NFS,pbs</a></li>
+  <li><a href="#安装编译环境" id="markdown-toc-安装编译环境">安装编译环境</a></li>
+  <li><a href="#安装计算程序" id="markdown-toc-安装计算程序">安装计算程序</a></li>
+</ul>
+
+<h2 id="配置及注意事项">配置及注意事项</h2>
+<ul>
+  <li>配置: 每个节点2*Intel(R) Xeon(R) Platinum 9242 CPU @ 2.30GHz,共96C/节点,总共192C</li>
+  <li>仅有一个节点有能ipv4访问互联网的ip,两个节点均支持ipv6,因此配置安装过程尽量使用ipv6.</li>
+  <li>使用有ipv4的节点做管理节点和计算节点，下面称为master节点,<br />
+另一个节点称为client01节点</li>
+  <li>环境变量仅添加到master的<code class="highlighter-rouge">/etc/profile</code>是不够的，还要添加到各个计算节点</li>
+  <li>仅在master节点安装编译需要的库(如libibmad.so),需要在计算节点也安装，才能正常提交作业</li>
+</ul>
+
+<h2 id="重装系统centos7">重装系统Centos7</h2>
+<p>安装界面勾选IB驱动和相关的库</p>
+
+<h2 id="配置源">配置源</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#ipv6源</span>
+<span class="nb">sudo </span>su
+<span class="nb">echo</span> <span class="s1">'2402:f000:1:408:8100::1 mirrors6.tuna.tsinghua.edu.cn mirrors.tuna.tsinghua.edu.cn'</span> <span class="o">&gt;&gt;</span> /etc/hosts
+<span class="nb">cp</span> /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh"> &gt; /etc/yum.repos.d/CentOS-Base.repo
+# CentOS-Base.repo
+#
+# The mirror system uses the connecting IP address of the client and the
+# update status of each mirror to pick mirrors that are updated to and
+# geographically close to the client.  You should use this for CentOS updates
+# unless you are manually picking other mirrors.
+#
+# If the mirrorlist= does not work for you, as a fall back you can try the
+# remarked out baseurl= line instead.
+#
+#
+
+
+[base]
+name=CentOS-</span><span class="se">\$</span><span class="sh">releasever - Base
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/</span><span class="se">\$</span><span class="sh">releasever/os/</span><span class="se">\$</span><span class="sh">basearch/
+#mirrorlist=http://mirrorlist.centos.org/?release=</span><span class="se">\$</span><span class="sh">releasever&amp;arch=</span><span class="se">\$</span><span class="sh">basearch&amp;repo=os
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-7
+
+#released updates
+[updates]
+name=CentOS-</span><span class="se">\$</span><span class="sh">releasever - Updates
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/</span><span class="se">\$</span><span class="sh">releasever/updates/</span><span class="se">\$</span><span class="sh">basearch/
+#mirrorlist=http://mirrorlist.centos.org/?release=</span><span class="se">\$</span><span class="sh">releasever&amp;arch=</span><span class="se">\$</span><span class="sh">basearch&amp;repo=updates
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-7
+
+
+
+#additional packages that may be useful
+[extras]
+name=CentOS-</span><span class="se">\$</span><span class="sh">releasever - Extras
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/</span><span class="se">\$</span><span class="sh">releasever/extras/</span><span class="se">\$</span><span class="sh">basearch/
+#mirrorlist=http://mirrorlist.centos.org/?release=</span><span class="se">\$</span><span class="sh">releasever&amp;arch=</span><span class="se">\$</span><span class="sh">basearch&amp;repo=extras
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-7
+
+
+
+#additional packages that extend functionality of existing packages
+[centosplus]
+name=CentOS-</span><span class="se">\$</span><span class="sh">releasever - Plus
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/</span><span class="se">\$</span><span class="sh">releasever/centosplus/</span><span class="se">\$</span><span class="sh">basearch/
+#mirrorlist=http://mirrorlist.centos.org/?release=</span><span class="se">\$</span><span class="sh">releasever&amp;arch=</span><span class="se">\$</span><span class="sh">basearch&amp;repo=centosplus
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-7
+</span><span class="no">
+EOF
+
+</span>yum makecache
+<span class="c">#清华源的GPG名称和centos的不同啊，这里这样解决</span>
+<span class="nb">cp</span> /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 /etc/pki/rpm-gpg/RPM-GPG-KEY-7
+<span class="c">#epel 源</span>
+<span class="nb">cd</span> /etc/pki/rpm-gpg
+wget https://mirrors.tuna.tsinghua.edu.cn/epel/RPM-GPG-KEY-EPEL-7
+
+yum <span class="nt">-y</span> <span class="nb">install </span>epel-release
+
+<span class="nb">sed</span> <span class="nt">-e</span> <span class="s1">'s!^metalink=!#metalink=!g'</span> <span class="se">\</span>
+    <span class="nt">-e</span> <span class="s1">'s!^#baseurl=!baseurl=!g'</span> <span class="se">\</span>
+    <span class="nt">-e</span> <span class="s1">'s!//download\.fedoraproject\.org/pub!//mirrors.tuna.tsinghua.edu.cn!g'</span> <span class="se">\</span>
+    <span class="nt">-e</span> <span class="s1">'s!http://mirrors\.tuna!https://mirrors.tuna!g'</span> <span class="se">\</span>
+    <span class="nt">-i</span> /etc/yum.repos.d/epel.repo /etc/yum.repos.d/epel-testing.repo
+
+</code></pre></div></div>
+
+<h2 id="网络">网络</h2>
+<p>IB驱动,后续关于IB的学习会更新在<a href="/2020/10/27/IB/">Centos 配置IB网络</a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## 如果ib网卡不识别，或着识别后配置后无法启用，安装ib驱动
+yum install -y infiniband-diags
+yum install -y opensm
+systemctl start opensm
+systemctl enable opensm
+
+#后期编译mvapich时需要ib库
+yum install -y libibverbs
+yum install -y libibverbs-devel
+yum install -y libibmad-devel
+</code></pre></div></div>
+
+<p>master</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#node7
+#主机名
+hostnamectl --static set-hostname master
+
+sed -i 's/BOOTPROTO=dhcp/BOOTPROTO=static/g'  /etc/sysconfig/network-scripts/ifcfg-ib0
+sed -i 's/ONBOOT=no/ONBOOT=yes/g'  /etc/sysconfig/network-scripts/ifcfg-ib0
+echo IPADDR=172.16.100.7  &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-ib0
+echo PREFIX=24 &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-ib0
+</code></pre></div></div>
+<p>client01</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hostnamectl --static set-hostname client01
+
+sed -i 's/BOOTPROTO=dhcp/BOOTPROTO=static/g'  /etc/sysconfig/network-scripts/ifcfg-ib0
+sed -i 's/ONBOOT=no/ONBOOT=yes/g'  /etc/sysconfig/network-scripts/ifcfg-ib0
+echo IPADDR=172.16.100.8  &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-ib0
+echo PREFIX=24 &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-ib0
+</code></pre></div></div>
+<p>hosts</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 172.16.100.7 master &gt;&gt; /etc/hosts
+echo 172.16.100.8 client01 &gt;&gt; /etc/hosts
+</code></pre></div></div>
+<h2 id="nisnfspbs">NIS,NFS,pbs</h2>
+<p>按照<a href="/2019/09/19/Centos7-CC19">从0搭建Centos7 计算集群</a>配置防火墙,NIS,NFS,pbs系统,使用master作为这些系统的服务器<br />
+<strong>注意:关闭SELinux</strong>
+程序编译安装在<code class="highlighter-rouge">/opt</code>目录进行共享</p>
+
+<h2 id="安装编译环境">安装编译环境</h2>
+<p>下载<a href="/web/file/2020/gnu-mvapich.sh">gnu-mvapich.sh</a>
+执行</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash gnu-mvapich.sh
+</code></pre></div></div>
+<p>内容,<code class="highlighter-rouge">$ROOT</code>是安装目录,因为<code class="highlighter-rouge">/opt</code>目录是共享的，所以安装在此目录</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#ROOT=$HOME/opt/gnu-mvapich</span>
+<span class="nv">ROOT</span><span class="o">=</span>/opt/gnu-mvapich
+<span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$ROOT</span>
+<span class="nb">mkdir</span> <span class="nv">$ROOT</span>/source
+
+<span class="c">#创建编译脚本</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh"> &gt; ./make.sh
+if [ -e ./netlib.py ]
+then
+    ./setup.py --prefix=</span><span class="nv">$ROOT</span><span class="sh">/math --downall
+else
+    make -j10
+    make
+    make install
+fi
+</span><span class="no">EOF
+
+</span><span class="c">#添加环境变量到/etc/profile或者个人bashrx或者作业脚本</span>
+<span class="nv">MATHDIR</span><span class="o">=</span><span class="nv">$ROOT</span>/math/lib
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/math/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4/lib:<span class="nv">$LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3/lib:<span class="nv">$LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/math/lib:<span class="nv">$LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4/include:<span class="nv">$C_INCLUDE_PATH</span>
+<span class="nb">export </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3/include:<span class="nv">$C_INCLUDE_PATH</span>
+<span class="nb">export </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/math/include:<span class="nv">$C_INCLUDE_PATH</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3/bin:<span class="nv">$PATH</span>
+
+
+<span class="c">#mvapich</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages/mirrors/mvapich2/mvapich2-2.3.1.tar.gz 
+<span class="nb">tar </span>xzvf mvapich2-2.3.1.tar.gz
+<span class="nb">cd </span>mvapich2-2.3.1/
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/mvapich2-2.3.1 <span class="nv">CC</span><span class="o">=</span>gcc <span class="nv">FC</span><span class="o">=</span>gfortran <span class="nv">CXX</span><span class="o">=</span>g++
+make <span class="nt">-j40</span>
+<span class="c">#安装</span>
+make <span class="nb">install</span>
+
+
+<span class="c">#libxc-4.3.4 for octopus-10.1</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/libxc/libxc-4.3.4.tar.gz
+<span class="nb">tar </span>xzvf libxc-4.3.4.tar.gz 
+<span class="nb">cd </span>libxc-4.3.4
+<span class="c">#--enable-shared 动态库</span>
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4  <span class="nv">CC</span><span class="o">=</span>gcc <span class="nv">CXX</span><span class="o">=</span>g++ <span class="nv">FC</span><span class="o">=</span>gfortran <span class="nt">--enable-shared</span> 
+bash ../make.sh
+
+<span class="c">#fft</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/fftw/fftw-3.3.3.tar.gz
+<span class="nb">tar </span>xzvf fftw-3.3.3.tar.gz
+<span class="nb">cd </span>fftw-3.3.3/
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3 <span class="nt">--enable-mpi</span> <span class="nt">--enable-shared</span>
+bash ../make.sh
+
+
+
+<span class="c">#从0编译动态库scalapack</span>
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-d</span> <span class="nv">$ROOT</span>/math <span class="o">]</span>
+<span class="k">then
+    </span><span class="nb">mkdir</span> <span class="nv">$ROOT</span>/math
+    <span class="nb">mkdir</span> <span class="nv">$ROOT</span>/math/lib
+    <span class="nb">mkdir</span> <span class="nv">$ROOT</span>/math/include
+<span class="k">fi
+
+</span><span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/math/lapack-3.8.0.tar.gz
+<span class="nb">rm</span> <span class="nt">-rf</span> lapack-3.8.0
+<span class="nb">tar </span>xzvf lapack-3.8.0.tar.gz
+<span class="nb">cd </span>lapack-3.8.0/
+<span class="c">#修改编译参数，并默认输出动态库</span>
+
+<span class="c">#BLAS&amp;LAPACK</span>
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"
+all:libblas.so
+libblas.so: </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+</span><span class="se">\t</span><span class="s2"> </span><span class="se">\$</span><span class="s2">(FORTRAN) -shared -Wl,-soname,</span><span class="se">\$</span><span class="s2">@ -o </span><span class="se">\$</span><span class="s2">@ </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+"</span> <span class="o">&gt;&gt;</span> BLAS/SRC/Makefile
+<span class="c">#TMG</span>
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"
+all:libtmg.so
+libtmg.so: </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+</span><span class="se">\t</span><span class="s2"> </span><span class="se">\$</span><span class="s2">(FORTRAN) -shared -Wl,-soname,</span><span class="se">\$</span><span class="s2">@ -o </span><span class="se">\$</span><span class="s2">@ </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+"</span> <span class="o">&gt;&gt;</span> TESTING/MATGEN/Makefile
+<span class="c">#LAPACK</span>
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"
+all: liblapack.so
+liblapack.so: </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+</span><span class="se">\t</span><span class="s2"> </span><span class="se">\$</span><span class="s2">(FORTRAN) -shared -Wl,-soname,</span><span class="se">\$</span><span class="s2">@ -o </span><span class="se">\$</span><span class="s2">@ </span><span class="se">\$</span><span class="s2">(ALLOBJ)
+"</span> <span class="o">&gt;&gt;</span> SRC/Makefile
+
+<span class="nb">cp </span>make.inc.example make.inc
+<span class="nb">echo</span> <span class="s2">"OPTS += -fPIC"</span> <span class="o">&gt;&gt;</span> make.inc
+<span class="nb">echo</span> <span class="s2">"NOOPT += -fPIC"</span> <span class="o">&gt;&gt;</span> make.inc
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"
+MATHDIR=</span><span class="nv">$ROOT</span><span class="s2">/math/lib
+install:all
+</span><span class="se">\t</span><span class="s2"> cp </span><span class="nv">$PWD</span><span class="s2">/BLAS/SRC/libblas.so </span><span class="se">\$</span><span class="s2">(MATHDIR)
+</span><span class="se">\t</span><span class="s2"> cp </span><span class="nv">$PWD</span><span class="s2">/SRC/liblapack.so </span><span class="se">\$</span><span class="s2">(MATHDIR)
+</span><span class="se">\t</span><span class="s2"> cp </span><span class="nv">$PWD</span><span class="s2">/TESTING/MATGEN/libtmg.so </span><span class="se">\$</span><span class="s2">(MATHDIR)
+</span><span class="se">\t</span><span class="s2"> cp </span><span class="nv">$PWD</span><span class="s2">/*.a </span><span class="se">\$</span><span class="s2">(MATHDIR)
+"</span> <span class="o">&gt;&gt;</span> make.inc
+<span class="c">#安装</span>
+make <span class="nt">-j36</span> <span class="c">#必须用make，用其他参数/完成后再输make会编译测试程序，没必要</span>
+<span class="c">#不可以注释Makefile中</span>
+<span class="c">#   all: lapack_install lib blas_testing lapack_testing</span>
+<span class="c">#为</span>
+<span class="c">#   all: lapack_install lib</span>
+<span class="c">#   #blas_testing lapack_testing</span>
+<span class="c">#可以跳过测试的过程，编译更快</span>
+<span class="c"># 因为blas_testing依赖blas的编译</span>
+<span class="c">#如果非要注释，要添加依赖blas</span>
+
+<span class="c">#Scalapack</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/math/scalapack-2.0.2.tgz
+<span class="nb">rm</span> <span class="nt">-rf</span> scalapack-2.0.2
+<span class="nb">tar </span>xzvf scalapack-2.0.2.tgz
+<span class="nb">cd </span>scalapack-2.0.2
+
+<span class="c">#echo -e "</span>
+<span class="c">#ALLOBJ += \$(SLASRC) \$(DLASRC)  \$(CLASRC) \$(ZLASRC)  \</span>
+<span class="c">#\t   \$(SCLAUX) \$(DZLAUX) \$(ALLAUX)</span>
+<span class="c">#all:libscalapack.so</span>
+<span class="c">#libscalapack.so: \$(ALLOBJ)</span>
+<span class="c">#\t \$(FC) -shared -Wl,-soname,\$@ -o \$@ \$(ALLOBJ)</span>
+<span class="c">#" &gt;&gt; SRC/Makefile</span>
+
+<span class="c">#使用fPIC参数，这样静态库可以转为动态库</span>
+<span class="nb">cp </span>SLmake.inc.example SLmake.inc
+<span class="nb">echo</span> <span class="s2">"FC += -fPIC"</span> <span class="o">&gt;&gt;</span> SLmake.inc
+<span class="nb">echo</span> <span class="s2">"CC += -fPIC"</span> <span class="o">&gt;&gt;</span> SLmake.inc
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"
+MATHDIR=</span><span class="nv">$ROOT</span><span class="s2">/math/lib
+install: all
+</span><span class="se">\t</span><span class="s2"> </span><span class="se">\$</span><span class="s2">(FC) -shared -o </span><span class="nv">$PWD</span><span class="s2">/libscalapack.so -Wl,--whole-archive </span><span class="nv">$PWD</span><span class="s2">/libscalapack.a -Wl,--no-whole-archive
+</span><span class="se">\t</span><span class="s2"> cp </span><span class="nv">$PWD</span><span class="s2">/libscalapack.so </span><span class="se">\$</span><span class="s2">(MATHDIR)
+"</span> <span class="o">&gt;&gt;</span> SLmake.inc
+<span class="c">#不支持-j20,就得逐个编译，把每个库依次打包添加到libscalapack.a，没编译成功也有libscalapack.a</span>
+make  <span class="nb">install</span>
+</code></pre></div></div>
+
+<h2 id="安装计算程序">安装计算程序</h2>
+<p>过程略，提交作业
+<code class="highlighter-rouge">qsub run-qe-iop.sh</code></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c">#PBS -N QE</span>
+<span class="c">#PBS -l nodes=2:ppn=96</span>
+<span class="c">#PBS -q regular</span>
+<span class="c">#PBS -j oe</span>
+<span class="c">#PBS -l walltime=08:00:00</span>
+
+<span class="nv">ROOT</span><span class="o">=</span>/opt/gnu-mvapich
+<span class="nv">MATHDIR</span><span class="o">=</span><span class="nv">$ROOT</span>/math/lib
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/mvapich2-2.3.1/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/math/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/mvapich2-2.3.1/lib:<span class="nv">$LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4/lib:<span class="nv">$LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3/lib:<span class="nv">$LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/math/lib:<span class="nv">$LIBRARY_PATH</span>
+<span class="nb">export </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/mvapich2-2.3.1/include:<span class="nv">$C_INCLUDE_PATH</span>
+<span class="nb">export </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4/include:<span class="nv">$C_INCLUDE_PATH</span>
+<span class="nb">export </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3/include:<span class="nv">$C_INCLUDE_PATH</span>
+<span class="nb">export </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/math/include:<span class="nv">$C_INCLUDE_PATH</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/mvapich2-2.3.1/bin:<span class="nv">$PATH</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3/bin:<span class="nv">$PATH</span>
+
+
+<span class="nv">EXEC</span><span class="o">=</span>~/code/tdpw2.0/q-e-qe-6.4.1-devel-1.0/bin/tdpw.x
+<span class="c">#EXEC=pw.x</span>
+<span class="nb">cd</span> <span class="nv">$PBS_O_WORKDIR</span>
+
+<span class="nv">NP</span><span class="o">=</span><span class="sb">`</span><span class="nb">cat</span> <span class="nv">$PBS_NODEFILE</span> | <span class="nb">wc</span> <span class="nt">-l</span><span class="sb">`</span>
+
+<span class="nb">echo </span>Job starts at <span class="sb">`</span><span class="nb">date</span><span class="sb">`</span>
+
+<span class="c">#mpirun -np $NP -machinefile $PBS_NODEFILE</span>
+mpirun  <span class="nv">$EXE</span> &lt; input.in | <span class="nb">tee  </span>result
+<span class="nb">echo </span>Job ends at <span class="sb">`</span><span class="nb">date</span><span class="sb">`</span>
+</code></pre></div></div>
+<p>192核一起运行,<strong>隔音墙都挡不住的噪声</strong>
+<img src="/uploads/2020/10/192.png" alt="" /></p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/10/27/IB/">Centos 配置IB网络
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2020/10/19/huairou-octopus/">怀柔计算中心安装octopus10.1&4.1.2
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/10/27/IB/">Centos 配置IB网络</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+    </div>
+</div>
+
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <hr>
+        <h2 id="comments">评论</h2>
+        
+
+
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC80MDQ4OC8xNzAxNQ==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+		<hr>
+		<h2 id="adsenseAfterComments">广告</h2>
+        <div id="adsense"></div>
+<!-- 谷歌广告文章底部,夜广告，自适应 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8365330523291002"
+     data-ad-slot="7816631956"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                    <li><a href="#comments">评论</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <div class="side">
+               <div>
+                   <i class="fa fa-database"></i>
+                  访客数据
+               </div>
+               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+            </div>
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             本站记录我的学习笔记！ 
+        </p>
+        <p class="contact">
+            联系方式: 
+            <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:who@cndaqiang.ac.cn" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>   
+            <a href="https://www.zhihu.com/people/cndaqiang" title="Zhihu"><i class="iconfont icon-zhihu"></i></a>   
+            <a href="http://www.jianshu.com/u/5d47905688d0" title="Jianshu"><i class="iconfont icon-jianshu"></i></a>  
+            <a href="https://twitter.com/cndaqiang" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>  
+            <a href="https://www.facebook.com/daqiang.chen.12" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>    
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

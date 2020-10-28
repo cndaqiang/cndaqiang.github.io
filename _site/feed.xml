@@ -5,9 +5,39 @@
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 26 Oct 2020 00:01:56 +0800</pubDate>
-    <lastBuildDate>Mon, 26 Oct 2020 00:01:56 +0800</lastBuildDate>
+    <pubDate>Wed, 28 Oct 2020 23:25:24 +0800</pubDate>
+    <lastBuildDate>Wed, 28 Oct 2020 23:25:24 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>两台S9200WK服务器组Centos集群</title>
+        <description>
+</description>
+        <pubDate>Wed, 28 Oct 2020 22:32:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/10/28/Centos7/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/10/28/Centos7/</guid>
+        
+        <category>gnu</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Centos 配置IB网络</title>
+        <description>
+</description>
+        <pubDate>Tue, 27 Oct 2020 23:11:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/10/27/IB/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/10/27/IB/</guid>
+        
+        <category>gnu</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
     
       <item>
         <title>怀柔计算中心安装octopus10.1&amp;4.1.2</title>
@@ -143,40 +173,6 @@ QE代码阅读系列，个人学习记录，仅供参考。&lt;br /&gt;
         
         
         <category>web</category>
-        
-      </item>
-    
-      <item>
-        <title>原子物理</title>
-        <description>
-</description>
-        <pubDate>Wed, 27 May 2020 22:52:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/05/27/basis/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/05/27/basis/</guid>
-        
-        <category>PHY</category>
-        
-        
-        <category>PHY</category>
-        
-      </item>
-    
-      <item>
-        <title>RPMD:ring polymer molecular dynamics</title>
-        <description>
-</description>
-        <pubDate>Tue, 19 May 2020 20:54:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/05/19/RPMD/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/05/19/RPMD/</guid>
-        
-        <category>PIMD</category>
-        
-        <category>RPMD</category>
-        
-        
-        <category>PIMD</category>
-        
-        <category>RPMD</category>
         
       </item>
     

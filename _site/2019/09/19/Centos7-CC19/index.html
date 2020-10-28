@@ -376,6 +376,10 @@
       <li><a href="#克隆磁盘" id="markdown-toc-克隆磁盘">克隆磁盘</a></li>
     </ul>
   </li>
+  <li><a href="#其他问题" id="markdown-toc-其他问题">其他问题</a>    <ul>
+      <li><a href="#nfs共享home目录后添加了authorized_key仍需要输入密码" id="markdown-toc-nfs共享home目录后添加了authorized_key仍需要输入密码">NFS共享HOME目录后，添加了authorized_key,仍需要输入密码</a></li>
+    </ul>
+  </li>
 </ul>
 
 <p>基于pbs作业系统的集群，支持NIS，NFS服务，slurm的后期有时间补上。
@@ -556,7 +560,7 @@ hosts:      files nis dns myhostname
 <p>设置ns客户端</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/yp.conf
 </code></pre></div></div>
-<p>添加<code class="highlighter-rouge">domain CC19   broadcast</code>，指定服务器地址也行</p>
+<p>添加<code class="highlighter-rouge">domain CC19   broadcast</code>，指定服务器地址也行(即,如果后面的<code class="highlighter-rouge">systemctl start ypbind 卡死,设置为</code>domain CC19 server 服务器hostname或ip`)</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/sysconfig/authconfig
 </code></pre></div></div>
 <p>修改<code class="highlighter-rouge">USENIS=yes</code></p>
@@ -806,7 +810,8 @@ service iptables save
 
 <h2 id="pbs作业管理系统">pbs作业管理系统</h2>
 <h3 id="管理节点mom01">管理节点mom01</h3>
-<p>程序都安装在<code class="highlighter-rouge">/opt</code>, 管理节点和计算节点共享<code class="highlighter-rouge">/opt</code>目录</p>
+<p>程序都安装在<code class="highlighter-rouge">/opt</code>, 管理节点和计算节点共享<code class="highlighter-rouge">/opt</code>目录<br />
+<strong>注意在<code class="highlighter-rouge">/etc/hosts</code>中HOSTNAME那一条,HOSTNAME一定要在其他域名前面</strong></p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> yum -y install libxml2-devel openssl-devel gcc gcc-c++ boost-devel libtool
 ./configure --prefix=/opt/CC19/torque6  --with-default-server=$HOSTNAME
 #--prefix= 程序安装目录
@@ -837,11 +842,11 @@ If the server database exists it will be overwritten.
 do you wish to continue y/(n)?y
 </code></pre></div></div>
 <p>配置文件(计算节点)</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /opt/CC19/torque6/server_priv/nodes
-# 在docker上安装时，是这个文件，不知道哪里设置的不同导致不一样 vi /var/spool/torque/server_priv/nodes
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /var/spool/torque/server_priv/nodes
+# 以前时编译这个文件vi /opt/CC19/torque6/server_priv/nodes,不知道哪里设置的不同导致不一样
 #填入计算节点 np=核数 队列名， 如
 mom01 np=4 regular
-boy01 np=8 regula
+boy01 np=8 regular
 </code></pre></div></div>
 <p>配置regular队列</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@mom01 torque-6.1.1.1]# qmgr
@@ -851,6 +856,9 @@ Qmgr: set server default_queue=regular
 Qmgr: set queue regular started=true
 Qmgr: set queue regular enabled=true
 Qmgr: set server scheduling=true
+</code></pre></div></div>
+<p>添加到开机自起</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in trqauthd pbs_server pbs_sched  ; do systemctl enable  $i.service ; done
 </code></pre></div></div>
 <p>启动pbs服务</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in trqauthd pbs_server pbs_sched  ; do systemctl restart  $i.service ; done
@@ -871,6 +879,8 @@ boy01                down
 $pbsserver mom01                                                                  
 $logevent 255        
 #启动服务         
+#开机启动
+systemctl enable pbs_mom.service 
 [root@mom01 torque-6.1.1.1]# systemctl restart pbs_mom.service 
 [root@mom01 torque-6.1.1.1]# systemctl status pbs_mom.service 
 ● pbs_mom.service - TORQUE pbs_mom daemon
@@ -1128,6 +1138,15 @@ watch -n 5 killall -USR1 dd
 dd if=/dev/sdb3 of=/dev/sdc3
 </code></pre></div></div>
 
+<h2 id="其他问题">其他问题</h2>
+<h3 id="nfs共享home目录后添加了authorized_key仍需要输入密码">NFS共享HOME目录后，添加了authorized_key,仍需要输入密码</h3>
+<p>因为计算节点没有关闭SELinux</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@client01 cndaqiang]# vi /etc/selinux/config
+#设置 SELINUX=disable
+#立即生效
+[root@client01 cndaqiang]# setenforce 0
+</code></pre></div></div>
+
         </article>
         <hr>
 
@@ -1141,6 +1160,24 @@ dd if=/dev/sdb3 of=/dev/sdc3
                     
                 
             
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
                 
                     
                 
@@ -1215,30 +1252,6 @@ dd if=/dev/sdb3 of=/dev/sdc3
             
         
             
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
             
                 
                     
