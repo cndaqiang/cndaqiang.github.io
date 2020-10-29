@@ -144,3 +144,6 @@
 2020-09-03-gpawuse.md
 #2020-09-20-qe-spin.md
 2020-10-19-huairou-octopus.md
+2020-10-27-IB.md
+2020-10-28-Centos7.md
+
