@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "python杂七杂八放着里"
+title:  "python报错"
 date:   2019-05-13 14:01:00 +0800
 categories: Python
 tags: python 
@@ -23,7 +23,7 @@ mathjax: true
 ## 
 ### python enumerate用法总结
 [python enumerate用法总结](https://blog.csdn.net/churximi/article/details/51648388)
-```
+```python
 >>> for i,name in enumerate( ('x','y','z') ):
 ...  print i, name
 ...
@@ -44,6 +44,17 @@ python脚本开头没写python运行,执行后，因`import`命令使鼠标变�
 ```
 
 
+### `divide by zero encountered in double_scalars`
+```
+RuntimeWarning: divide by zero encountered in double_scalars
+```
+因为自己写自相关函数时，当`t=总步长-1`时,只有一个数据, 分母 $ \< x^2 \> - \< x \> ^2 == 0 $
 
-
-
+### `if [ ] `用错判断符号
+应该用`()`或不用
+```python
+>>> if [ 2 > 3 ]:
+...  print("2>3")
+...
+2>3
+```

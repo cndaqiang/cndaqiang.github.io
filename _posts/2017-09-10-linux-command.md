@@ -713,7 +713,17 @@ export PATH=目录:$PATH
 - 修改后`exit`,重新登陆，修改内容生效
 - 立即生效，执行`source 文件名`，**仅对执行该命令的用户有效**
 
+**`/etc/profile`只对通过shell登陆的账户有效,`sudo su`获得的root权限不会加载`/etc/profile`**，使用 `su -`或`su username`
+```
+[cndaqiang@master  ]$ sudo su
+[sudo] password for cndaqiang: 
+[root@master  ]# echo $TORQUE_HOME
 
+[root@master  ]# su -
+Last login: Fri Nov  6 11:22:39 CST 2020 on pts/2
+[root@master ~]# echo $TORQUE_HOME
+/opt/CC19/torque6
+```
 ### sudo的PATH
 有时执行`sudo `时提示`xxxx : command not found`，但是却有该命令,原来，sudo的PATH路径不是普通用户或root的路径，这时可以`sudo su`后执行，或更改sudo的PATH<br>
 ```

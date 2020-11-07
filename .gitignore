@@ -1,2 +1,3 @@
 nohup.out
+_site/*
 public.sh public.txt
