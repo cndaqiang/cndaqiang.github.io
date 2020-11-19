@@ -457,7 +457,7 @@ long*        up   infinite      1   idle client01
 ```
 解决
 ```
-scontrol update NodeName=client01 State=RESUME
+scontrol update NodeName=master State=RESUME
 ```
 如果还报错，安装参考资料[SLURM 节点状态总是drained问题](https://blog.csdn.net/kongxx/article/details/48193333)方案
 ```

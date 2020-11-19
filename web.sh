@@ -1,2 +1,2 @@
 source /Users/cndaqiang/.rvm/scripts/rvm
-jekyll s
+jekyll s --host=0.0.0.0
