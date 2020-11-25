@@ -201,7 +201,13 @@ cat 文件
 cat -n 文件
 ```
 同时显示行号
-还可与重定向>配合使用[20170805bash学习](http://www.jianshu.com/p/2438d563de06)
+还可与重定向>配合使用[20170805bash学习](http://www.jianshu.com/p/2438d563de06)<br>
+输出到文件
+```
+# cat >b.txt <<EOF
+content
+> EOF
+```
 #### nl [选项] [文件]
 ```
 nl 文件
