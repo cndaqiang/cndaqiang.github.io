@@ -102,6 +102,17 @@ i=UBOUND(a,1)
 ### 全角字符不识别各种报错
 ` `与`　`是不一样的空格，后面的空格和变量相连，程序都无法识别。
 
+
+### 编译器混用报错
+使用gcc8编译了一个,又使用gcc4来调用这个.o
+```
+
+    USE kinds, ONLY :  DP
+       1
+Fatal Error: Cannot read module file ‘kinds.mod’ opened at (1), because it was created by a different version of GNU Fortran
+compilation terminated.
+```
+
 ## SCALAPACK 运行报错
 ### `PBLAS ERROR 'Illegal `，程序退出
 ```
@@ -234,3 +245,61 @@ error while loading shared libraries: libibmad.so.5: cannot open shared object f
 解决:
 - 在计算节点安装
 - [非管理员],通过`whereis libibmad.so.5`找到缺少的库复制到计算个管理节点共享的目录，添加目录到环境变量`LD_LIBRARY_PATH`
+
+
+## 语法报错
+### 重复定义
+```
+ #6418: This name has already been assigned a data type.   [ET2]
+   et2 = 0.0_DP
+---^
+```
+错误代码
+```fortran
+   REAL(DP) :: et2(nbnd,nkstot)
+   COMPLEX(DP) :: c_il(nbnd,nbnd,nkstot)
+   !
+   INTEGER :: lbnd, &! counter on tdks
+   ik,   &! counter on k points   !因为这个地方忘记删除逗号和续行符了
+   !
+   et2 = 0.0_DP
+```
+## Intel运行报错
+### format的格式不合理
+下面报错给出了error的具体位置
+```
+forrtl: severe (61): format/variable-type mismatch, unit 6, file /home/NFS/work/tdpw/TDAPW-intel-2020-12-06/Manypw/input_0.out
+Image              PC                Routine            Line        Source
+tdpw.x             0000000000E7497B  Unknown               Unknown  Unknown
+tdpw.x             0000000000ED711A  Unknown               Unknown  Unknown
+tdpw.x             0000000000ED4C6E  Unknown               Unknown  Unknown
+tdpw.x             0000000000459718  td_psi_a_psi_             202  td_psi_r_psi.f90
+tdpw.x             0000000000453B44  td_analysis_md_           312  td_analysis.f90
+tdpw.x             0000000000407652  run_pwscf_                225  run_pwscf.f90
+tdpw.x             0000000000406B01  MAIN__                    115  tdpw.f90
+tdpw.x             0000000000406882  Unknown               Unknown  Unknown
+libc-2.27.so       000014E8FDF2DB97  __libc_start_main     Unknown  Unknown
+tdpw.x             000000000040676A  Unknown               Unknown  Unknown
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 1 PID 65033 RUNNING AT mommint
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+```
+
+## srun提示
+### Bus error (core dumped)
+正在执行的程序被删除/覆盖了
+```
+srun: error: comput123: tasks 29,31: Bus error
+srun: error: comput157: tasks 38,40,42-44,46,50,52-54,56,60-62,64,66,68,70-71: Bus error
+srun: error: comput123: tasks 0,4,15,25: Bus error (core dumped)
+srun: error: comput123: tasks 1-3,5-10,12-14,16-24,26-28,30,32,34-35: Bus error
+srun: error: comput157: tasks 37,39,41,45,47,51,55,57,59,63,65,67,69: Bus error
+srun: error: comput123: task 33: Bus error (core dumped)
+srun: error: comput123: task 11: Bus error (core dumped)
+srun: error: comput157: tasks 36,48: Bus error (core dumped)
+srun: error: comput157: task 58: Bus error (core dumped)
+srun: error: comput157: task 49: Bus error (core dumped)
+```

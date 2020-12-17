@@ -1069,6 +1069,17 @@ montage PDOS_woU.png PDOS_aU.png -tile 2x1  -geometry 500x300  out.png
 montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行数)  -geometry 500x300(-geometry 设置输入图片组成整体时的分辨率)  out.png(输出图片)
 ```
 
+### 获取上层目录名dirname
+找到相应程序的include目录
+```
+(python37) cndaqiang@mac ~$ dirname /tmp
+/
+(python37) cndaqiang@mac ~$ dirname $HOME
+/Users
+#include目录
+ls $(dirname  $(which mpif90))/../include
+```
+
 ## 参考
 [peida-博客-每天一个linux命令目录](http://www.cnblogs.com/peida/)
 

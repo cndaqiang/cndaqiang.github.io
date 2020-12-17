@@ -664,9 +664,11 @@ cndaqiang@girl:~/code/test$ gfortran where.f90 ; ./a.out
      23.46
 ```
 
-默认WRITE后会换行，**设置`advance="no"`取消换行**，如
+默认WRITE后会换行，**设置`advance="no"`取消换行**，如<br>
+**注意:[ifort有bug](https://community.intel.com/t5/Intel-Fortran-Compiler/Writing-to-standard-output-with-advance-no/m-p/1145261/highlight/true?profile.language=zh-TW),还要再加上一个FLUSH,不然也会出现随机换行事件**
 ```
 WRITE(funit,9035,advance="no") 
+FLUSH(funit) #ifort要用这个确保不会换行
 ```
 
 ## 函数

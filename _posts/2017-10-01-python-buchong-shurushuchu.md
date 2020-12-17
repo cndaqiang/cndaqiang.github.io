@@ -244,3 +244,13 @@ os.chdir("路径")
 os.listdir("路径")　#ls
 os.rmdir("目录名")　#rmdir
 ```
+
+## 报错
+### 文件中有特殊的字符,删除
+```
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa6 in position 595: invalid start byte
+```
+特殊字符
+```
+!¦¤t=t2?t1 for the calculation of Uk(t2,t1) in tddft, 1 a.u.=0.048378 fs
+```

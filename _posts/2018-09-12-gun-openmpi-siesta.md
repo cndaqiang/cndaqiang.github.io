@@ -161,3 +161,13 @@ SCALAPACK_LIBS=$(MATHDIR)/libscalapack.a
 #COMP_LIBS=dc_lapack.a
 COMP_LIBS += libsiestaLAPACK.a
 ```
+
+### 报错
+config时报错
+```
+checking for Fortran compiler default output file name... configure: error: Fortran compiler cannot create executables
+```
+指定编译器
+```
+../Src/configure --enable-mpi FC=gfortran CC=gcc MPIFC=mpif90
+```
