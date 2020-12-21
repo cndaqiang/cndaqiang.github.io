@@ -232,9 +232,9 @@ spectrum=data[:,[0,2,3,4]] #提取一些数据
         break
 ```
 
-
-## 文件重命名删除
-```
+## os模块
+### 文件重命名删除
+```python
 import os
 os.rename("old_name","new_name")
 os.remove("name")
@@ -244,7 +244,16 @@ os.chdir("路径")
 os.listdir("路径")　#ls
 os.rmdir("目录名")　#rmdir
 ```
-
+### 执行系统命令
+```python
+>>> b=os.system("grep a_1 "+inputfile)
+                    a_1    11.999994   0.000000   0.000000
+>>> b
+0
+>>> b=os.popen("grep a_1 "+inputfile)
+>>> b.readlines()
+['                    a_1    11.999994   0.000000   0.000000\n']
+```
 ## 报错
 ### 文件中有特殊的字符,删除
 ```
