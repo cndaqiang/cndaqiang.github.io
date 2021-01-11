@@ -10,7 +10,9 @@ mathjax: true
 * content
 {:toc}
 
-之前尝试编译VASP[Ubuntu VASP安装和运行](/2018/01/09/ubuntu-install-vasp/)，但是在centos上进行重复时，各种报错，现在尝试了安装几次感觉自己的理解更多了，总结如下。这篇文章省略了很多命令,有看不懂的地方参考[Ubuntu VASP安装和运行](/2018/01/09/ubuntu-install-vasp/)。
+之前尝试编译VASP[Ubuntu VASP安装和运行](/2018/01/09/ubuntu-install-vasp/)，但是在centos上进行重复时，各种报错，现在尝试了安装几次感觉自己的理解更多了，总结如下。这篇文章省略了很多命令,有看不懂的地方参考[Ubuntu VASP安装和运行](/2018/01/09/ubuntu-install-vasp/).
+
+最新的Intel® oneAPI Toolkits也可以安装,和本文的差别仅是intel编译器的安装和环境变量的设置不同, 详见[Intel® oneAPI Toolkits(Intel Parallel Studio XE的代替品)安装使用](/2021/01/11/intel-oneAPI/)
 
 
 

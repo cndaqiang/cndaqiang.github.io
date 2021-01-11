@@ -27,6 +27,7 @@ Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-53-generic x86_64)
 [文件]支持[目录]/文件
 ### 目录操作
 #### ls [选项] [目录]
+[ls 的顺序与倒序排列@everfight](https://www.cnblogs.com/everfight/p/linux_ls.html)
 ```
 ls
 ```
@@ -39,7 +40,14 @@ ls -a
 ls -l
 ```
 显示权限，所有者信息，文件类型
-
+```
+ls -t
+```
+**按照时间排序**
+```
+ls -rt
+```
+**按照是时间反向排序**
 
 
 ![](http://upload-images.jianshu.io/upload_images/4575564-e202a67a455af2e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -1071,13 +1079,19 @@ montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行
 
 ### 获取上层目录名dirname
 找到相应程序的include目录
-```
+```bash
 (python37) cndaqiang@mac ~$ dirname /tmp
 /
 (python37) cndaqiang@mac ~$ dirname $HOME
 /Users
 #include目录
 ls $(dirname  $(which mpif90))/../include
+```
+### 获得文件名
+
+```bash
+(python37) cndaqiang@mommint:~$ basename $HOME
+cndaqiang
 ```
 
 ## 参考

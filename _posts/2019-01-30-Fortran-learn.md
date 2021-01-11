@@ -670,6 +670,15 @@ cndaqiang@girl:~/code/test$ gfortran where.f90 ; ./a.out
 WRITE(funit,9035,advance="no") 
 FLUSH(funit) #ifort要用这个确保不会换行
 ```
+### `FMT=*` 读写
+- `WRITE(unit,FMT=*) var`时, 会根据`var`的内容进行写,有些编译器(ifort)会写成多行,gfortran一般写成一行<br>
+如果写到了第`n`行, 再次调用`WRITE`时, 从`n+1`行开始写
+- `READ(unit,FMT=*) var`时, 会根据`var`的内容进行读, 如果当前行的数据不够, 会读取下面几行<br>
+如果读到了第`n`行, 再次调用`READ`时,从`n+1`行开始读      
+
+**针对这些特点, 我们读写的数据如果不是给人看的, 按照数组下标,或者直接将一个数组`WRITE(unit,FMT=*)`即可, 而且不同编译器之间都可以互相读写**<br>
+给人看的时候才要考虑格式化输出
+
 
 ## 函数
 
