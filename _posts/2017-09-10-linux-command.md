@@ -48,7 +48,11 @@ ls -t
 ls -rt
 ```
 **按照是时间反向排序**
-
+```
+ls -d */
+ls -d $HOME/*/
+```
+**只展示文件夹**
 
 ![](http://upload-images.jianshu.io/upload_images/4575564-e202a67a455af2e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
