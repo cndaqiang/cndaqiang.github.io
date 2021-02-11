@@ -975,6 +975,17 @@ sleep 5h # Waits 5 hours.
 sleep 5d # Waits 5 days.
 ```
 
+### 报错
+#### no matching key exchange method found
+连接openwrt时报错
+```
+(python37) cndaqiang@mac ~$ ssh root@192.168.10.1
+Unable to negotiate with 192.168.10.1 port 22: no matching key exchange method found. Their offer: diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,kexguess2@matt.ucc.asn.au
+```
+解决
+```
+ssh root@192.168.10.1   -oKexAlgorithms=+diffie-hellman-group1-sha1
+```
 
 ### 备份磁盘
 ```
