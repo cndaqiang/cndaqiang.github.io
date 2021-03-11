@@ -99,8 +99,10 @@ uc_server/data/config.inc.php
 ### 涉及域名调节
 参考
 [discuz更换域名](/2017/10/12/discuz-change-domain/)
-\n
-\n
+
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

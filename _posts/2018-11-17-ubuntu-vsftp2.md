@@ -263,8 +263,10 @@ sudo systemctl restart vsftpd
 <hr>
 ## 其他
 ### 路由端口转发
-路由器将外部端口，转发到ubuntu的21号端口即可\n
-\n
+路由器将外部端口，转发到ubuntu的21号端口即可
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

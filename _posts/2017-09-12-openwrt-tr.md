@@ -68,8 +68,10 @@ killall transmission-daemon
 ```
 
 ### 拓展
-[transmission禁用ipv4的尝试](http://www.jianshu.com/p/7a8daf7cec4c)\n
-\n
+[transmission禁用ipv4的尝试](http://www.jianshu.com/p/7a8daf7cec4c)
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

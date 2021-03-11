@@ -144,8 +144,10 @@ PC端，搜索anyconnect
 **1.移动端提示"安全网关已拒绝所尝试的连接操作。需要尝试与同一或其他安全网关建立新连接。新连接要求重新进行身份验证。"PC端提示"anyconnect was not able to establish a connection to the specified secure gateway please try again"**
 
 解决方案参考[Ubuntu上安装ocserv](/2017/08/03/ubuntu-ocserv/)
-\n
-\n
+
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

@@ -535,8 +535,10 @@ echo 'scontrol update NodeName=client01 State=RESUME' >> /etc/rc.local
 scontrol update NodeName=master State=RESUME
 scontrol update NodeName=client01 State=RESUME
 ```
-\n
-\n
+
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

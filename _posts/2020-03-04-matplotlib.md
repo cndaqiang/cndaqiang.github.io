@@ -199,8 +199,10 @@ yy = f(xx)
 
 高斯滤波后再插值效果更好
 ![](/uploads/2020/12/spec.png)
-\n
-\n
+
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

@@ -90,8 +90,10 @@ NCORE = 1
 ## Benchmark
 在进行大体系计算时，计算速度明显
 ![](/uploads/2019/04/benchmark.JPG)
-体系从小到大对比[GPU-vasp测试.pdf](/web/file/2019/GPU-vasp测试.pdf)\n
-\n
+体系从小到大对比[GPU-vasp测试.pdf](/web/file/2019/GPU-vasp测试.pdf)
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

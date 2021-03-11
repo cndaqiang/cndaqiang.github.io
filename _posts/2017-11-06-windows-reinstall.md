@@ -63,8 +63,10 @@ xmanage数据
 - 配置xamp
 - 登陆邮箱，同步日程邮件
 - 更新win10
-- 安装bash on ubuntu\n
-\n
+- 安装bash on ubuntu
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

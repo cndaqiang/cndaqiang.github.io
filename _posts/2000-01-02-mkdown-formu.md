@@ -1317,8 +1317,10 @@ Use `\,`, to insert a thin space before differentials; without this $\TeX$ will 
 祝您记录、阅读、分享愉快！
 
 Drafted & Translated by [Eric P.](https://ericp.cn/)
-2015-10-02\n
-\n
+2015-10-02
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

@@ -179,8 +179,10 @@ bash cnq.sh
 #重新提交
 qsub ../make.sh
 
-```\n
-\n
+```
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

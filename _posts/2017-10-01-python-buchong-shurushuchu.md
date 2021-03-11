@@ -264,8 +264,10 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa6 in position 595: invali
 特殊字符
 ```
 !¦¤t=t2?t1 for the calculation of Uk(t2,t1) in tddft, 1 a.u.=0.048378 fs
-```\n
-\n
+```
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

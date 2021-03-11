@@ -62,8 +62,10 @@ sudo apt-get update
 ```
 sudo mkdir 用户家目录
 sudo chown 用户名:用户组 用户家目录
-```\n
-\n
+```
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

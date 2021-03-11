@@ -200,8 +200,10 @@ sudo netfilter-persistent reload
     "watch-dir": "/home/data/zhongzi",
     "watch-dir-enabled": true
 ```
-**注：每行以`,`结尾,最后一行无符号**\n
-\n
+**注：每行以`,`结尾,最后一行无符号**
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

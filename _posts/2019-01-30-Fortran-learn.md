@@ -1688,8 +1688,10 @@ NINT (A [, KIND]) | 最近的整数
 REAL (A [, KIND]) | 转换为实数类型
 SIGN (A, B) | 符号传输,i.e. ABS(A)*sign(B)<br>注意A,B的类型要一致<br>`sign(-10.0,1.0)==10.0; sign(10,-1)==-10`
 
-\n
-\n
+
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

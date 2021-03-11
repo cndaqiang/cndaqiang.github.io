@@ -155,8 +155,10 @@ Warning: The existing disk label on /dev/vdb will be destroyed and all data on
 this disk will be lost. Do you want to continue?
 Yes/No?Yes
 ```
-之后再使用fdisk格式化具体格式\n
-\n
+之后再使用fdisk格式化具体格式
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

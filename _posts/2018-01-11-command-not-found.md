@@ -25,8 +25,10 @@ mathjax: true
 4 脚本为centos写的,命令和ubuntu不一样
 5 Shell不对
 `#!/bin/sh`和`#!/bin/bash`能运行的命令不一样
-\n
-\n
+
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

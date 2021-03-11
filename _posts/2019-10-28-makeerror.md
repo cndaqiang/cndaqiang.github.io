@@ -302,8 +302,10 @@ srun: error: comput123: task 11: Bus error (core dumped)
 srun: error: comput157: tasks 36,48: Bus error (core dumped)
 srun: error: comput157: task 58: Bus error (core dumped)
 srun: error: comput157: task 49: Bus error (core dumped)
-```\n
-\n
+```
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

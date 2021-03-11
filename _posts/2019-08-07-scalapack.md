@@ -819,8 +819,10 @@ from {0,3}, pnum=3, Contxt=0, in routine 'PDGEMM'.
 PBLAS ERROR 'Illegal DESCB[MB_] = 0, DESCB[MB_] must be at least 1'
 from {0,3}, pnum=3, Contxt=0, in routine 'PDGEMM'.
 ```
-\n
-\n
+
+
+
+
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>
