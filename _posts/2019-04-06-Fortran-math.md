@@ -39,6 +39,10 @@ matmul(A,B)
 ```
 transpose(A)
 ```
+求和
+```
+sum(a) !a可以是任意维,求和为一个数
+```
 
 ## 数学库间关系
 数学库说明[并行程序开发工具与高性能程序库](/web/file/2019/并行程序开发工具与高性能程序库_张林波_并行计算导论.pdf)
@@ -721,4 +725,7 @@ program bohanshufftw
 end program bohanshufftw
 ~~~
 其中一次的计算结果
-![](/uploads/2019/05/fftwbo.jpg)
+![](/uploads/2019/05/fftwbo.jpg)------
+本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
+允许注明来源转发.<br>
+强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.

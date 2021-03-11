@@ -191,3 +191,7 @@ UPDATE pre_home_comment SET message=REPLACE(message,'old.com','new.com');
 ## 其他问题
 >其他人的问题
 后台登陆不了，被自动退出请把`config/config_global.php`中的`$_config['admincp']['checkip'] = 1;`修改为`$_config['admincp']['checkip'] = 0;`
+------
+本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
+允许注明来源转发.<br>
+强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.

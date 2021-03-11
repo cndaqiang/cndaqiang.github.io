@@ -243,6 +243,8 @@ os.getcwd() #获取当前路径
 os.chdir("路径")
 os.listdir("路径")　#ls
 os.rmdir("目录名")　#rmdir
+os.path.exists("文件/目录") #检查文件/目录是否存在
+os.path.isfile("文件") #检查文件是否存在
 ```
 ### 执行系统命令
 ```python
@@ -262,4 +264,7 @@ UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa6 in position 595: invali
 特殊字符
 ```
 !¦¤t=t2?t1 for the calculation of Uk(t2,t1) in tddft, 1 a.u.=0.048378 fs
-```
+```------
+本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
+允许注明来源转发.<br>
+强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.

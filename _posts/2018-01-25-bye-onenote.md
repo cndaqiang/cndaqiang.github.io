@@ -114,3 +114,7 @@ sudo apt install exfat-fuse  exfat-utils dmsetup
 win10和ubuntu16.04编辑同一笔记
 ![](/uploads/2018/01/zimlin.PNG)
 ![](/uploads/2018/01/zimwin.PNG)
+------
+本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
+允许注明来源转发.<br>
+强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.

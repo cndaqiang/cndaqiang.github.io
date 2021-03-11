@@ -232,4 +232,7 @@ youtube的镜像卡的不行<br>
 谷歌的镜像没有问题,手机测试通过<br>
 ![](/uploads/2020/05/1520248476.jpg)
 <br>
-应该可以造成图床cdn加速一样的,在githuapage里面存上图片，然后用cloudflare加速
+应该可以造成图床cdn加速一样的,在githuapage里面存上图片，然后用cloudflare加速------
+本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
+允许注明来源转发.<br>
+强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.

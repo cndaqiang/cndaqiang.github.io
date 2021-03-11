@@ -172,4 +172,7 @@ ios [Cisco AnyConnect](https://itunes.apple.com/us/app/cisco-anyconnect/id113506
 
 [折腾笔记：架设OpenConnect Server给iPhone提供更顺畅的网络生活](https://bitinn.net/11084/)
 
-[安装ocserv和anyconnect](http://www.sbbok.com/discussion/2/%E5%AE%89%E8%A3%85ocserv%E5%92%8Canyconnect)
+[安装ocserv和anyconnect](http://www.sbbok.com/discussion/2/%E5%AE%89%E8%A3%85ocserv%E5%92%8Canyconnect)------
+本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
+允许注明来源转发.<br>
+强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.

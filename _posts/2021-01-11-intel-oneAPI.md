@@ -112,3 +112,7 @@ cndaqiang@mommint:~/work/vasp/H2O$ mpirun -np 10 vasp_std
  vasp.6.1.0 28Jan20 (build Jan 11 2021 20:12:18) complex
 ```
 
+------
+本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
+允许注明来源转发.<br>
+强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.

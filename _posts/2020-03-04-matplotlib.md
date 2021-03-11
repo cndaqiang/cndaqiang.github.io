@@ -90,6 +90,25 @@ ax.fill_between(x, 0, ycos,alpha=0.5) #,, facecolor='red', alpha=0.5)
 ```
 ![](/uploads/2020/03/fill.png)
 
+### 性质
+```
+axs.set(xlim=xlim, ylim=ylim, title=title, ylabel=ylabel, xlabel=xlabel) 
+```
+#### y轴显示为科学计数法
+[matplotlib刻度值使用科学记数法](https://blog.csdn.net/HackerTom/article/details/112102637)
+```
+axs.ticklabel_format(style='sci', scilimits=(-1,2), axis='y')
+```
+- style='sci' 指明用科学记数法；
+- scilimits=(-1,2) 表示对 (10^-1,10^2) 范围之外的值换科学记数法，范围内的数不换；
+- axis='y' 指明对 y 轴用，亦可以是 x、both。
+
+或者这样
+```
+import matplotlib.ticker as mtick
+axs.yaxis.set_major_formatter(mtick.FormatStrFormatter('%1.1e'))
+```
+
 ### 文本
 #### latex展示
 使用`r"$Latex语法$"`
@@ -180,3 +199,7 @@ yy = f(xx)
 
 高斯滤波后再插值效果更好
 ![](/uploads/2020/12/spec.png)
+------
+本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
+允许注明来源转发.<br>
+强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.

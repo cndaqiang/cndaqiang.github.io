@@ -60,3 +60,7 @@ fire.o lanczos.o neb.o qm.o opt.o \
 ### 编译
 
 编译设置与编译vasp没有区别，参考[Intel Parallel Studio XE 编译VASP ](/2018/01/15/intel-mpi-vasp/)
+------
+本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
+允许注明来源转发.<br>
+强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.
