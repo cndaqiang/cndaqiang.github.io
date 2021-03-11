@@ -87,6 +87,8 @@ export PATH=/home/cndaqiang/soft/openmpi-1.10.3/bin:$PATH
 export LD_LIBRARY_PATH=/home/cndaqiang/soft/fftw-3.3.3/lib:$LD_LIBRARY_PATH
 export PATH=/home/cndaqiang/soft/fftw-3.3.3/bin:$PATH
 ```
+\n
+\n
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>

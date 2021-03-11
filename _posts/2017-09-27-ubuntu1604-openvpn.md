@@ -309,7 +309,9 @@ ta.key文件内容
 ```
 cat /etc/openvpn/ca/keys/client.conf <(echo -e '<ca>') /etc/openvpn/ca/keys/ca.crt <(echo -e '</ca>\n<cert>') /etc/openvpn/ca/keys/client.crt <(echo -e '</cert>\n<key>') /etc/openvpn/ca/keys/client.key <(echo -e '</key>\n<tls-auth>') /etc/openvpn/ca/keys/ta.key <(echo -e '</tls-auth>') > ~/client/ovpn/client.ovpn
 ```
-然后下载client.ovpn------
+然后下载client.ovpn\n
+\n
+------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>
 强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.

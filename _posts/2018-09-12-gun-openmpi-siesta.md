@@ -170,7 +170,9 @@ checking for Fortran compiler default output file name... configure: error: Fort
 指定编译器
 ```
 ../Src/configure --enable-mpi FC=gfortran CC=gcc MPIFC=mpif90
-```------
+```\n
+\n
+------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>
 强烈谴责大专栏等肆意转发全网技术博客不注明来源,还请求打赏的无耻行为.

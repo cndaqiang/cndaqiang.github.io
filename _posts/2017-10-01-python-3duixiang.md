@@ -199,6 +199,8 @@ x=lei(参数用逗号隔开)
 ```
 ### 析构函数`__del__`
 没有啥特殊的
+\n
+\n
 ------
 本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 允许注明来源转发.<br>
