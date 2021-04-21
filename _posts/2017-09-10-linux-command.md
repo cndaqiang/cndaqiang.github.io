@@ -352,6 +352,25 @@ cat MoS2_T4_O0.25_p2.tar.gz_* | tar xzv #没有f
 ```
 
 
+#### zip
+压缩
+```
+zip -r dipole.zip ./dipole
+```
+- `-r`表示递归压缩,压缩文件夹要加上
+
+
+解压
+```
+unzip -d dipole.zip
+```
+
+加密
+```
+zip -P'passwd' A.zip A
+```
+
+
 ### 空间占用
 #### df [选项] [文件]
 查看磁盘使用和剩余

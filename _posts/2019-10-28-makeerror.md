@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[挖坑]程序编译报错(Fortran)"
+title:  "[挖坑]程序编译报错"
 date:   2019-10-28 15:45:00 +0800
 categories: Fortran
 tags:  gnu Fortran mpif90 gfortran
@@ -113,6 +113,17 @@ Fatal Error: Cannot read module file ‘kinds.mod’ opened at (1), because it w
 compilation terminated.
 ```
 
+
+## `file not recognized: File truncated`
+```
+/home/cndaqiang/code/intel/lib/libelpa.a: file not recognized: File truncated
+```
+因为libelpa.a没有正常产生, 不仅是库文件,`.o`的临时文件编译失败也会报错. 一种错误产生方式
+```
+touch libelpa.a
+```
+
+
 ## SCALAPACK 运行报错
 ### `PBLAS ERROR 'Illegal `，程序退出
 ```
@@ -210,6 +221,22 @@ make: *** Deleting file `test'
 
 ```
 
+```
+forrtl: severe (174): SIGSEGV, segmentation fault occurred
+Image              PC                Routine            Line        Source
+tdpp.x             0000000000BB4CCA  Unknown               Unknown  Unknown
+libpthread-2.27.s  00001486CF202890  Unknown               Unknown  Unknown
+libc-2.27.so       00001486CEAF898D  cfree                 Unknown  Unknown
+tdpp.x             0000000000BF80F3  Unknown               Unknown  Unknown
+tdpp.x             000000000046B7A8  td_psi_k_mp_test_          80  td_psi_k.f90
+tdpp.x             00000000004079F1  MAIN__                    350  postproc.f90
+```
+虽然报错在第80行` IF(ALLOCATED(mill_mesh))  DEALLOCATE( mill_mesh ), 但是实际错误时, ALLOCATE/定义的数组是`ALLOCATE( mill_mesh(dfftp%nr1x,dfftp%nr2x,dfftp%nr3x) )`, 中途用负下标修改了矩阵内容,结果修改时不报错, DEALLOCATE反而报错了, 如过不执行`DEALLOCATE`会出现下面的警告，改成`ALLOCATE( mill_mesh(-n1x:n1x,-n2x:n2x,-n3x:n3x) )`解决
+
+```
+free(): invalid next size (normal)
+Aborted (core dumped)
+```
 
 ### `Program received signal SIGFPE: Floating-point exception - erroneous arithmetic operation.`
 ```

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "怀柔计算中心安装octopus10.1&4.1.2"
+title:  "怀柔计算中心/SSLAB编译octopus记录"
 date:   2020-10-19 21:48:00 +0800
 categories: DFT
 tags:  gnu octopus
@@ -11,6 +11,10 @@ mathjax: true
 {:toc}
 
 
+
+
+
+## [GNU]怀柔计算中心安装octopus10.1&4.1.2
 
 ```shell
 #-------------------------------------------------------------
@@ -179,6 +183,89 @@ bash cnq.sh
 #重新提交
 qsub ../make.sh
 
+```
+
+## [Intel]怀柔计算中心安装octopus10.4
+```
+module unload openmpi3/3.1.4
+module load parallel_studio/2020.2.254
+module load intelmpi/2020.2.254
+
+cd $HOME/soft/ifort-impi2020
+ROOT=$PWD
+mkdir $ROOT/source
+
+```
+剩下的同**[Intel]SSLAB安装octopus10.4**
+
+GNU/Intel编译10.4速度对比，差别不大
+
+CalculationMode|GNU怀柔|Intel怀柔
+--|--|--
+gs|2.765s|2.870s
+td|31.222s|32.15s
+
+
+## [Intel]SSLAB安装octopus10.4
+
+```shell
+module load compiler/gcc/gcc_8.3.0
+module load compiler/intel/intel-compiler-2019u3
+module load mpi/intelmpi/2019u3
+
+cd $HOME/soft/intel2019u3
+ROOT=$PWD
+mkdir $ROOT/source
+
+
+#libxc
+cd $ROOT/source
+wget https://cndaqiang.gitee.io/packages//mirrors/libxc/libxc-4.3.4.tar.gz
+tar xzvf libxc-4.3.4.tar.gz 
+cd libxc-4.3.4
+./configure --prefix=$ROOT/libxc-4.3.4  CC=icc CXX=icpc FC=ifort
+make -j20
+make install
+
+
+#gs
+cd $ROOT/source
+wget https://cndaqiang.gitee.io/packages//mirrors/gs/gsl-1.14.tar.gz
+tar xzvf gsl-1.14.tar.gz
+cd gsl-1.14
+mkdir build; cd build
+../configure CC=icc --prefix=$ROOT/gsl-1.14
+qsub ../../make.sh
+
+#octopus
+cd $ROOT/source
+wget https://cndaqiang.gitee.io/packages//mirrors/octopus/octopus-10.4.tar.gz
+tar xzvf octopus-10.4.tar.gz
+cd octopus-10.4
+
+MKL_DIR=$(echo $MKLROOT | awk -F: '{ print $1 }')
+./configure CC=mpiicc CXX=mpiicpc FC=mpiifort \
+    --prefix=$ROOT/octopus-10.4 \
+    --with-libxc-prefix=$ROOT/libxc-4.3.4    \
+    FCFLAGS_FFTW=-I$MKL_DIR/include/fftw  \
+    --with-blas="-L$MKL_DIR/lib/intel64 -Wl,--start-group -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -Wl,--end-group -lpthread -lmkl_blacs_intelmpi_lp64 -lmkl_scalapack_lp64 " \
+    --with-gsl-prefix=$ROOT/gsl-1.14  \
+    --enable-mpi
+make -j20
+make install
+
+
+```
+运行环境，把下面命令的执行结果进行复制，放在octopus运行脚本的前面
+```
+echo "
+MATHDIR=$ROOT/math/lib
+export LD_LIBRARY_PATH=$ROOT/libxc-2.0.0/lib:\$LD_LIBRARY_PATH
+export PATH=$ROOT/gsl-1.14/bin:\$PATH
+export LD_LIBRARY_PATH=$ROOT/gsl-1.14/lib:\$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$ROOT/fftw-3.3.3/lib:\$LD_LIBRARY_PATH
+export PATH=$ROOT/fftw-3.3.3/bin:\$PATH
+"
 ```
 
 

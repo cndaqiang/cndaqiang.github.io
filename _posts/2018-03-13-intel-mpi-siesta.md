@@ -33,6 +33,7 @@ siesta-4.1-b1-intel/Obj$ ../Src/configure --enable-mpi FC=ifort CC=ifort MPIFC=m
 修改arch.make设置mkl数学库
 ```
 MKL_PATH   = /opt/intel/compilers_and_libraries_2018.0.128/linux/mkl/lib/intel64
+#oneapi时,   MKL_PATH=/opt/intel/oneapi/mkl/2021.1.1/lib/intel64/
 BLAS_LIBS=-L$(MKL_PATH) -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lmkl_blacs_intelmpi_lp64 -lmkl_scalapack_lp64
 LAPACK_LIBS=
 BLACS_LIBS=
@@ -42,6 +43,23 @@ SCALAPACK_LIBS=
 ```
 make
 ```
+
+如遇报错
+```
+SIESTA: dc_lapack.a has been deprecated in favor of:
+  COMP_LIBS += libsiestaLAPACK.a
+Please update your arch.make file accordingly...
+
+Makefile:437: recipe for target 'dc_lapack.a' failed
+make: *** [dc_lapack.a] Error 1
+```
+修改arch.make
+```
+#COMP_LIBS=dc_lapack.a
+
+COMP_LIBS += libsiestaLAPACK.a
+```
+
 ## 测试
 以siesta-4.1为例,根目录有`Tests`文件夹,里面有示例
 <br>修改Tests/test.mk

@@ -193,7 +193,7 @@ f = interp1d(x, y, kind='cubic')#参数(原始数据x,y,插值算法)
 xx = np.linspace(5,10,10000)
 yy = f(xx)
 ```
-插值算法有`linear', 'nearest', 'zero', 'slinear', 'quadratic', 'cubic'`
+插值算法有`'linear', 'nearest', 'zero', 'slinear', 'quadratic', 'cubic'`
 - linear 线性
 - cubic 三次
 

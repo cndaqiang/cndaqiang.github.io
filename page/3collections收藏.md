@@ -17,6 +17,8 @@ type: page
 - [自用开源程序源码mirror](/packages/) or  [gitee](https://cndaqiang.gitee.io/packages/)
 <br><br>
 - [google drive推荐的文件类型转换](https://cloudconvert.com)
+- [单位转换](http://www.unitconverters.net/)
+
 
 ## DFT程序和理论
 搜索Castep,有很多中英文教程，介绍程序是怎么计算的，对于看代码有帮助，如[Nonlinear core correction](https://www.tcm.phy.cam.ac.uk/castep/documentation/WebHelp/content/modules/castep/thcastepnonlincorr.htm?tocpath=Theory%20in%20CASTEP%7CCASTEP%20background%20theory%7CPseudopotentials%7C_____3)
@@ -26,6 +28,10 @@ type: page
 ## 资源站点
 - 下载过数学物理方法:[教程下载](https://www.jiaochengxiazai.cn/plug/search.asp?key=%E6%95%B0%E5%AD%A6%E7%89%A9%E7%90%86)
 
+
+## 量角器
+![](/uploads/2021/04/angle.png)
+更多工具[工具邦](http://cn.piliapp.com/)
 
 ## 查看ip
 ![IP签名](https://tool.lu/netcard/)

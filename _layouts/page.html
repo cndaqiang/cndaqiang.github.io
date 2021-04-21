@@ -7,6 +7,9 @@ layout: default
         <h1>{{page.title}}</h1>
         <hr>
         {{content}}
+        <hr>
+        <h2 id="comments">评论</h2>
+        {% include comments.html %}
     </div>
     <button class="anchor"><i class="fa fa-anchor"></i></button>
     <div class="right">

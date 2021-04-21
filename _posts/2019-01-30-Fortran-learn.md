@@ -176,7 +176,7 @@ com=(实部,虚部)
 
 直接`+ - * \( )`
 
-乘方`**`
+乘方`**`, **注意`0**0 == 1`, 0的0次方等于1**
 
 取余`mod(x,y)`为x/y的余数，y!=0
 
@@ -390,6 +390,10 @@ i=UBOUND(a,1)
 WRITE(*,"(A,I1,A,I4)") "max is a(",MAXLOC(a),"), which is",MAXVAL(a)
 WRITE(*,"(A,I1,A,I4)") "min is a(",MINLOC(a),"), which is",MINVAL(a)
 ```
+**注意`MAXLOC`返回的是数组,即使a是一维的,`a(MAXLOC(a))`只有一个数,也要用数组变量去接受最大值**
+
+
+
 **用`ANY`判断数组元素**<br>
 [ANY](https://gcc.gnu.org/onlinedocs/gcc-6.1.0/gfortran/ANY.html)
 

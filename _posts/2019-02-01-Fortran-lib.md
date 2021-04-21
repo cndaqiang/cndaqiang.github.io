@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Fortran 函数库的使用"
+title:  "Fortran/C函数库的使用"
 date:   2019-02-01 12:09:00 +0800
 categories: Fortran
 tags:  Fortran
@@ -321,7 +321,100 @@ SCALAPACK  = $(MKL_PATH)/libmkl_scalapack_lp64.a $(BLACS)
 
 
 
+## 工具
+- `readelf -c fun.a`查看静态库包含的函数模块
+- `objdump -t fun.so`查看静态库内容
+- `ar -x fun.a`解压静态库为`.o`文件
 
+```
+(python37) cndaqiang@mommint:/tmp$ !cat
+cat fun.f90
+SUBROUTINE cndaqiang_fun()
+
+END SUBROUTINE
+
+MODULE cndaqiang_mod
+        INTEGER :: cndaqiang_i
+        REAL :: cndaqiang_r
+        CONTAINS
+                SUBROUTINE cndaqiang_mfun()
+                END SUBROUTINE
+END MODULE
+#编译
+(python37) cndaqiang@mommint:/tmp$ gfortran -c fun.f90 -o fun.o
+#打包静态库
+(python37) cndaqiang@mommint:/tmp$ ar rv fun.a fun.o
+r - fun.o
+#查看静态库包含的内容
+(python37) cndaqiang@mommint:/tmp$ readelf -c fun.a
+Index of archive fun.a: (4 entries, 0x72 bytes in the symbol table)
+Contents of binary fun.a(fun.o) at offset 0xca
+	__cndaqiang_mod_MOD_cndaqiang_i
+	__cndaqiang_mod_MOD_cndaqiang_r
+	__cndaqiang_mod_MOD_cndaqiang_mfun
+	cndaqiang_fun_
+```
+
+```
+(python37) cndaqiang@mommint:/tmp$ gfortran fun.o -shared -fPIC -o fun.so
+(python37) cndaqiang@mommint:/tmp$ readelf -c fun.so
+readelf: Error: File fun.so is not an archive so its index cannot be displayed.
+(python37) cndaqiang@mommint:/tmp$ objdump -t fun.so
+
+fun.so:     file format elf64-x86-64
+
+SYMBOL TABLE:
+00000000000001c8 l    d  .note.gnu.build-id	0000000000000000 .note.gnu.build-id
+00000000000001f0 l    d  .gnu.hash	0000000000000000 .gnu.hash
+0000000000000238 l    d  .dynsym	0000000000000000 .dynsym
+0000000000000388 l    d  .dynstr	0000000000000000 .dynstr
+0000000000000478 l    d  .rela.dyn	0000000000000000 .rela.dyn
+0000000000000520 l    d  .init	0000000000000000 .init
+0000000000000540 l    d  .plt	0000000000000000 .plt
+0000000000000550 l    d  .plt.got	0000000000000000 .plt.got
+0000000000000560 l    d  .text	0000000000000000 .text
+0000000000000648 l    d  .fini	0000000000000000 .fini
+0000000000000654 l    d  .eh_frame_hdr	0000000000000000 .eh_frame_hdr
+0000000000000680 l    d  .eh_frame	0000000000000000 .eh_frame
+0000000000200e80 l    d  .init_array	0000000000000000 .init_array
+0000000000200e88 l    d  .fini_array	0000000000000000 .fini_array
+0000000000200e90 l    d  .dynamic	0000000000000000 .dynamic
+0000000000200fe0 l    d  .got	0000000000000000 .got
+0000000000201000 l    d  .got.plt	0000000000000000 .got.plt
+0000000000201018 l    d  .data	0000000000000000 .data
+0000000000201020 l    d  .bss	0000000000000000 .bss
+0000000000000000 l    d  .comment	0000000000000000 .comment
+0000000000000000 l    df *ABS*	0000000000000000 crtstuff.c
+0000000000000560 l     F .text	0000000000000000 deregister_tm_clones
+00000000000005a0 l     F .text	0000000000000000 register_tm_clones
+00000000000005f0 l     F .text	0000000000000000 __do_global_dtors_aux
+0000000000201020 l     O .bss	0000000000000001 completed.7698
+0000000000200e88 l     O .fini_array	0000000000000000 __do_global_dtors_aux_fini_array_entry
+0000000000000630 l     F .text	0000000000000000 frame_dummy
+0000000000200e80 l     O .init_array	0000000000000000 __frame_dummy_init_array_entry
+0000000000000000 l    df *ABS*	0000000000000000 fun.f90
+0000000000000000 l    df *ABS*	0000000000000000 crtstuff.c
+0000000000000718 l     O .eh_frame	0000000000000000 __FRAME_END__
+0000000000000000 l    df *ABS*	0000000000000000
+0000000000200e90 l     O .dynamic	0000000000000000 _DYNAMIC
+0000000000201020 l     O .data	0000000000000000 __TMC_END__
+0000000000201018 l     O .data	0000000000000000 __dso_handle
+0000000000000654 l       .eh_frame_hdr	0000000000000000 __GNU_EH_FRAME_HDR
+0000000000201000 l     O .got.plt	0000000000000000 _GLOBAL_OFFSET_TABLE_
+0000000000000000  w      *UND*	0000000000000000 __cxa_finalize
+0000000000000641 g     F .text	0000000000000007 cndaqiang_fun_
+0000000000201028 g     O .bss	0000000000000004 __cndaqiang_mod_MOD_cndaqiang_r
+0000000000000520 g     F .init	0000000000000000 _init
+0000000000000000  w      *UND*	0000000000000000 _ITM_registerTMCloneTable
+0000000000201024 g     O .bss	0000000000000004 __cndaqiang_mod_MOD_cndaqiang_i
+0000000000000000  w      *UND*	0000000000000000 _ITM_deregisterTMCloneTable
+0000000000201020 g       .bss	0000000000000000 __bss_start
+0000000000000648 g     F .fini	0000000000000000 _fini
+0000000000201020 g       .data	0000000000000000 _edata
+0000000000201030 g       .bss	0000000000000000 _end
+000000000000063a g     F .text	0000000000000007 __cndaqiang_mod_MOD_cndaqiang_mfun
+0000000000000000  w      *UND*	0000000000000000 __gmon_start__
+```
 
 
 
