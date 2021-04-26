@@ -238,6 +238,11 @@ bundle exec jekyll serve [-P port]
 全面迁移gitee, Now only for me.<br>
 使用web分支作为所有内容，master分支为公开内容.
 
+## 博客更新 2021-04-26
+通过修改`_config.yml`和相关页面, 本地搭建时关闭在线js, 如讨论,广告,联系方式等.
+```
+
+```
 
 ### CSS
 ```
