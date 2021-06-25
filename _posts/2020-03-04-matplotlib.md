@@ -26,6 +26,8 @@ import matplotlib.pyplot as plt
 ## 参考
 [Matplotlib 教程](https://www.runoob.com/w3cnote/matplotlib-tutorial.html)<br>
 [wizardforcel Matplotlib 入门教程](https://legacy.gitbook.com/book/wizardforcel/matplotlib-intro-tut/details)
+[Python中画图时候的线类型](https://blog.csdn.net/qq_34940959/article/details/78488208)
+
 
 ## 注意
 - **plt.show()之后会清空画板，所有绘图数据删除，保存前不要执行**
@@ -109,6 +111,76 @@ import matplotlib.ticker as mtick
 axs.yaxis.set_major_formatter(mtick.FormatStrFormatter('%1.1e'))
 ```
 
+#### 颜色（color 简写为 c）：
+
+![](/uploads/2021/05/color.png)
+
+
+- 蓝色： 'b' (blue)
+- 绿色： 'g' (green)
+- 红色： 'r' (red)
+- 蓝绿色(墨绿色)： 'c' (cyan)
+- 红紫色(洋红)： 'm' (magenta)
+- 黄色： 'y' (yellow)
+- 黑色： 'k' (black)
+- 白色： 'w' (white)
+- 灰度表示： e.g. 0.75 ([0,1]内任意浮点数)
+- RGB表示法： e.g. '#2F4F4F' 或 (0.18, 0.31, 0.31)
+- 任意合法的html中的颜色表示： e.g. 'red', 'darkslategray'
+
+#### 线型（linestyle 简写为 ls）：
+
+- 实线： '-'
+- 虚线： '--'
+- 虚点线： '-.'
+- 点线： ':'
+- 点： '.' 
+
+
+#### 点型（标记marker）：
+
+- 像素： ','
+- 圆形： 'o'
+- 上三角： '^'
+- 下三角： 'v'
+- 左三角： '<'
+- 右三角： '>'
+- 方形： 's'
+- 加号： '+' 
+- 叉形： 'x'
+- 棱形： 'D'
+- 细棱形： 'd'
+- 三脚架朝下： '1'（就是丫）
+- 三脚架朝上： '2'
+- 三脚架朝左： '3'
+- 三脚架朝右： '4'
+- 六角形： 'h'
+- 旋转六角形： 'H'
+- 五角形： 'p'
+- 垂直线： '|'
+- 水平线： '_'
+- gnuplot 中的steps： 'steps' （只能用于kwarg中）
+
+
+标记大小（markersize 简写为 ms）： 
+markersize： 实数
+ 
+标记边缘宽度（markeredgewidth 简写为 mew）：
+markeredgewidth：实数
+
+标记边缘颜色（markeredgecolor 简写为 mec）：
+markeredgecolor：颜色选项中的任意值
+
+标记表面颜色（markerfacecolor 简写为 mfc）：
+markerfacecolor：颜色选项中的任意值
+
+透明度（alpha）：
+alpha： [0,1]之间的浮点数
+
+线宽（linewidth）：
+linewidth： 实数
+
+
 ### 文本
 #### latex展示
 使用`r"$Latex语法$"`
@@ -165,6 +237,60 @@ for i in np.arange(gap.size):
                color=colors[i],
                bbox=dict(boxstyle='square,pad=0.1', fc="white",alpha=1.0,lw=0.0),
                verticalalignment="center",horizontalalignment="center")
+```
+
+### 清空
+```
+plt.cla()
+```
+### Axis  上下左右线，即坐标轴
+```
+    #设置x轴标签及其字号
+    plt.xlabel(xlabel,fontsize=Fontsize)
+    #设置y轴标签及其字号
+    plt.ylabel(ylabel,fontsize=Fontsize)
+    #宽度
+    axs.spines["bottom"].set_linewidth(axisw)
+    axs.spines["top"].set_linewidth(axisw)
+    axs.spines["left"].set_linewidth(axisw)
+    axs.spines["right"].set_linewidth(axisw)
+```
+### ticks 上下左右线上的小刻度
+```
+#ticks位置
+axs.set_xticks(ticks)
+#ticks标签
+axs.set_xticklabels(tickslabel)
+#等价于
+axs.set(xticks=ticks, xticklabels=tickslabel)
+
+# 设置xtick和ytick的方向：in、out、inout
+plt.rcParams['xtick.direction'] = 'in'
+plt.rcParams['ytick.direction'] = 'in'
+```
+
+### 对数坐标
+```python
+axs.set_yscale("log")
+#要在设置xlim,ylim之前设置,不然在前面的设置的xlim等信息会无效
+axs.set(xlim=xlim,ylim=ylim,ylabel=ylabel, xlabel=xlabel)
+```
+
+### 其他
+#### 水平线
+```
+matplotlib.pyplot.axhline(y=0, xmin=0, xmax=1, hold=None, **kwargs)
+import matplotlib.pyplot as plt
+plt.axhline(y=0, xmin=0, xmax=1, hold=None, **kwargs)
+#
+plt.hlines(y, xmin, xmax)
+plt.hlines(0, 0, 0.5, colors = "r", linestyles = "dashed")
+```
+#### 垂直线
+```
+matplotlib.pyplot.axvline(x=0, ymin=0, ymax=1, hold=None, **kwargs)
+vlines(x, ymin, ymax)
+
 ```
 
 ## 差值拟合

@@ -69,6 +69,8 @@ google_analytics_id: UA-109057291-1 # google 分析追踪id
 fangkeshuju: True
 #卜算子页面访问量统计
 busuanzi: True
+#广告
+adsense: True
 
 
 

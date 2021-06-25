@@ -199,6 +199,9 @@ com=(实部,虚部)
 
 **符号和英文都可以写**
 
+**判断逻辑变量数据是否相等用`.EQV.`, 见下**
+
+
 ##### 逻辑运算
 
 
@@ -1188,6 +1191,18 @@ end module m_init
 - Write  写入
 - Read  读取
 - Close  关闭文件
+
+### 检查文件是否存在
+
+```fortran
+LOGICAL :: alive
+inquire(file='data.txt',exist=alive)
+if ( alive) then
+        write(*,*) 'alive'
+else
+        write(*,*)  'no'
+endif
+```
 
 ### open(通道号,file="文件名")
 

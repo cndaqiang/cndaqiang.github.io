@@ -48,6 +48,7 @@ MPI_XXXX_XXX形式（ FORTRAN不区分大小写）`call MPI_XXXX_XXX(一堆参�
 器MPI_COMM_WORLD 所拥有的进程组中工作，之后用户可以根据自己的需要，建立
 其它的进程组
 -  所有MPI 的通信一定要在通信器(communicator) 中进行
+- **REDUACE等的bufer要给`A(1,1)`,给`A`或`A(:,:)`会报错**
 
 ## 数据类型
 

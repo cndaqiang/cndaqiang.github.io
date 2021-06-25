@@ -64,6 +64,7 @@ arch.make:62: recipe for target 'TDEvolve.o' failed
 ```
 现象: 没有合适的`mpi_allreduce`<br>
 可能原因: 输入参数不一致，send和recv的数组长度不同，找不到合适的interface<br>
+**应该用`A(1,1)`给buffer的起始地址**<br>
 解决:
 ```
 CALL MPI_REDUCE( eo_tmp, eo, no_u*nspin*nkpnt, MPI_DOUBLE_PRECISION, MPI_SUM,0,MPI_Comm_World, MPIerror)
@@ -112,7 +113,37 @@ i=UBOUND(a,1)
 Fatal Error: Cannot read module file ‘kinds.mod’ opened at (1), because it was created by a different version of GNU Fortran
 compilation terminated.
 ```
+### `Unclassifiable statement` 变量名写错
+```
 
+             Haxu(1,:,:) =  Haxu(1,:,:) + DBLE (H_scissor_pdos(:,:,ispin,IK))
+            1
+Error: Unclassifiable statement at (1)
+```
+
+以及`: Syntax error in argument list` 把错误的变量名当成了函数报错
+```
+             Haux(1,:,:) =  Haxu(1,:,:) + DBLE (H_scissor_pdos(:,:,ispin,IK))
+                                  1
+Error: Syntax error in argument list at (1)
+```
+
+### `Syntax error, found END-OF-STATEMENT `
+```
+td_init.f90(213): error #5082: Syntax error, found END-OF-STATEMENT when expecting one of: ( % . = =>
+         DALLOCATE(natweight(nat))
+```
+语法错误, 应为`ALLOCATE(natweight(nat))`
+
+
+
+### `.f`文件长度有限制
+```
+             Haux(2,:,:) =  Haux(2,:,:) + AIMAG(H_scissor_pdos(:,:,ispin,IK))
+                                                                        1
+Error: Expected array subscript at (1)
+```
+换行即可, **续行符不能是中文句号**
 
 ## `file not recognized: File truncated`
 ```
@@ -122,6 +153,26 @@ compilation terminated.
 ```
 touch libelpa.a
 ```
+
+
+
+
+
+## 运行报错
+
+### `error while loading shared libraries: liblapack.so: cannot open shared object file: No such file or directory`
+因为编译的时候使用动态库绝对地址. 运行时没有添加到动态库地址
+```
+MATHDIR=/home/users/cndaqiang/soft/gnu4-mvapich/math/lib
+BLAS_LIBS=$(MATHDIR)/libblas.so
+```
+解决方案
+```
+export LD_LIBRARY_PATH=/home/users/cndaqiang/soft/gnu4-mvapich/math/lib:$LD_LIBRARY_PATH
+```
+
+
+
 
 
 ## SCALAPACK 运行报错

@@ -246,6 +246,11 @@ os.rmdir("目录名")　#rmdir
 os.path.exists("文件/目录") #检查文件/目录是否存在
 os.path.isfile("文件") #检查文件是否存在
 ```
+非空目录不能删除,使用下面删除
+```
+import shutil
+shutil.rmtree(banddir, ignore_errors=True)
+```
 ### 执行系统命令
 ```python
 >>> b=os.system("grep a_1 "+inputfile)

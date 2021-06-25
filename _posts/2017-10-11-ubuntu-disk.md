@@ -157,6 +157,13 @@ Yes/No?Yes
 ```
 之后再使用fdisk格式化具体格式
 
+### 坏道检测
+```
+#查询坏道(时间较久)
+badblocks /dev/sdb bad-blocks
+#然后利用上面新建分区的方式，建的分区避开bad-blocks文件中的扇区
+```
+
 
 
 ------

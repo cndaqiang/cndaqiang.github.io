@@ -56,13 +56,15 @@ type: page
                 </ul>
             </div>
            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+           {% if site.fangkeshuju %} 
            <div class="side">
-            <div>
-                <i class="fa fa-database"></i>
-               访客数据
-            </div>
-            <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+              <div>
+                  <i class="fa fa-database"></i>
+                 访客数据
+              </div>
+              <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
            </div>
+           {% endif %}
             <!-- <div class="side">bbbb</div> -->
         </div>
     </div>
