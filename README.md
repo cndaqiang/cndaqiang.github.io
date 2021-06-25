@@ -244,6 +244,44 @@ bundle exec jekyll serve [-P port]
 
 ```
 
+## 迁移到gitlab
+建立`.gitlab-ci.yml`, 里面的环境和本地搭建的环境一样,注意ruby用2.7.0
+```
+image: ruby:2.7.0
+
+variables:
+  JEKYLL_ENV: production
+  LC_ALL: C.UTF-8
+
+before_script:
+  - gem install bundler
+  - bundle install
+
+test:
+  stage: test
+  script:
+  - bundle exec jekyll build -d test
+  artifacts:
+    paths:
+    - test
+  except:
+  - master
+
+pages:
+  stage: deploy
+  script:
+  - bundle exec jekyll build -d public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+```
+push后, 设置保存pages服务, 在CI里更新
+![](https://cndaqiang.github.io/uploads/2021/06/gitlab.png)
+
+
+
 ### CSS
 ```
 # html
