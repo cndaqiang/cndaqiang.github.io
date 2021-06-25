@@ -245,6 +245,8 @@ bundle exec jekyll serve [-P port]
 ```
 
 ## 迁移到gitlab
+**仓库名用cndaqiang.gitlab.io**
+
 建立`.gitlab-ci.yml`, 里面的环境和本地搭建的环境一样,注意ruby用2.7.0
 ```
 image: ruby:2.7.0
