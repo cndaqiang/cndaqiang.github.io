@@ -282,7 +282,7 @@ pages:
 push后, 设置保存pages服务, 在CI里更新
 ![](https://cndaqiang.github.io/uploads/2021/06/gitlab.png)
 
-
+后续push会自动在CI更新,如更新失败可去CI查看详情
 
 ### CSS
 ```
