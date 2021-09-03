@@ -1,9 +1,12 @@
-{% if site.adsense %} 
+{% if site.adsense != true %}
+<!-- 谷歌无收益,换成west-->
 <div class="side">
      <div>
          <i class="iconfont  icon-guanggao2"></i>
          广告
      </div>
+     <script language="javascript" src="http://www.west.cn/vcp/getJScode/getJScode.asp?ReferenceID=1801740&No=300x250"></script>
+     <!-- 
      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
      <ins class="adsbygoogle"
           style="display:block; text-align:center;"
@@ -14,5 +17,6 @@
      <script>
           (adsbygoogle = window.adsbygoogle || []).push({});
      </script>
+     -->
  </div>
 {% endif %}
