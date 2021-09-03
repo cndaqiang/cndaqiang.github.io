@@ -1,4 +1,5 @@
 nohup.out
 _site/*
 .DS_Store
+._*
 
