@@ -36,7 +36,7 @@ Fortran95程序设计【彭国伦】<br>
 |        |           固定格式           |           自由格式           |
 | ----- |: -------------------------- :| :-------------------------- :|
 | 英文   |         Fixed-format         |         Free-format          |
-| 扩展名 |      `.for      .f   ... `     |    `.f90   .f95   .f03 ... `   |
+| 扩展名 |      `.for      .f   ... `     |    `.f90   .f95   .f03 ...`   |
 | 语法   | F66、F77、F90、F95、F03、F08 | F66、F77、F90、F95、F03、F08 |
 | 格式   |       代码从第7格开始        |             任意             |
 | 续行   |    在第6格键入一个非0字符    | 上一行结束下一行开头加入   & |
@@ -686,6 +686,17 @@ FLUSH(funit) #ifort要用这个确保不会换行
 **针对这些特点, 我们读写的数据如果不是给人看的, 按照数组下标,或者直接将一个数组`WRITE(unit,FMT=*)`即可, 而且不同编译器之间都可以互相读写**<br>
 给人看的时候才要考虑格式化输出
 
+### 其他
+当变量比格式多时,会重复格式进行输入,如
+```
+REAL(8) :: b(10)
+b=1.0
+write(*,10) b
+10 FORMAT(1X,2E20.8)
+!或者
+write(*,"(1X,3E20.8)") b
+```
+b会按照格式每行输出2/3个,直到输出完毕为止
 
 ## 函数
 
@@ -1657,9 +1668,12 @@ agrc=iargc()：
 
 call getarg(i,buffer)：
 读取命令行的第i个参数，并将其存储到buffer中，其中命令本身是第0个参数
-
-对于Fortran2003及其之后，使用GET_COMMAND_ARGUMENT来获取参数
 ```
+
+**对于Fortran2003及其之后，使用`GET_COMMAND_ARGUMENT`来获取参数**,使用gfortran,f77,f90编译也是可以运行的
+- `COMMAND_ARGUMENT_COUNT()` 参数数目
+
+
 
 ### 更改默认的标准输出位置
 使得只有Ionode输出
@@ -1709,6 +1723,117 @@ REAL (A [, KIND]) | 转换为实数类型
 SIGN (A, B) | 符号传输,i.e. ABS(A)*sign(B)<br>注意A,B的类型要一致<br>`sign(-10.0,1.0)==10.0; sign(10,-1)==-10`
 
 
+### C和Fortran混编
+[Fortran与C/C++混合编程示例](https://www.cnblogs.com/snake553/p/6962386.html)
+
+#### 传统方式
+**注意C的函数名比Fortran多一个`_`**<br>
+
+```
+(python37) cndaqiang@mommint:~/code/octopus/CNQcode$ cat main.f90
+program main
+    IMPLICIT NONE
+    interface
+        subroutine cprinti( i)
+                integer :: i
+        end subroutine
+    end interface
+
+    integer :: i
+    i=10
+    call cprinti( i)
+end program main
+
+SUBROUTINE fprinti(i)
+        IMPLICIT NONE
+        INTEGER i
+        write(*,*) "print i by fortran",i
+END SUBROUTINE
+
+
+
+(python37) cndaqiang@mommint:~/code/octopus/CNQcode$ cat csub.c
+#include <stdio.h>
+void cprinti_( int *i);
+void fprinti_( int *i);
+
+void cprinti_( int *i)
+{
+ *i=*i+1;
+ printf("c Print i %10i\n",*i);
+ fprinti_(i);
+}
+
+(python37) cndaqiang@mommint:~/code/octopus/CNQcode$ gfortran -c main.f90 -o main.o
+(python37) cndaqiang@mommint:~/code/octopus/CNQcode$ gcc -c csub.c -o csub.o
+(python37) cndaqiang@mommint:~/code/octopus/CNQcode$ gfortran -o main.x  main.o  csub.o
+(python37) cndaqiang@mommint:~/code/octopus/CNQcode$ ./main.x
+c Print i         11
+ print i by fortran          11
+```
+
+#### autoconf实现
+参考[5.10.7 Fortran Compiler Characteristics](https://www.gnu.org/software/autoconf/manual/autoconf-2.60/html_node/Fortran-Compiler.html)<br>
+autoconf使用方法[使用autotools创建configure,Makefile](/2021/08/29/autotools/)<br>
+[octopus](https://octopus-code.org/)的代码常用这种方式
+- `FC_FUNC (name, NAME)`
+- `F77_FUNC (name, NAME)`
+- ...等
+
+c源码
+```c
+#include <stdio.h>
+void cprinti_( int *i);
+
+void cprinti_( int *i)
+{
+ *i=*i+1;
+ printf("C:Print by cprinti_ %10i\n",*i);
+}
+//autoconf方式
+void FC_FUNC_(cfun,CFUNUN) (int *i)
+{
+        *i=*i+1;
+        printf("C:Print by FC_FUNC %10i\n",*i);
+}
+```
+
+**需要在`configure.ac`中添加`AC_FC_WRAPPERS`**,如果不添加,编译报错,
+```
+gcc -DPACKAGE_NAME=\"qtool\" -DPACKAGE_TARNAME=\"qtool\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"qtool\ 1.0\" -DPACKAGE_BUGREPORT=\"who@cndaqiang.ac.cn\" -DPACKAGE_URL=\"\" -DPACKAGE=\"qtool\" -DVERSION=\"1.0\" -I.     -g -O2 -MT csub.o -MD -MP -MF .deps/csub.Tpo -c -o csub.o csub.c
+csub.c:11:6: error: ‘FC_FUNC_’ declared as function returning a function
+ void FC_FUNC_(cfun,CFUNUN) (int *i)
+      ^~~~~~~~
+csub.c: In function ‘FC_FUNC_’:
+csub.c:11:6: warning: type of ‘cfun’ defaults to ‘int’ [-Wimplicit-int]
+csub.c:11:6: warning: type of ‘CFUNUN’ defaults to ‘int’ [-Wimplicit-int]
+csub.c:13:3: error: ‘i’ undeclared (first use in this function)
+  *i=*i+1;
+   ^
+csub.c:13:3: note: each undeclared identifier is reported only once for each function it appears in
+Makefile:377: recipe for target 'csub.o' failed
+make: *** [csub.o] Error 1
+```
+添加时的编译参数
+```
+gcc -DPACKAGE_NAME=\"qtool\" -DPACKAGE_TARNAME=\"qtool\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"qtool\ 1.0\" -DPACKAGE_BUGREPORT=\"who@cndaqiang.ac.cn\" -DPACKAGE_URL=\"\" -DPACKAGE=\"qtool\" -DVERSION=\"1.0\" -DFC_FUNC\(name,NAME\)=name\ ##\ _ -DFC_FUNC_\(name,NAME\)=name\ ##\ _ -I.     -g -O2 -MT csub.o -MD -MP -MF .deps/csub.Tpo -c -o csub.o csub.c
+```
+运行结果
+```
+C:Print by cprinti_         11
+C:Print by FC_FUNC         12
+```
+
+
+### 检测Fortran的依赖关系
+```
+(python37) cndaqiang@mommint:~/code/octopus/CNQcode/automake/fortran$ sudo apt install makedepf90
+(python37) cndaqiang@mommint:~/code/octopus/CNQcode/automake/fortran$ makedepf90 $(ls *.f90)
+main.o : main.f90 m_mod.o
+m_mod.o : m_mod.f90
+qtool.o : qtool.f90
+sub.o : sub.f90
+```
 
 
 

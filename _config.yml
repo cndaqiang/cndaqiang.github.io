@@ -38,7 +38,6 @@ plugins: [jekyll-paginate]
 paginate: 6
 
 
-
 # other links
 twitter_username: 
 facebook_username: 

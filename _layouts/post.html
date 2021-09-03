@@ -82,13 +82,13 @@ layout: default
         <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
         <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
         {% include previousAndNext.html %}
-        {% include adsenseAfterComments.html %}
-        <hr>
-        <h2 id="comments">评论</h2>
-        {% include comments.html %}
-		<hr>
-		<h2 id="adsenseAfterComments">广告</h2>
-        {% include adsenseAfterComments.html %}
+        {%  if site.beian != true  %}
+            <hr>
+            <h2 id="comments">评论</h2>
+            {% include comments.html %}
+            <!--广告 _includes/adsenseAfterComments.html -->
+            {% include adsenseAfterComments.html %}
+        {%  endif  %}
         
 
         
@@ -112,14 +112,16 @@ layout: default
                 </ul>
             </div>
             <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
-            {% if site.fangkeshuju %} 
-            <div class="side">
-               <div>
-                   <i class="fa fa-database"></i>
-                  访客数据
-               </div>
-               <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
-            </div>
+            {%  if site.beian != true  %}
+                {% if site.fangkeshuju %} 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                {% endif %}
             {% endif %}
             <!-- <div class="side">bbbb</div> -->
         </div>

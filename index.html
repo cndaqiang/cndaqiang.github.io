@@ -79,7 +79,8 @@ layout: default
                     {% endfor %}
                 </ul>
             </div>
-
+            <!--- 感觉分类多了影响主页的美观， 注释掉-->
+            {% if site.buyaode %}
             <!-- Content -->
             <div class="side ">
                 <div>
@@ -99,6 +100,7 @@ layout: default
                     {% endfor %}
                 </ul>
             </div>
+            {% endif %}
             <!-- 其他div框放到这里 -->
             <div class="side">
                 <div>
@@ -145,22 +147,8 @@ layout: default
             </div>
 			
             <!-- adsens -->
-			      <div class="side">
-                <div>
-                    <i class="iconfont  icon-guanggao2"></i>
-                    广告
-                </div>
-                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <ins class="adsbygoogle"
-                     style="display:block; text-align:center;"
-                     data-ad-layout="in-article"
-                     data-ad-format="fluid"
-                     data-ad-client="ca-pub-8365330523291002"
-                     data-ad-slot="7816631956"></ins>
-                <script>
-                     (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
+            <!--广告 _includes/Index_side_adsense.html -->
+            {% include Index_side_adsense.html %}
         </div>
     </div>
 </div>

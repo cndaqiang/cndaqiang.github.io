@@ -301,3 +301,6 @@ push后, 设置保存pages服务, 在CI里更新
 
 ## 博客更新 2020-05-02使用cloudflare免费加速
 见[使用cloudflare加速博客访问/免费搭建谷歌镜像](https://cndaqiang.github.io/2020/05/02/cloudflare/)
+
+## 部署博客到群晖NAS
+jekyll启动后,打包`_site`目录,上传至群晖,新增虚拟主机,后端Apache,根目录即`_site`目录
