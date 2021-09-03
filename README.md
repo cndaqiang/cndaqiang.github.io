@@ -302,5 +302,13 @@ push后, 设置保存pages服务, 在CI里更新
 ## 博客更新 2020-05-02使用cloudflare免费加速
 见[使用cloudflare加速博客访问/免费搭建谷歌镜像](https://cndaqiang.github.io/2020/05/02/cloudflare/)
 
-## 部署博客到群晖NAS
+## 博客部署到其他平台
+### 部署博客到群晖NAS
 jekyll启动后,打包`_site`目录,上传至群晖,新增虚拟主机,后端Apache,根目录即`_site`目录
+### 文件
+- `public.sh` 部署到`../cndaqiang` 用于发布到gitee.sh,要删除违规内容
+- `public.sh github.cndaqiang` 部署到`../github.cndaqiang` 用于发布到github
+- `public.west.sh` 发布到west虚拟空间,自动删除多媒体文件，替换相对链接为绝对链接
+- `public.txt` `public.sh`会发布的文章
+- `public.west.txt` `public.west.sh`会发布的文章
+- `public.hexie.txt` `public.west.sh`要删除的违禁文章
