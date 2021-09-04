@@ -90,6 +90,7 @@ jekyll s --host=0.0.0.0
 /_layouts  主要页面的html内容，引用_incloud,_post等文件内容组成网页
 /_site 自已生成不需操作
 /_post 博客文章内容
+/web/Adsense 广告资源
 ```
 ## git clone已有博客页面
 
@@ -183,12 +184,6 @@ git config core.ignorecase false
             </div>
 ```
 
-## 博客更新 2020-03-26
-### 广告模块
-谷歌广告收入达到$10,需要添加收款地址设置PIN否则停止展示广告，等待验证中
-
-### 测试广告商
-审核中： http://union.2345.com/union_e2345.php
 
 ## 博客更新 2020-04-X 添加图形化访问数据
 添加到
@@ -301,6 +296,18 @@ push后, 设置保存pages服务, 在CI里更新
 
 ## 博客更新 2020-05-02使用cloudflare免费加速
 见[使用cloudflare加速博客访问/免费搭建谷歌镜像](https://cndaqiang.github.io/2020/05/02/cloudflare/)
+
+
+## 广告
+- 谷歌广告收入达到$10,需要添加收款地址设置PIN否则停止展示广告，~~等待验证中~~,验证通过,恢复展示
+- ~~审核中： http://union.2345.com/union_e2345.php~~
+- 百度联盟不过审
+- 通过图片和链接的方式给云服务器商推广,如腾讯和西部数码
+```
+     <a href="https://curl.qcloud.com/ph2YL72r" target=_blank><img src="/web/Adsense/tengxun.345x200.jpg" border=0></a>
+```
+- 阿里联盟只能手动选择商品,然后添加文案到网页,且商品有推广时限,也不定向,小流量不适合
+
 
 ## 博客部署到其他平台
 ### 部署博客到群晖NAS
