@@ -117,4 +117,5 @@ cndaqiang@mommint:~/work/vasp/H2O$ mpirun -np 10 vasp_std
 
 
 ------
+>本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>
 >本博客所有文章除特别声明外，均采用 [CC BY-SA 4.0 协议](https://creativecommons.org/licenses/by-sa/4.0/deed.zh) ，转载请注明出处！
