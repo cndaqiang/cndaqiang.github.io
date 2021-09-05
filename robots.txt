@@ -1,4 +1,8 @@
 User-agent: *
 Disallow: /yy
-EOF
+Disallow: /doc
+Disallow: /uploads
+Disallow: /web
+Disallow: /packages
+
 
