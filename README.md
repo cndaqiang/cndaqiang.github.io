@@ -308,7 +308,7 @@ push后, 设置保存pages服务, 在CI里更新
      <a href="https://curl.qcloud.com/ph2YL72r" target=_blank><img src="/web/Adsense/tengxun.345x200.jpg" border=0></a>
 ```
 - 阿里联盟只能手动选择商品,然后添加文案到网页,且商品有推广时限,也不定向,小流量不适合
-
+- 京东联盟,大多数都是商品活动的固定链接. 自定义推广中橱窗推广是js脚本
 
 
 ## 博客部署到其他平台

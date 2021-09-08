@@ -5,9 +5,8 @@
      <i class="iconfont  icon-guanggao2"></i>
      广告
 </div>
-     <!-- 图片广告
-          <a href="https://curl.qcloud.com/ph2YL72r" target=_blank><img src="/web/Adsense/tengxun.345x200.jpg" border=0></a>
-     -->
+{% if site.github %}
+<!--cndaqiang.github.io注册的广告-->
 <!-- 文章内嵌[通用] -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8365330523291002"
      crossorigin="anonymous"></script>
@@ -20,6 +19,10 @@
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+{% else %}
+<!---静态广告-->
+<a href="https://curl.qcloud.com/ph2YL72r" target=_blank><img src="/web/Adsense/tengxun.345x200.jpg" border=0></a>
+{% endif %}
 
 </div>
 {% endif %}
