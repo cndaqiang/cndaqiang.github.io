@@ -232,6 +232,11 @@ spectrum=data[:,[0,2,3,4]] #提取一些数据
         break
 ```
 
+### 加速文件读取速度
+~~**用readlines()比for循环readline快太多了**,下面多次重复测试,readlines的速度都是9s左右,很快~~<br>
+读入后`split`再变成数字的numpy,还真是`readline()`最快,没找到加速方法....
+
+
 ## os模块
 ### 文件重命名删除
 ```python

@@ -59,6 +59,16 @@ RuntimeWarning: divide by zero encountered in double_scalars
 2>3
 ```
 
+### `'builtin_function_or_method' object is not subscriptable`
+```
+    def fermi_dirac_fitting(Es,Os,Ein=np.zeros[1]):
+TypeError: 'builtin_function_or_method' object is not subscriptable
+```
+函数定义时出错,应该是`np.zeros(1)`
+```
+def fermi_dirac_fitting(Es,Os,Ein=np.zeros(1)):
+```
+
 
 
 ------
