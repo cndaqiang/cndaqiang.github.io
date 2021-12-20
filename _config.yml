@@ -54,8 +54,8 @@ dribbble_username:
 # 多说，disqus，来必力
 # 
 #duoshuo_shortname: #hygblog
-disqus_shortname: cndaqiang-github-io
-#City_uid: MTAyMC80MDQ4OC8xNzAxNQ==
+#disqus_shortname: cndaqiang-github-io
+City_uid: MTAyMC80MDQ4OC8xNzAxNQ==
 
 # statistic analysis 统计代码
 # 百度统计 id，将统计代码替换为自己的百度统计id，即
