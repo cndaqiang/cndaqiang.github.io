@@ -32,6 +32,8 @@ ab
 >>> print('a',end=' ');print('b')
 a b
 ```
+print输出不换行, 则指定`end=''`
+
 
 ### 格式化输出
 - %s --- 字符串
@@ -41,6 +43,7 @@ a b
 - %o --- oct 八进制
 - %f --- 浮点数
 - %m.nf --- 整数部分m个，不够补空格，小数部分n个
+- `str.zfill(n)`在前面补0凑够n位
 
 **更多格式先略**
 ```python
@@ -49,6 +52,12 @@ a b
 >>> str='hello,%d,%x,%o' %(45,45,45)
 >>> print(str)
 hello,45,2d,55
+>>> str(2.2).zfill(4)
+'02.2'
+>>> str('21').zfill(4)
+'0021'
+>>> str('ab').zfill(4)
+'00ab'
 ```
 ## format
 Python2.6 开始，新增了一种格式化字符串的函数 str.format()<br>

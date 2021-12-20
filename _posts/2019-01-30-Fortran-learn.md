@@ -1652,6 +1652,17 @@ call system("date",hh)
     walltime=(endtime-starttime)/1000
 ```
 
+VALUES 的取值
+- `VALUE(1)`:	The year
+- `VALUE(2)`:	The month
+- `VALUE(3)`:	The day of the month
+- `VALUE(4)`:	Time difference with UTC in minutes
+- `VALUE(5)`:	The hour of the day
+- `VALUE(6)`:	The minutes of the hour
+- `VALUE(7)`:	The seconds of the minute
+- `VALUE(8)`:	The milliseconds of the second
+
+
 其他时间[CPU_TIME](https://gcc.gnu.org/onlinedocs/gfortran/CPU_005fTIME.html#CPU_005fTIME)与[SYSTEM_CLOCK](https://gcc.gnu.org/onlinedocs/gfortran/SYSTEM_005fCLOCK.html#SYSTEM_005fCLOCK)
 
 ### 暂停一段时间再执行
@@ -1699,6 +1710,9 @@ export t=2010010100
 ```
 
 ### Fortran内置函数
+[Fortran 库参考 Sun™ Studio 11](https://docs.oracle.com/cd/E19422-01/819-4757/819-4757.pdf)
+
+
 
 通用内函数名 | 说明
 -- | --
@@ -1721,6 +1735,23 @@ MODULO (A, P) | 模数函数
 NINT (A [, KIND]) | 最近的整数
 REAL (A [, KIND]) | 转换为实数类型
 SIGN (A, B) | 符号传输,i.e. ABS(A)*sign(B)<br>注意A,B的类型要一致<br>`sign(-10.0,1.0)==10.0; sign(10,-1)==-10`
+
+#### LOG
+- `LOG(real/complex)`计算`real`或`complex`类型的数的自然对数`natural logarithm`, i.e. $ln(x),log_e(x)$
+- `log10(real)`,10为底的对数,虽然GNU的手册说支持complex,ifort也支持complex, gfortran编译会报错`x’ argument of ‘log10’ intrinsic at (1) must be REAL`
+- 更多[Fortran 库参考 Sun™ Studio 11](https://docs.oracle.com/cd/E19422-01/819-4757/819-4757.pdf)
+
+
+```fortran
+real(8) :: x=2.718281828
+complex :: c=(1.0,10.0)
+write(*,*) log(x),'|',log(c)
+```
+输出
+```
+(python37) cndaqiang@mommint:/tmp$ ./a.out
+  0.99999996963214000      |             (2.30756021,1.47112763)
+```
 
 
 ### C和Fortran混编

@@ -28,6 +28,13 @@ type: page
 ## 资源站点
 - 下载过数学物理方法:[教程下载](https://www.jiaochengxiazai.cn/plug/search.asp?key=%E6%95%B0%E5%AD%A6%E7%89%A9%E7%90%86)
 
+## 数据库
+
+- [https://atomly.net/#/](https://atomly.net/#/)
+- [https://webbook.nist.gov/chemistry/form-ser/#opennewwindow](https://webbook.nist.gov/chemistry/form-ser/#opennewwindow)
+- [https://materials.springer.com/](https://materials.springer.com/)
+
+
 
 ## 量角器
 ![](/uploads/2021/04/angle.png)

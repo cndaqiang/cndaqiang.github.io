@@ -4,28 +4,48 @@
 此操作只是为了能够本地预览博客效果，GitHub-page上已有环境
 
 ## 重新安装gem环境,采用bunlde配置环境
+### 关系
+- ruby: 语言,有不同版本
+- RVM: 安装管理Ruby环境各类斯三方插件
+- RubyGems
+>RubyGems是一个方便而强大的Ruby程序包管理器（ package manager），类似RedHat的RPM.它将一个Ruby应用程序打包到一个gem里，作为一个安装单元。无需安装，最新的Ruby版本已经包含RubyGems了。
+-Gem
+>Gem是封装起来的Ruby应用程序或代码库。
+>注：在终端使用的gem命令，是指通过RubyGems管理Gem包。
 
-### rvm安装
+- Gemfile
+>定义你的应用依赖哪些第三方包，bundle根据该配置去寻找这些包。
+
+### homebrew安装ruby
+```
+brew install ruby
+```
+会安装ruby和gem
+
+### Linux/Mac安装rvm
+**Ubuntu卸载系统的Ruby**
 ```
 sudo apt install gnupg #linux
 brew install gnupg #mac
 #下面非root
 gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 \curl -sSL https://get.rvm.io | bash -s stable
-\curl -sSL https://get.rvm.io | bash -s stable --rails
+#\curl -sSL https://get.rvm.io | bash -s stable --rails
 ```
 mac会提示缺少的程序，并自动进行编译安装
 ```
 #mac/Linux
-#source /Users/cndaqiang/.rvm/scripts/rvm
-rvm install "ruby-2.7.0"
+#需要登陆的shell,执行 /bin/bash --login
+source /Users/cndaqiang/.rvm/scripts/rvm
 rvm install "ruby-2.7.0"
 rvm use "ruby-2.7.0" --default 
+#rvm安装在用户目录,不粗要root
 ```
 
 
 ### gem 安装bunlder
 ```
+
 #设置源
 gem sources --add https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --remove https://rubygems.org/
 #更新
@@ -37,14 +57,13 @@ bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/r
 #还需要安装，不然安装jekyll会报错
 gem install nokogiri -v '1.10.9' --source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems/'
 'https://mirrors.tuna.tsinghua.edu.cn/rubygems/'
-退出root模式
-exit
+
 #bunder源
 bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems
 #在blog目录
 cndaqiang@girl:~/code/cndaqiang.github.io$ vi Gemfile
 ```
-Gemfile内容
+**要更新一下Gemfile的时间戳**,其中内容为
 ```
 source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems'
 gem 'github-pages'
@@ -53,7 +72,7 @@ gem 'github-pages'
 ```
 cndaqiang@girl:~/code/cndaqiang.github.io$ bundle install
 Fetching source index from https://mirrors.tuna.tsinghua.edu.cn/rubygems/
-#期间会要求输入密码
+
 ```
 
 ## 运行

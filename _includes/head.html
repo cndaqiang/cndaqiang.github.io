@@ -77,5 +77,15 @@
      crossorigin="anonymous"></script>
 {% endif %}
 
+{% if site.disqus_shortname %}
+<!-- 删除disqus的广告-->
+<!-- Disqus ads block -->
+<style>
+  /*disqus Ads block with CSS*/
+  iframe[src*=ads-iframe]{display:none!important;}
+  div[id*=disqus][style*=margin]{display:none!important;}
+</style>
+{% endif %}
+
 
 </head>
