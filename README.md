@@ -248,15 +248,28 @@ sudo gem install bundler
 bundle install
 bundle exec jekyll serve [-P port]
 ```
-## 博客更新　2020-05-10
+
+## 博客更新 2020-05-02使用cloudflare免费加速
+见[使用cloudflare加速博客访问/免费搭建谷歌镜像](https://cndaqiang.github.io/2020/05/02/cloudflare/)
+
+
+
+## 博客更新 2020-05-10
 全面迁移gitee, Now only for me.<br>
 使用web分支作为所有内容，master分支为公开内容.
 
+
+
 ## 博客更新 2021-04-26
 通过修改`_config.yml`和相关页面, 本地搭建时关闭在线js, 如讨论,广告,联系方式等.
-```
 
+## 博客更新 2022-01-27
+更换[Twikoo](https://twikoo.js.org/#%E7%89%B9%E8%89%B2)评论系统.
+使用Vercel 部署部署,并添加前端代码到`_includes/comments.html`.在`_config.yml`中定义
 ```
+twikooID: https://vercel-comment2-jhck1hsa5-cndaqiang.vercel.app/
+```
+生效
 
 ## 迁移到gitlab
 **仓库名用cndaqiang.gitlab.io**
@@ -312,9 +325,6 @@ push后, 设置保存pages服务, 在CI里更新
    
 }
 ```
-
-## 博客更新 2020-05-02使用cloudflare免费加速
-见[使用cloudflare加速博客访问/免费搭建谷歌镜像](https://cndaqiang.github.io/2020/05/02/cloudflare/)
 
 
 ## 广告

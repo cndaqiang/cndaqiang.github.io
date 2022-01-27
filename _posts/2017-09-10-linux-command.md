@@ -984,6 +984,11 @@ RMM:   7    -0.688651957131E+02    0.23242E-04   -0.10489E-04  6514   0.318E-02 
 ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:1200 %h %p" cndaqiang@mom
 ```
 
+使用ssh映射端口,使用本地的`localhost:2399`访问远程服务器能直连的`10.0.0.252:1234`
+```
+ ssh -N -f -L localhost:2399:10.0.0.252:1234 cndaqiang@IP -p port
+```
+
 ### 等待 
 ```
 sleep .5 # Waits 0.5 second.
@@ -1004,6 +1009,17 @@ Unable to negotiate with 192.168.10.1 port 22: no matching key exchange method f
 解决
 ```
 ssh root@192.168.10.1   -oKexAlgorithms=+diffie-hellman-group1-sha1
+```
+
+#### No such file or directo
+执行脚本,提示`No such file or directo`,因为代码是在windows下写的,转成unix
+```
+(python37) [HUAIROU cndaqiang@login01 i-PI_RUN]$./time_phase.py 
+: No such file or directory
+(python37) [HUAIROU cndaqiang@login01 i-PI_RUN]$dos2unix time_phase.py 
+dos2unix: converting file time_phase.py to Unix format ...
+(python37) [HUAIROU cndaqiang@login01 i-PI_RUN]$./time_phase.py 
+t_scale 1.0 inputfile simulation.xc.xyz.bond3.Sb0.Sb1.dat
 ```
 
 ### 备份磁盘

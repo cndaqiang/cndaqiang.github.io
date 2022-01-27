@@ -38,6 +38,8 @@ plugins: [jekyll-paginate]
 paginate: 6
 
 
+
+
 # other links
 twitter_username: 
 facebook_username: 
@@ -51,11 +53,12 @@ dribbble_username:
 
 
 # comments
-# 多说，disqus，来必力
+# 多说，disqus，来必力，teikooID
 # 
 #duoshuo_shortname: #hygblog
 #disqus_shortname: cndaqiang-github-io
-City_uid: MTAyMC80MDQ4OC8xNzAxNQ==
+#City_uid: MTAyMC80MDQ4OC8xNzAxNQ==
+twikooID: https://vercel-comment2-jhck1hsa5-cndaqiang.vercel.app/
 
 # statistic analysis 统计代码
 # 百度统计 id，将统计代码替换为自己的百度统计id，即

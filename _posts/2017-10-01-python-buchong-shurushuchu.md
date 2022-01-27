@@ -275,6 +275,17 @@ shutil.rmtree(banddir, ignore_errors=True)
 >>> b.readlines()
 ['                    a_1    11.999994   0.000000   0.000000\n']
 ```
+
+## 其他有趣
+### 更新屏幕上的内容
+不断刷新,如显示进度条
+```python
+            sys.stdout.write("\rReadming wfc(%4.2f%%)"%( (ik*nbnd+ibnd+1)/(nkstot*nbnd)*100.0 )+end )
+```
+
+
+
+
 ## 报错
 ### 文件中有特殊的字符,删除
 ```
