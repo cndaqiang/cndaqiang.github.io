@@ -1022,6 +1022,13 @@ dos2unix: converting file time_phase.py to Unix format ...
 t_scale 1.0 inputfile simulation.xc.xyz.bond3.Sb0.Sb1.dat
 ```
 
+#### Transport endpoint is not connected
+当某文件夹由于挂载出现问题，会出现无法访问，报错:`ls: cannot access 'aliyun': Transport endpoint is not connected`
+该文件夹和其父文件夹也会无法删除,只会提示`rm: cannot remove 'aliyun': Is a directory`
+
+卸载该文件夹即可`umount aliyun`
+
+
 ### 备份磁盘
 ```
 dd if=/dev/sdb of=mbr.bin
@@ -1283,7 +1290,35 @@ done
  make install
  PATH=$PATH:/home/users/cndaqiang/soft/gcc8/ImageMagick-7.1.0-10/bin
  convert pwscf.KP.layer.split.initgap.png pwscf.KP.layer.split.initgap.png.jpg
- ```
+```
+
+### 快速对比文件
+```
+diff <(tree -Ci --noreport /home/clouddriver_share/aliyun/互联网文件/电子书/计算机技术-PDF书籍) <(tree -Ci --noreport /home/D1/NFSD1/download/计算机技术-PDF书籍)
+```
+**`-C`显示颜色,`-i`不列出竖线, 但是这样比较,权限不同对应颜色不同也会比较出来**
+```
+(python37) cndaqiang@mommint:/tmp$ mkdir 3 4
+(python37) cndaqiang@mommint:/tmp$ touch 3/hello
+(python37) cndaqiang@mommint:/tmp$ cp 3/hello 4
+(python37) cndaqiang@mommint:/tmp$ chmod +x 4/hello 
+(python37) cndaqiang@mommint:/tmp$ diff <(tree -Ci --noreport 3 ) <(tree -Ci --noreport 4)
+1,2c1,2
+< 3
+< hello
+---
+> 4
+> hello
+```
+忽视权限(颜色)
+```
+(python37) cndaqiang@mommint:/tmp$ diff <(tree -ni --noreport 3 ) <(tree -ni --noreport 4)
+1c1
+< 3
+---
+> 4
+```
+
 
 ## 参考
 [peida-博客-每天一个linux命令目录](http://www.cnblogs.com/peida/)
