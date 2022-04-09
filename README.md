@@ -4,28 +4,48 @@
 此操作只是为了能够本地预览博客效果，GitHub-page上已有环境
 
 ## 重新安装gem环境,采用bunlde配置环境
+### 关系
+- ruby: 语言,有不同版本
+- RVM: 安装管理Ruby环境各类斯三方插件
+- RubyGems
+>RubyGems是一个方便而强大的Ruby程序包管理器（ package manager），类似RedHat的RPM.它将一个Ruby应用程序打包到一个gem里，作为一个安装单元。无需安装，最新的Ruby版本已经包含RubyGems了。
+-Gem
+>Gem是封装起来的Ruby应用程序或代码库。
+>注：在终端使用的gem命令，是指通过RubyGems管理Gem包。
 
-### rvm安装
+- Gemfile
+>定义你的应用依赖哪些第三方包，bundle根据该配置去寻找这些包。
+
+### homebrew安装ruby
+```
+brew install ruby
+```
+会安装ruby和gem
+
+### Linux/Mac安装rvm
+**Ubuntu卸载系统的Ruby**
 ```
 sudo apt install gnupg #linux
 brew install gnupg #mac
 #下面非root
 gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 \curl -sSL https://get.rvm.io | bash -s stable
-\curl -sSL https://get.rvm.io | bash -s stable --rails
+#\curl -sSL https://get.rvm.io | bash -s stable --rails
 ```
 mac会提示缺少的程序，并自动进行编译安装
 ```
 #mac/Linux
-#source /Users/cndaqiang/.rvm/scripts/rvm
-rvm install "ruby-2.7.0"
+#需要登陆的shell,执行 /bin/bash --login
+source /Users/cndaqiang/.rvm/scripts/rvm
 rvm install "ruby-2.7.0"
 rvm use "ruby-2.7.0" --default 
+#rvm安装在用户目录,不粗要root
 ```
 
 
 ### gem 安装bunlder
 ```
+
 #设置源
 gem sources --add https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --remove https://rubygems.org/
 #更新
@@ -37,14 +57,13 @@ bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/r
 #还需要安装，不然安装jekyll会报错
 gem install nokogiri -v '1.10.9' --source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems/'
 'https://mirrors.tuna.tsinghua.edu.cn/rubygems/'
-退出root模式
-exit
+
 #bunder源
 bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems
 #在blog目录
 cndaqiang@girl:~/code/cndaqiang.github.io$ vi Gemfile
 ```
-Gemfile内容
+**要更新一下Gemfile的时间戳**,其中内容为
 ```
 source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems'
 gem 'github-pages'
@@ -53,7 +72,7 @@ gem 'github-pages'
 ```
 cndaqiang@girl:~/code/cndaqiang.github.io$ bundle install
 Fetching source index from https://mirrors.tuna.tsinghua.edu.cn/rubygems/
-#期间会要求输入密码
+
 ```
 
 ## 运行
@@ -76,7 +95,7 @@ jekyll s --host=0.0.0.0
 主要结构
 ```
 /_config.yml 网站主要配置
-/page 导航栏指向的界面
+/page 导航栏指向的界面(只要按照下面的格式去创建文件,放在任意目录都是可以的)
 	
      里面的文本内容的格式 
 	 ---
@@ -86,6 +105,7 @@ jekyll s --host=0.0.0.0
      icon: 图标 #导航栏上的图标
      type: page #页面类型，选择page页面
 ---
+
 /_inclouds 页脚footer，页头head，评论系统等html模块化元素，用于引用组成一个html网页
 /_layouts  主要页面的html内容，引用_incloud,_post等文件内容组成网页
 /_site 自已生成不需操作
@@ -229,15 +249,28 @@ sudo gem install bundler
 bundle install
 bundle exec jekyll serve [-P port]
 ```
-## 博客更新　2020-05-10
+
+## 博客更新 2020-05-02使用cloudflare免费加速
+见[使用cloudflare加速博客访问/免费搭建谷歌镜像](https://cndaqiang.github.io/2020/05/02/cloudflare/)
+
+
+
+## 博客更新 2020-05-10
 全面迁移gitee, Now only for me.<br>
 使用web分支作为所有内容，master分支为公开内容.
 
+
+
 ## 博客更新 2021-04-26
 通过修改`_config.yml`和相关页面, 本地搭建时关闭在线js, 如讨论,广告,联系方式等.
-```
 
+## 博客更新 2022-01-27
+更换[Twikoo](https://twikoo.js.org/#%E7%89%B9%E8%89%B2)评论系统.
+使用Vercel 部署部署,并添加前端代码到`_includes/comments.html`.在`_config.yml`中定义
 ```
+twikooID: https://vercel-comment2-jhck1hsa5-cndaqiang.vercel.app/
+```
+生效
 
 ## 迁移到gitlab
 **仓库名用cndaqiang.gitlab.io**
@@ -294,13 +327,11 @@ push后, 设置保存pages服务, 在CI里更新
 }
 ```
 
-## 博客更新 2020-05-02使用cloudflare免费加速
-见[使用cloudflare加速博客访问/免费搭建谷歌镜像](https://cndaqiang.github.io/2020/05/02/cloudflare/)
-
 
 ## 广告
 - 谷歌广告收入达到$10,需要添加收款地址设置PIN否则停止展示广告，~~等待验证中~~,验证通过,恢复展示
 - - 通用最好: [文章内嵌](https://www.cnblogs.com/cndaqiang/p/15229188.html)
+- - 广告代码有一段通用代码,放在head内即可
 - ~~审核中： http://union.2345.com/union_e2345.php~~
 - 百度联盟不过审
 - 通过图片和链接的方式给云服务器商推广,如腾讯和西部数码

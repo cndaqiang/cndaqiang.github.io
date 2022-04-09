@@ -235,7 +235,8 @@ tar xzvf gsl-1.14.tar.gz
 cd gsl-1.14
 mkdir build; cd build
 ../configure CC=icc --prefix=$ROOT/gsl-1.14
-qsub ../../make.sh
+make -j10
+make install
 
 #octopus
 cd $ROOT/source
@@ -259,6 +260,9 @@ make install
 运行环境，把下面命令的执行结果进行复制，放在octopus运行脚本的前面
 ```
 echo "
+module load compiler/gcc/gcc_8.3.0
+module load compiler/intel/intel-compiler-2019u3
+module load mpi/intelmpi/2019u3
 MATHDIR=$ROOT/math/lib
 export LD_LIBRARY_PATH=$ROOT/libxc-2.0.0/lib:\$LD_LIBRARY_PATH
 export PATH=$ROOT/gsl-1.14/bin:\$PATH

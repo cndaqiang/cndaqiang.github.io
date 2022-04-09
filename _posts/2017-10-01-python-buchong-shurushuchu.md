@@ -32,6 +32,8 @@ ab
 >>> print('a',end=' ');print('b')
 a b
 ```
+print输出不换行, 则指定`end=''`
+
 
 ### 格式化输出
 - %s --- 字符串
@@ -41,6 +43,7 @@ a b
 - %o --- oct 八进制
 - %f --- 浮点数
 - %m.nf --- 整数部分m个，不够补空格，小数部分n个
+- `str.zfill(n)`在前面补0凑够n位
 
 **更多格式先略**
 ```python
@@ -49,6 +52,12 @@ a b
 >>> str='hello,%d,%x,%o' %(45,45,45)
 >>> print(str)
 hello,45,2d,55
+>>> str(2.2).zfill(4)
+'02.2'
+>>> str('21').zfill(4)
+'0021'
+>>> str('ab').zfill(4)
+'00ab'
 ```
 ## format
 Python2.6 开始，新增了一种格式化字符串的函数 str.format()<br>
@@ -232,6 +241,11 @@ spectrum=data[:,[0,2,3,4]] #提取一些数据
         break
 ```
 
+### 加速文件读取速度
+~~**用readlines()比for循环readline快太多了**,下面多次重复测试,readlines的速度都是9s左右,很快~~<br>
+读入后`split`再变成数字的numpy,还真是`readline()`最快,没找到加速方法....
+
+
 ## os模块
 ### 文件重命名删除
 ```python
@@ -261,6 +275,26 @@ shutil.rmtree(banddir, ignore_errors=True)
 >>> b.readlines()
 ['                    a_1    11.999994   0.000000   0.000000\n']
 ```
+
+### 获取进程pid
+```
+>>> os.getpid() #当前进程
+66021
+>>> os.getppid() #父进程
+61928
+```
+
+
+## 其他有趣
+### 更新屏幕上的内容
+不断刷新,如显示进度条
+```python
+            sys.stdout.write("\rReadming wfc(%4.2f%%)"%( (ik*nbnd+ibnd+1)/(nkstot*nbnd)*100.0 )+end )
+```
+
+
+
+
 ## 报错
 ### 文件中有特殊的字符,删除
 ```

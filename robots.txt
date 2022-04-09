@@ -1,2 +1,8 @@
 User-agent: *
-Disallow: /
+Disallow: /yy
+Disallow: /doc
+Disallow: /uploads
+Disallow: /web
+Disallow: /packages
+
+

@@ -171,8 +171,20 @@ BLAS_LIBS=$(MATHDIR)/libblas.so
 export LD_LIBRARY_PATH=/home/users/cndaqiang/soft/gnu4-mvapich/math/lib:$LD_LIBRARY_PATH
 ```
 
+### `free(): invalid next size (normal)`, `double free or corruption ( prev) `
+ALLOCATED的数组,ALLOCATE分配的空间为0,或者调用时超过数组的范围
 
 
+### 能跑完,但`free(): invalid next size (normal)`
+调用变量超过数组维度,不会终止,但是会有错误抛出.
+```
+free(): invalid next size (normal)
+Aborted (core dumped)
+```
+
+
+### forrtl: severe (174): SIGSEGV, segmentation fault occurred 
+调用函数时少参数造成
 
 
 ## SCALAPACK 运行报错
@@ -272,6 +284,7 @@ make: *** Deleting file `test'
 
 ```
 
+
 ```
 forrtl: severe (174): SIGSEGV, segmentation fault occurred
 Image              PC                Routine            Line        Source
@@ -282,12 +295,11 @@ tdpp.x             0000000000BF80F3  Unknown               Unknown  Unknown
 tdpp.x             000000000046B7A8  td_psi_k_mp_test_          80  td_psi_k.f90
 tdpp.x             00000000004079F1  MAIN__                    350  postproc.f90
 ```
+
 虽然报错在第80行` IF(ALLOCATED(mill_mesh))  DEALLOCATE( mill_mesh ), 但是实际错误时, ALLOCATE/定义的数组是`ALLOCATE( mill_mesh(dfftp%nr1x,dfftp%nr2x,dfftp%nr3x) )`, 中途用负下标修改了矩阵内容,结果修改时不报错, DEALLOCATE反而报错了, 如过不执行`DEALLOCATE`会出现下面的警告，改成`ALLOCATE( mill_mesh(-n1x:n1x,-n2x:n2x,-n3x:n3x) )`解决
 
-```
-free(): invalid next size (normal)
-Aborted (core dumped)
-```
+
+
 
 ### `Program received signal SIGFPE: Floating-point exception - erroneous arithmetic operation.`
 ```

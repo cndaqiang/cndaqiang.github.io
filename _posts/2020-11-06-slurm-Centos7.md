@@ -536,6 +536,89 @@ scontrol update NodeName=master State=RESUME
 scontrol update NodeName=client01 State=RESUME
 ```
 
+### `drain`,`drng`的另一个原因
+发现node02无法正常交作业
+```
+[root@mgmt CELL_Z]# sinfo
+PARTITION  AVAIL  TIMELIMIT  NODES  STATE NODELIST
+debug         up      30:00      1  drain node02
+debug         up      30:00      8  alloc node[01,03-09]
+regular       up 7-00:00:00      1  drain node02
+regular       up 7-00:00:00      8  alloc node[01,03-09]
+long          up 30-00:00:0      4  alloc node[06-09]
+intel_long    up 30-00:00:0      2  alloc node[11-12]
+[root@mgmt CELL_Z]# scontrol update NodeName=node02 State=RESUME
+[root@mgmt CELL_Z]# sinfo
+PARTITION  AVAIL  TIMELIMIT  NODES  STATE NODELIST
+debug         up      30:00      1   drng node02
+debug         up      30:00      8  alloc node[01,03-09]
+regular       up 7-00:00:00      1   drng node02
+regular       up 7-00:00:00      8  alloc node[01,03-09]
+long          up 30-00:00:0      4  alloc node[06-09]
+intel_long    up 30-00:00:0      2  alloc node[11-12]
+```
+查看节点现状,看起来是内存过低`Low RealMemory`
+```
+[root@mgmt CELL_Z]# scontrol show node 
+NodeName=node01 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=48 CPUTot=48 CPULoad=49.05
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=(null)
+   NodeAddr=node01 NodeHostName=node01 Version=19.05.8
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=190000 AllocMem=96000 FreeMem=140680 Sockets=2 Boards=1
+   State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=debug,regular 
+   BootTime=2021-08-04T08:14:34 SlurmdStartTime=2021-08-04T08:28:58
+   CfgTRES=cpu=48,mem=190000M,billing=48
+   AllocTRES=cpu=48,mem=96000M
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+NodeName=node02 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=0 CPUTot=48 CPULoad=0.01
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=(null)
+   NodeAddr=node02 NodeHostName=node02 Version=19.05.8
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=190000 AllocMem=0 FreeMem=178416 Sockets=2 Boards=1
+   State=IDLE+DRAIN ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=debug,regular 
+   BootTime=2021-12-10T17:18:42 SlurmdStartTime=2021-12-14T16:05:17
+   CfgTRES=cpu=48,mem=190000M,billing=48
+   AllocTRES=
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   Reason=Low RealMemory [slurm@2021-12-14T16:02:18]
+```
+登录各个节点，查看, 确实是`node02`的内存变少了，应该对应物理问题
+```
+[root@mgmt CELL_Z]# ssh node01
+Last login: Tue Dec 14 16:05:37 2021 from 11.11.11.101
+[root@node01 ~]# free -m
+              total        used        free      shared  buff/cache   available
+Mem:         191907       25383      140673         346       25850      165465
+Swap:         32767           0       32767
+[root@node01 ~]# exit
+logout
+Connection to node01 closed.
+[root@mgmt CELL_Z]# ssh node02
+Last login: Tue Dec 14 16:03:24 2021 from 11.11.11.101
+[root@node02 ~]# free -m
+              total        used        free      shared  buff/cache   available
+Mem:         184599        6004      178413          10         181      178014
+Swap:         32767           0       32767
+```
+在售后来换内存之前，先改配置运行
+```
+NodeName=node02 CPUs=48 Boards=1 SocketsPerBoard=2 CoresPerSocket=24 ThreadsPerCore=1 RealMemory=160000
+```
+
 
 
 

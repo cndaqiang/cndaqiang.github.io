@@ -18,7 +18,7 @@ MPI(openmpi)+Fortran(mpif90)<br>
 
 ## 参考
 ⭐⭐[莫则尧, 袁国兴. 消息传递并行编程环境 MPI[M]. 科学出版社, 2001.](/web/file/2019/mzy_MPI.pdf)<br>
-[Fortran 学习笔记])(/2019/01/30/Fortran-learn/)<br>
+[Fortran 学习笔记](/2019/01/30/Fortran-learn/)<br>
 [USTC超算中心:MPI分布内存并行程序开发-1.ppt](https://scc.ustc.edu.cn/_upload/article/files/e0/98/a9f0c4964abdb3281233d7943f9e/W020100308601033034327.ppt)<br>
 [USTC超算中心:MPI分布内存并行程序开发-2.ppt](https://scc.ustc.edu.cn/_upload/article/files/e0/98/a9f0c4964abdb3281233d7943f9e/W020100308601033282447.ppt)<br>
 [Open MPI v1.10.1 documentation](https://www.open-mpi.org/doc/v1.10/)<br>
