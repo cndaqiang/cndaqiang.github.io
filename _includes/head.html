@@ -71,10 +71,21 @@
 <!---   谷歌cse站内搜索-->
 <!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
 --->
-{% if site.adsense %}
+{% if site.adsenseNo %}
+<!--这里adsenseNo不存在,不再展示页面内广告-->
 <!---谷歌广告单元的通用脚本-->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8365330523291002"
      crossorigin="anonymous"></script>
+{% endif %}
+
+{% if site.disqus_shortname %}
+<!-- 删除disqus的广告-->
+<!-- Disqus ads block -->
+<style>
+  /*disqus Ads block with CSS*/
+  iframe[src*=ads-iframe]{display:none!important;}
+  div[id*=disqus][style*=margin]{display:none!important;}
+</style>
 {% endif %}
 
 

@@ -857,9 +857,9 @@ scp -P 1234 /path/local_filename username@servername:/path
 `:`后面不输入地址就默认是家目录
 ```
 #复制到home目录
-scp -r CaB2F8_107953_moxel0.001_Fren9eV chendq@node8:
+scp -r CaB2F8_107953_moxel0.001_Fren9eV cndaqiang@node8:
 #复制到home目录下的work目录
-scp -r CaB2F8_107953_moxel0.001_Fren9eV chendq@node8:./work
+scp -r CaB2F8_107953_moxel0.001_Fren9eV cndaqiang@node8:./work
 ```
 
 ### 短时间内设置语言为英文
@@ -984,6 +984,11 @@ RMM:   7    -0.688651957131E+02    0.23242E-04   -0.10489E-04  6514   0.318E-02 
 ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:1200 %h %p" cndaqiang@mom
 ```
 
+使用ssh映射端口,使用本地的`localhost:2399`访问远程服务器能直连的`10.0.0.252:1234`
+```
+ ssh -N -f -L localhost:2399:10.0.0.252:1234 cndaqiang@IP -p port
+```
+
 ### 等待 
 ```
 sleep .5 # Waits 0.5 second.
@@ -1005,6 +1010,24 @@ Unable to negotiate with 192.168.10.1 port 22: no matching key exchange method f
 ```
 ssh root@192.168.10.1   -oKexAlgorithms=+diffie-hellman-group1-sha1
 ```
+
+#### No such file or directo
+执行脚本,提示`No such file or directo`,因为代码是在windows下写的,转成unix
+```
+(python37) [HUAIROU cndaqiang@login01 i-PI_RUN]$./time_phase.py 
+: No such file or directory
+(python37) [HUAIROU cndaqiang@login01 i-PI_RUN]$dos2unix time_phase.py 
+dos2unix: converting file time_phase.py to Unix format ...
+(python37) [HUAIROU cndaqiang@login01 i-PI_RUN]$./time_phase.py 
+t_scale 1.0 inputfile simulation.xc.xyz.bond3.Sb0.Sb1.dat
+```
+
+#### Transport endpoint is not connected
+当某文件夹由于挂载出现问题，会出现无法访问，报错:`ls: cannot access 'aliyun': Transport endpoint is not connected`
+该文件夹和其父文件夹也会无法删除,只会提示`rm: cannot remove 'aliyun': Is a directory`
+
+卸载该文件夹即可`umount aliyun`
+
 
 ### 备份磁盘
 ```
@@ -1104,12 +1127,7 @@ cndaqiang@mboy:~$ getconf LONG_BIT
 ```
 
 
-### montage 合并，拆解图片
-合并图片
-```
-montage PDOS_woU.png PDOS_aU.png -tile 2x1  -geometry 500x300  out.png
-montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行数)  -geometry 500x300(-geometry 设置输入图片组成整体时的分辨率)  out.png(输出图片)
-```
+
 
 ### 获取上层目录名dirname
 找到相应程序的include目录
@@ -1128,6 +1146,194 @@ ls $(dirname  $(which mpif90))/../include
 cndaqiang
 ```
 
+### 计算相对路径
+参考: [Linux获取两个路径之间的相对路径](https://www.cnblogs.com/jmliao/p/12400597.html)
+
+```
+cndaqiang@mommint: realpath --relative-to=./NSCF/3,3,3/ $PWD/SCF
+../../SCF
+```
+### 建立相对路径的软连接
+```
+cndaqiang@mommint$ ln -sr ./NSCF/3,3,3/ /tmp/333
+cndaqiang@mommint$ ll /tmp/333
+lrwxrwxrwx 1 cndaqiang cndaqiang 54 Feb 23 16:59 /tmp/333 -> ../home/NFS/NSCF/3,3,3/
+```
+
+### rsync
+#### 断点续传
+```
+rsync -P --rsh=ssh DESKTOP-BMHDQJ3_OVB.vdi 192.168.192.204:/home/cndaqiang
+```
+- `-P`: 是包含了 “–partial –progress”， 部分传送和显示进度
+- `-rsh=ssh` 表示使用ssh协议传送数据
+- `--append-verify` 是续写在复制文件后面,不重新创建`.文件名.cg1deo`文件
+第二次续传时,会先进性校验, 会卡一段时间,然后*显示以超高的网速(与本地复制和网络复制无关,应该是读取数据的校验速度)传输之前传过的片段(???)*,校验完已有数据后会再次卡一段时间,然后恢复正常传输速度
+
+本地断点复制
+```
+cndaqiang@girl:~/17/back$ rsync -P  --append-verify /home/data/DESKTOP-BMHDQJ3_OVB.vdi .
+DESKTOP-BMHDQJ3_OVB.vdi
+ 25,830,457,344  25%  233.25MB/s    0:05:08  ^C
+rsync error: received SIGINT, SIGTERM, or SIGHUP (code 20) at rsync.c(644) [sender=3.1.3]
+rsync error: received SIGINT, SIGTERM, or SIGHUP (code 20) at io.c(513) [generator=3.1.3]
+cndaqiang@girl:~/17/back$ rsync -P  --append-verify /home/data/DESKTOP-BMHDQJ3_OVB.vdi .
+DESKTOP-BMHDQJ3_OVB.vdi
+  3,229,548,544   3%  356.88MB/s    0:04:23
+```
+
+
+### montage 合并，拆解图片
+合并图片
+```
+montage PDOS_woU.png PDOS_aU.png -tile 2x1  -geometry 500x300  out.png
+montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行数)  -geometry 500x300(-geometry 设置输入图片组成整体时的分辨率)  out.png(输出图片)
+```
+
+### 图转换压缩
+
+[Convert PNG with transparency to JPG](https://stackoverflow.com/questions/47954470/convert-png-with-transparency-to-jpg)
+
+[Linux使用imagemagick的convert命令压缩图片，节省服务器空间](https://blog.csdn.net/songwenbinasdf/article/details/51205480)
+
+```
+convert  -background white -alpha background pwscf.KP.layer.split.Excitataion200.png pwscf.KP.layer.split.Excitataion200.png.jpg
+```
+
+- `-background white -alpha background` 可以保证将PNG中透明部分变为白色,不然是默认的黑色
+- **再将PNG转为JPG的过程中，`-resize`和`-quality`参数没有改变转换后的JPG大小**
+- **将PNG转为PNG的过程中,`-resize`和`-quality`参数可能增加大小,而且图片也不清晰**
+- **降低`-quality`是有极限的,真正降低大小还要靠`-resize`**
+- **看起来最好的方式是:`PNG->JPG->压缩`**
+
+```
+(python37) cndaqiang@mommint:~/work/tmp$ convert  -background white -alpha background pwscf.KP.layer.split.Excitataion200.png pwscf.KP.layer.split.Excitataion200.png.jpg
+(python37) cndaqiang@mommint:~/work/tmp$ convert -quality 20% pwscf.KP.layer.split.Excitataion200.png.jpg pwscf.KP.layer.split.Excitataion200.png.jpg.20.jpg
+(python37) cndaqiang@mommint:~/work/tmp$ convert -resize 40%x40% pwscf.KP.layer.split.Excitataion200.png.jpg pwscf.KP.layer.split.Excitataion200.png.jpg.40x40.jpg
+(python37) cndaqiang@mommint:~/work/tmp$ convert -quality 20% pwscf.KP.layer.split.Excitataion200.png.jpg.20.jpg pwscf.KP.layer.split.Excitataion200.png.jpg.20.jpg.20.jpg
+(python37) cndaqiang@mommint:~/work/tmp$ tree -sh
+.
+├── [1.7M]  pwscf.KP.layer.split.Excitataion200.png
+├── [3.3M]  pwscf.KP.layer.split.Excitataion200.png.jpg
+├── [968K]  pwscf.KP.layer.split.Excitataion200.png.jpg.20.jpg
+├── [956K]  pwscf.KP.layer.split.Excitataion200.png.jpg.20.jpg.20.jpg
+└── [886K]  pwscf.KP.layer.split.Excitataion200.png.jpg.40x40.jpg
+
+0 directories, 5 files
+```
+![](/uploads/2017/09/convertfig.png)
+
+#### 批量处理
+```
+find ./ -regex '.*\(jpg\|JPG\|png\|jpeg\)' -size +500k -exec 压缩命令 \;
+```
+如
+```bash
+find ./ -regex '.*\(PNG\|png\)' -size +500k -exec convert -background white -alpha background  {} {}.jpg  \;
+```
+或者
+```bash
+#!/usr/bin/env bash
+##################################
+# Author : cndaqiang             #
+# Update : 2021-10-12            #
+# Build  : 2021-10-12            #
+# What   : 压缩png  #
+#################################
+for i in $( find ./ -regex '.*\(PNG\|png\)' -size +500k  )
+do
+  ifig=$i
+  ofig=$i.jpg
+  convert -background white -alpha background  $ifig $ofig
+  convert -resize 40%x40%  $ofig $ofig
+  convert -quality 20% $ofig $ofig
+  printf "\r"$ifig
+  #
+  if [ -f $ofig ]
+  then
+    isize=$(du -k $ifig | awk  '{ print $1 }' )
+    osize=$(du -k $ofig | awk  '{ print $1 }' )
+    if [ $osize -lt $isize ]
+    then
+      rm -rf $ifig
+    else
+      rm -rf $ofig
+    fi
+  fi
+done
+```
+
+```bash
+#!/usr/bin/env bash
+##################################
+# Author : cndaqiang             #
+# Update : 2021-10-12            #
+# Build  : 2021-10-12            #
+# What   : 压缩JPG  #
+#################################
+for i in $( find ./ -regex '.*\(jpg\|JPEG\|jpeg\)' -size +500k  )
+do
+  ifig=$i
+  ofig=$i.jpg
+  convert -resize 40%x40%  $ifig $ofig
+  convert -quality 20% $ofig $ofig
+  printf "\r"$ifig
+  #
+  if [ -f $ofig ]
+  then
+    isize=$(du -k $ifig | awk  '{ print $1 }' )
+    osize=$(du -k $ofig | awk  '{ print $1 }' )
+    if [ $osize -lt $isize ]
+    then
+      mv $ofig $ifig
+    else
+      rm -rf $ofig
+    fi
+  fi
+done
+```
+
+#### 编译安装
+
+```
+ wget --no-check-certificate https://download.imagemagick.org/ImageMagick/download/ImageMagick.tar.gz
+ tar xavf ImageMagick.tar.gz
+ cd ImageMagick-7.1.0-10/
+ ./configure --prefix=/home/users/cndaqiang/soft/gcc8/ImageMagick-7.1.0-10
+ make -j20
+ make install
+ PATH=$PATH:/home/users/cndaqiang/soft/gcc8/ImageMagick-7.1.0-10/bin
+ convert pwscf.KP.layer.split.initgap.png pwscf.KP.layer.split.initgap.png.jpg
+```
+
+### 快速对比文件
+```
+diff <(tree -Ci --noreport /home/clouddriver_share/aliyun/互联网文件/电子书/计算机技术-PDF书籍) <(tree -Ci --noreport /home/D1/NFSD1/download/计算机技术-PDF书籍)
+```
+**`-C`显示颜色,`-i`不列出竖线, 但是这样比较,权限不同对应颜色不同也会比较出来**
+```
+(python37) cndaqiang@mommint:/tmp$ mkdir 3 4
+(python37) cndaqiang@mommint:/tmp$ touch 3/hello
+(python37) cndaqiang@mommint:/tmp$ cp 3/hello 4
+(python37) cndaqiang@mommint:/tmp$ chmod +x 4/hello 
+(python37) cndaqiang@mommint:/tmp$ diff <(tree -Ci --noreport 3 ) <(tree -Ci --noreport 4)
+1,2c1,2
+< 3
+< hello
+---
+> 4
+> hello
+```
+忽视权限(颜色)
+```
+(python37) cndaqiang@mommint:/tmp$ diff <(tree -ni --noreport 3 ) <(tree -ni --noreport 4)
+1c1
+< 3
+---
+> 4
+```
+
+
 ## 参考
 [peida-博客-每天一个linux命令目录](http://www.cnblogs.com/peida/)
 
@@ -1141,7 +1347,7 @@ cndaqiang
 
 [Linux查看系统开机时间](https://developer.aliyun.com/article/34206)
 
-
+[linux scp 断点续传 rsync 命令简介](https://blog.csdn.net/whatday/article/details/105706373)
 
 
 

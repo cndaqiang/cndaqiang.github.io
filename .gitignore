@@ -2,5 +2,6 @@ nohup.out
 _site/*
 .DS_Store
 ._*
+.sass-cache/*
 
 public.hexie.txt public.nas.sh public.sh public.txt public.west.sh public.west.txt

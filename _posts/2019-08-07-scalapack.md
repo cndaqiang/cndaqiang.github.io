@@ -821,6 +821,37 @@ from {0,3}, pnum=3, Contxt=0, in routine 'PDGEMM'.
 ```
 
 
+## 代码阅读
+
+### `numroc` 辅助数据分块
+
+```
+  INTEGER FUNCTION numroc( N, NB, IPROC, ISRCPROC, NPROCS )
+ *  N         (global input) INTEGER
+ *            The number of rows/columns in distributed matrix.
+ *  NB        (global input) INTEGER
+ *            Block size, size of the blocks the distributed matrix is
+ *            split into.
+ *  IPROC     (local input) INTEGER
+ *            The coordinate of the process whose local array row or
+ *            column is to be determined.
+ *  ISRCPROC  (global input) INTEGER
+ *            The coordinate of the process that possesses the first
+ *            row or column of the distributed matrix.
+ *  NPROCS    (global input) INTEGER
+ *            The total number processes over which the matrix is
+ *            distributed.
+ ```
+
+ - 首先将`N`分成`N=nblock*nb+x`
+ - 然后把`nblock`分到各个node上
+ - - 每个node分到`int(nblock/node)*nb`, 还剩下`y`个block,`y<nodes`
+ - - `node=0~y-1`分别增加一个`block*nb`,共`(int(nblock/node)+1)*nb`
+ - - `node==y`分到`x`, 共`int(nblock/node)*nb+x`
+ - - `node > y`共`int(nblock/node)*nb`
+
+ IPROC即`node`,`ISRCPROC`表示对node重新排序,`ISRCPROC`对应`0`node
+
 
 
 ------
