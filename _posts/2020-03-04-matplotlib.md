@@ -332,8 +332,14 @@ plt.hlines(0, 0, 0.5, colors = "r", linestyles = "dashed")
 ```
 matplotlib.pyplot.axvline(x=0, ymin=0, ymax=1, hold=None, **kwargs)
 vlines(x, ymin, ymax)
-
 ```
+
+#### 透明背景
+```
+      plt.savefig(filename,dpi=200,transparent=True)
+```
+
+
 
 ## 扇形图
 ```
