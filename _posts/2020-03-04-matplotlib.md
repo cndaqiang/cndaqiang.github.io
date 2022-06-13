@@ -390,6 +390,154 @@ axs.scatter(xpoint, EIG[:,ispin,ibnd], s=add  [:,ispin,ibnd]*scale, color= "red"
 ```
 
 
+## 最新理解
+matplot皆是基于对象画图.
+- 每一个图,每一条线都是一个对象,可以进行设置
+- 注意`subplots`和`subplot`含义不同
+
+### 一些有助于学习的命令
+- `dir(plt)` 查看该对象的子属性和方法
+- `plt.getp(plt)` 查看该对象可以设置的图形属性,如背景色,字体等
+- `plt.setp(plt,key="value")` 设置该对象(或者群组)的图形属性,同上
+- 查看源代码  
+```python
+import inspect
+print(inspect.getsource(plt.plot))
+```
+
+### plt,figure,axes,axis的关系
+- `plt`只有一个,用于生成和调控各种对象  
+  - Artist对象包括简单类型(e.g. 图形,文字),**容器类型(Figure,Axes,Axis)**
+- `figure`和Matlab中的Figure类似,**每一个figure就是一个画图窗口,不同figure之间是独立的**  
+  - 创建figure `plt.figure()`(一个大图),`plt.subplots()`(带子图)
+  - `figure`的编号从`1`开始  
+     查看有几个figure: `plt.get_fignums()`  
+     切换活动figure`plt.figure(i)`,i=1,2,...,N in `plt.get_fignums()`    
+  - ,`plt.savefig("test.png")`只能保存当前的活动figure
+  - **`plt.gcf()`获得当前的figure对象**
+  - 重新调整大小`plt.gcf().set_size_inches(1, 3)`
+- axes,子图,**绘图子区域**  
+  - axes是figure的下层对象,`plt.gcf().axes[0-N]`是figure上包含的一些列的子图区域
+  - 每个figure中可以创建多个子图,即划分成多个绘图区域
+  - 创建子图的方法  
+  `plt.subplots(2,2)`在创建figure时创建  
+  `plt.subplot(231)` 在当前的figure中添加一个  
+  `plt.subplot2grid()` 更加的随意,给初始点和尺寸创建
+  - 子图的作用: 画多幅图,把colorbar画到别的子图上,实现colorbar随意位置
+  - **`plt.gca()`获得当前的axes**
+  - 可以在一个figure上不断添加绘图区域,如果新增的区域和之前的区域重合,则旧区域会被删除,如  
+```python
+#先按照2x2创建了4个子图
+fig,axs=plt.subplots(2,2)
+#创建了4个子图,gca()默认指向第一个子图,axs是所有子图的集合
+plt.gca().patch.set_facecolor("green")
+axs[0,1].patch.set_facecolor("blue")
+#修改axis对象
+axis=axs[0,1].xaxis
+axis.set(ticks=[])
+#
+#又按照2x3的规则,在2x3的第一个区创建了一个子图,原来的第一个子图就会被覆盖掉
+axs231=plt.subplot(231)
+#只创建了一个新子图,等号左边赋值,则后面直接可以用axs231操纵这个区域
+plt.gca().patch.set_facecolor("red")
+plt.plot(x,x/(x+1))
+#
+#又按照把figure分成4x4份,以行3列1为起点,选取行1列2的区域,最初2x2的左下角会被覆盖掉
+plt.subplot2grid((4,4),(3,0),rowspan=1,colspan=2)
+#只创建了一个新子图
+plt.gca().patch.set_facecolor("yellow")
+plt.plot(x,x)
+#
+#所有的子图都存在列表plt.gcf().axes里,新增的子图顺序在前面
+plt.gcf().axes[0].plot(x,x*0+1)
+plt.gcf().axes[1].plot(x,x*0+10)
+plt.gcf().axes[2].plot(x,x*0+20)
+plt.gcf().axes[3].plot(x,x*0+30)
+#
+plt.savefig("test.png")
+```
+![](/uploads/2022/04/subpot.png)
+- **axis,图的元素,刻度线,坐标轴,标题等**  
+  - axis是axes的下层对象,`plt.gca().xaxis`是axes上的x轴
+  - axes提供了一些创建axis的方法,通过`dir(plt.gca())`发现`plt.gca().set_xlabel("xlabel")`
+  - plt也提供了一些,如`plt.xlabel("XXlabel")`
+  - 获得x轴并修改,结果如上图  
+```python
+#修改axis对象
+axis=axs[0,1].xaxis
+axis.set(ticks=[])
+```
+
+
+### 修改对象的性质
+- `plt.getp`查看,然后使用`plt.setp`,`.set_**`的方式修改  
+   - 问题是,查看到的性质,并不能全部套用`plt.setp`,`.set_**`的方式去修改
+- 不同层级的对象可能体统实现相同功能的方法,如  
+`plt.xlabel("XXlabel")`和`plt.gca().set_xlabel("xlabel")`
+
+
+#### getp可以查看的性质修改
+- `getp`,查看对象的性质  
+  - `plt.getp(fig)`,`plt.getp(axes)`,`plt.getp(axis)`  
+  - 示例`plt.getp(plt.gca().xaxis)`
+```
+    ticks_direction = ['in' 'in' 'in' 'in']
+    ticks_position = bottom
+```
+- `getp`查看到的性质,都可以用`setp`修改, 示例  
+`plt.setp(plt.gca().xaxis,ticks_position = "top")`  
+`setp`的好处是可以同时设置一组对象,如`plt.setp(plt.gcf().axes,xlabel="xlabel")`  
+然而问题是,我们不查手册,不好设置输入,如`plt.setp(plt.gca().xaxis,ticks_direction = ['in' 'in' 'in' 'in'] )` 这样设置就会报错  
+- 和setp等价的方式,每个对象的`a.set_性质()`
+`plt.gca().xaxis.set_ticks_position("bottom")`  
+同样的问题,不存在`plt.gca().xaxis.set_ticks_direction(['in' 'in' 'in' 'in'])`
+
+#### dir()直接查看有哪些方法可以调用进行修改
+
+```
+dir(plt)
+[
+#...
+ 'xscale',
+ 'xticks',
+ 'ylabel',
+ 'ylim',
+ 'yscale',
+ 'yticks']
+ ]
+```
+
+#### 搜索引擎...
+
+
+## 默认画图参数设置
+### 参数设置
+```python
+#设置默认字体大小
+plt.rcParams['font.size']=fontsize
+plt.rcParams['axes.labelsize']=fontsize+2
+
+plt.rcParams['xtick.major.width']=majorticksw
+plt.rcParams['ytick.major.width']=majorticksw
+plt.rcParams['xtick.minor.width']=minorticksw
+plt.rcParams['ytick.minor.width']=minorticksw
+plt.rcParams['xtick.direction']="in"
+plt.rcParams['ytick.direction']="in"
+```
+### 文件设置
+```
+import matplotlib as mpl
+mpl.get_configdir()
+```
+修改返回目录`'/home/cndaqiang/.config/matplotlib'`的`matplotlibrc`文件,或者运行目录的`matplotlibrc`文件,
+```
+#按照字典的方式写好
+font.size           : 100.0
+```
+可以参考`~/anaconda3/./lib/python3.7/site-packages/matplotlib/mpl-data/matplotlibrc`文件
+
+
+
 
 ------
 >本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>

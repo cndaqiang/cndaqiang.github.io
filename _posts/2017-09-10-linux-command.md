@@ -1189,8 +1189,23 @@ DESKTOP-BMHDQJ3_OVB.vdi
 montage PDOS_woU.png PDOS_aU.png -tile 2x1  -geometry 500x300  out.png
 montage PDOS_woU.png PDOS_aU.png (各个输入图片) -tile 2x1(-tile 列数x行数)  -geometry 500x300(-geometry 设置输入图片组成整体时的分辨率)  out.png(输出图片)
 ```
+### ImageMagick 图片编辑
 
-### 图转换压缩
+#### 编译安装
+
+```
+ wget --no-check-certificate https://download.imagemagick.org/ImageMagick/download/ImageMagick.tar.gz
+ tar xavf ImageMagick.tar.gz
+ cd ImageMagick-7.1.0-10/
+ ./configure --prefix=/home/users/cndaqiang/soft/gcc8/ImageMagick-7.1.0-10
+ make -j20
+ make install
+ PATH=$PATH:/home/users/cndaqiang/soft/gcc8/ImageMagick-7.1.0-10/bin
+ convert pwscf.KP.layer.split.initgap.png pwscf.KP.layer.split.initgap.png.jpg
+```
+
+
+#### 图转换压缩
 
 [Convert PNG with transparency to JPG](https://stackoverflow.com/questions/47954470/convert-png-with-transparency-to-jpg)
 
@@ -1222,6 +1237,14 @@ convert  -background white -alpha background pwscf.KP.layer.split.Excitataion200
 0 directories, 5 files
 ```
 ![](/uploads/2017/09/convertfig.png)
+
+
+#### 添加文字
+```
+convert -draw "text 500,50 'cndaqiang txt' " -fill red -pointsize 20 2.png ~/work/2t.png
+```
+
+
 
 #### 批量处理
 ```
@@ -1293,18 +1316,6 @@ do
 done
 ```
 
-#### 编译安装
-
-```
- wget --no-check-certificate https://download.imagemagick.org/ImageMagick/download/ImageMagick.tar.gz
- tar xavf ImageMagick.tar.gz
- cd ImageMagick-7.1.0-10/
- ./configure --prefix=/home/users/cndaqiang/soft/gcc8/ImageMagick-7.1.0-10
- make -j20
- make install
- PATH=$PATH:/home/users/cndaqiang/soft/gcc8/ImageMagick-7.1.0-10/bin
- convert pwscf.KP.layer.split.initgap.png pwscf.KP.layer.split.initgap.png.jpg
-```
 
 ### 快速对比文件
 ```
@@ -1331,6 +1342,60 @@ diff <(tree -Ci --noreport /home/clouddriver_share/aliyun/互联网文件/电子
 < 3
 ---
 > 4
+```
+
+### 用户发送信息
+发送方`write usernamr pts/N`,结束用`ctrl+d`
+```
+(python37) cndaqiang@mommint:~$ who
+cndaqiang pts/0        2022-05-19 21:39 (192.168.192.167)
+cndaqiang pts/2        2022-05-19 21:39 (192.168.192.167)
+(python37) cndaqiang@mommint:~$ write cndaqiang pts/2
+hello
+```
+接收方会提示
+```
+(python37) cndaqiang@mommint:~$
+Message from cndaqiang@mommint on pts/0 at 21:39 ...
+hello
+EOF
+
+(python37) cndaqiang@mommint:~$
+```
+
+广播信息
+```
+(python37) cndaqiang@mommint:~$ wall "大家好"
+
+Broadcast message from cndaqiang@mommint (pts/0) (Thu May 19 21:41:34 2022):
+
+大家好
+
+(python37) cndaqiang@mommint:~$
+```
+
+### 把内存挂载成硬盘
+vps内存大,把内存挂成硬盘,增加pt做种空间
+```
+cndaqiang@oracle:~$ free -g
+               total        used        free      shared  buff/cache   available
+Mem:              23           2           0           0          20          20
+Swap:              0           0           0
+cndaqiang@oracle:~$ ls
+Downloads  soft
+cndaqiang@oracle:~$ mkdir neicun
+cndaqiang@oracle:~$ sudo mount -t tmpfs -o size=10G tmpfs neicun
+[sudo] password for cndaqiang:
+cndaqiang@oracle:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+udev             12G     0   12G   0% /dev
+tmpfs           2.4G  820K  2.4G   1% /run
+/dev/sda2        45G   40G  2.4G  95% /
+tmpfs            12G     0   12G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/sda1       512M  4.5M  508M   1% /boot/efi
+tmpfs           2.4G     0  2.4G   0% /run/user/1000
+tmpfs            10G     0   10G   0% /home/cndaqiang/neicun
 ```
 
 
