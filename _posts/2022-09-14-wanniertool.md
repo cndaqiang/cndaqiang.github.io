@@ -48,7 +48,6 @@ cd $ROOT/source
 wget https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/a/arpack-static-3.1.3-2.el7.x86_64.rpm
 wget http://mirror.centos.org/centos/7/os/x86_64/Packages/libgfortran-static-4.8.5-44.el7.x86_64.rpm
 for i in $( ls *.rpm );do rpm2cpio $i | cpio -idvm ; done
-  $(ls arpack-static*) 
 #安装WannierTools
 cd $ROOT/source
 git clone https://github.com/quanshengwu/wannier_tools.git
