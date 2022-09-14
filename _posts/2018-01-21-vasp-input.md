@@ -114,6 +114,7 @@ bbs.与结构优化相比,算DOS的时候,需要用到更多的K点数目,这是
 - 数据网站
 
 ### 格式
+**必须前面有Selective dynamics之后的T、F才会生效**
 ```
 AlN bulk (Title) 首行注释
 1.0   缩放系数

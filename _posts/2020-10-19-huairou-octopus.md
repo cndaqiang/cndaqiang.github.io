@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "怀柔计算中心/SSLAB编译octopus记录"
+title:  "怀柔计算中心/SSLAB编译octopus记录及Intel编译报错"
 date:   2020-10-19 21:48:00 +0800
 categories: DFT
 tags:  gnu octopus
@@ -271,6 +271,18 @@ export LD_LIBRARY_PATH=$ROOT/fftw-3.3.3/lib:\$LD_LIBRARY_PATH
 export PATH=$ROOT/fftw-3.3.3/bin:\$PATH
 "
 ```
+
+
+## 备注
+### Intel编译报错
+```
+/lib/cpp -ansi -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -isystem /home/chendq/anaconda3/envs/python37/include -I../src/include -I../src/include -I../external_libs/spglib-1.9.9/src -I../liboct_parser -I/home/chendq/soft/intel20u4/gsl-1.14/include -I/usr/include -I/home/apps/intel20u4/compilers_and_libraries_2020.4.304/linux/mkl/include/fftw -DSHARE_DIR='"/home/chendq/soft/intel20u4/octopus-10.4/share/octopus"' -I../external_libs/metis-5.1/include/ -I. basic/messages.F90 | \
+  ../build/preprocess.pl - \
+  "" "yes" > basic/messages_oct.f90
+mpiifort -O3 -fpp -I ../external_libs/bpdn -I ../external_libs/dftd3 -I ../external_libs/spglib-1.9.9/src/ -I /home/chendq/soft/intel20u4/libxc-4.3.4/include -I/home/apps/intel20u4/compilers_and_libraries_2020.4.304/linux/mkl/include/fftw  -c  -o basic/messages.o basic/messages_oct.f90
+```
+~~由于`/lib/cpp`预处理`basic/messages.F90`文件出错,指定Fortran的预处理即可~~
+删除`.bashrc`中的环境,重新load编译器后没有报错
 
 
 

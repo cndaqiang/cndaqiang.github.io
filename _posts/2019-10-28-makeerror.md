@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[挖坑]程序编译报错"
+title:  "[挖坑]程序编译运行报错"
 date:   2019-10-28 15:45:00 +0800
 categories: Fortran
 tags:  gnu Fortran mpif90 gfortran
@@ -171,8 +171,49 @@ BLAS_LIBS=$(MATHDIR)/libblas.so
 export LD_LIBRARY_PATH=/home/users/cndaqiang/soft/gnu4-mvapich/math/lib:$LD_LIBRARY_PATH
 ```
 
+类似的报错,注意找不到的是**libimf.so**,而不是`icx-lto.so`
+```
+[cndaqiang@login002 q-e-qe-6.6]$ ifort test.f90
+ld: /share/apps/intel-oneAPI-2021/compiler/2022.0.2/linux/bin/intel64/../../bin/intel64/../../lib/icx-lto.so: 加载插件程序时发生错误: libimf.so: 无法打开共享对象文件: 没有那个文件或目录
+```
+通过`ldd`可以进一步寻找,哪些都没有找到
+```
+[chendq@login002 q-e-qe-6.6]$ ldd /share/apps/intel-oneAPI-2021/compiler/2022.0.2/linux/bin/intel64/../../bin/intel64/../../lib/icx-lto.so
+	linux-vdso.so.1 =>  (0x00007ffd247f6000)
+	librt.so.1 => /lib64/librt.so.1 (0x00002b69ceaac000)
+	libdl.so.2 => /lib64/libdl.so.2 (0x00002b69cecb4000)
+	libimf.so => not found
+	libm.so.6 => /lib64/libm.so.6 (0x00002b69ceeb8000)
+	libz.so.1 => /lib64/libz.so.1 (0x00002b69cf1ba000)
+	libsvml.so => not found
+	libirng.so => not found
+	libgcc_s.so.1 => /lib64/libgcc_s.so.1 (0x00002b69cf3d0000)
+	libintlc.so.5 => not found
+	libpthread.so.0 => /lib64/libpthread.so.0 (0x00002b69cf5e6000)
+	libc.so.6 => /lib64/libc.so.6 (0x00002b69cf802000)
+	/lib64/ld-linux-x86-64.so.2 (0x00002b69cb50a000)
+```
+
 ### `free(): invalid next size (normal)`, `double free or corruption ( prev) `
 ALLOCATED的数组,ALLOCATE分配的空间为0,或者调用时超过数组的范围
+
+### `*** Error in `q_epsilon2.x': corrupted size vs. prev_size: 0x0000000003595a70 ***`
+通过提示找到报错行是`DEALLOCATE ( focc, wgrid, STAT=ierr)`命令. <br>
+是调用`focc`时,使用了`focc(0)`,访问了不属于`focc`的区域,所以在deallocate focc时,检测到的尺寸和allocate时不同<br>
+解决办法: 合理设置输入参数/代码,focc从focc(1)开始访问
+```
+forrtl: severe (174): SIGSEGV, segmentation fault occurred
+Image              PC                Routine            Line        Source
+q_epsilon2.x       0000000000C222DD  Unknown               Unknown  Unknown
+libpthread-2.17.s  00002AF0FDC06630  Unknown               Unknown  Unknown
+libc-2.17.so       00002AF0FE19AAEC  cfree                 Unknown  Unknown
+q_epsilon2.x       0000000000C6409D  Unknown               Unknown  Unknown
+q_epsilon2.x       00000000004081AF  MAIN__                    140  epsilon.f90
+q_epsilon2.x       000000000040671E  Unknown               Unknown  Unknown
+libc-2.17.so       00002AF0FE137555  __libc_start_main     Unknown  Unknown
+q_epsilon2.x       0000000000406629  Unknown               Unknown  Unknown
+```
+
 
 
 ### 能跑完,但`free(): invalid next size (normal)`
@@ -184,7 +225,8 @@ Aborted (core dumped)
 
 
 ### forrtl: severe (174): SIGSEGV, segmentation fault occurred 
-调用函数时少参数造成
+- 调用函数时少参数造成
+_ 原因很多
 
 
 ## SCALAPACK 运行报错

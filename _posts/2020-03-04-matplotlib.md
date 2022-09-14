@@ -132,6 +132,8 @@ axs.yaxis.set_major_formatter(mtick.FormatStrFormatter('%1.1e'))
 ```python
 cmap = plt.cm.get_cmap("viridis", n)
 colors = cmap(np.linspace(0, 1, n))
+#循环取颜色
+color=colors[i%len(colors)]
 ```
 
 更多颜色序列
