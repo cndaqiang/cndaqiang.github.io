@@ -165,6 +165,24 @@ parameter 常量
 
 ### 数值型
 
+#### huge统计变量范围
+```
+INTEGER :: i
+real :: ii
+real(8) :: iii
+write(*,*) "type:huge"
+write(*,*) 'integer',huge(i)
+write(*,*) 'real',huge(ii)
+write(*,*) 'real(8)',huge(iii)
+```
+结果
+```
+ type:huge
+ integer  2147483647
+ real   3.40282347E+38
+ real(8)   1.7976931348623157E+308
+```
+
 #### 赋值
 
 ```

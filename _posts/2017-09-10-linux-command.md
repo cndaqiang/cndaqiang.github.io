@@ -1398,6 +1398,17 @@ tmpfs           2.4G     0  2.4G   0% /run/user/1000
 tmpfs            10G     0   10G   0% /home/cndaqiang/neicun
 ```
 
+### 统计命令用时
+```
+time command
+```
+示例
+```
+cndaqiang@mac ~$ time sleep 2
+real	0m2.100s
+user	0m0.002s
+sys	0m0.007s
+```
 
 ## 参考
 [peida-博客-每天一个linux命令目录](http://www.cnblogs.com/peida/)

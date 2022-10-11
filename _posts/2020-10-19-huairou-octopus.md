@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "怀柔计算中心/SSLAB编译octopus记录及Intel编译报错"
+title:  "怀柔计算中心/SSLAB/新SSLAB编译octopus记录及Intel编译报错"
 date:   2020-10-19 21:48:00 +0800
 categories: DFT
 tags:  gnu octopus
@@ -272,6 +272,15 @@ export PATH=$ROOT/fftw-3.3.3/bin:\$PATH
 "
 ```
 
+## [oneapi] 新SSLAB 安装octopus10.4
+下载一键安装脚本[install.octopus.sslab2.oneapi.sh](/web/file/2022/install.octopus.sslab2.oneapi.sh),执行安装命令
+```
+bash install.octopus.sslab2.oneapi.sh
+```
+或者在线安装
+```
+curl http://cndaqiang.github.io/web/file/2022/install.octopus.sslab2.oneapi.sh | bash
+```
 
 ## 备注
 ### Intel编译报错

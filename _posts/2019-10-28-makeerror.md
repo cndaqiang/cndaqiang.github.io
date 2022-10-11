@@ -145,7 +145,7 @@ Error: Expected array subscript at (1)
 ```
 换行即可, **续行符不能是中文句号**
 
-## `file not recognized: File truncated`
+### `file not recognized: File truncated`
 ```
 /home/cndaqiang/code/intel/lib/libelpa.a: file not recognized: File truncated
 ```
@@ -154,8 +154,21 @@ Error: Expected array subscript at (1)
 touch libelpa.a
 ```
 
+### `configure: error: something wrong with LDFLAGS="-L/usr/local/opt/ruby/lib"`
+环境变量设置了`LDFLAGS="-L/usr/local/opt/ruby/lib"`,而实际上没有该目录. 
+修改环境变量,或者`unset LDFLAGS`后继续编译
 
 
+### `implicit declaration of function 'BI_imvcopy' is invalid in C99`
+Mac的clang默认不允许编译c文件时,不声明直接调用. 解决方案可以把声明补上,或者添加到头文件. 但是这是一个程序包,总不能一个个文件去改,因此添加编译参数
+```
+-Wno-implicit-function-declaration
+```
+
+### `ld: cannot find -lstdc++`
+- ld报错缺少库,有可能是动态库的目录没有配置对,此时通过`export LD_LIBRARY_PATH=ADDPATH:$LD_LIBRARY_PATH`,可以解决.
+- 但如果还是报错找不到,就只能说是库和编译器不兼容. 此时通过制定合适(新)的编译器解决,如`export PATH=/share/apps/gcc-10.2.0/bin:$PATH`
+- 上面的情况出现在调用icc的时候, 配合gcc10和gcc12都可以
 
 
 ## 运行报错

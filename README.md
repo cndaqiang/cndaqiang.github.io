@@ -23,16 +23,28 @@ brew install ruby
 会安装ruby和gem
 
 ### Linux/Mac安装rvm
-**Ubuntu卸载系统的Ruby**
+**Ubuntu卸载系统的Ruby,mac协助brew安装的Ruby,清除环境变量设置**,安装gpg公钥
 ```
 sudo apt install gnupg #linux
 brew install gnupg #mac
 #下面非root
 gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-\curl -sSL https://get.rvm.io | bash -s stable
-#\curl -sSL https://get.rvm.io | bash -s stable --rails
+#如果报错,则换个服务器
+cndaqiang@macmini blog.cndaqiang$ gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+gpg: 从公钥服务器接收失败：Server indicated a failure
+cndaqiang@macmini blog.cndaqiang$ gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+gpg: 密钥 105BD0E739499BDB： 1 个重复签名被移除
+gpg: /Users/cndaqiang/.gnupg/trustdb.gpg：建立了信任度数据库
+gpg: 密钥 105BD0E739499BDB：公钥 “Piotr Kuczynski <piotr.kuczynski@gmail.com>” 已导入
+gpg: 密钥 3804BB82D39DC0E3：公钥 “Michal Papis (RVM signing) <mpapis@gmail.com>” 已导入
+gpg: 处理的总数：2
+gpg:               已导入：2
 ```
-mac会提示缺少的程序，并自动进行编译安装
+安装rvm
+```
+curl -sSL https://get.rvm.io | bash -s stable
+```
+安装tuby2.7.0,mac会提示缺少的程序，并自动进行编译安装,编译失败根据configure结果修改即可
 ```
 #mac/Linux
 #需要登陆的shell,执行 /bin/bash --login
@@ -56,7 +68,6 @@ gem install bundler
 bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems
 #还需要安装，不然安装jekyll会报错
 gem install nokogiri -v '1.10.9' --source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems/'
-'https://mirrors.tuna.tsinghua.edu.cn/rubygems/'
 
 #bunder源
 bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems
@@ -68,7 +79,7 @@ cndaqiang@girl:~/code/cndaqiang.github.io$ vi Gemfile
 source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems'
 gem 'github-pages'
 ```
-继续安装
+`rm Gemfile.loc`, 继续安装
 ```
 cndaqiang@girl:~/code/cndaqiang.github.io$ bundle install
 Fetching source index from https://mirrors.tuna.tsinghua.edu.cn/rubygems/
