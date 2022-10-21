@@ -193,16 +193,16 @@ Error: Unclassifiable statement at (1)
 Error: Invalid character in name at (1)
 Fatal Error: Error count reached limit of 25.
 make[3]: *** [libxc_la-libxc.lo] Error 1
-make[3]: Leaving directory `/public/home/chendq/soft/gcc-openmpi/source/libxc-2.0.0/src'
+make[3]: Leaving directory `/public/home/cndaqiang/soft/gcc-openmpi/source/libxc-2.0.0/src'
 make[2]: *** [all] Error 2
-make[2]: Leaving directory `/public/home/chendq/soft/gcc-openmpi/source/libxc-2.0.0/src'
+make[2]: Leaving directory `/public/home/cndaqiang/soft/gcc-openmpi/source/libxc-2.0.0/src'
 make[1]: *** [all-recursive] Error 1
-make[1]: Leaving directory `/public/home/chendq/soft/gcc-openmpi/source/libxc-2.0.0'
+make[1]: Leaving directory `/public/home/cndaqiang/soft/gcc-openmpi/source/libxc-2.0.0'
 make: *** [all] Error 2
 ```
 在make后的目录中，搜索注释中的语句`IEC`，发现`/usr/include/stdc-predef.h`已经被引入`src/libxc.f90`<br>
 ```
-[chendq@login3 libxc-2.0.0]$ fyou IEC
+[cndaqiang@login3 libxc-2.0.0]$ fyou IEC
 src/libxc.f90:33:/* We do support the IEC 559 math functionality, real and complex.  */
 src/libxc.f90:37:/* wchar_t uses ISO/IEC 10646 (2nd ed., published 2011-03-15) /
 ```
@@ -223,7 +223,7 @@ vi Makefile
 723         $(top_srcdir)/build/preprocess.pl $*_oct.f90 \
 724           "" "yes" "yes"
 725         sed -i '5,41d' $*_oct.f90
-726         mpif90 -O3      -I /public/home/chendq/soft/gcc-openmpi/libxc-2.0.0/include $(AM_FCFLAGS) -c  -o $@ $*_oct.    f90
+726         mpif90 -O3      -I /public/home/cndaqiang/soft/gcc-openmpi/libxc-2.0.0/include $(AM_FCFLAGS) -c  -o $@ $*_oct.    f90
 727 #       @rm -f $*_oct.f90
 728 
 
@@ -333,7 +333,7 @@ F90_CPP = $(FCPP) -P $(INCLUDE) $(CPPOPT) $< > $(basename $<).p.f;/home/users/cn
 ```
 因为这几个文件的的规则是差不多的,所以`rmf90`和`rmF90`分别为
 ```
-(python37) [HUAIROU chendq@login01 BerkeleyGW-3.0.1]$cat rmf90.sh
+(python37) [HUAIROU cndaqiang@login01 BerkeleyGW-3.0.1]$cat rmf90.sh
 echo "cndaqiang deal $1"
 sed -i '4,43d' $1
 exit
@@ -344,7 +344,7 @@ echo "sed -i '4,43d' $1"
 sed -i '4,43d' $1
 fi
 
-(python37) [HUAIROU chendq@login01 BerkeleyGW-3.0.1]$cat rmF90.sh
+(python37) [HUAIROU cndaqiang@login01 BerkeleyGW-3.0.1]$cat rmF90.sh
 echo "cndaqiang deal  $1"
 sed -i '1,27d' $1
 exit
