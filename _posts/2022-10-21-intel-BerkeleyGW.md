@@ -19,6 +19,11 @@ mathjax: true
 # 下载源代码
 [BerkeleyGW](https://berkeleygw.org/)
 
+```
+[HUAIROU cndaqiang@login01 ifort-impi2020]$tar xzvf BerkeleyGW-3.0.1.tar.gz
+[HUAIROU cndaqiang@login01 ifort-impi2020]$cd BerkeleyGW-3.0.1
+```
+
 # 编译环境
 以怀柔服务器为例
 ```
@@ -35,8 +40,6 @@ module load gnu8/8.3.0
 ```
 ## arch.mk
 ```
-[HUAIROU cndaqiang@login01 ifort-impi2020]$tar xzvf BerkeleyGW-3.0.1.tar.gz
-[HUAIROU cndaqiang@login01 ifort-impi2020]$cd BerkeleyGW-3.0.1
 [HUAIROU cndaqiang@login01 BerkeleyGW-3.0.1]$cp config/edison.nersc.gov_intel.mk arch.mk
 ```
 修改`vi arch.mk`
