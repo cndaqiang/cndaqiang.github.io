@@ -8,7 +8,7 @@ ROOT=$HOME/soft/oneapi21
 mkdir -p $ROOT/source
 #libxc
 cd $ROOT/source
-wget https://cndaqiang.gitee.io/packages//mirrors/libxc/libxc-4.3.4.tar.gz
+wget https://cndaqiang.github.io/packages//mirrors/libxc/libxc-4.3.4.tar.gz
 tar xzvf libxc-4.3.4.tar.gz 
 cd libxc-4.3.4
 ./configure --prefix=$ROOT/libxc-4.3.4  CC=icc CXX=icpc FC=ifort
@@ -18,7 +18,7 @@ make install
 
 #gs
 cd $ROOT/source
-wget https://cndaqiang.gitee.io/packages//mirrors/gs/gsl-1.14.tar.gz
+wget https://cndaqiang.github.io/packages//mirrors/gs/gsl-1.14.tar.gz
 tar xzvf gsl-1.14.tar.gz
 cd gsl-1.14
 mkdir build; cd build
@@ -28,7 +28,7 @@ make install
 
 #octopus
 cd $ROOT/source
-wget https://cndaqiang.gitee.io/packages//mirrors/octopus/octopus-10.4.tar.gz
+wget https://cndaqiang.github.io/packages//mirrors/octopus/octopus-10.4.tar.gz
 tar xzvf octopus-10.4.tar.gz
 cd octopus-10.4
 

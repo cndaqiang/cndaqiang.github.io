@@ -16,11 +16,6 @@
 - Gemfile
 >定义你的应用依赖哪些第三方包，bundle根据该配置去寻找这些包。
 
-### homebrew安装ruby
-```
-brew install ruby
-```
-会安装ruby和gem
 
 ### Linux/Mac安装rvm
 **Ubuntu卸载系统的Ruby,mac协助brew安装的Ruby,清除环境变量设置**,安装gpg公钥
@@ -44,12 +39,12 @@ gpg:               已导入：2
 ```
 curl -sSL https://get.rvm.io | bash -s stable
 ```
-安装tuby2.7.0,mac会提示缺少的程序，并自动进行编译安装,编译失败根据configure结果修改即可
+安装ruby2.7.0,mac会提示缺少的程序，并自动进行编译安装,编译失败根据configure结果修改即可
 ```
 #mac/Linux
 #需要登陆的shell,执行 /bin/bash --login
 source /Users/cndaqiang/.rvm/scripts/rvm
-rvm install "ruby-2.7.0"
+rvm install "ruby-2.7.0" # 使用timemachine等当时迁移的mac系统，使用 rvm reinstall "ruby-2.7.0"
 rvm use "ruby-2.7.0" --default 
 #rvm安装在用户目录,不粗要root
 ```

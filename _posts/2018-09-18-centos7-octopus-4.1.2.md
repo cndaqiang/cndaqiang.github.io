@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "centos7 gnu 编译octopus-4.1.2遇到问题和解决方案 "
+title:  "Fortran预处理引入/usr/include/stdc-predef.h报错Unclassifiable statement"
 date:   2018-09-18 21:12:00 +0800
 categories: DFT
 tags: gnu octopus
@@ -21,8 +21,33 @@ Error: Invalid character in name at (1)<br>
 
 
 
+## 出现的情况
+-  centos7 gnu 编译,在编译libxc-2.0.0 和octopus-4.1.2时
+- 编译BerkeleyGW
 
-   
+
+## 2022-10-21 最新解决方案
+指定编译参数,默认的参数`FCCPP="/lib/cpp -C -ansi"会使用C的方式注释,产生的fpp文件里面有`/* */`等,导致Fortran编译失败
+```
+FCCPP="/lib/cpp -ansi"
+```
+如libxc和octopus使用
+```
+./configure --prefix=$ROOT/libxc-2.0.0  CC=gcc CXX=g++ FC=gfortran FCCPP="/lib/cpp -ansi"
+```
+而`BerkeleyGW`则直接修改`arch.mk`中的`FCCPP="/lib/cpp -ansi"`
+
+
+
+## 旧的解决方案保留,万一将来不得已用上
+- 修改include的文件,去掉注释行
+- 预处理结束后,修改生成的文件,删除注释
+- 在Makefile的脚本中,添加自动删除命令,
+
+
+
+
+
 centos7编译octopus遇到的问题<br>
 与在centos6上，使用相同版本的gcc-4.8.4,libxc-2.0.3,gsl-1.14,openmpi-1.10.3,fftw-3.3.3,sclapack进行编译<br>
 octopus-4.1.2的configure命令没有报错，make时却报下面的错误
@@ -54,13 +79,13 @@ Error: Unclassifiable statement at (1)
    modify it under the terms of the GNU Lesser General Public
 ```
 
-<br><br><br><br>
-## 有管理员权限时
+### ROOT管理员修改`/usr/include/stdc-predef.h`
+
 根据[Yambo Community Forum](http://www.yambo-code.org/forum/viewtopic.php?f=1&t=842)的建议，应该是libxc的问题，无法识别`/usr/include/stdc-predef.h`中的注释部分
 <br><br>备份`stdc-predef.h`后，删除其中的注释部分，也就是`/*注释。。。*/`里面的内容，再执行编译就可以了
 
 
-## 无管理员权限时(2019-05-06更新)
+### 无管理员权限时(2019-05-06更新)
 在RedHat上编译libxc-2.0.0遇到，同样错误,也是`/usr/include/stdc-predef.h`的注释造成<br>
 在make后的目录中，搜索注释中的语句`IEC`，发现`/usr/include/stdc-predef.h`已经被引入`src/libxc.f90`<br>
 只要删除`src/libxc.f90`中的`/* */`部分继续make就可以编译了<br>
@@ -183,7 +208,7 @@ src/libxc.f90:37:/* wchar_t uses ISO/IEC 10646 (2nd ed., published 2011-03-15) /
 ```
 只要删除`src/libxc.f90`中的`/* */`部分就可以编译了<br>
 
-### [非管理员]对于octopus-4.1-2同样的错误
+#### [非管理员]对于octopus-4.1-2同样的错误
 要改的信息更多，可以通过修改Makefile解决
 ```
 cd /public/home/cndaqiang/soft/gcc-MVAPICH/source/octopus-4.1.2/src/basic
@@ -264,8 +289,80 @@ done
 ```
 
 
+### BerkeleyGW直接修改Makefile
+由于`arch.mk`里面的`FCPP    = /usr/bin/cpp -ansi -C`包含了C,所以生成的`Common/nrtype.p.f`也是带`/**/`注释的,**简单的方式修改为`FCPP    = /usr/bin/cpp -ansi`就可以了**
+```
+/usr/bin/cpp -ansi -C -I./Common -DCPLX -DINTEL -DMPI -DOMP -DUSESCALAPACK -DUNPACKED -DUSEFFTW3  Common/nrtype.f90 > Common/nrtype.p.f;
+mpiifort -free -qopenmp -I ./Common -I /opt/ohpc/pub/apps/intel2020/compilers_and_libraries_2020.2.254/linux/mkl/include/fftw/ -c -O3  -g Common/nrtype.p.f -o Common/nrtype.o -module Common/
+<命令行>(1): warning #5117: Bad # preprocessor line
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+-----------------------------------^
+/usr/include/stdc-predef.h(1): error #5082: Syntax error, found '/' when expecting one of: <LABEL> <END-OF-STATEMENT> ; <IDENTIFIER> TYPE MODULE ELEMENTAL IMPURE NON_RECURSIVE ...
+/* Copyright (C) 1991-2012 Free Software Foundation, Inc.
+^
+/usr/include/stdc-predef.h(16): error #5145: Invalid blank/tab
+   <http://www.gnu.org/licenses/>.  */
+----------------------------------^
+/usr/include/stdc-predef.h(22): error #5145: Invalid blank/tab
+   include it implicitly at the start of every compilation.  It must
+-----------------------------------------------------------^
+/usr/include/stdc-predef.h(33): error #5143: Missing mandatory separating blank
+/* wchar_t uses ISO/IEC 10646 (2nd ed., published 2011-03-15) /
+--------------------------------^
+/usr/include/stdc-predef.h(34): error #5145: Invalid blank/tab
+   Unicode 6.0.  */
+---------------^
+/usr/include/stdc-predef.h(37): error #5145: Invalid blank/tab
+/* We do not support C11 <threads.h>.  */
+-------------------------------------^
+/usr/include/stdc-predef.h(1): catastrophic error: Could not recover from previous syntax error
+compilation aborted for Common/nrtype.p.f (code 1)
+make: *** [Common/nrtype.o] 错误 1
+```
 
+**我们也可以通过修改Makefile解决`vi Common/common-rules.mk`**<br>
+添加`/home/users/cndaqiang/soft/ifort-impi2020/BerkeleyGW-3.0.1/rmf90.sh`处理脚本
+```
+#clang C-preprocessing treats files incorrectly if they have .F90 extension
+ifeq ($(findstring clang,$(FCPP)),clang)
+  f90_CPP = cp $(basename $<).f90 $(basename $<)_cp.F90; $(FCPP) $(INCLUDE) $(CPPOPT) $(basename $<)_cp.F90 > $(basename $<).p.f; $(REMOVE) $(basename $<)_cp.F90;
+else
+  f90_CPP = $(FCPP) $(INCLUDE) $(CPPOPT) $< > $(basename $<).p.f;  /home/users/cndaqiang/soft/ifort-impi2020/BerkeleyGW-3.0.1/rmf90.sh $(basename $<).p.f
+endif
+F90_CPP = $(FCPP) -P $(INCLUDE) $(CPPOPT) $< > $(basename $<).p.f;/home/users/cndaqiang/soft/ifort-impi2020/BerkeleyGW-3.0.1/rmF90.sh $(basename $<).p.f
+```
+因为这几个文件的的规则是差不多的,所以`rmf90`和`rmF90`分别为
+```
+(python37) [HUAIROU chendq@login01 BerkeleyGW-3.0.1]$cat rmf90.sh
+echo "cndaqiang deal $1"
+sed -i '4,43d' $1
+exit
 
+if [ $1 == Common/nrtype.p.f ]
+then
+echo "sed -i '4,43d' $1"
+sed -i '4,43d' $1
+fi
+
+(python37) [HUAIROU chendq@login01 BerkeleyGW-3.0.1]$cat rmF90.sh
+echo "cndaqiang deal  $1"
+sed -i '1,27d' $1
+exit
+
+if [ $1 == Common/nrtype.p.f ]
+then
+echo "sed -i '4,43d' $1"
+sed -i '4,43d' $1
+fi
+```
+此时再编译就没有问题了
+```
+/usr/bin/cpp -ansi -I./Common -DCPLX -DINTEL -DMPI -DOMP -DUSESCALAPACK -DUNPACKED -DUSEFFTW3  Common/nrtype.f90 > Common/nrtype.p.f
+mpiifort -free -qopenmp -I ./Common -I /opt/ohpc/pub/apps/intel2020/compilers_and_libraries_2020.2.254/linux/mkl/include/fftw/ -c -O3  -g Common/nrtype.p.f -o Common/nrtype.o -module Common/
+<命令行>(1): warning #5117: Bad # preprocessor line
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+-----------------------------------^
+```
 
 
 

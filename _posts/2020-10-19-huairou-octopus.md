@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "怀柔计算中心/SSLAB/新SSLAB编译octopus记录及Intel编译报错"
+title:  "怀柔计算中心/SSLAB/新SSLAB编译/Monterey octopus记录及Intel编译报错"
 date:   2020-10-19 21:48:00 +0800
 categories: DFT
 tags:  gnu octopus
@@ -263,12 +263,9 @@ echo "
 module load compiler/gcc/gcc_8.3.0
 module load compiler/intel/intel-compiler-2019u3
 module load mpi/intelmpi/2019u3
-MATHDIR=$ROOT/math/lib
 export LD_LIBRARY_PATH=$ROOT/libxc-2.0.0/lib:\$LD_LIBRARY_PATH
 export PATH=$ROOT/gsl-1.14/bin:\$PATH
 export LD_LIBRARY_PATH=$ROOT/gsl-1.14/lib:\$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=$ROOT/fftw-3.3.3/lib:\$LD_LIBRARY_PATH
-export PATH=$ROOT/fftw-3.3.3/bin:\$PATH
 "
 ```
 
@@ -279,7 +276,25 @@ bash install.octopus.sslab2.oneapi.sh
 ```
 或者在线安装
 ```
-curl http://cndaqiang.github.io/web/file/2022/install.octopus.sslab2.oneapi.sh | bash
+wget http://cndaqiang.github.io/web/file/2022/install.octopus.sslab2.oneapi.sh ; bash install.octopus.sslab2.oneapi.sh
+#or
+curl https://raw.githubusercontent.com/cndaqiang/cndaqiang.github.io/master/web/file/2022/install.octopus.sslab2.oneapi.sh | bash
+```
+然后同样添加环境变量
+```
+source /share/apps/intel-oneAPI-2021/compiler/2022.0.2/env/vars.sh intel64
+source /share/apps/intel-oneAPI-2021/mkl/2022.0.2/env/vars.sh intel64
+source /share/apps/intel-oneAPI-2021/mpi/2021.5.1/env/vars.sh intel64
+module load /share/modulefile/gnu/10.2.0
+export LD_LIBRARY_PATH=/share/home/chendq/soft/oneapi21/libxc-2.0.0/lib:$LD_LIBRARY_PATH
+export PATH=/share/home/chendq/soft/oneapi21/gsl-1.14/bin:$PATH
+export LD_LIBRARY_PATH=/share/home/chendq/soft/oneapi21/gsl-1.14/lib:$LD_LIBRARY_PATH
+```
+
+## [oneapi] macOS Monterey 安装octopus10.4
+
+```
+curl https://raw.githubusercontent.com/cndaqiang/cndaqiang.github.io/master/web/file/2022/install.octopus.Monterey.oneapi.sh | bash
 ```
 
 ## 备注
