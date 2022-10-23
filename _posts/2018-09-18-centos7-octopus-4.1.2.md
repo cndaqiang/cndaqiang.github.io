@@ -27,7 +27,7 @@ Error: Invalid character in name at (1)<br>
 
 
 ## 2022-10-21 最新解决方案
-指定编译参数,默认的参数`FCCPP="/lib/cpp -C -ansi"会使用C的方式注释,产生的fpp文件里面有`/* */`等,导致Fortran编译失败
+指定编译参数,默认的参数`FCCPP="/lib/cpp -C -ansi"`会使用C的方式注释,产生的fpp文件里面有`/* */`等,导致Fortran编译失败
 ```
 FCCPP="/lib/cpp -ansi"
 ```
