@@ -58,7 +58,8 @@ dribbble_username:
 #duoshuo_shortname: #hygblog
 #disqus_shortname: cndaqiang-github-io
 #City_uid: MTAyMC80MDQ4OC8xNzAxNQ==
-twikooID: https://vercel-comment2-jhck1hsa5-cndaqiang.vercel.app/
+#20221024关闭评论
+#twikooID: https://vercel-comment2-jhck1hsa5-cndaqiang.vercel.app/
 
 # statistic analysis 统计代码
 # 百度统计 id，将统计代码替换为自己的百度统计id，即
@@ -76,4 +77,3 @@ adsense: True
 
 
 
-github: True
