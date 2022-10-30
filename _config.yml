@@ -43,11 +43,13 @@ paginate: 6
 # other links
 twitter_username: 
 facebook_username: 
-github_username:  cndaqiang
-email: who@cndaqiang.ac.cn
+github_username: cndaqiang
+email:
+#who@cndaqiang.ac.cn
 weibo_username: 
 zhihu_username:
-jianshu_username: 5d47905688d0
+jianshu_username:
+#5d47905688d0
 linkedIn_username: 
 dribbble_username:
 

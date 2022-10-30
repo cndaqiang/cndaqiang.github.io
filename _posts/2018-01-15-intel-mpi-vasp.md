@@ -372,6 +372,11 @@ DESCINIT parameter number    6 had an illegal value
 ```
 
 
+## `Assertion failed in file ../../src/mpid/ch4/shm/posix/eager/include/intel_transport.c at line 226: absolute_numa_node_id <= max`
+- 环境: Centos8虚拟机Parallel studio 2020, oneapi2022
+- 问题: 串行可以,并行报错
+- 解决: 增加并行的核数
+
 
 
 ------
