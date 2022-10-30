@@ -90,14 +90,3 @@ type: page
 
 <hr>
 
-
-## 联系方式
-* GitHub：[cndaqiang](https://github.com/cndaqiang)
-* email：who@cndaqiang.ac.cn
-* [知乎](https://www.zhihu.com/people/cndaqiang)
-* [简书](http://www.jianshu.com/u/5d47905688d0)
-* [Twitter](https://twitter.com/cndaqiang)
-* [Facebook](https://www.facebook.com/daqiang.chen.12)
-
-
-
