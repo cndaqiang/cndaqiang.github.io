@@ -983,11 +983,25 @@ RMM:   7    -0.688651957131E+02    0.23242E-04   -0.10489E-04  6514   0.318E-02 
 ```
 ssh -o "ProxyCommand nc -X 5 -x 127.0.0.1:1200 %h %p" cndaqiang@mom
 ```
-
+`[客户端]->[B:公网ip]->[C:和B在同一个内网]`
 使用ssh映射端口,使用本地的`localhost:2399`访问远程服务器能直连的`10.0.0.252:1234`
 ```
- ssh -N -f -L localhost:2399:10.0.0.252:1234 cndaqiang@IP -p port
+#客户端
+ssh -fCNL localhost:2399:10.0.0.252:1234 cndaqiang@B机器ip -p port
 ```
+
+反向代理,把内网端口映射到服务的端口: `[客户端]->[B:公网ip]<->[C:没有公网ip]`
+```
+#C机器上,-fCNR [B ip]:[B端口]:[C ip]:[C端口], 貌似[B ip]只能为`127.0.0.1`,设置其他ip无法被监听
+cndaqiang@mommint:~$ ssh -fCNR 127.0.0.1:2076:localhost:22  cndaqiang@B机器ip -p 2022
+#B机器上可以直接通过[B端口]访问
+cndaqiang@oracle:~$ ssh 127.0.0.1 -p 2076
+#其他客户端,需要连上B机器的127.0.0.1的ip
+#在客户端上需要先把B的内网ip映出来,(B机器是集群的某个登陆节点,则需要登陆多次,直到找到合适的登陆节点)
+cndaqiang@macmini ~$ ssh -fCNL localhost:12076:127.0.0.1:2076  cndaqiang@B机器ip -p 2022
+cndaqiang@macmini ~$ ssh cndaqiang@localhost -p 12076
+```
+
 
 ### 等待 
 ```

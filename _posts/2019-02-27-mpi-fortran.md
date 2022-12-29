@@ -732,7 +732,7 @@ call mpi_start()
 
 
 !-------------------------------------------
-!结构体类型 A,B,C ->{{[AA ][BBBB      ][A][CCC ]}}
+!结构体类型 A,B,C ->{ { [AA ][BBBB      ][A][CCC ] } }
 !比向量，类型更随意
 !------
 !MPI_TYPE_STRUCT(COUNT,ARRAY_OF_BLOCKLENGTHS,ARRAY_OF_DISPLACEMENTS, ARRAY_OF_TYPES * ,NEWTYPE,IERROR)
