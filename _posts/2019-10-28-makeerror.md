@@ -101,7 +101,7 @@ i=UBOUND(a,1)
 ```
 
 ### 全角字符不识别各种报错
-` `与`　`是不一样的空格，后面的空格和变量相连，程序都无法识别。
+`. .` 与 `.　.`是不一样的空格，后面的空格和变量相连，程序都无法识别。
 
 
 ### 编译器混用报错
@@ -431,6 +431,20 @@ tdpw.x             000000000040676A  Unknown               Unknown  Unknown
 =   RANK 1 PID 65033 RUNNING AT mommint
 =   KILLED BY SIGNAL: 9 (Killed)
 ===================================================================================
+```
+
+
+## C语言
+### icc for循环报错
+```
+icc main.c
+main.c(11): error: expected an expression
+      for ( int i=0; i<5; i++)
+            ^
+```
+C规范太低导致,提高版本解决
+```
+icc -std=c11 main.c
 ```
 
 ## srun提示

@@ -1260,6 +1260,7 @@ Open( 通道号 , File = "文件名" )
 open (is1,               form='formatted',status='scratch')
 
 ```
+- `STATUS='SCRATCH'`可以实现在内存中打开文件?
 
 ### read
 
@@ -1560,6 +1561,11 @@ cndaqiang@girl:~/code/test$ cat data ; echo "+++"; gfortran read.f90 ; ./a.out
      &           position="rewind", action="write",status="unknown")
          end if
 ```
+
+### 把*文件存到内存*的方法
+- allocate一个大的内存区域,如字符串类型,然后write进去
+
+
 
 ### 利用NAMELIST复制变量
 参考自[quantum-espresso](https://www.quantum-espresso.org/)<br>
