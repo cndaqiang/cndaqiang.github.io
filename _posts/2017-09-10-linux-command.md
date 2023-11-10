@@ -936,9 +936,13 @@ cndaqiang pts/4        2018-10-04 15:53 (win10.lan)
 ### 同时输出结果到屏幕和文件
 参考[linux命令tee：将信息同时输出到屏幕和文件](http://blog.csdn.net/dazhi_100/article/details/45022253)
 tee<br>
-实例
+默认tee仅支持标准输出
 ```
 ls | tee out.txt
+```
+可以通过把错误输出转到标准输出`2>&1`实现所有输出(支持windows powershell)
+```
+python -u .\duokai.py  2>&1 | tee result.txt
 ```
 
 ### 扫描局域网的ip和mac地址

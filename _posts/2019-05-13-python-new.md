@@ -70,6 +70,34 @@ def fermi_dirac_fitting(Es,Os,Ein=np.zeros(1)):
 ```
 
 
+## 面向对象编程学习
+### 写错了init的名字,报错没有参数
+```python
+class deviceOB2:
+    def __int__(self,设备类型="IOS",设备编号=0,LINK="ios:///http://192.168.12.130:8100",APPID=None):
+        print("hello")
+class auto_airtest2:
+    def __init__(self, mynode=1, totalnode=1,设备类型="IOS"):
+        self.移动端=deviceOB2(设备类型=self.设备类型,设备编号=self.mynode,LINK=self.LINK,APPID=self.APPID)
+# 如果文件被直接执行，则执行以下代码块
+if __name__ == "__main__":
+    run=auto_airtest2()    
+```
+
+报错
+```
+(base) cndaqiang@macmini WZRY_AirtestIDE_emulator$ python object.py
+Traceback (most recent call last):
+  File "/Users/cndaqiang/git/WZRY_AirtestIDE_emulator/object.py", line 170, in <module>
+    run=auto_airtest()
+        ^^^^^^^^^^^^^^
+  File "/Users/cndaqiang/git/WZRY_AirtestIDE_emulator/object.py", line 167, in __init__
+    self.移动端=deviceOB2(设备类型=self.设备类型,设备编号=self.mynode,LINK=self.LINK,APPID=self.APPID)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: deviceOB2() takes no arguments
+```
+
+
 
 ------
 >本文首发于[我的博客@cndaqiang](https://cndaqiang.github.io/).<br>

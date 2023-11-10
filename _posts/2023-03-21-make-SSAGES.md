@@ -77,6 +77,7 @@ make mpi -j20
 #SSAGES
 cd $ROOT
 git clone https://gitee.com/cndaqiang/ssages_mirror_gitee.git
+#如果没有网络环境，可以上传我打包的无网络版本https://gitee.com/cndaqiang/ssages_mirror_local
 cd ssages_mirror_gitee
 mkdir build ; cd build
 #需要制定gcc路径,不然找的还是系统默认的gcc 4.8.5
@@ -186,8 +187,8 @@ Volume   =     68921.0000
 
 
 ## 附录
-### 修改的部分代码  
-
+### 修改的部分代码使用gitee镜像  
+注:Googletest没有用到，其实不用修改
 ```diff
 (python37) cndaqiang@mommint:~/code/ssages_mirror_gitee$ git diff fb178779371cf8d7bbc25ce6b86f31b79395489c
 diff --git a/cmake/Modules/FetchGoogletest.cmake b/cmake/Modules/FetchGoogletest.cmake
@@ -228,6 +229,22 @@ index 61a271b..a357330 100644
  set(EIGEN_TAG 3.3.7)
  set(EIGEN_PATCH "${CMAKE_CURRENT_SOURCE_DIR}/include/patches/eigen-using-std-real.patch")
 ```
+
+### 修改的代码无需网络环境编译
+- https://gitee.com/cndaqiang/ssages_mirror_local
+- 还是修改`cmake/Modules`目录的cmake文件,修改DOWNLOAD_COMMAND
+
+如
+```cmake
+set(JSONCPP_REPOSITORY "${CMAKE_CURRENT_SOURCE_DIR}/Fetch_local/jsoncpp")
+set(JSONCPP_TAG 1.9.4)
+
+ExternalProject_Add(jsoncpp
+    # Using DOWNLOAD_COMMAND instead of GIT_REPOSITORY to pass some convenient git flags.
+    # For instance, GIT_SHALLOW is available from CMake 3.6
+    DOWNLOAD_COMMAND cp -frp ${JSONCPP_REPOSITORY} ${CMAKE_CURRENT_SOURCE_DIR}/build/jsoncpp-prefix/src/
+```
+Mxx和Eigen同理修改,需要下载的依赖已经提前下载到`Fetch_local`目录
 
 
 

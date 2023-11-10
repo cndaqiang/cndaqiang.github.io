@@ -239,6 +239,8 @@ Aborted (core dumped)
 
 ### forrtl: severe (174): SIGSEGV, segmentation fault occurred 
 - 调用函数时少参数造成
+- 使用了某个变量,但是没有定义这个变量,也没有**`USE MODULE , ONLY 这个变量`**
+- **记得在代码里写上`IMPLICIT NONE`**
 _ 原因很多
 
 
