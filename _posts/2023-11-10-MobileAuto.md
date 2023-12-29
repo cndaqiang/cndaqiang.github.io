@@ -43,6 +43,7 @@ chmod +x /Users/cndaqiang/anaconda3/lib/python3.11/site-packages/airtest/core/an
 ```
 
 ### 代码修改
+#### monkey
 mac/linux都会报错 airtest使用monkey控制安卓的命令 `monkey -p com.tencent.tmgp.sgame -c android.intent.category.LAUNCHER 1`,#会报错
 ```
 ** SYS_KEYS has no physical keys but with factor 2.0%.
@@ -57,6 +58,20 @@ airtest.core.error.AdbError: stdout[b'  bash arg: -p\n  bash arg: com.tencent.tm
 1388             self.shell(['monkey --pct-syskeys 0', '-p', package, '-c', 'android.intent.category.LAUNCHER', '1'])
 1389         else:
 1390             self.shell(['am', 'start', '-n', '%s/%s.%s' % (package, package, activity)])
+```
+
+#### mac远程控制adb时,有概率无法获得屏幕截图
+- 报错`[15:59:29][WARNING]<airtest.core.api> Screen is None, may be locked`,程序会退出,但是在多进程执行时，单进程报错只会卡住,不会全部停止
+- 方案，尝试过修改`airtest,requests`的代码和设置`airtest.core.settings.Settings.FIND_TIMEOUT`, 最后干脆重写(套壳)了一层airtest的函数
+
+```python
+def exists(*args, **kwargs):
+    try:
+        result=exists_o(*args, **kwargs)
+    except:
+        print("cndaqiang: exists失败")
+        result=False
+    return result
 ```
 
 ### 执行AirTest脚本
@@ -185,7 +200,7 @@ restarting in TCP mode port: 5555
 * 换设备编译时,建议先清空一下编译环境,不然会有各种奇怪问题
 * 目前仅找到AirTest能够控制安装了WDA的IOS设备
 
-#### 安装WebDriverAgent(WDA)
+#### 使用Xcode 安装WebDriverAgent(WDA)
 * 安装Xcode,注意Xcode有MacOS版本要求和IOS版本要求,下载复合自己的版本
 * 注册个人免费版账户
 ![image](/uploads/2023/11/2418819-20231108221359822-189765304.png)
@@ -232,6 +247,24 @@ brew install usbmux
 iproxy 8123 8100
 ```
 
+#### 没有Xcode时 安装WebDriverAgent(WDA)
+**提前准备WDA.ipa**,获取途径
+- 越狱后用Filza提取ipa, 提取目录`/var/contain.../Bun.../App/appname`
+- 虚拟机Xcode, build>找到build目录>复制出来>命名为Payload>压缩>改名为XXX.ipa
+![](/uploads/2023/11/1700204740958.jpg)
+![](/uploads/2023/11/1700205066173.jpg)
+
+**进行签名**
+- 如果上一步的ipa是制定设备编译的,安装在该设备时,距离编译结束的7天内是可以的. 
+- 因为不想再重新编译和使用xcode. 这里认为上一步获得的ipa已经签名过期
+- 使用i4助手的ipa签名功能,手机连接电脑，登录appleID进行签名
+![](/uploads/2023/11/1700205318354.jpg)
+
+**安装签完名的APP**,安装失败多是没有正确签名,使用sideload等自签名程序,安装后都打不开
+- i4的APP管理功能可以安装
+- `tidevice`安装 `tidevice install /Users/cndaqiang/Downloads/i4ToolsDownloads/SignIpa/13.4.Framework_AnyIOS.WDA.ipa`
+
+
 #### tidevice
 不同IOS设备需要不同的Xcode编译,我的工作环境版本太低,在虚拟机中编译安装的WDA,在工作环境可以使用tidevice启动设备的WDA服务.
 
@@ -262,6 +295,19 @@ pip install tidevice
 [I 231110 22:46:49 _device:933] 2023-11-10 22:46:46.851840+0800 WebDriverAgentRunner-Runner[536:43854] ServerURLHere->http://169.254.148.222:8100<-ServerURLHere
 [I 231110 22:46:49 _device:934] WebDriverAgent start successfully
 ```
+
+
+##### tidevice安装APP签名错误解释
+```
+[E 231117 14:02:49 _installation:55] Failed to verify code signature of /var/installd/Library/Caches/com.apple.mobile.installd.staging/temp.gurRaK/extracted/Payload/WebDriverAgentRunner-Runner.app : 0xe8008018 (The identity used to sign the executable is no longer valid.)
+```
+签名不再有效**sign the executable is no longer valid**, 安装时没有选择个人签名就build了.
+
+```
+[E 231117 14:11:56 _installation:55] Failed to verify code signature of /var/installd/Library/Caches/com.apple.mobile.installd.staging/temp.uok9qe/extracted/Payload/WebDriverAgentRunner-Runner.app : 0xe8008015 (A valid provisioning profile for this executable was not found.)
+```
+**A valid provisioning profile for this executable was not found**
+因为该app的APPLE个人签名，不包含此设备
 
 
 
