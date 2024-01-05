@@ -13,6 +13,11 @@ mathjax: true
 
 
 
+
+## 更新
+2023-01-03 `workers.dev`被墙, 此方法无法达到无科学上网环境访问相关网址
+
+
 ## 参考
 [使用 Cloudflare Workers™ 制作镜像站，可访问谷歌@何先生](https://umrhe.com/cloudflare-workers-to-google.html)
 
