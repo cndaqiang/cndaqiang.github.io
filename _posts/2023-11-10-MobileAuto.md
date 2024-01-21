@@ -17,7 +17,7 @@ mathjax: true
 
 
 ## 备注
-- 适配王者荣耀的示例仓库[AirTest_MobileAuto_WZRY@cndaqiang](https://github.com/cndaqiang/AirTest_MobileAuto_WZRY)
+- 适配王者荣耀的脚本: 单人/组队模式/熟练度/金币/礼物/营地. 支持Android/Iphone<br>[AirTest_MobileAuto_WZRY@cndaqiang](https://github.com/cndaqiang/AirTest_MobileAuto_WZRY)
 - 致谢大量参考了[WZRY_AirtestIDE@XRSec](https://github.com/XRSec/WZRY_AirtestIDE)项目,是我学习AirTest脚本的主要参考.
 
 
