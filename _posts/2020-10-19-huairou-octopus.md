@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "怀柔计算中心/SSLAB/新SSLAB编译/Monterey octopus记录及Intel编译报错"
+title:  "怀柔计算中心/SSLAB/新SSLAB编译/MacOS octopus记录及Intel编译报错"
 date:   2020-10-19 21:48:00 +0800
 categories: DFT
 tags:  gnu octopus

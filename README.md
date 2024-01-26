@@ -358,3 +358,8 @@ jekyll启动后,打包`_site`目录,上传至群晖,新增虚拟主机,后端Apa
 - `public.txt` `public.sh`会发布的文章
 - `public.west.txt` `public.west.sh`会发布的文章
 - `public.hexie.txt` `public.west.sh`要删除的违禁文章
+
+
+## 网站地图的制作
+- 使用本网站的RSS接口制作`https://cndaqiang.github.io/feed.xml`
+- 使用第三方网站制作`https://www.xml-sitemaps.com/`

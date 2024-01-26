@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "重装系统操作"
+title:  "Windows重装系统后的操作"
 date:   2017-11-06 23:58:00 +0800
 categories: windows
 tags: windows

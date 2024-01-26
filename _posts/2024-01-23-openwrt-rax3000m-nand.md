@@ -107,7 +107,7 @@ bin
 rsync -avu /home/cndaqiang/immortalwrt/bin/ root@192.168.12.1:/home/NFS/immortalwrt-23.05/
 #路由器需要opkg install rsync
 ```
-#修改仓库配置
+修改仓库配置
 ```
 mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf.bak
 echo "
@@ -132,7 +132,7 @@ Configuring htop.
 ## 修改编译输出的内核版本
 - 从而保证自己不同时期编译的内核版本是相同的,以方便更新一些依赖内核的包
 - 另外让版本显示和官方的仓库一样,也方便联网安装
-- https://blog.csdn.net/bjr2016/article/details/107776801
+- 参考[Openwrt 自编译后安装官方ipk时产生kernel MD5不兼容的问题处理@bjr2016](https://blog.csdn.net/bjr2016/article/details/107776801)
 - 因为我都是自己编译的ipk,没有冲突的问题,万一将来不想编译某个软件,就想利用官方仓库,提前避免冲突
 
 查看官方的仓库`https://mirrors.vsean.net/openwrt/releases/23.05-SNAPSHOT/targets/sunxi/cortexa53/kmods/`确定内核md5得到`5.15.146-1-24c201741aa3cde887b045d07c2eabc1/`
@@ -183,13 +183,13 @@ Version: 5.15.146-1-24c201741aa3cde887b045d07c2eabc1
 - **网页查找:** 搜索`openwrt package package_name`
 - - 如通过`https://openwrt.org/packages/pkgdata/ip6tables-extra`页面为例,可以看到:`Categories:network---firewall`
 
-### 我常编译的包的配置
+### 我常编译的包的位置
 ```
 Administration
 ├── htop
 Base system
-Customize busybox options
-Shells
+├── Customize busybox options
+├── Shells
 development
 ├── diffutils
 Extra packages
@@ -282,7 +282,7 @@ Openwrt默认不编译`openssh-server/client`,`Dropbear`提供`openssh-server/cl
 ## zerotier
 - 开机后zerotier的启动速度较慢,耐心等待
 - 防火墙的设置会导致无法访问zerotier
-- `网络>防火墙>防火墙 - 区域设置>常规设置>入站数据>接受 才能正常使用` zerotier
+- `网络>防火墙>防火墙 - 区域设置>常规设置>入站数据>接受` 才能正常使用zerotier
 - 走zerotier共享的NFS目录速度读写慢于直接读写的,后台发现zerotier的CPU占用率较高
 
 
@@ -361,7 +361,7 @@ mkdir $CLASHDIR/log
 
 ########################## clash 的获取 ######################
 ##### 使用openclash提供的
-#ln -s /etc/openclash/clash $CLASHDIR/bin/
+##### ln -s /etc/openclash/clash $CLASHDIR/bin/
 ##### 🌟🌟 从github下载
 ##### 从https://github.com/vernesong/OpenClash/tree/core下载
 ##### scp /Volumes/KPStoarge/ChromeDownload/clash-linux-arm64-2023.08.17-13-gdcc8d87.gz root@192.168.12.1:/home/NFS
@@ -592,7 +592,7 @@ ip6tables -t nat -A POSTROUTING -o `ip -6 route | grep "default from" | awk 'NR=
 root@ImmortalWrt:/etc/cndaqiang/clash# /etc/cndaqiang/clash/bin/restart-clash.sh
 -ash: /etc/cndaqiang/clash/bin/restart-clash.sh: not found
 ```
-因为脚本开头是用`bash运行的`,安装`bash`或者把开头调整为`ash`
+因为脚本开头是用`bash`运行的,安装`bash`或者把开头调整为`ash`
 
 ### 重启后root密码无法登录
 - 新系统,仅初始化修改root密码
@@ -602,9 +602,10 @@ root@ImmortalWrt:/etc/cndaqiang/clash# /etc/cndaqiang/clash/bin/restart-clash.sh
 - **初步原因:`sshd`和`dropbear`两个服务冲突了**
 - **方案1:关闭系统的`sshd`项目开机自启**
 - **方案2:使用`sshd`**,自己修改`/etc/ssh/sshd_config`配置，自己提前放好`.ssh/authorized_keys`
+- 🌟**最终采用的方案:固件不集成`openssh-server`**
 
 
-### 固件签名错误: 删除签名文件后再同步
+### 自己搭建的仓库签名错误: 删除签名文件后再同步
 ```
 Downloading file:///home/NFS/immortalwrt-23.05/targets/mediatek/filogic/packages/Packages.sig
 Signature check failed.
