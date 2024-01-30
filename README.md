@@ -361,5 +361,5 @@ jekyll启动后,打包`_site`目录,上传至群晖,新增虚拟主机,后端Apa
 
 
 ## 网站地图的制作
-- 使用本网站的RSS接口制作`https://cndaqiang.github.io/feed.xml`
+- 修改博客的rss订阅,`cp feed.xml sitemap.xml`，修改链接`href="{{ "/sitemap.xml" `和去掉限制`limit:10`,会自动生成本网站的sitemap,也是, `https://cndaqiang.github.io/sitemap.xml`
 - 使用第三方网站制作`https://www.xml-sitemaps.com/`
