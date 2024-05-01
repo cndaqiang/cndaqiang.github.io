@@ -26,6 +26,8 @@ mathjax: true
 - - 可以在`/luci/admin/system/flash`里面配置好[备份的目录](./#设置备份文件列表),如我自己写的脚本`/etc/cndaqiang`
 - 新装的系统如果各种异常,重置配置
 - **感谢互联网、GPT,有些教程参考了,但是没有及时把链接复制到本文进行致谢,在此统一致谢**
+- **同时开启qBittotrent、passWall, clash, zerotier确实内存满了,容易卡, 貌似买个x86作为科学、存储节点有意义**
+
 
 ## 编译固件方法
 - 不仅是`./scripts/feeds`需要科学上网环境
@@ -278,6 +280,21 @@ Openwrt默认不编译`openssh-server/client`,`Dropbear`提供`openssh-server/cl
 >- - `Ed25519通常比RSA更短,更快,相对安全`
 >- - 一般来说，如果性能和简洁性是关键因素，而且你不需要长密钥，那么Ed25519可能是一个更好的选择。如果你需要与现有系统或标准兼容，或者有特定的安全性需求，可能会选择RSA
 - Openwrt 服务器的密钥保存在`/etc/dropbear/`,网页端配置的密钥登录也在该文件
+- Dropbear的ssh客户端不支持`-D`,无法做ssh隧道
+
+
+## dns配置
+发现单独设置这些DNS,都可能无法解析
+- LAN接口
+- WAN接口
+- `dnsmasq`
+
+### DNS最终设置
+- LAN配置和下面一样的DNS
+- `:/luci/admin/network/dhcp/常规设置`中设置dns转发(注:这里只能填ipv4的dns,填v6的解析会出问题)
+![](/uploads/2024/01/dnsmasq_trans.jpg)
+- 有时候还是没法解析,就重启`dnsmasq`的服务
+
 
 ## zerotier
 - 开机后zerotier的启动速度较慢,耐心等待
@@ -474,7 +491,7 @@ then
   cp  $CLASHDIR/subconverter/config.yml $mylocalconfig
 fi
 #
-/usr/bin/clash -f $mylocalconfig | tee $CLASHDIR/log/clash.log
+/usr/bin/clash -f $mylocalconfig | tee $CLASHDIR/log/clash.log  2>&1 &
 
 #$CLASHDIR/bin/clash -f $mylocalconfig | tee $CLASHDIR/log/clash.log
 #$CLASHDIR/bin/clash -f $mylocalconfig > $CLASHDIR/log/clash.log 2>&1 &
@@ -533,6 +550,18 @@ cp $CLASHDIR/bin/cndaqiang_clash /etc/init.d/
 (/etc/init.d/cndaqiang_clash restart &)
 0 1 * * * /etc/init.d/cndaqiang_clash restart
 ```
+
+### clash占用存储的解决方案
+路由器的空间小，上面方案输出的clash日志文件增加，长时间后会导致路由器没有空间出现各种异常
+```
+#每天凌晨删除创建时间>1天的文件
+0 0 * * * /usr/bin/find /etc/cndaqiang/clash/log/clash.log -type f -mtime  +1 -exec /bin/rm {} \;
+#删除大于1M的
+0 0 * * * /usr/bin/find /etc/cndaqiang/clash/log/clash.log -type f -size +1024k -exec /bin/rm {} \;
+#其他缓存
+0 0 * * * /usr/bin/find /etc/cndaqiang/clash/subconverter/cache -type f -mtime +1 -exec /bin/rm {} \;
+```
+
 
 ## ipv6
 [Openwrt 纯ipv6环境管理和上网](https://www.cnblogs.com/cndaqiang/p/16632790.html)
