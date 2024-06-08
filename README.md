@@ -43,8 +43,12 @@ curl -sSL https://get.rvm.io | bash -s stable
 ```
 #mac/Linux
 #需要登陆的shell,执行 /bin/bash --login
+source /home/cndaqiang/.rvm/scripts/rvm
 source /Users/cndaqiang/.rvm/scripts/rvm
 rvm install "ruby-2.7.0" # 使用timemachine等当时迁移的mac系统，使用 rvm reinstall "ruby-2.7.0"
+#ubuntu 
+rvm pkg install openssl
+rvm install "ruby-2.7.0" --with-openssl-dir=$HOME/.rvm/usr
 rvm use "ruby-2.7.0" --default 
 #rvm安装在用户目录,不粗要root
 ```

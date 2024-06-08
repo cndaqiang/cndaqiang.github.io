@@ -43,8 +43,9 @@ chmod +x /Users/cndaqiang/anaconda3/lib/python3.11/site-packages/airtest/core/an
 ```
 
 ### 代码修改
-#### monkey
-mac/linux都会报错 airtest使用monkey控制安卓的命令 `monkey -p com.tencent.tmgp.sgame -c android.intent.category.LAUNCHER 1`,#会报错
+#### start_app 报错(monkey)
+mac/linux/windows终端以及AirTest客户端在执行`start_app`时都会报错。
+因为airtest使用monkey控制安卓的命令 `monkey -p com.tencent.tmgp.sgame -c android.intent.category.LAUNCHER 1`
 ```
 ** SYS_KEYS has no physical keys but with factor 2.0%.
 airtest.core.error.AdbError: stdout[b'  bash arg: -p\n  bash arg: com.tencent.tmgp.sgame\n  bash arg: -c\n  bash arg: android.intent.category.LAUNCHER\n  bash arg: 1\n'] stderr[b'args: [-p, com.tencent.tmgp.sgame, -c, android.intent.category.LAUNCHER, 1]\n arg: "-p"\n arg: "com.tencent.tmgp.sgame"\n arg: "-c"\n arg: "android.intent.category.LAUNCHER"\n arg: "1"\ndata="com.tencent.tmgp.sgame"\ndata="android.intent.category.LAUNCHER"\n** SYS_KEYS has no physical keys but with factor 2.0%.\n']
@@ -52,7 +53,12 @@ airtest.core.error.AdbError: stdout[b'  bash arg: -p\n  bash arg: com.tencent.tm
 
 添加`--pct-syskeys 0`
 
-修改`/home/cndaqiang/.local/lib/python3.10/site-packages/airtest/core/android/adb.py`
+* 对于在终端运行的脚本，<br>
+Mac/linux 修改`/home/cndaqiang/.local/lib/python3.10/site-packages/airtest/core/android/adb.py`<br>
+windows修改 `C:\Users\cnche\anaconda3\Lib\site-packages\airtest\core\android\adb.py`
+* AirTest客户端运行修改`AirtestIDE\airtest\core\android\adb.py`
+
+修改内容：
 ```
 1387         if not activity:
 1388             self.shell(['monkey --pct-syskeys 0', '-p', package, '-c', 'android.intent.category.LAUNCHER', '1'])

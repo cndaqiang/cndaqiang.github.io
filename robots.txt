@@ -1,8 +1,10 @@
 User-agent: *
-Disallow: /yy
-Disallow: /doc
-Disallow: /uploads
-Disallow: /web
-Disallow: /packages
-
-
+Disallow: /Periodic_Table/
+Disallow: /yy/
+Disallow: /doc/
+Disallow: /uploads/
+Disallow: /web/
+Disallow: /packages/
+Disallow: /q-tools/
+Disallow: /*.pdf$
+Allow: /
