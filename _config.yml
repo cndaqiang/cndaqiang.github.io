@@ -68,6 +68,7 @@ dribbble_username:
 # xxxxx字符串
 baidu_tongji_id: 8ba332e6517ae0ba8a13339285d97bb3
 google_analytics_id: UA-109057291-1 # google 分析追踪id
+Umami_id: 27e72116-bcc0-4a4d-82a5-485b4105820e #https://cloud.umami.is/ 统计
 
 #一些功能
 #显示全球用户分布

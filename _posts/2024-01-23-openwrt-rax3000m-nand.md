@@ -16,37 +16,269 @@ mathjax: true
 
 
 
-## 备注
-- 设备CMCC RAX3000M
-- 编译系统: Ubuntu 22.04, Passwd:123456
-- 注1: Ubuntu版本较低(20.04)会和OpenWRT开发者的环境出现差异,无法编译新版本.
-- 注2: 编译固件+常用包需要空间`>35G`, 虚拟机需要给足够空间
-- 每次编译后显示的内核版本以及依赖内核版本号的关系会变
-- 有些包更新系统后可以保留配置,有些还是不行,比如`/etc/opkg/distfeeds.conf`都不能保存
-- - 可以在`/luci/admin/system/flash`里面配置好[备份的目录](./#设置备份文件列表),如我自己写的脚本`/etc/cndaqiang`
-- 新装的系统如果各种异常,重置配置
+
+
 - **感谢互联网、GPT,有些教程参考了,但是没有及时把链接复制到本文进行致谢,在此统一致谢**
 - **同时开启qBittotrent、passWall, clash, zerotier确实内存满了,容易卡, 貌似买个x86作为科学、存储节点有意义**
 
 
-## 编译固件方法
+## 编译固件
+### 为什么要编译固件
+- **如果没有特殊需求, 官方的包就行**
+- 官方固件存在问题时: 
+- - flash扩容
+- - 预安装包: ipv6, 校园网认证, luci界面
+- - kmod等内核驱动的包,使用opkg安装后有可能不能用, 例如usb接口, u盘
+- - passwall 等app不在opkg的仓库里, 但是编译固件的时候可以打包进来
+
+
+### 编译环境
+- 路由设备: CMCC RAX3000M
+- 编译系统: Ubuntu 22.04, Passwd:123456
+- 注1: Ubuntu版本较低(20.04)会和OpenWRT开发者的环境出现差异,无法编译新版本.
+- 注2: 编译固件+常用包需要空间`>35G`, 虚拟机需要给足够空间
+
+- 如果使用老板本的openwrt可能找不到支持的设备,更新到较新的分支`git checkout v23.05.3`
+- 不同的发行版openwrt/immortalwrt支持的软件/设备/显示的内容, [简单的区别@CrazyBoyFeng
+](https://github.com/immortalwrt/immortalwrt/discussions/1109#discussioncomment-8073987)
+
+
+### 源码下载
 - 不仅是`./scripts/feeds`需要科学上网环境
 - 编译过程中有些包如`frp`也会联网下载,使用全局代理或者`proxychains`方法
 - 参考[immortalwrt](https://github.com/immortalwrt/immortalwrt/tree/openwrt-23.05)
-- **`*`代表编入固件,`M`表示编译成模块或者IPK包,`空`不编译**
 
 ```bash
 sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'
+#这里采用immortalwrt，没使用openwrt，是因为immortalwrt支持更多的软件
 git clone -b openwrt-23.05 --single-branch --filter=blob:none https://github.com/immortalwrt/immortalwrt
 cd immortalwrt 
+#切换到最新的分支,不要使用默认的SNAPSHOT分支，
+git checkout v23.05.0
+#
+#更新feed
 ./scripts/feeds update -a
 ./scripts/feeds install -a
-make menuconfig
-make
 ```
 
-proxychains编译示例(并不稳定)
+### [可选]添加第三方插件: istore
+* 项目地址[istore](https://github.com/linkease/istore)
+* 可以直接命令安装，但是出错了，集成在固件里可以使用
+* 添加istore后，可能会改动immortalwrt的源为openwrt,注意修改回来
+* 更多的问题，放到本文的后面
+* 128M的小设备就别添加了
 
+```
+echo >> feeds.conf.default
+echo 'src-git istore https://github.com/linkease/istore;main' >> feeds.conf.default
+./scripts/feeds update istore
+./scripts/feeds install -d y -p istore luci-app-store
+```
+
+### 设置固件包参数
+- **注:有些包是特定发行版才有的,例如immortalwrt和openwrt在这里的结果就不同**
+-- 不同发行版默认开启包也是不同，例如immortalwrt对cmcc rax3000默认开启了usb的支持，而openwrt默认不开启
+- **`*`代表编入固件,`M`表示编译成模块或者IPK包,`空`不编译**
+- **注:编译的包多了,`/rom`占用的空间就大, 相应的`/overlay`(`/dev/ubi`)空间就小了**
+```
+make menuconfig
+```
+
+#### 我常编译的包
+
+```
+Base system
+├── Customize busybox options
+Administration
+├── htop
+Development
+├── diffutils
+Extra packages
+├── ipv6helper
+Kernel modules
+│   └── Filesystems
+│       ├── kmod-fs-ext4 #挂载ext4格式的u盘时用
+│   └──USB Support
+│       ├── kmod-usb-storage # u盘
+LuCi
+│   └── Applications
+│       ├── luci-app-fileassistant #在luci界面浏览编辑下载文件
+│       ├── luci-app-ksmbd #smb共享
+│       ├── luci-app-passwall
+│       ├── luci-app-qbittorrent
+│       ├── luci-app-store #添加store的源后才有
+│       ├── luci-app-ttyd #luci界面终端
+│       ├── luci-app-zerotier
+│   └── Themes
+│       ├── luci-theme-argon
+Network
+│   └── File Transfer
+│       ├── rsync    #这是我向路由器推送文件使用的
+│       ├── rsyncd
+│       ├── wget-ssl #不要开wget-nossl,不然默认用wget下载容易出错
+│   └── Filesystem
+│       ├── ksmbd-server 
+│       ├── nfs-kernel-server 
+│   └── Firewall
+│       ├── ip6tables-extra
+│       ├── ip6tables-mod-nat
+│       ├── ip6tables-nft #旧版名为ip6table
+│   └── Version Control Systems
+│       ├── git #同步代码用
+│   └── SSH
+│       ├── openssh-client (不要编译,Dropbear有ssh的功能,安装后还要配置哪个ssh客户端负责git)
+│       ├── openssh-server (不要编译,Dropbear有ssh的功能,两个会冲突,编译后开机也只能2选1 )
+│       ├── openssh-sftp-server (SFTP服务,要编译)
+│   └── Web Servers/Proxies
+│       ├── clash #默认的仓库地址GO PKG:=github.com/Dreamacro/clash已经失效了，这个无法编译通过
+Utilities
+│   └── Disc
+│       ├── parted
+│   └── Editors
+│       ├── vim-full
+│   └── Filesystem
+│       ├── e2fsprogs #格式化U盘位ext4, mkfs.ext4
+│   └── shadow-utils #创建新用户用
+│   └── lsof #查看端口,用于查看和clash端口冲突的程序
+```
+
+
+#### 精简包
+配置好内核的md5后，只安装几个基础的包也是可以使用的
+
+```
+Extra packages
+├── ipv6helper
+luci
+│   └── Applications
+│       ├── luci-app-fileassistant #在luci界面浏览编辑下载文件
+│       ├── luci-app-qbittorrent
+│       ├── luci-app-store #添加store的源后才有
+│       ├── luci-app-ttyd #luci界面终端
+│       ├── luci-app-zerotier
+│   └── Themes
+│       ├── luci-theme-argon
+Network
+│   └── File Transfer
+│       ├── rsync    #这是我向路由器推送文件使用的
+│       ├── rsyncd
+│       ├── wget-ssl #不要开wget-nossl,不然默认用wget下载容易出错
+│   └── Filesystem
+│       ├── nfs-kernel-server 
+│   └── Firewall
+│       ├── ip6tables-extra
+│       ├── ip6tables-mod-nat
+│       ├── ip6tables-nft #旧版名为ip6table
+│   └── SSH
+│       ├── openssh-sftp-server (SFTP服务,要编译)
+```
+
+其他包opkg即可
+```
+opkg install htop
+```
+
+#### 与内核相关的包
+```
+Kernel modules
+│   └── Filesystems
+│       ├── kmod-fs-ext4 #挂载ext4格式的u盘时用
+│   └──USB Support
+│       ├── kmod-usb-storage # u盘
+│       ├── kmod-usb2 #usb 2.0
+│       ├── # kmod-usb3 #usb 3.0
+│       ├── # kmod-usb-storage-extras #这些不安装也可以识别U盘
+│       ├── # kmod-scsi-core
+│       ├── # kmod-scsi-generic
+│       ├── # kmod-usb-core  
+│       ├── # kmod-usb-uhci 
+│       ├── # kmod-usb-ohci
+Utilities
+│   └── Filesystem
+│       ├── e2fsprogs #格式化U盘位ext4, mkfs.ext4
+```
+
+
+
+#### 查找特定包的位置
+
+- **`make menuconfig`后`/`搜索**
+- **推荐: 网页查找**, 搜索`openwrt package package_name`
+- - 如通过`https://openwrt.org/packages/pkgdata/ip6tables-extra`页面为例,可以看到:`Categories:network---firewall`
+
+
+
+
+### [可选、推荐]设置编译的内核依赖与镜像仓库相同
+- **主要解决: opkg安装涉及内核的软件时报错`cannot find dependency kernel (= 内核版本-1-仓库编译的md5)`**
+- - 原因1. 本地编译的内核md5与opkg仓库的不同
+- - 原因2. 本地编译环境变化，编译的离线内核ipk文件不满足依赖关系
+- - 原因3. 不同发行版(openwrt/immortalwrt/...)的内核版本和md5不同，immortalwrt固件使用openwrt的仓库时，也无法满足内核的依赖关系
+- **解决方案: 强制本地内核的md5与opkg仓库相同**, 参考[Openwrt 自编译后安装官方ipk时产生kernel MD5不兼容的问题处理@bjr2016](https://blog.csdn.net/bjr2016/article/details/107776801)
+- **注:虽然大多数的kmod包都可以安装了，但是如果还是不能正常工作（利于usb接口），还是集成到固件里更稳**
+
+#### 查看仓库内核的md5
+如`https://downloads.immortalwrt.org/releases/23.05.0/targets/mediatek/filogic/kmods/`(**注意不同的路由器/平台此网址有差异, cmcc rax3000m是`mediatek`平台**)<br>
+看到`5.15.137-1-904c4c7394bedf0cdae64cbc242922fd`
+
+
+#### 修改md5
+这样替换
+```
+vi include/kernel-defaults.mk
+```
+注意是`Tab`键+`echo ...`
+```
+        #grep '=[ym]' $(LINUX_DIR)/.config.set | LC_ALL=C sort | $(MKHASH) md5 > $(LINUX_DIR)/.vermagic
+        echo 904c4c7394bedf0cdae64cbc242922fd > $(LINUX_DIR)/.vermagic
+```
+
+```
+vi package/kernel/linux/Makefile
+```
+
+```
+ifeq ($(DUMP),)
+  #STAMP_BUILT:=$(STAMP_BUILT)_$(shell $(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5)
+  STAMP_BUILT:=$(STAMP_BUILT)_904c4c7394bedf0cdae64cbc242922fd
+  -include $(LINUX_DIR)/.config
+endif
+```
+
+#### 重新编译
+```
+make V=s
+#报错依赖则删除
+rm bin/targets/mediatek/filogic/packages/*
+make V=s
+```
+
+更新之后
+```
+cndaqiang@vmnode:/data/openwrt/cmcc/immortalwrt$ ls bin/targets/mediatek/filogic/packages/ | grep kernel
+kernel_5.15.137-1-904c4c7394bedf0cdae64cbc242922fd_aarch64_cortex-a53.ipk
+```
+
+
+### 开始编译
+#### 全部编译
+```
+make V=s #设置V=s, 可以看详细信息，检查报错
+```
+
+#### 编译特定包的方法
+以`subconverter`为例
+```
+cndaqiang@cndaqiang:~/immortalwrt$ ls package/feeds/packages/subconverter/
+files  Makefile  patches
+cndaqiang@cndaqiang:~/immortalwrt$ make package/feeds/packages/subconverter/compile V=s
+make[2]: Entering directory '/home/cndaqiang/immortalwrt/scripts/config'
+make[2]: 'conf' is up to date.
+```
+
+#### 科学编译的方法
+- a. 在ubuntu的系统里设置了socks代理
+- b. proxychains编译
 ```
 apt install proxychains
 vi /etc/proxychains.conf
@@ -54,7 +286,9 @@ vi /etc/proxychains.conf
 proxychains make -j1 V=s
 ```
 
-## 编译生成的固件和ipk文件列表
+
+### 编译结果
+#### 编译固件目录
 ```
 cndaqiang@cndaqiang:~/immortalwrt$ tree bin
 bin
@@ -99,11 +333,16 @@ bin
             └── version.buildinfo
 ```
 
-## 创建个人固件仓库
-### 搭建http版仓库
-- 把`/home/cndaqiang/immortalwrt/bin/`复制到`www`目录即可
 
-### 本地文件版仓库
+#### 搭建opkg镜像
+- 可以使用国内的镜像`https://mirrors.cernet.edu.cn/immortalwrt`
+- 这里提供两种自建镜像的方法
+
+##### http版
+- 把编译目录`/immortalwrt/bin/`中的文件复制到op的`www`目录即可
+- 局域网镜像`rsync -avu ./bin/ /data/blog/blog.cndaqiang/localshare/`
+
+##### 本地文件版
 #编译服务器推送仓库到路由器
 ```
 rsync -avu /home/cndaqiang/immortalwrt/bin/ root@192.168.12.1:/home/NFS/immortalwrt-23.05/
@@ -123,142 +362,16 @@ src/gz cndaqianglocal_targets    file:///home/NFS/immortalwrt-23.05/targets/medi
 ```
 
 
-使用个人固件示例
+## 安装系统
+### 终端升级
 ```
-root@CRouter:/etc/cndaqiang/clash/subconverter# opkg install htop
-Installing htop (3.3.0-1) to root...
-Downloading file:///home/NFS/immortalwrt-23.05/packages/aarch64_cortex-a53/packages/htop_3.3.0-1_aarch64_cortex-a53.ipk
-Configuring htop.
-```
-
-## 修改编译输出的内核版本
-- 从而保证自己不同时期编译的内核版本是相同的,以方便更新一些依赖内核的包
-- 另外让版本显示和官方的仓库一样,也方便联网安装
-- 参考[Openwrt 自编译后安装官方ipk时产生kernel MD5不兼容的问题处理@bjr2016](https://blog.csdn.net/bjr2016/article/details/107776801)
-- 因为我都是自己编译的ipk,没有冲突的问题,万一将来不想编译某个软件,就想利用官方仓库,提前避免冲突
-
-查看官方的仓库`https://mirrors.vsean.net/openwrt/releases/23.05-SNAPSHOT/targets/sunxi/cortexa53/kmods/`确定内核md5得到`5.15.146-1-24c201741aa3cde887b045d07c2eabc1/`
-查看已经编译的md5
-```
-cndaqiang@cndaqiang:~/immortalwrt$ cat ./build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_filogic/linux-5.15.146/.vermagic
-ca77fd682e2cf88329a642815770f8a8
+#默认保存了config的
+root@OpenWrt:/tmp# sysupgrade immortalwrt-23.05.0-ath79-nand-netgear_wndr3700-v4-squashfs-sysupgrade.bin
 ```
 
-这样替换
-```
-vi include/kernel-defaults.mk
-```
-注意是`Tab`键+`echo ...`
-```
-        #grep '=[ym]' $(LINUX_DIR)/.config.set | LC_ALL=C sort | $(MKHASH) md5 > $(LINUX_DIR)/.vermagic
-        echo 24c201741aa3cde887b045d07c2eabc1 > $(LINUX_DIR)/.vermagic
-```
-
-```
-vi package/kernel/linux/Makefile
-```
-
-```
-ifeq ($(DUMP),)
-  #STAMP_BUILT:=$(STAMP_BUILT)_$(shell $(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5)
-  STAMP_BUILT:=$(STAMP_BUILT)_24c201741aa3cde887b045d07c2eabc1
-  -include $(LINUX_DIR)/.config
-endif
-```
-再重新编译,需要清除一些与内核有关包
-```
-cndaqiang@cndaqiang:~/immortalwrt$ rm bin/targets/mediatek/filogic/packages/*
-```
-
-更新之后
-```
-root@CRouter:~# opkg info kernel | grep 'Version'
-Version: 5.15.146-1-24c201741aa3cde887b045d07c2eabc1
-```
-
-
-## 编译固件时选择哪些安装包
-
-### 查找特定包位置
-
-- **`make menuconfig`后`/`搜索**
-- **网页查找:** 搜索`openwrt package package_name`
-- - 如通过`https://openwrt.org/packages/pkgdata/ip6tables-extra`页面为例,可以看到:`Categories:network---firewall`
-
-### 我常编译的包的位置
-```
-Administration
-├── htop
-Base system
-├── Customize busybox options
-├── Shells
-development
-├── diffutils
-Extra packages
-├── ipv6helper
-luci
-│   └── Applications
-│       ├── luci-app-fileassistant #在luci界面浏览编辑下载文件
-│       ├── luci-app-ksmbd #smb共享
-│       ├── luci-app-passwall
-│       ├── luci-app-qbittorrent
-│       ├── luci-app-ttyd #luci界面终端
-│       ├── luci-app-zerotier
-│   └── Themes
-│       ├── luci-theme-argon
-Network
-│   └── File Transfer
-│       ├── rsync
-│       ├── rsyncd
-│       ├── wget-ssl 不要开wget-nossl,不然默认用wget下载容易出错
-│   └── Filesystem
-│       ├── ksmbd-server 
-│       ├── nfs-kernel-server 
-│   └── Firewall
-│       ├── ip6tables-extra
-│       ├── ip6tables-mod-nat
-│       ├── ip6tables-nft #旧版名为ip6table
-│   └── Version Control Systems
-│       ├── git #同步代码用
-│   └── SSH
-│       ├── openssh-client (不要编译,Dropbear有ssh的功能,安装后还要配置哪个ssh客户端负责git)
-│       ├── openssh-server (不要编译,Dropbear有ssh的功能,两个会冲突,编译后开机也只能2选1 )
-│       ├── openssh-sftp-server (SFTP服务,要编译)
-│   └── Web Servers/Proxies
-│       ├── clash
-Utilities
-│   └── Disc
-│       ├── parted
-│   └── Editors
-│       ├── vim-full
-│   └── shadow-utils #创建新用户用
-│   └── lsof #查看端口,用于查看和clash端口冲突的程序
-```
-
-
-### 只编译特定包的一种方式
-以`subconverter`为例
-```
-cndaqiang@cndaqiang:~/immortalwrt$ ls package/feeds/packages/subconverter/
-files  Makefile  patches
-cndaqiang@cndaqiang:~/immortalwrt$ make package/feeds/packages/subconverter/compile V=s
-make[2]: Entering directory '/home/cndaqiang/immortalwrt/scripts/config'
-make[2]: 'conf' is up to date.
-```
-
-
-
-## 新系统操作
-- 设置密码`ssh`后`passwd`就好
-- 如果不恢复其他备份, 恢复下`/etc/dropbear`服务器的key
-- WAN口上网设置, dns, ipv6
-- 修改lan网段
-- 设置备份列表
-- USB挂载
-- 可以按照下面的方式配置`clash,nat6`,也可以直接上传之前备份文件解压缩的`/etc/cndaqiang`文件夹
-
-## 升级系统
-### 设置备份文件列表
+### web升级
+- 不同发布版的openwrt升级不建议保留配置
+- 设置备份文件列表
 `luci>系统>备份与升级>配置`
 ```
 /etc/cndaqiang
@@ -269,6 +382,19 @@ make[2]: 'conf' is up to date.
 /root #git, .ssh等
 #nfs、zerotier的配置可以自动保存不用管
 ```
+
+
+### 全新安装后的操作
+- 新装的系统如果各种异常,重置系统
+- 设置密码`ssh`后`passwd`就好
+- 如果不恢复其他备份, 恢复下`/etc/dropbear`服务器的key
+- WAN口上网设置, dns, ipv6
+- 修改lan网段
+- 设置备份列表
+- USB挂载
+- 可以按照下面的方式配置`clash,nat6`,也可以直接上传之前备份文件解压缩的`/etc/cndaqiang`文件夹
+- 检查opkg的镜像
+
 
 ## 关于Dropbear
 Openwrt默认不编译`openssh-server/client`,`Dropbear`提供`openssh-server/client`的服务
@@ -302,7 +428,6 @@ Openwrt默认不编译`openssh-server/client`,`Dropbear`提供`openssh-server/cl
 - `网络>防火墙>防火墙 - 区域设置>常规设置>入站数据>接受` 才能正常使用zerotier
 - 走zerotier共享的NFS目录速度读写慢于直接读写的,后台发现zerotier的CPU占用率较高
 
-
 ## NFS
 
 ```
@@ -331,7 +456,7 @@ sudo mount_nfs  -P -o nolocks,nosuid ${mom}:/home/NFS /Users/data
 
 ### 路由器上层访问
 - 添加客户端ip到`exports`
-- 路由器内部又不能用这个wan的ip访问,真是又怪了
+- 路由器内部又不能用这个wan的ip访问,真是怪了
 
 #### rpc的111端口
 - 目前发现只能通过端口转发的形式实现
@@ -571,6 +696,11 @@ cp $CLASHDIR/bin/cndaqiang_clash /etc/init.d/
 ```
 
 ```
+opkg update
+opkg install ip6tables kmod-ipt-nat6
+#如果换了overlay分区，怎么配置都不好就
+opkg upgrade ip6tables kmod-ipt-nat6
+#
 mkdir /etc/cndaqiang/
 vi /etc/cndaqiang/nat6.sh
 chmod +x /etc/cndaqiang/nat6.sh
@@ -615,6 +745,47 @@ ip6tables -t nat -A POSTROUTING -o `ip -6 route | grep "default from" | awk 'NR=
 - 不要复制原机场的clash订阅,复制V2-Ray订阅地址能解析
 
 
+## istore使用记录
+* 因为不是官方支持的设备，可能存在各种问题，谨慎使用
+* **做好固件备份和备份,有可能使用istore安装一个插件后系统出现各种奇怪现象**
+* 系统的opkg配置不好的时候，istore也安装不好软件
+* istore安装的软件包都很大，普通的120M ram的路由器，安装一两个包就占满了，意义不大
+
+
+可以在网页luci>iStore上直接安装插件,安装失败后,根据网页端显示的命令，在终端执行, 例如`is-opkg install app-meta-istorex`, 可以看到报错的原因
+
+报错
+```
+is-opkg install 'app-meta-qbittorrent'
+#.....
+Collected errors:
+ * check_data_file_clashes: Package qbittorrent-enhanced-edition wants to install file /usr/bin/qbittorrent-nox
+	But that file is already provided by package  * qBittorrent-static
+ * opkg_install_cmd: Cannot install package app-meta-qbittorrent.
+```
+
+存储空间不够
+```
+Installing qbittorrent-enhanced-edition (4.6.5.10-2) to root...
+Collected errors:
+ * verify_pkg_installable: Only have 3932kb available on filesystem /overlay, pkg qbittorrent-enhanced-edition needs 7734
+ * opkg_install_cmd: Cannot install package app-meta-qbittorrent.
+ ```
+
+## ttyd
+[OpenWRT的TTYD终端显示已拒绝连接](https://www.cnblogs.com/Magiclala/p/16935165.html)
+```
+vi /etc/init.d/ttyd
+#用#注释掉${interface:+-i $interface} \
+#重启ttyd服务
+```
+
+
+## 挂载U盘
+* 有的U盘有问题,换个U盘就好了
+* opkg安装的驱动`kmod-usb-storage kmod-usb2`, 若无效就集成在固件中
+* 还要安装U盘的格式支持，例如ext4:`kmod-fs-ext4`
+
 ## 报错
 ### 脚本存在无法运行
 ```
@@ -648,6 +819,7 @@ echo rm $i
 done
 ```
 再重新同步Packages
+
 
 
 

@@ -16,6 +16,19 @@
 - Gemfile
 >定义你的应用依赖哪些第三方包，bundle根据该配置去寻找这些包。
 
+### openwrt 安装过程
+```
+docker run --name ubuntu_page -it -p 4000:4000 -p 1022:22 -v /mnt/mmc0-4/data:/data ubuntu:22.04
+apt update
+#ruby apt流程
+按照官方安装
+https://jekyllrb.com/docs/installation/ubuntu/
+#echo "gem 'webrick'" >> Gemfile
+rm Gemfile.lock 
+bundle install
+bundle exec jekyll s --host=0.0.0.0
+
+```
 
 ### Linux/Mac安装rvm
 **Ubuntu卸载系统的Ruby,mac协助brew安装的Ruby,清除环境变量设置**,安装gpg公钥
@@ -25,15 +38,7 @@ brew install gnupg #mac
 #下面非root
 gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 #如果报错,则换个服务器
-cndaqiang@macmini blog.cndaqiang$ gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-gpg: 从公钥服务器接收失败：Server indicated a failure
-cndaqiang@macmini blog.cndaqiang$ gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-gpg: 密钥 105BD0E739499BDB： 1 个重复签名被移除
-gpg: /Users/cndaqiang/.gnupg/trustdb.gpg：建立了信任度数据库
-gpg: 密钥 105BD0E739499BDB：公钥 “Piotr Kuczynski <piotr.kuczynski@gmail.com>” 已导入
-gpg: 密钥 3804BB82D39DC0E3：公钥 “Michal Papis (RVM signing) <mpapis@gmail.com>” 已导入
-gpg: 处理的总数：2
-gpg:               已导入：2
+gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 ```
 安装rvm
 ```
@@ -43,14 +48,15 @@ curl -sSL https://get.rvm.io | bash -s stable
 ```
 #mac/Linux
 #需要登陆的shell,执行 /bin/bash --login
-source /home/cndaqiang/.rvm/scripts/rvm
-source /Users/cndaqiang/.rvm/scripts/rvm
-rvm install "ruby-2.7.0" # 使用timemachine等当时迁移的mac系统，使用 rvm reinstall "ruby-2.7.0"
-#ubuntu 
-rvm pkg install openssl
-rvm install "ruby-2.7.0" --with-openssl-dir=$HOME/.rvm/usr
-rvm use "ruby-2.7.0" --default 
-#rvm安装在用户目录,不粗要root
+source $HOME/.rvm/scripts/rvm
+export PATH="$PATH:$HOME/.rvm/bin"
+#如果是root账户
+source /usr/local/rvm/scripts/rvm
+export PATH="$PATH:/usr/local/rvm/bin"
+rvm install "ruby-3.0.0"
+#新版本的ubuntu可能会出问题，这样安装:
+#rvm pkg install openssl; rvm install "ruby-3.0.0" --with-openssl-dir=$HOME/.rvm/usr
+rvm use "ruby-3.0.0" --default
 ```
 
 
@@ -59,30 +65,14 @@ rvm use "ruby-2.7.0" --default
 
 #设置源
 gem sources --add https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --remove https://rubygems.org/
-#更新
-gem update
-#安装bunder
-gem install bundler
-#bunder源
-bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems
 #还需要安装，不然安装jekyll会报错
 gem install nokogiri -v '1.10.9' --source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems/'
-
-#bunder源
+#bunder源。非必须
 bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems
+gem update
 #在blog目录
-cndaqiang@girl:~/code/cndaqiang.github.io$ vi Gemfile
-```
-**要更新一下Gemfile的时间戳**,其中内容为
-```
-source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems'
-gem 'github-pages'
-```
-`rm Gemfile.loc`, 继续安装
-```
-cndaqiang@girl:~/code/cndaqiang.github.io$ bundle install
-Fetching source index from https://mirrors.tuna.tsinghua.edu.cn/rubygems/
-
+rm Gemfile.lock 
+bundle install
 ```
 
 ## 运行

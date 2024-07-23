@@ -1,7 +1,9 @@
+localshare
 nohup.out
 _site/*
 .DS_Store
 ._*
 .sass-cache/*
-
+myweb/*
+Gemfile.lock
 public.hexie.txt public.nas.sh public.sh public.txt public.west.sh public.west.txt

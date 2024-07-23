@@ -19,7 +19,8 @@
             {% if site.twitter_username  %} <a href="https://twitter.com/{{site.twitter_username}}" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a> {% endif %}  
             {% if site.facebook_username %} <a href="https://www.facebook.com/{{site.facebook_username}}" title="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a> {% endif %}  
             {% if site.linkedIn_username %} <a href="https://www.linkedin.com/in/{{site.linkedIn_username}}" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a> {% endif %}  
-            {% if site.dribbble_username %} <a href=" https://dribbble.com/{{site.dribbble_username}}" title="Dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a> {% endif %}  
+            {% if site.dribbble_username %} <a href="https://dribbble.com/{{site.dribbble_username}}" title="Dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a> {% endif %}  
+            .
         {% endif %}
         {% if site.beian %}
             <!-- align对齐,使的备案图标和备案号对齐-->
@@ -29,8 +30,9 @@
         </p>
         <p>
             {% if site.busuanzi %}
-            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
             {% endif %}
+            {% if site.Umami_id %} <a href="https://us.umami.is/websites/{{site.Umami_id}}"> 实时访客数据</a>{% endif %}  
         </p>
         <p class="power">
             <span>

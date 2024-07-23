@@ -1,6 +1,8 @@
+localshare
 nohup.out
 _site/*
 .DS_Store
 ._*
 .sass-cache/*
-
+myweb/*
+Gemfile.lock

@@ -43,28 +43,41 @@ chmod +x /Users/cndaqiang/anaconda3/lib/python3.11/site-packages/airtest/core/an
 ```
 
 ### 代码修改
-#### start_app 报错(monkey)
-mac/linux/windows终端以及AirTest客户端在执行`start_app`时都会报错。
-因为airtest使用monkey控制安卓的命令 `monkey -p com.tencent.tmgp.sgame -c android.intent.category.LAUNCHER 1`
+#### start_app 报错
+mac/linux/windows 都会报错 airtest使用monkey启动安卓app的命令`monkey -p com.tencent.tmgp.sgame -c android.intent.category.LAUNCHER 1`,#会报错
 ```
 ** SYS_KEYS has no physical keys but with factor 2.0%.
 airtest.core.error.AdbError: stdout[b'  bash arg: -p\n  bash arg: com.tencent.tmgp.sgame\n  bash arg: -c\n  bash arg: android.intent.category.LAUNCHER\n  bash arg: 1\n'] stderr[b'args: [-p, com.tencent.tmgp.sgame, -c, android.intent.category.LAUNCHER, 1]\n arg: "-p"\n arg: "com.tencent.tmgp.sgame"\n arg: "-c"\n arg: "android.intent.category.LAUNCHER"\n arg: "1"\ndata="com.tencent.tmgp.sgame"\ndata="android.intent.category.LAUNCHER"\n** SYS_KEYS has no physical keys but with factor 2.0%.\n']
 ```
 
-添加`--pct-syskeys 0`
+1. 获得start_app的位置`airtest/core/android`
+```
+#windows
+(base) PS D:\SoftData\git\AirTest_MobileAuto_WZRY> python
+Python 3.11.7 | packaged by Anaconda, Inc. | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import airtest.core.android, os; os.path.dirname(airtest.core.android.__file__)
+'C:\\Users\\cnche\\AppData\\Local\\anaconda3\\Lib\\site-packages\\airtest\\core\\android'
+#
+#linux
+cndaqiang@oracle:~/builddocker/redroid/8arm0$ python
+Python 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import airtest.core.android, os; os.path.dirname(airtest.core.android.__file__)
+'/home/cndaqiang/.local/lib/python3.10/site-packages/airtest/core/android
+```
 
-* 对于在终端运行的脚本，<br>
-Mac/linux 修改`/home/cndaqiang/.local/lib/python3.10/site-packages/airtest/core/android/adb.py`<br>
-windows修改 `C:\Users\cnche\anaconda3\Lib\site-packages\airtest\core\android\adb.py`
-* AirTest客户端运行修改`AirtestIDE\airtest\core\android\adb.py`
-
-修改内容：
+2. 修改`airtest/core/android/adb.py`中的`start_app()`函数,
+**添加`--pct-syskeys 0`**
 ```
 1387         if not activity:
 1388             self.shell(['monkey --pct-syskeys 0', '-p', package, '-c', 'android.intent.category.LAUNCHER', '1'])
 1389         else:
 1390             self.shell(['am', 'start', '-n', '%s/%s.%s' % (package, package, activity)])
 ```
+
+3. 如果是AirTestIDE的图形化界面，修改后要重启AirTest
+
 
 #### mac远程控制adb时,有概率无法获得屏幕截图
 - 报错`[15:59:29][WARNING]<airtest.core.api> Screen is None, may be locked`,程序会退出,但是在多进程执行时，单进程报错只会卡住,不会全部停止
