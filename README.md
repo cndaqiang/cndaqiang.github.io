@@ -44,7 +44,7 @@ gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113
 ```
 curl -sSL https://get.rvm.io | bash -s stable
 ```
-安装ruby2.7.0,mac会提示缺少的程序，并自动进行编译安装,编译失败根据configure结果修改即可
+
 ```
 #mac/Linux
 #需要登陆的shell,执行 /bin/bash --login

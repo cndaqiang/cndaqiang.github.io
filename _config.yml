@@ -76,7 +76,6 @@ fangkeshuju: True
 #卜算子页面访问量统计
 busuanzi: True
 #广告
-adsense: True
-
-
+#adsense: True
+github: True
 
