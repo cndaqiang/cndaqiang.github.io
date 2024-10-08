@@ -30,7 +30,7 @@ mathjax: true
 - - 预安装包: ipv6, 校园网认证, luci界面
 - - kmod等内核驱动的包,使用opkg安装后有可能不能用, 例如usb接口, u盘
 - - passwall 等app不在opkg的仓库里, 但是编译固件的时候可以打包进来
-
+- - 默认编译的软件版本有问题，例如`transmission-4.0.6`被很多pt站禁止访问
 
 ### 编译环境
 - 路由设备: CMCC RAX3000M
@@ -103,7 +103,7 @@ Kernel modules
 LuCi
 │   └── Applications
 │       ├── luci-app-fileassistant #在luci界面浏览编辑下载文件
-│       ├── luci-app-ksmbd #smb共享
+│       ├── luci-app-samba4  #smb共享, ksmbd能用，但是vivo的手机管理器无法正常连接
 │       ├── luci-app-passwall
 │       ├── luci-app-qbittorrent
 │       ├── luci-app-store #添加store的源后才有
@@ -117,7 +117,6 @@ Network
 │       ├── rsyncd
 │       ├── wget-ssl #不要开wget-nossl,不然默认用wget下载容易出错
 │   └── Filesystem
-│       ├── ksmbd-server 
 │       ├── nfs-kernel-server 
 │   └── Firewall
 │       ├── ip6tables-extra
@@ -276,6 +275,45 @@ make[2]: Entering directory '/home/cndaqiang/immortalwrt/scripts/config'
 make[2]: 'conf' is up to date.
 ```
 
+#### 编译特定版本包的方法
+以transmission为例，查看`https://github.com/immortalwrt/packages/tree/master/net/transmission`更新记录，
+替换`package/feeds/packages/transmission/`中的内容(主要就是Makefile文件里面定义了软件版本)
+编译
+```
+make  package/feeds/packages/transmission/compile V=s
+```
+
+以qBit为例
+```
+cd /data/openwrt/immortalwrt/feeds/packages/net/qBittorrent-Enhanced-Edition
+rm -rf *
+#把旧版的内容https://github.com/immortalwrt/packages/tree/f5c7d4105d60ea36b4ea218adc6bf76010654fdb/net/qBittorrent-Enhanced-Edition，下载到本文件夹
+make package/feeds/packages/qBittorrent-Enhanced-Edition/compile V=s
+```
+
+#### 不编译固件，只编译特定包
+先编译工具链
+```
+make tools/compile V=s
+make toolchain/compile V=s
+```
+有的还依赖内核
+```
+make target/linux/compile  V=s
+```
+再进行编译就好了
+```
+(base) cndaqiang@vmnode:/data/openwrt/immortalwrt$ make  package/feeds/packages/transmission/compile V=s -j6
+(base) cndaqiang@vmnode:/data/openwrt/immortalwrt$ ls bin/packages/mipsel_24kc/packages/
+libcurl4_8.7.1-r1_mipsel_24kc.ipk             libnatpmp1_20150609-3_mipsel_24kc.ipk         transmission-daemon_4.0.5-1_mipsel_24kc.ipk
+libdeflate_1.18-1_mipsel_24kc.ipk             libnghttp2-14_1.57.0-1_mipsel_24kc.ipk        transmission-remote_4.0.5-1_mipsel_24kc.ipk
+libdht_2022-04-27-11123089-1_mipsel_24kc.ipk  libpsl5_0.21.2-1_mipsel_24kc.ipk              transmission-web_4.0.5-1_all.ipk
+libidn2_2.3.4-1_mipsel_24kc.ipk               libutp_2023-02-14-c95738b1-1_mipsel_24kc.ipk  
+libminiupnpc_2.2.3-1_mipsel_24kc.ipk          transmission-cli_4.0.5-1_mipsel_24kc.ipk 
+```
+
+
+
 #### 科学编译的方法
 - a. 在ubuntu的系统里设置了socks代理
 - b. proxychains编译
@@ -394,6 +432,10 @@ root@OpenWrt:/tmp# sysupgrade immortalwrt-23.05.0-ath79-nand-netgear_wndr3700-v4
 - USB挂载
 - 可以按照下面的方式配置`clash,nat6`,也可以直接上传之前备份文件解压缩的`/etc/cndaqiang`文件夹
 - 检查opkg的镜像
+
+## 随手记录
+* 使用外部硬盘做overlay时，网页恢复/恢复操作无效，只能手动删除/overlay中的文件，再去执行
+* 初次设置完overlay后，设置就被清空了，还要重新配置
 
 
 ## 关于Dropbear
