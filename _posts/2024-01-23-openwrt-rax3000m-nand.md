@@ -862,6 +862,21 @@ done
 ```
 再重新同步Packages
 
+### qbittorent无法启动
+* 参数设置错了，比如下载目录不存在、不可读写
+* 文件系统变read-only了
+
+### qbittorent提示`Unauthorized`
+qbitttorent识别lan口识别错了，尝试通过其他网卡访问qbittorent的webui，取消
+* 启用“点击劫持”保护
+* 启用跨站请求伪造 (CSRF) 保护
+
+等价于设置`/etc/qBittorrent/config/qBittorrent.conf`中
+```
+WebUI\CSRFProtection=false            
+WebUI\ClickjackingProtection=false
+```
+
 
 
 
