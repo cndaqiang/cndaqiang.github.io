@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>普通用户yum安装软件包,rpm包</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2019/09/06/yumlocal/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>普通用户yum安装软件包,rpm包</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-09-06
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>&nbsp;
+    
+        <a href="/category/#Centos" title="Category: Centos" rel="category">Centos</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#yum" title="Tag: yum" rel="tag">yum</a-->
+        <a href="/tag/#yum" title="Tag: yum" rel="tag">yum</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#操作示例" id="markdown-toc-操作示例">操作示例</a>    <ul>
+      <li><a href="#安装liblzma" id="markdown-toc-安装liblzma">安装<code class="language-plaintext highlighter-rouge">liblzma</code></a>        <ul>
+          <li><a href="#1-检查xz依赖的程序包" id="markdown-toc-1-检查xz依赖的程序包">1. 检查xz依赖的程序包</a></li>
+          <li><a href="#2-下载安装缺失的依赖" id="markdown-toc-2-下载安装缺失的依赖">2. 下载安装缺失的依赖</a></li>
+          <li><a href="#3添加环境变量" id="markdown-toc-3添加环境变量">3.添加环境变量</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#一键脚本" id="markdown-toc-一键脚本">一键脚本</a></li>
+  <li><a href="#rpm包" id="markdown-toc-rpm包">rpm包</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://blog.csdn.net/sty945/article/details/80888872">centos 非root用户(普通用户)替换yum安装软件方法</a></p>
+
+<h2 id="操作示例">操作示例</h2>
+<h3 id="安装liblzma">安装<code class="language-plaintext highlighter-rouge">liblzma</code></h3>
+<p>编译R语言时遇到,<code class="language-plaintext highlighter-rouge">configure: error: "liblzma library and headers are required"</code>,然而我是实在不敢<code class="language-plaintext highlighter-rouge">sudo yum</code>了<br />
+使用普通用户安装</p>
+
+<h4 id="1-检查xz依赖的程序包">1. 检查xz依赖的程序包</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@managernode yumlocal]$ cd ~/soft/yumlocal/
+[cndaqiang@managernode yumlocal]$ yum deplist xz
+已加载插件：axelget, fastestmirror, langpacks
+No metadata available for base
+No metadata available for extras
+No metadata available for mariadb-main
+No metadata available for mariadb-maxscale
+No metadata available for mariadb-tools
+No metadata available for mongodb-enterprise
+No metadata available for mongodb-org-4.0
+No metadata available for updates
+Loading mirror speeds from cached hostfile
+软件包：xz.x86_64 5.2.2-1.el7
+   依赖：/bin/sh
+   provider: bash.x86_64 4.2.46-31.el7
+   依赖：libc.so.6(GLIBC_2.17)(64bit)
+   provider: glibc.x86_64 2.17-260.el7_6.6
+   依赖：liblzma.so.5()(64bit)
+   provider: xz-libs.x86_64 5.2.2-1.el7
+   依赖：liblzma.so.5(XZ_5.0)(64bit)
+   provider: xz-libs.x86_64 5.2.2-1.el7
+   依赖：liblzma.so.5(XZ_5.1.2alpha)(64bit)
+   provider: xz-libs.x86_64 5.2.2-1.el7
+   依赖：liblzma.so.5(XZ_5.2.2)(64bit)
+   provider: xz-libs.x86_64 5.2.2-1.el7
+   依赖：libpthread.so.0()(64bit)
+   provider: glibc.x86_64 2.17-260.el7_6.6
+   依赖：libpthread.so.0(GLIBC_2.2.5)(64bit)
+   provider: glibc.x86_64 2.17-260.el7_6.6
+   依赖：rtld(GNU_HASH)
+   provider: glibc.x86_64 2.17-260.el7_6.6
+   provider: glibc.i686 2.17-260.el7_6.6
+   依赖：xz-libs = 5.2.2-1.el7
+   provider: xz-libs.x86_64 5.2.2-1.el7
+   provider: xz-libs.i686 5.2.2-1.el7
+</code></pre></div></div>
+<h4 id="2-下载安装缺失的依赖">2. 下载安装缺失的依赖</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@managernode yumlocal]$ yumdownloader xz-libs
+已加载插件：axelget, fastestmirror, langpacks
+No metadata available for base
+No metadata available for extras
+No metadata available for mariadb-main
+No metadata available for mariadb-maxscale
+No metadata available for mariadb-tools
+No metadata available for mongodb-enterprise
+No metadata available for mongodb-org-4.0
+No metadata available for updates
+Loading mirror speeds from cached hostfile
+(1/2): xz-libs-5.2.2-1.el7.x86_64.rpm                      | 103 kB  00:00:01     
+(2/2): xz-libs-5.2.2-1.el7.i686.rpm                        | 109 kB  00:00:05     
+[cndaqiang@managernode yumlocal]$ ls
+rpm  xz-libs-5.2.2-1.el7.i686.rpm  xz-libs-5.2.2-1.el7.x86_64.rpm
+[cndaqiang@managernode yumlocal]$ rpm2cpio  xz-libs-5.2.2-1.el7.i686.rpm | cpio -idvm
+./usr/lib/liblzma.so.5
+./usr/lib/liblzma.so.5.2.2
+./usr/share/doc/xz-libs-5.2.2
+./usr/share/doc/xz-libs-5.2.2/COPYING
+./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv2
+./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv3
+./usr/share/doc/xz-libs-5.2.2/COPYING.LGPLv2.1
+494 块
+[cndaqiang@managernode yumlocal]$ rpm2cpio  xz-libs-5.2.2-1.el7.x86_64.rpm | cpio -idvm
+./usr/lib64/liblzma.so.5
+./usr/lib64/liblzma.so.5.2.2
+./usr/share/doc/xz-libs-5.2.2
+cpio: 未创建 ./usr/share/doc/xz-libs-5.2.2/COPYING：已有更新或同样新的版本存在
+./usr/share/doc/xz-libs-5.2.2/COPYING
+cpio: 未创建 ./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv2：已有更新或同样新的版本存在
+./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv2
+cpio: 未创建 ./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv3：已有更新或同样新的版本存在
+./usr/share/doc/xz-libs-5.2.2/COPYING.GPLv3
+cpio: 未创建 ./usr/share/doc/xz-libs-5.2.2/COPYING.LGPLv2.1：已有更新或同样新的版本存在
+./usr/share/doc/xz-libs-5.2.2/COPYING.LGPLv2.1
+471 块
+[cndaqiang@managernode yumlocal]$ 
+</code></pre></div></div>
+<p>更多的依赖，如</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yumdownloader xz-devel
+rpm2cpio  xz-devel-5.2.2-1.el7.x86_64.rpm | cpio -idvm
+rpm2cpio  xz-devel-5.2.2-1.el7.i686.rpm | cpio -idvm
+</code></pre></div></div>
+
+<h4 id="3添加环境变量">3.添加环境变量</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=/home/cndaqiang/soft/yumlocal/usr/bin:/home/cndaqiang/soft/yumlocal/usr/sbin:$PATH
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/yumlocal/usr/lib:/home/cndaqiang/soft/yumlocal/usr/lib64:$LD_LIBRARY_PATH
+export CFLAGS="-I/home/cndaqiang/soft/yumlocal/usr/include "
+export LDFLAGS="-L/home/cndaqiang/soft/yumlocal/usr/lib64  -L/home/cndaqiang/soft/yumlocal/usr/lib -L/home/cndaqiang/soft/yumlocal/lib64 -L/home/cndaqiang/soft/yumlocal/lib "
+</code></pre></div></div>
+<p>之后configure R语言就没问题了</p>
+
+<h2 id="一键脚本">一键脚本</h2>
+<p><code class="language-plaintext highlighter-rouge">vi yum.sh</code></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+<span class="c">##################################</span>
+<span class="c"># Author : cndaqiang             #</span>
+<span class="c"># Update : 2020-10-20            #</span>
+<span class="c"># Build  : 2020-10-20            #</span>
+<span class="c"># What   : 普通用户yum安装程序      #</span>
+<span class="c">#################################</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$1</span> <span class="o">]</span>
+<span class="k">then
+</span><span class="nv">ROOT</span><span class="o">=</span><span class="nv">$HOME</span>/soft/yumlocal
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-d</span> <span class="nv">$ROOT</span> <span class="o">]</span>
+<span class="k">then
+   </span><span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$ROOT</span>
+<span class="k">fi
+</span><span class="nb">cd</span> <span class="nv">$ROOT</span>
+<span class="c">#</span>
+<span class="nb">rm</span> <span class="nt">-rf</span> ./.tmp.yumdownloader
+<span class="nb">rm</span> <span class="nt">-rf</span> ./<span class="k">*</span>rpm
+<span class="c">#</span>
+<span class="nb">echo</span> <span class="s2">"Downloading dependency"</span>
+yum deplist <span class="nv">$1</span> | <span class="nb">grep </span>provider | <span class="nb">grep </span>x86_64 | <span class="nb">awk</span> <span class="nt">-F</span>:  <span class="s1">'{ printf "'</span>%s<span class="s1">'\n", $2  }'</span> <span class="o">&gt;</span> ./.tmp.yumdownloader
+<span class="k">while </span><span class="nb">read </span>line
+<span class="k">do
+    </span>yumdownloader <span class="nv">$line</span>
+<span class="k">done</span> &lt; .tmp.yumdownloader
+yumdownloader <span class="nv">$1</span>
+<span class="nb">echo</span> <span class="s2">"ALL down"</span>
+<span class="k">while </span><span class="nb">read </span>line
+<span class="k">do
+    </span>yumdownloader <span class="nv">$line</span>
+<span class="k">done</span> &lt; .tmp.yumdownloader
+
+<span class="c">#</span>
+<span class="nb">echo</span> <span class="s2">"Installing dependency"</span>
+<span class="k">for </span>i <span class="k">in</span> <span class="si">$(</span> <span class="nb">ls</span> | <span class="nb">grep</span> .rpm<span class="nv">$ </span><span class="si">)</span>
+<span class="k">do
+    </span>rpm2cpio  <span class="nv">$i</span> | cpio <span class="nt">-idvm</span>
+<span class="k">done
+</span><span class="nb">rm</span> <span class="nt">-rf</span> ./<span class="k">*</span>rpm
+
+<span class="nb">echo</span> <span class="s2">"
+export PATH=</span><span class="se">\$</span><span class="s2">PATH:</span><span class="nv">$ROOT</span><span class="s2">/usr/local/bin:</span><span class="nv">$ROOT</span><span class="s2">/usr/bin:</span><span class="nv">$ROOT</span><span class="s2">/usr/local/sbin:</span><span class="nv">$ROOT</span><span class="s2">/usr/sbin
+export LD_LIBRARY_PATH=</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH:</span><span class="nv">$ROOT</span><span class="s2">/usr/lib:</span><span class="nv">$ROOT</span><span class="s2">/usr/lib64
+#export CFLAGS+="</span><span class="nt">-I</span><span class="nv">$ROOT</span>/usr/include <span class="s2">"
+#export LDFLAGS+="</span><span class="nt">-L</span><span class="nv">$ROOT</span>/usr/lib64  <span class="nt">-L</span><span class="nv">$ROOT</span>/usr/lib <span class="nt">-L</span><span class="nv">$ROOT</span>/lib64 <span class="nt">-L</span><span class="nv">$ROOT</span>/lib <span class="s2">"
+"</span>
+<span class="nb">cd</span> -
+<span class="k">else
+    </span><span class="nb">echo</span> <span class="s2">"Usage: </span><span class="nv">$0</span><span class="s2"> softname"</span>
+    <span class="nb">echo</span> <span class="s2">"
+    export PATH=</span><span class="se">\$</span><span class="s2">PATH:</span><span class="nv">$ROOT</span><span class="s2">/usr/local/bin:</span><span class="nv">$ROOT</span><span class="s2">/usr/bin:</span><span class="nv">$ROOT</span><span class="s2">/usr/local/sbin:</span><span class="nv">$ROOT</span><span class="s2">/usr/sbin
+    export LD_LIBRARY_PATH=</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH:</span><span class="nv">$ROOT</span><span class="s2">/usr/lib:</span><span class="nv">$ROOT</span><span class="s2">/usr/lib64
+    #export CFLAGS+="</span><span class="nt">-I</span><span class="nv">$ROOT</span>/usr/include <span class="s2">"
+    #export LDFLAGS+="</span><span class="nt">-L</span><span class="nv">$ROOT</span>/usr/lib64  <span class="nt">-L</span><span class="nv">$ROOT</span>/usr/lib <span class="nt">-L</span><span class="nv">$ROOT</span>/lib64 <span class="nt">-L</span><span class="nv">$ROOT</span>/lib <span class="s2">"
+    "</span>   
+<span class="k">fi</span> 
+</code></pre></div></div>
+<p>示例</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>HUAIROU cndaqiang@login01 soft]<span class="nv">$vi</span> yum.sh
+<span class="o">[</span>HUAIROU cndaqiang@login01 soft]<span class="nv">$chmod</span> +x yum.sh
+<span class="o">[</span>HUAIROU cndaqiang@login01 soft]<span class="nv">$.</span>/yum.sh htop
+Downloading dependency
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 2.17-292.el7
+glibc-2.17-292.el7.x86_64.rpm                                                                                                                                   | 3.6 MB  00:00:00
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 4.8.5-39.el7
+libgcc-4.8.5-39.el7.x86_64.rpm                                                                                                                                  | 102 kB  00:00:00
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 4.8.5-39.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 4.8.5-39.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 2.17-292.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 2.17-292.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 5.9-14.20130511.el7_4
+ncurses-libs-5.9-14.20130511.el7_4.x86_64.rpm                                                                                                                   | 316 kB  00:00:00
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 5.9-14.20130511.el7_4
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 2.17-292.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+htop-2.2.0-3.el7.x86_64.rpm                                                                                                                                     | 103 kB  00:00:00
+ALL down
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 2.17-292.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 4.8.5-39.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 4.8.5-39.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 4.8.5-39.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 2.17-292.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 2.17-292.el7
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 5.9-14.20130511.el7_4
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 5.9-14.20130511.el7_4
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+No Match <span class="k">for </span>argument 2.17-292.el7
+Installing dependency
+./etc/ld.so.conf
+./etc/ld.so.conf.d
+./etc/nsswitch.conf
+./etc/rpc
+./lib64/ld-2.17.so
+./lib64/ld-linux-x86-64.so.2
+./lib64/libBrokenLocale-2.17.so
+./lib64/libBrokenLocale.so.1
+./lib64/libSegFault.so
+./lib64/libanl-2.17.so
+./lib64/libanl.so.1
+./lib64/libc-2.17.so
+./lib64/libc.so.6
+./lib64/libcidn-2.17.so
+./lib64/libcidn.so.1
+./lib64/libcrypt-2.17.so
+./lib64/libcrypt.so.1
+./lib64/libdl-2.17.so
+./lib64/libdl.so.2
+./lib64/libm-2.17.so
+./lib64/libm.so.6
+./lib64/libnsl-2.17.so
+./lib64/libnsl.so.1
+./lib64/libnss_compat-2.17.so
+./lib64/libnss_compat.so.2
+./lib64/libnss_db-2.17.so
+./lib64/libnss_db.so.2
+./lib64/libnss_dns-2.17.so
+./lib64/libnss_dns.so.2
+./lib64/libnss_files-2.17.so
+./lib64/libnss_files.so.2
+./lib64/libnss_hesiod-2.17.so
+./lib64/libnss_hesiod.so.2
+./lib64/libnss_nis-2.17.so
+./lib64/libnss_nis.so.2
+./lib64/libnss_nisplus-2.17.so
+./lib64/libnss_nisplus.so.2
+./lib64/libpthread-2.17.so
+./lib64/libpthread.so.0
+./lib64/libresolv-2.17.so
+./lib64/libresolv.so.2
+./lib64/librt-2.17.so
+./lib64/librt.so.1
+./lib64/libthread_db-1.0.so
+./lib64/libthread_db.so.1
+./lib64/libutil-2.17.so
+./lib64/libutil.so.1
+./lib64/rtkaio
+./lib64/rtkaio/librt.so.1
+./lib64/rtkaio/librtkaio-2.17.so
+./sbin/ldconfig
+./sbin/sln
+./usr/lib64/audit
+./usr/lib64/audit/sotruss-lib.so
+./usr/lib64/gconv
+./usr/lib64/gconv/ANSI_X3.110.so
+./usr/lib64/gconv/ARMSCII-8.so
+./usr/lib64/gconv/ASMO_449.so
+./usr/lib64/gconv/BIG5.so
+./usr/lib64/gconv/BIG5HKSCS.so
+./usr/lib64/gconv/BRF.so
+./usr/lib64/gconv/CP10007.so
+./usr/lib64/gconv/CP1125.so
+./usr/lib64/gconv/CP1250.so
+./usr/lib64/gconv/CP1251.so
+./usr/lib64/gconv/CP1252.so
+./usr/lib64/gconv/CP1253.so
+./usr/lib64/gconv/CP1254.so
+./usr/lib64/gconv/CP1255.so
+./usr/lib64/gconv/CP1256.so
+./usr/lib64/gconv/CP1257.so
+./usr/lib64/gconv/CP1258.so
+./usr/lib64/gconv/CP737.so
+./usr/lib64/gconv/CP770.so
+./usr/lib64/gconv/CP771.so
+./usr/lib64/gconv/CP772.so
+./usr/lib64/gconv/CP773.so
+./usr/lib64/gconv/CP774.so
+./usr/lib64/gconv/CP775.so
+./usr/lib64/gconv/CP932.so
+./usr/lib64/gconv/CSN_369103.so
+./usr/lib64/gconv/CWI.so
+./usr/lib64/gconv/DEC-MCS.so
+./usr/lib64/gconv/EBCDIC-AT-DE-A.so
+./usr/lib64/gconv/EBCDIC-AT-DE.so
+./usr/lib64/gconv/EBCDIC-CA-FR.so
+./usr/lib64/gconv/EBCDIC-DK-NO-A.so
+./usr/lib64/gconv/EBCDIC-DK-NO.so
+./usr/lib64/gconv/EBCDIC-ES-A.so
+./usr/lib64/gconv/EBCDIC-ES-S.so
+./usr/lib64/gconv/EBCDIC-ES.so
+./usr/lib64/gconv/EBCDIC-FI-SE-A.so
+./usr/lib64/gconv/EBCDIC-FI-SE.so
+./usr/lib64/gconv/EBCDIC-FR.so
+./usr/lib64/gconv/EBCDIC-IS-FRISS.so
+./usr/lib64/gconv/EBCDIC-IT.so
+./usr/lib64/gconv/EBCDIC-PT.so
+./usr/lib64/gconv/EBCDIC-UK.so
+./usr/lib64/gconv/EBCDIC-US.so
+./usr/lib64/gconv/ECMA-CYRILLIC.so
+./usr/lib64/gconv/EUC-CN.so
+./usr/lib64/gconv/EUC-JISX0213.so
+./usr/lib64/gconv/EUC-JP-MS.so
+./usr/lib64/gconv/EUC-JP.so
+./usr/lib64/gconv/EUC-KR.so
+./usr/lib64/gconv/EUC-TW.so
+./usr/lib64/gconv/GB18030.so
+./usr/lib64/gconv/GBBIG5.so
+./usr/lib64/gconv/GBGBK.so
+./usr/lib64/gconv/GBK.so
+./usr/lib64/gconv/GEORGIAN-ACADEMY.so
+./usr/lib64/gconv/GEORGIAN-PS.so
+./usr/lib64/gconv/GOST_19768-74.so
+./usr/lib64/gconv/GREEK-CCITT.so
+./usr/lib64/gconv/GREEK7-OLD.so
+./usr/lib64/gconv/GREEK7.so
+./usr/lib64/gconv/HP-GREEK8.so
+./usr/lib64/gconv/HP-ROMAN8.so
+./usr/lib64/gconv/HP-ROMAN9.so
+./usr/lib64/gconv/HP-THAI8.so
+./usr/lib64/gconv/HP-TURKISH8.so
+./usr/lib64/gconv/IBM037.so
+./usr/lib64/gconv/IBM038.so
+./usr/lib64/gconv/IBM1004.so
+./usr/lib64/gconv/IBM1008.so
+./usr/lib64/gconv/IBM1008_420.so
+./usr/lib64/gconv/IBM1025.so
+./usr/lib64/gconv/IBM1026.so
+./usr/lib64/gconv/IBM1046.so
+./usr/lib64/gconv/IBM1047.so
+./usr/lib64/gconv/IBM1097.so
+./usr/lib64/gconv/IBM1112.so
+./usr/lib64/gconv/IBM1122.so
+./usr/lib64/gconv/IBM1123.so
+./usr/lib64/gconv/IBM1124.so
+./usr/lib64/gconv/IBM1129.so
+./usr/lib64/gconv/IBM1130.so
+./usr/lib64/gconv/IBM1132.so
+./usr/lib64/gconv/IBM1133.so
+./usr/lib64/gconv/IBM1137.so
+./usr/lib64/gconv/IBM1140.so
+./usr/lib64/gconv/IBM1141.so
+./usr/lib64/gconv/IBM1142.so
+./usr/lib64/gconv/IBM1143.so
+./usr/lib64/gconv/IBM1144.so
+./usr/lib64/gconv/IBM1145.so
+./usr/lib64/gconv/IBM1146.so
+./usr/lib64/gconv/IBM1147.so
+./usr/lib64/gconv/IBM1148.so
+./usr/lib64/gconv/IBM1149.so
+./usr/lib64/gconv/IBM1153.so
+./usr/lib64/gconv/IBM1154.so
+./usr/lib64/gconv/IBM1155.so
+./usr/lib64/gconv/IBM1156.so
+./usr/lib64/gconv/IBM1157.so
+./usr/lib64/gconv/IBM1158.so
+./usr/lib64/gconv/IBM1160.so
+./usr/lib64/gconv/IBM1161.so
+./usr/lib64/gconv/IBM1162.so
+./usr/lib64/gconv/IBM1163.so
+./usr/lib64/gconv/IBM1164.so
+./usr/lib64/gconv/IBM1166.so
+./usr/lib64/gconv/IBM1167.so
+./usr/lib64/gconv/IBM12712.so
+./usr/lib64/gconv/IBM1364.so
+./usr/lib64/gconv/IBM1371.so
+./usr/lib64/gconv/IBM1388.so
+./usr/lib64/gconv/IBM1390.so
+./usr/lib64/gconv/IBM1399.so
+./usr/lib64/gconv/IBM16804.so
+./usr/lib64/gconv/IBM256.so
+./usr/lib64/gconv/IBM273.so
+./usr/lib64/gconv/IBM274.so
+./usr/lib64/gconv/IBM275.so
+./usr/lib64/gconv/IBM277.so
+./usr/lib64/gconv/IBM278.so
+./usr/lib64/gconv/IBM280.so
+./usr/lib64/gconv/IBM281.so
+./usr/lib64/gconv/IBM284.so
+./usr/lib64/gconv/IBM285.so
+./usr/lib64/gconv/IBM290.so
+./usr/lib64/gconv/IBM297.so
+./usr/lib64/gconv/IBM420.so
+./usr/lib64/gconv/IBM423.so
+./usr/lib64/gconv/IBM424.so
+./usr/lib64/gconv/IBM437.so
+./usr/lib64/gconv/IBM4517.so
+./usr/lib64/gconv/IBM4899.so
+./usr/lib64/gconv/IBM4909.so
+./usr/lib64/gconv/IBM4971.so
+./usr/lib64/gconv/IBM500.so
+./usr/lib64/gconv/IBM5347.so
+./usr/lib64/gconv/IBM803.so
+./usr/lib64/gconv/IBM850.so
+./usr/lib64/gconv/IBM851.so
+./usr/lib64/gconv/IBM852.so
+./usr/lib64/gconv/IBM855.so
+./usr/lib64/gconv/IBM856.so
+./usr/lib64/gconv/IBM857.so
+./usr/lib64/gconv/IBM860.so
+./usr/lib64/gconv/IBM861.so
+./usr/lib64/gconv/IBM862.so
+./usr/lib64/gconv/IBM863.so
+./usr/lib64/gconv/IBM864.so
+./usr/lib64/gconv/IBM865.so
+./usr/lib64/gconv/IBM866.so
+./usr/lib64/gconv/IBM866NAV.so
+./usr/lib64/gconv/IBM868.so
+./usr/lib64/gconv/IBM869.so
+./usr/lib64/gconv/IBM870.so
+./usr/lib64/gconv/IBM871.so
+./usr/lib64/gconv/IBM874.so
+./usr/lib64/gconv/IBM875.so
+./usr/lib64/gconv/IBM880.so
+./usr/lib64/gconv/IBM891.so
+./usr/lib64/gconv/IBM901.so
+./usr/lib64/gconv/IBM902.so
+./usr/lib64/gconv/IBM903.so
+./usr/lib64/gconv/IBM9030.so
+./usr/lib64/gconv/IBM904.so
+./usr/lib64/gconv/IBM905.so
+./usr/lib64/gconv/IBM9066.so
+./usr/lib64/gconv/IBM918.so
+./usr/lib64/gconv/IBM921.so
+./usr/lib64/gconv/IBM922.so
+./usr/lib64/gconv/IBM930.so
+./usr/lib64/gconv/IBM932.so
+./usr/lib64/gconv/IBM933.so
+./usr/lib64/gconv/IBM935.so
+./usr/lib64/gconv/IBM937.so
+./usr/lib64/gconv/IBM939.so
+./usr/lib64/gconv/IBM943.so
+./usr/lib64/gconv/IBM9448.so
+./usr/lib64/gconv/IEC_P27-1.so
+./usr/lib64/gconv/INIS-8.so
+./usr/lib64/gconv/INIS-CYRILLIC.so
+./usr/lib64/gconv/INIS.so
+./usr/lib64/gconv/ISIRI-3342.so
+./usr/lib64/gconv/ISO-2022-CN-EXT.so
+./usr/lib64/gconv/ISO-2022-CN.so
+./usr/lib64/gconv/ISO-2022-JP-3.so
+./usr/lib64/gconv/ISO-2022-JP.so
+./usr/lib64/gconv/ISO-2022-KR.so
+./usr/lib64/gconv/ISO-IR-197.so
+./usr/lib64/gconv/ISO-IR-209.so
+./usr/lib64/gconv/ISO646.so
+./usr/lib64/gconv/ISO8859-1.so
+./usr/lib64/gconv/ISO8859-10.so
+./usr/lib64/gconv/ISO8859-11.so
+./usr/lib64/gconv/ISO8859-13.so
+./usr/lib64/gconv/ISO8859-14.so
+./usr/lib64/gconv/ISO8859-15.so
+./usr/lib64/gconv/ISO8859-16.so
+./usr/lib64/gconv/ISO8859-2.so
+./usr/lib64/gconv/ISO8859-3.so
+./usr/lib64/gconv/ISO8859-4.so
+./usr/lib64/gconv/ISO8859-5.so
+./usr/lib64/gconv/ISO8859-6.so
+./usr/lib64/gconv/ISO8859-7.so
+./usr/lib64/gconv/ISO8859-8.so
+./usr/lib64/gconv/ISO8859-9.so
+./usr/lib64/gconv/ISO8859-9E.so
+./usr/lib64/gconv/ISO_10367-BOX.so
+./usr/lib64/gconv/ISO_11548-1.so
+./usr/lib64/gconv/ISO_2033.so
+./usr/lib64/gconv/ISO_5427-EXT.so
+./usr/lib64/gconv/ISO_5427.so
+./usr/lib64/gconv/ISO_5428.so
+./usr/lib64/gconv/ISO_6937-2.so
+./usr/lib64/gconv/ISO_6937.so
+./usr/lib64/gconv/JOHAB.so
+./usr/lib64/gconv/KOI-8.so
+./usr/lib64/gconv/KOI8-R.so
+./usr/lib64/gconv/KOI8-RU.so
+./usr/lib64/gconv/KOI8-T.so
+./usr/lib64/gconv/KOI8-U.so
+./usr/lib64/gconv/LATIN-GREEK-1.so
+./usr/lib64/gconv/LATIN-GREEK.so
+./usr/lib64/gconv/MAC-CENTRALEUROPE.so
+./usr/lib64/gconv/MAC-IS.so
+./usr/lib64/gconv/MAC-SAMI.so
+./usr/lib64/gconv/MAC-UK.so
+./usr/lib64/gconv/MACINTOSH.so
+./usr/lib64/gconv/MIK.so
+./usr/lib64/gconv/NATS-DANO.so
+./usr/lib64/gconv/NATS-SEFI.so
+./usr/lib64/gconv/PT154.so
+./usr/lib64/gconv/RK1048.so
+./usr/lib64/gconv/SAMI-WS2.so
+./usr/lib64/gconv/SHIFT_JISX0213.so
+./usr/lib64/gconv/SJIS.so
+./usr/lib64/gconv/T.61.so
+./usr/lib64/gconv/TCVN5712-1.so
+./usr/lib64/gconv/TIS-620.so
+./usr/lib64/gconv/TSCII.so
+./usr/lib64/gconv/UHC.so
+./usr/lib64/gconv/UNICODE.so
+./usr/lib64/gconv/UTF-16.so
+./usr/lib64/gconv/UTF-32.so
+./usr/lib64/gconv/UTF-7.so
+./usr/lib64/gconv/VISCII.so
+./usr/lib64/gconv/gconv-modules
+./usr/lib64/gconv/gconv-modules.cache
+./usr/lib64/gconv/libCNS.so
+./usr/lib64/gconv/libGB.so
+./usr/lib64/gconv/libISOIR165.so
+./usr/lib64/gconv/libJIS.so
+./usr/lib64/gconv/libJISX0213.so
+./usr/lib64/gconv/libKSC.so
+./usr/lib64/libmemusage.so
+./usr/lib64/libpcprofile.so
+./usr/libexec/getconf
+./usr/sbin/glibc_post_upgrade.x86_64
+./usr/share/doc/glibc-2.17
+./usr/share/doc/glibc-2.17/BUGS
+./usr/share/doc/glibc-2.17/CONFORMANCE
+./usr/share/doc/glibc-2.17/COPYING
+./usr/share/doc/glibc-2.17/COPYING.LIB
+./usr/share/doc/glibc-2.17/INSTALL
+./usr/share/doc/glibc-2.17/LICENSES
+./usr/share/doc/glibc-2.17/NEWS
+./usr/share/doc/glibc-2.17/PROJECTS
+./usr/share/doc/glibc-2.17/README
+./usr/share/doc/glibc-2.17/README.hesiod
+./usr/share/doc/glibc-2.17/rtld-debugger-interface.txt
+./var/cache/ldconfig
+./var/db/Makefile
+./usr/libexec/getconf/POSIX_V6_LP64_OFF64
+./usr/libexec/getconf/POSIX_V7_LP64_OFF64
+cpio: ./usr/libexec/getconf/XBS5_LP64_OFF64 linked to ./usr/libexec/getconf/POSIX_V7_LP64_OFF64
+cpio: ./usr/libexec/getconf/XBS5_LP64_OFF64 linked to ./usr/libexec/getconf/POSIX_V6_LP64_OFF64
+./usr/libexec/getconf/XBS5_LP64_OFF64
+./usr/sbin/iconvconfig
+cpio: ./usr/sbin/iconvconfig.x86_64 linked to ./usr/sbin/iconvconfig
+./usr/sbin/iconvconfig.x86_64
+27634 blocks
+./usr/bin/htop
+./usr/share/applications/htop.desktop
+./usr/share/doc/htop-2.2.0
+./usr/share/doc/htop-2.2.0/AUTHORS
+./usr/share/doc/htop-2.2.0/ChangeLog
+./usr/share/doc/htop-2.2.0/README
+./usr/share/licenses/htop-2.2.0
+./usr/share/licenses/htop-2.2.0/COPYING
+./usr/share/man/man1/htop.1.gz
+./usr/share/pixmaps/htop.png
+439 blocks
+./lib64/libgcc_s-4.8.5-20150702.so.1
+./lib64/libgcc_s.so.1
+./usr/share/doc/libgcc-4.8.5
+./usr/share/doc/libgcc-4.8.5/COPYING
+./usr/share/doc/libgcc-4.8.5/COPYING.LIB
+./usr/share/doc/libgcc-4.8.5/COPYING.RUNTIME
+./usr/share/doc/libgcc-4.8.5/COPYING3
+./usr/share/doc/libgcc-4.8.5/COPYING3.LIB
+353 blocks
+./usr/lib64/libform.so.5
+./usr/lib64/libform.so.5.9
+./usr/lib64/libformw.so.5
+./usr/lib64/libformw.so.5.9
+./usr/lib64/libmenu.so.5
+./usr/lib64/libmenu.so.5.9
+./usr/lib64/libmenuw.so.5
+./usr/lib64/libmenuw.so.5.9
+./usr/lib64/libncurses++.so.5
+./usr/lib64/libncurses++.so.5.9
+./usr/lib64/libncurses++w.so.5
+./usr/lib64/libncurses++w.so.5.9
+./usr/lib64/libncurses.so.5
+./usr/lib64/libncurses.so.5.9
+./usr/lib64/libncursesw.so.5
+./usr/lib64/libncursesw.so.5.9
+./usr/lib64/libpanel.so.5
+./usr/lib64/libpanel.so.5.9
+./usr/lib64/libpanelw.so.5
+./usr/lib64/libpanelw.so.5.9
+./usr/lib64/libtic.so.5
+./usr/lib64/libtic.so.5.9
+./usr/lib64/libtinfo.so.5
+./usr/lib64/libtinfo.so.5.9
+2016 blocks
+
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/home/users/cndaqiang/soft/yumlocal/usr/local/bin:/home/users/cndaqiang/soft/yumlocal/usr/bin:/home/users/cndaqiang/soft/yumlocal/usr/local/sbin:/home/users/cndaqiang/soft/yumlocal/usr/sbin
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:/home/users/cndaqiang/soft/yumlocal/usr/lib:/home/users/cndaqiang/soft/yumlocal/usr/lib64
+<span class="c">#export CFLAGS+=-I/home/users/cndaqiang/soft/yumlocal/usr/include</span>
+<span class="c">#export LDFLAGS+=-L/home/users/cndaqiang/soft/yumlocal/usr/lib64 -L/home/users/cndaqiang/soft/yumlocal/usr/lib -L/home/users/cndaqiang/soft/yumlocal/lib64 -L/home/users/cndaqiang/soft/yumlocal/lib</span>
+
+/home/users/cndaqiang/soft
+<span class="o">[</span>HUAIROU cndaqiang@login01 soft]<span class="nv">$export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/home/users/cndaqiang/soft/yumlocal/usr/local/bin:/home/users/cndaqiang/soft/yumlocal/usr/bin:/home/users/cndaqiang/soft/yumlocal/usr/local/sbin:/home/users/cndaqiang/soft/yumlocal/usr/sbin
+<span class="o">[</span>HUAIROU cndaqiang@login01 soft]<span class="nv">$export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:/home/users/cndaqiang/soft/yumlocal/usr/lib:/home/users/cndaqiang/soft/yumlocal/usr/lib64
+<span class="o">[</span>HUAIROU cndaqiang@login01 soft]<span class="nv">$htop</span>
+</code></pre></div></div>
+
+<h2 id="rpm包">rpm包</h2>
+<p><strong>只支持一些包</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rpm -ivh xxx.rpm --prefix=dir
+</code></pre></div></div>
+<p>不能安装示例,还是编译吧</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) [HUAIROU cndaqiang@login01 source]$   rpm -ivh ImageMagick-7.1.0-10.x86_64.rpm --prefix=/home/users/chendq/soft/yumlocal
+error: package ImageMagick is not relocatable
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/09/05/glibc/">Segmentation Fault when running commands</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/09/19/Centos7-CC19/">从0搭建Centos7 计算集群</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

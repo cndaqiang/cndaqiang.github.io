@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>GPAW快速上手</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2020/09/03/gpawuse/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>GPAW快速上手</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-09-03
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#GPAW" title="Tag: GPAW" rel="tag">GPAW</a-->
+        <a href="/tag/#GPAW" title="Tag: GPAW" rel="tag">GPAW</a>&nbsp;
+    
+        <!--a href="/tag/#ASE" title="Tag: ASE" rel="tag">ASE</a-->
+        <a href="/tag/#ASE" title="Tag: ASE" rel="tag">ASE</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#执行脚本" id="markdown-toc-执行脚本">执行脚本</a>    <ul>
+      <li><a href="#串行" id="markdown-toc-串行">串行</a></li>
+      <li><a href="#并行" id="markdown-toc-并行">并行</a></li>
+    </ul>
+  </li>
+  <li><a href="#计算示例" id="markdown-toc-计算示例">计算示例</a>    <ul>
+      <li><a href="#示例1" id="markdown-toc-示例1">示例1</a></li>
+      <li><a href="#示例2" id="markdown-toc-示例2">示例2</a></li>
+      <li><a href="#lr-tddft计算吸收光谱" id="markdown-toc-lr-tddft计算吸收光谱">Lr-TDDFT计算吸收光谱</a></li>
+    </ul>
+  </li>
+  <li><a href="#报错" id="markdown-toc-报错">报错</a>    <ul>
+      <li><a href="#参数不合理" id="markdown-toc-参数不合理">参数不合理</a>        <ul>
+          <li><a href="#bands太少" id="markdown-toc-bands太少">bands太少</a></li>
+          <li><a href="#cpu数不合适" id="markdown-toc-cpu数不合适">cpu数不合适</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://wiki.fysik.dtu.dk/gpaw/dev/platforms/Linux/centos.html">GPAW</a></p>
+
+<p><a href="https://wiki.fysik.dtu.dk/ase/">ASE</a></p>
+
+<h2 id="执行脚本">执行脚本</h2>
+
+<h3 id="串行">串行</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpaw python test.py 
+<span class="c">#或(下面这个运行结果和上面的在输出屏幕的精度可能不同,是一致的)</span>
+./test.py 
+</code></pre></div></div>
+
+<h3 id="并行">并行</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpiexec <span class="nt">-n</span> 8  gpaw python test.py
+<span class="c">#或</span>
+gpaw <span class="nt">-P</span> 8 python test.py
+<span class="c">#或(下面这个运行结果和上面的在输出屏幕的精度可能不同,是一致的)</span>
+mpiexec <span class="nt">-n</span> 8 python test.py 
+</code></pre></div></div>
+
+<h2 id="计算示例">计算示例</h2>
+<h3 id="示例1">示例1</h3>
+<p>test.py</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span><span class="kn">from</span> <span class="nn">ase</span> <span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">GPAW</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="mf">0.74</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">6.0</span>
+
+<span class="n">atoms</span> <span class="o">=</span> <span class="n">Atoms</span><span class="p">(</span><span class="s">'H2'</span><span class="p">,</span>
+              <span class="n">positions</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                         <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">)],</span>
+              <span class="n">cell</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span>
+<span class="n">atoms</span><span class="p">.</span><span class="n">center</span><span class="p">()</span>
+
+<span class="n">calc</span> <span class="o">=</span> <span class="n">GPAW</span><span class="p">(</span><span class="n">nbands</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">txt</span><span class="o">=</span><span class="s">'h2.txt'</span><span class="p">)</span> <span class="c1">#计算程序和参数, GPAW/NWCHem等
+</span><span class="n">atoms</span><span class="p">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">calc</span>
+<span class="k">print</span><span class="p">(</span><span class="n">atoms</span><span class="p">.</span><span class="n">get_forces</span><span class="p">())</span><span class="c1">#执行计算 atoms.get_forces(), 如果计算过了不再重复计算
+</span><span class="n">atoms</span><span class="p">.</span><span class="n">get_total_energy</span><span class="p">()</span> <span class="c1">#计算总能量, 上一行已经计算过了，不重复计算
+</span></code></pre></div></div>
+
+<h3 id="示例2">示例2</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="kn">from</span> <span class="nn">ase</span> <span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">GPAW</span>
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">mpi</span>
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">PW</span>
+
+<span class="n">rank</span> <span class="o">=</span> <span class="n">mpi</span><span class="p">.</span><span class="n">world</span><span class="p">.</span><span class="n">rank</span>
+
+<span class="c1">#------------------ STRUCTURE
+</span><span class="n">a</span><span class="o">=</span><span class="mi">15</span>
+<span class="n">RM</span><span class="o">=</span><span class="n">Atoms</span><span class="p">(</span><span class="s">'C3O1H6'</span><span class="p">,</span>
+        <span class="n">positions</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">[</span> <span class="mf">8.682901</span><span class="p">,</span>    <span class="mf">8.148500</span><span class="p">,</span>    <span class="mf">6.967300</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">7.500000</span><span class="p">,</span>    <span class="mf">7.500000</span><span class="p">,</span>    <span class="mf">7.500000</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">6.142400</span><span class="p">,</span>    <span class="mf">7.654800</span><span class="p">,</span>    <span class="mf">6.874200</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">8.451600</span><span class="p">,</span>    <span class="mf">6.780600</span><span class="p">,</span>    <span class="mf">6.762900</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">8.605600</span><span class="p">,</span>    <span class="mf">8.769301</span><span class="p">,</span>    <span class="mf">6.079600</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">9.518500</span><span class="p">,</span>    <span class="mf">8.385800</span><span class="p">,</span>    <span class="mf">7.619100</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">7.497300</span><span class="p">,</span>    <span class="mf">7.256200</span><span class="p">,</span>    <span class="mf">8.558300</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">5.572400</span><span class="p">,</span>    <span class="mf">6.733100</span><span class="p">,</span>    <span class="mf">6.970900</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">5.584000</span><span class="p">,</span>    <span class="mf">8.451500</span><span class="p">,</span>    <span class="mf">7.361100</span> <span class="p">],</span>
+            <span class="p">[</span> <span class="mf">6.233600</span><span class="p">,</span>    <span class="mf">7.887900</span><span class="p">,</span>    <span class="mf">5.815400</span> <span class="p">]</span>
+        <span class="p">],</span>
+        <span class="n">cell</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+        <span class="p">)</span>
+<span class="n">atoms</span><span class="o">=</span><span class="n">RM</span>
+
+<span class="c1">#------------------ PARAMETER
+</span><span class="n">calc</span> <span class="o">=</span> <span class="n">GPAW</span><span class="p">(</span><span class="c1">#nbands=2,       #nbands
+</span>            <span class="n">xc</span><span class="o">=</span><span class="s">'PBE'</span><span class="p">,</span>       <span class="c1">#XC
+</span>            <span class="n">basis</span><span class="o">=</span><span class="p">{},</span>       <span class="c1">#基组
+</span>            <span class="n">charge</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>     <span class="c1">#总电荷
+</span>            <span class="c1">#mode=PW(350),
+</span>            <span class="c1">#gpts=(24, 24, 24), #grid points in each direction
+</span>            <span class="n">h</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>          <span class="c1">#Grid spacing, gpts和h二选一
+</span>            <span class="c1">#kpts={'size': (1, 1, 1)}, #仅在周期性条件下使用 1x1x1 Monkhorst-pack,有其他形式
+</span>            <span class="c1">#occupations={'name': 'fermi-dirac',
+</span>            <span class="c1">#             'width': 0.05
+</span>            <span class="c1">#            },
+</span>            <span class="n">parallel</span><span class="o">=</span><span class="p">{},</span>    <span class="c1">#k点并行, nbnd并行等并行操作
+</span>            <span class="n">convergence</span><span class="o">=</span><span class="p">{</span>   <span class="c1">#收敛精度
+</span>                <span class="s">'energy'</span><span class="p">:</span> <span class="mf">0.0005</span><span class="p">,</span>  <span class="c1"># eV / electron
+</span>                <span class="s">'density'</span><span class="p">:</span> <span class="mf">1.0e-4</span><span class="p">,</span>
+                <span class="s">'eigenstates'</span><span class="p">:</span> <span class="mf">4.0e-8</span><span class="p">,</span>  <span class="c1"># eV^2 / electron
+</span>                <span class="s">'bands'</span><span class="p">:</span> <span class="s">'occupied'</span><span class="p">,</span>  <span class="c1">#'all','occupied',100,-10,'CBM+5.0'} 等,一般占据态收敛就可以
+</span>                <span class="s">'forces'</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="c1"># eV / Ang Max
+</span>                        <span class="p">},</span>
+                            <span class="c1"># add new
+</span>            <span class="n">txt</span><span class="o">=</span><span class="s">'result'</span>   <span class="c1">#result
+</span>            <span class="p">)</span> <span class="c1">#计算程序和参数, GPAW/NWCHem等
+</span><span class="n">atoms</span><span class="p">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">calc</span>
+<span class="n">energy</span><span class="o">=</span><span class="n">atoms</span><span class="p">.</span><span class="n">get_total_energy</span><span class="p">()</span> <span class="c1">#执行计算get_total_energy,
+</span><span class="n">force</span><span class="o">=</span><span class="n">atoms</span><span class="p">.</span><span class="n">get_forces</span><span class="p">()</span><span class="c1">#执行计算 atoms.get_forces(), 上面计算过了不再重复计算
+</span><span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+    <span class="c1">#print(atoms.get_forces()) #这样也可以
+</span></code></pre></div></div>
+
+<h3 id="lr-tddft计算吸收光谱">Lr-TDDFT计算吸收光谱</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpiexec -n 8  gpaw python Lr-TDDFT.py
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">Lr-TDDFT.py</code>内容</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+</span><span class="s">"""
+ 
+@author: cndaqiang 2020-
+吸收光谱计算
+"""</span>
+
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">GPAW</span>
+<span class="kn">from</span> <span class="nn">ase</span> <span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">from</span> <span class="nn">ase.io</span> <span class="kn">import</span> <span class="n">read</span><span class="p">,</span> <span class="n">write</span>
+<span class="kn">from</span> <span class="nn">gpaw.lrtddft</span> <span class="kn">import</span> <span class="n">LrTDDFT</span><span class="p">,</span><span class="n">photoabsorption_spectrum</span>
+<span class="kn">from</span> <span class="nn">gpaw</span> <span class="kn">import</span> <span class="n">mpi</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">rank</span> <span class="o">=</span> <span class="n">mpi</span><span class="p">.</span><span class="n">world</span><span class="p">.</span><span class="n">rank</span>
+
+<span class="n">POSCAR</span><span class="o">=</span><span class="s">"center.frac.car.roat.8883.vasp"</span>
+<span class="n">atoms</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">POSCAR</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="s">"vasp"</span><span class="p">)</span>
+<span class="c1">#atoms=Atoms('Na2', positions=((0.0, 0.0, 0.0), (3.12, 0.0, 0.0)))
+</span>
+
+<span class="n">calc</span> <span class="o">=</span> <span class="n">GPAW</span><span class="p">(</span><span class="n">xc</span><span class="o">=</span><span class="s">'PBE'</span><span class="p">,</span>
+            <span class="n">txt</span><span class="o">=</span><span class="s">'result'</span><span class="p">)</span>
+<span class="c1">#计算结果输出到result，屏幕上没有输出
+</span><span class="n">atoms</span><span class="p">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">calc</span>
+
+<span class="c1">#执行计算，平面有输出
+</span><span class="n">energy</span><span class="o">=</span><span class="n">atoms</span><span class="p">.</span><span class="n">get_potential_energy</span><span class="p">()</span>
+<span class="c1">#执行完计算后，计算的结果保存到calc中
+</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LrTDDFT</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="n">xc</span><span class="o">=</span><span class="s">'PBE'</span><span class="p">)</span>
+<span class="n">lr</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'Omega_result.gz'</span><span class="p">)</span>
+
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LrTDDFT</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">'Omega_result.gz'</span><span class="p">)</span>
+<span class="n">lr</span><span class="p">.</span><span class="n">diagonalize</span><span class="p">()</span>
+<span class="n">lr</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'excitations_result.gz'</span><span class="p">)</span>
+<span class="c1">#
+</span><span class="n">lr</span> <span class="o">=</span> <span class="n">LrTDDFT</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">'excitations_result.gz'</span><span class="p">)</span>
+<span class="n">photoabsorption_spectrum</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="s">'result_spectrum.dat'</span><span class="p">,</span> <span class="n">e_min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">e_max</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Save to result_spectrum.dat"</span><span class="p">)</span>
+
+<span class="n">LrTDDFT</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="n">istart</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">jend</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">atoms</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"result.vasp"</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="s">"vasp"</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p>画图</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spectrum.gpaw.py result_spectrum.dat
+</code></pre></div></div>
+
+<h2 id="报错">报错</h2>
+<p>会提示的，看信息</p>
+<h3 id="参数不合理">参数不合理</h3>
+<h4 id="bands太少">bands太少</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rank=2 L32:     self.initialize(atoms)
+rank=2 L33:   File "/Users/cndaqiang/anaconda3/envs/python37/lib/python3.7/site-packages/gpaw/calculator.py", line 732, in initialize
+rank=2 L34:     % (nvalence, nbands))
+rank=2 L35: ValueError: Too few bands!  Electrons: 24.000000, bands: 2
+GPAW CLEANUP (node 2): &lt;class 'ValueError'&gt; occurred.  Calling MPI_Abort!
+--------------------------------------------------------------------------
+</code></pre></div></div>
+<h4 id="cpu数不合适">cpu数不合适</h4>
+<p>调大调小或调网格</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rank=13 L50:     raise BadGridError(msg)
+rank=13 L51: gpaw.grid_descriptor.BadGridError: Grid 19x19x19 too small for 19x1x1 cores!
+GPAW CLEANUP (node 13): &lt;class 'gpaw.grid_descriptor.BadGridError'&gt; occurred.  Calling MPI_Abort!
+--------------------------------------------------------------------------
+MPI_ABORT was invoked on rank 18 in communicator MPI_COMM_WORLD
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rank=12 L51: gpaw.grid_descriptor.BadGridError: Grid 19x19x19 too small for 23x1x1 cores!
+GPAW CLEANUP (node 12): &lt;class 'gpaw.grid_descriptor.BadGridError'&gt; occurred.  Calling MPI_Abort!
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/09/02/gpaw/">GPAW安装</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/09/03/aseuse/">ASE快速上手</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

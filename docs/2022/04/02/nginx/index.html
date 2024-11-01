@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Nginx学习</title>
+    <meta name="description" content="Nginx学习，个人学习记录，只记录主要框架和用到的参数, 更详细的用法查manual即可。">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2022/04/02/nginx/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Nginx学习</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2022-04-02
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#web" title="Category: web" rel="category">web</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#web" title="Tag: web" rel="tag">web</a-->
+        <a href="/tag/#web" title="Tag: web" rel="tag">web</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
+      <li><a href="#编译openresty安装使用" id="markdown-toc-编译openresty安装使用">编译openresty安装使用</a>        <ul>
+          <li><a href="#下载源码" id="markdown-toc-下载源码">下载源码</a></li>
+          <li><a href="#编译" id="markdown-toc-编译">编译</a></li>
+        </ul>
+      </li>
+      <li><a href="#目录展示" id="markdown-toc-目录展示">目录展示</a></li>
+      <li><a href="#添加到系统服务" id="markdown-toc-添加到系统服务">添加到系统服务</a></li>
+    </ul>
+  </li>
+  <li><a href="#使用" id="markdown-toc-使用">使用</a>    <ul>
+      <li><a href="#说明" id="markdown-toc-说明">说明</a></li>
+      <li><a href="#创建站点示例" id="markdown-toc-创建站点示例">创建站点示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#配置文件" id="markdown-toc-配置文件">配置文件</a>    <ul>
+      <li><a href="#主模块" id="markdown-toc-主模块">主模块</a></li>
+      <li><a href="#events" id="markdown-toc-events">events</a></li>
+      <li><a href="#http" id="markdown-toc-http">http</a>        <ul>
+          <li><a href="#httpserverlocations" id="markdown-toc-httpserverlocations">http/server/locations</a></li>
+          <li><a href="#httpservererror_page" id="markdown-toc-httpservererror_page">http/server/error_page</a></li>
+          <li><a href="#rewrite" id="markdown-toc-rewrite">rewrite</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#应用" id="markdown-toc-应用">应用</a>    <ul>
+      <li><a href="#常用参数" id="markdown-toc-常用参数">常用参数</a></li>
+      <li><a href="#反向代理" id="markdown-toc-反向代理">反向代理</a>        <ul>
+          <li><a href="#二级目录反向代理" id="markdown-toc-二级目录反向代理">二级目录反向代理</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#调试" id="markdown-toc-调试">调试</a>    <ul>
+      <li><a href="#设置日志输出" id="markdown-toc-设置日志输出">设置日志输出</a>        <ul>
+          <li><a href="#error_log" id="markdown-toc-error_log">error_log</a></li>
+          <li><a href="#access_log" id="markdown-toc-access_log">access_log</a></li>
+        </ul>
+      </li>
+      <li><a href="#日志排查错误" id="markdown-toc-日志排查错误">日志排查错误</a></li>
+    </ul>
+  </li>
+  <li><a href="#其他笔记" id="markdown-toc-其他笔记">其他笔记</a>    <ul>
+      <li><a href="#web服务器" id="markdown-toc-web服务器">web服务器</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Nginx学习，个人学习记录，只记录主要框架和用到的参数, 更详细的用法查manual即可。<br /></p>
+
+<h2 id="参考">参考</h2>
+<ul>
+  <li><a href="https://segmentfault.com/a/1190000039809332">吃透 Nginx 编译安装过程@书旅</a></li>
+  <li><a href="https://github.com/EtherDream/jsproxy">EtherDream/jsproxy</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/128579141">nginx入门之—-编译安装</a></li>
+  <li><a href="https://www.kancloud.cn/wizardforcel/nginx-doc/92350">Nginx 中文官方文档@飞龙</a></li>
+  <li><a href="https://www.nginx.org.cn/article/detail/545">Nginx 从入门到实践，万字详解！</a></li>
+  <li><a href="https://juejin.cn/post/6844903571092160525">Nginx日志配置详解</a></li>
+</ul>
+
+<h2 id="安装">安装</h2>
+
+<h3 id="编译openresty安装使用">编译openresty安装使用</h3>
+<h4 id="下载源码">下载源码</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ROOT=$HOME/code/
+cd $ROOT/source
+
+#curl失败的,用wget
+wget https://www.openssl.org/source/openssl-1.1.1b.tar.gz
+wget https://mirrors.gigenet.com/OSDN//sfnet/p/pc/pcre/pcre/8.43/pcre-8.43.tar.gz
+wget https://zlib.net/zlib-1.2.12.tar.gz  #官网可能因版本更新删除旧的下载链接
+
+tar zxf openssl-*
+tar zxf pcre-*
+tar zxf zlib-*
+
+wget https://openresty.org/download/openresty-1.19.9.1.tar.gz
+tar zxf openresty-*
+cd openresty-1.19.9.1/
+</code></pre></div></div>
+
+<h4 id="编译">编译</h4>
+<p>可以只提供上面下载的库的源代码即可</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  --with-pcre=DIR                    set path to PCRE library sources
+  --with-zlib=DIR                    set path to zlib library sources
+  --with-libatomic=DIR               set path to libatomic_ops library sources
+  --with-openssl=DIR                 set path to OpenSSL library sources
+</code></pre></div></div>
+<p>更多编译参数解释:<a href="https://zhuanlan.zhihu.com/p/128579141">nginx入门之—-编译安装</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure \
+  --with-openssl=../openssl-1.1.1b \
+  --with-pcre=../pcre-8.43 \
+  --with-zlib=../zlib-1.2.12 \
+  --with-http_v2_module \
+  --with-http_ssl_module \
+  --with-pcre-jit \
+  --prefix=$ROOT/softopenresty
+
+make -j20
+make install
+
+echo PATH=$PATH:$ROOT/softopenresty &gt;&gt; ~/.bashrc
+echo PATH=\$PATH:$ROOT/softopenresty/bin &gt;&gt; ~/.bashrc
+echo PATH=\$PATH:$ROOT/softopenresty/nginx/sbin/ &gt;&gt; ~/.bashrc
+</code></pre></div></div>
+
+<h3 id="目录展示">目录展示</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mommint:~/code/softopenresty$ ls
+bin  COPYRIGHT  luajit  lualib  nginx  pod  resty.index  site
+</code></pre></div></div>
+
+<p>nginx目录</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mommint:~/code/softopenresty$ tree nginx
+nginx
+├── conf #参考配置文件
+│   ├── xxx.conf
+efault
+│   └── win-utf
+├── html
+│   ├── 50x.html
+│   └── index.html
+├── logs
+└── sbin
+    └── nginx
+</code></pre></div></div>
+
+<h3 id="添加到系统服务">添加到系统服务</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@localhost.com sbin]# vim /usr/lib/systemd/system/nginx.service
+[Unit]
+Description=nginx - high performance web server
+Documentation=http://nginx.org/en/docs/
+After=network.target remote-fs.target nss-lookup.target
+​
+[Service]
+Type=forking
+PIDFile=/usr/local/nginx/logs/nginx.pid
+ExecStartPre=/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf
+ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+ExecReload= /usr/local/nginx/sbin/nginx -s reload
+ExecStop= /usr/local/nginx/sbin/nginx -s stop
+PrivateTmp=true
+​
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+
+<h2 id="使用">使用</h2>
+
+<h3 id="说明">说明</h3>
+<ul>
+  <li><strong>nginx可以执行多次,每次执行都会在指定的目录(<code class="language-plaintext highlighter-rouge">-p</code>设定)创建所有的tmp文件和pid文件</strong></li>
+  <li><strong>这种一个配置文件一个nginx,可以修改某个网站而不不用重启整个服务</strong></li>
+  <li><strong>通过<code class="language-plaintext highlighter-rouge">-p</code>也可以对之前执行的nginx进行关闭重载等配置</strong></li>
+  <li><strong>如果默认的配置文件不是<code class="language-plaintext highlighter-rouge">conf/nginx.conf</code>,stop,reload等操作时也必须<code class="language-plaintext highlighter-rouge">-c</code>指定这个文件</strong></li>
+  <li><strong>默认<code class="language-plaintext highlighter-rouge">-p</code>的nginx运行的报错文件是<code class="language-plaintext highlighter-rouge">logs/error.log</code>,如果不存在<code class="language-plaintext highlighter-rouge">logs</code>目录会报错</strong></li>
+</ul>
+
+<p>nginx version: openresty/1.19.9.1
+Usage: nginx [-?hvVtTq] [-s signal] [-p prefix]
+             [-e filename] [-c filename] [-g directives]</p>
+
+<blockquote>
+  <ul>
+    <li>Options:</li>
+    <li>-?,-h         : this help</li>
+    <li>-v            : show version and exit</li>
+    <li>-V            : show version and configure options then exit</li>
+    <li>-t            : test configuration and exit</li>
+    <li>-T            : test configuration, dump it and exit</li>
+    <li>-q            : suppress non-error messages during configuration testing</li>
+    <li><strong>-s signal</strong>    : send signal to a master process: stop, quit, reopen, reload 停止更新一些站点</li>
+    <li><strong>-p prefix</strong>   : set prefix path (default: /home/cndaqiang/code//softopenresty/nginx/)</li>
+    <li><strong>-e filename</strong>   : set error log file (<strong>default: logs/error.log</strong>)</li>
+    <li><strong>-c filename</strong>   : set configuration file (<strong>default: conf/nginx.conf</strong>)</li>
+    <li>-g directives : set global directives out of configuration file</li>
+  </ul>
+</blockquote>
+
+<h3 id="创建站点示例">创建站点示例</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mommint:~$ cd ~/work/web/test
+cndaqiang@mommint:~/work/web/test$ mkdir conf logs
+cndaqiang@mommint:~/work/web/test$ cat &gt; conf/nginx.conf &lt;&lt;EOF
+worker_processes  1;
+error_log logs/error.log;
+events {
+    worker_connections 1024;
+}
+http {
+    server {
+        listen 2022;
+        location / {
+            default_type text/html;
+            content_by_lua_block {
+                ngx.say("&lt;p&gt;hello, world&lt;/p&gt;")
+            }
+        }
+    }
+}
+EOF
+</code></pre></div></div>
+
+<p><strong>操作</strong></p>
+<ul>
+  <li><strong>启动nginx,启动后会自动在后台运行了,退出当前账户,也仍在后台运行</strong>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mommint:~/work/web/test$ nginx -p $PWD
+</code></pre></div>    </div>
+  </li>
+  <li>浏览网页 <a href="http://127.0.0.1:2022/">http://127.0.0.1:2022/</a> 就有hello world</li>
+  <li><strong>关闭:(如果配置文件不是conf/nginx.conf,要-c指出来)</strong>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mommint:~/work/web/test$ nginx -s stop -p $PWD
+</code></pre></div>    </div>
+  </li>
+  <li><strong>更新配置</strong>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nginx -p $PWD -s reload
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>其他同理<code class="language-plaintext highlighter-rouge">quit, reopen, reload</code></p>
+
+<h2 id="配置文件">配置文件</h2>
+
+<ul>
+  <li>格式<code class="language-plaintext highlighter-rouge">指令/参数;</code>,必须包含换行符<code class="language-plaintext highlighter-rouge">;</code>,可以写在同一行用<code class="language-plaintext highlighter-rouge">;</code>号隔开不同指令. 或者用<code class="language-plaintext highlighter-rouge">{}</code>扩起来,<code class="language-plaintext highlighter-rouge">}</code>后不跟<code class="language-plaintext highlighter-rouge">;</code>,和c一样</li>
+  <li>注释<code class="language-plaintext highlighter-rouge">#开头</code></li>
+  <li><code class="language-plaintext highlighter-rouge">include file;</code> 只能跟一个文件,或者类似正则表达<code class="language-plaintext highlighter-rouge">include conf/*.conf</code></li>
+  <li><strong>不同模块的代码块内的参数名可能重复,因此填错参数位置,不会生效</strong></li>
+  <li>配置文件即一层层定义相应模块的不同功能<code class="language-plaintext highlighter-rouge">main&gt;event&gt;..., main&gt;http&gt;...</code>,如下示例. <strong>具体模块的设置参数,查手册即可</strong></li>
+  <li><strong>必须包含<code class="language-plaintext highlighter-rouge">events{}</code>模块,即使为空<code class="language-plaintext highlighter-rouge">{}</code></strong></li>
+  <li>使用<code class="language-plaintext highlighter-rouge">$</code>符号使用变量,如<code class="language-plaintext highlighter-rouge">$host</code>,<code class="language-plaintext highlighter-rouge">$remote_addr</code><a href="https://www.nginx.org.cn/article/detail/545">等</a></li>
+  <li>同一个参数可以出现在不同位置,手册里面会提到,如<code class="language-plaintext highlighter-rouge">error_log</code>可以在<code class="language-plaintext highlighter-rouge">main, http, server, location</code>等里面定义,如果在<code class="language-plaintext highlighter-rouge">location</code>里面定义了,<code class="language-plaintext highlighter-rouge">location</code>里面的执行日志就存到相应的文件,否则一直向上层寻找设置了<code class="language-plaintext highlighter-rouge">error_log</code>的目录.</li>
+  <li><code class="language-plaintext highlighter-rouge">rewrite_log</code>的位置也只能出现可以有<code class="language-plaintext highlighter-rouge">rewrite</code>命令的位置</li>
+</ul>
+
+<p>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#主模块等级
+main        # 全局配置，对全局生效,如进程数量
+├── events  # 配置影响 Nginx 服务器或与用户的网络连接
+├── http    # 配置代理，缓存，日志定义等绝大多数功能和第三方模块的配置
+│   ├── upstream # 配置后端服务器具体地址，负载均衡配置不可或缺的部分
+│   ├── server   # 配置虚拟主机的相关参数，一个 http 块中可以有多个 server 块
+│   ├── server
+│   │   ├── location  # server 块可以包含多个 location 块，location 指令用于匹配 uri
+│   │   ├── location
+│   │   └── ...
+│   └── ...
+└── ...
+</code></pre></div></div>
+
+<h3 id="主模块">主模块</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>worker_processes  1;          # 设置nginx启动进程的数量，一般设置成与逻辑cpu数量相同 
+error_log  logs/error.log;    # 指定错误日志 
+worker_rlimit_nofile 102400;  # 设置一个nginx进程能打开的最大文件数 
+pid        /var/run/nginx.pid;  #默认prefix/log/nginx.pid
+events{
+      ...
+}
+http {
+      ...
+}
+</code></pre></div></div>
+<h3 id="events">events</h3>
+<p>查手册</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>events {                      # 事件配置
+    worker_connections  10240; # 设置一个进程的最大并发连接数
+    use epoll;                # 事件驱动类型
+}
+</code></pre></div></div>
+
+<h3 id="http">http</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># http 服务相关设置 
+http {  
+    log_format  main  'remote_addr - remote_user [time_local] "request" '
+                      'status body_bytes_sent "$http_referer" '
+                      '"http_user_agent" "http_x_forwarded_for"'; 
+    access_log  /var/log/nginx/access.log  main;    #设置访问日志的位置和格式 
+    sendfile          on;      # 用于开启文件高效传输模式，一般设置为on，若nginx是用来进行磁盘IO负载应用时，可以设置为off，降低系统负载
+    tcp_nopush        on;      # 减少网络报文段数量，当有数据时，先别着急发送, 确保数据包已经装满数据, 避免了网络拥塞
+    tcp_nodelay       on;      # 提高I/O性能，确保数据尽快发送, 提高可数据传输效率                           
+    gzip              on;      # 是否开启 gzip 压缩 
+    keepalive_timeout  65;     # 设置长连接的超时时间，请求完成之后还要保持连接多久，不是请求时间多久，目的是保持长连接，减少创建连接过程给系统带来的性能损                                    耗，类似于线程池，数据库连接池
+    types_hash_max_size 2048;  # 影响散列表的冲突率。types_hash_max_size 越大，就会消耗更多的内存，但散列key的冲突率会降低，检索速度就更快。                                            types_hash_max_size越小，消耗的内存就越小，但散列key的冲突率可能上升
+    include             /etc/nginx/mime.types;  # 关联mime类型，关联资源的媒体类型(不同的媒体类型的打开方式)
+    default_type        application/octet-stream;  # 根据文件的后缀来匹配相应的MIME类型，并写入Response header，导致浏览器播放文件而不是下载
+# 虚拟服务器的相关设置 
+    server { 
+        listen      80;        # 设置监听的端口 
+        server_name  localhost;        # 设置绑定的主机名、域名或ip地址 
+        charset koi8-r;        # 设置编码字符 
+        location / { 
+            root  /var/www/nginx;           # 设置服务器默认网站的根目录位置 
+            index  index.html index.htm;    # 设置默认打开的文档 
+            } 
+        error_page  500 502 503 504  /50x.html; # 设置错误信息返回页面 ,这里是把相应代码的错误界面直接替换成访问`http://url/50x.htmls`,即填入的是网页相对链接不是在服务器上的位置
+            location = /50x.html { 
+            root  html;        # 这里的绝对位置是/var/www/nginx/html 
+        } 
+    } 
+ }
+</code></pre></div></div>
+
+<h4 id="httpserverlocations">http/server/locations</h4>
+<p>用于定义网址中的含义,如下, 跟多的参数,网上有很多手册,这里就不搬运了</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#访问路径为:www.cndaqiang.web/xxx 时, /xxx会按照这个规则进行匹配
+        location / { 
+            root  /var/www/nginx;           # 设置服务器默认网站的根目录位置 
+            index  index.html index.htm;    # 设置默认打开的文档 
+            }
+#访问路径为:www.cndaqiang.web/hello 时, 则映射到`/home/cndaqiang/work/web/test/www/2.html`
+location = /hello {
+            alias /home/cndaqiang/work/web/test/www/2.html;
+        }
+#也可以 location = /xxx/ {};
+#还有很多....
+location  /i/ {
+  alias  /spool/w3/images/;}
+</code></pre></div></div>
+
+<h4 id="httpservererror_page">http/server/error_page</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error_page  500 502 503 504  /50x.html; # 设置错误信息返回页面 ,这里是把相应代码的错误界面直接替换成访问`http://url/50x.htmls`,即填入的是网页相对链接不是在服务器上的位置
+error_page 404  https://cndaqiang.github.io ; #直接跳到url
+</code></pre></div></div>
+
+<h4 id="rewrite">rewrite</h4>
+<p>位置<code class="language-plaintext highlighter-rouge">server、location、if</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rewrite 匹配规则 替换内容 [flag]
+</code></pre></div></div>
+<p>示例</p>
+
+<h2 id="应用">应用</h2>
+<h3 id="常用参数">常用参数</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error_log  logs/error.log;    # 指定错误日志,调试时注上level为debug
+events{}
+http {
+    log_format  main  'remote_addr - remote_user [time_local] "request" '
+                      'status body_bytes_sent "$http_referer" '
+                      '"http_user_agent" "http_x_forwarded_for"';
+    access_log logs/access.log main;
+}
+</code></pre></div></div>
+
+<h3 id="反向代理">反向代理</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mommint:~/work/web/test$ cat conf/nginx.conf
+events{}
+http {
+    server {
+        listen 2012;
+        location / { proxy_pass https://cndaqiang.github.io/;  proxy_ssl_server_name on; }
+    }
+}
+</code></pre></div></div>
+<p>然后使用<code class="language-plaintext highlighter-rouge">url/</code>打开的链接就是<code class="language-plaintext highlighter-rouge">https://cndaqiang.github.io</code>的内容</p>
+
+<p>代理有的网站时,出现502错误</p>
+
+<h4 id="二级目录反向代理">二级目录反向代理</h4>
+<p>示例</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server_name mom;
+location /ip/ {
+    proxy_ssl_server_name on;
+    proxy_pass https://ip.cn/;
+}
+</code></pre></div></div>
+
+<p>这样代理的网页虽然可以访问,但是有些网页元素如<code class="language-plaintext highlighter-rouge">api/index?ip=&amp;type=0</code>,会对应<code class="language-plaintext highlighter-rouge">mom/api/index?ip=&amp;type=0</code>,应该访问到<code class="language-plaintext highlighter-rouge">ip.cn/api/...</code>,因为没有做<code class="language-plaintext highlighter-rouge">/api</code>的地址映射,所以访问`mom/api/…‘只能返回404,可在错误日志中查到</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2022/04/03 21:35:10 [error] 162970#0: *163 open() "/home/cndaqiang/work/web/test/html/api/index" failed (2: No such file or directory), client: 192.168.192.167, server: mom, request: "GET /api/index?ip=&amp;type=0 HTTP/1.1", host: "mom:2012", referrer: "http://mom:2012/ip/"
+</code></pre></div></div>
+
+<p>为了解决这个问题,可以添加一个<code class="language-plaintext highlighter-rouge">location</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       location /api/ {
+        proxy_ssl_server_name on;
+        proxy_pass https://ip.cn/api/;
+}
+</code></pre></div></div>
+
+<p>或者添加一个<code class="language-plaintext highlighter-rouge">rewrite</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      location /{
+#这两种rewrite都行
+#        rewrite '^/api/index' '/ip/api/index' last;
+        rewrite '^/api/(.*)$' /ip/api/$1 last;
+}
+</code></pre></div></div>
+
+<h2 id="调试">调试</h2>
+
+<h3 id="设置日志输出">设置日志输出</h3>
+<ul>
+  <li>access_log：指的是访问日志，我们通过访问日志可以获取用户的 IP、请求处理的时间、浏览器信息等</li>
+  <li>error_log：错误日志记录了访问出错的信息，可以用于定位错误的原因</li>
+</ul>
+
+<h4 id="error_log">error_log</h4>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">error_log</code>可以在<code class="language-plaintext highlighter-rouge">main,http, mail, stream, server, location</code>里面定义,如果在<code class="language-plaintext highlighter-rouge">location</code>里面定义了,<code class="language-plaintext highlighter-rouge">location</code>里面的执行日志就存到相应的文件,否则一直向上层寻找设置了<code class="language-plaintext highlighter-rouge">error_log</code>的目录</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error_log &lt;FILE&gt; &lt;LEVEL&gt;
+</code></pre></div></div>
+<ul>
+  <li>error_log 设置输出的log文件</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;LEVEL&gt;</code> 是日志的级别,常见的错误日志级别有<code class="language-plaintext highlighter-rouge">[debug | info | notice | warn | error | crit | alert | emerg]</code>，级别越高记录的信息越少
+debug输出的信息最多,不只是错误信息,还有rewrite等信息</li>
+  <li>error_log的位置可以有<code class="language-plaintext highlighter-rouge">main, http, server, location</code></li>
+  <li>是否输出特定功能的log还有设置,如<code class="language-plaintext highlighter-rouge">rewrite</code>的log: <code class="language-plaintext highlighter-rouge">rewrite_log on;</code></li>
+</ul>
+
+<h4 id="access_log">access_log</h4>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">access_log</code>可以在<code class="language-plaintext highlighter-rouge">http，server，location，limit_except</code>里面使用
+访问日志主要记录客户端的请求。客户端向Nginx服务器发起的每一次请求都记录在这里。客户端IP，浏览器信息，referer，请求处理时间，请求URL等都可以在访问日志中得到。当然具体要记录哪些信息，你可以通过log_format指令定义。</li>
+</ul>
+
+<p>参数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>access_log path [format [buffer=size] [gzip[=level]] [flush=time] [if=condition]]; # 设置访问日志
+access_log off; # 关闭访问日志
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">http/access_log</code>,自定义log规则为<code class="language-plaintext highlighter-rouge">main</code>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http{
+    log_format  main  'remote_addr - remote_user [time_local] "request" '
+                      'status body_bytes_sent "$http_referer" '
+                      '"http_user_agent" "http_x_forwarded_for"'; 
+    access_log  /var/log/nginx/access.log  main;    #设置访问日志的位置和格式 
+}
+</code></pre></div></div>
+
+<p>log示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mommint:~/work/web/test$ cat run.log
+192.168.192.167 - - [02/Apr/2022:21:49:57 +0800] "GET /2.html HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"
+192.168.192.167 - - [02/Apr/2022:21:49:57 +0800] "GET /favicon.ico HTTP/1.1" 404 6 "http://mom:2012/2.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"
+192.168.192.167 - - [02/Apr/2022:21:49:58 +0800] "GET /favicon.ico HTTP/1.1" 404 6 "http://mom:2012/2.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"
+</code></pre></div></div>
+
+<h3 id="日志排查错误">日志排查错误</h3>
+<p><strong>当访问网页出现错误时,多查看日志</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error_log  logs/error.log;    # 指定错误日志 
+</code></pre></div></div>
+<p>如反向代理一些网站时出现</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2022/04/03 17:23:19 [error] 112816#0: *18 SSL_do_handshake() failed (SSL: error:14094410:SSL routines:ssl3_read_bytes:sslv3 alert handshake failure:SSL alert number 40) while SSL handshaking to upstream, client: 192.168.192.167, server: , request: "GET / HTTP/1.1", upstream: "https://172.67.204.11:443/", host: "mom:2012"
+</code></pre></div></div>
+<p>通过搜索引擎,得知<a href="https://zvv.me/z/1717.html/comment-page-1">解决方案</a>是在<code class="language-plaintext highlighter-rouge">location</code>内添加<code class="language-plaintext highlighter-rouge">proxy_ssl_server_name on;</code></p>
+
+<h2 id="其他笔记">其他笔记</h2>
+<h3 id="web服务器">web服务器</h3>
+<ul>
+  <li>apache,最广最古老</li>
+  <li>Tomcat、Jetty: Java语言,jsp</li>
+  <li>IIS: windows系统下运行</li>
+  <li>nginx: 来自俄罗斯,性能好</li>
+</ul>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2021/08/29/autotools/">[草稿]使用autotools创建configure,Makefile</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2022/04/13/oncvpsp/">ONCVPSP安装使用</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

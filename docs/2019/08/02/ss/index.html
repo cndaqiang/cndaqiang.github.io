@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>OpenWrt (Chaos Calmer)下搭建ss服务器</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2019/08/02/ss/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>OpenWrt (Chaos Calmer)下搭建ss服务器</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-08-02
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#OpenWrt" title="Category: OpenWrt" rel="category">OpenWrt</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#OpenWrt" title="Tag: OpenWrt" rel="tag">OpenWrt</a-->
+        <a href="/tag/#OpenWrt" title="Tag: OpenWrt" rel="tag">OpenWrt</a>&nbsp;
+    
+        <!--a href="/tag/#ss" title="Tag: ss" rel="tag">ss</a-->
+        <a href="/tag/#ss" title="Tag: ss" rel="tag">ss</a>&nbsp;
+    
+        <!--a href="/tag/#Shadowsocks" title="Tag: Shadowsocks" rel="tag">Shadowsocks</a-->
+        <a href="/tag/#Shadowsocks" title="Tag: Shadowsocks" rel="tag">Shadowsocks</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#环境" id="markdown-toc-环境">环境：</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考:</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
+      <li><a href="#下载" id="markdown-toc-下载">下载</a></li>
+      <li><a href="#scp上传到opwnwrt" id="markdown-toc-scp上传到opwnwrt">scp上传到OpwnWrt</a></li>
+      <li><a href="#安装-1" id="markdown-toc-安装-1">安装</a></li>
+      <li><a href="#修改配置文件" id="markdown-toc-修改配置文件">修改配置文件</a></li>
+      <li><a href="#将配置文件中选择的端口添加到防火墙许可" id="markdown-toc-将配置文件中选择的端口添加到防火墙许可">将配置文件中选择的端口添加到防火墙许可</a></li>
+      <li><a href="#重启ss即可" id="markdown-toc-重启ss即可">重启ss即可</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="环境">环境：</h2>
+<p>OpenWrt (Chaos Calmer)<br />
+CPU: ar71xx</p>
+<h2 id="参考">参考:</h2>
+<p><a href="https://ntgeralt.blogspot.com/2015/12/openwrtshadowsocks.html">OpenWRT 路由器搭建 Shadowsocks 服务器 （ss-server on ramips、71xx、bc47xx）</a></p>
+
+<h2 id="安装">安装</h2>
+
+<h3 id="下载">下载</h3>
+<p>选择自己的CPU平台下载，我仅测试了ar71xx没问题<br />
+<a href="/web/file/2019/libev-ss-server_2.4.5-1_ar71xx.ipk">libev-ss-server_2.4.5-1_ar71xx.ipk</a><br />
+<a href="/web/file/2019/libev-ss-server_2.4.5-1_brcm47xx.ipk">libev-ss-server_2.4.5-1_brcm47xx.ipk</a><br />
+<a href="/web/file/2019/libev-ss-server_2.4.5-1_ramips_24kec.ipk">libev-ss-server_2.4.5-1_ramips_24kec.ipk</a><br /></p>
+
+<h3 id="scp上传到opwnwrt">scp上传到OpwnWrt</h3>
+
+<h3 id="安装-1">安装</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg install libev-ss-server_2.4.5-1_ar71xx.ipk
+</code></pre></div></div>
+
+<h3 id="修改配置文件">修改配置文件</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/shadowsocks-server.json
+</code></pre></div></div>
+<p>配置规则参见<a href="https://cndaqiang.github.io/2017/09/27/ubuntu-ss/">/2017/09/27/ubuntu-ss/</a></p>
+<h3 id="将配置文件中选择的端口添加到防火墙许可">将配置文件中选择的端口添加到防火墙许可</h3>
+<p>Luci&gt;网络&gt;防火墙&gt;Traffic Rules&gt;Open ports on router:</p>
+
+<h3 id="重启ss即可">重启ss即可</h3>
+<p>Luci&gt;系统&gt;启动项&gt;shadowsocks-server&gt;重启</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/07/25/QE/">QE 快速上手</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/08/04/HC_SCE/">Fortran使用Scalapack求解HC=SCE</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

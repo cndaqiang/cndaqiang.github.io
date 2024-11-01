@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>JavaScript学习</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2020/07/01/js/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>JavaScript学习</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-07-01
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#web" title="Category: web" rel="category">web</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#web" title="Tag: web" rel="tag">web</a-->
+        <a href="/tag/#web" title="Tag: web" rel="tag">web</a>&nbsp;
+    
+        <!--a href="/tag/#JavaScript" title="Tag: JavaScript" rel="tag">JavaScript</a-->
+        <a href="/tag/#JavaScript" title="Tag: JavaScript" rel="tag">JavaScript</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#简介" id="markdown-toc-简介">简介</a></li>
+  <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+  <li><a href="#示例" id="markdown-toc-示例">示例</a></li>
+  <li><a href="#输出函数" id="markdown-toc-输出函数">输出函数</a></li>
+  <li><a href="#html事件" id="markdown-toc-html事件">html事件</a></li>
+  <li><a href="#变量" id="markdown-toc-变量">变量</a>    <ul>
+      <li><a href="#定义" id="markdown-toc-定义">定义</a></li>
+      <li><a href="#数据类型" id="markdown-toc-数据类型">数据类型</a></li>
+      <li><a href="#一切皆对象" id="markdown-toc-一切皆对象">一切皆对象</a>        <ul>
+          <li><a href="#其他" id="markdown-toc-其他">其他</a></li>
+        </ul>
+      </li>
+      <li><a href="#字符串" id="markdown-toc-字符串">字符串</a></li>
+      <li><a href="#字符串属性" id="markdown-toc-字符串属性">字符串属性</a></li>
+      <li><a href="#字符串方法" id="markdown-toc-字符串方法">字符串方法</a></li>
+    </ul>
+  </li>
+  <li><a href="#计算" id="markdown-toc-计算">计算</a>    <ul>
+      <li><a href="#数值计算" id="markdown-toc-数值计算">数值计算</a></li>
+    </ul>
+  </li>
+  <li><a href="#对象" id="markdown-toc-对象">对象</a></li>
+  <li><a href="#条件" id="markdown-toc-条件">条件</a>    <ul>
+      <li><a href="#if" id="markdown-toc-if">if</a></li>
+      <li><a href="#switch" id="markdown-toc-switch">switch</a></li>
+    </ul>
+  </li>
+  <li><a href="#循环" id="markdown-toc-循环">循环</a>    <ul>
+      <li><a href="#for" id="markdown-toc-for">for</a></li>
+      <li><a href="#for-in" id="markdown-toc-for-in">for in</a></li>
+      <li><a href="#while" id="markdown-toc-while">while</a></li>
+      <li><a href="#do-while" id="markdown-toc-do-while">do while</a></li>
+      <li><a href="#break-跳出其他用法-continue-下一个循环" id="markdown-toc-break-跳出其他用法-continue-下一个循环">break 跳出&amp;其他用法, continue 下一个循环</a></li>
+    </ul>
+  </li>
+  <li><a href="#函数" id="markdown-toc-函数">函数</a>    <ul>
+      <li><a href="#定义-1" id="markdown-toc-定义-1">定义</a></li>
+      <li><a href="#调用" id="markdown-toc-调用">调用</a></li>
+      <li><a href="#参数和返回值" id="markdown-toc-参数和返回值">参数和返回值</a></li>
+      <li><a href="#内置函数" id="markdown-toc-内置函数">内置函数</a>        <ul>
+          <li><a href="#时间函数" id="markdown-toc-时间函数">时间函数</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#正则表达式略" id="markdown-toc-正则表达式略">正则表达式[略]</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+
+<p><a href="https://www.runoob.com/js/js-howto.html">JavaScript 教程-菜鸟教程</a></p>
+
+<h2 id="简介">简介</h2>
+
+<h2 id="备注">备注</h2>
+<ul>
+  <li>像写html一样，在网页中插入<code class="language-plaintext highlighter-rouge">&lt;script&gt;&lt;/script&gt;</code>就行</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;script&gt;</code>内可以放执行命令，则立即执行</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;script&gt;</code>内也可以放置函数，可定义此函数的前后都可以调用此函数<br />
+大家喜欢把函数定义在<code class="language-plaintext highlighter-rouge">&lt;head&gt;</code>内，不是必须的</li>
+  <li>也可以引用外部的JavaScript<code class="language-plaintext highlighter-rouge">&lt;script src="myScript.js"&gt;&lt;/script&gt;</code></li>
+  <li>同行换行用<code class="language-plaintext highlighter-rouge">;</code>，不同行<code class="language-plaintext highlighter-rouge">;</code>非必须，但是建议加<code class="language-plaintext highlighter-rouge">;</code></li>
+  <li>不同的<code class="language-plaintext highlighter-rouge">script</code>中定义的变量全局通用</li>
+  <li>注释<code class="language-plaintext highlighter-rouge">//</code>开头</li>
+</ul>
+
+<h2 id="示例">示例</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+            <span class="kd">function</span> <span class="nx">myfun</span><span class="p">()</span>
+                <span class="p">{</span>
+                    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">hello world</span><span class="dl">"</span><span class="p">);</span>
+                <span class="p">};</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">onclick=</span><span class="s">"myfun()"</span><span class="nt">&gt;</span> call fun <span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p>chrome打开, 可以执行,写错的代码，也会报错在某行
+<img src="/uploads/2020/12/jschrome.png" alt="" />
+也可以在这里直接写脚本<a href="https://gliderhx.github.io/">@gliderhx</a>
+<img src="/uploads/2020/12/snippets.png" alt="" />
+也可以直接在下面的Console中输入</p>
+
+<h2 id="输出函数">输出函数</h2>
+
+<ul>
+  <li>使用 <code class="language-plaintext highlighter-rouge">window.alert()</code> 弹出警告框。</li>
+  <li>使用 <code class="language-plaintext highlighter-rouge">document.write()</code> 方法将内容写到 HTML 文档中。</li>
+  <li>使用 <code class="language-plaintext highlighter-rouge">innerHTML</code> 写入到 HTML 元素。</li>
+  <li>使用 <code class="language-plaintext highlighter-rouge">console.log()</code> 写入到浏览器的控制台</li>
+</ul>
+
+<h2 id="html事件">html事件</h2>
+<p>触发事件,执行js命令</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>事件</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">onchange</code></td>
+      <td>HTML 元素改变</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">onclick</code></td>
+      <td>用户点击 HTML 元素</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">onmouseover</code></td>
+      <td>用户在一个HTML元素上移动鼠标</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">onmouseout</code></td>
+      <td>用户从一个HTML元素上移开鼠标</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">onkeydown</code></td>
+      <td>用户按下键盘按键(?测试无效)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">onload</code></td>
+      <td>浏览器已完成页面的加载</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h1</span>  <span class="na">onclick=</span><span class="s">"alert(Date())"</span><span class="nt">&gt;</span>点我获取当前时间<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div></div>
+
+<h2 id="变量">变量</h2>
+<h3 id="定义">定义</h3>
+<ul>
+  <li><strong>作用域</strong>
+    <ul>
+      <li>
+        <blockquote>
+          <p>在 JavaScript 函数内部声明的变量（使用 var）是局部变量，所以只能在函数内部访问它。（该变量的作用域是局部的）。</p>
+        </blockquote>
+      </li>
+      <li>
+        <blockquote>
+          <p>在函数外声明(也用var)的变量是全局变量，直接给为定义过的变量赋值(即使是函数内,在函数被执行后)变为全局变量</p>
+        </blockquote>
+      </li>
+      <li>全局变量可以<code class="language-plaintext highlighter-rouge">delete 变量名</code>返回true, 局域变量返回false</li>
+    </ul>
+  </li>
+  <li>变量名区分大小写，支持<code class="language-plaintext highlighter-rouge">_</code>,<code class="language-plaintext highlighter-rouge">$</code>,字母开头的变量</li>
+  <li>可以在声明变量时定义<code class="language-plaintext highlighter-rouge">var a=123</code>,也可以声明后定义<code class="language-plaintext highlighter-rouge">var a; a=123 ;</code></li>
+  <li>可以同时定义多个变量<code class="language-plaintext highlighter-rouge">var str="hello world", a; a=123 ;</code></li>
+  <li>变量没有类型的区分，即之前是数值，后面可以是字符串<code class="language-plaintext highlighter-rouge">var a; a=123 ; a="hello"</code></li>
+  <li><strong>每种变量都是对象,和面向对象的python一致,有相应的属性和方法</strong>
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span><span class="o">=</span><span class="mi">123</span><span class="p">;</span> <span class="kd">var</span> <span class="nx">b</span><span class="o">=</span><span class="mi">456</span>
+<span class="kd">var</span> <span class="nx">str</span><span class="o">=</span><span class="dl">"</span><span class="s2">hello world</span><span class="dl">"</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="数据类型">数据类型</h3>
+<ul>
+  <li>字符串<br />
+使用单引号和双引号定义 <code class="language-plaintext highlighter-rouge">a="hellowrold"</code></li>
+  <li>数字<br />
+<code class="language-plaintext highlighter-rouge">a=123;a=12.34;a=123e5;a=123e-5</code></li>
+  <li>布尔<br />
+<code class="language-plaintext highlighter-rouge">a=true ;a=false</code></li>
+  <li>数组<br />
+<code class="language-plaintext highlighter-rouge">Array()</code>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a=Array(123,456,"hello",345);
+a=new Array();a[0]=123,a[1]="hello";
+a=new Array(123,456,"hello")
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="一切皆对象">一切皆对象</h3>
+<p><code class="language-plaintext highlighter-rouge">typeof</code>查看类型</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>typeof "John"                // 返回 string
+typeof 3.14                  // 返回 number
+typeof false                 // 返回 boolean
+typeof [1,2,3,4]             // 返回 object
+typeof {name:'John', age:34} // 返回 object
+typeof Array(123,456,"hello",345)  // 返回 object
+typeof undefined // 返回 "undefined"
+typeof null                   // 返回 object
+typeof function () {}         // 返回 function
+</code></pre></div></div>
+<p>constructor可以查看构造函数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"John".constructor                 // 返回函数 String()  { [native code] }
+(3.14).constructor                 // 返回函数 Number()  { [native code] }
+false.constructor                  // 返回函数 Boolean() { [native code] }
+[1,2,3,4].constructor              // 返回函数 Array()   { [native code] }
+{name:'John', age:34}.constructor  // 返回函数 Object()  { [native code] }
+new Date().constructor             // 返回函数 Date()    { [native code] }
+function () {}.constructor         // 返回函数 Function(){ [native code] }
+</code></pre></div></div>
+<p><strong>用这些函数也可创建对象,也可以用于转换类型</strong>,如</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Number(123)
+123
+Number(String(123))
+123
+</code></pre></div></div>
+<p>这些对象还有很多性质可以调整格式,如</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Number(String(123)).toExponential()
+"1.23e+2"
+//Number的更多方法
+//toExponential()	把对象的值转换为指数计数法。
+//toFixed()	把数字转换为字符串，结果的小数点后有指定位数的数字。
+//toPrecision()	把数字格式化为指定的长度。
+</code></pre></div></div>
+
+<h4 id="其他">其他</h4>
+<p>Undefined 这个值表示变量不含有值,输出空白, 例如未传入函数的输入参数时<br />
+null表示这个值为null,用于清空变量，输出null</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a=null;a=Undefined
+</code></pre></div></div>
+<p>只定义类型，不赋值</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var carname=new String;
+var x=      new Number;
+var y=      new Boolean;
+var cars=   new Array;
+var person= new Object;
+</code></pre></div></div>
+
+<h3 id="字符串">字符串</h3>
+<p>字符串的索引顺序和python类似,下标从0开始, 不可以<code class="language-plaintext highlighter-rouge">str[0:1]</code>,有多种截取方法比如<code class="language-plaintext highlighter-rouge">substring</code>,使用<code class="language-plaintext highlighter-rouge">+</code>号连接</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a="hello world"
+"hello world"
+a[0]
+"h"
+a.substring(0,1)
+"h"
+a.length
+11
+(a+a).length
+22
+</code></pre></div></div>
+
+<h3 id="字符串属性">字符串属性</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>属性</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">constructor</code></td>
+      <td>返回创建字符串属性的函数</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">length</code></td>
+      <td>返回字符串的长度</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">prototype</code></td>
+      <td>允许您向对象添加属性和方法</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="字符串方法">字符串方法</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>方法</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">charAt()</code></td>
+      <td>返回指定索引位置的字符</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">charCodeAt()</code></td>
+      <td>返回指定索引位置字符的 Unicode 值</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">concat()</code></td>
+      <td>连接两个或多个字符串，返回连接后的字符串</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">fromCharCode()</code></td>
+      <td>将 Unicode 转换为字符串</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">indexOf()</code></td>
+      <td>返回字符串中检索指定字符第一次出现的位置</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lastIndexOf()</code></td>
+      <td>返回字符串中检索指定字符最后一次出现的位置</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">localeCompare()</code></td>
+      <td>用本地特定的顺序来比较两个字符串</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">match()</code></td>
+      <td>找到一个或多个正则表达式的匹配</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">replace()</code></td>
+      <td>替换与正则表达式匹配的子串</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">search()</code></td>
+      <td>检索与正则表达式相匹配的值</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">slice()</code></td>
+      <td>提取字符串的片断，并在新的字符串中返回被提取的部分</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">split()</code></td>
+      <td>把字符串分割为子字符串数组</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">substr()</code></td>
+      <td>从起始索引号提取字符串中指定数目的字符</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">substring()</code></td>
+      <td>提取字符串中两个指定的索引号之间的字符</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">toLocaleLowerCase()</code></td>
+      <td>根据主机的语言环境把字符串转换为小写，只有几种语言（如土耳其语）具有地方特有的大小写映射</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">toLocaleUpperCase()</code></td>
+      <td>根据主机的语言环境把字符串转换为大写，只有几种语言（如土耳其语）具有地方特有的大小写映射</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">toLowerCase()</code></td>
+      <td>把字符串转换为小写</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">toString()</code></td>
+      <td>返回字符串对象值</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">toUpperCase()</code></td>
+      <td>把字符串转换为大写</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">trim()</code></td>
+      <td>移除字符串首尾空白</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">valueOf()</code></td>
+      <td>返回某个字符串对象的原始值</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="计算">计算</h2>
+
+<h3 id="数值计算">数值计算</h3>
+<ul>
+  <li>通用计算符:加减乘除<code class="language-plaintext highlighter-rouge">+-*/</code>,幂级数<code class="language-plaintext highlighter-rouge">1.1**1.2</code>,取余<code class="language-plaintext highlighter-rouge">2%3</code>,括号<code class="language-plaintext highlighter-rouge">()</code><br />
+<code class="language-plaintext highlighter-rouge">i++ i-- ++i --i</code>, 连加/减在变量后面的，返回值是变量原来的数值<br />
+<code class="language-plaintext highlighter-rouge">= += -= *= /= %=</code>也有</li>
+  <li>逻辑运算<code class="language-plaintext highlighter-rouge">== != &lt; &gt; &gt;= &lt;=</code><br />
+<code class="language-plaintext highlighter-rouge">===</code>	绝对等于（值和类型均相等）<br />
+<code class="language-plaintext highlighter-rouge">!==</code>	 不绝对等于（值和类型有一个不相等，或两个都不相等
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x=5
+5
+//值相同，类型不同
+x == "5"
+true
+x === "5"
+false
+</code></pre></div>    </div>
+  </li>
+  <li>连接<code class="language-plaintext highlighter-rouge">"hello"+"world"</code></li>
+</ul>
+
+<h2 id="对象">对象</h2>
+<p>使用<code class="language-plaintext highlighter-rouge">{key:value}</code>定义，使用<code class="language-plaintext highlighter-rouge">var.key</code>调用<br />
+对象中也可以有方法，使用<code class="language-plaintext highlighter-rouge">var.fun()</code>调用</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a={name:"xiaoming",age:15}
+window.alert(a.age)
+</code></pre></div></div>
+
+<h2 id="条件">条件</h2>
+<h3 id="if">if</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (condition)
+{
+    当条件为 true 时执行的代码
+}
+//
+if (condition)
+{
+    当条件为 true 时执行的代码
+}
+else
+{
+    当条件不为 true 时执行的代码
+}
+//
+if (condition1)
+{
+    当条件 1 为 true 时执行的代码
+}
+else if (condition2)
+{
+    当条件 2 为 true 时执行的代码
+}
+else
+{
+  当条件 1 和 条件 2 都不为 true 时执行的代码
+}
+</code></pre></div></div>
+
+<h3 id="switch">switch</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>switch(n)
+{
+    case 1:
+        执行代码块 1
+        break;
+    case 2:
+        执行代码块 2
+        break;
+    default:
+        与 case 1 和 case 2 不同时执行的代码
+}
+</code></pre></div></div>
+
+<h2 id="循环">循环</h2>
+<h3 id="for">for</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for (语句 1; 语句 2; 语句 3)
+{
+    被执行的代码块
+}
+</code></pre></div></div>
+
+<ul>
+  <li>语句1,3可省略,但是分号不能省略</li>
+  <li>语句 1 （代码块）开始前执行, 可省略</li>
+  <li>语句 2 定义运行循环（代码块）的条件</li>
+  <li>语句 3 在循环（代码块）已被执行之后执行,可省略</li>
+</ul>
+
+<p>实例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for (var i=0; i&lt;5; i++)
+{
+      x=x + "该数字为 " + i + "&lt;br&gt;";
+}
+</code></pre></div></div>
+<h3 id="for-in">for in</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a="hello world"
+for ( x in a)
+{
+    //此时x以此为0,1,2,...,10
+    alert(x)
+}
+//当a为数组时, x仍是0,1,2,...,
+//因此可以这样调用数组中的值
+a=Array(123,456,"hello",345);
+for ( x in a)
+{
+    alert(a[x])
+}
+</code></pre></div></div>
+
+<h3 id="while">while</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while (条件)
+{
+    需要执行的代码
+}
+</code></pre></div></div>
+
+<h3 id="do-while">do while</h3>
+<p>至少执行一次</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>do
+{
+    需要执行的代码
+}
+while (条件);
+</code></pre></div></div>
+
+<h3 id="break-跳出其他用法-continue-下一个循环">break 跳出&amp;其他用法, continue 下一个循环</h3>
+<p><strong>continue仅用于进入下一个循环</strong><br />
+<strong>break还可以用于跳出其他带有标签的代码块,例如switch</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function hello(a)
+{
+      return a &gt; 5
+}
+
+// 在代码前面label: 这样标记即可
+test:
+{
+      a=3
+      if ( hello(a) )
+      {
+            break test
+      }
+      alert(a)
+}
+</code></pre></div></div>
+
+<h2 id="函数">函数</h2>
+
+<h3 id="定义-1">定义</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function myfun()
+{
+    window.alert("hello world")
+}
+</code></pre></div></div>
+<h3 id="调用">调用</h3>
+<ul>
+  <li>可以直接在<code class="language-plaintext highlighter-rouge">script</code>里面调用<code class="language-plaintext highlighter-rouge">&lt;script&gt;myfun()&lt;/script&gt;</code>
+<strong>需要先定义后使用</strong></li>
+  <li>用html方式调用,<strong>可以先调用后定义</strong>,难道是先执行javascript在解释html的原因?
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;button onclick="myfun()"&gt;call fun&lt;/button&gt;
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="参数和返回值">参数和返回值</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function myfun(a,b)
+{
+    c=a+" "+b;
+    window.alert(c);
+    return c;
+};
+
+d=myfun('hello','world');
+</code></pre></div></div>
+
+<h3 id="内置函数">内置函数</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//返回时间
+Date()
+</code></pre></div></div>
+
+<h4 id="时间函数">时间函数</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>方法</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>getDate()</td>
+      <td>从 Date 对象返回一个月中的某一天 (1 ~ 31)。</td>
+    </tr>
+    <tr>
+      <td>getDay()</td>
+      <td>从 Date 对象返回一周中的某一天 (0 ~ 6)。</td>
+    </tr>
+    <tr>
+      <td>getFullYear()</td>
+      <td>从 Date 对象以四位数字返回年份。</td>
+    </tr>
+    <tr>
+      <td>getHours()</td>
+      <td>返回 Date 对象的小时 (0 ~ 23)。</td>
+    </tr>
+    <tr>
+      <td>getMilliseconds()</td>
+      <td>返回 Date 对象的毫秒(0 ~ 999)。</td>
+    </tr>
+    <tr>
+      <td>getMinutes()</td>
+      <td>返回 Date 对象的分钟 (0 ~ 59)。</td>
+    </tr>
+    <tr>
+      <td>getMonth()</td>
+      <td>从 Date 对象返回月份 (0 ~ 11)。</td>
+    </tr>
+    <tr>
+      <td>getSeconds()</td>
+      <td>返回 Date 对象的秒数 (0 ~ 59)。</td>
+    </tr>
+    <tr>
+      <td>getTime()</td>
+      <td>返回 1970 年 1 月 1 日至今的毫秒数。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="正则表达式略">正则表达式[略]</h2>
+
+<p><a href="https://www.runoob.com/js/js-regexp.html">JavaScript 正则表达式</a></p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/05/02/cloudflare/">使用cloudflare加速博客访问/免费搭建谷歌镜像</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/07/17/clash/">Linux使用clash</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

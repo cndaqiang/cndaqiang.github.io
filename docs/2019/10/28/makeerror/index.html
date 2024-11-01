@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>[挖坑]程序编译运行报错</title>
+    <meta name="description" content="写程序编译报的错误">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2019/10/28/makeerror/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>[挖坑]程序编译运行报错</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-10-28
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Fortran" title="Category: Fortran" rel="category">Fortran</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a-->
+        <a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a>&nbsp;
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>&nbsp;
+    
+        <!--a href="/tag/#mpif90" title="Tag: mpif90" rel="tag">mpif90</a-->
+        <a href="/tag/#mpif90" title="Tag: mpif90" rel="tag">mpif90</a>&nbsp;
+    
+        <!--a href="/tag/#gfortran" title="Tag: gfortran" rel="tag">gfortran</a-->
+        <a href="/tag/#gfortran" title="Tag: gfortran" rel="tag">gfortran</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#编译错误" id="markdown-toc-编译错误">编译错误</a>    <ul>
+      <li><a href="#undefined-symbols-or-mpi_allreduceqwmake_未定义的引用" id="markdown-toc-undefined-symbols-or-mpi_allreduceqwmake_未定义的引用"><code class="language-plaintext highlighter-rouge">Undefined symbols</code> or <code class="language-plaintext highlighter-rouge">‘mpi_allreduceqwmake_’未定义的引用</code></a></li>
+      <li><a href="#there-is-no-specific-subroutine-for-the-generic-mpi_allreduce-" id="markdown-toc-there-is-no-specific-subroutine-for-the-generic-mpi_allreduce-"><code class="language-plaintext highlighter-rouge">There is no specific subroutine for the generic 'mpi_allreduce' </code></a></li>
+      <li><a href="#invalid-character" id="markdown-toc-invalid-character"><code class="language-plaintext highlighter-rouge">Invalid character</code></a></li>
+      <li><a href="#error-incompatible-ranks-0-and-1-in-assignment-at-1" id="markdown-toc-error-incompatible-ranks-0-and-1-in-assignment-at-1"><code class="language-plaintext highlighter-rouge">Error: Incompatible ranks 0 and 1 in assignment at (1)</code></a></li>
+      <li><a href="#全角字符不识别各种报错" id="markdown-toc-全角字符不识别各种报错">全角字符不识别各种报错</a></li>
+      <li><a href="#编译器混用报错" id="markdown-toc-编译器混用报错">编译器混用报错</a></li>
+      <li><a href="#unclassifiable-statement-变量名写错" id="markdown-toc-unclassifiable-statement-变量名写错"><code class="language-plaintext highlighter-rouge">Unclassifiable statement</code> 变量名写错</a></li>
+      <li><a href="#syntax-error-found-end-of-statement-" id="markdown-toc-syntax-error-found-end-of-statement-"><code class="language-plaintext highlighter-rouge">Syntax error, found END-OF-STATEMENT </code></a></li>
+      <li><a href="#f文件长度有限制" id="markdown-toc-f文件长度有限制"><code class="language-plaintext highlighter-rouge">.f</code>文件长度有限制</a></li>
+      <li><a href="#file-not-recognized-file-truncated" id="markdown-toc-file-not-recognized-file-truncated"><code class="language-plaintext highlighter-rouge">file not recognized: File truncated</code></a></li>
+      <li><a href="#configure-error-something-wrong-with-ldflags-lusrlocaloptrubylib" id="markdown-toc-configure-error-something-wrong-with-ldflags-lusrlocaloptrubylib"><code class="language-plaintext highlighter-rouge">configure: error: something wrong with LDFLAGS="-L/usr/local/opt/ruby/lib"</code></a></li>
+      <li><a href="#implicit-declaration-of-function-bi_imvcopy-is-invalid-in-c99" id="markdown-toc-implicit-declaration-of-function-bi_imvcopy-is-invalid-in-c99"><code class="language-plaintext highlighter-rouge">implicit declaration of function 'BI_imvcopy' is invalid in C99</code></a></li>
+      <li><a href="#ld-cannot-find--lstdc" id="markdown-toc-ld-cannot-find--lstdc"><code class="language-plaintext highlighter-rouge">ld: cannot find -lstdc++</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#运行报错" id="markdown-toc-运行报错">运行报错</a>    <ul>
+      <li><a href="#error-while-loading-shared-libraries-liblapackso-cannot-open-shared-object-file-no-such-file-or-directory" id="markdown-toc-error-while-loading-shared-libraries-liblapackso-cannot-open-shared-object-file-no-such-file-or-directory"><code class="language-plaintext highlighter-rouge">error while loading shared libraries: liblapack.so: cannot open shared object file: No such file or directory</code></a></li>
+      <li><a href="#free-invalid-next-size-normal-double-free-or-corruption--prev-" id="markdown-toc-free-invalid-next-size-normal-double-free-or-corruption--prev-"><code class="language-plaintext highlighter-rouge">free(): invalid next size (normal)</code>, <code class="language-plaintext highlighter-rouge">double free or corruption ( prev) </code></a></li>
+      <li><a href="#-error-in-q_epsilon2x-corrupted-size-vs-prev_size-0x0000000003595a70-" id="markdown-toc--error-in-q_epsilon2x-corrupted-size-vs-prev_size-0x0000000003595a70-"><code class="language-plaintext highlighter-rouge">*** Error in </code>q_epsilon2.x’: corrupted size vs. prev_size: 0x0000000003595a70 ***`</a></li>
+      <li><a href="#能跑完但free-invalid-next-size-normal" id="markdown-toc-能跑完但free-invalid-next-size-normal">能跑完,但<code class="language-plaintext highlighter-rouge">free(): invalid next size (normal)</code></a></li>
+      <li><a href="#forrtl-severe-174-sigsegv-segmentation-fault-occurred" id="markdown-toc-forrtl-severe-174-sigsegv-segmentation-fault-occurred">forrtl: severe (174): SIGSEGV, segmentation fault occurred</a></li>
+    </ul>
+  </li>
+  <li><a href="#scalapack-运行报错" id="markdown-toc-scalapack-运行报错">SCALAPACK 运行报错</a>    <ul>
+      <li><a href="#pblas-error-illegal-程序退出" id="markdown-toc-pblas-error-illegal-程序退出"><code class="language-plaintext highlighter-rouge">PBLAS ERROR 'Illegal </code>，程序退出</a></li>
+      <li><a href="#on-entry-to-pdgetri-parameter-number----8-had-an-illegal-value程序返回错误代码" id="markdown-toc-on-entry-to-pdgetri-parameter-number----8-had-an-illegal-value程序返回错误代码"><code class="language-plaintext highlighter-rouge">On entry to PDGETRI parameter number    8 had an illegal value</code>，程序返回错误代码</a></li>
+      <li><a href="#program-received-signal-sigsegv-segmentation-fault---invalid-memory-reference" id="markdown-toc-program-received-signal-sigsegv-segmentation-fault---invalid-memory-reference"><code class="language-plaintext highlighter-rouge">Program received signal SIGSEGV: Segmentation fault - invalid memory reference</code></a></li>
+      <li><a href="#program-received-signal-sigfpe-floating-point-exception---erroneous-arithmetic-operation" id="markdown-toc-program-received-signal-sigfpe-floating-point-exception---erroneous-arithmetic-operation"><code class="language-plaintext highlighter-rouge">Program received signal SIGFPE: Floating-point exception - erroneous arithmetic operation.</code></a></li>
+      <li><a href="#管理节点运行正常作业节点编译运行报错" id="markdown-toc-管理节点运行正常作业节点编译运行报错">管理节点运行正常，作业节点编译运行报错</a></li>
+    </ul>
+  </li>
+  <li><a href="#语法报错" id="markdown-toc-语法报错">语法报错</a>    <ul>
+      <li><a href="#重复定义" id="markdown-toc-重复定义">重复定义</a></li>
+    </ul>
+  </li>
+  <li><a href="#intel运行报错" id="markdown-toc-intel运行报错">Intel运行报错</a>    <ul>
+      <li><a href="#format的格式不合理" id="markdown-toc-format的格式不合理">format的格式不合理</a></li>
+    </ul>
+  </li>
+  <li><a href="#c语言" id="markdown-toc-c语言">C语言</a>    <ul>
+      <li><a href="#icc-for循环报错" id="markdown-toc-icc-for循环报错">icc for循环报错</a></li>
+    </ul>
+  </li>
+  <li><a href="#srun提示" id="markdown-toc-srun提示">srun提示</a>    <ul>
+      <li><a href="#bus-error-core-dumped" id="markdown-toc-bus-error-core-dumped">Bus error (core dumped)</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>写程序编译报的错误</p>
+
+<h2 id="编译错误">编译错误</h2>
+<h3 id="undefined-symbols-or-mpi_allreduceqwmake_未定义的引用"><code class="language-plaintext highlighter-rouge">Undefined symbols</code> or <code class="language-plaintext highlighter-rouge">‘mpi_allreduceqwmake_’未定义的引用</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Undefined symbols for architecture x86_64:
+  "_showhy_", referenced from:
+      _MAIN__ in benchmark.o
+ld: symbol(s) not found for architecture x86_64
+collect2: error: ld returned 1 exit status
+make: *** [test] Error 1
+</code></pre></div></div>
+<p>再如</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ibs/lapack.f:40482: more undefined references to `lsame_' follow
+ld: libsiestaLAPACK.a(lapack.o): in function `zupmtr_':
+/home/cndaqiang/work/TTTT/Normal-Final/TTTT-1.2.1/Src/Libs/lapack.f:40492: undefined reference to `xerbla_'
+</code></pre></div></div>
+
+<p>现象: 在benchmark.o中调用的<code class="language-plaintext highlighter-rouge">showhy</code>,没有此函数<br />
+原因:</p>
+<ul>
+  <li>没有USE <code class="language-plaintext highlighter-rouge">showhy</code>所在的模块</li>
+  <li>函数名错误</li>
+  <li>Makefile中没有添加<code class="language-plaintext highlighter-rouge">showhy</code>所在的模块为对象Obj <code class="language-plaintext highlighter-rouge">Obj+= xxx.o</code></li>
+  <li>数学库掉错了，找不到相应函数</li>
+  <li>Makefile写错，漏写<code class="language-plaintext highlighter-rouge">.o</code>,如此效果，是仅把这一个module编译成一个程序，自然少mian，少定义
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~/code/O-TDAP/Obj$ make td_compute_jump
+mpif90 -c -g -O2 -ffree-line-length-none   `FoX/FoX-config --fcflags` -DMPI -DFC_HAVE_FLUSH -DFC_HAVE_ABORT -DTDAP  /home/cndaqiang/code/O-TDAP/Src/td_compute_jump.F90 
+cc   td_compute_jump.o   -o td_compute_jump
+/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o: In function `_start':
+(.text+0x20): undefined reference to `main'
+td_compute_jump.o: In function `__td_compute_jump_MOD_hp':
+/home/cndaqiang/code/O-TDAP/Src/td_compute_jump.F90:549: undefined reference to `__sys_MOD_die'
+td_compute_jump.o: In function `__td_compute_jump_MOD_enpy':
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="there-is-no-specific-subroutine-for-the-generic-mpi_allreduce-"><code class="language-plaintext highlighter-rouge">There is no specific subroutine for the generic 'mpi_allreduce' </code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+), eo(:,:,1), no_u, MPI_DOUBLE_PRECISION, MPI_SUM,MPI_Comm_World, MPIerror)
+                                                                           1
+Error: There is no specific subroutine for the generic 'mpi_allreduce' at (1)
+arch.make:62: recipe for target 'TDEvolve.o' failed
+</code></pre></div></div>
+<p>现象: 没有合适的<code class="language-plaintext highlighter-rouge">mpi_allreduce</code><br />
+可能原因: 输入参数不一致，send和recv的数组长度不同，找不到合适的interface<br />
+<strong>应该用<code class="language-plaintext highlighter-rouge">A(1,1)</code>给buffer的起始地址</strong><br />
+解决:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CALL MPI_REDUCE( eo_tmp, eo, no_u*nspin*nkpnt, MPI_DOUBLE_PRECISION, MPI_SUM,0,MPI_Comm_World, MPIerror)
+改为
+CALL MPI_REDUCE( eo_tmp(1,1,1), eo(1,1,1), no_u*nspin*nkpnt, MPI_DOUBLE_PRECISION, MPI_SUM,0,MPI_Comm_World, MPIerror)
+</code></pre></div></div>
+
+<h3 id="invalid-character"><code class="language-plaintext highlighter-rouge">Invalid character</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      COMPLEX(dp), INTENT(IN,OUT) :: M(no_u, no_l)
+                  1
+Error: Invalid character in name at (1)
+</code></pre></div></div>
+<p>现象: 非法字符<br />
+原因:</p>
+<ul>
+  <li>前后语法有问题</li>
+  <li>该行过长，超过编译器限制
+解决:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#改为
+COMPLEX(dp), INTENT(INOUT) :: M(no_u, no_l)
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="error-incompatible-ranks-0-and-1-in-assignment-at-1"><code class="language-plaintext highlighter-rouge">Error: Incompatible ranks 0 and 1 in assignment at (1)</code></h3>
+<p>维度不同赋值造成，<strong>即使　INTEGER :: a(1),b,也不可以b=a 或a=b</strong><br />
+如<code class="language-plaintext highlighter-rouge">UBOUND(a)</code>返回的是一维数组,即使只有一个元素也是数组,也不可以直接返回给整数,即<code class="language-plaintext highlighter-rouge">b=UBOUND(a)</code>也会这样报错<br />
+可以采用</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INTEGER     :: a(N),bound(1),i
+bound=UBOUND(a)
+i=bound(1)
+i=UBOUND(a,1)
+</code></pre></div></div>
+
+<h3 id="全角字符不识别各种报错">全角字符不识别各种报错</h3>
+<p><code class="language-plaintext highlighter-rouge">. .</code> 与 <code class="language-plaintext highlighter-rouge">.　.</code>是不一样的空格，后面的空格和变量相连，程序都无法识别。</p>
+
+<h3 id="编译器混用报错">编译器混用报错</h3>
+<p>使用gcc8编译了一个,又使用gcc4来调用这个.o</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    USE kinds, ONLY :  DP
+       1
+Fatal Error: Cannot read module file ‘kinds.mod’ opened at (1), because it was created by a different version of GNU Fortran
+compilation terminated.
+</code></pre></div></div>
+<h3 id="unclassifiable-statement-变量名写错"><code class="language-plaintext highlighter-rouge">Unclassifiable statement</code> 变量名写错</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+             Haxu(1,:,:) =  Haxu(1,:,:) + DBLE (H_scissor_pdos(:,:,ispin,IK))
+            1
+Error: Unclassifiable statement at (1)
+</code></pre></div></div>
+
+<p>以及<code class="language-plaintext highlighter-rouge">: Syntax error in argument list</code> 把错误的变量名当成了函数报错</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>             Haux(1,:,:) =  Haxu(1,:,:) + DBLE (H_scissor_pdos(:,:,ispin,IK))
+                                  1
+Error: Syntax error in argument list at (1)
+</code></pre></div></div>
+
+<h3 id="syntax-error-found-end-of-statement-"><code class="language-plaintext highlighter-rouge">Syntax error, found END-OF-STATEMENT </code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>td_init.f90(213): error #5082: Syntax error, found END-OF-STATEMENT when expecting one of: ( % . = =&gt;
+         DALLOCATE(natweight(nat))
+</code></pre></div></div>
+<p>语法错误, 应为<code class="language-plaintext highlighter-rouge">ALLOCATE(natweight(nat))</code></p>
+
+<h3 id="f文件长度有限制"><code class="language-plaintext highlighter-rouge">.f</code>文件长度有限制</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>             Haux(2,:,:) =  Haux(2,:,:) + AIMAG(H_scissor_pdos(:,:,ispin,IK))
+                                                                        1
+Error: Expected array subscript at (1)
+</code></pre></div></div>
+<p>换行即可, <strong>续行符不能是中文句号</strong></p>
+
+<h3 id="file-not-recognized-file-truncated"><code class="language-plaintext highlighter-rouge">file not recognized: File truncated</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/cndaqiang/code/intel/lib/libelpa.a: file not recognized: File truncated
+</code></pre></div></div>
+<p>因为libelpa.a没有正常产生, 不仅是库文件,<code class="language-plaintext highlighter-rouge">.o</code>的临时文件编译失败也会报错. 一种错误产生方式</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>touch libelpa.a
+</code></pre></div></div>
+
+<h3 id="configure-error-something-wrong-with-ldflags-lusrlocaloptrubylib"><code class="language-plaintext highlighter-rouge">configure: error: something wrong with LDFLAGS="-L/usr/local/opt/ruby/lib"</code></h3>
+<p>环境变量设置了<code class="language-plaintext highlighter-rouge">LDFLAGS="-L/usr/local/opt/ruby/lib"</code>,而实际上没有该目录. 
+修改环境变量,或者<code class="language-plaintext highlighter-rouge">unset LDFLAGS</code>后继续编译</p>
+
+<h3 id="implicit-declaration-of-function-bi_imvcopy-is-invalid-in-c99"><code class="language-plaintext highlighter-rouge">implicit declaration of function 'BI_imvcopy' is invalid in C99</code></h3>
+<p>Mac的clang默认不允许编译c文件时,不声明直接调用. 解决方案可以把声明补上,或者添加到头文件. 但是这是一个程序包,总不能一个个文件去改,因此添加编译参数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-Wno-implicit-function-declaration
+</code></pre></div></div>
+
+<h3 id="ld-cannot-find--lstdc"><code class="language-plaintext highlighter-rouge">ld: cannot find -lstdc++</code></h3>
+<ul>
+  <li>ld报错缺少库,有可能是动态库的目录没有配置对,此时通过<code class="language-plaintext highlighter-rouge">export LD_LIBRARY_PATH=ADDPATH:$LD_LIBRARY_PATH</code>,可以解决.</li>
+  <li>但如果还是报错找不到,就只能说是库和编译器不兼容. 此时通过制定合适(新)的编译器解决,如<code class="language-plaintext highlighter-rouge">export PATH=/share/apps/gcc-10.2.0/bin:$PATH</code></li>
+  <li>上面的情况出现在调用icc的时候, 配合gcc10和gcc12都可以</li>
+</ul>
+
+<h2 id="运行报错">运行报错</h2>
+
+<h3 id="error-while-loading-shared-libraries-liblapackso-cannot-open-shared-object-file-no-such-file-or-directory"><code class="language-plaintext highlighter-rouge">error while loading shared libraries: liblapack.so: cannot open shared object file: No such file or directory</code></h3>
+<p>因为编译的时候使用动态库绝对地址. 运行时没有添加到动态库地址</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MATHDIR=/home/users/cndaqiang/soft/gnu4-mvapich/math/lib
+BLAS_LIBS=$(MATHDIR)/libblas.so
+</code></pre></div></div>
+<p>解决方案</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LD_LIBRARY_PATH=/home/users/cndaqiang/soft/gnu4-mvapich/math/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+
+<p>类似的报错,注意找不到的是<strong>libimf.so</strong>,而不是<code class="language-plaintext highlighter-rouge">icx-lto.so</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@login002 q-e-qe-6.6]$ ifort test.f90
+ld: /share/apps/intel-oneAPI-2021/compiler/2022.0.2/linux/bin/intel64/../../bin/intel64/../../lib/icx-lto.so: 加载插件程序时发生错误: libimf.so: 无法打开共享对象文件: 没有那个文件或目录
+</code></pre></div></div>
+<p>通过<code class="language-plaintext highlighter-rouge">ldd</code>可以进一步寻找,哪些都没有找到</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[chendq@login002 q-e-qe-6.6]$ ldd /share/apps/intel-oneAPI-2021/compiler/2022.0.2/linux/bin/intel64/../../bin/intel64/../../lib/icx-lto.so
+	linux-vdso.so.1 =&gt;  (0x00007ffd247f6000)
+	librt.so.1 =&gt; /lib64/librt.so.1 (0x00002b69ceaac000)
+	libdl.so.2 =&gt; /lib64/libdl.so.2 (0x00002b69cecb4000)
+	libimf.so =&gt; not found
+	libm.so.6 =&gt; /lib64/libm.so.6 (0x00002b69ceeb8000)
+	libz.so.1 =&gt; /lib64/libz.so.1 (0x00002b69cf1ba000)
+	libsvml.so =&gt; not found
+	libirng.so =&gt; not found
+	libgcc_s.so.1 =&gt; /lib64/libgcc_s.so.1 (0x00002b69cf3d0000)
+	libintlc.so.5 =&gt; not found
+	libpthread.so.0 =&gt; /lib64/libpthread.so.0 (0x00002b69cf5e6000)
+	libc.so.6 =&gt; /lib64/libc.so.6 (0x00002b69cf802000)
+	/lib64/ld-linux-x86-64.so.2 (0x00002b69cb50a000)
+</code></pre></div></div>
+
+<h3 id="free-invalid-next-size-normal-double-free-or-corruption--prev-"><code class="language-plaintext highlighter-rouge">free(): invalid next size (normal)</code>, <code class="language-plaintext highlighter-rouge">double free or corruption ( prev) </code></h3>
+<p>ALLOCATED的数组,ALLOCATE分配的空间为0,或者调用时超过数组的范围</p>
+
+<h3 id="-error-in-q_epsilon2x-corrupted-size-vs-prev_size-0x0000000003595a70-"><code class="language-plaintext highlighter-rouge">*** Error in </code>q_epsilon2.x’: corrupted size vs. prev_size: 0x0000000003595a70 ***`</h3>
+<p>通过提示找到报错行是<code class="language-plaintext highlighter-rouge">DEALLOCATE ( focc, wgrid, STAT=ierr)</code>命令. <br />
+是调用<code class="language-plaintext highlighter-rouge">focc</code>时,使用了<code class="language-plaintext highlighter-rouge">focc(0)</code>,访问了不属于<code class="language-plaintext highlighter-rouge">focc</code>的区域,所以在deallocate focc时,检测到的尺寸和allocate时不同<br />
+解决办法: 合理设置输入参数/代码,focc从focc(1)开始访问</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>forrtl: severe (174): SIGSEGV, segmentation fault occurred
+Image              PC                Routine            Line        Source
+q_epsilon2.x       0000000000C222DD  Unknown               Unknown  Unknown
+libpthread-2.17.s  00002AF0FDC06630  Unknown               Unknown  Unknown
+libc-2.17.so       00002AF0FE19AAEC  cfree                 Unknown  Unknown
+q_epsilon2.x       0000000000C6409D  Unknown               Unknown  Unknown
+q_epsilon2.x       00000000004081AF  MAIN__                    140  epsilon.f90
+q_epsilon2.x       000000000040671E  Unknown               Unknown  Unknown
+libc-2.17.so       00002AF0FE137555  __libc_start_main     Unknown  Unknown
+q_epsilon2.x       0000000000406629  Unknown               Unknown  Unknown
+</code></pre></div></div>
+
+<h3 id="能跑完但free-invalid-next-size-normal">能跑完,但<code class="language-plaintext highlighter-rouge">free(): invalid next size (normal)</code></h3>
+<p>调用变量超过数组维度,不会终止,但是会有错误抛出.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>free(): invalid next size (normal)
+Aborted (core dumped)
+</code></pre></div></div>
+
+<h3 id="forrtl-severe-174-sigsegv-segmentation-fault-occurred">forrtl: severe (174): SIGSEGV, segmentation fault occurred</h3>
+<ul>
+  <li>调用函数时少参数造成</li>
+  <li>使用了某个变量,但是没有定义这个变量,也没有<strong><code class="language-plaintext highlighter-rouge">USE MODULE , ONLY 这个变量</code></strong></li>
+  <li><strong>记得在代码里写上<code class="language-plaintext highlighter-rouge">IMPLICIT NONE</code></strong>
+_ 原因很多</li>
+</ul>
+
+<h2 id="scalapack-运行报错">SCALAPACK 运行报错</h2>
+<h3 id="pblas-error-illegal-程序退出"><code class="language-plaintext highlighter-rouge">PBLAS ERROR 'Illegal </code>，程序退出</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PBLAS ERROR 'Illegal JY = 0, JY must be at least 1'
+from {0,0}, pnum=0, Contxt=1, in routine 'PDSWAP'.
+
+PBLAS ERROR 'Parameter number 9 had an illegal value'
+from {0,0}, pnum=0, Contxt=1, in routine 'PDSWAP'.
+
+{0,0}, pnum=0, Contxt=1, killed other procs, exiting with error #-9.
+
+PBLAS ERROR 'Illegal JY = 0, JY must be at least 1'
+from {0,1}, pnum=1, Contxt=1, in routine 'PDSWAP'.
+
+PBLAS ERROR 'Parameter number 9 had an illegal value'
+from {0,1}, pnum=1, Contxt=1, in routine 'PDSWAP'.
+..........
+..........
+--------------------------------------------------------------------------
+MPI_ABORT was invoked on rank 1 in communicator MPI_COMM_WORLD 
+with errorcode -9.
+
+NOTE: invoking MPI_ABORT causes Open MPI to kill all MPI processes.
+You may or may not see output from other processes, depending on
+exactly when Open MPI kills them.
+--------------------------------------------------------------------------
+</code></pre></div></div>
+<p>现象: 第9个参数非法<br />
+原因:</p>
+<ul>
+  <li>漏写了参数，输入参数数不足</li>
+</ul>
+
+<h3 id="on-entry-to-pdgetri-parameter-number----8-had-an-illegal-value程序返回错误代码"><code class="language-plaintext highlighter-rouge">On entry to PDGETRI parameter number    8 had an illegal value</code>，程序返回错误代码</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{    0,    1}:  On entry to PDGETRI parameter number    8 had an illegal value
+{    0,    2}:  On entry to PDGETRI parameter number    8 had an illegal value
+{    0,    3}:  On entry to PDGETRI parameter number    8 had an illegal value
+{    0,    4}:  On entry to PDGETRI parameter number    8 had an illegal value
+</code></pre></div></div>
+<p>现象: 第8个参数非法<br />
+原因:</p>
+<ul>
+  <li>参数类型写错</li>
+  <li>该位置放错变量</li>
+  <li>数组的长度太小，查说明书，看代码里面对变量的具体要求</li>
+</ul>
+
+<h3 id="program-received-signal-sigsegv-segmentation-fault---invalid-memory-reference"><code class="language-plaintext highlighter-rouge">Program received signal SIGSEGV: Segmentation fault - invalid memory reference</code></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x11201d882
+#1  0x11201e03e
+#2  0x7fff644cab5c
+#0  0x104a69882
+#1  0x104a6a03e
+#2  0x7fff644cab5c
+#3  0x102ba4397
+#3  0x11015b397
+</code></pre></div></div>
+
+<p>现象: 内存问题<br />
+原因: <strong>太多了!!!</strong></p>
+<ul>
+  <li>数据内容不合理，导致程序根据错的信息访问了不可访问的内存<br />
+如未运行<code class="language-plaintext highlighter-rouge">PZGBTRF</code>就运行<code class="language-plaintext highlighter-rouge">PZGBTRI</code></li>
+  <li>函数输入参数未指定维度，进行调用，如下面的错误二</li>
+</ul>
+
+<p>错误二:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#错误
+   real(8),intent(in) :: A(:,:) ! Banded atrix to be inverted.
+   write(*,*) A(1,1)
+Program received signal SIGSEGV: Segmentation fault - invalid memory reference.
+
+Backtrace for this error:
+#0  0x101f0f882
+#1  0x101f1003e
+#2  0x7fff644cab5c
+#3  0x101fe4090
+#4  0x101fe6724
+#5  0x101fe726e
+#6  0x101ef0cba
+#7  0x101ef0889
+#8  0x101ef7aae
+make: *** [test] Segmentation fault: 11
+make: *** Deleting file `test'
+
+#正常
+   real(8),intent(in) :: A(N,N) ! Banded atrix to be inverted.
+   write(*,*) A(1,1)
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>forrtl: severe (174): SIGSEGV, segmentation fault occurred
+Image              PC                Routine            Line        Source
+tdpp.x             0000000000BB4CCA  Unknown               Unknown  Unknown
+libpthread-2.27.s  00001486CF202890  Unknown               Unknown  Unknown
+libc-2.27.so       00001486CEAF898D  cfree                 Unknown  Unknown
+tdpp.x             0000000000BF80F3  Unknown               Unknown  Unknown
+tdpp.x             000000000046B7A8  td_psi_k_mp_test_          80  td_psi_k.f90
+tdpp.x             00000000004079F1  MAIN__                    350  postproc.f90
+</code></pre></div></div>
+
+<p>虽然报错在第80行<code class="language-plaintext highlighter-rouge"> IF(ALLOCATED(mill_mesh))  DEALLOCATE( mill_mesh ), 但是实际错误时, ALLOCATE/定义的数组是</code>ALLOCATE( mill_mesh(dfftp%nr1x,dfftp%nr2x,dfftp%nr3x) )<code class="language-plaintext highlighter-rouge">, 中途用负下标修改了矩阵内容,结果修改时不报错, DEALLOCATE反而报错了, 如过不执行</code>DEALLOCATE<code class="language-plaintext highlighter-rouge">会出现下面的警告，改成</code>ALLOCATE( mill_mesh(-n1x:n1x,-n2x:n2x,-n3x:n3x) )`解决</p>
+
+<h3 id="program-received-signal-sigfpe-floating-point-exception---erroneous-arithmetic-operation"><code class="language-plaintext highlighter-rouge">Program received signal SIGFPE: Floating-point exception - erroneous arithmetic operation.</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Program received signal SIGFPE: Floating-point exception - erroneous arithmetic operation.
+
+Backtrace for this error:
+#0  0x109c9e882
+#1  0x109c9f03e
+#2  0x7fff644cab5c
+#3  0x109931dba
+#4  0x1098902a8
+#5  0x10988e7d8
+#6  0x1099909ae
+--------------------------------------------------------------------------
+mpirun noticed that process rank 0 with PID 15152 on node cndaqiangdeMac exited on signal 8 (Floating point exception: 8).
+--------------------------------------------------------------------------
+</code></pre></div></div>
+<p>现象: 内存问题<br />
+原因: <strong>未知</strong><br />
+解决:</p>
+<ul>
+  <li>使用ifort编译</li>
+  <li>把gfortran的优化参数由<code class="language-plaintext highlighter-rouge">-O2</code>改为<code class="language-plaintext highlighter-rouge">-O</code>或<code class="language-plaintext highlighter-rouge">-O0</code></li>
+</ul>
+
+<h3 id="管理节点运行正常作业节点编译运行报错">管理节点运行正常，作业节点编译运行报错</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error while loading shared libraries: libibmad.so.5: cannot open shared object file: No such file or directory
+</code></pre></div></div>
+<p>还有缺<code class="language-plaintext highlighter-rouge">ibraries: libosmcomp.so.4</code></p>
+
+<p>现象: 计算节点和管理节点不同缺少库<br />
+原因:计算节点少安装<br />
+解决:</p>
+<ul>
+  <li>在计算节点安装</li>
+  <li>[非管理员],通过<code class="language-plaintext highlighter-rouge">whereis libibmad.so.5</code>找到缺少的库复制到计算个管理节点共享的目录，添加目录到环境变量<code class="language-plaintext highlighter-rouge">LD_LIBRARY_PATH</code></li>
+</ul>
+
+<h2 id="语法报错">语法报错</h2>
+<h3 id="重复定义">重复定义</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> #6418: This name has already been assigned a data type.   [ET2]
+   et2 = 0.0_DP
+---^
+</code></pre></div></div>
+<p>错误代码</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">   </span><span class="kt">REAL</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">et2</span><span class="p">(</span><span class="n">nbnd</span><span class="p">,</span><span class="n">nkstot</span><span class="p">)</span><span class="w">
+   </span><span class="kt">COMPLEX</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">c_il</span><span class="p">(</span><span class="n">nbnd</span><span class="p">,</span><span class="n">nbnd</span><span class="p">,</span><span class="n">nkstot</span><span class="p">)</span><span class="w">
+   </span><span class="c1">!</span><span class="w">
+   </span><span class="kt">INTEGER</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">lbnd</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span><span class="c1">! counter on tdks</span><span class="w">
+   </span><span class="n">ik</span><span class="p">,</span><span class="w">   </span><span class="p">&amp;</span><span class="c1">! counter on k points   !因为这个地方忘记删除逗号和续行符了</span><span class="w">
+   </span><span class="c1">!</span><span class="w">
+   </span><span class="n">et2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0_DP</span><span class="w">
+</span></code></pre></div></div>
+<h2 id="intel运行报错">Intel运行报错</h2>
+<h3 id="format的格式不合理">format的格式不合理</h3>
+<p>下面报错给出了error的具体位置</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>forrtl: severe (61): format/variable-type mismatch, unit 6, file /home/NFS/work/tdpw/TDAPW-intel-2020-12-06/Manypw/input_0.out
+Image              PC                Routine            Line        Source
+tdpw.x             0000000000E7497B  Unknown               Unknown  Unknown
+tdpw.x             0000000000ED711A  Unknown               Unknown  Unknown
+tdpw.x             0000000000ED4C6E  Unknown               Unknown  Unknown
+tdpw.x             0000000000459718  td_psi_a_psi_             202  td_psi_r_psi.f90
+tdpw.x             0000000000453B44  td_analysis_md_           312  td_analysis.f90
+tdpw.x             0000000000407652  run_pwscf_                225  run_pwscf.f90
+tdpw.x             0000000000406B01  MAIN__                    115  tdpw.f90
+tdpw.x             0000000000406882  Unknown               Unknown  Unknown
+libc-2.27.so       000014E8FDF2DB97  __libc_start_main     Unknown  Unknown
+tdpw.x             000000000040676A  Unknown               Unknown  Unknown
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   RANK 1 PID 65033 RUNNING AT mommint
+=   KILLED BY SIGNAL: 9 (Killed)
+===================================================================================
+</code></pre></div></div>
+
+<h2 id="c语言">C语言</h2>
+<h3 id="icc-for循环报错">icc for循环报错</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>icc main.c
+main.c(11): error: expected an expression
+      for ( int i=0; i&lt;5; i++)
+            ^
+</code></pre></div></div>
+<p>C规范太低导致,提高版本解决</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>icc -std=c11 main.c
+</code></pre></div></div>
+
+<h2 id="srun提示">srun提示</h2>
+<h3 id="bus-error-core-dumped">Bus error (core dumped)</h3>
+<p>正在执行的程序被删除/覆盖了</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>srun: error: comput123: tasks 29,31: Bus error
+srun: error: comput157: tasks 38,40,42-44,46,50,52-54,56,60-62,64,66,68,70-71: Bus error
+srun: error: comput123: tasks 0,4,15,25: Bus error (core dumped)
+srun: error: comput123: tasks 1-3,5-10,12-14,16-24,26-28,30,32,34-35: Bus error
+srun: error: comput157: tasks 37,39,41,45,47,51,55,57,59,63,65,67,69: Bus error
+srun: error: comput123: task 33: Bus error (core dumped)
+srun: error: comput123: task 11: Bus error (core dumped)
+srun: error: comput157: tasks 36,48: Bus error (core dumped)
+srun: error: comput157: task 58: Bus error (core dumped)
+srun: error: comput157: task 49: Bus error (core dumped)
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/05/01/ubuntu22.04-gpu/">单GPU节点配置计算环境
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/02/08/mac-dev/">macOS配置开发环境 
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/09/19/Centos7-CC19/">从0搭建Centos7 计算集群</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/10/28/Frp/">Frp内网穿透</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Fortran/C函数库的使用</title>
+    <meta name="description" content="shell+gfortran">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2019/02/01/Fortran-lib/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Fortran/C函数库的使用</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-02-01
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Fortran" title="Category: Fortran" rel="category">Fortran</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#静态库a-动态库so" id="markdown-toc-静态库a-动态库so">静态库(.a) 动态库(.so)</a>    <ul>
+      <li><a href="#lib静态库a" id="markdown-toc-lib静态库a">lib静态库(.a)</a>        <ul>
+          <li><a href="#编译使用" id="markdown-toc-编译使用">编译使用</a></li>
+        </ul>
+      </li>
+      <li><a href="#dll动态库so" id="markdown-toc-dll动态库so">dll动态库(.so)</a>        <ul>
+          <li><a href="#编译使用-1" id="markdown-toc-编译使用-1">编译使用</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#第三方库调用" id="markdown-toc-第三方库调用">第三方库调用</a>    <ul>
+      <li><a href="#背景知识" id="markdown-toc-背景知识">背景知识</a></li>
+      <li><a href="#调用语法" id="markdown-toc-调用语法">调用语法</a></li>
+      <li><a href="#lapack使用示例" id="markdown-toc-lapack使用示例">lapack使用示例</a></li>
+      <li><a href="#其他" id="markdown-toc-其他">其他</a></li>
+    </ul>
+  </li>
+  <li><a href="#工具" id="markdown-toc-工具">工具</a></li>
+</ul>
+
+<p>shell+gfortran</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://v.fcode.cn/">《Fortran实用编程》系列视频教程 - Fortran Coder 研讨团队</a><br /></p>
+
+<h2 id="静态库a-动态库so">静态库(.a) 动态库(.so)</h2>
+
+<p><strong>不同的编译器编译的函数库不能混用</strong></p>
+
+<p>编译<code class="language-plaintext highlighter-rouge">.o</code>时不用链接其他需要的对象</p>
+
+<p>编译主程序时，要在后面放上所有的对象</p>
+
+<p>如</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#-c编译，不用编入其他.o
+m_matradd.o : m_matradd.f90 $(MPI)
+               $(FC) $(FCFLAGE) -c -o $@  m_matradd.f90
+
+#生成主程序，要所有对象
+test:$(TEST) $(MPI)
+        $(FC)  $(FCFLAGE)   -o $@  $(TEST) $(MPI)  $(LIB)
+</code></pre></div></div>
+
+<h3 id="lib静态库a">lib静态库(.a)</h3>
+
+<p>静态库 lib，实际上，就是 obj 文件的集合。可以认为是打包在一起的若干 obj</p>
+
+<h4 id="编译使用">编译使用</h4>
+
+<p>因此它的编译过程是：</p>
+
+<ul>
+  <li>
+    <p>1.编译子程序源代码，得到若干 obj 文件 <code class="language-plaintext highlighter-rouge">gfortran -c xxx.f90 xx.f90</code></p>
+  </li>
+  <li>
+    <p>2.打包这些 obj 文件，成为 lib 静态库<code class="language-plaintext highlighter-rouge">ar rv xxx.a xxx.o xxxx.o xx.o </code></p>
+  </li>
+</ul>
+
+<p>它的使用过程也比较简单：</p>
+
+<p>编译主程序（或其他子程序），链接时，带上 lib 文件即可，与多文件编译链接一样</p>
+
+<p>使用静态库编译的程序，运行时不依赖静态库</p>
+
+<p>当然，有些编译器提供动态库，还是动态链接的,用<code class="language-plaintext highlighter-rouge">ldd a.out</code>可以查看，所以编译程序时，要设置好编译器的动态库,如<code class="language-plaintext highlighter-rouge">export LD_LIBRARY_PATH=/home/cndaqiang/soft/gcc-4.8.4/lib64:$LD_LIBRARY_PATH</code></p>
+
+<p>示例</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@DESKTOP-N5I64SI:lib$ ls
+fun.f90  main.f90  sub2.f90
+cndaqiang@DESKTOP-N5I64SI:lib$ cat main.f90
+program main
+      use fun
+      implicit none
+      call sub1()
+      call sub2()
+end program main
+cndaqiang@DESKTOP-N5I64SI:lib$ cat fun.f90
+Module fun
+      implicit none
+      contains
+              subroutine sub1()
+                      implicit none
+                      write(*,*) "this is sub1"
+              end subroutine sub1
+end module fun
+cndaqiang@DESKTOP-N5I64SI:lib$ cat sub2.f90
+subroutine sub2()
+      implicit none
+      write(*,*) "this is sub2"
+end subroutine sub2
+cndaqiang@DESKTOP-N5I64SI:lib$ gf -c fun.f90 sub2.f90
+cndaqiang@DESKTOP-N5I64SI:lib$ ls
+fun.f90  fun.mod  fun.o  main.f90  sub2.f90  sub2.o
+!此处的fun.mod类似与为module的描述文件，需要有，才能正常调用module
+cndaqiang@DESKTOP-N5I64SI:lib$ ar rv libfun.a fun.o sub2.o  !打包成静态库
+ar: creating libfun.a
+a - fun.o
+a - sub2.o
+cndaqiang@DESKTOP-N5I64SI:lib$ gf main.f90 libfun.a    !链接程序和静态库
+cndaqiang@DESKTOP-N5I64SI:lib$ ./a.out
+ this is sub1
+ this is sub2
+ cndaqiang@DESKTOP-N5I64SI:lib$ ldd a.out
+        linux-vdso.so.1 (0x00007ffffd2af000)
+        libgfortran.so.4 =&gt; /usr/lib/x86_64-linux-gnu/libgfortran.so.4 (0x00007fbecf830000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007fbecf430000)
+        libquadmath.so.0 =&gt; /usr/lib/x86_64-linux-gnu/libquadmath.so.0 (0x00007fbecf1f0000)
+        libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007fbecee50000)
+        libgcc_s.so.1 =&gt; /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007fbecec30000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007fbed0000000)
+</code></pre></div></div>
+
+<h3 id="dll动态库so">dll动态库(.so)</h3>
+
+<p>动态库 DLL，<strong>实际上也是可执行文件</strong>，所以intel的mkl库里面，<code class="language-plaintext highlighter-rouge">.so</code>文件是绿色可执行属性</p>
+
+<p>只不过dll通常没有主程序而已,它必须由其他程序调用后才能运行</p>
+
+<p>程序运行时，需要能找到动态库如<code class="language-plaintext highlighter-rouge">export LD_LIBRARY_PATH=动态库目录:$LD_LIBRARY_PATH</code></p>
+
+<h4 id="编译使用-1">编译使用</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> gfortran fun.f90 sub2.f90 -shared -fPIC -o libfun.so
+ gfortran main.f90 libfun.so   !动态库要放到后面
+</code></pre></div></div>
+
+<p>示例</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@DESKTOP-N5I64SI:lib$ ls
+fun.f90  main.f90  sub2.f90
+cndaqiang@DESKTOP-N5I64SI:lib$ gf fun.f90 sub2.f90 -shared -fPIC -o libfun.so
+cndaqiang@DESKTOP-N5I64SI:lib$ ls
+fun.f90  fun.mod  libfun.so  main.f90  sub2.f90
+cndaqiang@DESKTOP-N5I64SI:lib$ gfortran libfun.so main.f90 !把动态库写前面报错
+/tmp/ccD5FpLx.o: In function `MAIN__':
+main.f90:(.text+0x5): undefined reference to `__fun_MOD_sub1'
+main.f90:(.text+0xf): undefined reference to `sub2_'
+collect2: error: ld returned 1 exit status
+cndaqiang@DESKTOP-N5I64SI:lib$ gfortran  main.f90 libfun.so
+cndaqiang@DESKTOP-N5I64SI:lib$ ./a.out !找不到动态库目录报错
+./a.out: error while loading shared libraries: libfun.so: cannot open shared object file: No such file or directory
+cndaqiang@DESKTOP-N5I64SI:lib$ export LD_LIBRARY_PATH=$(pwd):$LD_LIBRARY_PATH
+cndaqiang@DESKTOP-N5I64SI:lib$ ./a.out
+ this is sub1
+ this is sub2
+ cndaqiang@DESKTOP-N5I64SI:lib$ ldd a.out
+        linux-vdso.so.1 (0x00007fffd4cca000)
+        libfun.so =&gt; /mnt/c/Storage/code/siesta/siesta4_1/siesta-4.1-b1/Fortran/bianyi/lib/libfun.so
+(0x00007f6274330000)
+        libgfortran.so.4 =&gt; /usr/lib/x86_64-linux-gnu/libgfortran.so.4 (0x00007f6273f50000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f6273b50000)
+        libquadmath.so.0 =&gt; /usr/lib/x86_64-linux-gnu/libquadmath.so.0 (0x00007f6273910000)
+        libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007f6273570000)
+        libgcc_s.so.1 =&gt; /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f6273350000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f6274800000)
+</code></pre></div></div>
+
+<h2 id="第三方库调用">第三方库调用</h2>
+
+<h3 id="背景知识">背景知识</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>内容</th>
+      <th>通常所在的文件夹</th>
+      <th>开源函数库</th>
+      <th>闭源函数库</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>文档</td>
+      <td>document，docs，help，notes，man</td>
+      <td>可能提供</td>
+      <td>提供</td>
+    </tr>
+    <tr>
+      <td><strong>源代码</strong></td>
+      <td>src，source，code</td>
+      <td>**提供 **</td>
+      <td>不提供</td>
+    </tr>
+    <tr>
+      <td>接口文件</td>
+      <td>src，source，interface</td>
+      <td>不提供</td>
+      <td>可能提供</td>
+    </tr>
+    <tr>
+      <td><strong>包含文件</strong></td>
+      <td><strong>include</strong></td>
+      <td><strong>不提供(编译后可能产生)，使用<code class="language-plaintext highlighter-rouge">-Iinclude所在目录</code>告诉编译器</strong></td>
+      <td>提供</td>
+    </tr>
+    <tr>
+      <td><strong>库文件</strong></td>
+      <td><strong>lib</strong></td>
+      <td><strong>不提供(编译后产生)</strong></td>
+      <td>提供</td>
+    </tr>
+    <tr>
+      <td>范例代码</td>
+      <td>test，examples，demo</td>
+      <td>可能提供</td>
+      <td>可能提供</td>
+    </tr>
+    <tr>
+      <td>其他工具</td>
+      <td>bin，tools</td>
+      <td>可能提供</td>
+      <td>可能提供</td>
+    </tr>
+    <tr>
+      <td>运行时库</td>
+      <td>redist</td>
+      <td>不提供</td>
+      <td>可能提供</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>例fftw编译后的目录</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@managernode fftw-3.3.4]$ ls
+bin  include  lib  share
+[cndaqiang@managernode fftw-3.3.4]$ ls include/
+fftw3.f  fftw3.f03  fftw3.h  fftw3l.f03  fftw3l-mpi.f03  fftw3-mpi.f03  fftw3-mpi.h  fftw3q.f03
+[cndaqiang@managernode fftw-3.3.4]$ ls lib
+libfftw3.a  libfftw3.la  libfftw3_mpi.a  libfftw3_mpi.la  pkgconfig
+</code></pre></div></div>
+
+<p>所有函数库的使用，归纳起来，总是离不开这么五个内容</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>include      （mod）   编译时用到</th>
+      <th>lib   链接时用到</th>
+      <th>DLL   Runtime Library   运行时用到</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>路径（在哪儿？）   一般只设置一次</td>
+      <td>把include的路径  告知编译器</td>
+      <td>把lib的路径   告知编译器</td>
+      <td>把运行时库加入   系统目录   或path目录</td>
+    </tr>
+    <tr>
+      <td>文件名（哪个？）   一般每个工程都需要设置</td>
+      <td>把所需的   module告知编译器</td>
+      <td>把所需的lib文件   告知编译器</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="调用语法">调用语法</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gfortran main.f90 xxx.o libxxx.so libxxx.a
+gfortran main.f90 -lxxx -L/libxxx.so(a)所在目录
+</code></pre></div></div>
+
+<p>详细参数</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">-I</code>    指明头文件路径(include)</li>
+  <li><code class="language-plaintext highlighter-rouge">-L</code>    link的时候，gcc会先从-L指定的目录去找库<br />也可将库所在目录加入环境变量<code class="language-plaintext highlighter-rouge">LD_LIBRARY_PATH</code>(<strong>运行时目录，动态库目录</strong>，编译运行都需要加入环境变量)或<code class="language-plaintext highlighter-rouge">LIBRARY_PATH</code>(<strong>静态库目录，编译时加入环境变量就行</strong>)，就不用写<code class="language-plaintext highlighter-rouge">-L目录</code>了</li>
+  <li><code class="language-plaintext highlighter-rouge">-l</code>    指定库文件（库名）<br />注：<code class="language-plaintext highlighter-rouge">-l </code>紧接着就是库名，比如库文件名是libm.so的库名是m：<strong>把库文件名的头lib和尾.so去掉就是库名</strong></li>
+  <li>第三方库如果编译<code class="language-plaintext highlighter-rouge">sudo make</code>默认到系统，则安装在<code class="language-plaintext highlighter-rouge">/usr/local/</code> 如<code class="language-plaintext highlighter-rouge">LIBCURL_CFLAGS='-I/usr/local/include'  LIBCURL_LIBS='-L/usr/local/lib -lcurl'</code></li>
+</ul>
+
+<p>编译vasp时，调用函数库示例</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o \
+           /opt/fftw/lib/libfftw3_mpi.a
+OBJECTS    +=-L$(MKL_PATH) -lmkl_intel_lp64 
+INCS       =-I/opt/fftw/include
+!略
+MKLROOT    = /opt/intel/compilers_and_libraries/linux/mkl
+FC         = mpif90  -m64 -I${MKLROOT}/include
+FCL        = mpif90  -m64 -I${MKLROOT}/include
+</code></pre></div></div>
+
+<p>编译siesta时</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BLAS_LIBS=/home/chendq/soft/scalapack/lib/librefblas.a
+LAPACK_LIBS=/home/chendq/soft/scalapack/lib/libreflapack.a
+BLACS_LIBS=
+SCALAPACK_LIBS=/home/chendq/soft/scalapack/lib/libscalapack.a
+COMP_LIBS=dc_lapack.a
+
+NETCDF_LIBS=
+NETCDF_INTERFACE=
+
+LIBS=$(SCALAPACK_LIBS) $(BLACS_LIBS) $(LAPACK_LIBS) $(BLAS_LIBS) $(NETCDF_LIBS)
+
+!省略
+
+siesta: check-siesta what version $(MPI_INTERFACE) $(FDF) $(WXML) $(XMLPARSER) \
+                $(COMP_LIBS) $(ALL_OBJS) 
+	$(FC) -o siesta \
+	       $(LDFLAGS) $(ALL_OBJS) $(FDF) $(WXML) $(XMLPARSER) $(MPI_INTERFACE)\
+               $(COMP_LIBS) $(FoX_LIBS) $(LIBS) 
+#
+</code></pre></div></div>
+
+<h3 id="lapack使用示例">lapack使用示例</h3>
+
+<p>主程序所在文件lib.f90</p>
+
+<p>我们传入了 A 和 b 及其大小，最终得到的结果覆盖了b，注意：<strong>A也被覆盖了</strong>因此我们用aa保存原来的值</p>
+
+<p>最后，我们用 matmul 来检查计算是否正确。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program libla
+        implicit none
+        real:: a(3,3),aa(3,3),b(3)
+        integer::v(3),iflag
+        external sgesv !调用lapack中的sgesv用来求解 Ax=b 的线性方程组
+
+        aa=reshape([2.0,1.0,3.0,6.0,2.0,-4.0,4.0,3.0,-6.0],[3,3])
+        a=aa
+        b=[998.0,999.0,1000.0]
+        write(*,*) 'a=',a
+        write(*,*) 'b=',b
+        call sgesv(3,1,a,3,v,b,3,iflag)
+        write(*,*) 'solve=',b
+        write(*,*) matmul(aa,reshape(b,[3,1]))
+end program libla
+</code></pre></div></div>
+
+<p>编译，运行</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@managernode fortran]$ ls $MATHDIR
+librefblas.a  libreflapack.a  libscalapack.a  libtmg.a
+[cndaqiang@managernode fortran]$ gfortran lib.f90 -lreflapack  -lrefblas -L$MATHDIR
+!lapack依赖于blas库，需要调用两个库
+[cndaqiang@managernode fortran]$ ./a.out 
+ a=   2.00000000       1.00000000       3.00000000       6.00000000       2.00000000      -4.00000000       4.00000000       3.00000000      -6.00000000    
+ b=   998.000000       999.000000       1000.00000    
+ solve=   599.599915      -220.119980       279.879974    
+   997.999878       998.999878       1000.00000  
+</code></pre></div></div>
+
+<p>关于lapack函数的更多介绍<a href="/web/file/2019/lapack.pdf">Lapack中文帮助手册手册.pdf</a></p>
+
+<h3 id="其他">其他</h3>
+
+<p><strong><code class="language-plaintext highlighter-rouge">-库名 -L目录 </code>当静态库动态库同时存在时，vasp默认调用的是动态库</strong></p>
+
+<p>makefile</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MKL_PATH   =/opt/intel/compilers_and_libraries_2018.3.222/linux/mkl/lib/intel64/
+BLAS       =-L$(MKL_PATH) -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread
+LAPACK     =-L$(MKL_PATH) -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread
+BLACS      =-L$(MKL_PATH) -lmkl_blacs_intelmpi_lp64
+SCALAPACK  = $(MKL_PATH)/libmkl_scalapack_lp64.a $(BLACS)
+</code></pre></div></div>
+
+<p>编译结果</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@managernode bin]$ ldd vasp_std 
+	linux-vdso.so.1 =&gt;  (0x00007ffe978fd000)
+	libmkl_intel_lp64.so =&gt; /opt/intel/compilers_and_libraries_2018.3.222/linux/mkl/lib/intel64_lin/libmkl_intel_lp64.so (0x00002b38d432e000)
+	libmkl_cdft_core.so =&gt; /opt/intel/compilers_and_libraries_2018.3.222/linux/mkl/lib/intel64_lin/libmkl_cdft_core.so (0x00002b38d4e41000)
+	libmkl_scalapack_lp64.so =&gt; 
+</code></pre></div></div>
+
+<h2 id="工具">工具</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">readelf -c fun.a</code>查看静态库包含的函数模块</li>
+  <li><code class="language-plaintext highlighter-rouge">objdump -t fun.so</code>查看静态库内容</li>
+  <li><code class="language-plaintext highlighter-rouge">ar -x fun.a</code>解压静态库为<code class="language-plaintext highlighter-rouge">.o</code>文件</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:/tmp$ !cat
+cat fun.f90
+SUBROUTINE cndaqiang_fun()
+
+END SUBROUTINE
+
+MODULE cndaqiang_mod
+        INTEGER :: cndaqiang_i
+        REAL :: cndaqiang_r
+        CONTAINS
+                SUBROUTINE cndaqiang_mfun()
+                END SUBROUTINE
+END MODULE
+#编译
+(python37) cndaqiang@mommint:/tmp$ gfortran -c fun.f90 -o fun.o
+#打包静态库
+(python37) cndaqiang@mommint:/tmp$ ar rv fun.a fun.o
+r - fun.o
+#查看静态库包含的内容
+(python37) cndaqiang@mommint:/tmp$ readelf -c fun.a
+Index of archive fun.a: (4 entries, 0x72 bytes in the symbol table)
+Contents of binary fun.a(fun.o) at offset 0xca
+	__cndaqiang_mod_MOD_cndaqiang_i
+	__cndaqiang_mod_MOD_cndaqiang_r
+	__cndaqiang_mod_MOD_cndaqiang_mfun
+	cndaqiang_fun_
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:/tmp$ gfortran fun.o -shared -fPIC -o fun.so
+(python37) cndaqiang@mommint:/tmp$ readelf -c fun.so
+readelf: Error: File fun.so is not an archive so its index cannot be displayed.
+(python37) cndaqiang@mommint:/tmp$ objdump -t fun.so
+
+fun.so:     file format elf64-x86-64
+
+SYMBOL TABLE:
+00000000000001c8 l    d  .note.gnu.build-id	0000000000000000 .note.gnu.build-id
+00000000000001f0 l    d  .gnu.hash	0000000000000000 .gnu.hash
+0000000000000238 l    d  .dynsym	0000000000000000 .dynsym
+0000000000000388 l    d  .dynstr	0000000000000000 .dynstr
+0000000000000478 l    d  .rela.dyn	0000000000000000 .rela.dyn
+0000000000000520 l    d  .init	0000000000000000 .init
+0000000000000540 l    d  .plt	0000000000000000 .plt
+0000000000000550 l    d  .plt.got	0000000000000000 .plt.got
+0000000000000560 l    d  .text	0000000000000000 .text
+0000000000000648 l    d  .fini	0000000000000000 .fini
+0000000000000654 l    d  .eh_frame_hdr	0000000000000000 .eh_frame_hdr
+0000000000000680 l    d  .eh_frame	0000000000000000 .eh_frame
+0000000000200e80 l    d  .init_array	0000000000000000 .init_array
+0000000000200e88 l    d  .fini_array	0000000000000000 .fini_array
+0000000000200e90 l    d  .dynamic	0000000000000000 .dynamic
+0000000000200fe0 l    d  .got	0000000000000000 .got
+0000000000201000 l    d  .got.plt	0000000000000000 .got.plt
+0000000000201018 l    d  .data	0000000000000000 .data
+0000000000201020 l    d  .bss	0000000000000000 .bss
+0000000000000000 l    d  .comment	0000000000000000 .comment
+0000000000000000 l    df *ABS*	0000000000000000 crtstuff.c
+0000000000000560 l     F .text	0000000000000000 deregister_tm_clones
+00000000000005a0 l     F .text	0000000000000000 register_tm_clones
+00000000000005f0 l     F .text	0000000000000000 __do_global_dtors_aux
+0000000000201020 l     O .bss	0000000000000001 completed.7698
+0000000000200e88 l     O .fini_array	0000000000000000 __do_global_dtors_aux_fini_array_entry
+0000000000000630 l     F .text	0000000000000000 frame_dummy
+0000000000200e80 l     O .init_array	0000000000000000 __frame_dummy_init_array_entry
+0000000000000000 l    df *ABS*	0000000000000000 fun.f90
+0000000000000000 l    df *ABS*	0000000000000000 crtstuff.c
+0000000000000718 l     O .eh_frame	0000000000000000 __FRAME_END__
+0000000000000000 l    df *ABS*	0000000000000000
+0000000000200e90 l     O .dynamic	0000000000000000 _DYNAMIC
+0000000000201020 l     O .data	0000000000000000 __TMC_END__
+0000000000201018 l     O .data	0000000000000000 __dso_handle
+0000000000000654 l       .eh_frame_hdr	0000000000000000 __GNU_EH_FRAME_HDR
+0000000000201000 l     O .got.plt	0000000000000000 _GLOBAL_OFFSET_TABLE_
+0000000000000000  w      *UND*	0000000000000000 __cxa_finalize
+0000000000000641 g     F .text	0000000000000007 cndaqiang_fun_
+0000000000201028 g     O .bss	0000000000000004 __cndaqiang_mod_MOD_cndaqiang_r
+0000000000000520 g     F .init	0000000000000000 _init
+0000000000000000  w      *UND*	0000000000000000 _ITM_registerTMCloneTable
+0000000000201024 g     O .bss	0000000000000004 __cndaqiang_mod_MOD_cndaqiang_i
+0000000000000000  w      *UND*	0000000000000000 _ITM_deregisterTMCloneTable
+0000000000201020 g       .bss	0000000000000000 __bss_start
+0000000000000648 g     F .fini	0000000000000000 _fini
+0000000000201020 g       .data	0000000000000000 _edata
+0000000000201030 g       .bss	0000000000000000 _end
+000000000000063a g     F .text	0000000000000007 __cndaqiang_mod_MOD_cndaqiang_mfun
+0000000000000000  w      *UND*	0000000000000000 __gmon_start__
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/02/01/Fortran-debug/">Fortran 的gdb命令行调试</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/02/27/mpi-fortran/">MPI编程入门(Fortran)</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

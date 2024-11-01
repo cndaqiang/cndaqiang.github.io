@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>文件处理: grep sed awk sort echo printf tail cut paste</title>
+    <meta name="description" content="原文正则表达式 文件格式处理 shell脚本gitbook访问太慢了，重置文章到此处">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2018/10/17/deal-file/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>文件处理: grep sed awk sort echo printf tail cut paste</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-10-17
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Linux" title="Tag: Linux" rel="tag">Linux</a-->
+        <a href="/tag/#Linux" title="Tag: Linux" rel="tag">Linux</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#正则表达式" id="markdown-toc-正则表达式">正则表达式</a>    <ul>
+      <li><a href="#定义" id="markdown-toc-定义">定义</a></li>
+      <li><a href="#语系对正规表示法的影响" id="markdown-toc-语系对正规表示法的影响">语系对正规表示法的影响</a></li>
+      <li><a href="#语法" id="markdown-toc-语法">语法</a>        <ul>
+          <li><a href="#特殊符号" id="markdown-toc-特殊符号">特殊符号</a></li>
+          <li><a href="#基础正规表示法字符汇整" id="markdown-toc-基础正规表示法字符汇整">基础正规表示法字符汇整</a></li>
+          <li><a href="#高级用法" id="markdown-toc-高级用法">高级用法</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#grep" id="markdown-toc-grep">grep</a>    <ul>
+      <li><a href="#语法-1" id="markdown-toc-语法-1">语法</a></li>
+      <li><a href="#示例" id="markdown-toc-示例">示例</a></li>
+      <li><a href="#grep支持正则表达式" id="markdown-toc-grep支持正则表达式">grep支持正则表达式</a>        <ul>
+          <li><a href="#特殊符号示例" id="markdown-toc-特殊符号示例">特殊符号示例</a></li>
+          <li><a href="#基础正规表示法字符示例" id="markdown-toc-基础正规表示法字符示例">基础正规表示法字符示例</a></li>
+          <li><a href="#egrep示例高级语法" id="markdown-toc-egrep示例高级语法">egrep示例高级语法</a></li>
+          <li><a href="#读取代码配置跳过行首为的注释行" id="markdown-toc-读取代码配置跳过行首为的注释行">读取代码/配置跳过行首为<code class="language-plaintext highlighter-rouge">#</code>的注释行</a></li>
+          <li><a href="#提取空格开头首单词确定的行" id="markdown-toc-提取空格开头首单词确定的行">提取空格开头,首单词确定的行</a></li>
+          <li><a href="#更多示例" id="markdown-toc-更多示例">更多示例</a></li>
+        </ul>
+      </li>
+      <li><a href="#报错" id="markdown-toc-报错">报错</a>        <ul>
+          <li><a href="#binary-file-result-matches" id="markdown-toc-binary-file-result-matches"><code class="language-plaintext highlighter-rouge">Binary file result matches</code></a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#sed" id="markdown-toc-sed">sed</a>    <ul>
+      <li><a href="#功能" id="markdown-toc-功能">功能</a></li>
+      <li><a href="#语法-2" id="markdown-toc-语法-2">语法</a></li>
+      <li><a href="#示例-1" id="markdown-toc-示例-1">示例</a>        <ul>
+          <li><a href="#选项参数" id="markdown-toc-选项参数">选项参数</a></li>
+          <li><a href="#动作参数" id="markdown-toc-动作参数">动作参数</a></li>
+        </ul>
+      </li>
+      <li><a href="#其他" id="markdown-toc-其他">其他</a></li>
+      <li><a href="#问题" id="markdown-toc-问题">问题</a>        <ul>
+          <li><a href="#推荐使用双引号" id="markdown-toc-推荐使用双引号">推荐使用双引号</a></li>
+          <li><a href="#修改某个文件" id="markdown-toc-修改某个文件">修改某个文件</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#awk" id="markdown-toc-awk">awk</a>    <ul>
+      <li><a href="#功能-1" id="markdown-toc-功能-1">功能</a></li>
+      <li><a href="#语法-3" id="markdown-toc-语法-3">语法</a>        <ul>
+          <li><a href="#特殊字符转移" id="markdown-toc-特殊字符转移">特殊字符转移</a></li>
+          <li><a href="#变量" id="markdown-toc-变量">变量</a></li>
+          <li><a href="#条件类型" id="markdown-toc-条件类型">条件类型</a></li>
+          <li><a href="#动作" id="markdown-toc-动作">动作</a></li>
+        </ul>
+      </li>
+      <li><a href="#示例-2" id="markdown-toc-示例-2">示例</a></li>
+      <li><a href="#补充应用" id="markdown-toc-补充应用">补充应用</a>        <ul>
+          <li><a href="#awk求和求平均" id="markdown-toc-awk求和求平均">awk求和求平均</a></li>
+          <li><a href="#awk中使用系统变量" id="markdown-toc-awk中使用系统变量">awk中使用系统变量</a></li>
+          <li><a href="#awk-print单引号" id="markdown-toc-awk-print单引号">awk print单引号</a></li>
+          <li><a href="#awk的计算功能" id="markdown-toc-awk的计算功能">awk的计算功能</a></li>
+          <li><a href="#awk在每行内添加值" id="markdown-toc-awk在每行内添加值">awk在每行内添加值</a></li>
+          <li><a href="#awk将修改结果直接写入文件" id="markdown-toc-awk将修改结果直接写入文件">awk将修改结果直接写入文件</a></li>
+          <li><a href="#awk提取特定文字之间的内容" id="markdown-toc-awk提取特定文字之间的内容">awk提取特定文字之间的内容</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#echo" id="markdown-toc-echo">echo</a>    <ul>
+      <li><a href="#功能-2" id="markdown-toc-功能-2">功能</a></li>
+      <li><a href="#语法-4" id="markdown-toc-语法-4">语法</a></li>
+      <li><a href="#示例-3" id="markdown-toc-示例-3">示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#printf" id="markdown-toc-printf">printf</a>    <ul>
+      <li><a href="#功能-3" id="markdown-toc-功能-3">功能</a></li>
+      <li><a href="#语法-5" id="markdown-toc-语法-5">语法</a></li>
+      <li><a href="#示例-4" id="markdown-toc-示例-4">示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#sort排序" id="markdown-toc-sort排序">sort排序</a></li>
+  <li><a href="#tail" id="markdown-toc-tail">tail</a></li>
+  <li><a href="#cut切文件" id="markdown-toc-cut切文件">cut切文件</a></li>
+  <li><a href="#paste合并文件" id="markdown-toc-paste合并文件">paste合并文件</a></li>
+</ul>
+
+<p>原文<a href="https://legacy.gitbook.com/book/cndaqiang/shell-scrip/details">正则表达式 文件格式处理 shell脚本</a><br />
+gitbook访问太慢了，重置文章到此处</p>
+
+<p><br /><br /><br /></p>
+
+<h2 id="正则表达式">正则表达式</h2>
+<h3 id="定义">定义</h3>
+<p>正则表达式通常被用来检索、替换那些匹配某个模式的文本<br />
+不仅在linux命令中使用,在php,python等语言和notepad++等文本编辑器中也经常用于快速检索某串字符</p>
+<h3 id="语系对正规表示法的影响">语系对正规表示法的影响</h3>
+<p>不同语系的编码数据并不相同,如</p>
+<ul>
+  <li><strong>LANG=C     时：0 1 2 3 4 … A B C D … Z a b c d …z</strong></li>
+  <li>LANG=zh_TW 时：0 1 2 3 4 … a A b B c C d D … z Z</li>
+</ul>
+
+<p>当我们使用[A-Z]提取正则表达式时,对LANG=C提取是A-Z的所有大写字母,而LANG=Zh_TW提取A-Z和a-z<br />
+不过在linux等常用情况都默认是LANG=C语系,我们不用了解太多</p>
+
+<h3 id="语法">语法</h3>
+<p>先看下具体规则,再对vasp输出文件进行处理</p>
+<h4 id="特殊符号">特殊符号</h4>
+<p>感觉这个不是很常用
+<img src="/uploads/2018/10/regularex/1.png" alt="image.png" /></p>
+
+<h4 id="基础正规表示法字符汇整">基础正规表示法字符汇整</h4>
+<p>这个好记忆,而且好用
+<img src="/uploads/2018/10/regularex/2.png" alt="image.png" /></p>
+
+<h4 id="高级用法">高级用法</h4>
+<p>有点用处<br />
+<strong>注意鸟哥给的示例使用的是<code class="language-plaintext highlighter-rouge">egrap</code>,grep是不支持这些语法的</strong>
+<img src="/uploads/2018/10/regularex/3.png" alt="image.png" /></p>
+
+<h2 id="grep">grep</h2>
+<h3 id="语法-1">语法</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="o">[</span><span class="nt">-acinv</span><span class="o">]</span> <span class="o">[</span><span class="nt">--color</span><span class="o">=</span>auto] <span class="s1">'搜寻字符串'</span> filename
+选项与参数：
+<span class="nt">-a</span> ：将 binary 文件以 text 文件的方式搜寻数据
+<span class="nt">-c</span> ：计算找到 <span class="s1">'搜寻字符串'</span> 的次数
+<span class="nt">-i</span> ：忽略大小写的不同，默认大小写不同
+<span class="nt">-n</span> ：顺便输出行号
+<span class="nt">-v</span> ：反向选择，亦即显示出没有 <span class="s1">'搜寻字符串'</span> 内容的那一行！
+<span class="nt">--color</span><span class="o">=</span>auto ：可以将找到的关键词部分加上颜色的显示喔！
+</code></pre></div></div>
+<h3 id="示例">示例</h3>
+<p>以我用vasp计算时某次结构优化后某OUTCAR为例<br />
+下载地址<a href="https://cndaqiang.github.io/web/file/2018/sf10/linux/OUTCAR">https://cndaqiang.github.io/web/file/2018/sf10/linux/OUTCAR</a><br />
+下载命令</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://cndaqiang.github.io/web/file/2018/sf10/linux/OUTCAR
+</code></pre></div></div>
+<p>使用此OUTCAR文件进行下列示例</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">grep</span> <span class="s2">"E-fermi"</span> OUTCAR
+<span class="c">#搜索计算的费米能级</span>
+ E-fermi :  <span class="nt">-1</span>.7694     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2437     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.6967     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2322     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.7565     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2059     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.8226     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2557     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.5143     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.0949     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.4183     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.0606     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.4229     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.1155     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.4078     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.1161     alpha+bet : <span class="nt">-3</span>.6065
+<span class="nv">$ </span><span class="nb">grep</span> <span class="nt">-c</span> <span class="s2">"E-fermi"</span> OUTCAR
+8
+<span class="nv">$ </span><span class="nb">grep</span> <span class="nt">-ci</span> <span class="s2">"E-fermi"</span> OUTCAR
+8
+<span class="nv">$ </span><span class="nb">grep</span> <span class="nt">-cn</span> <span class="s2">"E-fermi"</span> OUTCAR
+<span class="c">#有参数c时,只输出结果数,不输出结果</span>
+8
+<span class="nv">$ </span><span class="nb">grep</span> <span class="nt">-n</span> <span class="s2">"E-fermi"</span> OUTCAR
+<span class="c">#输出行号</span>
+1956: E-fermi :  <span class="nt">-1</span>.7694     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2437     alpha+bet : <span class="nt">-3</span>.6065
+3601: E-fermi :  <span class="nt">-1</span>.6967     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2322     alpha+bet : <span class="nt">-3</span>.6065
+5451: E-fermi :  <span class="nt">-1</span>.7565     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2059     alpha+bet : <span class="nt">-3</span>.6065
+7351: E-fermi :  <span class="nt">-1</span>.8226     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2557     alpha+bet : <span class="nt">-3</span>.6065
+9201: E-fermi :  <span class="nt">-1</span>.5143     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.0949     alpha+bet : <span class="nt">-3</span>.6065
+10852: E-fermi :  <span class="nt">-1</span>.4183     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.0606     alpha+bet : <span class="nt">-3</span>.6065
+12007: E-fermi :  <span class="nt">-1</span>.4229     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.1155     alpha+bet : <span class="nt">-3</span>.6065
+13113: E-fermi :  <span class="nt">-1</span>.4078     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.1161     alpha+bet : <span class="nt">-3</span>.6065
+</code></pre></div></div>
+<blockquote>
+  <p>因为我结构优化时,驰豫了8次离子步,所以有8个结果</p>
+</blockquote>
+
+<h3 id="grep支持正则表达式">grep支持正则表达式</h3>
+<h4 id="特殊符号示例">特殊符号示例</h4>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">grep</span> <span class="s2">"[:alpha:]-fermi"</span> OUTCAR
+<span class="nb">grep</span>: 字符类的语法是 <span class="o">[[</span>:space:]],而非 <span class="o">[</span>:space:]
+<span class="nv">$ </span><span class="nb">grep</span> <span class="s2">"[[:alpha:]]-fermi"</span> OUTCAR
+ E-fermi :  <span class="nt">-1</span>.7694     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2437     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.6967     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2322     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.7565     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2059     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.8226     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2557     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.5143     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.0949     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.4183     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.0606     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.4229     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.1155     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.4078     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.1161     alpha+bet : <span class="nt">-3</span>.6065
+</code></pre></div></div>
+<h4 id="基础正规表示法字符示例">基础正规表示法字符示例</h4>
+<blockquote>
+  <p>查看最终是否收敛,收敛时,OUTCAR内会有reached required accuracy - stopping structural energy 这句,我们搜索reached<br />我们发现有很多,可以采用以 reached为开头搜索</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">grep</span> <span class="s2">"reached"</span> OUTCAR
+<span class="nt">------------------------</span> aborting loop because EDIFF is reached <span class="nt">----------------------------------------</span>
+<span class="nt">------------------------</span> aborting loop because EDIFF is reached <span class="nt">----------------------------------------</span>
+<span class="nt">------------------------</span> aborting loop because EDIFF is reached <span class="nt">----------------------------------------</span>
+<span class="nt">------------------------</span> aborting loop because EDIFF is reached <span class="nt">----------------------------------------</span>
+<span class="nt">------------------------</span> aborting loop because EDIFF is reached <span class="nt">----------------------------------------</span>
+<span class="nt">------------------------</span> aborting loop because EDIFF is reached <span class="nt">----------------------------------------</span>
+<span class="nt">------------------------</span> aborting loop because EDIFF is reached <span class="nt">----------------------------------------</span>
+<span class="nt">------------------------</span> aborting loop because EDIFF is reached <span class="nt">----------------------------------------</span>
+ reached required accuracy - stopping structural energy minimisation
+ <span class="nv">$ </span><span class="nb">grep</span> <span class="s2">"^ reached"</span> OUTCAR
+ reached required accuracy - stopping structural energy minimisation
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#.表示一定有一个字节</span>
+<span class="nv">$ </span><span class="nb">grep</span> <span class="s2">"^ r.ached"</span> OUTCAR
+ reached required accuracy - stopping structural energy minimisation
+</code></pre></div></div>
+
+<h4 id="egrep示例高级语法">egrep示例高级语法</h4>
+<p>能搜到的太多了,我就只显示行数了,可以看到?(零个或1个)比+(至少1个)搜到的结果多</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>egrep <span class="nt">-c</span> <span class="s2">"[0-9]+"</span> OUTCAR 
+9858
+<span class="nv">$ </span>egrep <span class="nt">-c</span> <span class="s2">"[0-9]?"</span> OUTCAR 
+13956
+</code></pre></div></div>
+
+<h4 id="读取代码配置跳过行首为的注释行">读取代码/配置跳过行首为<code class="language-plaintext highlighter-rouge">#</code>的注释行</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#去除#号开头
+grep StateSaveLocation /etc/slurm-llnl/slurm.conf  | grep -v "^ *#"
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@mommint:/opt# grep StateSaveLocation /etc/slurm-llnl/slurm.conf  | grep -v "^ *#"
+StateSaveLocation=/var/spool/slurm-llnl
+</code></pre></div></div>
+
+<h4 id="提取空格开头首单词确定的行">提取空格开头,首单词确定的行</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) [HUAIROU cndaqiang@login01 0.00015y_y0_0.117_ramdom10k]$grep ^[[:blank:]]*temperature result | head -3
+     temperature           =         106.78531944 K
+     temperature           =         114.58036450 K
+     temperature           =         149.09400799 K
+</code></pre></div></div>
+
+<h4 id="更多示例">更多示例</h4>
+<p>鸟哥给的示例,下载地址<a href="https://cndaqiang.github.io/web/file/2018/sf10/linux/regular_express.txt">https://cndaqiang.github.io/web/file/2018/sf10/linux/regular_express.txt</a><br /></p>
+
+<p><a href="https://github.com/cndaqiang/vasp_scrip/blob/master/grep_OUTCAR.md">grep_OUTCAR</a><br />
+<a href="https://github.com/cndaqiang/vasp_scrip/blob/master/grep_POTCAR.md">grep_POTCAR.md</a>
+<br /><br /><br /></p>
+
+<h3 id="报错">报错</h3>
+<h4 id="binary-file-result-matches"><code class="language-plaintext highlighter-rouge">Binary file result matches</code></h4>
+<p>也许是因为文件太大的原因, 文本文件被识别为二进制文件, 添加<code class="language-plaintext highlighter-rouge">-a</code> 参数</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">-a</code> –text equivalent to –binary-files=text，即让二进制文件等价于文本。<a href="https://www.cnblogs.com/amyzhu/p/11160736.html">grep命令提示”binary file matches **.log”解决方法</a></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) [HUAIROU cndaqiang@login01 edt0.5RunNVE0_nofield]$grep MD result
+Binary file result matches
+(python37) [HUAIROU cndaqiang@login01 edt0.5RunNVE0_nofield]$grep -a MD result  | head -1
+     MD5 check sum: 7de1f3f262afbb95e2ae740af32c06ec
+</code></pre></div></div>
+<h2 id="sed">sed</h2>
+<h3 id="功能">功能</h3>
+<p>对文件增加,替换,删除,插入,打印等命令<br />
+<strong>以行为处理单位</strong></p>
+<h3 id="语法-2">语法</h3>
+<p>sed支持管道语法</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@www ~]## <span class="nb">sed</span> <span class="o">[</span><span class="nt">-nefr</span><span class="o">]</span> <span class="o">[</span>动作] 文件名/管道输入
+选项与参数：
+<span class="nt">-n</span>  ：使用安静<span class="o">(</span>silent<span class="o">)</span>模式。在一般 <span class="nb">sed </span>的用法中，所有来自 STDIN 
+      的数据一般都会被列出到萤幕上。但如果加上 <span class="nt">-n</span> 参数后，则只有经过
+      <span class="nb">sed </span>特殊处理的那一行<span class="o">(</span>或者动作<span class="o">)</span>才会被列出来。
+<span class="nt">-e</span>  ：直接在命令列模式上进行 <span class="nb">sed </span>的动作编辑；
+<span class="nt">-f</span>  ：直接将 <span class="nb">sed </span>的动作写在一个文件内， <span class="nt">-f</span> filename 则可以运行 filename 内的 
+      <span class="nb">sed </span>动作；
+<span class="nt">-r</span>  ：sed 的动作支持的是延伸型正规表示法的语法。<span class="o">(</span>默认是基础正规表示法语法<span class="o">)</span>
+<span class="nt">-i</span>  ：直接修改读取的文件内容，而不是由萤幕输出。
+
+动作说明：  <span class="o">[</span>n1[,n2]]function
+n1, n2 ：不见得会存在，一般代表『选择进行动作的行数』，举例来说，如果我的动作
+         是需要在 10 到 20 行之间进行的，则『 10,20[动作行为] 』
+
+<span class="k">function </span>有底下这些咚咚：
+a   ：新增， a 的后面可以接字串，而这些字串会在新的一行出现<span class="o">(</span>目前的下一行<span class="o">)</span>～
+c   ：取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
+d   ：删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
+i   ：插入， i 的后面可以接字串，而这些字串会在新的一行出现<span class="o">(</span>目前的上一行<span class="o">)</span>；
+p   ：列印，亦即将某个选择的数据印出。通常 p 会与参数 <span class="nb">sed</span> <span class="nt">-n</span> 一起运行～
+s   ：取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配
+      正规表示法！例如 1,20s/old/new/g 就是啦！
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>鸟哥:sed 后面接的动作，请务必以 ‘’ 两个单引号括住喔！</strong></p>
+</blockquote>
+
+<h3 id="示例-1">示例</h3>
+<h4 id="选项参数">选项参数</h4>
+<p><strong>-n</strong>只显示处理的行</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls
+</span>ls.txt  nohup.out  OUTCAR
+<span class="c">#在原来的第2,3行前插入hello</span>
+<span class="nv">$ </span><span class="nb">ls</span> |sed <span class="s1">'2,3ihello'</span>
+ls.txt
+hello
+nohup.out
+hello
+OUTCAR
+<span class="nv">$ </span><span class="nb">ls</span> |sed <span class="nt">-n</span> <span class="s1">'2,3ihello'</span>
+hello
+hello
+</code></pre></div></div>
+<p><strong>-e是默认的,直接输入动作,-f 文件名,从文件中读入动作命令</strong>
+<br /></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#将命令保存到sedfile文件</span>
+<span class="nv">$ </span><span class="nb">echo </span>2,3ihello word <span class="o">&gt;</span>sedfile
+<span class="c">## -f 调用文件</span>
+<span class="nv">$ </span><span class="nb">ls</span> |sed <span class="nt">-f</span> sedfile 
+ls.txt
+hello word
+nohup.out
+hello word
+OUTCAR
+sedfile
+</code></pre></div></div>
+<p><strong>-i 不显示在屏幕上</strong></p>
+<blockquote>
+  <p>鸟哥:这功能非常有帮助！举例来说，如果你有一个 100 万行的文件，你要在第 100 行加某些文字，此时使用 vim 可能会疯掉！因为文件太大了！那怎办？就利用 sed 啊！透过 sed 直接修改/取代的功能，你甚至不需要使用 vim 去修订！很棒吧！</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">ls</span> <span class="o">&gt;</span> ls_out_file
+<span class="nv">$ </span><span class="nb">cat </span>ls_out_file 
+ls_out_file
+ls.txt
+nohup.out
+OUTCAR
+sedfile
+<span class="nv">$ </span><span class="nb">sed</span> <span class="nt">-i</span> <span class="nt">-f</span> sedfile ls_out_file 
+<span class="nv">$ </span><span class="nb">cat </span>ls_out_file 
+ls_out_file
+hello word
+ls.txt
+hello word
+nohup.out
+OUTCAR
+sedfile
+</code></pre></div></div>
+
+<h4 id="动作参数">动作参数</h4>
+<p>去除行行尾的空格和tab</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat XXX | sed 's/[ \t]*$//g' | sed 's/^[ \t]*//g'
+</code></pre></div></div>
+<p>举一个取代的例子,语法:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed 's/要被取代的字串/新的字串/g'
+</code></pre></div></div>
+<p>我们测试晶格常数时,可以使用sed批量替换成POSCAT
+<br /><a href="https://cndaqiang.github.io/web/file/2018/sf10/linux/POSCAR">https://cndaqiang.github.io/web/file/2018/sf10/linux/POSCAR</a></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat </span>POSCAR 
+CoCl2 <span class="nv">Vaccum</span><span class="o">=</span>15
+1.0
+        3.5269000530         0.0000000000         0.0000000000
+       <span class="nt">-1</span>.7634500265         3.0543850425         0.0000000000
+        0.0000000000         0.0000000000        17.6408996582
+   Co   Cl
+    1    2
+Direct
+     0.000000000         0.000000000         0.074850000
+     0.666670032         0.333329992         0.000000000
+     0.333329986         0.666669976         0.149700000
+<span class="nv">$ </span><span class="nb">cat </span>POSCAR |sed <span class="s1">'2s/1.0/1.1/g'</span> <span class="o">&gt;</span>POSCAR1.1 
+<span class="nv">$ </span><span class="nb">cat </span>POSCAR1.1 
+CoCl2 <span class="nv">Vaccum</span><span class="o">=</span>15
+1.1
+        3.5269000530         0.0000000000         0.0000000000
+       <span class="nt">-1</span>.7634500265         3.0543850425         0.0000000000
+        0.0000000000         0.0000000000        17.6408996582
+   Co   Cl
+    1    2
+Direct
+     0.000000000         0.000000000         0.074850000
+     0.666670032         0.333329992         0.000000000
+     0.333329986         0.666669976         0.149700000
+</code></pre></div></div>
+
+<h3 id="其他">其他</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -n "1~${eachstep}p" input
+从第1行开始，每隔eachstep行，进行输出。
+</code></pre></div></div>
+<h3 id="问题">问题</h3>
+<h4 id="推荐使用双引号">推荐使用双引号</h4>
+<p>双引号能识别变量<code class="language-plaintext highlighter-rouge">$变量名</code>，单引号不识别变量</p>
+<h4 id="修改某个文件">修改某个文件</h4>
+<p><strong>错误</strong>做法</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat $global |sed "8s/${olduser}/${newuser}/g"  &gt; $global 
+</code></pre></div></div>
+<p>应该</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -i "8s/${olduser}/${newuser}/g" $global
+</code></pre></div></div>
+<p><br /><br /><br /></p>
+
+<h2 id="awk">awk</h2>
+<h3 id="功能-1">功能</h3>
+<p>相较于 sed以行为处理单位， awk 则把一行分成数个小单位来处理。</p>
+<h3 id="语法-3">语法</h3>
+<p>awk支持管道命令<br /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>awk '条件类型1{动作1} 条件类型2{动作2} ...' filename
+</code></pre></div></div>
+
+<h4 id="特殊字符转移">特殊字符转移</h4>
+<p>替换<code class="language-plaintext highlighter-rouge">](/in</code>为<code class="language-plaintext highlighter-rouge">](/out/)</code>,即替换markdown的url</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    sed -i s/\]\(\\/${in}/\]\(\\/${out}\\//g $i
+    sed -i s/\]\(\\/\\//\]\(\\//g $i
+</code></pre></div></div>
+<p>使用<code class="language-plaintext highlighter-rouge">\) \] \\( \\[ \\/</code>分别转义<code class="language-plaintext highlighter-rouge">) ] ( [ /</code></p>
+
+<h4 id="变量">变量</h4>
+
+<p>awk内建变量</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>变量名称</th>
+      <th>意义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>NF</td>
+      <td>每一行分成的单元数</td>
+    </tr>
+    <tr>
+      <td>NR</td>
+      <td>目前 awk 所处理的是第几行数据</td>
+    </tr>
+    <tr>
+      <td>FS</td>
+      <td>目前的分隔字节，默认是空白键</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">$n</code></td>
+      <td>当前行的第n个单元</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>print后面默认只能识别内建变量，<strong>使用<code class="language-plaintext highlighter-rouge">-v</code>指定自定义变量</strong>, 可用于循环提取每一列的各值, 如原子坐标</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"hello world"</span> |awk <span class="nt">-vorder</span><span class="o">=</span>2 <span class="s1">'{ print $order }'</span>
+world
+</code></pre></div></div>
+
+<h4 id="条件类型">条件类型</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>逻辑类型</th>
+      <th>意义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>&gt;</td>
+      <td>大于</td>
+    </tr>
+    <tr>
+      <td>&lt;</td>
+      <td>小于</td>
+    </tr>
+    <tr>
+      <td>&gt;=</td>
+      <td>大于或等于</td>
+    </tr>
+    <tr>
+      <td>&lt;=</td>
+      <td>小于或等于</td>
+    </tr>
+    <tr>
+      <td>==</td>
+      <td>等于</td>
+    </tr>
+    <tr>
+      <td>!=</td>
+      <td>不等于</td>
+    </tr>
+    <tr>
+      <td>&amp;&amp;</td>
+      <td>与</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">\\</code></td>
+      <td>或</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>注意等于是<code class="language-plaintext highlighter-rouge">==</code></strong></p>
+
+<h4 id="动作">动作</h4>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">print $1,$2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">printf "%f %f\n", $1,$2</code> <strong>需要自己添加换行符<code class="language-plaintext highlighter-rouge">\n</code></strong></li>
+</ul>
+
+<h3 id="示例-2">示例</h3>
+
+<p>以#开头的</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>awk '/#/' file.out
+</code></pre></div></div>
+<p>跳过#开头</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>awk '!/#/' file.out
+</code></pre></div></div>
+<p>跳过#开头并输出第6个</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>awk '!/#/{ print $6}' file.out
+</code></pre></div></div>
+
+<p>从POSCAR中,提取3到5行,设置分隔符为”  “,
+<br />awk的printf动作和printf有点不同,<code class="language-plaintext highlighter-rouge">printf "格式控制",变量,变量</code>,使用逗号隔开变量</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat </span>POSCAR
+CoCl2 <span class="nv">Vaccum</span><span class="o">=</span>15
+1.0
+        3.5269000530         0.0000000000         0.0000000000
+       <span class="nt">-1</span>.7634500265         3.0543850425         0.0000000000
+        0.0000000000         0.0000000000        17.6408996582
+   Co   Cl
+    1    2
+Direct
+     0.000000000         0.000000000         0.074850000
+     0.666670032         0.333329992         0.000000000
+     0.333329986         0.666669976         0.149700000
+<span class="nv">$ </span><span class="nb">sed</span> <span class="nt">-n</span> 3,5p POSCAR
+        3.5269000530         0.0000000000         0.0000000000
+       <span class="nt">-1</span>.7634500265         3.0543850425         0.0000000000
+        0.0000000000         0.0000000000        17.6408996582
+<span class="c">#\表示换行继续输入</span>
+<span class="nv">$ </span><span class="nb">sed</span> <span class="nt">-n</span> 3,5p  POSCAR | <span class="nb">awk</span> <span class="s1">'{FS=" "} (($1!=0 &amp;&amp; $2==0)||$1==0) \
+&gt; {printf "%f\t%f\tNF=%i\tNR=%i\tFS=%s__\n",$1,$2,NF,NR,FS}'</span>
+3.526900	0.000000	<span class="nv">NF</span><span class="o">=</span>3	<span class="nv">NR</span><span class="o">=</span>1	<span class="nv">FS</span><span class="o">=</span> __
+0.000000	0.000000	<span class="nv">NF</span><span class="o">=</span>3	<span class="nv">NR</span><span class="o">=</span>3	<span class="nv">FS</span><span class="o">=</span> __
+</code></pre></div></div>
+<p>从OUTCAR中提取费米能级
+<br /><code class="language-plaintext highlighter-rouge">tail -1</code>表示最后一行,之前秋豪讲过</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">grep</span>  <span class="s2">"E-fermi"</span> OUTCAR
+<span class="se">\ </span>E-fermi :  <span class="nt">-1</span>.7694     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2437     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.6967     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2322     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.7565     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2059     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.8226     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.2557     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.5143     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.0949     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.4183     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.0606     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.4229     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.1155     alpha+bet : <span class="nt">-3</span>.6065
+ E-fermi :  <span class="nt">-1</span>.4078     XC<span class="o">(</span><span class="nv">G</span><span class="o">=</span>0<span class="o">)</span>:  <span class="nt">-4</span>.1161     alpha+bet : <span class="nt">-3</span>.6065
+<span class="nv">$ </span><span class="nb">grep</span>  <span class="s2">"E-fermi"</span> OUTCAR |awk <span class="s1">'{printf "%f\n",$5}'</span>
+<span class="nt">-4</span>.243700
+<span class="nt">-4</span>.232200
+<span class="nt">-4</span>.205900
+<span class="nt">-4</span>.255700
+<span class="nt">-4</span>.094900
+<span class="nt">-4</span>.060600
+<span class="nt">-4</span>.115500
+<span class="nt">-4</span>.116100
+<span class="nv">$ </span><span class="nb">grep</span>  <span class="s2">"E-fermi"</span> OUTCAR |awk <span class="s1">'{printf "%f\n",$5}'</span>|tail <span class="nt">-1</span>
+<span class="nt">-4</span>.116100
+</code></pre></div></div>
+<p>从siesta输出提取偶极矩<br />
+$(NF-1)表示倒数第二列</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grep  "Electric dipole (a.u.)" result | awk '{printf "%f\t%f\t%f\n", $(NF-2),$(NF-1),$NF }' &gt; dipole
+</code></pre></div></div>
+
+<h3 id="补充应用">补充应用</h3>
+
+<h4 id="awk求和求平均">awk求和求平均</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat count.txt | awk '{sum+=$1} END {print "Average = ", sum}'
+cat count.txt | awk '{sum+=$1} END {print "Average = ", sum/NR}'
+grep -v "#" simulation.out  |  awk '{sum+=$6} END {printf "Average = %1.10e \n", sum/NR}'
+</code></pre></div></div>
+<p>方差</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>col=$(grep $phy $i    | awk '{ print $3+1 }')
+mean=$(grep -v "#" $i | awk '{sum+=$'$col'} END {printf "%1.10e", sum/NR}')
+#注意mean前面不能有空格,不然下面的'$mean'会报错
+std=$(grep -v "#" $i | awk '{sum+=($'$col' - '$mean')**2 } END {printf "%1.10e", sqrt(sum/(NR-1))}')
+echo $i $phy mean=$mean std=$std
+</code></pre></div></div>
+<p>最大/小值</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tail -n +$startline $INPUTFILE | awk 'BEGIN {max = 0} {if ($2+0 &gt; max+0) max=$2} END {print "Max=", max}'
+tail -n +$startline $INPUTFILE | awk 'BEGIN {min = 9999999} {if ($2+0 &lt; min+0) max=$2} END {print "Min=", min}'
+#同时求最大最小, BEGIN和END的用法
+tail -n +$startline $INPUTFILE | awk 'BEGIN {max = -9999; min=9999} {if ($2+0 &gt; max+0) max=$2; if ($2+0 &lt; min+0) min=$2 } END {printf "%15.10f,%15.10f \n" , max, min }' 
+</code></pre></div></div>
+
+<h4 id="awk中使用系统变量">awk中使用系统变量</h4>
+<p>使用<code class="language-plaintext highlighter-rouge">'$var'</code>分隔开即可,<strong>注意var可以<code class="language-plaintext highlighter-rouge">var=6</code>但是不可以是<code class="language-plaintext highlighter-rouge">var=' 6'</code>,即不能有空格</strong><br />
+可以使用循环生成<code class="language-plaintext highlighter-rouge">var=",$3,$5,$6"</code>,<strong>但是var中绝对不能出现空格</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>col=6
+grep -v "#" simulation.out  |  awk '{sum+=$'$col'} END {printf "Average = %1.10e \n", sum/NR}'
+</code></pre></div></div>
+
+<h4 id="awk-print单引号">awk print单引号</h4>
+<p><strong>用单引号隔开,在用转义字符即可,<code class="language-plaintext highlighter-rouge">"'\''%s'\''"</code>内部一定不要有空格!!!</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tail -n +$startline $INPUTFILE | awk '{printf "'\''%s'\''",$1}'
+</code></pre></div></div>
+
+<h4 id="awk的计算功能">awk的计算功能</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~$ echo | awk '{ print sin(3.141592653/2) , cos(3.141592653/2) }'
+1 2.94897e-10
+</code></pre></div></div>
+
+<h4 id="awk在每行内添加值">awk在每行内添加值</h4>
+<p>如每行首添加行号</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> awk '{print NR,"\t",$0  }' 3,3,3
+</code></pre></div></div>
+<h4 id="awk将修改结果直接写入文件">awk将修改结果直接写入文件</h4>
+<p>错误示范,下面这种方式，只写入了几行，后面的数据都没有了</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>awk '{print NR,"\t",$0 &gt; "3,3,3" }' 3,3,3
+</code></pre></div></div>
+
+<h4 id="awk提取特定文字之间的内容">awk提取特定文字之间的内容</h4>
+<p>提取<code class="language-plaintext highlighter-rouge">Begin PSP_UPF</code>到<code class="language-plaintext highlighter-rouge">END_PSP</code>之间的内容</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>awk 'Begin{out=0};/END_PSP/{out=0}; {if(out == 1) {print}};\
+        /Begin PSP_UPF/{out=1}' $OUTFILE &gt;$TEMP
+</code></pre></div></div>
+
+<p><br /><br /><br /></p>
+
+<h2 id="echo">echo</h2>
+<h3 id="功能-2">功能</h3>
+<p>echo是Shell的一个内部指令，用于在屏幕上打印出指定的字符串。
+<br /><strong>不支持管道</strong></p>
+<h3 id="语法-4">语法</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo ［-e］"要打印内容"
+</code></pre></div></div>
+<p>echo默认是禁用反斜杠转义功能的,开启使用<code class="language-plaintext highlighter-rouge">-e</code>参数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       \\    反斜杠
+       \a    警告声音输出
+       \b    倒退键(backspace)
+       \f    清除屏幕 (form feed),（换页(FF)，将光标移到下页开头）
+       \n    输出新的一行（光标移到下行开头）
+       \r    亦即 Enter 按键（光标回到当前行开头）
+       \t    水平的 [tab] 按键
+       \v    垂直的 [tab] 按键
+</code></pre></div></div>
+<h3 id="示例-3">示例</h3>
+<p><strong>使用转移字符,需加上-e参数,最好使用双引号</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ pi</span><span class="o">=</span>3.1415926
+<span class="c">## 双引号可以省略,支持变量,单引号会直接输出所有内容</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$pi</span><span class="s2">"</span>
+3.1415926
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">'$pi'</span>
+<span class="nv">$pi</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$pi</span>
+3.1415926
+<span class="c">## 使用转移字符,需加上-e参数,最好使用双引号</span>
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$pi</span><span class="se">\t\v</span><span class="nv">$pi</span>
+3.1415926tv3.1415926
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nt">-e</span> <span class="nv">$pi</span><span class="se">\t\v</span><span class="nv">$pi</span>
+3.1415926tv3.1415926
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$pi</span><span class="se">\t\v</span><span class="nv">$pi</span><span class="s2">"</span>
+3.1415926	
+                3.1415926
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s1">'$pi\t\v$pi'</span>
+<span class="nv">$pi</span>	
+        <span class="nv">$pi</span>
+</code></pre></div></div>
+
+<p><strong>不换行<code class="language-plaintext highlighter-rouge">-e "str\c"</code></strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@mgmt output_iter]$ for i in $(seq 1 20); do echo -e "$i,\c"; done | xargs
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
+</code></pre></div></div>
+
+<p><br /><br /><br /></p>
+
+<h2 id="printf">printf</h2>
+<h3 id="功能-3">功能</h3>
+<p>printf 命令用于格式化输出， 是echo命令的增强版。它是C语言printf()库函数的一个有限的变形，并且在语法上有些不同。
+<br /><strong>不支持管道</strong></p>
+<h3 id="语法-5">语法</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">printf</span> <span class="s1">'列印格式'</span> 实际内容
+选项与参数：
+关於格式方面的几个特殊样式：
+       <span class="se">\a</span>    警告声音输出
+       <span class="se">\b</span>    倒退键<span class="o">(</span>backspace<span class="o">)</span>
+       <span class="se">\f</span>    清除屏幕 <span class="o">(</span>form feed<span class="o">)</span>,（换页<span class="o">(</span>FF<span class="o">)</span>，将光标移到下页开头）
+       <span class="se">\n</span>    输出新的一行（光标移到下行开头）
+       <span class="se">\r</span>    亦即 Enter 按键（光标回到当前行开头）
+       <span class="se">\t</span>    水平的 <span class="o">[</span>tab] 按键
+       <span class="se">\v</span>    垂直的 <span class="o">[</span>tab] 按键
+       <span class="se">\x</span>NN  NN 为两位数的数字，可以转换数字成为字节。
+关於 C 程序语言内，常见的变量格式
+       %ns   那个 n 是数字， s 代表 string ，亦即多少个字节；
+       %ni   那个 n 是数字， i 代表 integer ，亦即多少整数码数；
+       %N.nf 那个 n 与 N 都是数字， f 代表 floating <span class="o">(</span>浮点<span class="o">)</span>，如果有小数码数，
+             假设我共要十个位数，但小数点有两位，即为 %10.2f 罗！
+</code></pre></div></div>
+
+<h3 id="示例-4">示例</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">pi</span><span class="o">=</span>3.1415926
+<span class="nv">$ </span><span class="nb">printf</span> <span class="s1">'%f\n%f'</span> <span class="nv">$pi</span> <span class="nv">$pi</span>
+3.141593
+3.141593<span class="nv">$ </span><span class="nb">printf</span> <span class="s1">'%f\n%f\n'</span> <span class="nv">$pi</span> <span class="nv">$pi</span>
+3.141593
+3.141593
+<span class="c">## \r会,回到该列开头进行覆盖</span>
+<span class="nv">$ </span><span class="nb">printf</span> <span class="s1">'%f\n%2.1f\n'</span> 123 4
+123.000000
+4.0
+<span class="nv">$ </span><span class="nb">printf</span> <span class="s1">'%f\r%2.1f\n'</span> 123 4
+4.0.000000
+<span class="c">#\t制表符,用来对齐,\v垂直制表,回车加制表</span>
+<span class="nv">$ </span><span class="nb">printf</span> <span class="s1">'%f\t%f\v%f\n'</span> 3 3 3
+3.000000	3.000000
+                    3.000000
+</code></pre></div></div>
+
+<p>整数前置补0,如octopus的输出</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in $(seq 0 50 13000); do  echo $(printf "td.%07d\n" $i); done
+</code></pre></div></div>
+
+<h2 id="sort排序">sort排序</h2>
+<p><code class="language-plaintext highlighter-rouge">sort -n</code>按数字排序,<code class="language-plaintext highlighter-rouge">-rn</code>反向数字排序</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~/work/tdpw/wannier-h2o-2020-12-18/MD/wannier/test$ ls |sort
+10.vasp
+11.vasp
+20.vasp
+2.vasp
+(python37) cndaqiang@mommint:~/work/tdpw/wannier-h2o-2020-12-18/MD/wannier/test$ ls |sort -n
+2.vasp
+10.vasp
+11.vasp
+20.vasp
+(python37) cndaqiang@mommint:~/work/tdpw/wannier-h2o-2020-12-18/MD/wannier/test$ ls |sort -rn
+20.vasp
+11.vasp
+10.vasp
+2.vasp
+</code></pre></div></div>
+
+<h2 id="tail">tail</h2>
+
+<p>从第5行开始</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tail -n +5
+</code></pre></div></div>
+<p>倒数5行</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tail -5
+</code></pre></div></div>
+
+<h2 id="cut切文件">cut切文件</h2>
+<p><a href="https://linuxtools-rst.readthedocs.io/zh_CN/latest/base/03_text_processing.html#">3. 文本处理</a></p>
+
+<ul>
+  <li>截取文件的第2列和第4列
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cut -f2,4 filename
+</code></pre></div>    </div>
+  </li>
+  <li>去文件除第3列的所有列
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cut -f3 --complement filename
+</code></pre></div>    </div>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">-d</code> 指定定界符
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat -f2 -d";" filename
+</code></pre></div>    </div>
+  </li>
+  <li>cut 取的范围</li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">N- </code> 第N个字段到结尾</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">-M </code> 第1个字段为M</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">N-M</code>  N到M个字段</li>
+    </ul>
+  </li>
+  <li>cut 取的单位</li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">-b</code> 以字节为单位</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">-c</code> 以字符为单位</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">-f</code> 以字段为单位（使用定界符）</li>
+    </ul>
+  </li>
+</ul>
+
+<p>示例:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cut -c1-5 file //打印第一到5个字符
+cut -c-2 file  //打印前2个字符
+</code></pre></div></div>
+<p>截取文本的第5到第7列</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$echo string | cut -c5-7
+</code></pre></div></div>
+
+<h2 id="paste合并文件">paste合并文件</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~$ cat 1
+1
+2
+3
+(python37) cndaqiang@mommint:~$ cat 2
+2
+3
+(python37) cndaqiang@mommint:~$ paste 1 2
+1	2
+2	3
+3
+</code></pre></div></div>
+<p>和awk连用可以进行计算和提取数据</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~$ paste 1 2 | awk '{print $2*10, ($1+$2)/2}'
+20 1.5
+30 2.5
+0 1.5
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2018/09/18/centos7-octopus-4.1.2/">Fortran预处理引入/usr/include/stdc-predef.h报错Unclassifiable statement</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/11/17/transmision_skip/">ubuntu 16.04/18.04 编译 可跳过散列检测的 transmission-2.92</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

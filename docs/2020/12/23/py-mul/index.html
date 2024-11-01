@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Python并行处理数据</title>
+    <meta name="description" content="仅记录使用到的，后续使用再补充">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2020/12/23/py-mul/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Python并行处理数据</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-12-23
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Python" title="Category: Python" rel="category">Python</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Python" title="Tag: Python" rel="tag">Python</a-->
+        <a href="/tag/#Python" title="Tag: Python" rel="tag">Python</a>&nbsp;
+    
+        <!--a href="/tag/#multiprocessing" title="Tag: multiprocessing" rel="tag">multiprocessing</a-->
+        <a href="/tag/#multiprocessing" title="Tag: multiprocessing" rel="tag">multiprocessing</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#numpy" id="markdown-toc-numpy">Numpy</a></li>
+  <li><a href="#cant-pickle-错误" id="markdown-toc-cant-pickle-错误">“Can’t pickle” 错误</a></li>
+</ul>
+
+<p>仅记录使用到的，后续使用再补充</p>
+
+<h2 id="参考">参考</h2>
+<p>致谢<a href="https://github.com/GliderHX">@GliderHX</a></p>
+
+<h2 id="numpy">Numpy</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">Zcore</span><span class="o">=</span><span class="p">{</span> <span class="s">'Ag'</span><span class="p">:</span>   <span class="mf">19.00</span><span class="p">,</span> <span class="s">'Al'</span><span class="p">:</span>    <span class="mf">3.00</span><span class="p">,</span> <span class="s">'Ar'</span><span class="p">:</span>    <span class="mf">8.00</span><span class="p">,</span> <span class="s">'As'</span><span class="p">:</span>   <span class="mf">15.00</span><span class="p">,</span> <span class="s">'Au'</span><span class="p">:</span>   <span class="mf">19.00</span><span class="p">,</span> <span class="s">'Ba'</span><span class="p">:</span>   <span class="mf">10.00</span><span class="p">,</span> <span class="s">'Be'</span><span class="p">:</span>    <span class="mf">4.00</span><span class="p">,</span> 
+    <span class="s">'Bi'</span><span class="p">:</span>   <span class="mf">15.00</span><span class="p">,</span> <span class="s">'B'</span><span class="p">:</span>    <span class="mf">3.00</span><span class="p">,</span> <span class="s">'Br'</span><span class="p">:</span>    <span class="mf">7.00</span><span class="p">,</span> <span class="s">'Ca'</span><span class="p">:</span>   <span class="mf">10.00</span><span class="p">,</span> <span class="s">'Cd'</span><span class="p">:</span>   <span class="mf">20.00</span><span class="p">,</span> <span class="s">'Cl'</span><span class="p">:</span>    <span class="mf">7.00</span><span class="p">,</span> <span class="s">'C'</span><span class="p">:</span>    <span class="mf">4.00</span><span class="p">,</span> 
+    <span class="s">'Co'</span><span class="p">:</span>   <span class="mf">17.00</span><span class="p">,</span> <span class="s">'Cr'</span><span class="p">:</span>   <span class="mf">14.00</span><span class="p">,</span> <span class="s">'Cs'</span><span class="p">:</span>    <span class="mf">9.00</span><span class="p">,</span> <span class="s">'Cu'</span><span class="p">:</span>   <span class="mf">19.00</span><span class="p">,</span> <span class="s">'Fe'</span><span class="p">:</span>   <span class="mf">16.00</span><span class="p">,</span> <span class="s">'F'</span><span class="p">:</span>    <span class="mf">7.00</span><span class="p">,</span> <span class="s">'Ga'</span><span class="p">:</span>   <span class="mf">13.00</span><span class="p">,</span> 
+    <span class="s">'Ge'</span><span class="p">:</span>   <span class="mf">14.00</span><span class="p">,</span> <span class="s">'He'</span><span class="p">:</span>    <span class="mf">2.00</span><span class="p">,</span> <span class="s">'Hf'</span><span class="p">:</span>   <span class="mf">12.00</span><span class="p">,</span> <span class="s">'Hg'</span><span class="p">:</span>   <span class="mf">20.00</span><span class="p">,</span> <span class="s">'H'</span><span class="p">:</span>    <span class="mf">1.00</span><span class="p">,</span> <span class="s">'In'</span><span class="p">:</span>   <span class="mf">13.00</span><span class="p">,</span> <span class="s">'I'</span><span class="p">:</span>    <span class="mf">7.00</span><span class="p">,</span> 
+    <span class="s">'Ir'</span><span class="p">:</span>   <span class="mf">17.00</span><span class="p">,</span> <span class="s">'K'</span><span class="p">:</span>    <span class="mf">9.00</span><span class="p">,</span> <span class="s">'Kr'</span><span class="p">:</span>    <span class="mf">8.00</span><span class="p">,</span> <span class="s">'Li'</span><span class="p">:</span>    <span class="mf">3.00</span><span class="p">,</span> <span class="s">'Mg'</span><span class="p">:</span>   <span class="mf">10.00</span><span class="p">,</span> <span class="s">'Mn'</span><span class="p">:</span>   <span class="mf">15.00</span><span class="p">,</span> <span class="s">'Mo'</span><span class="p">:</span>   <span class="mf">14.00</span><span class="p">,</span> 
+    <span class="s">'Na'</span><span class="p">:</span>    <span class="mf">9.00</span><span class="p">,</span> <span class="s">'Nb'</span><span class="p">:</span>   <span class="mf">13.00</span><span class="p">,</span> <span class="s">'Ne'</span><span class="p">:</span>    <span class="mf">8.00</span><span class="p">,</span> <span class="s">'Ni'</span><span class="p">:</span>   <span class="mf">18.00</span><span class="p">,</span> <span class="s">'N'</span><span class="p">:</span>    <span class="mf">5.00</span><span class="p">,</span> <span class="s">'O'</span><span class="p">:</span>    <span class="mf">6.00</span><span class="p">,</span> <span class="s">'Os'</span><span class="p">:</span>   <span class="mf">16.00</span><span class="p">,</span> 
+    <span class="s">'Pb'</span><span class="p">:</span>   <span class="mf">14.00</span><span class="p">,</span> <span class="s">'Pd'</span><span class="p">:</span>   <span class="mf">18.00</span><span class="p">,</span> <span class="s">'P'</span><span class="p">:</span>    <span class="mf">5.00</span><span class="p">,</span> <span class="s">'Po'</span><span class="p">:</span>   <span class="mf">16.00</span><span class="p">,</span> <span class="s">'Pt'</span><span class="p">:</span>   <span class="mf">16.00</span><span class="p">,</span> <span class="s">'Rb'</span><span class="p">:</span>    <span class="mf">9.00</span><span class="p">,</span> <span class="s">'Re'</span><span class="p">:</span>   <span class="mf">15.00</span><span class="p">,</span> 
+    <span class="s">'Rh'</span><span class="p">:</span>   <span class="mf">17.00</span><span class="p">,</span> <span class="s">'Rn'</span><span class="p">:</span>   <span class="mf">18.00</span><span class="p">,</span> <span class="s">'Ru'</span><span class="p">:</span>   <span class="mf">16.00</span><span class="p">,</span> <span class="s">'Sb'</span><span class="p">:</span>   <span class="mf">15.00</span><span class="p">,</span> <span class="s">'Sc'</span><span class="p">:</span>   <span class="mf">11.00</span><span class="p">,</span> <span class="s">'Se'</span><span class="p">:</span>   <span class="mf">16.00</span><span class="p">,</span> <span class="s">'Si'</span><span class="p">:</span>    <span class="mf">4.00</span><span class="p">,</span> 
+    <span class="s">'Sn'</span><span class="p">:</span>   <span class="mf">14.00</span><span class="p">,</span> <span class="s">'S'</span><span class="p">:</span>    <span class="mf">6.00</span><span class="p">,</span> <span class="s">'Sr'</span><span class="p">:</span>   <span class="mf">10.00</span><span class="p">,</span> <span class="s">'Ta'</span><span class="p">:</span>   <span class="mf">13.00</span><span class="p">,</span> <span class="s">'Tc'</span><span class="p">:</span>   <span class="mf">15.00</span><span class="p">,</span> <span class="s">'Te'</span><span class="p">:</span>   <span class="mf">16.00</span><span class="p">,</span> <span class="s">'Ti'</span><span class="p">:</span>   <span class="mf">12.00</span><span class="p">,</span> 
+    <span class="s">'Tl'</span><span class="p">:</span>   <span class="mf">13.00</span><span class="p">,</span> <span class="s">'V'</span><span class="p">:</span>   <span class="mf">13.00</span><span class="p">,</span> <span class="s">'W'</span><span class="p">:</span>   <span class="mf">14.00</span><span class="p">,</span> <span class="s">'Xe'</span><span class="p">:</span>    <span class="mf">8.00</span><span class="p">,</span> <span class="s">'Y'</span><span class="p">:</span>   <span class="mf">11.00</span><span class="p">,</span> <span class="s">'Zn'</span><span class="p">:</span>   <span class="mf">20.00</span><span class="p">,</span> <span class="s">'Zr'</span><span class="p">:</span>   <span class="mf">12.00</span>
+<span class="p">}</span>
+<span class="n">Zcore</span><span class="p">[</span><span class="s">"WF"</span><span class="p">]</span><span class="o">=-</span><span class="mf">2.0</span>    <span class="c1">#电子,一个wannier上占两个电子
+</span>
+<span class="k">def</span> <span class="nf">cal_dipole</span><span class="p">(</span><span class="n">ntyp</span><span class="p">,</span><span class="n">nat</span><span class="p">,</span><span class="n">xyz</span><span class="p">):</span>
+    <span class="n">Dipole</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">xyz</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nat</span><span class="p">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="n">Dipole</span><span class="o">=</span><span class="n">Dipole</span><span class="o">+</span><span class="n">xyz</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">nat</span><span class="p">[</span><span class="n">i</span><span class="p">],:].</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">Zcore</span><span class="p">[</span><span class="n">ntyp</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">Dipole</span>
+
+<span class="c1">#----------------
+</span><span class="k">if</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># 串行计算
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"Calculate Dipole by one cpu"</span><span class="p">)</span>
+    <span class="n">time_start</span><span class="o">=</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">Dipole</span><span class="o">=</span><span class="n">cal_dipole</span><span class="p">(</span><span class="n">ntyp</span><span class="p">,</span><span class="n">nat</span><span class="p">,</span><span class="n">xyz</span><span class="p">)</span>
+    <span class="n">time_end</span><span class="o">=</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Time cost'</span><span class="p">,</span><span class="n">time_end</span><span class="o">-</span><span class="n">time_start</span><span class="p">,</span><span class="s">'s'</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span> <span class="c1">#并行计算
+</span>    <span class="c1">#multi rdf
+</span>    <span class="kn">import</span>  <span class="nn">multiprocessing</span>
+    <span class="n">time_start</span><span class="o">=</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">m_process</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">multiprocessing</span><span class="p">.</span><span class="n">cpu_count</span><span class="p">()</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span><span class="c1">#选择合适的cpu数
+</span>    <span class="k">if</span> <span class="n">m_process</span> <span class="o">&gt;</span> <span class="n">nstep</span><span class="p">:</span>
+        <span class="n">m_process</span> <span class="o">=</span> <span class="n">nstep</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"m_Calculate Dipole by "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">m_process</span><span class="p">)</span><span class="o">+</span> <span class="s">" cpus"</span><span class="p">)</span>
+    <span class="n">m_length</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">floor</span><span class="p">(</span><span class="n">nstep</span><span class="o">/</span><span class="n">m_process</span><span class="p">))</span> 
+    <span class="n">m_left</span><span class="o">=</span><span class="n">nstep</span><span class="o">-</span><span class="n">m_process</span><span class="o">*</span><span class="n">m_length</span>
+    <span class="n">m_snstep</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">m_process</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">m_enstep</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">m_process</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">m_snstep</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">m_enstep</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">m_snstep</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">m_length</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">m_process</span><span class="p">):</span>
+        <span class="n">m_snstep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">m_enstep</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">nstep</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">m_left</span><span class="p">:</span> <span class="c1">#向下取整，把剩下的以此分配到从1开始编号的CPU
+</span>            <span class="n">m_enstep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">m_snstep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">m_length</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">nstep</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">m_enstep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">m_snstep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">m_length</span><span class="p">,</span><span class="n">nstep</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">m_snstep</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">multi_dipole</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">m_snstep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">end</span><span class="o">=</span><span class="n">m_enstep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">Dipole</span><span class="o">=</span><span class="n">cal_dipole</span><span class="p">(</span><span class="n">ntyp</span><span class="p">,</span><span class="n">nat</span><span class="p">,</span><span class="n">xyz</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">Dipole</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">m_enstep</span><span class="p">)</span>
+    <span class="n">m_cpu</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m_process</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="p">.</span><span class="n">Pool</span><span class="p">(</span><span class="n">m_process</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">map_async</span><span class="p">(</span><span class="n">multi_dipole</span><span class="p">,</span><span class="n">m_cpu</span><span class="p">).</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="n">Dipole</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">nstep</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">m_process</span><span class="p">):</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">m_snstep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">end</span><span class="o">=</span><span class="n">m_enstep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">Dipole</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span><span class="o">=</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">time_end</span><span class="o">=</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Time cost'</span><span class="p">,</span><span class="n">time_end</span><span class="o">-</span><span class="n">time_start</span><span class="p">,</span><span class="s">'s'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="cant-pickle-错误">“Can’t pickle” 错误</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PicklingError: Can't pickle &lt;type
+</code></pre></div></div>
+<p>因为并行执行的程序中，包含了其他class中的函数. 此时采用</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import  multiprocessing
+p = multiprocessing.Pool(m_process)
+out = p.map_async(multi_dipole,m_cpu).get()
+#替换为
+
+from pathos import multiprocessing
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/12/02/makefile/">[草稿]Makefile学习</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2021/01/11/intel-oneAPI/">Intel® oneAPI Toolkits(Intel Parallel Studio XE的代替品)安装使用</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

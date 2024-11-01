@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>oneplus6刷windows 11 arm等</title>
+    <meta name="description" content="oneplus6刷机过程中还遇到了其他的问题, 记录一下">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2021/07/09/oneplus6/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>oneplus6刷windows 11 arm等</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2021-07-09
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Linux" title="Tag: Linux" rel="tag">Linux</a-->
+        <a href="/tag/#Linux" title="Tag: Linux" rel="tag">Linux</a>&nbsp;
+    
+        <!--a href="/tag/#oneplus" title="Tag: oneplus" rel="tag">oneplus</a-->
+        <a href="/tag/#oneplus" title="Tag: oneplus" rel="tag">oneplus</a>&nbsp;
+    
+        <!--a href="/tag/#arm" title="Tag: arm" rel="tag">arm</a-->
+        <a href="/tag/#arm" title="Tag: arm" rel="tag">arm</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#资源下载" id="markdown-toc-资源下载">资源下载</a></li>
+  <li><a href="#解bl锁" id="markdown-toc-解bl锁">解BL锁</a></li>
+  <li><a href="#刷twrp" id="markdown-toc-刷twrp">刷twrp</a>    <ul>
+      <li><a href="#安卓10降级安卓9" id="markdown-toc-安卓10降级安卓9">安卓10降级安卓9</a>        <ul>
+          <li><a href="#卡刷" id="markdown-toc-卡刷">卡刷</a></li>
+          <li><a href="#线刷" id="markdown-toc-线刷">线刷</a></li>
+          <li><a href="#刷机后打开usb调试" id="markdown-toc-刷机后打开usb调试">刷机后打开usb调试</a></li>
+        </ul>
+      </li>
+      <li><a href="#刷twrp-1" id="markdown-toc-刷twrp-1">刷twrp</a></li>
+    </ul>
+  </li>
+  <li><a href="#分区" id="markdown-toc-分区">分区</a>    <ul>
+      <li><a href="#方法一-电脑adb调试" id="markdown-toc-方法一-电脑adb调试">方法一: 电脑adb调试</a></li>
+      <li><a href="#方法二-twrp界面操作方法" id="markdown-toc-方法二-twrp界面操作方法">方法二: twrp界面操作方法</a></li>
+    </ul>
+  </li>
+  <li><a href="#复制pe到pe分区" id="markdown-toc-复制pe到pe分区">复制PE到pe分区</a></li>
+  <li><a href="#uefi引导开机" id="markdown-toc-uefi引导开机">UEFI引导开机</a></li>
+  <li><a href="#安装系统" id="markdown-toc-安装系统">安装系统</a>    <ul>
+      <li><a href="#进入pe界面" id="markdown-toc-进入pe界面">进入PE界面</a></li>
+      <li><a href="#装载iso文件" id="markdown-toc-装载iso文件">装载ISO文件</a></li>
+      <li><a href="#打开arm版的dism" id="markdown-toc-打开arm版的dism">打开ARM版的DISM++</a></li>
+    </ul>
+  </li>
+  <li><a href="#开机" id="markdown-toc-开机">开机</a></li>
+  <li><a href="#刷ubuntu-touch" id="markdown-toc-刷ubuntu-touch">刷Ubuntu Touch</a></li>
+  <li><a href="#其他备用" id="markdown-toc-其他备用">其他备用</a>    <ul>
+      <li><a href="#一加线刷恢复-msmdownloadtool" id="markdown-toc-一加线刷恢复-msmdownloadtool">一加线刷恢复: MsmDownloadTool</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>oneplus6刷机过程中还遇到了其他的问题, 记录一下</p>
+
+<h2 id="参考">参考</h2>
+
+<p>主要参考了oneplus6t的教程</p>
+<ul>
+  <li><a href="https://silime.gitee.io/2021/05/20/Windows10-on-arm64/">Windows10 on arm64@Skr-niao’Blog</a></li>
+  <li><a href="https://www.bilibili.com/video/BV1MU4y137Yi">给手机装Windows11！还能玩大型游戏？！@极客湾Geekerwan</a></li>
+  <li><a href="https://nerdschalk.com/how-to-roll-back-oneplus-6-6t-to-android-9-pie/">How to downgrade OnePlus 6/6T to Android 9 Pie from Android 10</a></li>
+  <li><a href="https://www.titanwolf.org/Network/q/1bc1323e-e07d-4dd7-a892-6423236d6649/x">TWRP: Could not mount /data (even after format data / change file system)</a></li>
+</ul>
+
+<h2 id="资源下载">资源下载</h2>
+<p>本文用到的文件主要来自参考教程:</p>
+<ul>
+  <li><a href="https://pan.baidu.com/s/1z67ETDYb-avwVP6OUIRUCw">一加6刷机文件下载, 密码: enkh</a><br />
+不包含windows镜像,可以使用aria2从<a href="https://uupdump.net/?lang=zh-cn">UUP dump</a>下载很快</li>
+</ul>
+
+<p>注:</p>
+<ul>
+  <li>一加6的代号是enchilada,下载相关文件注意该关键词</li>
+  <li>可以关注最新SDM845驱动<a href="https://github.com/edk2-porting/WOA-Drivers">GitHub -WOA-Drivers</a>更新情况,用最新的驱动</li>
+  <li>可关注最新的efi:  <a href="https://github.com/edk2-porting/edk2-sdm845/releases">boot-enchilada.img</a>,以及大佬们提供uefi</li>
+  <li>PE以及windows10/11用ARM版的都可以</li>
+</ul>
+
+<h2 id="解bl锁">解BL锁</h2>
+<p><strong>解锁会丢失所有用户数据</strong></p>
+<ul>
+  <li>进入开发者模式: 关于手机&gt;连点五次版本号</li>
+  <li>
+    <p>系统&gt;开发者选项&gt;OEM解锁,USB调试,一律允许USB调试</p>
+  </li>
+  <li>解锁: 这里使用<code class="language-plaintext highlighter-rouge">一加全机型万能工具箱v3.8.1.exe</code>,其他方式也可以
+<img src="/uploads/2021/07/oneplustool.png" alt="" />
+音量选择unlock,电源键确认
+<img src="/uploads/2021/07/unlock.png" alt="" /></li>
+  <li>解锁后,因为丢失数据,第一次开机比较慢</li>
+</ul>
+
+<h2 id="刷twrp">刷twrp</h2>
+<p>这里使用<code class="language-plaintext highlighter-rouge">一加全机型万能工具箱v3.8.1.exe</code></p>
+
+<h3 id="安卓10降级安卓9">安卓10降级安卓9</h3>
+<p>因为<code class="language-plaintext highlighter-rouge">一加全机型万能工具箱v3.8.1.exe</code>目前只能给安卓9以下的一加6刷twrp,所以要降级.<br />
+如果能通过其他方式刷入twrp则不需要降级.</p>
+
+<h4 id="卡刷">卡刷</h4>
+<p>复制<code class="language-plaintext highlighter-rouge">fulldowngrade_wipe_MSM_17819_181025_2315_user_MP1_release.zip</code>到手机<br />
+系统&gt;系统更新&gt;齿轮&gt;本地升级<br />
+(注: <code class="language-plaintext highlighter-rouge">fulldowngrade_wipe_MSM_17819_181025_2315_user_MP1_release.zip</code>这个卡刷包是国外的,开机断开网络和手机卡,不然一直连不上google验证)</p>
+
+<h4 id="线刷">线刷</h4>
+<p>也可以用MsmDownloadTool线刷安卓9的包. 方法见下.<br />
+链接中提供了安卓8的H2_5.1.3系统</p>
+
+<h4 id="刷机后打开usb调试">刷机后打开usb调试</h4>
+
+<h3 id="刷twrp-1">刷twrp</h3>
+<p>一加6要刷两次, 按照提示操作即可</p>
+<ul>
+  <li>Advanced &gt; ADB Sideload</li>
+  <li>回车第一遍刷完</li>
+  <li>Back</li>
+  <li>Advance &gt; ADB Sideload</li>
+  <li>回车再刷一遍</li>
+</ul>
+
+<h2 id="分区">分区</h2>
+<p>进入twrp界面</p>
+<h3 id="方法一-电脑adb调试">方法一: 电脑adb调试</h3>
+<ul>
+  <li>连上电脑复制parted到手机并分区
+<img src="/uploads/2021/07/parted.png" alt="" /></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\U</span>sers<span class="se">\c</span>ndaqiang&gt;adb shell
+<span class="c">#</span>
+<span class="nb">cp</span> /sdcard/parted /sbin
+<span class="nb">chmod</span> +x /sbin/parted
+</code></pre></div></div>
+
+<p><img src="/uploads/2021/07/adbshell.png" alt="" /></p>
+
+<ul>
+  <li>卸载data分区
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>umount /data &amp;&amp; umount /sdccard
+#或者根据df -h 确定data是sda的第17个分区
+umount /dev/block/sda17
+</code></pre></div>    </div>
+  </li>
+  <li>进入分区界面
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parted /dev/block/sda
+</code></pre></div>    </div>
+    <p><img src="/uploads/2021/07/sdap.png" alt="" /></p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm 17 
+#下面的起始结束位置不同类型的手机不同,根据p返回的信息修改
+mkpart esp fat32 6559MB 7000MB
+mkpart pe fat32 7000MB 10000MB
+mkpart win ntfs 10000MB 70GB
+mkpart userdata ext4 70GB 125GB
+set 17 esp on
+#按q退出
+q
+</code></pre></div>    </div>
+    <p>最终分区的结果
+<img src="/uploads/2021/07/sdap2.png" alt="" /></p>
+  </li>
+  <li>格式化新分区<br />
+参考教程中给出oneplus6t是通过<code class="language-plaintext highlighter-rouge">/dev/block/by-name/pe</code>的方式分的, 我手里的版本,不存在该文件夹<code class="language-plaintext highlighter-rouge">/dev/block/by-name</code><br />
+下面通过硬盘编号分区,根据上面分的结果<code class="language-plaintext highlighter-rouge">esp,pe,win,userdata</code>分别是<code class="language-plaintext highlighter-rouge">17,18,19,20</code>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkfs.fat -F32 -s1 /dev/block/sda17
+mkfs.fat -F32 -s1 /dev/block/sda18
+mkfs.ntfs -f /dev/block/sda19
+mke2fs -t ext4 /dev/block/sda20
+</code></pre></div>    </div>
+    <p>再给<code class="language-plaintext highlighter-rouge">userdata</code>分区时出现错误,不影响,可以之后进fastboot分区</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ # [6nmke2fs -t ext4 /dev/block/sda20
+mke2fs -t ext4 /dev/block/sda20
+CANNOT LINK EXECUTABLE "mke2fs": library "libext2_misc.so" not found
+libc: CANNOT LINK EXECUTABLE "mke2fs": library "libext2_misc.so" not found
+libc: Fatal signal 6 (SIGABRT), code -6 in tid 938 (mke2fs), pid 938 (mke2fs)
+Aborted
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="方法二-twrp界面操作方法">方法二: twrp界面操作方法</h3>
+<ul>
+  <li>把parted放到U盘(很图形化的操作)</li>
+  <li>插入U盘</li>
+  <li>
+    <ul>
+      <li>twrp&gt;Mount&gt;USB Storage</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>twrp&gt;Advanced&gt;File Manager<br />
+进入<code class="language-plaintext highlighter-rouge">/usbstroage/</code> ,按住<code class="language-plaintext highlighter-rouge">parted</code>文件,<br />
+复制到<code class="language-plaintext highlighter-rouge">/sbin</code>(其实复制到哪都无所谓,后面执行时指定parted的绝对路径即可)<br />
+进入<code class="language-plaintext highlighter-rouge">/sbin/</code>,<code class="language-plaintext highlighter-rouge">parted</code> 可执权限<code class="language-plaintext highlighter-rouge">chmod 775</code></li>
+    </ul>
+  </li>
+  <li>twrp&gt;Adcance&gt;Terminal<br />
+输入同方法一的命令,卸载和分区</li>
+</ul>
+
+<h2 id="复制pe到pe分区">复制PE到pe分区</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount /dev/block/sda18 /mnt
+</code></pre></div></div>
+<p>插入包含PE文件的U盘到手机<br />
+twrp&gt;Adcance&gt;Terminal,复制PE到挂载点<code class="language-plaintext highlighter-rouge">/mnt</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp /usbstroage/20h2pe_new/* /mnt
+</code></pre></div></div>
+<p><img src="/uploads/2021/07/cppe.png" alt="" /></p>
+
+<h2 id="uefi引导开机">UEFI引导开机</h2>
+<p>重启进入Bootload<br />
+先修复刚才data分区格式化出错,CMD输入</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fastboot format:ext4 userdata
+</code></pre></div></div>
+<p>从uefi的boot启动</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fastboot boot D:\cndaqiang\Download\boot-enchilada.img
+</code></pre></div></div>
+<p>也可以把这个img直接刷入的boot里面(没必要),不刷则每次开机进windows都要进fastboot启动<br />
+flash命令(<strong>慎用</strong>)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fastboot flash boot D:\cndaqiang\Download\boot-enchilada.img
+</code></pre></div></div>
+
+<h2 id="安装系统">安装系统</h2>
+<h3 id="进入pe界面">进入PE界面</h3>
+<p>fastboot命令熟完后就会进行ARM版的PE界面</p>
+<h3 id="装载iso文件">装载ISO文件</h3>
+<p>提前解压也,我们要用到里面<code class="language-plaintext highlighter-rouge">/source/install.wim</code>文件
+<img src="/uploads/2021/07/armpe.png" alt="" /></p>
+
+<h3 id="打开arm版的dism">打开ARM版的DISM++</h3>
+<p>和在PE下给x86装系统没有什么区别</p>
+<ul>
+  <li>释放镜像
+文件&gt;释放镜像,选择<code class="language-plaintext highlighter-rouge">install.wim</code>和要安装到的分区，<strong>注意钩上添加引导</strong>
+<img src="/uploads/2021/07/dism.png" alt="" /></li>
+  <li>
+    <p>加载驱动
+打开对话&gt;驱动管理&gt;打开WOA的驱动
+<img src="/uploads/2021/07/woa.png" alt="" /></p>
+  </li>
+  <li>关闭驱动验证
+PE中的CMD
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#这个挂载EFI分区的命令在其他教程中也没提到
+mountvol Y: /S
+bcdedit /store Y:\efi\microsoft\boot\bcd /set {Default} testsigning on
+bcdedit /store Y:\efi\microsoft\boot\bcd /set {Default} nointegritychecks on
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="开机">开机</h2>
+<p>从uefi的boot启动</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fastboot boot D:\cndaqiang\Download\boot-enchilada.img
+</code></pre></div></div>
+<p>跟极客湾Geekerwan的视频教程一致，第一次蓝屏, 关机后再<code class="language-plaintext highlighter-rouge">fastboot</code>启动一次就可以了<br />
+<img src="/uploads/2021/07/ra2.png" alt="" /></p>
+
+<p>很多硬件还是没有适配,触屏虽然能用也点不准</p>
+
+<h2 id="刷ubuntu-touch">刷Ubuntu Touch</h2>
+<p>参考<a href="https://github.com/ubports-oneplus6/documentation">ubports-oneplus6</a><br />
+可以去上面仓库看看有没有最新版<br />
+目前的bug:</p>
+<ul>
+  <li>电信卡不识别</li>
+  <li>联通卡只能用卡2槽</li>
+</ul>
+
+<p>过程:</p>
+<ul>
+  <li>下载Release中的<code class="language-plaintext highlighter-rouge">target.zip</code>和<code class="language-plaintext highlighter-rouge">halium-boot.img</code></li>
+  <li>复制<code class="language-plaintext highlighter-rouge">target.zip</code>到手机存储</li>
+  <li>twrp安装<code class="language-plaintext highlighter-rouge">target.zip</code></li>
+  <li>启动,<strong>默认密码是<code class="language-plaintext highlighter-rouge">phablet</code></strong>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fastboot boot D:\cndaqiang\Download\halium-boot.img
+</code></pre></div>    </div>
+    <p>也可以写入</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fastboot flash boot D:\cndaqiang\Download\halium-boot.img
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><img src="/uploads/2021/07/utouch.png" alt="" /></p>
+
+<p>UbuntuTouch/Win11/Oneplus系统可以并存,设置fastboot启动不同img即可</p>
+
+<h2 id="其他备用">其他备用</h2>
+<h3 id="一加线刷恢复-msmdownloadtool">一加线刷恢复: MsmDownloadTool</h3>
+<p>一键回原厂, 恢复一加默认Recover,系统,硬盘分区,加BL锁等.</p>
+<ul>
+  <li>按住<code class="language-plaintext highlighter-rouge">电源</code>+<code class="language-plaintext highlighter-rouge">音量+</code>,连接数据线,手机应该就黑屏, 设备管理器查看到COM设备后松手<br />
+<img src="/uploads/2021/07/9008.png" alt="" /></li>
+  <li>windows自动更新9008驱动</li>
+  <li>MsmDownloadTool:start进行线刷恢复
+<img src="/uploads/2021/07/msmdownloadtool.png" alt="" /></li>
+</ul>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/10/21/hinas2/">安装OP/HiNas至U盘以及配置
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/10/20/hinas/">海纳思刷机总结
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2021/04/20/abacus/">Abacus编译&快速上手</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2021/08/29/autotools/">[草稿]使用autotools创建configure,Makefile</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

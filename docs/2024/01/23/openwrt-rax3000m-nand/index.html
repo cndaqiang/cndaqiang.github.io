@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>OpenWRT编译配置:以CMCC RAX3000M为例</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2024/01/23/openwrt-rax3000m-nand/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>OpenWRT编译配置:以CMCC RAX3000M为例</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2024-01-23
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#OpenWRT" title="Category: OpenWRT" rel="category">OpenWRT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#OpenWRT" title="Tag: OpenWRT" rel="tag">OpenWRT</a-->
+        <a href="/tag/#OpenWRT" title="Tag: OpenWRT" rel="tag">OpenWRT</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#编译固件" id="markdown-toc-编译固件">编译固件</a>    <ul>
+      <li><a href="#为什么要编译固件" id="markdown-toc-为什么要编译固件">为什么要编译固件</a></li>
+      <li><a href="#编译环境" id="markdown-toc-编译环境">编译环境</a></li>
+      <li><a href="#源码下载" id="markdown-toc-源码下载">源码下载</a></li>
+      <li><a href="#可选添加第三方插件-istore" id="markdown-toc-可选添加第三方插件-istore">[可选]添加第三方插件: istore</a></li>
+      <li><a href="#设置固件包参数" id="markdown-toc-设置固件包参数">设置固件包参数</a>        <ul>
+          <li><a href="#我常编译的包" id="markdown-toc-我常编译的包">我常编译的包</a></li>
+          <li><a href="#精简包" id="markdown-toc-精简包">精简包</a></li>
+          <li><a href="#与内核相关的包" id="markdown-toc-与内核相关的包">与内核相关的包</a></li>
+          <li><a href="#查找特定包的位置" id="markdown-toc-查找特定包的位置">查找特定包的位置</a></li>
+        </ul>
+      </li>
+      <li><a href="#可选推荐设置编译的内核依赖与镜像仓库相同" id="markdown-toc-可选推荐设置编译的内核依赖与镜像仓库相同">[可选、推荐]设置编译的内核依赖与镜像仓库相同</a>        <ul>
+          <li><a href="#查看仓库内核的md5" id="markdown-toc-查看仓库内核的md5">查看仓库内核的md5</a></li>
+          <li><a href="#修改md5" id="markdown-toc-修改md5">修改md5</a></li>
+          <li><a href="#重新编译" id="markdown-toc-重新编译">重新编译</a></li>
+        </ul>
+      </li>
+      <li><a href="#开始编译" id="markdown-toc-开始编译">开始编译</a>        <ul>
+          <li><a href="#全部编译" id="markdown-toc-全部编译">全部编译</a></li>
+          <li><a href="#编译特定包的方法" id="markdown-toc-编译特定包的方法">编译特定包的方法</a></li>
+          <li><a href="#编译特定版本包的方法" id="markdown-toc-编译特定版本包的方法">编译特定版本包的方法</a></li>
+          <li><a href="#不编译固件只编译特定包" id="markdown-toc-不编译固件只编译特定包">不编译固件，只编译特定包</a></li>
+          <li><a href="#科学编译的方法" id="markdown-toc-科学编译的方法">科学编译的方法</a></li>
+        </ul>
+      </li>
+      <li><a href="#编译结果" id="markdown-toc-编译结果">编译结果</a>        <ul>
+          <li><a href="#编译固件目录" id="markdown-toc-编译固件目录">编译固件目录</a></li>
+          <li><a href="#搭建opkg镜像" id="markdown-toc-搭建opkg镜像">搭建opkg镜像</a>            <ul>
+              <li><a href="#http版" id="markdown-toc-http版">http版</a></li>
+              <li><a href="#本地文件版" id="markdown-toc-本地文件版">本地文件版</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#安装系统" id="markdown-toc-安装系统">安装系统</a>    <ul>
+      <li><a href="#终端升级" id="markdown-toc-终端升级">终端升级</a></li>
+      <li><a href="#web升级" id="markdown-toc-web升级">web升级</a></li>
+      <li><a href="#全新安装后的操作" id="markdown-toc-全新安装后的操作">全新安装后的操作</a></li>
+    </ul>
+  </li>
+  <li><a href="#随手记录" id="markdown-toc-随手记录">随手记录</a></li>
+  <li><a href="#关于dropbear" id="markdown-toc-关于dropbear">关于Dropbear</a></li>
+  <li><a href="#dns配置" id="markdown-toc-dns配置">dns配置</a>    <ul>
+      <li><a href="#dns最终设置" id="markdown-toc-dns最终设置">DNS最终设置</a></li>
+    </ul>
+  </li>
+  <li><a href="#zerotier" id="markdown-toc-zerotier">zerotier</a></li>
+  <li><a href="#nfs" id="markdown-toc-nfs">NFS</a>    <ul>
+      <li><a href="#路由器上层访问" id="markdown-toc-路由器上层访问">路由器上层访问</a>        <ul>
+          <li><a href="#rpc的111端口" id="markdown-toc-rpc的111端口">rpc的111端口</a></li>
+          <li><a href="#2049端口32777-32780端口" id="markdown-toc-2049端口32777-32780端口">2049端口、32777-32780端口</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#smb" id="markdown-toc-smb">smb</a></li>
+  <li><a href="#git" id="markdown-toc-git">git</a></li>
+  <li><a href="#clash" id="markdown-toc-clash">clash</a>    <ul>
+      <li><a href="#clash占用存储的解决方案" id="markdown-toc-clash占用存储的解决方案">clash占用存储的解决方案</a></li>
+    </ul>
+  </li>
+  <li><a href="#ipv6" id="markdown-toc-ipv6">ipv6</a></li>
+  <li><a href="#passwall" id="markdown-toc-passwall">PassWall</a>    <ul>
+      <li><a href="#暂时不支持https类型的节点订阅跳过此节点" id="markdown-toc-暂时不支持https类型的节点订阅跳过此节点">暂时不支持https类型的节点订阅，跳过此节点</a></li>
+    </ul>
+  </li>
+  <li><a href="#istore使用记录" id="markdown-toc-istore使用记录">istore使用记录</a></li>
+  <li><a href="#ttyd" id="markdown-toc-ttyd">ttyd</a></li>
+  <li><a href="#挂载u盘" id="markdown-toc-挂载u盘">挂载U盘</a></li>
+  <li><a href="#报错" id="markdown-toc-报错">报错</a>    <ul>
+      <li><a href="#脚本存在无法运行" id="markdown-toc-脚本存在无法运行">脚本存在无法运行</a></li>
+      <li><a href="#重启后root密码无法登录" id="markdown-toc-重启后root密码无法登录">重启后root密码无法登录</a></li>
+      <li><a href="#自己搭建的仓库签名错误-删除签名文件后再同步" id="markdown-toc-自己搭建的仓库签名错误-删除签名文件后再同步">自己搭建的仓库签名错误: 删除签名文件后再同步</a></li>
+      <li><a href="#qbittorent无法启动" id="markdown-toc-qbittorent无法启动">qbittorent无法启动</a></li>
+      <li><a href="#qbittorent提示unauthorized" id="markdown-toc-qbittorent提示unauthorized">qbittorent提示<code class="language-plaintext highlighter-rouge">Unauthorized</code></a></li>
+    </ul>
+  </li>
+</ul>
+
+<ul>
+  <li><strong>感谢互联网、GPT,有些教程参考了,但是没有及时把链接复制到本文进行致谢,在此统一致谢</strong></li>
+  <li><strong>同时开启qBittotrent、passWall, clash, zerotier确实内存满了,容易卡, 貌似买个x86作为科学、存储节点有意义</strong></li>
+</ul>
+
+<h2 id="编译固件">编译固件</h2>
+<h3 id="为什么要编译固件">为什么要编译固件</h3>
+<ul>
+  <li><strong>如果没有特殊需求, 官方的包就行</strong></li>
+  <li>官方固件存在问题时:</li>
+  <li>
+    <ul>
+      <li>flash扩容</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>预安装包: ipv6, 校园网认证, luci界面</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>kmod等内核驱动的包,使用opkg安装后有可能不能用, 例如usb接口, u盘</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>passwall 等app不在opkg的仓库里, 但是编译固件的时候可以打包进来</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>默认编译的软件版本有问题，例如<code class="language-plaintext highlighter-rouge">transmission-4.0.6</code>被很多pt站禁止访问</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="编译环境">编译环境</h3>
+<ul>
+  <li>路由设备: CMCC RAX3000M</li>
+  <li>编译系统: Ubuntu 22.04, Passwd:123456</li>
+  <li>注1: Ubuntu版本较低(20.04)会和OpenWRT开发者的环境出现差异,无法编译新版本.</li>
+  <li>
+    <p>注2: 编译固件+常用包需要空间<code class="language-plaintext highlighter-rouge">&gt;35G</code>, 虚拟机需要给足够空间</p>
+  </li>
+  <li>如果使用老板本的openwrt可能找不到支持的设备,更新到较新的分支<code class="language-plaintext highlighter-rouge">git checkout v23.05.3</code></li>
+  <li>不同的发行版openwrt/immortalwrt支持的软件/设备/显示的内容, <a href="https://github.com/immortalwrt/immortalwrt/discussions/1109#discussioncomment-8073987">简单的区别@CrazyBoyFeng
+</a></li>
+</ul>
+
+<h3 id="源码下载">源码下载</h3>
+<ul>
+  <li>不仅是<code class="language-plaintext highlighter-rouge">./scripts/feeds</code>需要科学上网环境</li>
+  <li>编译过程中有些包如<code class="language-plaintext highlighter-rouge">frp</code>也会联网下载,使用全局代理或者<code class="language-plaintext highlighter-rouge">proxychains</code>方法</li>
+  <li>参考<a href="https://github.com/immortalwrt/immortalwrt/tree/openwrt-23.05">immortalwrt</a></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>bash <span class="nt">-c</span> <span class="s1">'bash &lt;(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'</span>
+<span class="c">#这里采用immortalwrt，没使用openwrt，是因为immortalwrt支持更多的软件</span>
+git clone <span class="nt">-b</span> openwrt-23.05 <span class="nt">--single-branch</span> <span class="nt">--filter</span><span class="o">=</span>blob:none https://github.com/immortalwrt/immortalwrt
+<span class="nb">cd </span>immortalwrt 
+<span class="c">#切换到最新的分支,不要使用默认的SNAPSHOT分支，</span>
+git checkout v23.05.0
+<span class="c">#</span>
+<span class="c">#更新feed</span>
+./scripts/feeds update <span class="nt">-a</span>
+./scripts/feeds <span class="nb">install</span> <span class="nt">-a</span>
+</code></pre></div></div>
+
+<h3 id="可选添加第三方插件-istore">[可选]添加第三方插件: istore</h3>
+<ul>
+  <li>项目地址<a href="https://github.com/linkease/istore">istore</a></li>
+  <li>可以直接命令安装，但是出错了，集成在固件里可以使用</li>
+  <li>添加istore后，可能会改动immortalwrt的源为openwrt,注意修改回来</li>
+  <li>更多的问题，放到本文的后面</li>
+  <li>128M的小设备就别添加了</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo &gt;&gt; feeds.conf.default
+echo 'src-git istore https://github.com/linkease/istore;main' &gt;&gt; feeds.conf.default
+./scripts/feeds update istore
+./scripts/feeds install -d y -p istore luci-app-store
+</code></pre></div></div>
+
+<h3 id="设置固件包参数">设置固件包参数</h3>
+<ul>
+  <li><strong>注:有些包是特定发行版才有的,例如immortalwrt和openwrt在这里的结果就不同</strong>
+– 不同发行版默认开启包也是不同，例如immortalwrt对cmcc rax3000默认开启了usb的支持，而openwrt默认不开启</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">*</code>代表编入固件,<code class="language-plaintext highlighter-rouge">M</code>表示编译成模块或者IPK包,<code class="language-plaintext highlighter-rouge">空</code>不编译</strong></li>
+  <li><strong>注:编译的包多了,<code class="language-plaintext highlighter-rouge">/rom</code>占用的空间就大, 相应的<code class="language-plaintext highlighter-rouge">/overlay</code>(<code class="language-plaintext highlighter-rouge">/dev/ubi</code>)空间就小了</strong>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make menuconfig
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="我常编译的包">我常编译的包</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Base system
+├── Customize busybox options
+Administration
+├── htop
+Development
+├── diffutils
+Extra packages
+├── ipv6helper
+Kernel modules
+│   └── Filesystems
+│       ├── kmod-fs-ext4 #挂载ext4格式的u盘时用
+│   └──USB Support
+│       ├── kmod-usb-storage # u盘
+LuCi
+│   └── Applications
+│       ├── luci-app-fileassistant #在luci界面浏览编辑下载文件
+│       ├── luci-app-samba4  #smb共享, ksmbd能用，但是vivo的手机管理器无法正常连接
+│       ├── luci-app-passwall
+│       ├── luci-app-qbittorrent
+│       ├── luci-app-store #添加store的源后才有
+│       ├── luci-app-ttyd #luci界面终端
+│       ├── luci-app-zerotier
+│   └── Themes
+│       ├── luci-theme-argon
+Network
+│   └── File Transfer
+│       ├── rsync    #这是我向路由器推送文件使用的
+│       ├── rsyncd
+│       ├── wget-ssl #不要开wget-nossl,不然默认用wget下载容易出错
+│   └── Filesystem
+│       ├── nfs-kernel-server 
+│   └── Firewall
+│       ├── ip6tables-extra
+│       ├── ip6tables-mod-nat
+│       ├── ip6tables-nft #旧版名为ip6table
+│   └── Version Control Systems
+│       ├── git #同步代码用
+│   └── SSH
+│       ├── openssh-client (不要编译,Dropbear有ssh的功能,安装后还要配置哪个ssh客户端负责git)
+│       ├── openssh-server (不要编译,Dropbear有ssh的功能,两个会冲突,编译后开机也只能2选1 )
+│       ├── openssh-sftp-server (SFTP服务,要编译)
+│   └── Web Servers/Proxies
+│       ├── clash #默认的仓库地址GO PKG:=github.com/Dreamacro/clash已经失效了，这个无法编译通过
+Utilities
+│   └── Disc
+│       ├── parted
+│   └── Editors
+│       ├── vim-full
+│   └── Filesystem
+│       ├── e2fsprogs #格式化U盘位ext4, mkfs.ext4
+│   └── shadow-utils #创建新用户用
+│   └── lsof #查看端口,用于查看和clash端口冲突的程序
+</code></pre></div></div>
+
+<h4 id="精简包">精简包</h4>
+<p>配置好内核的md5后，只安装几个基础的包也是可以使用的</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Extra packages
+├── ipv6helper
+luci
+│   └── Applications
+│       ├── luci-app-fileassistant #在luci界面浏览编辑下载文件
+│       ├── luci-app-qbittorrent
+│       ├── luci-app-store #添加store的源后才有
+│       ├── luci-app-ttyd #luci界面终端
+│       ├── luci-app-zerotier
+│   └── Themes
+│       ├── luci-theme-argon
+Network
+│   └── File Transfer
+│       ├── rsync    #这是我向路由器推送文件使用的
+│       ├── rsyncd
+│       ├── wget-ssl #不要开wget-nossl,不然默认用wget下载容易出错
+│   └── Filesystem
+│       ├── nfs-kernel-server 
+│   └── Firewall
+│       ├── ip6tables-extra
+│       ├── ip6tables-mod-nat
+│       ├── ip6tables-nft #旧版名为ip6table
+│   └── SSH
+│       ├── openssh-sftp-server (SFTP服务,要编译)
+</code></pre></div></div>
+
+<p>其他包opkg即可</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg install htop
+</code></pre></div></div>
+
+<h4 id="与内核相关的包">与内核相关的包</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Kernel modules
+│   └── Filesystems
+│       ├── kmod-fs-ext4 #挂载ext4格式的u盘时用
+│   └──USB Support
+│       ├── kmod-usb-storage # u盘
+│       ├── kmod-usb2 #usb 2.0
+│       ├── # kmod-usb3 #usb 3.0
+│       ├── # kmod-usb-storage-extras #这些不安装也可以识别U盘
+│       ├── # kmod-scsi-core
+│       ├── # kmod-scsi-generic
+│       ├── # kmod-usb-core  
+│       ├── # kmod-usb-uhci 
+│       ├── # kmod-usb-ohci
+Utilities
+│   └── Filesystem
+│       ├── e2fsprogs #格式化U盘位ext4, mkfs.ext4
+</code></pre></div></div>
+
+<h4 id="查找特定包的位置">查找特定包的位置</h4>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">make menuconfig</code>后<code class="language-plaintext highlighter-rouge">/</code>搜索</strong></li>
+  <li><strong>推荐: 网页查找</strong>, 搜索<code class="language-plaintext highlighter-rouge">openwrt package package_name</code></li>
+  <li>
+    <ul>
+      <li>如通过<code class="language-plaintext highlighter-rouge">https://openwrt.org/packages/pkgdata/ip6tables-extra</code>页面为例,可以看到:<code class="language-plaintext highlighter-rouge">Categories:network---firewall</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="可选推荐设置编译的内核依赖与镜像仓库相同">[可选、推荐]设置编译的内核依赖与镜像仓库相同</h3>
+<ul>
+  <li><strong>主要解决: opkg安装涉及内核的软件时报错<code class="language-plaintext highlighter-rouge">cannot find dependency kernel (= 内核版本-1-仓库编译的md5)</code></strong></li>
+  <li>
+    <ul>
+      <li>原因1. 本地编译的内核md5与opkg仓库的不同</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>原因2. 本地编译环境变化，编译的离线内核ipk文件不满足依赖关系</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>原因3. 不同发行版(openwrt/immortalwrt/…)的内核版本和md5不同，immortalwrt固件使用openwrt的仓库时，也无法满足内核的依赖关系</li>
+    </ul>
+  </li>
+  <li><strong>解决方案: 强制本地内核的md5与opkg仓库相同</strong>, 参考<a href="https://blog.csdn.net/bjr2016/article/details/107776801">Openwrt 自编译后安装官方ipk时产生kernel MD5不兼容的问题处理@bjr2016</a></li>
+  <li><strong>注:虽然大多数的kmod包都可以安装了，但是如果还是不能正常工作（利于usb接口），还是集成到固件里更稳</strong></li>
+</ul>
+
+<h4 id="查看仓库内核的md5">查看仓库内核的md5</h4>
+<p>如<code class="language-plaintext highlighter-rouge">https://downloads.immortalwrt.org/releases/23.05.0/targets/mediatek/filogic/kmods/</code>(<strong>注意不同的路由器/平台此网址有差异, cmcc rax3000m是<code class="language-plaintext highlighter-rouge">mediatek</code>平台</strong>)<br />
+看到<code class="language-plaintext highlighter-rouge">5.15.137-1-904c4c7394bedf0cdae64cbc242922fd</code></p>
+
+<h4 id="修改md5">修改md5</h4>
+<p>这样替换</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi include/kernel-defaults.mk
+</code></pre></div></div>
+<p>注意是<code class="language-plaintext highlighter-rouge">Tab</code>键+<code class="language-plaintext highlighter-rouge">echo ...</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        #grep '=[ym]' $(LINUX_DIR)/.config.set | LC_ALL=C sort | $(MKHASH) md5 &gt; $(LINUX_DIR)/.vermagic
+        echo 904c4c7394bedf0cdae64cbc242922fd &gt; $(LINUX_DIR)/.vermagic
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi package/kernel/linux/Makefile
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ifeq ($(DUMP),)
+  #STAMP_BUILT:=$(STAMP_BUILT)_$(shell $(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5)
+  STAMP_BUILT:=$(STAMP_BUILT)_904c4c7394bedf0cdae64cbc242922fd
+  -include $(LINUX_DIR)/.config
+endif
+</code></pre></div></div>
+
+<h4 id="重新编译">重新编译</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make V=s
+#报错依赖则删除
+rm bin/targets/mediatek/filogic/packages/*
+make V=s
+</code></pre></div></div>
+
+<p>更新之后</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@vmnode:/data/openwrt/cmcc/immortalwrt$ ls bin/targets/mediatek/filogic/packages/ | grep kernel
+kernel_5.15.137-1-904c4c7394bedf0cdae64cbc242922fd_aarch64_cortex-a53.ipk
+</code></pre></div></div>
+
+<h3 id="开始编译">开始编译</h3>
+<h4 id="全部编译">全部编译</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make V=s #设置V=s, 可以看详细信息，检查报错
+</code></pre></div></div>
+
+<h4 id="编译特定包的方法">编译特定包的方法</h4>
+<p>以<code class="language-plaintext highlighter-rouge">subconverter</code>为例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@cndaqiang:~/immortalwrt$ ls package/feeds/packages/subconverter/
+files  Makefile  patches
+cndaqiang@cndaqiang:~/immortalwrt$ make package/feeds/packages/subconverter/compile V=s
+make[2]: Entering directory '/home/cndaqiang/immortalwrt/scripts/config'
+make[2]: 'conf' is up to date.
+</code></pre></div></div>
+
+<h4 id="编译特定版本包的方法">编译特定版本包的方法</h4>
+<p>以transmission为例，查看<code class="language-plaintext highlighter-rouge">https://github.com/immortalwrt/packages/tree/master/net/transmission</code>更新记录，
+替换<code class="language-plaintext highlighter-rouge">package/feeds/packages/transmission/</code>中的内容(主要就是Makefile文件里面定义了软件版本)
+编译</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make  package/feeds/packages/transmission/compile V=s
+</code></pre></div></div>
+
+<p>以qBit为例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /data/openwrt/immortalwrt/feeds/packages/net/qBittorrent-Enhanced-Edition
+rm -rf *
+#把旧版的内容https://github.com/immortalwrt/packages/tree/f5c7d4105d60ea36b4ea218adc6bf76010654fdb/net/qBittorrent-Enhanced-Edition，下载到本文件夹
+make package/feeds/packages/qBittorrent-Enhanced-Edition/compile V=s
+</code></pre></div></div>
+
+<h4 id="不编译固件只编译特定包">不编译固件，只编译特定包</h4>
+<p>先编译工具链</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make tools/compile V=s
+make toolchain/compile V=s
+</code></pre></div></div>
+<p>有的还依赖内核</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make target/linux/compile  V=s
+</code></pre></div></div>
+<p>再进行编译就好了</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(base) cndaqiang@vmnode:/data/openwrt/immortalwrt$ make  package/feeds/packages/transmission/compile V=s -j6
+(base) cndaqiang@vmnode:/data/openwrt/immortalwrt$ ls bin/packages/mipsel_24kc/packages/
+libcurl4_8.7.1-r1_mipsel_24kc.ipk             libnatpmp1_20150609-3_mipsel_24kc.ipk         transmission-daemon_4.0.5-1_mipsel_24kc.ipk
+libdeflate_1.18-1_mipsel_24kc.ipk             libnghttp2-14_1.57.0-1_mipsel_24kc.ipk        transmission-remote_4.0.5-1_mipsel_24kc.ipk
+libdht_2022-04-27-11123089-1_mipsel_24kc.ipk  libpsl5_0.21.2-1_mipsel_24kc.ipk              transmission-web_4.0.5-1_all.ipk
+libidn2_2.3.4-1_mipsel_24kc.ipk               libutp_2023-02-14-c95738b1-1_mipsel_24kc.ipk  
+libminiupnpc_2.2.3-1_mipsel_24kc.ipk          transmission-cli_4.0.5-1_mipsel_24kc.ipk 
+</code></pre></div></div>
+
+<h4 id="科学编译的方法">科学编译的方法</h4>
+<ul>
+  <li>a. 在ubuntu的系统里设置了socks代理</li>
+  <li>b. proxychains编译
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install proxychains
+vi /etc/proxychains.conf
+#替换代理为 socks5 192.168.192.204 10092
+proxychains make -j1 V=s
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="编译结果">编译结果</h3>
+<h4 id="编译固件目录">编译固件目录</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@cndaqiang:~/immortalwrt$ tree bin
+bin
+├── packages
+│   └── aarch64_cortex-a53
+│       ├── 这里都是一些常规的包,后期用opkg从公共仓库也可以安装
+│       ├── base
+│       │   ├── XXXXXX.ipk
+│       │   ├── XXXXXX_aarch64_cortex-a53.ipk.ipk
+│       │   ├── index.json
+│       │   ├── Packages文件是用来建立ipk的仓库用,有这个文件就可以作为固件仓库使用
+│       │   ├── Packages
+│       │   ├── Packages.gz
+│       │   ├── Packages.manifest
+│       │   ├── Packages.sig
+│       ├── luci
+│       │   ├── 同上
+│       ├── packages
+│       │   ├── 同上
+│       ├── routing
+│       │   ├── 同上
+│       └── telephony
+│           └── 同上
+└── targets
+    └── mediatek
+        └── filogic
+            ├── config.buildinfo
+            ├── feeds.buildinfo
+            ├── 这里是打包的固件
+            ├── immortalwrt-mediatek-filogic-cmcc_rax3000m-nand-ubootmod-initramfs-kernel.bin
+            ├── immortalwrt-mediatek-filogic-cmcc_rax3000m-nand-ubootmod.manifest
+            ├── immortalwrt-mediatek-filogic-cmcc_rax3000m-nand-ubootmod-squashfs-factory.bin
+            ├── factory.bin U-Boot直接上传这一个
+            ├── immortalwrt-mediatek-filogic-cmcc_rax3000m-nand-ubootmod-squashfs-sysupgrade.bin 
+            ├── sysupgrade.binOpenWRT后台上传这个更新，不同的OpenWRT系统会提示警告,我在换固件警告时还是采用U-Boot上传factory版本,仅在更新自己固件时采用sysupgrade.bin
+            ├── 有时候刷的factory.bin有各种异常问题,再更新一个sysupgrade.bin,并不保存配置,很多问题就消失了
+            ├── packages
+            │   ├── 一些额外的包,如kmod,和内核md5有关,后期如果内核版本不一样，需要重新打包或者从这里编译
+            │   ├── 同上base
+            ├── profiles.json
+            ├── sha256sums
+            └── version.buildinfo
+</code></pre></div></div>
+
+<h4 id="搭建opkg镜像">搭建opkg镜像</h4>
+<ul>
+  <li>可以使用国内的镜像<code class="language-plaintext highlighter-rouge">https://mirrors.cernet.edu.cn/immortalwrt</code></li>
+  <li>这里提供两种自建镜像的方法</li>
+</ul>
+
+<h5 id="http版">http版</h5>
+<ul>
+  <li>把编译目录<code class="language-plaintext highlighter-rouge">/immortalwrt/bin/</code>中的文件复制到op的<code class="language-plaintext highlighter-rouge">www</code>目录即可</li>
+  <li>局域网镜像<code class="language-plaintext highlighter-rouge">rsync -avu ./bin/ /data/blog/blog.cndaqiang/localshare/</code></li>
+</ul>
+
+<h5 id="本地文件版">本地文件版</h5>
+<p>#编译服务器推送仓库到路由器</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rsync -avu /home/cndaqiang/immortalwrt/bin/ root@192.168.12.1:/home/NFS/immortalwrt-23.05/
+#路由器需要opkg install rsync
+</code></pre></div></div>
+<p>修改仓库配置</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mv /etc/opkg/distfeeds.conf /etc/opkg/distfeeds.conf.bak
+echo "
+src/gz cndaqianglocal_base       file:///home/NFS/immortalwrt-23.05/packages/aarch64_cortex-a53/base
+src/gz cndaqianglocal_luci       file:///home/NFS/immortalwrt-23.05/packages/aarch64_cortex-a53/luci
+src/gz cndaqianglocal_packages   file:///home/NFS/immortalwrt-23.05/packages/aarch64_cortex-a53/packages
+src/gz cndaqianglocal_routing    file:///home/NFS/immortalwrt-23.05/packages/aarch64_cortex-a53/routing
+src/gz cndaqianglocal_telephony  file:///home/NFS/immortalwrt-23.05/packages/aarch64_cortex-a53/telephony
+src/gz cndaqianglocal_targets    file:///home/NFS/immortalwrt-23.05/targets/mediatek/filogic/packages
+" &gt; /etc/opkg/distfeeds.conf
+</code></pre></div></div>
+
+<h2 id="安装系统">安装系统</h2>
+<h3 id="终端升级">终端升级</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#默认保存了config的
+root@OpenWrt:/tmp# sysupgrade immortalwrt-23.05.0-ath79-nand-netgear_wndr3700-v4-squashfs-sysupgrade.bin
+</code></pre></div></div>
+
+<h3 id="web升级">web升级</h3>
+<ul>
+  <li>不同发布版的openwrt升级不建议保留配置</li>
+  <li>设置备份文件列表
+<code class="language-plaintext highlighter-rouge">luci&gt;系统&gt;备份与升级&gt;配置</code>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/cndaqiang
+/etc/rc.local
+/etc/init.d/cndaqiang_clash
+/etc/opkg/distfeeds.conf
+/www/clash-dashboard #clash
+/root #git, .ssh等
+#nfs、zerotier的配置可以自动保存不用管
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="全新安装后的操作">全新安装后的操作</h3>
+<ul>
+  <li>新装的系统如果各种异常,重置系统</li>
+  <li>设置密码<code class="language-plaintext highlighter-rouge">ssh</code>后<code class="language-plaintext highlighter-rouge">passwd</code>就好</li>
+  <li>如果不恢复其他备份, 恢复下<code class="language-plaintext highlighter-rouge">/etc/dropbear</code>服务器的key</li>
+  <li>WAN口上网设置, dns, ipv6</li>
+  <li>修改lan网段</li>
+  <li>设置备份列表</li>
+  <li>USB挂载</li>
+  <li>可以按照下面的方式配置<code class="language-plaintext highlighter-rouge">clash,nat6</code>,也可以直接上传之前备份文件解压缩的<code class="language-plaintext highlighter-rouge">/etc/cndaqiang</code>文件夹</li>
+  <li>检查opkg的镜像</li>
+</ul>
+
+<h2 id="随手记录">随手记录</h2>
+<ul>
+  <li>使用外部硬盘做overlay时，网页恢复/恢复操作无效，只能手动删除/overlay中的文件，再去执行</li>
+  <li>初次设置完overlay后，设置就被清空了，还要重新配置</li>
+</ul>
+
+<h2 id="关于dropbear">关于Dropbear</h2>
+<p>Openwrt默认不编译<code class="language-plaintext highlighter-rouge">openssh-server/client</code>,<code class="language-plaintext highlighter-rouge">Dropbear</code>提供<code class="language-plaintext highlighter-rouge">openssh-server/client</code>的服务</p>
+<ul>
+  <li>Dropbear不支持SFTP,需要安装<a href="https://openwrt.org/docs/guide-user/services/nas/sftp.server">openssh-sftp-server</a></li>
+  <li>key</li>
+  <li>
+    <ul>
+      <li>生成密钥对: <code class="language-plaintext highlighter-rouge">( dropbearkey -y -f id_dropbear 2&gt;/dev/null || dropbearkey -t rsa -f id_dropbear ) | grep "^ssh-rsa " &gt; id_dropbear.pub</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>密钥:<code class="language-plaintext highlighter-rouge">dropbearkey -t ed25519 -f ~/.ssh/id_dropbear</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>查看公钥:<code class="language-plaintext highlighter-rouge">dropbearkey -y -f ~/.ssh/id_dropbear</code>
+        <blockquote>
+          <ul>
+            <li>
+              <ul>
+                <li><code class="language-plaintext highlighter-rouge">Ed25519通常比RSA更短,更快,相对安全</code></li>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <li>一般来说，如果性能和简洁性是关键因素，而且你不需要长密钥，那么Ed25519可能是一个更好的选择。如果你需要与现有系统或标准兼容，或者有特定的安全性需求，可能会选择RSA</li>
+              </ul>
+            </li>
+          </ul>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li>Openwrt 服务器的密钥保存在<code class="language-plaintext highlighter-rouge">/etc/dropbear/</code>,网页端配置的密钥登录也在该文件</li>
+  <li>Dropbear的ssh客户端不支持<code class="language-plaintext highlighter-rouge">-D</code>,无法做ssh隧道</li>
+</ul>
+
+<h2 id="dns配置">dns配置</h2>
+<p>发现单独设置这些DNS,都可能无法解析</p>
+<ul>
+  <li>LAN接口</li>
+  <li>WAN接口</li>
+  <li><code class="language-plaintext highlighter-rouge">dnsmasq</code></li>
+</ul>
+
+<h3 id="dns最终设置">DNS最终设置</h3>
+<ul>
+  <li>LAN配置和下面一样的DNS</li>
+  <li><code class="language-plaintext highlighter-rouge">:/luci/admin/network/dhcp/常规设置</code>中设置dns转发(注:这里只能填ipv4的dns,填v6的解析会出问题)
+<img src="/uploads/2024/01/dnsmasq_trans.jpg" alt="" /></li>
+  <li>有时候还是没法解析,就重启<code class="language-plaintext highlighter-rouge">dnsmasq</code>的服务</li>
+</ul>
+
+<h2 id="zerotier">zerotier</h2>
+<ul>
+  <li>开机后zerotier的启动速度较慢,耐心等待</li>
+  <li>防火墙的设置会导致无法访问zerotier</li>
+  <li><code class="language-plaintext highlighter-rouge">网络&gt;防火墙&gt;防火墙 - 区域设置&gt;常规设置&gt;入站数据&gt;接受</code> 才能正常使用zerotier</li>
+  <li>走zerotier共享的NFS目录速度读写慢于直接读写的,后台发现zerotier的CPU占用率较高</li>
+</ul>
+
+<h2 id="nfs">NFS</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod 777 /home/NFS
+vi /etc/exports
+</code></pre></div></div>
+<p>填入</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/NFS  192.168.192.0/24(rw,no_subtree_check,all_squash,anonuid=0,anongid=0)
+</code></pre></div></div>
+<p>重启</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/init.d/nfsd restart
+</code></pre></div></div>
+
+<p>客户端</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(base) cndaqiang@macmini ~$ showmount -e 192.168.192.101
+Exports list on 192.168.192.101:
+/home/NFS                           192.168.192.0/24
+#
+#
+mom=192.168.192.101
+sudo mount_nfs  -P -o nolocks,nosuid ${mom}:/home/NFS /Users/data
+</code></pre></div></div>
+
+<h3 id="路由器上层访问">路由器上层访问</h3>
+<ul>
+  <li>添加客户端ip到<code class="language-plaintext highlighter-rouge">exports</code></li>
+  <li>路由器内部又不能用这个wan的ip访问,真是怪了</li>
+</ul>
+
+<h4 id="rpc的111端口">rpc的111端口</h4>
+<ul>
+  <li>目前发现只能通过端口转发的形式实现</li>
+  <li>端口转发<code class="language-plaintext highlighter-rouge">wan:111 =&gt; lan:111</code></li>
+</ul>
+
+<h4 id="2049端口32777-32780端口">2049端口、32777-32780端口</h4>
+<p>转发或者开启入站规则都可以,只要把<code class="language-plaintext highlighter-rouge">2049,32777-32780</code>转发或者入站了就行</p>
+<ul>
+  <li>可以使用端口转发<code class="language-plaintext highlighter-rouge">wan:port=&gt;lan:paort</code></li>
+  <li>也可以开启入站规则: 所有区域到此设备<code class="language-plaintext highlighter-rouge">port</code></li>
+</ul>
+
+<p><img src="/uploads/2024/01/nfs_port.png" alt="" /></p>
+
+<h2 id="smb">smb</h2>
+<p>ksmb的用户和登录账户是两套</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ksmbd.adduser --add-user=cndaqiang
+</code></pre></div></div>
+<p>共享<code class="language-plaintext highlighter-rouge">/home/NFS/share</code></p>
+
+<h2 id="git">git</h2>
+<p>这里使用的是<code class="language-plaintext highlighter-rouge">dropbear</code>提供的ssh客户端,因此和普通linux上生成key的方式不同.</p>
+
+<p>初次使用时</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd .ssh
+( dropbearkey -y -f id_dropbear 2&gt;/dev/null || dropbearkey -t rsa -f id_dropbear ) | grep "^ssh-rsa " &gt; id_dropbear.pub
+</code></pre></div></div>
+<p>把<code class="language-plaintext highlighter-rouge">id_dropbear.pub</code>放到gitee就可以了</p>
+
+<h2 id="clash">clash</h2>
+<ul>
+  <li>因为是在路由器上,所以不仅满足了clash科学网站</li>
+  <li>在外面还可以走内网下载科学文献</li>
+  <li>默认<code class="language-plaintext highlighter-rouge">allow-lan: true</code>,虽然路由器下面可以用路由器的<code class="language-plaintext highlighter-rouge">wan ip</code>访问,路由器外面访问不了<code class="language-plaintext highlighter-rouge">wan ip</code>,放心</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CLASHDIR=/etc/cndaqiang/clash
+mylocalconfig=$CLASHDIR/mylocalconfig.yaml
+mkdir -p $CLASHDIR
+mkdir $CLASHDIR/bin
+mkdir $CLASHDIR/log
+
+########################## clash 的获取 ######################
+##### 使用openclash提供的
+##### ln -s /etc/openclash/clash $CLASHDIR/bin/
+##### 🌟🌟 从github下载
+##### 从https://github.com/vernesong/OpenClash/tree/core下载
+##### scp /Volumes/KPStoarge/ChromeDownload/clash-linux-arm64-2023.08.17-13-gdcc8d87.gz root@192.168.12.1:/home/NFS
+##### 🌟🌟🌟🌟🌟编译固件时集成 Netwrok/Web Servers/Proxies/clash
+##############################################################
+
+########################## clash-dashboard 的获取 #############
+##### 🌟🌟 从github下载
+##### wget 'https://codeload.github.com/cndaqiang/clash-dashboard/zip/refs/heads/gh-pages'
+##### 我已经提前下载好了
+cd /home/NFS
+unzip -x gh-pages
+mv clash-dashboard-gh-pages /www/clash-dashboard
+##### 访问地址 http://192.168.12.1/clash-dashboard
+##############################################################
+
+########################## subconverter 的获取 ################
+##### subconverter 负责将clash订阅地址转成clash配置文件 ##########
+##### 编译固件时集成,运行会出错,不推荐
+##### cp -r /etc/subconverter $CLASHDIR/subconverter
+##### 🌟🌟 从github下载
+##### wget https://github.com/tindy2013/subconverter/releases/download/v0.8.1/subconverter_aarch64.tar.gz
+##### 我已经提前下载好了
+cd $CLASHDIR/
+tar xzvf /home/NFS/subconverter_aarch64.tar.gz
+##############################################################
+
+########################## subconverter 的配置 ###################
+cd $CLASHDIR/subconverter
+#可以适当修改clash生成参数
+vi base/all_base.tpl
+mixed-port: N (注意:和N之前有空格)
+#输入文件
+cat &gt; $CLASHDIR/subconverter/generate.ini &lt;&lt;EOF
+[cndaqiang]
+path=config.yml
+target=clash
+ver=4
+url=http://dy.clashweb.site/api/v1/client/subscribe?token=cndaqiangstoken
+EOF
+#
+##############################################################
+
+#配置文件使用系统服务启动
+cat &gt;  $CLASHDIR/bin/restart-clash.sh &lt;&lt;EOF
+#!/bin/bash
+
+lsof -i :10092 | awk 'NR!=1 {print \$2}' | xargs kill
+#
+#新配置文件
+rm -rf $CLASHDIR/subconverter/config.yml
+cd $CLASHDIR/subconverter/
+$CLASHDIR/subconverter/subconverter -g --artifact "cndaqiang"
+if [ -f $CLASHDIR/subconverter/config.yml ]
+then
+        echo 下载$CLASHDIR/subconverter/config.yml成功
+        cp $CLASHDIR/subconverter/config.yml $CLASHDIR/subconverter/config.yml.bak
+else
+        echo 下载失败，使用备份$CLASHDIRh/subconverter/config.yml.bak
+        cp $CLASHDIR/subconverter/config.yml.bak $CLASHDIR/subconverter/config.yml
+fi
+#
+#添加自定义的规则, 如libgen走代理
+line=\$(grep -rn rules $CLASHDIR/subconverter/config.yml | awk  -F: '{ print \$1 }')
+sed -i \${line}a'\ \ - DOMAIN-KEYWORD,libgen,♻️ 自动选择           ' $CLASHDIR/subconverter/config.yml
+sed -i \${line}a'\ \ - DOMAIN-KEYWORD,sci-hub,♻️ 自动选择          ' $CLASHDIR/subconverter/config.yml      
+sed -i \${line}a'\ \ - DOMAIN-KEYWORD,sciencedirect,🎯 全球直连   ' $CLASHDIR/subconverter/config.yml    
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,aps.org,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml       
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,webofscience.com,🎯 全球直连 ' $CLASHDIR/subconverter/config.yml             
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,iop.org,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml           
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,scitation.org,🎯 全球直连    ' $CLASHDIR/subconverter/config.yml                 
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,elsevier.com,🎯 全球直连     ' $CLASHDIR/subconverter/config.yml                
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,wiley.com,🎯 全球直连        ' $CLASHDIR/subconverter/config.yml             
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,acs.org,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml           
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,nih.gov,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml           
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,springer.com,🎯 全球直连     ' $CLASHDIR/subconverter/config.yml                
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,nature.com,🎯 全球直连       ' $CLASHDIR/subconverter/config.yml              
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,science.org,🎯 全球直连      ' $CLASHDIR/subconverter/config.yml               
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,jps.jp,🎯 全球直连           ' $CLASHDIR/subconverter/config.yml               
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,xiaomi.eu,♻️ 自动选择         ' $CLASHDIR/subconverter/config.yml
+#
+#创建新策略组(自动筛选节点)
+sourceFile=$CLASHDIR/subconverter/config.yml
+includeFile=\${sourceFile}.chat.cndaqiang.in
+echo "  - name: ChatGPT" &gt; \$includeFile
+hang0=\$(grep -n '自动选择' \$sourceFile | grep name | awk -F: '{ print \$1 }')
+hang=\$((hang0+1))
+sed -n "\${hang},\\\$p" \$sourceFile  | awk '/^[[:space:]]*-/ {exit} {print}' &gt;&gt; \$includeFile
+#筛选节点
+sed -n "\${hang},\\\$p" \$sourceFile  | awk '/name/ {exit} {print}' | grep -i GPT &gt;&gt; \$includeFile
+#生成新的文件
+awk -v line="\${hang0}" -v includeFile="\$includeFile" 'NR==line{system("cat " includeFile )} {print}' \$sourceFile &gt; ${sourceFile}.tmp
+mv ${sourceFile}.tmp \$sourceFile
+rm \$includeFile
+line=\$(grep -rn rules \$sourceFile | awk  -F: '{ print \$1 }')
+GPT=\$(grep -i chatgpt \$sourceFile | grep name | head -1| sed 's/[,":{}]/ /g' | awk  '{ print \$3 }')
+if [ \$GPT ]
+then
+sed -i \${line}a'\ \ - DOMAIN-KEYWORD,openai, ChatGPT           ' \$sourceFile
+sed -i \${line}a'\ \ - DOMAIN-KEYWORD,perplexity, ChatGPT       ' \$sourceFile
+fi
+#
+
+#
+if [ ! -f $mylocalconfig ]; then touch $mylocalconfig;fi
+diff $CLASHDIR/subconverter/config.yml $mylocalconfig
+#如果两个文件不一致就生成备份旧文件并下载替换新的文件
+if [ ! "\$?" == 0 ]
+then
+  cp  $CLASHDIR/subconverter/config.yml $mylocalconfig
+fi
+#
+/usr/bin/clash -f $mylocalconfig | tee $CLASHDIR/log/clash.log  2&gt;&amp;1 &amp;
+
+#$CLASHDIR/bin/clash -f $mylocalconfig | tee $CLASHDIR/log/clash.log
+#$CLASHDIR/bin/clash -f $mylocalconfig &gt; $CLASHDIR/log/clash.log 2&gt;&amp;1 &amp;
+EOF
+chmod +x $CLASHDIR/bin/restart-clash.sh
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &gt;  $CLASHDIR/bin/stop-clash.sh &lt;&lt;EOF
+#!/bin/bash
+lsof -i :10092 | awk 'NR!=1 {print \$2}' | xargs kill
+EOF
+chmod +x $CLASHDIR/bin/stop-clash.sh
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &gt; $CLASHDIR/bin/cndaqiang_clash &lt;&lt; EOF
+#!/bin/sh /etc/rc.common
+
+START=99
+STOP=10
+
+start() {
+    echo "Starting My Clash Service"
+    $CLASHDIR/bin/restart-clash.sh
+    # 添加启动服务的命令
+}
+
+stop() {
+    echo "Stopping My Clash Service"
+    # 添加停止服务的命令
+    $CLASHDIR/bin/stop-clash.sh
+}
+
+restart() {
+    echo "Restarting My Clash Service"
+    stop
+    start
+}
+
+# 添加其他需要的函数
+
+# 添加其他需要的逻辑
+
+# Exit on unsupported action
+run "$@"
+EOF
+#
+chmod +x $CLASHDIR/bin/cndaqiang_clash
+cp $CLASHDIR/bin/cndaqiang_clash /etc/init.d/
+</code></pre></div></div>
+
+<p>开机启动、每日重启</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(/etc/init.d/cndaqiang_clash restart &amp;)
+0 1 * * * /etc/init.d/cndaqiang_clash restart
+</code></pre></div></div>
+
+<h3 id="clash占用存储的解决方案">clash占用存储的解决方案</h3>
+<p>路由器的空间小，上面方案输出的clash日志文件增加，长时间后会导致路由器没有空间出现各种异常</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#每天凌晨删除创建时间&gt;1天的文件
+0 0 * * * /usr/bin/find /etc/cndaqiang/clash/log/clash.log -type f -mtime  +1 -exec /bin/rm {} \;
+#删除大于1M的
+0 0 * * * /usr/bin/find /etc/cndaqiang/clash/log/clash.log -type f -size +1024k -exec /bin/rm {} \;
+#其他缓存
+0 0 * * * /usr/bin/find /etc/cndaqiang/clash/subconverter/cache -type f -mtime +1 -exec /bin/rm {} \;
+</code></pre></div></div>
+
+<h2 id="ipv6">ipv6</h2>
+<p><a href="https://www.cnblogs.com/cndaqiang/p/16632790.html">Openwrt 纯ipv6环境管理和上网</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(sleep 20; /etc/cndaqiang/nat6.sh &amp;)
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg install ip6tables kmod-ipt-nat6
+#如果换了overlay分区，怎么配置都不好就
+opkg upgrade ip6tables kmod-ipt-nat6
+#
+mkdir /etc/cndaqiang/
+vi /etc/cndaqiang/nat6.sh
+chmod +x /etc/cndaqiang/nat6.sh
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#/bin/bash
+#添加到开机启动就行
+#需要kmod-ipt-nat6
+# Wait until IPv6 route is up...                  .....................ipv6......
+line=0
+while [ $line -eq 0 ]
+do
+        sleep 5
+        line=`route -A inet6 | grep ::/0 | awk 'END{print NR}'`
+        #这个其实无效，就是为例检测ipv6是否正常
+done
+#添加默认路由
+ip -6 route add default via `ip -6 route | grep "default from" | awk 'NR==1{print $5,$6,$7}'`
+#如果有默认规则,则删除后重新添加
+if [ $? -gt 0 ]
+then
+ip -6 route delet default
+ip -6 route add default via `ip -6 route | grep "default from" | awk 'NR==1{print $5,$6,$7}'`
+fi
+
+#NAT转发
+ip6tables -t nat -A POSTROUTING -o `ip -6 route | grep "default from" | awk 'NR==1{print $7}'` -j MASQUERADE
+</code></pre></div></div>
+
+<h2 id="passwall">PassWall</h2>
+<ul>
+  <li>一般不使用,仅在需要全局环境编译软件时开启</li>
+  <li>默认开启访问控制,只允许特定设备访问</li>
+  <li>开启的socks也是可以局域网/zerotier的</li>
+</ul>
+
+<p><img src="/uploads/2024/01/passwall.png" alt="" /></p>
+
+<h3 id="暂时不支持https类型的节点订阅跳过此节点">暂时不支持https类型的节点订阅，跳过此节点</h3>
+<p>是订阅链接的原因</p>
+<ul>
+  <li>不要复制原机场的clash订阅,复制V2-Ray订阅地址能解析</li>
+</ul>
+
+<h2 id="istore使用记录">istore使用记录</h2>
+<ul>
+  <li>因为不是官方支持的设备，可能存在各种问题，谨慎使用</li>
+  <li><strong>做好固件备份和备份,有可能使用istore安装一个插件后系统出现各种奇怪现象</strong></li>
+  <li>系统的opkg配置不好的时候，istore也安装不好软件</li>
+  <li>istore安装的软件包都很大，普通的120M ram的路由器，安装一两个包就占满了，意义不大</li>
+</ul>
+
+<p>可以在网页luci&gt;iStore上直接安装插件,安装失败后,根据网页端显示的命令，在终端执行, 例如<code class="language-plaintext highlighter-rouge">is-opkg install app-meta-istorex</code>, 可以看到报错的原因</p>
+
+<p>报错</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>is-opkg install 'app-meta-qbittorrent'
+#.....
+Collected errors:
+ * check_data_file_clashes: Package qbittorrent-enhanced-edition wants to install file /usr/bin/qbittorrent-nox
+	But that file is already provided by package  * qBittorrent-static
+ * opkg_install_cmd: Cannot install package app-meta-qbittorrent.
+</code></pre></div></div>
+
+<p>存储空间不够</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Installing qbittorrent-enhanced-edition (4.6.5.10-2) to root...
+Collected errors:
+ * verify_pkg_installable: Only have 3932kb available on filesystem /overlay, pkg qbittorrent-enhanced-edition needs 7734
+ * opkg_install_cmd: Cannot install package app-meta-qbittorrent.
+</code></pre></div></div>
+
+<h2 id="ttyd">ttyd</h2>
+<p><a href="https://www.cnblogs.com/Magiclala/p/16935165.html">OpenWRT的TTYD终端显示已拒绝连接</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/init.d/ttyd
+#用#注释掉${interface:+-i $interface} \
+#重启ttyd服务
+</code></pre></div></div>
+
+<h2 id="挂载u盘">挂载U盘</h2>
+<ul>
+  <li>有的U盘有问题,换个U盘就好了</li>
+  <li>opkg安装的驱动<code class="language-plaintext highlighter-rouge">kmod-usb-storage kmod-usb2</code>, 若无效就集成在固件中</li>
+  <li>还要安装U盘的格式支持，例如ext4:<code class="language-plaintext highlighter-rouge">kmod-fs-ext4</code></li>
+</ul>
+
+<h2 id="报错">报错</h2>
+<h3 id="脚本存在无法运行">脚本存在无法运行</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@ImmortalWrt:/etc/cndaqiang/clash# /etc/cndaqiang/clash/bin/restart-clash.sh
+-ash: /etc/cndaqiang/clash/bin/restart-clash.sh: not found
+</code></pre></div></div>
+<p>因为脚本开头是用<code class="language-plaintext highlighter-rouge">bash</code>运行的,安装<code class="language-plaintext highlighter-rouge">bash</code>或者把开头调整为<code class="language-plaintext highlighter-rouge">ash</code></p>
+
+<h3 id="重启后root密码无法登录">重启后root密码无法登录</h3>
+<ul>
+  <li>新系统,仅初始化修改root密码</li>
+  <li>ssh 后 reboot</li>
+  <li>
+    <p>重启后就无法登录了, 主机的key也变了</p>
+  </li>
+  <li><strong>初步原因:<code class="language-plaintext highlighter-rouge">sshd</code>和<code class="language-plaintext highlighter-rouge">dropbear</code>两个服务冲突了</strong></li>
+  <li><strong>方案1:关闭系统的<code class="language-plaintext highlighter-rouge">sshd</code>项目开机自启</strong></li>
+  <li><strong>方案2:使用<code class="language-plaintext highlighter-rouge">sshd</code></strong>,自己修改<code class="language-plaintext highlighter-rouge">/etc/ssh/sshd_config</code>配置，自己提前放好<code class="language-plaintext highlighter-rouge">.ssh/authorized_keys</code></li>
+  <li>🌟<strong>最终采用的方案:固件不集成<code class="language-plaintext highlighter-rouge">openssh-server</code></strong></li>
+</ul>
+
+<h3 id="自己搭建的仓库签名错误-删除签名文件后再同步">自己搭建的仓库签名错误: 删除签名文件后再同步</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Downloading file:///home/NFS/immortalwrt-23.05/targets/mediatek/filogic/packages/Packages.sig
+Signature check failed.
+Remove wrong Signature file.
+</code></pre></div></div>
+<p>处理</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in $(find /home/NFS/immortalwrt-23.05 | grep Packages.sig)
+do
+echo rm $i
+done
+</code></pre></div></div>
+<p>再重新同步Packages</p>
+
+<h3 id="qbittorent无法启动">qbittorent无法启动</h3>
+<ul>
+  <li>参数设置错了，比如下载目录不存在、不可读写</li>
+  <li>文件系统变read-only了</li>
+</ul>
+
+<h3 id="qbittorent提示unauthorized">qbittorent提示<code class="language-plaintext highlighter-rouge">Unauthorized</code></h3>
+<p>qbitttorent识别lan口识别错了，尝试通过其他网卡访问qbittorent的webui，取消</p>
+<ul>
+  <li>启用“点击劫持”保护</li>
+  <li>启用跨站请求伪造 (CSRF) 保护</li>
+</ul>
+
+<p>等价于设置<code class="language-plaintext highlighter-rouge">/etc/qBittorrent/config/qBittorrent.conf</code>中</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WebUI\CSRFProtection=false            
+WebUI\ClickjackingProtection=false
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/09/12/openwrt-LuBan/">无线宝云路由器AX1800 JD-Cloud RE-CP-02 的OpenWRT配置
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/07/08/openwrt-server/">OpenWRT个人服务器:以E20C为例
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2023/12/09/QuantumultX/">Quantumult-X操作手册</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2024/01/25/mac-nfsd/">MacOS/FreeBSD 搭建nfs服务器</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

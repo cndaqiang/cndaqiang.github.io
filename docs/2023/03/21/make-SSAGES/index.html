@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>SSLAB服务器上编译基于lammps引擎的SSAGES</title>
+    <meta name="description" content="编译yambo">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2023/03/21/make-SSAGES/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>SSLAB服务器上编译基于lammps引擎的SSAGES</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2023-03-21
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#MD" title="Category: MD" rel="category">MD</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#ssages" title="Tag: ssages" rel="tag">ssages</a-->
+        <a href="/tag/#ssages" title="Tag: ssages" rel="tag">ssages</a>&nbsp;
+    
+        <!--a href="/tag/#lammps" title="Tag: lammps" rel="tag">lammps</a-->
+        <a href="/tag/#lammps" title="Tag: lammps" rel="tag">lammps</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#下载源代码" id="markdown-toc-下载源代码">下载源代码</a></li>
+  <li><a href="#注意" id="markdown-toc-注意">注意</a></li>
+  <li><a href="#编译" id="markdown-toc-编译">编译</a></li>
+  <li><a href="#后期更新lammps需要的package" id="markdown-toc-后期更新lammps需要的package">后期更新lammps需要的package</a></li>
+  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+  <li><a href="#附录" id="markdown-toc-附录">附录</a>    <ul>
+      <li><a href="#修改的部分代码使用gitee镜像" id="markdown-toc-修改的部分代码使用gitee镜像">修改的部分代码使用gitee镜像</a></li>
+      <li><a href="#修改的代码无需网络环境编译" id="markdown-toc-修改的代码无需网络环境编译">修改的代码无需网络环境编译</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>编译yambo</p>
+
+<h2 id="下载源代码">下载源代码</h2>
+<p>因为编译的过程需要从github下载源码,国内服务器网络不畅.
+将需要的代码同步到gitee平台.并修改SSAGES源码中下载其他依赖的环境,修改内容见附录</p>
+
+<h2 id="注意">注意</h2>
+<ul>
+  <li>编译完SSAGES后,lammps的源代码就被改了,后期更新lammps的包,就不能在lammps目录编译,而是要在SSAGES的目录执行编译命令</li>
+  <li>查看<code class="language-plaintext highlighter-rouge">./hooks/lammps/CMakeLists.txt</code>可以得到支持的lammps版本</li>
+</ul>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set</span> <span class="p">(</span>SUPPORTED_LAMMPS_VERSIONS
+     <span class="s2">"10 Aug 2015"</span>  <span class="s2">"7 Dec 2015"</span>
+     <span class="s2">"16 Feb 2016"</span> <span class="s2">"14 May 2016"</span> <span class="s2">"30 Jul 2016"</span>
+     <span class="s2">"5 Nov 2016"</span> <span class="s2">"17 Nov 2016"</span>
+     <span class="s2">"31 Mar 2017"</span> <span class="s2">"11 Aug 2017"</span>
+     <span class="s2">"16 Mar 2018"</span> <span class="s2">"22 Aug 2018"</span> <span class="s2">"12 Dec 2018"</span>
+     <span class="s2">"5 Jun 2019"</span> <span class="s2">"7 Aug 2019"</span>
+     <span class="s2">"3 Mar 2020"</span> <span class="s2">"29 Oct 2020"</span>
+    <span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="编译">编译</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#环境
+module load compiler/gcc/gcc_8.3.0
+module load mpi/openmpi/gcc/4.1.1
+#去掉intel
+delet=intel
+VARS=( CP_INTEL_DIR PATH LD_LIBRARY_PATH LIBRARY_PATH  MANPATH INCLUDE FPATH CPATH INTEL_LICENSE_FILE MKLROOT TBBROOT MIC_LD_LIBRARY_PATH NLSPATH)
+for VAR in ${VARS[@]}
+do
+    unset A
+    for term in $(echo $(eval echo \$$VAR) | awk -F: '{for(i=1;i&lt;=NF;i++){printf "%s ", $i}}')
+    do
+        if [ $( echo $term | grep -v $delet ) ]
+        then
+            if [ ! $A ]
+            then
+                A=$term
+            else
+                A=$A:$term
+            fi
+        fi
+    done
+    export $VAR=$A
+done
+
+#创建编译目录
+ROOT=$HOME/soft/gnu8-openmpi411/
+mkdir -p $ROOT
+cd $ROOT
+#lammps
+wget https://download.lammps.org/tars/lammps-29Oct2020.tar.gz --no-check-certificate
+tar xzvf lammps-29Oct2020.tar.gz
+cd lammps-29Oct20/src
+make serial -j30
+make mpi -j20
+
+#SSAGES
+cd $ROOT
+git clone https://gitee.com/cndaqiang/ssages_mirror_gitee.git
+#如果没有网络环境，可以上传我打包的无网络版本https://gitee.com/cndaqiang/ssages_mirror_local
+cd ssages_mirror_gitee
+mkdir build ; cd build
+#需要制定gcc路径,不然找的还是系统默认的gcc 4.8.5
+cmake -DLAMMPS_SRC=$ROOT/lammps-29Oct20/src -DCMAKE_C_COMPILER=/public/software/compiler/gcc-8.3.0/bin/gcc -DCMAKE_CXX_COMPILER=/public/software/compiler/gcc-8.3.0/bin/g++ ..
+make -j10
+</code></pre></div></div>
+
+<h2 id="后期更新lammps需要的package">后期更新lammps需要的package</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd $ROOT/lammps-29Oct20/src
+make yes-RIGID yes-KSPACE yes-MOLECULE yes-CLASS2
+cd $ROOT/ssages_mirror_gitee/build/
+make -j20
+</code></pre></div></div>
+<p>环境变量</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "
+export LD_LIBRARY_PATH=$ROOT/ssages_mirror_gitee/build:\$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$ROOT/lammps-29Oct20/src/:\$LD_LIBRARY_PATH
+export PATH=$ROOT/ssages_mirror_gitee/build:\$PATH
+export PATH=$ROOT/lammps-29Oct20/src/:\$PATH
+"
+</code></pre></div></div>
+
+<h2 id="运行">运行</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd $ROOT/ssages_mirror_gitee//Examples/User/Umbrella/LAMMPS
+$mpirun -np 4 $ROOT/ssages_mirror_gitee/build/ssages umbrella_input.json
+</code></pre></div></div>
+<p>输出</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[SSLAB cndaqiang@login2 LAMMPS]$mpirun -np 4 $ROOT/ssages_mirror_gitee/build/ssages umbrella_input.json
+--------------------------------------------------------------------------
+WARNING: There was an error initializing an OpenFabrics device.
+
+  Local host:   login2
+  Local device: mlx5_0
+--------------------------------------------------------------------------
+LAMMPS (29 Oct 2020)
+Reading data file ...
+  orthogonal box = (-22.206855 -19.677099 -19.241968) to (18.793145 21.322901 21.758032)
+  1 by 2 by 2 MPI processor grid
+  reading atoms ...
+  14 atoms
+  scanning bonds ...
+  4 = max bonds/atom
+  scanning angles ...
+  6 = max angles/atom
+  scanning dihedrals ...
+  9 = max dihedrals/atom
+  reading bonds ...
+  13 bonds
+  reading angles ...
+  24 angles
+  reading dihedrals ...
+  27 dihedrals
+Finding 1-2 1-3 1-4 neighbors ...
+  special bond factors lj:    0.0      0.0      0.5
+  special bond factors coul:  0.0      0.0      0.5
+     4 = max # of 1-2 neighbors
+     6 = max # of 1-3 neighbors
+     9 = max # of 1-4 neighbors
+    13 = max # of special neighbors
+  special bonds CPU = 0.000 seconds
+  read_data CPU = 0.010 seconds
+14 atoms in group mobile
+PPPM initialization ...
+  using 12-bit tables for long-range coulomb (../kspace.cpp:328)
+  G vector (1/distance) = 0.25404746
+  grid = 30 30 30
+  stencil order = 5
+  estimated absolute RMS force accuracy = 3.1790139e-06
+  estimated relative force accuracy = 9.573506e-09
+  using double precision KISS FFT
+  3d grid and FFT values/proc = 17908 7200
+Neighbor list info ...
+  update every 1 steps, delay 0 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 14
+  ghost atom cutoff = 14
+  binsize = 7, bins = 6 6 6
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair lj/cut/coul/long, perpetual
+      attributes: half, newton on
+      pair build: half/bin/newton
+      stencil: half/bin/3d/newton
+      bin: standard
+Setting up Verlet run ...
+  Unit style    : real
+  Current step  : 0
+  Time step     : 1.0
+Per MPI rank memory allocation (min/avg/max) = 13.25 | 13.27 | 13.29 Mbytes
+---------------- Step        0 ----- CPU =      0.0000 (sec) ----------------
+TotEng   =         4.3057 KinEng   =         0.0000 PotEng   =         4.3057
+E_bond   =         1.4573 E_angle  =         0.8367 E_dihed  =         0.0000
+E_impro  =         0.0000 E_vdwl   =         0.0530 E_coul   =         8.0587
+E_long   =        -6.0998 Temp     =         0.0000 Press    =        45.1869
+Volume   =     68921.0000
+---------------- Step      100 ----- CPU =      0.1748 (sec) ----------------
+TotEng   =        96.2003 KinEng   =        49.3740 PotEng   =        46.8263
+E_bond   =         6.7676 E_angle  =        35.7110 E_dihed  =         1.8397
+E_impro  =         0.0000 E_vdwl   =         1.0362 E_coul   =         7.5581
+E_long   =        -6.0864 Temp     =      1274.1505 Press    =        -7.6435
+Volume   =     68921.0000
+</code></pre></div></div>
+
+<h2 id="附录">附录</h2>
+<h3 id="修改的部分代码使用gitee镜像">修改的部分代码使用gitee镜像</h3>
+<p>注:Googletest没有用到，其实不用修改</p>
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">(python37)</span> cndaqiang@mommint:~/code/ssages_mirror_gitee$ git diff fb178779371cf8d7bbc25ce6b86f31b79395489c
+<span class="gh">diff --git a/cmake/Modules/FetchGoogletest.cmake b/cmake/Modules/FetchGoogletest.cmake
+index ec53a9b..f490da4 100644
+</span><span class="gd">--- a/cmake/Modules/FetchGoogletest.cmake
+</span><span class="gi">+++ b/cmake/Modules/FetchGoogletest.cmake
+</span><span class="p">@@ -1,4 +1,4 @@</span>
+<span class="gd">-set(GTEST_REPOSITORY "https://github.com/google/googletest.git")
+</span><span class="gi">+set(GTEST_REPOSITORY "https://gitee.com/cndaqiang/googletest.git")
+</span> set(GTEST_TAG "release-1.10.0")
+
+ # http://stackoverflow.com/questions/9689183/cmake-googletest
+<span class="gh">diff --git a/cmake/Modules/FetchJsonCpp.cmake b/cmake/Modules/FetchJsonCpp.cmake
+index 677dd63..740d3df 100644
+</span><span class="gd">--- a/cmake/Modules/FetchJsonCpp.cmake
+</span><span class="gi">+++ b/cmake/Modules/FetchJsonCpp.cmake
+</span><span class="p">@@ -1,4 +1,4 @@</span>
+<span class="gd">-set(JSONCPP_REPOSITORY "https://github.com/open-source-parsers/jsoncpp.git")
+</span><span class="gi">+set(JSONCPP_REPOSITORY "https://gitee.com/cndaqiang/jsoncpp.git")
+</span> set(JSONCPP_TAG 1.9.4)
+
+ ExternalProject_Add(jsoncpp
+<span class="gh">diff --git a/cmake/Modules/FetchMxx.cmake b/cmake/Modules/FetchMxx.cmake
+index 69bff58..ae766f3 100644
+</span><span class="gd">--- a/cmake/Modules/FetchMxx.cmake
+</span><span class="gi">+++ b/cmake/Modules/FetchMxx.cmake
+</span><span class="p">@@ -1,4 +1,4 @@</span>
+<span class="gd">-set(MXX_REPOSITORY "https://github.com/patflick/mxx.git")
+</span><span class="gi">+set(MXX_REPOSITORY "https://gitee.com/cndaqiang/mxx.git")
+</span> set(MXX_TAG "master")
+<span class="gh">diff --git a/cmake/Modules/FetchEigen.cmake b/cmake/Modules/FetchEigen.cmake
+index 61a271b..a357330 100644
+</span><span class="gd">--- a/cmake/Modules/FetchEigen.cmake
+</span><span class="gi">+++ b/cmake/Modules/FetchEigen.cmake
+</span><span class="p">@@ -1,4 +1,4 @@</span>
+<span class="gd">-set(EIGEN_REPOSITORY "https://gitlab.com/libeigen/eigen.git")
+</span><span class="gi">+set(EIGEN_REPOSITORY "https://gitee.com/cndaqiang/eigen.git")
+</span> set(EIGEN_TAG 3.3.7)
+ set(EIGEN_PATCH "${CMAKE_CURRENT_SOURCE_DIR}/include/patches/eigen-using-std-real.patch")
+</code></pre></div></div>
+
+<h3 id="修改的代码无需网络环境编译">修改的代码无需网络环境编译</h3>
+<ul>
+  <li>https://gitee.com/cndaqiang/ssages_mirror_local</li>
+  <li>还是修改<code class="language-plaintext highlighter-rouge">cmake/Modules</code>目录的cmake文件,修改DOWNLOAD_COMMAND</li>
+</ul>
+
+<p>如</p>
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set</span><span class="p">(</span>JSONCPP_REPOSITORY <span class="s2">"</span><span class="si">${</span><span class="nv">CMAKE_CURRENT_SOURCE_DIR</span><span class="si">}</span><span class="s2">/Fetch_local/jsoncpp"</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span>JSONCPP_TAG 1.9.4<span class="p">)</span>
+
+<span class="nf">ExternalProject_Add</span><span class="p">(</span>jsoncpp
+    <span class="c1"># Using DOWNLOAD_COMMAND instead of GIT_REPOSITORY to pass some convenient git flags.</span>
+    <span class="c1"># For instance, GIT_SHALLOW is available from CMake 3.6</span>
+    DOWNLOAD_COMMAND cp -frp <span class="si">${</span><span class="nv">JSONCPP_REPOSITORY</span><span class="si">}</span> <span class="si">${</span><span class="nv">CMAKE_CURRENT_SOURCE_DIR</span><span class="si">}</span>/build/jsoncpp-prefix/src/
+</code></pre></div></div>
+<p>Mxx和Eigen同理修改,需要下载的依赖已经提前下载到<code class="language-plaintext highlighter-rouge">Fetch_local</code>目录</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2022/12/22/openmp-fortran/">OpenMP学习(Fortran)</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2023/08/28/windows-ps/">Windows powershell/CMD 等命令学习</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

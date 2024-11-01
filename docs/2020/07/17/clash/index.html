@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Linux使用clash</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2020/07/17/clash/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Linux使用clash</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-07-17
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#clash" title="Tag: clash" rel="tag">clash</a-->
+        <a href="/tag/#clash" title="Tag: clash" rel="tag">clash</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#2022-06-20更新" id="markdown-toc-2022-06-20更新">2022-06-20更新</a></li>
+  <li><a href="#2022-02-23更新" id="markdown-toc-2022-02-23更新">2022-02-23更新</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#文件说明" id="markdown-toc-文件说明">文件说明</a></li>
+  <li><a href="#下载客户端" id="markdown-toc-下载客户端">下载客户端</a></li>
+  <li><a href="#初始化程序" id="markdown-toc-初始化程序">初始化程序</a></li>
+  <li><a href="#配置文件" id="markdown-toc-配置文件">配置文件</a>    <ul>
+      <li><a href="#常用配置参数" id="markdown-toc-常用配置参数">常用配置参数</a></li>
+      <li><a href="#分组设置" id="markdown-toc-分组设置">分组设置</a></li>
+      <li><a href="#规则" id="markdown-toc-规则">规则</a></li>
+    </ul>
+  </li>
+  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+  <li><a href="#其他" id="markdown-toc-其他">其他</a>    <ul>
+      <li><a href="#dashboard配置" id="markdown-toc-dashboard配置">dashboard配置</a>        <ul>
+          <li><a href="#公共dashboard" id="markdown-toc-公共dashboard">公共dashboard</a></li>
+          <li><a href="#私有dashboard" id="markdown-toc-私有dashboard">私有dashboard</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#添加到快捷脚本" id="markdown-toc-添加到快捷脚本">添加到快捷脚本</a></li>
+  <li><a href="#订阅相关" id="markdown-toc-订阅相关">订阅相关</a>    <ul>
+      <li><a href="#subconverter转换订阅url为clash配置文件" id="markdown-toc-subconverter转换订阅url为clash配置文件">subconverter转换订阅url为clash配置文件</a>        <ul>
+          <li><a href="#通过http转换订阅文件" id="markdown-toc-通过http转换订阅文件">通过http转换订阅文件</a></li>
+          <li><a href="#推荐命令行转换" id="markdown-toc-推荐命令行转换">[推荐]命令行转换</a></li>
+          <li><a href="#自定义subconverter生成的配置文件" id="markdown-toc-自定义subconverter生成的配置文件">自定义subconverter生成的配置文件</a></li>
+        </ul>
+      </li>
+      <li><a href="#有配置文件后启动clash即可" id="markdown-toc-有配置文件后启动clash即可">有配置文件后,启动clash即可</a></li>
+    </ul>
+  </li>
+  <li><a href="#新服务器从头配置clash" id="markdown-toc-新服务器从头配置clash">新服务器从头配置clash</a></li>
+  <li><a href="#openwrt自定义配置文件的一种方式" id="markdown-toc-openwrt自定义配置文件的一种方式">Openwrt自定义配置文件的一种方式</a></li>
+  <li><a href="#自己创建策略并配置分流" id="markdown-toc-自己创建策略并配置分流">自己创建策略并配置分流</a>    <ul>
+      <li><a href="#为了避免gpt被封号这里添加自己的节点进行gpt访问" id="markdown-toc-为了避免gpt被封号这里添加自己的节点进行gpt访问">为了避免GPT被封号，这里添加自己的节点进行GPT访问.</a></li>
+      <li><a href="#创建一个包含所有节点的群组" id="markdown-toc-创建一个包含所有节点的群组">创建一个包含所有节点的群组</a></li>
+    </ul>
+  </li>
+  <li><a href="#mac使用clash" id="markdown-toc-mac使用clash">mac使用clash</a></li>
+</ul>
+
+<h2 id="2022-06-20更新">2022-06-20更新</h2>
+<p>linux的<a href="https://github.com/juewuy/ShellClash">shell客户端:ShellClash</a></p>
+
+<p>可以很简单的在服务器和openwrt等系统上布置clash.</p>
+
+<h2 id="2022-02-23更新">2022-02-23更新</h2>
+<p>linux的<a href="https://github.com/Fndroid/clash_for_windows_pkg/releases">GUI客户端:CFW</a>有了,适合linux作为主力机的用户</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/Fndroid/clash_for_windows_pkg/releases/download/0.19.8/Clash.for.Windows-0.19.8-x64-linux.tar.gz
+tar xzvf Clash.for.Windows-0.19.8-x64-linux.tar.gz
+cd Clash\ for\ Windows-0.19.8-x64-linux/
+./cfw
+</code></pre></div></div>
+
+<p>下面的方法适合一台服务器上运行clash,给局域网内其他机器提供代理</p>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://www.cnblogs.com/sueyyyy/p/12424178.html">linux环境使用clash实现网络代理访问外网</a><br />
+<a href="https://ytlee.cn/2021/04/clash-for-linux-automatically-renews-the-subscription-link/">Clash For Linux自动更新订阅配置</a></p>
+
+<h2 id="文件说明">文件说明</h2>
+<ul>
+  <li>客户端，可执行程序:clash<br />
+项目地址:https://github.com/Dreamacro/clash</li>
+  <li>配置文件:<code class="language-plaintext highlighter-rouge">~/.config/clash/config.yaml</code><br />
+里面放着clash的接口,控制参数，链接信息等</li>
+  <li>ip数据库<code class="language-plaintext highlighter-rouge">~/.config/clash/Country.mmdb</code><br />
+启动程序后会自动下载，下载失败，终端会提示错误，复制提示的下载链接，手动下载放到<code class="language-plaintext highlighter-rouge">~/.config/clash/config.yaml</code></li>
+</ul>
+
+<h2 id="下载客户端">下载客户端</h2>
+<p>下载页面,https://github.com/Dreamacro/clash/releases</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/Dreamacro/clash/releases/download/v1.9.0/clash-linux-amd64-v1.9.0.gz
+gzip -d clash-linux-amd64-v1.9.0.gz
+</code></pre></div></div>
+
+<h2 id="初始化程序">初始化程序</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@girl:~/MyTools/clash$ ./clash-linux-amd64-v0.19.0
+</code></pre></div></div>
+<p>若无<code class="language-plaintext highlighter-rouge">~/.config/clash/config.yaml</code>与<code class="language-plaintext highlighter-rouge">~/.config/clash/Country.mmdb</code>会提示，然后自动下载</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@GIRL clash$ ./clash-linux-amd64-v1.9.0
+INFO[0000] Can't find config, create a initial config file
+INFO[0000] Can't find MMDB, start download
+FATA[0011] Initial configuration directory error: Can't initial MMDB: Can't download MMDB: Get "https://github-production-release-asset-2e65be.s3.amazonaws.com/231014917/281a0e00-c369-11ea-8903-79a958b78b99?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20200717%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20200717T124944Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=95c6abc781a12fad2be03e640220a1f01f67e580d60d4510b9d80e233a164fbc&amp;X-Amz-SignedHeaders=host&amp;actor_id=0&amp;repo_id=231014917&amp;response-content-disposition=attachment%3B%20filename%3DCountry.mmdb&amp;response-content-type=application%2Foctet-stream": net/http: TLS handshake timeout 
+</code></pre></div></div>
+<p>如果下载ip数据库失败，人为代理下载后放到<code class="language-plaintext highlighter-rouge">~/.config/clash/</code></p>
+
+<h2 id="配置文件">配置文件</h2>
+<p>编辑<code class="language-plaintext highlighter-rouge">~/.config/clash/config.yaml</code>文件,买的机场也提供相应的配置文件,也可以把机场提供的订阅地址按照<a href="/2020/07/17/clash/#%E8%AE%A2%E9%98%85%E7%9B%B8%E5%85%B3">下面的方式</a>生成配置文件</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#http代理
+port: 10091
+#socks代理
+socks-port: 10092
+#是否允许局域网连接
+allow-lan: true
+#运行模式: 规则Rule,全局Global,直连Direct
+mode: Global
+log-level: silent
+#网页管理ip和端口
+external-controller: '0.0.0.0:10090'
+#管理密码
+secret: ''
+#一堆代理
+Proxy:
+  -
+    name: xxxx
+    type: trojan
+    server: xxxx
+    port: xxxx
+    password: xxxx
+    sni: xxx
+</code></pre></div></div>
+<h3 id="常用配置参数">常用配置参数</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mixed-port: 10092
+allow-lan: true
+mode: Rule
+bind-address: '192.168.192.204'
+external-controller: 192.168.192.204:9090
+ipv6: true
+</code></pre></div></div>
+
+<h3 id="分组设置">分组设置</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>proxy-groups:
+  - name: 🔰 节点选择 #组名
+    type: select     #类型,选择
+    proxies:         #选项
+      - ♻️自动选择   #其他分组
+      - 🎯 全球直连  #其他分组
+      - 公益|新加坡高速节点|H.K中转|1Gps  #代理节点
+  - name: ♻️自动选择
+    type: url-test #测试url
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies:
+      - 公益|新加坡高速节点|H.K中转|1Gps
+</code></pre></div></div>
+
+<h3 id="规则">规则</h3>
+<p>指定符合规则的域名采用的分组</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rules:
+ - DOMAIN-SUFFIX,local,🎯 全球直连
+ - IP-CIDR,192.168.0.0/16,🎯 全球直连,no-resolve
+ - DOMAIN-SUFFIX,android.com,🔰 节点选择
+ - DOMAIN-KEYWORD,XLLiveUD,🎯 全球直连
+ - GEOIP,CN,🎯 全球直连
+ - MATCH,🐟 漏网之鱼    #其他网站选择🐟 漏网之鱼分组
+</code></pre></div></div>
+
+<p>规则定义</p>
+<ul>
+  <li>DOMAIN-SUFFIX：域名后缀匹配</li>
+  <li>DOMAIN：域名匹配</li>
+  <li>DOMAIN-KEYWORD：域名关键字匹配</li>
+  <li>IP-CIDR：IP 段匹配</li>
+  <li>SRC-IP-CIDR：源 IP 段匹配</li>
+  <li>GEOIP：GEOIP 数据库（国家代码）匹配</li>
+  <li>DST-PORT：目标端口匹配</li>
+  <li>SRC-PORT：源端口匹配</li>
+  <li>PROCESS-NAME：源进程名匹配</li>
+  <li>RULE-SET：Rule Provider 规则匹配</li>
+  <li>MATCH：全匹配</li>
+</ul>
+
+<p><strong>规则靠前的优先级高</strong>,我们要插入自定义规则,要插在<code class="language-plaintext highlighter-rouge">MATCH：全匹配</code>的前面</p>
+
+<h2 id="运行">运行</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@GIRL clash$ ./clash-linux-amd64-v1.9.0
+</code></pre></div></div>
+<p>浏览器添加设置的http/socks代理</p>
+
+<h2 id="其他">其他</h2>
+<h3 id="dashboard配置">dashboard配置</h3>
+<h4 id="公共dashboard">公共dashboard</h4>
+<p>网页打开<a href="http://clash.razord.top/">http://clash.razord.top/</a>,选择设置，点击编辑外部控制设置旁边的蓝色ip:端口<br />
+其他的GUI管理网页也是可以的<a href="http://yacd.haishan.me/">http://yacd.haishan.me/</a>.</p>
+
+<p>填入配置文件中的管理ip端口密码，连上clash
+<img src="/uploads/2020/07/clash.png" alt="" />
+之后可以继续在这里设置端口和其他管理<br />
+<strong>这里的结果并不会保存到配置文件，就是临时生效</strong>
+<img src="/uploads/2020/07/clash2.png" alt="" />
+<strong>在代理里选择使用的服务器</strong>
+<img src="/uploads/2020/07/clash3.png" alt="" /></p>
+
+<h4 id="私有dashboard">私有dashboard</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd $CLASHDIR/ui
+git clone git@github.com:Dreamacro/clash-dashboard.git
+cd 
+git checkout gh-pages
+</code></pre></div></div>
+<p>可以把<code class="language-plaintext highlighter-rouge">clash-dashboard</code>目录直接放到服务器的web目录,进行访问(http://mom/clash-dashboard/#/proxies),也可以用clash提供的web服务(192.168.192.204/ui)进行访问,使用clash的服务需要添加参数<code class="language-plaintext highlighter-rouge">external-ui</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>external-controller: 192.168.192.204:9090
+external-ui: /home/cndaqiang/soft/clash/ui/clash-dashboard
+</code></pre></div></div>
+<p>也可以用其他的dashboard:<a href="https://github.com/haishanh/yacd">yacd</a></p>
+
+<h2 id="添加到快捷脚本">添加到快捷脚本</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#启动clash
+pkill -f clash-linux-amd64-v1.9.0; sleep 10; nohup $HOME/MyTools/clash/clash-linux-amd64-v1.9.0 &gt; /tmp/clash.pid &amp;
+</code></pre></div></div>
+
+<h2 id="订阅相关">订阅相关</h2>
+<h3 id="subconverter转换订阅url为clash配置文件">subconverter转换订阅url为clash配置文件</h3>
+<p>下载<a href="https://github.com/tindy2013/subconverter">subconverter</a>,解压,</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/tindy2013/subconverter/releases/download/v0.7.1/subconverter_linux64.tar.gz
+tar xzvf subconverter_linux64.tar.gz
+</code></pre></div></div>
+
+<p>利用下面两种方式生成<code class="language-plaintext highlighter-rouge">config.yml</code>,并复制到clash配置目录</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@GIRL subconverter$ cp config.yml ~/.config/clash/config.yaml
+</code></pre></div></div>
+
+<h4 id="通过http转换订阅文件">通过http转换订阅文件</h4>
+<p>适合搭建转换服务器,供所有的机器使用</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@GIRL subconverter$ ./subconverter
+2022/02/21 Mon 21:15:44.125582 [1058 10739384][INFO] SubConverter v0.7.1 starting up..
+2022/02/21 Mon 21:15:44.127224 [1058 10739384][INFO] Reading preference settings...
+......
+2022/02/21 Mon 21:15:44.164532 [1058 10739384][INFO] Startup completed. Serving HTTP @ http://0.0.0.0:25500
+</code></pre></div></div>
+<p>使用http获取clash配置文件, 网址规则详见<a href="https://github.com/tindy2013/subconverter/blob/master/README-cn.md">README-cn.md</a>,注意要把订阅连接转为<a href="https://www.urlencoder.org/">URLEncode</a>,示例</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@GIRL tmp$ curl -s "http://127.0.0.1:25500/sub?target=clash&amp;url=http%3A%2F%2Fdy.clashweb.site%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3Dcndaqiangstoken" &gt; config.yaml
+cndaqiang@GIRL tmp$ head  config.yaml
+port: 7890
+socks-port: 7891
+allow-lan: true
+mode: Rule
+log-level: info
+external-controller: :9090
+proxies:
+  - {name: 日本01-CM-2.0, server: xxx.gz.cm.888022.site, port: 32224, type: ss, cipher: chacha20-ietf-poly1305, password: ec684a62-be94-47f6-820c-779e4d921234, udp: true}
+  ...
+</code></pre></div></div>
+<p>根据URLEncode的格式也可以自己写一个</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@GIRL tmp$ curl -s "http://127.0.0.1:25500/sub?target=clash&amp;url="$(echo "http://dy.clashweb.site/api/v1/client/subscribe?token=cndaqiangstoken" | sed  "s|/|%2F|g" | sed  "s|:|%3A|g"  | sed  "s|?|%3F|g")
+</code></pre></div></div>
+<h4 id="推荐命令行转换">[推荐]命令行转换</h4>
+<p>修改配置文件,自定义配置类型<code class="language-plaintext highlighter-rouge">[cndaqiang]</code>,url可以为文件也可以为订阅地址</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@GIRL subconverter$ vi generate.ini
+#内容如下
+[cndaqiang]
+path=config.yml
+target=clash
+ver=4
+url=http://dy.clashweb.site/api/v1/client/subscribe?token=cndaqiangstoken
+</code></pre></div></div>
+<p>生成配置文件<code class="language-plaintext highlighter-rouge">config.yml</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@GIRL subconverter$ ./subconverter -g --artifact "cndaqiang"
+#这里生成的是config.yml,配置文件时yaml
+cndaqiang@GIRL subconverter$ cp config.yml ~/.config/clash/config.yaml
+</code></pre></div></div>
+
+<h4 id="自定义subconverter生成的配置文件">自定义subconverter生成的配置文件</h4>
+<p><strong>简单粗暴就直接修改<code class="language-plaintext highlighter-rouge">vi base/all_base.tpl</code>就可以</strong><br /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+port: { { default(global.clash.http_port, "7890") } }
+...
+</code></pre></div></div>
+
+<p>在<code class="language-plaintext highlighter-rouge">vi pref.toml</code>中设置模板也可以</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+[[template.globals]]
+key = "clash.http_port"
+value = "7890"
+...
+</code></pre></div></div>
+
+<h3 id="有配置文件后启动clash即可">有配置文件后,启动clash即可</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@GIRL clash$ ./clash-linux-amd64-v1.8.0
+INFO[0000] Start initial compatible provider 🔰 节点选择
+INFO[0000] Start initial compatible provider 🛑 全球拦截
+INFO[0000] Start initial compatible provider 🚫 运营劫持
+</code></pre></div></div>
+<p>1.9版本虽然报错<code class="language-plaintext highlighter-rouge">ERRO[0000] Start DNS server error: missing port in address</code>,但是不影响使用</p>
+
+<h2 id="新服务器从头配置clash">新服务器从头配置clash</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd $HOME/soft
+CLASHDIR=$PWD/clash
+mkdir $CLASHDIR
+mkdir $CLASHDIR/bin
+mkdir $CLASHDIR/log
+mkdir $CLASHDIR/ui
+cd $CLASHDIR
+#gitee备份
+version=clash-linux-amd64-v1.9.0
+wget http://cndaqiang.gitee.io/packages//mirrors/clash/${version}.gz
+gzip -d ${version}.gz
+chmod +x $version
+#生成配置文件
+./$version
+#初始化完成后终止
+
+#下载subconvert
+wget https://github.com/tindy2013/subconverter/releases/download/v0.7.1/subconverter_linux64.tar.gz
+tar xzvf subconverter_linux64.tar.gz
+cd $CLASHDIR/subconverter
+cat &gt;&gt; generate.ini &lt;&lt;EOF
+[cndaqiang]
+path=config.yml
+target=clash
+ver=4
+url=http://dy.clashweb.site/api/v1/client/subscribe?token=cndaqiangstoken
+#当网络环境不好时，使用提前下载后放到本地的www目录临时启用也可
+EOF
+#
+
+#本地dashboard可选
+cd $CLASHDIR/ui
+git clone git@github.com:Dreamacro/clash-dashboard.git
+git checkout gh-pages
+     
+#改clash参数          
+vi base/all_base.tpl
+#
+./subconverter -g --artifact "cndaqiang"
+cp $CLASHDIR/subconverter/config.yml $HOME/.config/clash/config.yaml
+
+
+#执行
+ln -s $CLASHDIR/$version $CLASHDIR/bin/clash
+$CLASHDIR/bin/clash
+
+
+#配置文件使用系统服务启动
+cd $CLASHDIR/bin/
+cat &gt;  restart-clash.sh &lt;&lt;EOF
+#!/bin/bash
+PIDFILE=$CLASHDIR/log/clash.pid
+if [ -f \$PIDFILE ]
+then
+kill -9 \$(cat \$PIDFILE )
+fi
+#生成新的PID文件
+echo \$\$ &gt; \$PIDFILE 
+#新配置文件
+rm -rf $CLASHDIR/subconverter/config.yml
+$CLASHDIR/subconverter/subconverter -g --artifact "cndaqiang"
+if [ -f $CLASHDIR/subconverter/config.yml ]
+then
+        echo 下载$CLASHDIR/subconverter/config.yml成功
+        cp $CLASHDIR/subconverter/config.yml $CLASHDIR/subconverter/config.yml.bak
+else
+        echo 下载失败，使用备份$CLASHDIRh/subconverter/config.yml.bak
+        cp $CLASHDIR/subconverter/config.yml.bak $CLASHDIR/subconverter/config.yml
+fi
+
+
+#添加自定义的规则, 如libgen走代理
+line=\$(grep -rn rules $CLASHDIR/subconverter/config.yml | awk  -F: '{ print \$1 }')
+
+sed -i \${line}a'\ - DOMAIN-KEYWORD,libgen,♻️ 自动选择          ' $CLASHDIR/subconverter/config.yml
+sed -i \${line}a'\ - DOMAIN-KEYWORD,sci-hub,♻️ 自动选择         ' $CLASHDIR/subconverter/config.yml      
+sed -i \${line}a'\ - DOMAIN-KEYWORD,sciencedirect,🎯 全球直连   ' $CLASHDIR/subconverter/config.yml    
+sed -i \${line}a'\ - DOMAIN-SUFFIX,aps.org,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml       
+sed -i \${line}a'\ - DOMAIN-SUFFIX,webofscience.com,🎯 全球直连 ' $CLASHDIR/subconverter/config.yml             
+sed -i \${line}a'\ - DOMAIN-SUFFIX,iop.org,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml           
+sed -i \${line}a'\ - DOMAIN-SUFFIX,scitation.org,🎯 全球直连    ' $CLASHDIR/subconverter/config.yml                 
+sed -i \${line}a'\ - DOMAIN-SUFFIX,elsevier.com,🎯 全球直连     ' $CLASHDIR/subconverter/config.yml                
+sed -i \${line}a'\ - DOMAIN-SUFFIX,wiley.com,🎯 全球直连        ' $CLASHDIR/subconverter/config.yml             
+sed -i \${line}a'\ - DOMAIN-SUFFIX,acs.org,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml           
+sed -i \${line}a'\ - DOMAIN-SUFFIX,nih.gov,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml           
+sed -i \${line}a'\ - DOMAIN-SUFFIX,springer.com,🎯 全球直连     ' $CLASHDIR/subconverter/config.yml                
+sed -i \${line}a'\ - DOMAIN-SUFFIX,nature.com,🎯 全球直连       ' $CLASHDIR/subconverter/config.yml              
+sed -i \${line}a'\ - DOMAIN-SUFFIX,science.org,🎯 全球直连      ' $CLASHDIR/subconverter/config.yml               
+sed -i \${line}a'\ - DOMAIN-SUFFIX,jps.jp,🎯 全球直连      ' $CLASHDIR/subconverter/config.yml               
+sed -i ${line}a'\ - DOMAIN-SUFFIX,xiaomi.eu,♻️ 自动选择      ' /home/cndaqiang/soft/clash/subconverter/config.yml
+
+diff $CLASHDIR/subconverter/config.yml $HOME/.config/clash/config.yaml
+#如果两个文件一致，就直接开启clash，如果不一致就生成备份旧文件并下载替换新的文件
+if [ ! "\$?" == 0 ]
+then
+  cp  $CLASHDIR/subconverter/config.yml $HOME/.config/clash/config.yaml
+fi
+#
+#执行
+$CLASHDIR/bin/clash | tee $CLASHDIR/log/clash.log
+EOF
+
+chmod +x restart-clash.sh
+#终止文件
+cat &gt;  stop-clash.sh &lt;&lt;EOF
+#!/bin/bash
+PIDFILE=$CLASHDIR/log/clash.pid
+if [ -f \$PIDFILE ]
+then
+kill -9 \$(cat \$PIDFILE )
+fi
+EOF
+chmod +x stop-clash.sh
+
+#配置基于用户身份(把cndaqiang换成自己的用户名)的系统服务
+cat &gt; $CLASHDIR/bin/clash.service &lt;&lt;EOF
+[Unit]
+[Service]
+User=cndaqiang
+Group=cndaqiang
+ExecStart=$CLASHDIR/bin/restart-clash.sh
+ExecStop=$CLASHDIR/bin/stop-clash.sh
+TimeoutSec=0
+StandardOutput=tty
+RemainAfterExit=yes
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo cp $CLASHDIR/bin/clash.service /etc/systemd/system/clash.service
+#启动服务
+sudo systemctl start clash
+#开机启动
+sudo systemctl enable clash
+
+#如只在zerotier的内网使用clash,在`/etc/rc.local`中添加
+systemctl start clash
+
+#计划任务，每天一点更新clash
+crontab -e
+0 1 * * * systemctl restart clash
+</code></pre></div></div>
+
+<h2 id="openwrt自定义配置文件的一种方式">Openwrt自定义配置文件的一种方式</h2>
+<p>安装软件包</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg install subconverter diffutils
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CLASHDIR=$HOME/clash
+mylocalconfig=$HOME/clash/mylocalconfig.yaml
+mkdir -p $CLASHDIR
+mkdir $CLASHDIR/bin
+mkdir $CLASHDIR/log
+ln -s /etc/openclash/clash $CLASHDIR/bin/
+cp -r /etc/subconverter $CLASHDIR/subconverter
+#可以适当修改clash生成参数
+#vi base/all_base.tpl =&gt; mixed-port: N
+#输入文件
+cat &gt; $CLASHDIR/subconverter/generate.ini &lt;&lt;EOF
+[cndaqiang]
+path=config.yml
+target=clash
+ver=4
+url=http://dy.clashweb.site/api/v1/client/subscribe?token=cndaqiangstoken
+#当网络环境不好时，使用提前下载后放到本地的www目录临时启用也可
+EOF
+#
+
+#配置文件使用系统服务启动
+cat &gt;  $CLASHDIR/bin/restart-clash.sh &lt;&lt;EOF
+#!/bin/bash
+PIDFILE=$CLASHDIR/log/clash.pid
+if [ -f \$PIDFILE ]
+then
+kill -9 \$(cat \$PIDFILE )
+fi
+#生成新的PID文件
+echo \$\$ &gt; \$PIDFILE
+#
+#新配置文件
+rm -rf $CLASHDIR/subconverter/config.yml
+cd $CLASHDIR/subconverter/
+subconverter -g --artifact "cndaqiang"
+if [ -f $CLASHDIR/subconverter/config.yml ]
+then
+        echo 下载$CLASHDIR/subconverter/config.yml成功
+        cp $CLASHDIR/subconverter/config.yml $CLASHDIR/subconverter/config.yml.bak
+else
+        echo 下载失败，使用备份$CLASHDIRh/subconverter/config.yml.bak
+        cp $CLASHDIR/subconverter/config.yml.bak $CLASHDIR/subconverter/config.yml
+fi
+#
+#添加自定义的规则, 如libgen走代理
+line=\$(grep -rn rules $CLASHDIR/subconverter/config.yml | awk  -F: '{ print \$1 }')
+sed -i \${line}a'\ \ - DOMAIN-KEYWORD,libgen,♻️ 自动选择           ' $CLASHDIR/subconverter/config.yml
+sed -i \${line}a'\ \ - DOMAIN-KEYWORD,sci-hub,♻️ 自动选择          ' $CLASHDIR/subconverter/config.yml      
+sed -i \${line}a'\ \ - DOMAIN-KEYWORD,sciencedirect,🎯 全球直连   ' $CLASHDIR/subconverter/config.yml    
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,aps.org,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml       
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,webofscience.com,🎯 全球直连 ' $CLASHDIR/subconverter/config.yml             
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,iop.org,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml           
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,scitation.org,🎯 全球直连    ' $CLASHDIR/subconverter/config.yml                 
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,elsevier.com,🎯 全球直连     ' $CLASHDIR/subconverter/config.yml                
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,wiley.com,🎯 全球直连        ' $CLASHDIR/subconverter/config.yml             
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,acs.org,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml           
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,nih.gov,🎯 全球直连          ' $CLASHDIR/subconverter/config.yml           
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,springer.com,🎯 全球直连     ' $CLASHDIR/subconverter/config.yml                
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,nature.com,🎯 全球直连       ' $CLASHDIR/subconverter/config.yml              
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,science.org,🎯 全球直连      ' $CLASHDIR/subconverter/config.yml               
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,jps.jp,🎯 全球直连           ' $CLASHDIR/subconverter/config.yml               
+sed -i \${line}a'\ \ - DOMAIN-SUFFIX,xiaomi.eu,♻️ 自动选择         ' $CLASHDIR/subconverter/config.yml
+#
+#创建新策略组(自动筛选节点)
+sourceFile=$CLASHDIR/subconverter/config.yml
+includeFile=\${sourceFile}.chat.cndaqiang.in
+echo "  - name: ChatGPT" &gt; \$includeFile
+hang0=\$(grep -n '自动选择' \$sourceFile | grep name | awk -F: '{ print \$1 }')
+hang=\$((hang0+1))
+sed -n "\${hang},\\\$p" \$sourceFile  | awk '/^[[:space:]]*-/ {exit} {print}' &gt;&gt; \$includeFile
+#筛选节点
+sed -n "\${hang},\\\$p" \$sourceFile  | awk '/name/ {exit} {print}' | grep -i GPT &gt;&gt; \$includeFile
+#生成新的文件
+awk -v line="\${hang0}" -v includeFile="\$includeFile" 'NR==line{system("cat " includeFile )} {print}' \$sourceFile &gt; ${sourceFile}.tmp
+mv ${sourceFile}.tmp \$sourceFile
+rm \$includeFile
+line=\$(grep -rn rules \$sourceFile | awk  -F: '{ print \$1 }')
+GPT=\$(grep -i chatgpt \$sourceFile | grep name | head -1| sed 's/[,":{}]/ /g' | awk  '{ print \$3 }')
+if [ \$GPT ]
+then
+sed -i \${line}a'\ \ - DOMAIN-KEYWORD,openai, ChatGPT           ' \$sourceFile
+sed -i \${line}a'\ \ - DOMAIN-KEYWORD,perplexity, ChatGPT       ' \$sourceFile
+fi
+#
+
+#
+if [ ! -f $mylocalconfig ]; then touch $mylocalconfig;fi
+diff $CLASHDIR/subconverter/config.yml $mylocalconfig
+#如果两个文件不一致就生成备份旧文件并下载替换新的文件
+if [ ! "\$?" == 0 ]
+then
+  cp  $CLASHDIR/subconverter/config.yml $mylocalconfig
+fi
+#
+$CLASHDIR/bin/clash -f $mylocalconfig | tee $CLASHDIR/log/clash.log
+#$CLASHDIR/bin/clash -f $mylocalconfig &gt; $CLASHDIR/log/clash.log 2&gt;&amp;1 &amp;
+EOF
+chmod +x $CLASHDIR/bin/restart-clash.sh
+</code></pre></div></div>
+<p>可以测试生成的文件是否可用</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@CRouter:~/clash/subconverter# /etc/openclash/clash -f config.yml
+</code></pre></div></div>
+<p>关闭文件</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &gt;  $CLASHDIR/bin/stop-clash.sh &lt;&lt;EOF
+#!/bin/bash
+PIDFILE=$CLASHDIR/log/clash.pid
+if [ -f \$PIDFILE ]
+then
+kill -9 \$(cat \$PIDFILE )
+fi
+EOF
+chmod +x $CLASHDIR/bin/stop-clash.sh
+</code></pre></div></div>
+
+<blockquote>
+  <p>如果想共享就把<code class="language-plaintext highlighter-rouge">mylocalconfig=/www/clashconfig/mylocalconfig.yaml</code>就可以从openwrt的网页下载修改后的配置了<code class="language-plaintext highlighter-rouge">http://192.168.12.1/clashconfig/mylocalconfig.yaml</code></p>
+
+  <p>也可以复制到<code class="language-plaintext highlighter-rouge">/etc/openclash/config/mylocalconfig.yaml</code>作为openclash的输入</p>
+
+  <p><strong>我觉得openclash非常的卡,仅作为临时代理使用,我常用的还是/root/clash/bin/restart-clash.sh</strong></p>
+
+  <p>openclash曾经使用的配置</p>
+  <ul>
+    <li>此次使用OpebnClash插件,白名单模式,另外配置文件中制定的端口(subconverter的配置<code class="language-plaintext highlighter-rouge">base/all_base.tpl</code>制定),是可以走zerotier访问的,所以可以远程访问</li>
+    <li><code class="language-plaintext highlighter-rouge">Luci&gt;OpenClash&gt;插件设置&gt;定时重启</code>,重启时间大于<code class="language-plaintext highlighter-rouge">build-clash-config.sh</code>时间,就可以实现定期更新配置</li>
+  </ul>
+</blockquote>
+
+<p>生成系统控制脚本</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &gt; $CLASHDIR/bin/myclash &lt;&lt; EOF
+#!/bin/sh /etc/rc.common
+
+START=99
+STOP=10
+
+start() {
+    echo "Starting My Clash Service"
+    $CLASHDIR/bin/restart-clash.sh
+    # 添加启动服务的命令
+}
+
+stop() {
+    echo "Stopping My Clash Service"
+    # 添加停止服务的命令
+    $CLASHDIR/bin/stop-clash.sh
+}
+
+restart() {
+    echo "Restarting My Clash Service"
+    stop
+    start
+}
+
+# 添加其他需要的函数
+
+# 添加其他需要的逻辑
+
+# Exit on unsupported action
+run "$@"
+EOF
+#
+chmod +x $CLASHDIR/bin/myclash
+cp $CLASHDIR/bin/myclash /etc/init.d/
+</code></pre></div></div>
+
+<p>添加定期启动</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#0 1 * * * /root/clash/bin/restart-clash.sh
+0 1 * * * /etc/init.d/myclash restart
+</code></pre></div></div>
+
+<p>配置dashboard</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget 'https://codeload.github.com/cndaqiang/clash-dashboard/zip/refs/heads/gh-pages'
+unzip -x gh-pages
+mv clash-dashboard-gh-pages /www/clash-dashboard
+</code></pre></div></div>
+
+<h2 id="自己创建策略并配置分流">自己创建策略并配置分流</h2>
+<h3 id="为了避免gpt被封号这里添加自己的节点进行gpt访问">为了避免GPT被封号，这里添加自己的节点进行GPT访问.</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourceFile=/home/cndaqiang/soft/clash/subconverter/config.yml
+#添加节点
+line=$(grep -n 'proxies' $sourceFile | head -1 | awk -F: '{ print $1 }')
+sed -i ${line}a'\ \ - {name: "cndaqiang.ChatGPT", server: 192.168.192.10, port: 2090, type: socks5}' $sourceFile
+</code></pre></div></div>
+<h3 id="创建一个包含所有节点的群组">创建一个包含所有节点的群组</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sourceFile=/home/cndaqiang/soft/clash/subconverter/config.yml
+includeFile=${sourceFile}.chat.cndaqiang.in
+echo "  - name: 所有节点
+    type: select
+    proxies:
+grep '{name:' $sourceFile | awk -F'name: ' '{print $2}' | awk -F', ' '{gsub(/"/, "", $1);  print "      - " $1}' &gt;&gt; $includeFile
+</code></pre></div></div>
+
+<p>不想转译了,自己添加到<code class="language-plaintext highlighter-rouge">restart-clash.sh</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#自动筛选节点
+sourceFile=/home/cndaqiang/soft/clash/subconverter/config.yml
+includeFile=${sourceFile}.chat.cndaqiang.in
+#...............................................筛选美国节点并设置自动选择
+#这是抄的“♻️自动选择”的策略，即自动测试节点的方法
+echo "  - name: QS_US" &gt; $includeFile
+hang0=$(grep -n '自动选择' $sourceFile | grep name | awk -F: '{ print $1 }')
+hang=$((hang0+1))
+sed -n "${hang},\$p" $sourceFile  | awk '/^[[:space:]]*-/ {exit} {print}' &gt;&gt;    $includeFile
+#筛选节点
+sed -n "${hang},\$p" $sourceFile  | awk '/name/ {exit} {print}' | grep -i 美国   &gt;&gt; $includeFile
+sed -n "${hang},\$p" $sourceFile  | awk '/name/ {exit} {print}' | grep -i US   &gt;&gt; $includeFile
+#...............................................筛选GPT节点.
+#添加自己的节点
+echo "  - name: ChatGPT
+    type: select
+    proxies:
+      - cndaqiang.ChatGPT" &gt;&gt; $includeFile
+#亦可从"节点选择"中筛选其他的节点
+hang0=$(grep -n '节点选择' $sourceFile | grep name | awk -F: '{ print $1 }')
+hang=$((hang0+1))
+sed -n "${hang},\$p" $sourceFile  | awk '/name/ {exit} {print}' | grep -i GPT   &gt;&gt; $includeFile
+#..........................................................
+#生成新的文件
+awk -v line="${hang0}" -v includeFile="$includeFile" 'NR==line{system("cat "    includeFile )} {print}' $sourceFile &gt; .tmp
+mv .tmp $sourceFile
+rm $includeFile
+line=$(grep -rn rules $sourceFile | awk  -F: '{ print $1 }')
+#.
+GPT=$(grep -i chatgpt $sourceFile | grep name | head -1| sed 's/[,":{}]/ /g' | awk  '{ print $3 }')
+if [ $GPT ]
+then
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,oaistatic.com, ChatGPT           ' $sourceFile
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,openai.com, ChatGPT           ' $sourceFile
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,chatgpt.com, ChatGPT           ' $sourceFile
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,gravatar.com, ChatGPT          ' $sourceFile
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,oaistatic.com, ChatGPT           ' $sourceFile
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,scholar.google.com, ChatGPT           ' $sourceFile
+fi
+
+# 其他网站
+https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
+#美国节点
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,ai, QS_US       ' $sourceFile
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,phind.com, QS_US       ' $sourceFile
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,gemini.google.com, QS_US        ' $sourceFile
+# 其他网址
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,github.com,♻️ 自动选择      '  $sourceFile
+sed -i ${line}a'\ \ - DOMAIN-SUFFIX,githubusercontent.com,♻️ 自动选择      '   $sourceFile
+</code></pre></div></div>
+
+<h2 id="mac使用clash">mac使用clash</h2>
+<p>配置文件<code class="language-plaintext highlighter-rouge">config.yaml</code>中设置端口, 可以覆盖节点订阅的配置</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mixed-port: 7890
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/07/01/js/">JavaScript学习</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/09/02/gpaw/">GPAW安装</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

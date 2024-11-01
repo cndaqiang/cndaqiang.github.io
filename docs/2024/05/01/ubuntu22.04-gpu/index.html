@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>单GPU节点配置计算环境</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2024/05/01/ubuntu22.04-gpu/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>单GPU节点配置计算环境</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2024-05-01
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a-->
+        <a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#系统安装" id="markdown-toc-系统安装">系统安装</a></li>
+  <li><a href="#网络配置" id="markdown-toc-网络配置">网络配置</a>    <ul>
+      <li><a href="#infiniband-配置" id="markdown-toc-infiniband-配置">InfiniBand 配置</a>        <ul>
+          <li><a href="#安装驱动" id="markdown-toc-安装驱动">安装驱动</a></li>
+          <li><a href="#配置ip" id="markdown-toc-配置ip">配置ip</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#用户管理" id="markdown-toc-用户管理">用户管理</a></li>
+  <li><a href="#常用软件安装" id="markdown-toc-常用软件安装">常用软件安装</a>    <ul>
+      <li><a href="#基本软件" id="markdown-toc-基本软件">基本软件</a></li>
+      <li><a href="#module" id="markdown-toc-module">module</a></li>
+      <li><a href="#docker" id="markdown-toc-docker">docker</a></li>
+      <li><a href="#rdp远程桌面" id="markdown-toc-rdp远程桌面">RDP远程桌面</a></li>
+      <li><a href="#nfs-ib共享存储" id="markdown-toc-nfs-ib共享存储">nfs ib共享存储</a></li>
+    </ul>
+  </li>
+  <li><a href="#oneapi" id="markdown-toc-oneapi">oneapi</a>    <ul>
+      <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+      <li><a href="#module配置" id="markdown-toc-module配置">module配置</a>        <ul>
+          <li><a href="#精简配置" id="markdown-toc-精简配置">精简配置</a></li>
+          <li><a href="#管理员推荐配置" id="markdown-toc-管理员推荐配置">管理员推荐配置</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#gpu配置" id="markdown-toc-gpu配置">GPU配置</a>    <ul>
+      <li><a href="#禁用开源驱动" id="markdown-toc-禁用开源驱动">禁用开源驱动</a></li>
+      <li><a href="#cuda" id="markdown-toc-cuda">cuda</a></li>
+      <li><a href="#hpc-toolkit" id="markdown-toc-hpc-toolkit">hpc toolkit</a></li>
+      <li><a href="#module配置-1" id="markdown-toc-module配置-1">module配置</a></li>
+    </ul>
+  </li>
+  <li><a href="#计算软件配置" id="markdown-toc-计算软件配置">计算软件配置</a>    <ul>
+      <li><a href="#hdf5" id="markdown-toc-hdf5">HDF5</a>        <ul>
+          <li><a href="#oneapi版本" id="markdown-toc-oneapi版本">oneapi版本</a></li>
+          <li><a href="#cuda版本" id="markdown-toc-cuda版本">cuda版本</a></li>
+        </ul>
+      </li>
+      <li><a href="#qe" id="markdown-toc-qe">QE</a>        <ul>
+          <li><a href="#external包无法下载编译的解决办法" id="markdown-toc-external包无法下载编译的解决办法">external包无法下载编译的解决办法</a></li>
+          <li><a href="#方法1ssh科学上网" id="markdown-toc-方法1ssh科学上网">方法1:ssh科学上网</a></li>
+          <li><a href="#方法2把仓库转存到gitee" id="markdown-toc-方法2把仓库转存到gitee">方法2:把仓库转存到gitee</a></li>
+          <li><a href="#qe-oneapi" id="markdown-toc-qe-oneapi">QE-oneapi</a>            <ul>
+              <li><a href="#mbd代码兼容性问题" id="markdown-toc-mbd代码兼容性问题">mbd代码兼容性问题</a></li>
+            </ul>
+          </li>
+          <li><a href="#qe-cuda" id="markdown-toc-qe-cuda">QE-cuda</a></li>
+          <li><a href="#运行测试" id="markdown-toc-运行测试">运行测试</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#docker配置" id="markdown-toc-docker配置">docker配置</a>    <ul>
+      <li><a href="#douku-wiki" id="markdown-toc-douku-wiki">douku wiki</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="系统安装">系统安装</h2>
+<ul>
+  <li>刻录ubuntu-22.04-desktop到U盘</li>
+  <li>插入U盘到服务器</li>
+  <li>idrac启动到u盘，远程安装系统</li>
+</ul>
+
+<h2 id="网络配置">网络配置</h2>
+<ul>
+  <li>网口1: 互联网访问ip</li>
+  <li>网口2: 内网ip</li>
+</ul>
+
+<h3 id="infiniband-配置">InfiniBand 配置</h3>
+<h4 id="安装驱动">安装驱动</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /home/source/MLNX_OFED_LINUX-23.10-2.1.3.1-ubuntu22.04-x86_64
+./mlnxofedinstall --force
+/etc/init.d/openibd restart
+</code></pre></div></div>
+<h4 id="配置ip">配置ip</h4>
+<p><strong>注:装完docker等更改网络的软件，可能需要重新配置</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#查看ib网卡信息，名称为ibp75s0
+root@BBBBgpu:# ip link show
+4: ibp75s0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 2044 qdisc mq state UP mode DEFAULT group default qlen 256
+    link/infiniband 00:00:0e:e8:fe:80:00:00:00:00:00:00:94:6d:ae:03:00:3c:83:4a brd 00:ff:ff:ff:ff:12:40:1b:ff:ff:00:00:00:00:00:00:ff:ff:ff:ff
+#修改ib网卡ibp75s0配置
+root@BBBBgpu:#  nmcli connection edit type infiniband con-name  ibp75s0
+nmcli&gt; set ipv4.addresses  10.10.10.120/24
+nmcli&gt; set ipv4.gateway  10.10.10.1
+nmcli&gt; save
+Saving the connection with 'autoconnect=yes'. That might result in an immediate activation of the connection.
+Do you still want to save? (yes/no) [yes] yes
+Connection 'ibp75s0' (34a3e7f4-2cde-4e2e-9e04-a0390711f825) successfully saved.
+nmcli&gt; quit
+</code></pre></div></div>
+
+<h2 id="用户管理">用户管理</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adduser --home /home/cndaqiang cndaqiang
+#使用之前的home目录，以及不同服务器之间pid相同的要求
+usermod -u 1043 cndaqiang
+groupmod -g 1043 cndaqiang
+#使用之前的home目录
+chown -R cndaqiang:cndaqiang /home/cndaqiang
+#添加sudo权限
+usermod -aG sudo cndaqiang
+</code></pre></div></div>
+
+<h2 id="常用软件安装">常用软件安装</h2>
+<h3 id="基本软件">基本软件</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install openssh-server
+systemctl start ssh
+systemctl enable ssh
+apt install vim
+apt install htop
+</code></pre></div></div>
+<h3 id="module">module</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install environment-modules
+</code></pre></div></div>
+<p>添加下面内容到<code class="language-plaintext highlighter-rouge">/etc/profile</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># cndaqiang 20240430
+MODULEPATH=/home/apps/module_files
+</code></pre></div></div>
+
+<h3 id="docker">docker</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install apt-transport-https ca-certificates curl software-properties-common gnupg lsb-release
+#
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+#
+add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+#
+apt-get update
+apt-get install docker-ce
+
+</code></pre></div></div>
+
+<h3 id="rdp远程桌面">RDP远程桌面</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Install new packages
+sudo apt-get install xrdp xorg
+
+# Add xrdp user to ssl-cert group and reboot
+sudo adduser xrdp ssl-cert
+sudo reboot
+</code></pre></div></div>
+
+<h3 id="nfs-ib共享存储">nfs ib共享存储</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install nfs-common
+</code></pre></div></div>
+<p>添加挂载信息到<code class="language-plaintext highlighter-rouge">/etc/fstab</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10.10.10.101:/home           /home/suanpan                   nfs            defaults     0 0
+</code></pre></div></div>
+<p>重启之后可以看到</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@BBBBgpu:~$ df -h
+Filesystem          Size  Used Avail Use% Mounted on
+10.10.10.101:/home  145T  106T   33T  77% /home/suanpan
+</code></pre></div></div>
+
+<h2 id="oneapi">oneapi</h2>
+<ul>
+  <li><strong>注: 新版本oneapi的编译器变了</strong></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">icc -&gt; icx, ifort -&gt; ifx, icpc -&gt; icpx</code></strong>,</li>
+  <li><strong>相应的mpi编译器名字也跟着变了</strong></li>
+</ul>
+
+<h3 id="安装">安装</h3>
+<p>安装方法以<a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit-download.html?operatingsystem=linux&amp;distributions=aptpackagemanager">官方链接</a>为准,先安装Base Toolkit再安装HPC Toolkit</p>
+
+<h3 id="module配置">module配置</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /opt/intel/oneapi
+./modulefiles-setup.sh --output-dir=/home/apps/module_files/oneapi.2024
+</code></pre></div></div>
+
+<h4 id="精简配置">精简配置</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>oneapi.2024/tbb/latest oneapi.2024/compiler-rt/2024.1.0 oneapi.2024/oclfpga/2024.1.0 oneapi.2024/compiler/2024.1.0 oneapi.2024/mkl/2024.1 oneapi.2024/mpi/2021.12
+</code></pre></div></div>
+<p>其他的module文件可以删除</p>
+
+<h4 id="管理员推荐配置">管理员推荐配置</h4>
+
+<p>创建一个我们需要使用的module文件到<code class="language-plaintext highlighter-rouge">/home/apps/module_files/oneapi.2024/recommended-oneapi</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#%Module1.0###########################################
+# build by cndaqiang 20240501
+
+## 提供模块的帮助信息
+proc ModulesHelp { } {
+    puts stderr "This module sets up the recommended oneAPI 2024 environment."
+}
+
+## 设置模块的描述信息
+module-whatis "Sets up the recommended oneAPI 2024 environment"
+
+set module_prefixname "oneapi.2024"
+
+foreach depmodulename { "compiler/2024.1.0" "mkl/2024.1" "mpi/2021.12" } {
+    set fullmodulename "${module_prefixname}/${depmodulename}"
+    prereq $fullmodulename
+}
+</code></pre></div></div>
+
+<h2 id="gpu配置">GPU配置</h2>
+<h3 id="禁用开源驱动">禁用开源驱动</h3>
+<p>创建一个文件 <code class="language-plaintext highlighter-rouge">/etc/modprobe.d/blacklist-nouveau.conf</code> 并添加以下内容：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blacklist nouveau
+options nouveau modeset=0
+</code></pre></div></div>
+<p>更新</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo update-initramfs -u
+</code></pre></div></div>
+<p>重启</p>
+<h3 id="cuda">cuda</h3>
+<p><strong>注,安装完cuda,重启一下</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh cuda_12.3.2_545.23.08_linux.run
+</code></pre></div></div>
+<h3 id="hpc-toolkit">hpc toolkit</h3>
+<p><strong>注toolkit要和cuda版本匹配,注意一致</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#curl https://developer.download.nvidia.com/hpc-sdk/ubuntu/DEB-GPG-KEY-NVIDIA-HPC-SDK | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg
+wget https://developer.download.nvidia.com/hpc-sdk/ubuntu/DEB-GPG-KEY-NVIDIA-HPC-SDK
+cat DEB-GPG-KEY-NVIDIA-HPC-SDK | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg
+echo 'deb [signed-by=/usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg] https://developer.download.nvidia.com/hpc-sdk/ubuntu/amd64 /' | sudo tee /etc/apt/sources.list.d/nvhpc.list
+sudo apt-get update -y
+sudo apt-get install -y nvhpc-24-3
+</code></pre></div></div>
+<h3 id="module配置-1">module配置</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp -r /opt/nvidia/hpc_sdk/modulefiles/* /home/apps/module_files/
+</code></pre></div></div>
+
+<h2 id="计算软件配置">计算软件配置</h2>
+<h3 id="hdf5">HDF5</h3>
+<h4 id="oneapi版本">oneapi版本</h4>
+<p>并行版</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure  CC=mpiicx FC=mpiifx CXX=mpiicpx --prefix=/home/apps/HDF5/oneapi/1.14.4-2.parallel --enable-fortran --enable-cxx --enable-parallel --enable-unsupported
+</code></pre></div></div>
+<p>串行版</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure  CC=icx FC=ifx CXX=icpx --prefix=/home/apps/HDF5/oneapi/1.14.4-2 --enable-fortran --enable-cxx
+</code></pre></div></div>
+
+<p>安装，由于root没有编译环境,所以<strong>需要<code class="language-plaintext highlighter-rouge">sudo env PATH=$PATH</code></strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make
+sudo env PATH=$PATH make install
+</code></pre></div></div>
+
+<p>创建module file,示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@BBBBgpu:~$ cat /home/apps/module_files/HDF5/oneapi.2024/1.14.4-2
+#%Module1.0
+#
+#  HDF5 module file
+#
+proc ModulesHelp { } {
+    puts stderr "Provides HDF5 1.14.4-2"
+}
+
+module-whatis "Sets up the environment for HDF5 1.14.4-2"
+
+# Set paths
+set prefix /home/apps/HDF5/oneapi/1.14.4-2
+
+prepend-path PATH            $prefix/bin
+prepend-path LD_LIBRARY_PATH $prefix/lib
+prepend-path CPATH           $prefix/include
+prepend-path LIBRARY_PATH    $prefix/lib
+prepend-path MANPATH         $prefix/share/man
+</code></pre></div></div>
+
+<h4 id="cuda版本">cuda版本</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module load nvhpc
+./configure FC=nvfortran CC=nvc FCFLAGS=-fPIC --enable-fortran --prefix=/home/apps/HDF5/nvhpc/1.14.4-2
+make
+sudo env PATH=$PATH make install
+</code></pre></div></div>
+<p>module file与oneapi版本相同，不过</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set prefix /home/apps/HDF5/nvhpc/1.14.4-2
+</code></pre></div></div>
+
+<h3 id="qe">QE</h3>
+<h4 id="external包无法下载编译的解决办法">external包无法下载编译的解决办法</h4>
+<h4 id="方法1ssh科学上网">方法1:ssh科学上网</h4>
+<p><strong>wannier等体积较大的包,科学上网的方法，也容易中断，使用方法2:把仓库转存到gitee</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh  -f -N -D 127.0.0.1:42090 -p 2022 cndaqiang@科学的服务器ip
+#编辑 ~/.ssh/config
+Host github.com
+    ProxyCommand nc -x 127.0.0.1:42090 %h %p
+Host gitlab.com
+    ProxyCommand nc -x 127.0.0.1:42090 %h %p
+</code></pre></div></div>
+<h4 id="方法2把仓库转存到gitee">方法2:把仓库转存到gitee</h4>
+<p>编辑<code class="language-plaintext highlighter-rouge">vi .gitmodules</code>,替换git地址，例如：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://github.com/wannier-developers/wannier90.git
+变为
+https://gitee.com/cndaqiang/wannier90.git
+</code></pre></div></div>
+
+<h4 id="qe-oneapi">QE-oneapi</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#支持HDF5的qe-7.2
+./configure --with-hdf5=/home/apps/HDF5/oneapi/1.14.4-2/ FC=ifx CC=icx MPIF90=mpiifx
+make pw
+#普通的qe-7.3
+./configure  FC=ifx CC=icx MPIF90=mpiifx
+</code></pre></div></div>
+
+<p>复制到公共目录</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo cp bin/* /home/apps/QE/7.3.1.oneapi.2024/bin/
+</code></pre></div></div>
+<p>module file</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@BBBBgpu:~$ cat /home/apps/module_files/QE/oneapi.2024/7.3.1
+#%Module1.0
+##
+## QE 7.3.1 for oneAPI 2024 module file
+##
+
+module-whatis "Sets up the Quantum ESPRESSO 7.3.1 environment for oneAPI 2024"
+
+set MODULEPATH /home/apps/QE/7.3.1.oneapi.2024
+prepend-path PATH            $MODULEPATH/bin
+#这里是依赖的编译环境,这样只用module load一次
+prereq oneapi.2024/recommended-oneapi
+</code></pre></div></div>
+
+<h5 id="mbd代码兼容性问题">mbd代码兼容性问题</h5>
+<p><strong>2024.05.01 mbd和<a href="https://github.com/libmbd/libmbd/issues/65">oneapi不兼容</a></strong></p>
+
+<p>修改代码</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi external/mbd/src/mbd_c_api.F90
+!use iso_c_binding
+use iso_c_binding, only: c_int, c_double, c_bool, c_char, c_ptr, c_double_complex, &amp;
+                         c_null_char, c_loc, c_f_pointer, c_associated
+rm -rf MBD
+make libmbd
+</code></pre></div></div>
+<p>重新编译</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm -rf MBD
+make libmbd
+make pw
+</code></pre></div></div>
+
+<h4 id="qe-cuda">QE-cuda</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module load nvhpc
+./configure --with-hdf5=/home/apps/HDF5/nvhpc/1.14.4-2 --with-cuda=/opt/nvidia/hpc_sdk/Linux_x86_64/24.3/cuda/ --with-cuda-cc=86 --with-cuda-runtime=12.3   --with-scalapack=no  --with-cuda-mpi=yes
+</code></pre></div></div>
+<p>复制</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo cp bin/* /home/apps/QE.nvhpc.24.3/qe-AAAA-7.2-hdf5-1.14.4-2/bin/
+</code></pre></div></div>
+<p>module file</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@BBBBgpu:~$ cat /home/apps/module_files/QE/nvhpc.24.3/qe-AAAA-7.2-hdf5-1.14.4-2
+#%Module1.0
+##
+## QE 7.2 for oneAPI 2024 module file
+##
+
+module-whatis "Sets up the Quantum ESPRESSO 7.2 environment for oneAPI 2024"
+
+set MODULEPATH /home/apps/QE.nvhpc.24.3/qe-AAAA-7.2-hdf5-1.14.4-2
+prepend-path PATH            $MODULEPATH/bin
+
+prereq nvhpc/24.3
+prereq HDF5/nvhpc.24.3/1.14.4-2
+</code></pre></div></div>
+
+<h4 id="运行测试">运行测试</h4>
+<p>oneapi版本:<strong>module load QE/oneapi.2024/qe-AAAA-7.2-hdf5-1.14.4-2</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/work/tdpw/test/in
+cndaqiang@BBBBgpu:~/work/tdpw/test/in$ module load QE/oneapi.2024/qe-AAAA-7.2-hdf5-1.14.4-2
+Loading QE/oneapi.2024/qe-AAAA-7.2-hdf5-1.14.4-2
+  Loading requirement: oneapi.2024/tbb/latest oneapi.2024/compiler-rt/2024.1.0 oneapi.2024/oclfpga/2024.1.0 oneapi.2024/compiler/2024.1.0
+    oneapi.2024/mkl/2024.1 oneapi.2024/mpi/2021.12 oneapi.2024/recommended-oneapi HDF5/oneapi.2024/1.14.4-2
+
+#运行
+mpirun -np 4 pw.x -i input.in  | tee result
+cndaqiang@BBBBgpu:~/work/tdpw/test/in$ grep ! result
+!    total energy              =     -21.68049299 Ry
+!    total energy              =     -21.68049301 Ry
+</code></pre></div></div>
+
+<p>cuda版本:<strong>module load QE/nvhpc.24.3/qe-AAAA-7.2-hdf5-1.14.4-2</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/work/tdpw/test/in-nv
+cndaqiang@BBBBgpu:~$ module load QE/nvhpc.24.3/qe-AAAA-7.2-hdf5-1.14.4-2
+Loading QE/nvhpc.24.3/qe-AAAA-7.2-hdf5-1.14.4-2
+  Loading requirement: nvhpc/24.3 HDF5/nvhpc.24.3/1.14.4-2
+mpirun -np 2 pw.x -i input.in -npool 2 | tee result
+cndaqiang@BBBBgpu:~/work/tdpw/test/in-nv$ grep ! result
+!    total energy              =     -21.68049299 Ry
+!    total energy              =     -21.68049301 Ry
+</code></pre></div></div>
+
+<h2 id="docker配置">docker配置</h2>
+<h3 id="douku-wiki">douku wiki</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -dit -v /home/apps/doukuwiki:/var/www/html -p 810:80 --name dokuwiki --restart unless-stopped php:7.0-apache
+cp -r /home/cndaqiang/wiki/wiki_backup/* /home/apps/doukuwiki/
+#给权限
+docker exec  -it dokuwiki bash
+chown -R www-data:www-data *
+exit
+</code></pre></div></div>
+<p>刷新网页即可</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/02/08/mac-dev/">macOS配置开发环境 
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2024/02/08/mac-dev/">macOS配置开发环境 </a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2024/07/08/openwrt-server/">OpenWRT个人服务器:以E20C为例</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

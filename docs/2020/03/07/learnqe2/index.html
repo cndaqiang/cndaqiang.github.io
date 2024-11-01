@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Learn QE2 原子结构相关：结构优化,MD,NEB,声子谱</title>
+    <meta name="description" content="本学习教程内容主要来自互联网，个人学习记录，仅供参考。代码仓库LearnQE@cndaqiang">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2020/03/07/learnqe2/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Learn QE2 原子结构相关：结构优化,MD,NEB,声子谱</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-03-07
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Quantum-Espresso" title="Category: Quantum-Espresso" rel="category">Quantum-Espresso</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a-->
+        <a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a>&nbsp;
+    
+        <!--a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a-->
+        <a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#示例" id="markdown-toc-示例">示例</a>    <ul>
+      <li><a href="#结构优化" id="markdown-toc-结构优化">结构优化</a>        <ul>
+          <li><a href="#graphane-relax" id="markdown-toc-graphane-relax">Graphane relax</a></li>
+          <li><a href="#hcp-zinc-vc-relax" id="markdown-toc-hcp-zinc-vc-relax">hcp-Zinc vc-relax</a></li>
+        </ul>
+      </li>
+      <li><a href="#md分子动力学略" id="markdown-toc-md分子动力学略">MD分子动力学[略]</a></li>
+      <li><a href="#neb计算" id="markdown-toc-neb计算">NEB计算</a>        <ul>
+          <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+          <li><a href="#hcn-转换为-cnh-的过程" id="markdown-toc-hcn-转换为-cnh-的过程">HCN 转换为 CNH 的过程</a></li>
+          <li><a href="#计算输出" id="markdown-toc-计算输出">计算输出</a></li>
+        </ul>
+      </li>
+      <li><a href="#振动模式计算" id="markdown-toc-振动模式计算">振动模式计算</a>        <ul>
+          <li><a href="#计算流程" id="markdown-toc-计算流程">计算流程</a></li>
+          <li><a href="#phx计算声子信息动力学矩阵" id="markdown-toc-phx计算声子信息动力学矩阵">ph.x计算声子信息(动力学矩阵)</a></li>
+          <li><a href="#动力学矩阵文件格式" id="markdown-toc-动力学矩阵文件格式">动力学矩阵文件格式</a></li>
+          <li><a href="#dynmatx后处理单个q点的动力学矩阵文件" id="markdown-toc-dynmatx后处理单个q点的动力学矩阵文件">dynmat.x后处理单个q点的动力学矩阵文件</a></li>
+          <li><a href="#q2rxmatdynx-指定q点的声子频率" id="markdown-toc-q2rxmatdynx-指定q点的声子频率">q2r.x,matdyn.x 指定q点的声子频率</a></li>
+          <li><a href="#20-分子振荡频率gamma点声子谱" id="markdown-toc-20-分子振荡频率gamma点声子谱">2.0 分子振荡频率($\Gamma$点声子谱)</a>            <ul>
+              <li><a href="#展示苯环的振动模式" id="markdown-toc-展示苯环的振动模式">展示苯环的振动模式</a></li>
+              <li><a href="#使用上述参数计算nh3的振动频率" id="markdown-toc-使用上述参数计算nh3的振动频率">使用上述参数计算NH3的振动频率</a></li>
+              <li><a href="#co2的拉曼和红外模式识别" id="markdown-toc-co2的拉曼和红外模式识别">CO2的拉曼和红外模式识别</a></li>
+            </ul>
+          </li>
+          <li><a href="#2122声子谱计算" id="markdown-toc-2122声子谱计算">2.1/2.2声子谱计算</a>            <ul>
+              <li><a href="#21-傅立叶变化计算声子谱" id="markdown-toc-21-傅立叶变化计算声子谱">2.1 傅立叶变化计算声子谱</a></li>
+              <li><a href="#22-直接计算声子谱" id="markdown-toc-22-直接计算声子谱">2.2 直接计算声子谱</a></li>
+            </ul>
+          </li>
+          <li><a href="#测试" id="markdown-toc-测试">测试</a>            <ul>
+              <li><a href="#image并行" id="markdown-toc-image并行">image并行</a></li>
+              <li><a href="#startq加速phx计算" id="markdown-toc-startq加速phx计算">startq加速ph.x计算</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#附录" id="markdown-toc-附录">附录</a>    <ul>
+      <li><a href="#xcrysden-help" id="markdown-toc-xcrysden-help">xcrysden help</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>本学习教程内容主要来自互联网，个人学习记录，仅供参考。<br />
+代码仓库<a href="https://github.com/cndaqiang/LearnQE">LearnQE@cndaqiang</a></p>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://qe2019.ijs.si/">Summer School on Advanced Materials and Molecular Modelling</a><br />
+<a href="https://gitlab.com/QEF/material-for-ljubljana-qe-summer-school">GitLab for qe2019</a><br /></p>
+
+<h2 id="示例">示例</h2>
+<h3 id="结构优化">结构优化</h3>
+<h4 id="graphane-relax">Graphane relax</h4>
+<p>relax计算<code class="language-plaintext highlighter-rouge">    calculation = 'relax',</code>,添加<code class="language-plaintext highlighter-rouge">&amp;IONS</code>原子收敛参数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;IONS
+!都有默认值
+		!ion_dynamics="bfgs" !relax: bfgs,damp ; md: verlet langevin, langevin-smc....
+/
+</code></pre></div></div>
+<p>运行</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-2/example1.relax
+mpirun -np 4 pw.x -i pw.graphane.relax.in | tee graphane.relax.out
+xcrysden  --pwo graphane.relax.out 
+</code></pre></div></div>
+<p>xcrysden打开后，可以选择<code class="language-plaintext highlighter-rouge">Display All Coordinates as Animation</code>，<br />
+然后显示不同原子步的结构，分别测量，C-H键长变化:0.9851Ang-&gt;1.1083Ang</p>
+<h4 id="hcp-zinc-vc-relax">hcp-Zinc vc-relax</h4>
+<p>vc-relax,变cell结构优化，要加上<code class="language-plaintext highlighter-rouge">&amp;CELL</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &amp;IONS
+ /
+ &amp;CELL
+ /
+</code></pre></div></div>
+<p>运行</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 pw.x -i pw.Zn.vc-relax.in | tee Zn.vc-relax.out
+xcrysden --pwo  Zn.vc-relax.out
+</code></pre></div></div>
+
+<h3 id="md分子动力学略">MD分子动力学[略]</h3>
+<p>与结构优化类似，添加步长dt和总步数nstep,</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;CONTROL
+	  calculation="md" !scf nscf 
+      nstep=68
+      dt=4
+/
+&amp;IONS
+!tempw起始温度
+!		tempw = 0.1
+!系综，verlet(NVE)
+		ion_dynamics="verlet"
+/
+&amp;CELL
+/
+
+</code></pre></div></div>
+
+<h3 id="neb计算">NEB计算</h3>
+<p>输入文件结构示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BEGIN
+
+BEGIN_PATH_INPUT
+&amp;PATH
+nstep_path = 200 !最大步数
+num_of_images = 7
+!默认pwscf_1 pwscf_N仅计算一次，只有2-N1共N-2个image参与后续的迭代
+!设置first_last_opt = .True. 1,N也参与迭代
+!first_last_opt = .False.
+/
+END_PATH_INPUT
+
+BEGIN_ENGINE_INPUT
+!各个图像的计算参数，把pw.x的输入复制过来，
+!仅不包含原子结构ATOMIC_POSITIONS，其他的如晶格参数，赝势依旧在此处填写
+&amp;CONTROL
+pseudo_dir = './'
+/
+&amp;SYSTEM
+  ibrav = 0
+  A =    1.00000000000000
+  nat = 3
+  ntyp = 3
+
+  ecutwfc = 30 
+!  	kinetic energy cutoff (Ry) for wavefunctions
+  ecutrho = 200 !4*ecutwfc
+
+/
+&amp;ELECTRONS
+/
+
+CELL_PARAMETERS {alat}
+  20.0000000000000000   0.0000000000000000   0.0000000000000000
+   0.0000000000000000  20.0000000000000000   0.0000000000000000
+   0.0000000000000000   0.0000000000000000  20.0000000000000000
+ATOMIC_SPECIES
+  C 12.0107 C_ONCV_PBE_fr.upf
+  N 14.0067 N_ONCV_PBE_fr.upf
+  H 1.00794 H_ONCV_PBE_fr.upf
+K_POINTS {automatic}
+1 1 1  0 0 0
+
+BEGIN_POSITIONS
+!初始IMAGE，终止IMAGE
+FIRST_IMAGE
+ATOMIC_POSITIONS {crystal}
+  C   0.4999025166406645 0.5000000000000000 0.5000000000000000
+  N   0.5578501003511457 0.5000000000000000 0.5000000000000000
+  H   0.4462473830081877 0.5000000000000000 0.5000000000000000 
+LAST_IMAGE
+ATOMIC_POSITIONS {crystal}
+  C   0.5000000000000000 0.5000000000000000 0.4414141678546500
+  N   0.5000000000000000 0.5000000000000000 0.5001920800889998
+  H   0.5000000000000000 0.5000000000000000 0.5503937520563474
+END_POSITIONS
+   
+END_ENGINE_INPUT
+END
+</code></pre></div></div>
+<h4 id="运行">运行</h4>
+<ul>
+  <li>默认的计算方式,创建pwscf_[1-N],然后分别进入到相应的文件夹进行计算<br />
+可以看到开始时只有pwscf_1中有输出，随后其他文件夹内以此出现输出文件
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 neb.x -i neb.in | tee neb.out
+</code></pre></div>    </div>
+  </li>
+  <li>使用image并行(-ni n)，可以同时开始好几个pwscf_的计算，如下，有四个image同时计算<br />
+<strong>image并行的image数量小于等于neb的image-2</strong>,因为初始和最终的image不参与后续的计算<br />
+如果设置<code class="language-plaintext highlighter-rouge">first_last_opt = .True.</code>，初始，最终的image也参与计算，此时image并行的image数量小于等于neb的image
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 4 neb.x -ni 4  -i neb.in | tee neb.out
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>xcrysden 可以根据neb.in生成变化动图，如下例</p>
+
+<h4 id="hcn-转换为-cnh-的过程">HCN 转换为 CNH 的过程</h4>
+<p>工作路径</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-2/example3.neb/HCN_CNH
+</code></pre></div></div>
+<p>之前使用VASP+VTST的计算结果<a href="https://github.com/cndaqiang/DFT-EXERCISES">DFT-EXERCISES</a>中的6.5节<br />
+<img src="/uploads/2020/03/neb.gif" alt="" /></p>
+
+<h4 id="计算输出">计算输出</h4>
+<p>运行</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EXEC=/public/home/chendq/soft/intel17/qe-6.4.1/bin/neb.x
+srun --mpi=pmi2 $EXEC -ni 5 -i neb.in | tee result
+</code></pre></div></div>
+<p><strong>下面的输出，是我中途kill了neb.x的结果，不是最终收敛的结果</strong></p>
+<ul>
+  <li>neb.dat 是输入neb.in中的<code class="language-plaintext highlighter-rouge">&amp;PATH</code>的备份</li>
+  <li>pw_1.in pw_2.in 是neb.in中的初态，末态scf计算的参数和坐标</li>
+  <li>pwscf_i 各个image的运行目录，与正常的scf计算相同，<code class="language-plaintext highlighter-rouge">pwscf_i/PW.out</code>是标准输出</li>
+  <li>pwscf.int ??</li>
+  <li>pwscf.dat中[反应坐标，相对能量，error]与标准输出中的一致,用于画反应势能面
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    image        energy (eV)        error (eV/A)        frozen
+
+       1       -455.0343548            3.837393            T
+       2       -454.1570363           17.615266            F
+       3       -453.7100989           11.466074            F
+       4       -453.2121126            3.452926            F
+       5       -453.9481453            0.191098            F
+       6       -453.7209844           14.164421            F
+       7       -454.3738303            3.409830            T
+</code></pre></div>    </div>
+  </li>
+  <li>pwscf.pathI 每次迭代的反应路径</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C_ONCV_PBE_fr.upf  pwscf.dat     pwscf.path26  pwscf.path46
+H_ONCV_PBE_fr.upf  pwscf.int     pwscf.path27  pwscf.path47
+neb.dat            pwscf.path    pwscf.path28  pwscf.path48
+neb.in             pwscf.path0   pwscf.path29  pwscf.path49
+N_ONCV_PBE_fr.upf  pwscf.path1   pwscf.path3   pwscf.path5
+out.1_0            pwscf.path10  pwscf.path30  pwscf.path50
+out.2_0            pwscf.path11  pwscf.path31  pwscf.path51
+out.3_0            pwscf.path12  pwscf.path32  pwscf.path52
+out.4_0            pwscf.path13  pwscf.path33  pwscf.path53
+out.5_0            pwscf.path14  pwscf.path34  pwscf.path54
+out.6_0            pwscf.path15  pwscf.path35  pwscf.path55
+pw_1.in            pwscf.path16  pwscf.path36  pwscf.path6
+pw_2.in            pwscf.path17  pwscf.path37  pwscf.path7
+pwscf_1            pwscf.path18  pwscf.path38  pwscf.path8
+pwscf_2            pwscf.path19  pwscf.path39  pwscf.path9
+pwscf_3            pwscf.path2   pwscf.path4   pwscf.xyz
+pwscf_4            pwscf.path20  pwscf.path40  result
+pwscf_5            pwscf.path21  pwscf.path41  run-qe-sslab.sh
+pwscf_6            pwscf.path22  pwscf.path42  run-qe-sslab.sh.e1010102
+pwscf_7            pwscf.path23  pwscf.path43  run-qe-sslab.sh.o1010102
+pwscf.axsf         pwscf.path24  pwscf.path44
+pwscf.crd          pwscf.path25  pwscf.path45
+</code></pre></div></div>
+<p><strong>结果等待SSLAB中</strong></p>
+
+<h3 id="振动模式计算">振动模式计算</h3>
+<ul>
+  <li><strong>注意区分<code class="language-plaintext highlighter-rouge">dynmat.x</code>和<code class="language-plaintext highlighter-rouge">matdyn.x</code>不是一个程序</strong></li>
+  <li><strong>计算耗时主要来自于ph.x的计算</strong></li>
+  <li><strong>如果赝势来源有问题,很可能算出来的结果完全错的,也没有很好的收敛性</strong></li>
+  <li><strong>注意ph.x和matdyn.x输入q点坐标时,默认的单位是<code class="language-plaintext highlighter-rouge">2pi/a</code>,不是分数坐标</strong>,matdyn.x可以通过<code class="language-plaintext highlighter-rouge">q_in_cryst_coord=.true.</code>设置成倒格式的分数坐标,但是<code class="language-plaintext highlighter-rouge">ph.x</code>只能用<code class="language-plaintext highlighter-rouge">2pi/a</code>输入,而且<strong>输出的所有文件中的q都是以<code class="language-plaintext highlighter-rouge">2pi/a</code>为单位</strong>.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">ph.x</code>续算,删除<code class="language-plaintext highlighter-rouge">_phN/pwscf.save</code>,输入参数添加<code class="language-plaintext highlighter-rouge">recover=.true.</code>即可</strong>,自动续算的作业提交方式<code class="language-plaintext highlighter-rouge">sbatch --dependency=afternotok:5718202 run-tdpw-huairou.sh</code></li>
+  <li>电声耦合计算,<a href="https://docs.epw-code.org/doc/School2018.html">EPW</a></li>
+</ul>
+
+<h4 id="计算流程">计算流程</h4>
+<p>计算流程和电子自洽计算一样:</p>
+<ul>
+  <li>1.<code class="language-plaintext highlighter-rouge">pw.x</code>:电子结构计算</li>
+  <li>2.0 <code class="language-plaintext highlighter-rouge">ph.x</code>计算单q点(声子波矢,如$\Gamma$点)的力常数<code class="language-plaintext highlighter-rouge">ldisp=.false.</code>,见下
+    <ul>
+      <li>2.0.1 <code class="language-plaintext highlighter-rouge">dynmat.x</code>后处理动力学矩阵文件,得到红外拉曼,运动图像等信息</li>
+    </ul>
+  </li>
+  <li>2.1 <code class="language-plaintext highlighter-rouge">ph.x</code>:自洽计算均一网格点(q-mesh)的$C_{s\alpha,s’\beta}(q_{ijk})$,<code class="language-plaintext highlighter-rouge">ldisp=.true.</code><strong>需要测试qmesh的收敛性</strong>
+    <ul>
+      <li>2.1.1  <code class="language-plaintext highlighter-rouge">q2r.x</code>:傅立叶变换到实空间(interatomic force constants, <strong>IFC</strong>): $C_{s\alpha,s’\beta}(q_{ijk})$ 到$C_{s\alpha,s’\beta}(R_{lmn})$</li>
+      <li>2.1.2  <code class="language-plaintext highlighter-rouge">matdyn.x</code>:从实空间傅立叶到q空间,<strong>用于插值快速计算指定q点的</strong>$C_{s\alpha,s’\beta}(q’_{ijk})$
+\(\begin{array}{c}
+C_{s\alpha,s'\beta}(R_{lmn})=\frac{1}{N_q}\sum_{i,j,k}C_{s\alpha,s'\beta}(q_{ijk})e^{iq_{ijk}R_{lmn}} \\
+C_{s\alpha,s'\beta}(q_{ijk})=\sum_{l,m,n}C_{s\alpha,s'\beta}(R_{lmn})e^{-iq_{ijk}R_{lmn}} 
+\end{array}\)</li>
+    </ul>
+  </li>
+  <li>2.2 <code class="language-plaintext highlighter-rouge">ph.x</code>: 直接计算q点列表的动力学矩阵,<code class="language-plaintext highlighter-rouge">ldisp=.true.,qplot=.true.</code>
+    <ul>
+      <li>2.2.1 <code class="language-plaintext highlighter-rouge">matdyn.x</code>:直接自洽求解$C_{s\alpha,s’\beta}(q’_{ijk})$，<strong>可用于确认2.1的方法qmesh是否足够收敛</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="phx计算声子信息动力学矩阵">ph.x计算声子信息(动力学矩阵)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUTPH
+prefix='pwscf'
+tr2_ph=1d-12 !阈值,提高可以减少部分虚频
+fildyn='matdyn'!保存用于后处理文件
+
+!这三个量只会在非金属体系的q=(0,0,0)点计算,其他材料或者其他q点(q!=0),则不会计算,设置也没有用
+!当ldisp=.FALSE.时,这三个量才由输入参数决定
+!当ldisp=.true.时,如果有q=0的点,且是非金属,则会强制计算这个q点的这三个信息`/PHonon/PH/prepare_q.f90`
+!  IF (elph_ahc) THEN
+!     epsil = .FALSE.
+!     zeu = .FALSE.
+!     zue = .FALSE.
+!  ENDIF
+!epsil=.true. !红外活性, 仅适用于半导体, 即自洽计算的occupations = 'fixed', epsil = epsil .OR. lraman .OR. elop
+!zeu=epsil !effective charges  are computed from the dielectric
+!zue=.false. !effective charges are computed from the phonon density responses.
+
+!lraman=.true. !拉曼活性
+
+!q点的计算方式MP网格,二维网格,q点列表
+!ldisp=.false.  !使用nq1,nq2,nq3设置q点网格,或者qplot=.true.读入q点列表
+!  nq1 = 1,
+!  nq2 = 1,
+!  nq3 = 1,
+!qplot=.false. !读入q点列表,需要设置ldisp=.true., 而且会输出`fildyn`+`.freq`文件,里面是各个q点振动模式的本征值,band.x的输出格式,和matdyn.x输出的flfrq='matdyn.freq'内容一样
+!q2d = .false. !利用q点列表生成二维的q点网格
+!q_in_band_form = .false. !.true. 和pwscf计算能带一样,q点列表为高对称q点和q点间隔nq, .false. 直接计算输入的q点列表
+
+!nat_todo=0 !不计算指定q点,而是计算指定原子的自由度对应的声子
+!electron_phonon='' !电声耦合系数
+!asr=.true.
+
+/
+!q点列表,原子列表, 必须紧贴着/下一行些,不能有空行和注释行
+!注意单位都是2i/a
+!&gt; ldisp=.false., qplot=.false., 只能输入一个q点列表,qx,qy,qz
+!0.0 0.0  0.0
+!&gt; ldisp=.true.,qplot=.false., 空,使用上面的nq1,2,3
+!&gt; ldisp=.true.,qplot=.true., 类似于K点的输入,具体见q2d,q_in_band_form
+!nqs
+!q1x q1y q1z nq1
+!...
+!qnx qny qnz nqn
+!
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ldisp=.false.</code> 时,只输出<code class="language-plaintext highlighter-rouge">fildyn='matdyn'</code>文件,即指定q点的动力学矩阵</li>
+  <li><code class="language-plaintext highlighter-rouge">ldisp=.true., nq1,2,3</code>,<br />
+当<code class="language-plaintext highlighter-rouge">nq1=nq2=nq3=1</code>只有1个q点时和<code class="language-plaintext highlighter-rouge">ldisp=.false.</code>的计算相同,
+但是<code class="language-plaintext highlighter-rouge">ldisp=.true.</code>时,对于半导体材料,在<code class="language-plaintext highlighter-rouge">q=(0,0,0)</code>的点会强制计算<code class="language-plaintext highlighter-rouge">epsil,zeu,zue</code>
+输出<code class="language-plaintext highlighter-rouge">matdyn0</code>(q点列表),<strong><code class="language-plaintext highlighter-rouge">matdyn[1-N]</code>动力学矩阵文件,同<code class="language-plaintext highlighter-rouge">ldisp=.false.</code>中的<code class="language-plaintext highlighter-rouge">fildyn='matdyn'</code>文件</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">epsil=.true.</code> , 红外活性,拉曼活性, 仅适用于半导体, 即自洽计算的occupations = ‘fixed’,
+    <blockquote>
+
+      <p>7.6 HOW CAN I CALCULATE RAMAN/IR COEFFICIENTS IN METALS?<br />
+You cannot: they are well defined only for insulators.<br />
+7.7 HOW CAN I CALCULATE THE ELECTRON-PHONON COEFFICIENTS IN INSULATORS?<br />
+You cannot: the current implementation is for metals only.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h4 id="动力学矩阵文件格式">动力学矩阵文件格式</h4>
+<ul>
+  <li><strong>只能由<code class="language-plaintext highlighter-rouge">ph.x</code>输出<code class="language-plaintext highlighter-rouge">fildyn='matdyn'</code></strong>,不仅是密度矩阵,还包含了一系列的信息<br />
+如设置了<code class="language-plaintext highlighter-rouge">epsil</code>则会计算<code class="language-plaintext highlighter-rouge">Dielectric Tensor:</code>,<code class="language-plaintext highlighter-rouge">Effective Charges E-U: Z_{alpha}{s,beta}</code>等项,否则不计算为空</li>
+  <li><code class="language-plaintext highlighter-rouge">ldisp=.false.</code>时输出到一个动力学矩阵文件文件<code class="language-plaintext highlighter-rouge">matdyn</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ldisp=.true.</code> 时输出到1(<code class="language-plaintext highlighter-rouge">matdyn0</code>,q点网格)+$N_q$(<code class="language-plaintext highlighter-rouge">matdyn1</code>,…,<code class="language-plaintext highlighter-rouge">matdynI</code>,…<code class="language-plaintext highlighter-rouge">matdynN</code>,动力学矩阵文件)个文件</li>
+  <li><code class="language-plaintext highlighter-rouge">matdyn</code>和<code class="language-plaintext highlighter-rouge">matdynI</code>都是<em>动力学矩阵文件</em>,内容格式一模一样
+    <ul>
+      <li>Dynamical matrix file 晶格,原子坐标</li>
+      <li>Dynamical  Matrix in cartesian axes <strong>动力学矩阵</strong></li>
+      <li>Dielectric Tensor:</li>
+      <li>Effective Charges E-U: Z_{alpha}{s,beta}</li>
+      <li>Diagonalizing the dynamical matrix  <strong>动力学矩阵的</strong> <em>本征矢量</em></li>
+    </ul>
+  </li>
+  <li><strong>使用<code class="language-plaintext highlighter-rouge">dynmat.x</code>后处理单个动力学矩阵文件<code class="language-plaintext highlighter-rouge">matdyn</code>和<code class="language-plaintext highlighter-rouge">matdynI</code></strong></li>
+  <li><strong>使用<code class="language-plaintext highlighter-rouge">q2r.x</code>可以把<code class="language-plaintext highlighter-rouge">matdyn[1-N]</code></strong>转换到实空间,<code class="language-plaintext highlighter-rouge">matdyn.x</code>继续转换为指定q点的动力学矩阵,但是<code class="language-plaintext highlighter-rouge">matdyn.x</code>输出的只有动力学矩阵,不包含晶格, 节点,本征矢量等信息.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Dynamical matrix file
+晶格原子结构
+     !&gt;&gt;&gt;&gt;&gt; 动力学矩阵
+     Dynamical  Matrix in cartesian axes
+
+     q = (    0.000000000   0.000000000   0.000000000 )
+
+    1    1
+  2.06042047   0.00000000     0.00000000   0.00000000     0.00000000   0.00000000
+  0.00000000   0.00000000     0.08783090   0.00000000     0.00000000   0.00000000
+  0.00000000   0.00000000     0.00000000   0.00000000     0.08783090   0.00000000
+
+     Dielectric Tensor:
+     Effective Charges E-U: Z_{alpha}{s,beta}
+     atom #    1
+     ...
+     !&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; q,频率,本征矢量
+     Diagonalizing the dynamical matrix 
+
+     q = (   -0.050000000   0.000000000   0.000000000 )
+
+ **************************************************************************
+     freq (    1) =      -6.661608 [THz] =    -222.207322 [cm-1]
+ (  0.000000  0.000000 -0.527975  0.000000  0.000000  0.000000 )
+ (  0.000000  0.000000 -0.527975  0.000000 -0.000000  0.000000 )
+ (  0.000000  0.000000 -0.665195  0.000000  0.000000  0.000000 )
+</code></pre></div></div>
+
+<h4 id="dynmatx后处理单个q点的动力学矩阵文件">dynmat.x后处理单个q点的动力学矩阵文件</h4>
+<p>直接处理ph.x的计算结果<code class="language-plaintext highlighter-rouge">matdyn</code>,<code class="language-plaintext highlighter-rouge">matdyn[1-N]</code></p>
+<ul>
+  <li>读入单个动力学矩阵文件</li>
+  <li>Acoustic Sum Rule (if q=0)</li>
+  <li>对角化动力学矩阵</li>
+  <li>计算红外和拉曼散射截面</li>
+  <li>保存结果用于画图</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUT
+fildyn='matdyn'   !动力学矩阵文件,只能由ph.x的`fildyn`输入
+!fildyn='matdyn1' !多个q点时,读入特定q点
+filout='dynmat.out' !同密度矩阵文件格式中的Diagonalizing the dynamical matrix项，是normalized phonon displacements
+!(i.e. eigenvectors divided by the square root of the mass and then normalized; they are not orthogonal)
+!fileig='dynmat.eig' !&gt;&gt;&gt;默认不输出, 也是 eigenvectors(they are orthogonal), 几乎同filout='dynmat.out'
+!不过这两个文件和原始的matdyn文件中的Diagonalizing the dynamical matrix项又存在差异,为什么呢？
+filmol='dynmat.mold' !Molden Format格式,频率,坐标,振动模式,可能给特定程序后处理用
+filxsf='dynmat.axsf' !图形化展示原子的运动
+/
+</code></pre></div></div>
+
+<h4 id="q2rxmatdynx-指定q点的声子频率">q2r.x,matdyn.x 指定q点的声子频率</h4>
+<p><strong>注意区分<code class="language-plaintext highlighter-rouge">dynmat.x</code>和<code class="language-plaintext highlighter-rouge">matdyn.x</code>不是一个程序</strong><br />
+<strong>从qe-6.8开始,PHonon/Doc目录中才出现matdyn和q2r的说明手册</strong></p>
+
+<p><strong>q2r.x读入动力学矩阵</strong>$C_{s\alpha,s’\beta}(q_{ijk})$,计算原子间力常数interatomic force constants (IFC), C(R)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUT
+fildyn="matdyn" !读入matdyn0,matdyn[1-N],找不到matdyn0,也会
+flfrc='matdyn.ifc' ! 原子间力常数文件,Output file containing the IFC in real space (must be specified)
+/
+</code></pre></div></div>
+
+<p><strong>matdyn.x读入IFC( q2r.x 计算的 interatomic force constants ),计算给定q点的声子频率</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUT
+flfrc="matdyn.ifc"  !同q2r
+!dos=.false. !true 计算dos, false计算band
+!dos参数
+!nk1, nk2, nk3 计算dos的均一k点网格
+!deltaE !dE,单位cm^-1
+!degauss=0.0 !展宽
+!fldos='matdyn.dos' 
+
+!一些信息和dynmat.x类似,fildyn,filout,fileig
+!fldyn="matdyn.mat"   !&gt;&gt;&gt;默认不输出,和ph.x的输出相比,是matdyn文件的部分信息, 仅包含Dynamical  Matrix in cartesian axes
+!flvec='matdyn.modes' !&gt;&gt;&gt;默认输出,信息足够&lt;&lt;&lt; 同密度矩阵文件格式中的Diagonalizing the dynamical matrix项，是normalized phonon displacements, 同上filout
+!flfrq='matdyn.freq'  !&gt;&gt;&gt;默认输出,信息足够&lt;&lt;&lt; 频率信息,是qe的band.x类型的输出,可以用plotband.x处理,只有声子坐标和频率
+!fleig='matdyn.eig'   !&gt;&gt;&gt;默认不输出,phonon eigenvectors, 同上fileig
+
+
+!q点形式,和ph.x类似
+!q_in_band_form=.false. !按照能带格式录入
+!q_in_cryst_coord=.false. !设为True,则录入的q点坐标是分数坐标, 否则按照2pi/a为单位
+/
+!q点列表格式,在dos=.false.时读入
+!qe q_in_band_form == .trun. dos == .false.
+!nqs
+!q1x q1y q1z nq
+!... 同能带
+!qe .a_in_band_form == .false. dos == .false., q点列表
+!nq
+!q1x q1y q1z
+!...
+
+</code></pre></div></div>
+
+<h4 id="20-分子振荡频率gamma点声子谱">2.0 分子振荡频率($\Gamma$点声子谱)</h4>
+<p>参考</p>
+
+<p><a href="http://blog.sciencenet.cn/blog-685489-846704.html">利用xcryden画出振动模式图</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#自洽计算
+mpirun -np 20 pw.x -i input.in | tee scf.result
+#ph.x
+mpirun -np 20 ph.x   -i ph.in | tee ph.result
+#使用image并行运行ph.x, 把表示分配到不同的CPU里面去加速计算
+#mpirun -np 20 ph.x   -i ph.in -ni 2 | tee ph.result
+#dynmat.x用于图形化展示振动特征
+dynmat.x -i dynmat.in | tee dynmat.result
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">ph.in</code>全部使用默认参数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUTPH
+/
+0.0 0.0 0.0
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">dynmat.in</code>全部使用默认参数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUT
+!fildyn='matdyn'
+!filxsf='dynmat.axsf'!输出展示文件
+/
+</code></pre></div></div>
+
+<h5 id="展示苯环的振动模式">展示苯环的振动模式</h5>
+<p>参数同上,使用xcrysden打开<code class="language-plaintext highlighter-rouge">dynmat.axsf</code>,display显示受力，Modify可以修改里的显示方式
+<img src="/uploads/2020/10/dyn.png" alt="" /></p>
+
+<h5 id="使用上述参数计算nh3的振动频率">使用上述参数计算NH3的振动频率</h5>
+<p>参数同上,从<code class="language-plaintext highlighter-rouge">matdyn</code>中读入频率画图
+下图为$NH_3$的振动频率和<a href="https://github.com/cndaqiang/DFT-EXERCISES">使用VASP计算:5.2 NH3 振动频率</a>的结果一致</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./matdyn.py
+</code></pre></div></div>
+<p><img src="/uploads/2020/10/matdyn.png" alt="" /></p>
+
+<h5 id="co2的拉曼和红外模式识别">CO2的拉曼和红外模式识别</h5>
+<p>参数同上,通过提高<code class="language-plaintext highlighter-rouge">tr2_ph=1d-14</code>精度,计算的虚频就没有了,计算出三支主要的频率<code class="language-plaintext highlighter-rouge">648.1,1346.7,2403.0</code>分别对应红外<strong>I</strong>R,拉曼<strong>R</strong>aman,红外<strong>I</strong>R模式</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~/work/tdpw/LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-3/ph_CO2_LDA$ !grep
+grep freq ph.result | grep -v THz
+     freq (   1-   1) =         25.3  [cm-1]   --&gt; A_2u X_4' M_4'  I
+     freq (   2-   3) =         27.0  [cm-1]   --&gt; E_g  X_5  M_5   R
+     freq (   4-   5) =         86.1  [cm-1]   --&gt; E_u  X_5' M_5'  I
+     freq (   6-   7) =        648.1  [cm-1]   --&gt; E_u  X_5' M_5'  I
+     freq (   8-   8) =       1346.7  [cm-1]   --&gt; A_1g X_1  M_1   R
+     freq (   9-   9) =       2403.0  [cm-1]   --&gt; A_2u X_4' M_4'  I
+</code></pre></div></div>
+<p><strong>在<code class="language-plaintext highlighter-rouge">ph.in</code>中添加下面参数计算红外和拉曼光谱</strong>,会计算介电性值</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">epsil=.true.</code> 可以计算红外光谱强度</li>
+  <li><code class="language-plaintext highlighter-rouge">lraman=.true.</code> 计算红外和<a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.90.036401">拉曼PRL 90, 036401 (2003)</a>,只支持LDA泛函</li>
+</ul>
+
+<p>提取结果:<code class="language-plaintext highlighter-rouge">dynmat.x -i dynmat.in | tee dynmat.result</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mode   [cm-1]    [THz]      IR          Raman   depol.fact
+    1     25.33    0.7595    0.0000         0.0000    0.7500
+    2     26.99    0.8093    0.0000         2.8224    0.7500
+    3     26.99    0.8093    0.0000         2.8224    0.7500
+    4     86.07    2.5802    0.0000         0.0000    0.7500
+    5     86.07    2.5802    0.0000         0.0000       NaN
+    6    648.08   19.4288    0.5810         0.0000    0.7500
+    7    648.08   19.4288    0.5810         0.0000       NaN
+    8   1346.73   40.3739    0.0000        27.4919    0.0995
+    9   2403.03   72.0411   13.5277         0.0000    0.7500
+</code></pre></div></div>
+
+<h4 id="2122声子谱计算">2.1/2.2声子谱计算</h4>
+<p>流程见上, 示例目录</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-3/ph_Si2
+</code></pre></div></div>
+
+<p>scf计算</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpirun -np 20 pw.x -i input.in | tee result
+</code></pre></div></div>
+
+<h5 id="21-傅立叶变化计算声子谱">2.1 傅立叶变化计算声子谱</h5>
+<p>自洽计算q网格点<code class="language-plaintext highlighter-rouge">mpirun ph.x -i  ph.in | tee ph.result</code>,参数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &amp;inputph
+  prefix='pwscf',
+  tr2_ph = 1.0d-14,
+  ldisp = .true.,
+  nq1 = 2,
+  nq2 = 2,
+  nq3 = 2,
+  outdir='../'
+  fildyn='matdyn',
+!lraman=.true.
+ /
+</code></pre></div></div>
+<p>FFT到实空间<code class="language-plaintext highlighter-rouge">q2r.x -i q2r.in | tee q2r.result</code>,生成IFC文件</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUT
+fildyn="matdyn" !读入matdyn0,matdyn[1-N],找不到matdyn0,也会
+flfrc='matdyn.ifc' ! 原子间力常数文件,Output file containing the IFC in real space (must be specified)
+zasr='simple'
+/
+</code></pre></div></div>
+
+<p>计算指定q点的声子谱<code class="language-plaintext highlighter-rouge">matdyn.x -i matdyn.in | tee matdyn.result</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUT
+flfrc="matdyn.ifc"  !同q2r
+q_in_band_form=.true.
+asr='simple'
+/
+5
+0.0 0.0 0.0 10 \Gamma
+1.0 0.0 0.0 10  X
+1.0 1.0 0.0 10  W
+0.0 0.0 0.0 10 \Gamma
+0.5 0.5 0.0 0  L
+</code></pre></div></div>
+<p>产生<code class="language-plaintext highlighter-rouge">matdyn.modes</code>模式详细信息,<code class="language-plaintext highlighter-rouge">matdyn.freq</code>声子谱(单位$cm^{-1}$)</p>
+
+<h5 id="22-直接计算声子谱">2.2 直接计算声子谱</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LearnQE/DOC/material-for-ljubljana-qe-summer-school-master/Day-3/ph_Si2/direct
+</code></pre></div></div>
+
+<p>设置<code class="language-plaintext highlighter-rouge">  ldisp = .true., qplot=.true.</code>, <strong>直接填入要计算的q点坐标</strong>，在<code class="language-plaintext highlighter-rouge">mpirun ph.x -i  ph.in | tee ph.result</code>后就会输出<code class="language-plaintext highlighter-rouge">matdyn.freq</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &amp;inputph
+  prefix='pwscf',
+  tr2_ph = 1.0d-14,
+  ldisp = .true.,
+  nq1 = 1,
+  nq2 = 1,
+  nq3 = 1,
+  qplot=.true.
+  q_in_band_form=.true.
+  outdir='../'
+  fildyn='matdyn',
+!lraman=.true.
+ /
+5
+0.0 0.0 0.0 10 \Gamma
+1.0 0.0 0.0 10  X
+1.0 1.0 0.0 10  W
+0.0 0.0 0.0 10 \Gamma
+0.5 0.5 0.0 0  L
+</code></pre></div></div>
+
+<p>这里对比了<code class="language-plaintext highlighter-rouge">ph.x</code>的参数<code class="language-plaintext highlighter-rouge">nq=1x1x1,2x2x2,4x4x4,8x8x8</code>以及,直接在<code class="language-plaintext highlighter-rouge">ph.x</code>的输入文件中写入q点坐标的计算结果,对比结果如图.<br />
+可以见q点密度上去后,是会逐渐和直接算的结果趋于一致(其实$\Gamma$点附近还是有点不一样的)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plotband.x.py -i 1x1x1/matdyn.in -eig 1x1x1/matdyn.freq 2x2x2/matdyn.freq 4x4x4/matdyn.freq 8x8x8/matdyn.freq direct/matdyn.freq
+</code></pre></div></div>
+
+<p><img src="/uploads/2022/04/plotband.png" alt="" /></p>
+
+<h4 id="测试">测试</h4>
+<ul>
+  <li>波函数的数量(nbnd)对声子&amp;介电性值计算没有明显影响</li>
+</ul>
+
+<h5 id="image并行">image并行</h5>
+
+<p><code class="language-plaintext highlighter-rouge">-ni</code>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#ph.x
+mpirun  ph.x   -i ph.in -npool 2 -ni 36  | tee ph.result
+</code></pre></div></div>
+<p>可以在<code class="language-plaintext highlighter-rouge">ph.result</code>中看到,第一个image只算一个表示和某些原子</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     Atomic displacements:
+     There are   36 irreducible representations
+
+     Representation     1      1 modes -  To be done
+
+     Representation     2      1 modes -  Not done in this run
+
+     Representation     3      1 modes -  Not done in this run
+     ......
+     Representation    36      1 modes -  Not done in this run
+
+     Compute atoms:     5,    6,    7,    8,
+</code></pre></div></div>
+<p>第2个image的屏幕输出在<code class="language-plaintext highlighter-rouge">out.1_0</code>…, 计算文件夹在<code class="language-plaintext highlighter-rouge">_phN</code></p>
+
+<p>用时对比</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#mpirun -np 6 ph.x -i ph.Si.in | tee ph.result
+#     PHONON       :     17.58s CPU     20.73s WALL
+#mpirun -np 6 ph.x -i ph.Si.in -ni 6 | tee ph.result
+#     PHONON       :     16.98s CPU     17.53s WALL
+#mpirun -np 1 ph.x -i ph.Si.in | tee ph.result
+#     PHONON       :     34.96s CPU     36.03s WALL
+</code></pre></div></div>
+
+<h5 id="startq加速phx计算">startq加速ph.x计算</h5>
+<p>不同q点顺序同时开始计算</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;INPUTPH
+start_q=1
+last_q=10
+outdir="1_10.out" !如果希望不同q点顺序同时开始计算,必须给他们指定不同的outdir存储中间变量,把scf的outdir复制一份即可
+/
+</code></pre></div></div>
+
+<h2 id="附录">附录</h2>
+<h3 id="xcrysden-help">xcrysden help</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       --xsf file
+           Load structure from XCrySDen's-Structure-File (XSF) formatted file.
+
+       --cube file
+       --gXX_cube file
+       --g98_cube file
+           Load  structure  from  Gaussian cube file. The cube file should be produced with the Cube=Cards option. Only scalar cube files are supported, that
+           is, Cube=(Cards,Density) or Cube=(Cards,Orbitals) or Cube=(Cards,Potential). Refer to GAUSSIAN manual for the meaning of this keywords.
+
+       --pwi
+       --pw_inp file
+           Load structure from pw.x input file. pw.x is a  pseudopotential  planewave  program  of  the  Quantum-ESPRESSO  distribution  (http://www.quantum-
+           espresso.org/).
+
+       --pwo
+       --pw_out file
+           Load  structure  from  pw.x  output  file.  pw.x  is a pseudopotential planewave program of the Quantum-ESPRESSO distribution (http://www.quantum-
+           espresso.org/).
+
+       -s script
+       --script script
+           Load script from file containing Tcl script.
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/03/06/learnqe/">Learn QE1 电子结构计算</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/04/14/bluetooth/">Mint 使用蓝牙鼠标问题</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

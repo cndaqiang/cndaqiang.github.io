@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>安装OP/HiNas至U盘以及配置</title>
+    <meta name="description" content="始终无法解决刷机后，系统变为read-only或者无法启动的问题。怀疑是mmc有问题。最终的解决方案是刷到U盘中。">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2024/10/21/hinas2/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>安装OP/HiNas至U盘以及配置</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2024-10-21
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#HiNas" title="Category: HiNas" rel="category">HiNas</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#HiNas" title="Tag: HiNas" rel="tag">HiNas</a-->
+        <a href="/tag/#HiNas" title="Tag: HiNas" rel="tag">HiNas</a>&nbsp;
+    
+        <!--a href="/tag/#openwrt" title="Tag: openwrt" rel="tag">openwrt</a-->
+        <a href="/tag/#openwrt" title="Tag: openwrt" rel="tag">openwrt</a>&nbsp;
+    
+        <!--a href="/tag/#arm" title="Tag: arm" rel="tag">arm</a-->
+        <a href="/tag/#arm" title="Tag: arm" rel="tag">arm</a>&nbsp;
+    
+        <!--a href="/tag/#mv100" title="Tag: mv100" rel="tag">mv100</a-->
+        <a href="/tag/#mv100" title="Tag: mv100" rel="tag">mv100</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#写在前面" id="markdown-toc-写在前面">写在前面</a></li>
+  <li><a href="#设备" id="markdown-toc-设备">设备</a></li>
+  <li><a href="#刷机流程" id="markdown-toc-刷机流程">刷机流程</a></li>
+  <li><a href="#openwrtimmortalwrt配置" id="markdown-toc-openwrtimmortalwrt配置">openwrt/immortalwrt配置</a></li>
+  <li><a href="#刷hinas和配置" id="markdown-toc-刷hinas和配置">刷HiNas和配置</a>    <ul>
+      <li><a href="#设置" id="markdown-toc-设置">设置</a></li>
+      <li><a href="#qbittorrent" id="markdown-toc-qbittorrent">qbittorrent</a></li>
+    </ul>
+  </li>
+  <li><a href="#u盘格式化命令" id="markdown-toc-u盘格式化命令">U盘格式化命令</a></li>
+  <li><a href="#迁移系统" id="markdown-toc-迁移系统">迁移系统</a></li>
+  <li><a href="#备份系统" id="markdown-toc-备份系统">备份系统</a></li>
+  <li><a href="#创建bootargs" id="markdown-toc-创建bootargs">创建bootargs</a></li>
+</ul>
+
+<p>始终无法解决刷机后，系统变为read-only或者无法启动的问题。怀疑是mmc有问题。最终的解决方案是刷到U盘中。</p>
+
+<h2 id="写在前面">写在前面</h2>
+<ul>
+  <li><strong>感谢神雕大佬的开发:<a href="https://histb.com/">HiNas</a></strong></li>
+  <li>建议阅读<a href="/2024/10/20/hinas/">海纳思刷机总结</a></li>
+  <li><strong>刷机有风险，别无脑复制下面的内容</strong></li>
+</ul>
+
+<h2 id="设备">设备</h2>
+<ul>
+  <li>咪咕盒子MG101</li>
+  <li>芯片类型 hi3798mv100</li>
+  <li>刷机包类型 mv100-mdmo1a-usb-flash.zip. 版本Hinas-20240201</li>
+  <li>openwrt刷机包<a href="https://downloads.immortalwrt.org/releases/21.02.7/targets/armvirt/32/immortalwrt-21.02.7-armvirt-32-rootfs-ext4.img.gz">immortalwrt-21.02.7@armvirt/32</a></li>
+  <li><strong>最终效果,U盘的sda1负责引导,sda2是一个immortalwrt,sda3是<a href="https://histb.com/">HiNas</a></strong></li>
+</ul>
+
+<h2 id="刷机流程">刷机流程</h2>
+<ul>
+  <li>按照<a href="https://histb.com/">HiNas</a>官方刷一次系统</li>
+  <li>在能够进入系统的时候，立刻把fastboot分区删除</li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">dd if=/dev/zero of=/dev/mmcblk0p1 bs=1024  count=1024</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>这样，启动权由U盘决定，又可以使用<a href="https://histb.com/">HiNas</a>的内核</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>同时创建一个恢复系统(/dev/mmcblk0p7)，见<a href="/2024/10/20/hinas/#修改hinas的恢复分区">修改hinas的恢复分区</a></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>以后可以利用这个恢复系统安装系统</li>
+    </ul>
+  </li>
+  <li>把U盘分成三个区, 第一个区是fat32，第二个区是ext4，第三个区是ext4</li>
+  <li>
+    <ul>
+      <li>将<code class="language-plaintext highlighter-rouge">fastboot.bin</code>和启动到第二个区(sda2)的<code class="language-plaintext highlighter-rouge">bootargs.bin</code>放到fat32分区</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>将openwrt的固件解压到sda2,<a href="https://histb.com/">HiNas</a>解压到sda3</li>
+    </ul>
+  </li>
+  <li>插入U盘开机</li>
+  <li>
+    <ul>
+      <li>对于openwrt系统，开机后可能默认是主路由模式。关机，在恢复系统(/dev/mmcblk0p7)下修改<code class="language-plaintext highlighter-rouge">/etc/config/network</code>
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config interface 'lan'
+    option device 'br-lan'
+    option proto 'dhcp'
+    #option proto 'static'
+    #option ipaddr '192.168.1.1'
+    #option netmask '255.255.255.0'
+    #option ip6assign '60'
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="openwrtimmortalwrt配置">openwrt/immortalwrt配置</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/gz immortalwrt_core https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/targets/armvirt/32/packages
+src/gz immortalwrt_base https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/packages/arm_cortex-a15_neon-vfpv4/base
+src/gz immortalwrt_luci https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/packages/arm_cortex-a15_neon-vfpv4/luci
+src/gz immortalwrt_packages https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/packages/arm_cortex-a15_neon-vfpv4/packages
+src/gz immortalwrt_routing https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/packages/arm_cortex-a15_neon-vfpv4/routing
+src/gz immortalwrt_telephony https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/packages/arm_cortex-a15_neon-vfpv4/telephony
+#
+opkg update
+opkg install luci-app-samba4 luci-app-qbittorrent luci-app-zerotier luci-theme-argon  openssh-sftp-server htop
+#https://github.com/vernesong/OpenClash/releases
+# opkg install luci-app-openclash_0.46.033-beta_all.ipk 
+</code></pre></div></div>
+
+<h2 id="刷hinas和配置">刷HiNas和配置</h2>
+<ul>
+  <li>HiNas刷机后要等待五分钟</li>
+  <li>HiNas中<code class="language-plaintext highlighter-rouge">poweroff</code>后是不会自动开机的</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /tmp
+mkdir a3
+mount /dev/sda3 a3
+mkdir b
+mount  /dev/sdb1 ./b
+mkdir ubuntu
+mount -o loop  /tmp/b/Ubuntu-20.04.5-armhf-20240201-0d93d.img  /tmp/ubuntu/
+cp -a /tmp/ubuntu/* /tmp/a3/
+#替换bootargs
+</code></pre></div></div>
+
+<h3 id="设置">设置</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -s https://install.zerotier.com | sudo bash
+cd /var/lib/zerotier-one
+cp /tmp/a2/etc/config/zero/identity.* .
+cp /tmp/a2/etc/config/zero/authtoken.secret .
+zerotier-cli join 83048a063272598a
+systemctl restart zerotier-one
+systemctl enable zerotier-one
+#
+apt install ./mihomo-linux-armv7-v1.18.9.deb
+systemctl enable mihomo
+cp -r /tmp/a2/usr/share/openclash/ui /var/www/html/clashui
+#clash页面ui
+#http://ip/clashui/dashboard/index.html
+#http://ip/clashui/yacd/index.html
+#也可以把他们添加到hinas的首页
+</code></pre></div></div>
+
+<p>卸载用不到的, 只保留了</p>
+<ul>
+  <li>dav共享 alist</li>
+  <li>文件上传 filebrowser</li>
+  <li>万一用到呢 Aria、tty
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt purge  transmission-histb ddns-histb  typecho-histb frpc-histb h5ai-histb tailscale-histb
+</code></pre></div>    </div>
+    <p>清理主页<code class="language-plaintext highlighter-rouge">/var/www/html/icons_lan/wan/home.php</code></p>
+  </li>
+</ul>
+
+<h3 id="qbittorrent">qbittorrent</h3>
+<ul>
+  <li>不要用hinas仓库的，会被pt站拦截</li>
+  <li>只能用开源的</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install qbittorrent-nox
+vi /etc/systemd/system/qbittorrent.service
+##
+##
+[Unit]
+Description=qBittorrent Daemon Service
+After=network.target
+[Service]
+User=root
+ExecStart=/usr/bin/qbittorrent-nox
+ExecStop=/usr/bin/killall -w qbittorrent-nox
+[Install]
+WantedBy=multi-user.target
+##
+systemctl daemon-reload
+systemctl enable qbittorrent
+</code></pre></div></div>
+
+<h2 id="u盘格式化命令">U盘格式化命令</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg install fdisk dosfstools
+fdisk /dev/sdb
+d
+n,p,1-3,+1G,w
+mkfs.fat -F 32 /dev/sdb1
+mkfs.ext4 /dev/sdb2
+mkfs.ext4 /dev/sdb3
+</code></pre></div></div>
+
+<h2 id="迁移系统">迁移系统</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount /dev/sda2 a
+mount /dev/sdb2 b
+cp -a a/* b/
+</code></pre></div></div>
+
+<h2 id="备份系统">备份系统</h2>
+<p>ubuntu下面备份</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar -czvf /tmp/system_backup.tar.gz -C /tmp/b . --exclude=./proc --exclude=./sys --exclude=./dev --exclude=./tmp --exclude=./mnt
+</code></pre></div></div>
+<p>op下面备份，–exclude 不受支持</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "/proc
+/sys
+/dev
+/tmp
+/mnt" &gt; /tmp/exclude.txt
+tar -czvf /tmp/system_backup.tar.gz -C /tmp/b -X /tmp/exclude.txt .
+</code></pre></div></div>
+<p>恢复</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar --preserve-permissions -xzvf /path/to/system_backup.tar.gz -C /mnt/target
+</code></pre></div></div>
+
+<h2 id="创建bootargs">创建bootargs</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mkbootargs</code>从神雕大佬的ubuntu镜像中解压出来传到openwrt中就可以用</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for boot in sda2 sda3 sdb2 sdb3
+do
+echo "baudrate=115200
+ethaddr=00:11:22:33:44:55
+ipaddr=192.168.1.10
+netmask=255.255.255.0
+gatewayip=192.168.1.1
+serverip=192.168.1.1
+bootcmd=mmc read 0 0x1FFFFC0 0x7000 0xA000;bootm 0x1FFFFC0
+bootargs_512M=mem=512M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_1G=mem=1G mmz=ddr,0,0,48M vmalloc=500M
+bootargs_2G=mem=2G mmz=ddr,0,0,48M vmalloc=500M
+bootargs_768M=mem=768M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_1536M=mem=1536M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_3840M=mem=3840M mmz=ddr,0,0,48M vmalloc=500M
+bootargs=console=ttyAMA0,115200 root=/dev/$boot rootfstype=ext4 rootwait blkdevparts=mmcblk0:1M(boot),1M(bootargs),4M(baseparam),4M(pqparam),4M(logo),20M(kernel),64M(busybox),512M(backup),-(ubuntu)
+bootdelay=0
+stdin=serial
+stdout=serial
+stderr=serial" &gt; bootargs.$boot.txt
+mkbootargs -s 64 -r bootargs.$boot.txt -o bootargs.$boot.bin
+done
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/10/27/dxp4800/">绿联nas配置
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/10/20/hinas/">海纳思刷机总结
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2024/10/20/hinas/">海纳思刷机总结</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2024/10/27/dxp4800/">绿联nas配置</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>[草稿]使用autotools创建configure,Makefile</title>
+    <meta name="description" content="编译程序时,常遇到使用./configure生成Makefile的方式,使用autotool可以创建configure边用边补充">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2021/08/29/autotools/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>[草稿]使用autotools创建configure,Makefile</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2021-08-29
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Fortran" title="Category: Fortran" rel="category">Fortran</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>&nbsp;
+    
+        <!--a href="/tag/#mpi" title="Tag: mpi" rel="tag">mpi</a-->
+        <a href="/tag/#mpi" title="Tag: mpi" rel="tag">mpi</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#流程图" id="markdown-toc-流程图">流程图</a></li>
+  <li><a href="#示例" id="markdown-toc-示例">示例</a></li>
+  <li><a href="#配置文件" id="markdown-toc-配置文件">配置文件</a>    <ul>
+      <li><a href="#configureac" id="markdown-toc-configureac"><code class="language-plaintext highlighter-rouge">configure.ac</code></a>        <ul>
+          <li><a href="#ac_subst定义变量" id="markdown-toc-ac_subst定义变量"><code class="language-plaintext highlighter-rouge">AC_SUBST</code>定义变量</a></li>
+          <li><a href="#使用bash语法" id="markdown-toc-使用bash语法">使用bash语法</a></li>
+        </ul>
+      </li>
+      <li><a href="#makefileam" id="markdown-toc-makefileam"><code class="language-plaintext highlighter-rouge">Makefile.am</code></a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>编译程序时,常遇到使用<code class="language-plaintext highlighter-rouge">./configure</code>生成Makefile的方式,使用autotool可以创建<code class="language-plaintext highlighter-rouge">configure</code><br />
+边用边补充</p>
+
+<h2 id="参考">参考</h2>
+<p>⭐⭐<a href="https://fantiq.github.io/2019/03/06/unix%E4%B8%8Ac%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B%E7%AE%80%E6%9E%90/">unix上c项目构建过程简析</a><br />
+<a href="https://elinux.org/images/4/43/Petazzoni.pdf">Petazzoni.pdf@elinux</a><br />
+<a href="https://www.huaweicloud.com/articles/86875c5d72bc078e6736cd17edc66e03.html">linux使用—automake学习(从原理到实践，一步步完成automake)</a><br /></p>
+
+<h2 id="流程图">流程图</h2>
+<p><strong>我们需要准备<code class="language-plaintext highlighter-rouge">configure.ac</code>&amp;<code class="language-plaintext highlighter-rouge">Makefile.am</code></strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">configure.ac</code>或<code class="language-plaintext highlighter-rouge">configure.in</code></li>
+  <li>
+    <ul>
+      <li>可由<code class="language-plaintext highlighter-rouge">autoscan</code>生成模版然后修改</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>也可以自己写</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>所有文件的生成都离不开<code class="language-plaintext highlighter-rouge">configure.ac</code></strong></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>定义需要的编译器类型(C/Fortran/CXX/…),程序名,版本号,automake等程序的要求,……</strong></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Makefile.am</code></li>
+  <li>
+    <ul>
+      <li>自己写</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong><code class="language-plaintext highlighter-rouge">automake</code>根据<code class="language-plaintext highlighter-rouge">makefile.am</code>生成<code class="language-plaintext highlighter-rouge">Makefile.in</code>,最终生成Makefile</strong></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>和源码直接相关</strong>,定义了需要编译的程序,该程序需要的源代码文件,以及依赖关系等等</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>可以写入Makefile的代码</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>目前没发现autotools可以检测源代码之间的依赖关系,所以还要在这里添加上依赖关系(或者通过include的方式)</strong></li>
+    </ul>
+  </li>
+  <li>头文件暂略</li>
+</ul>
+
+<p><img src="/uploads/2021/08/autotools.jpg" alt="" /></p>
+
+<h2 id="示例">示例</h2>
+<p>文件列表</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── configure.ac 编译配置
+├── qtool.f90    源码
+├── Makefile.am Makefile配置
+└── m_mod.f90 源码
+</code></pre></div></div>
+<p>执行顺序</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aclocal
+#automake和autoconf无先后之分
+automake
+autoconf
+./configure --prefix=$HOME/soft/qtool FC=ifort
+make
+make instal
+~/soft/qtool/bin/qtool
+</code></pre></div></div>
+<p><del>后续如果更新了<code class="language-plaintext highlighter-rouge">configure.ac,Makefile.am</code>可以通过<code class="language-plaintext highlighter-rouge">autoreconf</code>一键更新</del></p>
+
+<p><strong>通过<code class="language-plaintext highlighter-rouge">make dist</code>可以打包成发布版本,如<a href="/web/file/2021/08/qtool-1.0.tar.gz">qtool-1.0.tar.gz</a>. 里面也包含了<code class="language-plaintext highlighter-rouge">configure.ac</code>&amp;<code class="language-plaintext highlighter-rouge">Makefile.am</code></strong>
+<img src="/uploads/2021/08/autorun.jpg" alt="" /></p>
+
+<h2 id="配置文件">配置文件</h2>
+<p><code class="language-plaintext highlighter-rouge">configure.ac</code>&amp;<code class="language-plaintext highlighter-rouge">Makefile.am</code>的参数多同时生效,两个文件不是独立的</p>
+
+<h3 id="configureac"><code class="language-plaintext highlighter-rouge">configure.ac</code></h3>
+<p><a href="https://blog.csdn.net/john_crash/article/details/49889949">编写configure.ac</a></p>
+
+<p>可由<code class="language-plaintext highlighter-rouge">autoscan</code>生成模版然后修改<br />
+<strong><code class="language-plaintext highlighter-rouge">configure.ac</code>用于生成<code class="language-plaintext highlighter-rouge">configure</code>,<code class="language-plaintext highlighter-rouge">configure.ac</code>里面的注释和shell脚本会被复制到<code class="language-plaintext highlighter-rouge">configure</code>中去,配置的命令也会被转译成<code class="language-plaintext highlighter-rouge">configure</code>中相应的命令</strong>
+猜</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">AC</code>autoconf</li>
+  <li><code class="language-plaintext highlighter-rouge">AM</code>automake</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#                                               -*- Autoconf -*-</span>
+<span class="c"># Process this file with autoconf to produce a configure script.</span>
+<span class="c"># 要求的autoconf版本</span>
+AC_PREREQ<span class="o">([</span>2.69]<span class="o">)</span>
+<span class="c">#AC_INIT开始, 程序名,版本号, 出错联系方法</span>
+AC_INIT<span class="o">([</span>qtool], <span class="o">[</span>1.0], <span class="o">[</span><span class="nb">who</span>@cndaqiang.ac.cn]<span class="o">)</span>
+
+<span class="c">#使用autoreconf调用automake生成Makefile.in, (或者自己执行automake时)会根据此参数检测是否复合响应的发布标准</span>
+<span class="c">#里面跟的参数是Makefile.am中的AUTOMAKE_OPTIONS参数，详见下</span>
+<span class="c">#如gnu需要NEWS,README, AUTHORS, etc</span>
+AM_INIT_AUTOMAKE<span class="o">([</span>foreign 1.15.1]<span class="o">)</span>
+<span class="c">#foreign,dist-bzip2,dist-xz等等</span>
+<span class="c">#后面的版本是automake的最低版本，automake --version 获得automake版本</span>
+
+<span class="c">#源代码文件,用于autoconf检查是否准备好了</span>
+AC_CONFIG_SRCDIR<span class="o">([</span>qtool.f90]<span class="o">)</span>
+
+<span class="c">#确保编译器等程序可用,AC_PROG_CC,AC_PROG_CXX,AC_PROG_AWK,AC_PROG_GREP,AC_PROG_F77</span>
+AC_PROG_FC
+
+<span class="c">#从AC_CONFIG_FILES, 用file.in创建file</span>
+AC_CONFIG_FILES<span class="o">([</span>Makefile]<span class="o">)</span>
+<span class="c">#Makefile.in定义一些变量和要实现的目标</span>
+<span class="c">#Makefile.in可以自己写,也可以通过automake生成</span>
+<span class="c">#automake需要Makefile.am生成Makefile.in</span>
+<span class="c">#AC_OUTPUT结束</span>
+
+<span class="c">#</span>
+<span class="c">#AC_CONFIG_HEADERS([config.h])</span>
+<span class="c">#用autoheader从config.h.in产生</span>
+<span class="c">#最终的头文件有configure产生为config.h</span>
+
+AC_OUTPUT
+
+</code></pre></div></div>
+
+<h4 id="ac_subst定义变量"><code class="language-plaintext highlighter-rouge">AC_SUBST</code>定义变量</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AC_SUBST([变量名], [值])
+</code></pre></div></div>
+<p>例如</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AC_SUBST([QLIBS],[-lgsl])
+</code></pre></div></div>
+<p>可以在<code class="language-plaintext highlighter-rouge">Makefile.am</code>中使用<code class="language-plaintext highlighter-rouge">QLIBS</code>的变量</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qtool_LDADD=-lxcf90 $(QLIBS)
+</code></pre></div></div>
+<p>也可以</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>QLIBS=-lgsl2
+AC_SUBST([QLIBS])
+</code></pre></div></div>
+<p>或</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AC_SUBST([QLIBS])
+QLIBS=-lgsl3
+</code></pre></div></div>
+
+<h4 id="使用bash语法">使用bash语法</h4>
+<p>因为<code class="language-plaintext highlighter-rouge">configure.ac</code>中的<code class="language-plaintext highlighter-rouge">[ ]</code>会在翻译成<code class="language-plaintext highlighter-rouge">configure</code>时会被删除,因此不能直接用<code class="language-plaintext highlighter-rouge">if [ 判读语句 ]</code>的方式进行判断,可以使用<code class="language-plaintext highlighter-rouge">test</code>,如根据环境变量定义变量<br />
+<strong>bash语法错误,不会被报错,是转译到configure的,执行<code class="language-plaintext highlighter-rouge">./configure</code>时报错</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if test "$USER" = cndaqiang
+then
+        QLIBS=-lqqq
+fi
+AC_SUBST([QLIBS])
+</code></pre></div></div>
+
+<h3 id="makefileam"><code class="language-plaintext highlighter-rouge">Makefile.am</code></h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">automake</code>提示缺少文件时<code class="language-plaintext highlighter-rouge">automake --add-missing</code></li>
+  <li><strong>至少包含<code class="language-plaintext highlighter-rouge">bin_PROGRAMS</code>和其源码<code class="language-plaintext highlighter-rouge">xxxx_SOURCES</code></strong></li>
+  <li><code class="language-plaintext highlighter-rouge">automake</code>会同时读取<code class="language-plaintext highlighter-rouge">makefile.am</code>和 <strong><code class="language-plaintext highlighter-rouge">configure.ac</code></strong></li>
+</ul>
+
+<div class="language-makefile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#用于生成Makefile.in
+#Makefile.in定义一些变量和要实现的目标
+#可以直接写Makefile的语法
+</span>
+<span class="c">#参数有默认值,如AUTOMAKE_OPTIONS
+#如AUTOMAKE_OPTIONS用于检查软件的发布规范,参数:foreign,gnu,gnits,不同规法需要提供的文件不同
+#如设置AUTOMAKE_OPTIONS=foreign时,需要missing install-sh文件
+#如设置AUTOMAKE_OPTIONS=gnu时,需要存在INSTALL NEWS README AUTHORS ChangeLog COPYING文件
+#如果不存在这些文件,可通过automake --add-missing自动补全
+#也可以通过touch INSTALL NEWS README AUTHORS ChangeLog COPYIN 解决
+#
+</span><span class="nv">AUTOMAKE_OPTIONS</span><span class="o">=</span>gnu
+
+<span class="c">#至少包含bin_PROGRAMS和其源码 xxxx_SOURCES,将会安装到$prefix/bin,可以有多个程序
+</span><span class="nv">bin_PROGRAMS</span><span class="o">=</span>qtool
+<span class="c">#编译源程序,并链接到可执行程序
+</span><span class="nv">qtool_SOURCES</span><span class="o">=</span>qtool.f90 m_mod.f90 test_pp.F90
+<span class="c">#可选,其他的库,具体效果见下
+#最后生成可执行文件时添加的库
+</span><span class="nv">qtool_LDADD</span><span class="o">=</span><span class="nt">-lxcf90</span>
+<span class="c">#预编译源码的参数
+</span><span class="nv">qtool_CPPFLAGS</span><span class="o">=</span><span class="nt">-I</span>/usr/include/
+<span class="c">#qtool_LIBADD=
+</span>
+<span class="c">#依赖关系
+</span><span class="nl">qtool.o</span><span class="o">:</span><span class="nf">m_mod.o</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">qtool_LDADD=-lxcf90</code>和<code class="language-plaintext highlighter-rouge">qtool_CPPFLAGS=-I/usr/include/</code>对编译的影响</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gfortran -DPACKAGE_NAME=\"qtool\" -DPACKAGE_TARNAME=\"qtool\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"qtool\ 1.0\" -DPACKAGE_BUGREPORT=\"who@cndaqiang.ac.cn\" -DPACKAGE_URL=\"\" -DPACKAGE=\"qtool\" -DVERSION=\"1.0\" -I.  -I/usr/include/   -g -O2 -c -o qtool-test_pp.o `test -f 'test_pp.F90' || echo './'`test_pp.F90
+gfortran  -g -O2   -o qtool qtool.o m_mod.o qtool-test_pp.o -lxcf90
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2021/07/09/oneplus6/">oneplus6刷windows 11 arm等</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2022/04/02/nginx/">Nginx学习</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

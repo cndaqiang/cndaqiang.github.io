@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>[linux]Anaconda安装</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2019/05/03/anaconda/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>[linux]Anaconda安装</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-05-03
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Anaconda" title="Category: Anaconda" rel="category">Anaconda</a>&nbsp;
+    
+        <a href="/category/#Python" title="Category: Python" rel="category">Python</a>&nbsp;
+    
+        <a href="/category/#jupyter" title="Category: jupyter" rel="category">jupyter</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Python" title="Tag: Python" rel="tag">Python</a-->
+        <a href="/tag/#Python" title="Tag: Python" rel="tag">Python</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#常用命令" id="markdown-toc-常用命令">常用命令</a></li>
+  <li><a href="#下载" id="markdown-toc-下载">下载</a></li>
+  <li><a href="#查看已有环境" id="markdown-toc-查看已有环境">查看已有环境</a></li>
+  <li><a href="#创建环境" id="markdown-toc-创建环境">创建环境</a></li>
+  <li><a href="#配置环境" id="markdown-toc-配置环境">配置环境</a></li>
+  <li><a href="#其他软件包" id="markdown-toc-其他软件包">其他软件包</a></li>
+  <li><a href="#pip离线安装包" id="markdown-toc-pip离线安装包">pip离线安装包</a></li>
+  <li><a href="#更换仓库加速安装" id="markdown-toc-更换仓库加速安装">更换仓库加速安装</a></li>
+  <li><a href="#使用mamba加速安装" id="markdown-toc-使用mamba加速安装">使用mamba加速安装</a>    <ul>
+      <li><a href="#安装-mamba" id="markdown-toc-安装-mamba">安装 mamba</a></li>
+      <li><a href="#使用mamba安装包示例triqs" id="markdown-toc-使用mamba安装包示例triqs">使用mamba安装包示例:<code class="language-plaintext highlighter-rouge">triqs</code></a></li>
+      <li><a href="#大多数conda的命令可以直接替换conda为mamba" id="markdown-toc-大多数conda的命令可以直接替换conda为mamba">大多数conda的命令,可以直接替换conda为mamba</a></li>
+    </ul>
+  </li>
+  <li><a href="#有趣的库" id="markdown-toc-有趣的库">有趣的库</a>    <ul>
+      <li><a href="#图片exif查看修改" id="markdown-toc-图片exif查看修改">图片exif查看修改</a></li>
+    </ul>
+  </li>
+  <li><a href="#jupyter" id="markdown-toc-jupyter">Jupyter</a>    <ul>
+      <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+      <li><a href="#配置" id="markdown-toc-配置">配置</a></li>
+      <li><a href="#添加到系统服务" id="markdown-toc-添加到系统服务">添加到系统服务</a></li>
+    </ul>
+  </li>
+  <li><a href="#问题" id="markdown-toc-问题">问题</a>    <ul>
+      <li><a href="#nfs服务器连接断开-anaconda命令会卡死" id="markdown-toc-nfs服务器连接断开-anaconda命令会卡死">NFS服务器连接断开, anaconda命令会卡死</a></li>
+      <li><a href="#condahttperror" id="markdown-toc-condahttperror">CondaHTTPError:</a></li>
+      <li><a href="#卡在solving-environment-done" id="markdown-toc-卡在solving-environment-done">卡在<code class="language-plaintext highlighter-rouge">Solving environment: done</code></a></li>
+      <li><a href="#filenotfounderror" id="markdown-toc-filenotfounderror"><code class="language-plaintext highlighter-rouge">FileNotFoundError</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#无法解析环境无法安装新包" id="markdown-toc-无法解析环境无法安装新包">无法解析环境/无法安装新包</a></li>
+</ul>
+
+<h2 id="常用命令">常用命令</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>激活环境
+conda activate python37 # for Linux &amp; Mac
+#老版 source activate python37 # for Linux &amp; Mac
+退出环境
+conda deactivate python37 # for Linux &amp; Mac
+#老版 source deactivate python37 # for Linux &amp; Mac
+</code></pre></div></div>
+
+<h2 id="下载">下载</h2>
+<p>下载后，直接运行</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://repo.anaconda.com/archive/Anaconda2-2019.03-Linux-x86_64.sh
+./Anaconda2-2019.03-Linux-x86_64.sh
+</code></pre></div></div>
+<p>安装后，添加PATH</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=/home/cndaqiang/anaconda2/bin:$PATH
+</code></pre></div></div>
+<p>自定义模块</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PYTHONPATH="${PYTHONPATH}:${HOME}/MyTools/TDAP/py/module"
+</code></pre></div></div>
+
+<h2 id="查看已有环境">查看已有环境</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~ $ conda info --env
+# conda environments:
+#
+base                  *  /Users/cndaqiang/anaconda3
+python27                 /Users/cndaqiang/anaconda3/envs/python27
+</code></pre></div></div>
+
+<h2 id="创建环境">创建环境</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>创建环境
+conda create --name python37 python=3.7
+激活环境
+conda activate python37 # for Linux &amp; Mac
+退出环境
+conda deactivate python37 # for Linux &amp; Mac
+删除环境
+conda remove --name python37 --all
+#通常默认创建的base环境包含很多库了,可以复制减少安装过程
+conda create -n python37  --clone base
+</code></pre></div></div>
+<h2 id="配置环境">配置环境</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>指定环境按照程序包
+conda install -n python37 numpy
+更新
+conda update -n python37 numpy
+删除
+conda remove -n python37 numpy
+</code></pre></div></div>
+<p>也可以进入环境后</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python -m pip install 
+</code></pre></div></div>
+<p>查看安装的包</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda list [ -n python37]
+</code></pre></div></div>
+<p>删除没用的包</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda clean -p      //删除没有被依赖的包,一下就删除了3GB.
+conda clean -t      //删除tar包
+conda clean -y --all //删除所有的安装包及cache
+</code></pre></div></div>
+
+<h2 id="其他软件包">其他软件包</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda install -n python37 numpy
+conda install -n python37 matplotlib
+conda install -n python37 pandas
+conda install -n python37 scipy
+#自动输入脚本
+echo y  | conda install -n  python37 numpy
+echo y  | conda install -n  python37 matplotlib
+echo y  | conda install -n  python37 pandas
+echo y  | conda install -n  python37 scipy
+</code></pre></div></div>
+<p>pymatgen</p>
+
+<p>自动调整matplot画图的text位置</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda install -c conda-forge adjusttext
+</code></pre></div></div>
+
+<h2 id="pip离线安装包">pip离线安装包</h2>
+<p>下载<a href="https://pypi.org/">https://pypi.org/</a>,安装</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python -m pip install adjustText-0.7.3.tar.gz
+</code></pre></div></div>
+
+<h2 id="更换仓库加速安装">更换仓库加速安装</h2>
+<p><a href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">清华-Anaconda 镜像使用帮助</a><br />
+<code class="language-plaintext highlighter-rouge">vi ~/.condarc</code>
+填入</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>channels:
+  - defaults
+show_channel_urls: true
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+</code></pre></div></div>
+
+<h2 id="使用mamba加速安装">使用mamba加速安装</h2>
+
+<p><strong>安装mamba可以使用conda镜像,使用mamba安装其他包时,在<code class="language-plaintext highlighter-rouge">~/.condarc</code>设置镜像可能导致安装失败</strong></p>
+
+<h3 id="安装-mamba">安装 mamba</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda install mamba -n dft37 -c conda-forge
+</code></pre></div></div>
+<h3 id="使用mamba安装包示例triqs">使用mamba安装包示例:<code class="language-plaintext highlighter-rouge">triqs</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mamba install  -c conda-forge triqs
+</code></pre></div></div>
+<p><img src="/uploads/2021/10/manba.png" alt="" /></p>
+
+<h3 id="大多数conda的命令可以直接替换conda为mamba">大多数conda的命令,可以直接替换conda为mamba</h3>
+<p>如</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mamba create --name python37 python=3.7
+mamba install  numpy matplotlib pandas scipy -n python37
+mamba activate python37
+#完全可以
+alias conda=mamba
+</code></pre></div></div>
+
+<h2 id="有趣的库">有趣的库</h2>
+<h3 id="图片exif查看修改">图片exif查看修改</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python -m pip install pyexiv2
+</code></pre></div></div>
+<p>使用</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; from pyexiv2 import Image
+&gt;&gt;&gt; i=Image("IMG_20210502_134203.jpg")
+&gt;&gt;&gt; i.read_exif()
+{'Exif.Image.ImageWidth': '4000', 'Exif.Image.Model': 'MI 9', 'Exif.Image.ImageLength': '3000', 'Exif.Image.Orientation': '1', 'Exif.Image.DateTime': '2021:05:02 13:42:05', 'Exif.Image.YCbCrPositioning': '1', 'Exif.Image.ExifTag': '206', 'Exif.Photo.0x9aaa': '56 215 229 108 207 190 100 102 189 201 147 196 56 34 235 201 1
+.....
+#修改exif
+&gt;&gt;&gt; i.modify_exif({'Exif.Image.Make': 'cndaqiang'})
+#关闭，保存修改
+&gt;&gt;&gt; i.close()
+</code></pre></div></div>
+<p>修改后就不同了</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; import filecmp
+&gt;&gt;&gt; filecmp.cmp("IMG_20210502_134203.jpg","IMG_20210502_134203的副本.jpg")
+</code></pre></div></div>
+<p>对另一个文件做同样的更改,就相同了</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; i=Image("IMG_20210502_134203的副本.jpg")
+&gt;&gt;&gt; i.modify_exif({'Exif.Image.Make': 'cndaqiang'})
+&gt;&gt;&gt; i.close()
+&gt;&gt;&gt; filecmp.cmp("IMG_20210502_134203.jpg","IMG_20210502_134203的副本.jpg")
+True
+</code></pre></div></div>
+
+<h2 id="jupyter">Jupyter</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/83884252">Ubuntu安装Jupyter notebook——开启远程访问</a></p>
+
+<h3 id="安装">安装</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda install jupyter 
+conda install notebook
+</code></pre></div></div>
+<p>启动</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mac ~$ jupyter notebook
+[I 21:19:48.581 NotebookApp] 把notebook 服务cookie密码写入 /Users/cndaqiang/Library/Jupyter/runtime/notebook_cookie_secret
+[I 21:19:49.069 NotebookApp] 启动notebooks 在本地路径: /Users/cndaqiang
+[I 21:19:49.069 NotebookApp] Jupyter Notebook 6.4.3 is running at:
+[I 21:19:49.069 NotebookApp] http://localhost:8888/?token=70eee734a61b7c748ccd3c9c712ba5228deb0c5076b919fc
+[I 21:19:49.069 NotebookApp]  or http://127.0.0.1:8888/?token=70eee734a61b7c748ccd3c9c712ba5228deb0c5076b919fc
+[I 21:19:49.069 NotebookApp] 使用control-c停止此服务器并关闭所有内核(两次跳过确认).
+[C 21:19:49.237 NotebookApp]
+
+    To access the notebook, open this file in a browser:
+        file:///Users/cndaqiang/Library/Jupyter/runtime/nbserver-8614-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8888/?token=70eee734a61b7c748ccd3c9c712ba5228deb0c5076b919fc
+     or http://127.0.0.1:8888/?token=70eee734a61b7c748ccd3c9c712ba5228deb0c5076b919fc
+/Users/cndaqiang/anaconda3/envs/python37/lib/python3.7/json/encoder.py:257: UserWarning: date_default is deprecated since jupyter_client 7.0.0. Use jupyter_client.jsonutil.json_default.
+  return _iterencode(o, 0)
+
+</code></pre></div></div>
+<h3 id="配置">配置</h3>
+<p>配置文件: <code class="language-plaintext highlighter-rouge">~/.jupyter/jupyter_notebook_config.json</code></p>
+
+<p>命令启动</p>
+<ul>
+  <li>使用密码登录:浏览器无痕模式打开<code class="language-plaintext highlighter-rouge">http://127.0.0.1:8888</code>输入token和新密码就可以用密码登录了,密码自动写入配置文件</li>
+  <li>恢复token:删除 <code class="language-plaintext highlighter-rouge">~/.jupyter/jupyter_notebook_config.json</code></li>
+  <li>指定ip端口,并不要自动打开浏览器<code class="language-plaintext highlighter-rouge">jupyter notebook --port 1234 --ip 192.168.192.167 --no-browser</code></li>
+</ul>
+
+<p>使用配置文件控制</p>
+<ul>
+  <li>生成配置文件<code class="language-plaintext highlighter-rouge">jupyter notebook --generate-config</code></li>
+  <li>生成迷文密码:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~$ python
+Python 3.7.9 (default, Aug 31 2020, 12:42:55)
+[GCC 7.3.0] :: Anaconda, Inc. on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; from notebook.auth import passwd
+&gt;&gt;&gt; passwd()
+Enter password:
+Verify password:
+'argon2:$argon2id$v=19$m=10240,t=10,p=8$xu/mq1dTF9vs9v6JKiBMUQ$6phhCcBl/Ri6UgHlI681Uw'
+</code></pre></div>    </div>
+  </li>
+  <li>修改配置文件
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~$ grep -v '^#' ~/.jupyter/jupyter_notebook_config.py | grep -v '^$'
+c.NotebookApp.allow_remote_access = True  #打开远程访问
+c.NotebookApp.ip = '192.168.192.204'  #指定ip
+c.NotebookApp.open_browser = False  #不开浏览器
+c.NotebookApp.password = 'argon2:$argon2id$v=19$m=10240,t=10,p=8$xu/mq1dTF9vs9v6JKiBMUQ$6phhCcBl/Ri6UgHlI681Uw' #密码同上
+c.NotebookApp.port = 1234 #端口
+</code></pre></div>    </div>
+  </li>
+  <li>启动<code class="language-plaintext highlighter-rouge">jupyter notebook</code></li>
+</ul>
+
+<h3 id="添加到系统服务">添加到系统服务</h3>
+
+<h2 id="问题">问题</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Traceback (most recent call last):
+  File "/home/cndaqiang/anaconda3/bin/conda", line 7, in &lt;module&gt;
+    from conda.cli import main
+ModuleNotFoundError: No module named 'conda'
+</code></pre></div></div>
+<p>重新安装修复</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./Anaconda3-5.3.1-Linux-x86_64.sh -u
+</code></pre></div></div>
+<p>anaconda安装的mpi和系统的mpi冲突，卸载anaconda安装的mpi</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#查询包名称
+conda list
+#卸载
+conda uninstall mpi
+</code></pre></div></div>
+<p>安装ase，及其他</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple  ase
+#
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple uncertainties
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple lmfit
+</code></pre></div></div>
+
+<h3 id="nfs服务器连接断开-anaconda命令会卡死">NFS服务器连接断开, anaconda命令会卡死</h3>
+<p>这样加一道检测命令</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">networkOK</span><span class="o">=</span><span class="si">$(</span>ping <span class="nt">-t</span> 1 <span class="nt">-c</span> 1 mom | <span class="nb">grep </span>round-trip | <span class="nb">tail</span> | <span class="nb">awk</span> <span class="s1">'{ print $NF }'</span><span class="si">)</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$networkOK</span>  <span class="o">]</span> 
+<span class="k">then
+  </span>conda activate python37 <span class="c">#&amp; #pid=$! ;sleep 5; kill -9 $pid</span>
+<span class="k">else
+  </span><span class="nb">echo</span> <span class="s2">"Can't mount mom, stop conda, Please not run: conda activate python37"</span>
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<h3 id="condahttperror">CondaHTTPError:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mac zim-0.74.2$ conda install mamba -c conda-forge
+Solving environment: failed
+
+CondaHTTPError: HTTP 000 CONNECTION FAILED for url &lt;https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r/osx-64/repodata.json&gt;
+Elapsed: -
+
+An HTTP error occurred when trying to retrieve this URL.
+HTTP errors are often intermittent, and a simple retry will get you on your way.
+SSLError(MaxRetryError('HTTPSConnectionPool(host=\'mirrors.tuna.tsinghua.edu.cn\', port=443): Max retries exceeded with url: /anaconda/pkgs/r/osx-64/repodata.json (Caused by SSLError(SSLError("bad handshake: Error([(\'SSL routines\', \'ssl3_get_server_certificate\', \'certificate verify failed\')])")))'))
+
+
+(python37) cndaqiang@mac zim-0.74.2$ conda config --set ssl_verify no #没用
+</code></pre></div></div>
+<p>无解</p>
+
+<h3 id="卡在solving-environment-done">卡在<code class="language-plaintext highlighter-rouge">Solving environment: done</code></h3>
+<p>无解,重新创建新的环境就可以</p>
+
+<h3 id="filenotfounderror"><code class="language-plaintext highlighter-rouge">FileNotFoundError</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR conda.core.link:_execute(502): An error occurred while installing package 'conda-forge::certifi-2022.9.24-pyhd8ed1ab_0'.
+FileNotFoundError(2, "No such file or directory: '/public/home/cndaqiang/anaconda3/envs/xTB/bin/python3.9'")
+Attempting to roll back.
+
+Rolling back transaction: done
+
+FileNotFoundError(2, "No such file or directory: '/public/home/cndaqiang/anaconda3/envs/xTB/bin/python3.9'")
+</code></pre></div></div>
+<p>更新</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda update -n base -c defaults conda
+</code></pre></div></div>
+
+<h2 id="无法解析环境无法安装新包">无法解析环境/无法安装新包</h2>
+<p>有可能是镜像站封了ip,超算用户过多，容易被封。
+切换其他镜像源：https://help.mirrors.cernet.edu.cn/anaconda/</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/04/11/gitbook/">[乱糟糟的博客结尾]本地gitbook写书</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/05/09/R/">R语言快速上手</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

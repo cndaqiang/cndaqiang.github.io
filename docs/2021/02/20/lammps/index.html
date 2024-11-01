@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>lammps编译&amp;快速上手</title>
+    <meta name="description" content="本文为自学笔记, 仅供参考, 如有理解不正确的地方欢迎指正.">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2021/02/20/lammps/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>lammps编译&快速上手</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2021-02-20
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#PIMD" title="Category: PIMD" rel="category">PIMD</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#PIMD" title="Tag: PIMD" rel="tag">PIMD</a-->
+        <a href="/tag/#PIMD" title="Tag: PIMD" rel="tag">PIMD</a>&nbsp;
+    
+        <!--a href="/tag/#RPMD" title="Tag: RPMD" rel="tag">RPMD</a-->
+        <a href="/tag/#RPMD" title="Tag: RPMD" rel="tag">RPMD</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
+      <li><a href="#编译的相关指令" id="markdown-toc-编译的相关指令">编译的相关指令</a>        <ul>
+          <li><a href="#make-package" id="markdown-toc-make-package">make package</a></li>
+        </ul>
+      </li>
+      <li><a href="#清空编译环境" id="markdown-toc-清空编译环境">清空编译环境</a></li>
+    </ul>
+  </li>
+  <li><a href="#输入文件与执行" id="markdown-toc-输入文件与执行">输入文件与执行</a>    <ul>
+      <li><a href="#初始化命令" id="markdown-toc-初始化命令">初始化命令</a>        <ul>
+          <li><a href="#units单位" id="markdown-toc-units单位"><code class="language-plaintext highlighter-rouge">units</code>单位</a></li>
+          <li><a href="#dimension纬度" id="markdown-toc-dimension纬度"><code class="language-plaintext highlighter-rouge">dimension</code>纬度</a></li>
+          <li><a href="#boundary周期性条件" id="markdown-toc-boundary周期性条件"><code class="language-plaintext highlighter-rouge">boundary</code>周期性条件</a></li>
+          <li><a href="#下面是各种xxx_style" id="markdown-toc-下面是各种xxx_style">下面是各种<code class="language-plaintext highlighter-rouge">xxx_style</code></a></li>
+          <li><a href="#atom_style" id="markdown-toc-atom_style"><code class="language-plaintext highlighter-rouge">atom_style</code></a></li>
+          <li><a href="#bond_style" id="markdown-toc-bond_style"><code class="language-plaintext highlighter-rouge">bond_style</code></a></li>
+          <li><a href="#angle_style" id="markdown-toc-angle_style"><code class="language-plaintext highlighter-rouge">angle_style</code></a></li>
+          <li><a href="#kspace_style" id="markdown-toc-kspace_style"><code class="language-plaintext highlighter-rouge">kspace_style</code></a></li>
+          <li><a href="#neighbor" id="markdown-toc-neighbor"><code class="language-plaintext highlighter-rouge">neighbor</code></a></li>
+          <li><a href="#neigh_modify" id="markdown-toc-neigh_modify"><code class="language-plaintext highlighter-rouge">neigh_modify</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#原子构型" id="markdown-toc-原子构型">原子构型</a></li>
+      <li><a href="#read_data从构型文件中读入原子构型" id="markdown-toc-read_data从构型文件中读入原子构型"><code class="language-plaintext highlighter-rouge">read_data</code>从构型文件中读入原子构型</a></li>
+      <li><a href="#read_restart" id="markdown-toc-read_restart">read_restart</a></li>
+      <li><a href="#创建原子构型" id="markdown-toc-创建原子构型">创建原子构型</a>        <ul>
+          <li><a href="#lattice-晶格" id="markdown-toc-lattice-晶格"><code class="language-plaintext highlighter-rouge">lattice</code> 晶格</a></li>
+          <li><a href="#region建立模拟区域" id="markdown-toc-region建立模拟区域"><code class="language-plaintext highlighter-rouge">region</code>建立模拟区域</a></li>
+          <li><a href="#create_box相应region的原子类型数" id="markdown-toc-create_box相应region的原子类型数"><code class="language-plaintext highlighter-rouge">create_box</code>相应region的原子类型数</a></li>
+          <li><a href="#create_atoms" id="markdown-toc-create_atoms"><code class="language-plaintext highlighter-rouge">create_atoms</code></a></li>
+          <li><a href="#delete_atoms" id="markdown-toc-delete_atoms"><code class="language-plaintext highlighter-rouge">delete_atoms</code></a></li>
+          <li><a href="#mass" id="markdown-toc-mass"><code class="language-plaintext highlighter-rouge">mass</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#复制" id="markdown-toc-复制">复制</a></li>
+      <li><a href="#力场计算输出参数" id="markdown-toc-力场计算输出参数">力场、计算、输出参数</a>        <ul>
+          <li><a href="#pair_style" id="markdown-toc-pair_style"><code class="language-plaintext highlighter-rouge">pair_style</code></a></li>
+          <li><a href="#pair_coeff" id="markdown-toc-pair_coeff"><code class="language-plaintext highlighter-rouge">pair_coeff</code></a></li>
+          <li><a href="#group" id="markdown-toc-group"><code class="language-plaintext highlighter-rouge">group</code></a></li>
+          <li><a href="#set" id="markdown-toc-set"><code class="language-plaintext highlighter-rouge">set</code></a></li>
+          <li><a href="#compute" id="markdown-toc-compute"><code class="language-plaintext highlighter-rouge">compute</code></a></li>
+          <li><a href="#fix" id="markdown-toc-fix"><code class="language-plaintext highlighter-rouge">fix</code></a></li>
+          <li><a href="#velocity" id="markdown-toc-velocity"><code class="language-plaintext highlighter-rouge">velocity</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#运行和输出" id="markdown-toc-运行和输出">运行和输出</a>        <ul>
+          <li><a href="#timestep" id="markdown-toc-timestep"><code class="language-plaintext highlighter-rouge">timestep</code></a></li>
+          <li><a href="#thermo-n" id="markdown-toc-thermo-n"><code class="language-plaintext highlighter-rouge">thermo N</code></a></li>
+          <li><a href="#thermo_style" id="markdown-toc-thermo_style"><code class="language-plaintext highlighter-rouge">thermo_style</code></a></li>
+          <li><a href="#thermo_modify" id="markdown-toc-thermo_modify"><code class="language-plaintext highlighter-rouge">thermo_modify</code></a></li>
+          <li><a href="#dump" id="markdown-toc-dump"><code class="language-plaintext highlighter-rouge">dump</code></a></li>
+          <li><a href="#dump-atom" id="markdown-toc-dump-atom"><code class="language-plaintext highlighter-rouge">dump atom</code></a></li>
+          <li><a href="#dump-image" id="markdown-toc-dump-image"><code class="language-plaintext highlighter-rouge">dump image</code></a></li>
+          <li><a href="#run-n" id="markdown-toc-run-n"><code class="language-plaintext highlighter-rouge">run N</code></a></li>
+          <li><a href="#log文件" id="markdown-toc-log文件">log文件</a></li>
+          <li><a href="#耗时比例" id="markdown-toc-耗时比例">耗时比例</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#报错" id="markdown-toc-报错">报错</a>    <ul>
+      <li><a href="#unrecognized-atom-style-full-is-part-of-the-molecule-package" id="markdown-toc-unrecognized-atom-style-full-is-part-of-the-molecule-package">Unrecognized atom style ‘full’ is part of the MOLECULE package</a>        <ul>
+          <li><a href="#同样的问题" id="markdown-toc-同样的问题">同样的问题</a></li>
+        </ul>
+      </li>
+      <li><a href="#not-included" id="markdown-toc-not-included">not included</a></li>
+      <li><a href="#参数报错" id="markdown-toc-参数报错">参数报错</a></li>
+      <li><a href="#environment-or-make-variable-quip_root-must-be-set--stop" id="markdown-toc-environment-or-make-variable-quip_root-must-be-set--stop">Environment or make variable QUIP_ROOT must be set..  Stop.</a></li>
+    </ul>
+  </li>
+  <li><a href="#案例学习" id="markdown-toc-案例学习">案例学习</a>    <ul>
+      <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+      <li><a href="#demo" id="markdown-toc-demo">demo</a>        <ul>
+          <li><a href="#live-demo-1-running-a-test-example" id="markdown-toc-live-demo-1-running-a-test-example">Live demo #1: running a test example</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>本文为自学笔记, 仅供参考, 如有理解不正确的地方欢迎指正.</p>
+
+<h2 id="安装">安装</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:lammps/lammps.git
+cd lammps/
+cd src/
+make mpi
+make serial -j20
+#针对特定的版本 g++_openmpi等
+vi MAKE/OPTIONS/Makefile.g++_openmpi
+make g++_openmpi -j20
+</code></pre></div></div>
+
+<h3 id="编译的相关指令">编译的相关指令</h3>
+<ul>
+  <li><strong>需要什么包就编译什么包,编译了all,有的编译不成功最后生成serial/mpi时反而容易编译失败</strong></li>
+</ul>
+
+<h4 id="make-package">make package</h4>
+<p>使用<code class="language-plaintext highlighter-rouge">make package</code>可以查看支持的package命令和安装卸载命令</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~/code/lammps/src$ make package
+Standard packages: asphere body class2 colloid compress coreshell dipole gpu granular kim kokkos kspace latte manybody mc message misc mliap molecule mpiio mscg opt peri poems python qeq replica rigid shock snap spin srd voronoi
+
+User-contributed packages: user-adios user-atc user-awpmd user-bocs user-cgdna user-cgsdk user-colvars user-diffraction user-dpd user-drude user-eff user-fep user-h5md user-intel user-lb user-manifold user-meamc user-mesodpd user-mesont user-mgpt user-misc user-mofff user-molfile user-netcdf user-omp user-phonon user-plumed user-ptm user-qmmm user-qtb user-quip user-reaction user-reaxc user-scafacos user-smd user-smtbq user-sdpd user-sph user-tally user-uef user-vtk user-yaff
+
+Packages that need system libraries: compress mpiio python user-lb
+
+Packages that need provided libraries: gpu kokkos message poems user-atc user-awpmd user-colvars user-mesont
+
+Packages that need external libraries: kim latte mscg voronoi user-adios user-h5md user-molfile user-netcdf user-plumed user-qmmm user-quip user-smd user-vtk
+
+make package                 list available packages
+make package                 list available packages
+make package-status (ps)     status of all packages
+make package-installed (pi)  list of installed packages
+make yes-package             install a single pgk in src dir
+make no-package              remove a single pkg from src dir
+</code></pre></div></div>
+<p>卸载<code class="language-plaintext highlighter-rouge">user-quip</code>通过</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make no-user-quip 
+</code></pre></div></div>
+<p>安装<code class="language-plaintext highlighter-rouge">body</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make yes-body
+</code></pre></div></div>
+<p>等</p>
+
+<h3 id="清空编译环境">清空编译环境</h3>
+<p>用于重新编译</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make clean-all
+make clean-machine
+make no-all
+</code></pre></div></div>
+<p>重新编译即可</p>
+
+<h2 id="输入文件与执行">输入文件与执行</h2>
+<ul>
+  <li>注释<code class="language-plaintext highlighter-rouge">#</code></li>
+  <li>参数即命令, lammps运行后逐条输入命令,如下图, 开始设置计算参数或者运行<code class="language-plaintext highlighter-rouge">run n</code>,执行结束后,继续输入<code class="language-plaintext highlighter-rouge">run n</code>则会继续计算</li>
+  <li>当然也可以通过下面的方式执行
+    <ul>
+      <li>重定向 <code class="language-plaintext highlighter-rouge">lmp_serial &lt; in.water</code></li>
+      <li>管道 <code class="language-plaintext highlighter-rouge">cat in.water | lmp_serial</code></li>
+      <li>参数  <code class="language-plaintext highlighter-rouge">lmp_serial -i in.water</code></li>
+    </ul>
+  </li>
+  <li>命令对大小写敏感</li>
+  <li>续行用 <code class="language-plaintext highlighter-rouge">&amp;</code>结尾</li>
+  <li>使用<code class="language-plaintext highlighter-rouge">variable</code>定义变量,加<code class="language-plaintext highlighter-rouge">$</code>调用, 可以<code class="language-plaintext highlighter-rouge">print, if</code>等语法执行</li>
+  <li>命令之间有前后顺序, 命令二次执行可能会覆盖/补全前面的设置,如 <code class="language-plaintext highlighter-rouge">atom_style</code>就是最后一次设置的值为最终结果
+<img src="/uploads/2021/02/lmprun.png" alt="" /></li>
+  <li><strong>lammps的计算元素主要有原子、元素、mol、组、区域(atom or type or mol or group or region)这几类</strong>, 可以通过<code class="language-plaintext highlighter-rouge">region,group</code>等命令进行定义,<br />
+很多命令也会调用相应的<code class="language-plaintext highlighter-rouge">region ID, group ID</code>进行进一步的设置<br />
+其他的命令如<code class="language-plaintext highlighter-rouge">fix,dump</code>每一次执行也要创建一个ID,后面可以根据这个ID进行修改已经输入的命令(<code class="language-plaintext highlighter-rouge">fix_modify,dump_modify</code>)</li>
+  <li>命令的风格一般是<code class="language-plaintext highlighter-rouge">命令 本命令的ID 修改的计算元素/命令的ID 修改的性质/style 一堆参数</code></li>
+</ul>
+
+<p>示例<code class="language-plaintext highlighter-rouge">in.water</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>units		electron
+atom_style	full
+
+pair_style      lj/cut/tip4p/long 1 2 1 1 0.278072379 17.007
+bond_style      class2 
+angle_style     harmonic
+kspace_style	pppm/tip4p 0.0001
+
+read_data	data.water
+pair_coeff  * * 0 0
+pair_coeff  1  1  0.000295147 5.96946
+
+neighbor	2.0 bin
+
+run 2
+</code></pre></div></div>
+
+<h3 id="初始化命令">初始化命令</h3>
+<h4 id="units单位"><code class="language-plaintext highlighter-rouge">units</code>单位</h4>
+<p>可以参考<a href="https://lammps.sandia.gov/doc/units.html">lammps:unit</a>的说明<br /></p>
+<blockquote>
+  <p>This command sets the style of units used for a simulation. <strong>It determines the units of all quantities specified in the input script and data file</strong>, as well as quantities output to the screen, log file, and dump files. Typically, this command is used at the very beginning of an input script.</p>
+</blockquote>
+
+<p>例如第一性常用的原子单位制类似的<code class="language-plaintext highlighter-rouge">units electron</code>, 常见的<code class="language-plaintext highlighter-rouge">units real</code>, 更多的看说明文档</p>
+
+<h4 id="dimension纬度"><code class="language-plaintext highlighter-rouge">dimension</code>纬度</h4>
+<p>2或3维, 默认3维</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dimension 2
+dimension 3
+</code></pre></div></div>
+
+<h4 id="boundary周期性条件"><code class="language-plaintext highlighter-rouge">boundary</code>周期性条件</h4>
+<p>更多参考<a href="https://lammps.sandia.gov/doc/boundary.html">boundary</a><br />
+<strong>Syntax</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boundary x y z
+</code></pre></div></div>
+<p>x,y,z = p or s or f or m, one or two letters</p>
+
+<ul>
+  <li>p is periodic</li>
+  <li>f is non-periodic and fixed</li>
+  <li>s is non-periodic and shrink-wrapped</li>
+  <li>m is non-periodic and shrink-wrapped with a minimum value</li>
+</ul>
+
+<p><img src="/uploads/2021/03/lammpsfsp.png" alt="" />
+Examples</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boundary p p f
+boundary p fs p
+boundary s f fm
+#默认
+boundary p p p
+</code></pre></div></div>
+
+<h4 id="下面是各种xxx_style">下面是各种<code class="language-plaintext highlighter-rouge">xxx_style</code></h4>
+<p>如<code class="language-plaintext highlighter-rouge">atom_style</code>决定了计算过程中会存储原子的哪些性质,用于计算力使用的物理量,以及<code class="language-plaintext highlighter-rouge">read_data</code>的命令<br />
+如<code class="language-plaintext highlighter-rouge">read_data</code>中有角度的性质,  就不能只设置键长<code class="language-plaintext highlighter-rouge">atom_style	bond</code>,会报错</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR: Angle_style command when no angles allowed (../input.cpp:1324)
+Last command: angle_style     harmonic
+</code></pre></div></div>
+<p>需要在<code class="language-plaintext highlighter-rouge">read_data, create_atoms, set</code>等命令前执行.<br /></p>
+
+<h4 id="atom_style"><code class="language-plaintext highlighter-rouge">atom_style</code></h4>
+<p><a href="https://lammps.sandia.gov/doc/atom_style.html">atom_style</a><br />
+目前设置<code class="language-plaintext highlighter-rouge">atom_style	full</code>即可, 默认<code class="language-plaintext highlighter-rouge">atom_style	atomic</code></p>
+
+<h4 id="bond_style"><code class="language-plaintext highlighter-rouge">bond_style</code></h4>
+<h4 id="angle_style"><code class="language-plaintext highlighter-rouge">angle_style</code></h4>
+<h4 id="kspace_style"><code class="language-plaintext highlighter-rouge">kspace_style</code></h4>
+
+<h4 id="neighbor"><code class="language-plaintext highlighter-rouge">neighbor</code></h4>
+<p>参考<a href="https://zhuanlan.zhihu.com/p/46410891">(八）neighbor command@Roy Kid</a><br />
+<a href="https://lammps.org.cn/en/tutorial/advanced/neighborlist.html">临近表</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>neighbor skin style
+#示例
+neighbor 0.3 bin
+</code></pre></div></div>
+<ul>
+  <li>skin = extra distance beyond force cutoff (distance units),对距离小于<code class="language-plaintext highlighter-rouge">force cutoff + skin</code> 的原子建立表</li>
+  <li>style = bin or nsq or multi, 计算表的算法</li>
+</ul>
+
+<p>为了减少计算量, lammps只计算距离在一定范围内的原子间受力,这些成对的原子在一定时间步长内还是成对的关系, 将原子间距小于(<code class="language-plaintext highlighter-rouge">cutoff + skin distance</code>)的原子保存为一个<code class="language-plaintext highlighter-rouge">neighbor list</code>的表, 不用每一步都进行成对原子搜索.
+当表中的原子间距超过<code class="language-plaintext highlighter-rouge">cutoff + skin distance</code>就需要更新表信息, 显然<code class="language-plaintext highlighter-rouge">skin distance</code>越大, 更新的频率就越低, 表中的原子数多计算量也会增加, 一个需要权衡的参数.</p>
+
+<blockquote>
+  <p>style 的选取决定了建立表的算法</p>
+  <ul>
+    <li>bin 计算量随着 原子总数/处理器核数 线性变化;</li>
+    <li>nsq 计算量随着 （原子总数/处理器核数）^2 线性变化，但是在特定情况下会比bin要快。</li>
+    <li>multi 则是一个为了适应具有变化很大的cutoff的体系，会对每种原子建立不同的list。这样子的话就不会出现无谓的计算。</li>
+  </ul>
+</blockquote>
+
+<h4 id="neigh_modify"><code class="language-plaintext highlighter-rouge">neigh_modify</code></h4>
+<p>建立临近表的参数,更新的频率.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>neigh_modify keyword values ...
+#示例: 距离上一步更新的后5步更新?
+neigh_modify	delay 5
+</code></pre></div></div>
+
+<h3 id="原子构型">原子构型</h3>
+<p>只有设置了上面的各种 <code class="language-plaintext highlighter-rouge">xxx_style</code>后才可以设置原子构型</p>
+
+<h3 id="read_data从构型文件中读入原子构型"><code class="language-plaintext highlighter-rouge">read_data</code>从构型文件中读入原子构型</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>read_data	data.water
+</code></pre></div></div>
+<p>构型文件格式, 并不需要全部设置</p>
+<ul>
+  <li><strong>首行</strong>: 标题 (即使是空白,也要保留一行)</li>
+  <li>建议首行和下面的统计信息之间保留一行空白,没意义,只是排版好看</li>
+  <li><strong>统计信息</strong>,下面的统计信息没有顺序,但是不能把后面的``Masses`等结构信息放在任何统计信息的前面
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">X atoms    </code> 体系的总原子数</li>
+      <li><code class="language-plaintext highlighter-rouge">X bonds    </code> 体系的总键数</li>
+      <li><code class="language-plaintext highlighter-rouge">X angles   </code> 体系的总角数</li>
+      <li><code class="language-plaintext highlighter-rouge">X dihedrals</code> 体系的总二面角数</li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">X impropers</code> 体系的总impropers dihedral数</p>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">X atom types    </code> 原子类型数</li>
+      <li><code class="language-plaintext highlighter-rouge">X bond types    </code> 化学键类型数</li>
+      <li><code class="language-plaintext highlighter-rouge">X angle types   </code> 键角类型数</li>
+      <li><code class="language-plaintext highlighter-rouge">X dihedral types</code> 二面角类型数</li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">X improper types</code> impropers dihedral类型数</p>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">X_min X_max xlo xhi</code> 模拟盒子在x方向的范围</li>
+      <li><code class="language-plaintext highlighter-rouge">X_min X_max ylo yhi</code> 模拟盒子在y方向的范围</li>
+      <li><code class="language-plaintext highlighter-rouge">X_min X_max zlo zhi</code> 模拟盒子在z方向的范围</li>
+    </ul>
+  </li>
+  <li>下面的具体原子、键、角等信息都是采用下面的格式,<br />
+<strong>Masses和下面的内容要隔一行,空白或者#都可以</strong><br />
+这些键角信息可以交换顺序
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>标签
+#空行,这一空行不能省略
+编号 数值
+...
+编号 数值
+</code></pre></div>    </div>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Masses</code> 原子质量<br />示例
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Masses
+
+1 15.9994
+2  1.0080
+</code></pre></div>    </div>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Bonds</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Angles</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Bond Coeffs</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Angle Coeffs</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Atoms</code> 原子坐标</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Atoms
+ 
+ 1 1 1 -1.1128       3.84600000       5.67200001       1.32300000
+ 2 1 2 0.5564        2.97900000       7.05400000       0.85700000
+ 3 1 2 0.5564        5.52500001       5.69700001       0.45100000
+#原子编号  
+</code></pre></div></div>
+
+<ul>
+  <li>等等</li>
+</ul>
+
+<p>data.water示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LAMMPS Description
+ 
+           3  atoms
+           2  bonds
+           1  angles
+ 
+           2  atom types
+           1  bond types
+           1  angle types
+ 
+         0 35.233 xlo xhi
+         0 35.233 ylo yhi
+         0 35.233 zlo zhi
+ 
+Masses
+ 
+  1 15.9994
+  2  1.0080
+ 
+Bond Coeffs
+ 
+  1    1.78    0.2708585 -0.327738785 0.231328959
+ 
+Angle Coeffs
+ 
+  1    0.0700  107.400000
+
+Atoms
+ 
+ 1 1 1 -1.1128       3.84600000       5.67200001       1.32300000
+ 2 1 2 0.5564        2.97900000       7.05400000       0.85700000
+ 3 1 2 0.5564        5.52500001       5.69700001       0.45100000
+
+Bonds
+
+ 1 1 1 2
+ 2 1 1 3
+
+Angles
+
+ 1 1 2 1 3
+</code></pre></div></div>
+
+<blockquote>
+  <p><a href="https://wenku.baidu.com/view/1ba6f1b3f90f76c661371ab6.html">关于lammps学习的一点汇总</a>
+MS建好模型后使用Discover模块,j康Forcefield设置为cvff,计算后将构型文件到处保存为<code class="language-plaintext highlighter-rouge">.car, .cor</code>类型
+<code class="language-plaintext highlighter-rouge">./msi2lmp.exe ** -class I -frc cvff &gt; data.** </code>将导出的两个文件转为lammpsdata文件</p>
+</blockquote>
+
+<h3 id="read_restart">read_restart</h3>
+
+<h3 id="创建原子构型">创建原子构型</h3>
+<p>通过命令创建</p>
+<h4 id="lattice-晶格"><code class="language-plaintext highlighter-rouge">lattice</code> 晶格</h4>
+<p><a href="https://lammps.sandia.gov/doc/lattice.html">lattice</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lattice style scale keyword values ...
+#示例: 六方晶系, 缩放系数0.7?
+lattice		hex 0.7
+</code></pre></div></div>
+<h4 id="region建立模拟区域"><code class="language-plaintext highlighter-rouge">region</code>建立模拟区域</h4>
+<p><a href="https://lammps.sandia.gov/doc/region.html">region</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>region ID style args keyword arg ...
+#style = delete or block or cone or cylinder or plane or prism or sphere or union or intersect
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#示例: 创建ID为box的region
+region		box block 0 40 0 10 -0.25 0.25
+</code></pre></div></div>
+
+<h4 id="create_box相应region的原子类型数"><code class="language-plaintext highlighter-rouge">create_box</code>相应region的原子类型数</h4>
+<p><a href="https://lammps.sandia.gov/doc/create_box.html">create_box</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create_box N region-ID keyword value ...
+#示例:三种原子
+create_box	3 box
+</code></pre></div></div>
+
+<h4 id="create_atoms"><code class="language-plaintext highlighter-rouge">create_atoms</code></h4>
+<p><a href="https://lammps.sandia.gov/doc/create_atoms.html">create_atoms</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create_atoms type style args keyword values ...
+#示例:在box style中填充原子
+create_atoms	1 box
+</code></pre></div></div>
+
+<h4 id="delete_atoms"><code class="language-plaintext highlighter-rouge">delete_atoms</code></h4>
+<p>删除指定的原子<a href="https://lammps.sandia.gov/doc/delete_atoms.html">delete_atoms</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>delete_atoms style args keyword value ...
+#style = group or region or overlap or porosity
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#以x,y,z=10,4,0为球心,半径为3的区域void1, 删除void中的原子
+region		void1 sphere 10 4 0 3
+delete_atoms	region void1
+</code></pre></div></div>
+
+<h4 id="mass"><code class="language-plaintext highlighter-rouge">mass</code></h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mass I value
+# I = atom type (see asterisk form below)
+# value = mass
+#示例
+mass		1 1.0
+mass		2 1.0
+mass		3 1.0
+</code></pre></div></div>
+
+<h3 id="复制">复制</h3>
+
+<h3 id="力场计算输出参数">力场、计算、输出参数</h3>
+
+<blockquote>
+  <p>力场系数可以通过这些命令定义 : pair_coeff, bond_coeff, angle_coeff, dihedral_coeff,
+improper_coeff, kspace_style, dielectric, special_bonds. 注意, 其实力场系数也可以在 data
+文件中制定</p>
+</blockquote>
+
+<blockquote>
+  <p>各 种 模 拟 参 数 由 这 些 命 令 设 置 : neighbor, neigh_modify, group, timestep,
+reset_timestep, run_style, min_style, min_modify.</p>
+</blockquote>
+
+<h4 id="pair_style"><code class="language-plaintext highlighter-rouge">pair_style</code></h4>
+<p>原子间的相互作用势,<a href="https://lammps.sandia.gov/doc/pair_style.html">pair_style</a><br />
+tip4p的水模型也在这里设置</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pair_style style args
+</code></pre></div></div>
+<ul>
+  <li>style = one of the styles from <a href="https://lammps.sandia.gov/doc/pairs.html">pairs</a></li>
+  <li>args = arguments used by a particular style</li>
+</ul>
+
+<p><strong>Categories of pair styles</strong></p>
+<ul>
+  <li>Solids
+    <ul>
+      <li>eam, eim, meam, adp</li>
+    </ul>
+  </li>
+  <li>Bio and polymers
+    <ul>
+      <li>charmm, class2, gromacs, dreiding</li>
+    </ul>
+  </li>
+  <li>Reactive
+    <ul>
+      <li>tersoff, bop, airebo, comb, reax, reax/c</li>
+    </ul>
+  </li>
+  <li>Coarse-grained
+    <ul>
+      <li>dpd, granular, sph, peri, colloid, lubricate, brownian, FLD</li>
+    </ul>
+  </li>
+  <li>Aspherical
+    <ul>
+      <li>gayberne, resquared, line, tri</li>
+    </ul>
+  </li>
+  <li>Pair table for tabulation of any pair-wise interaction</li>
+  <li>Pair hybrid style allows for hybrid models
+    <ul>
+      <li>polymers on metal</li>
+      <li>CNTs in water</li>
+      <li>solid-solid interface between 2 materials</li>
+    </ul>
+  </li>
+  <li><strong>也可以使用自己优化出来的势场, 需要重新编译</strong></li>
+</ul>
+
+<p>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pair_style	lj/cut 1.12246
+# lj/cut : cutoff Lennard-Jones potential without Coulomb， 
+# 1.12246 :  cutoff = global cutoff for Lennard Jones interactions (distance units)
+</code></pre></div></div>
+
+<h4 id="pair_coeff"><code class="language-plaintext highlighter-rouge">pair_coeff</code></h4>
+<p>描述每种类型的原子之间的相互作用, <a href="https://lammps.sandia.gov/doc/pair_coeff.html">pair_coeff</a>
+也可以在<code class="language-plaintext highlighter-rouge">read_data</code>中设置,这里的具体参数要参考<a href="https://lammps.sandia.gov/doc/pair_style.html">pair_style</a>中特定的类型<br />
+<strong>可以输入多次,会覆盖之前的设置</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pair_coeff I J args
+</code></pre></div></div>
+<ul>
+  <li>I,J = atom types (see asterisk form below), I=1,N, I&lt;=J, 可以使用通配符<code class="language-plaintext highlighter-rouge">*</code>代替</li>
+  <li>args = coefficients for one or more pairs of atom types</li>
+</ul>
+
+<p>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pair_style	lj/cut 1.12246
+pair_coeff	* * 1.0 1.0 1.12246
+</code></pre></div></div>
+<p>对于<code class="language-plaintext highlighter-rouge">lj/cut</code>,I,J后面的参数分别为LJ势中的$\epsilon, \sigma$和截断距离$r_c$,详见<a href="https://lammps.sandia.gov/doc/pair_lj.html">pair_lj</a></p>
+
+<h4 id="group"><code class="language-plaintext highlighter-rouge">group</code></h4>
+<p><a href="https://zhuanlan.zhihu.com/p/348083488">lammps教程：group命令详解</a></p>
+<blockquote>
+  <p>group就是对原子进行分组,被group后的原子会被分配一个group-ID，这个group-ID被用到fix、compute、dump等命令中
+即使不对原子进行分组，<strong>lammps也会设置一个默认的原子组：all</strong>，也就是把所有的原子全部划分到all组内。</p>
+</blockquote>
+
+<p>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#用region设置left和right的区域, 用于设置group
+region	        1 block INF INF INF 1.25 INF INF
+#创建lower组
+group		lower region 1
+
+region		2 block INF INF 8.75 INF INF INF
+#创建upper组
+group		upper region 2
+#合并lower,upper组为boundary组
+group		boundary union lower upper
+#减去boundary创建flow组
+group		flow subtract all boundary
+</code></pre></div></div>
+
+<h4 id="set"><code class="language-plaintext highlighter-rouge">set</code></h4>
+<p>可以设置原子/种类/mol/组/区域的性质<a href="https://lammps.sandia.gov/doc/set.html">set</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set style ID keyword values ...
+</code></pre></div></div>
+<ul>
+  <li>style = atom or type or mol or group or region</li>
+  <li>ID = atom ID range or type range or mol ID range or group ID or region ID
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#设置lower组的原子类型为2 ?
+set		group lower type 2
+</code></pre></div>    </div>
+    <h4 id="compute"><code class="language-plaintext highlighter-rouge">compute</code></h4>
+    <p>设置对特定组的性质的计算,如键长、键角、受力、PE势、压力、温度等<a href="https://lammps.sandia.gov/doc/compute.html">compute</a></p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>compute ID group-ID style args
+</code></pre></div>    </div>
+  </li>
+  <li>ID = user-assigned name for the computation, ID金威字母数字下划线</li>
+  <li>group-ID = ID of the group of atoms to perform the computation on</li>
+  <li>style = one of a list of possible style names (see <a href="https://lammps.sandia.gov/doc/compute.html">compute</a>)</li>
+  <li>args = arguments used by a particular style</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#计算flow组的的温度, 这个计算任务称为mobile
+compute	        mobile flow temp
+</code></pre></div></div>
+
+<h4 id="fix"><code class="language-plaintext highlighter-rouge">fix</code></h4>
+<p>给group中的原子施加约束,如控制温度(系综)、施加约束力等<a href="https://lammps.sandia.gov/doc/fix.html">fix</a><br />
+<a href="http://www.52souji.net/lammps-command-fix.html">LAMMPS翻译系列】fix命令@Michael Duan</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fix ID group-ID style args
+</code></pre></div></div>
+<ul>
+  <li>ID = user-assigned name for the fix</li>
+  <li>group-ID = ID of the group of atoms to apply the fix to</li>
+  <li>style = one of a long list of possible style names (see below)</li>
+  <li>args = arguments used by a particular style</li>
+  <li>创建相同的fix ID时, 之前创建的规则会被覆盖<code class="language-plaintext highlighter-rouge">unfix ID</code>可用于删除</li>
+  <li><code class="language-plaintext highlighter-rouge">fix_modify</code>可用于修改之前<code class="language-plaintext highlighter-rouge">fix</code>定义的内容<code class="language-plaintext highlighter-rouge">fix_modify fix-ID keyword value ...</code> <a href="https://lammps.sandia.gov/doc/fix_modify.html">fix_modify</a><br />
+keyword = temp or press or energy or virial or respa or dynamic/dof or bodyforces
+    <ul>
+      <li>temp value = compute ID that calculates a temperature</li>
+      <li>press value = compute ID that calculates a pressure</li>
+      <li>energy value = yes or no</li>
+      <li>virial value = yes or no</li>
+      <li>respa value = 1 to max respa level or 0 (for outermost level)</li>
+      <li>dynamic/dof value = yes or no
+yes/no = do or do not re-compute the number of degrees of freedom (DOF) contributing to the temperature</li>
+      <li>bodyforces value = early or late
+early/late = compute rigid-body forces/torques early or late in the timestep</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#设置all组的原子系综为nve
+fix		1 all nve
+#设置flow组温度受到velocity rescaling调控
+#fix ID group-ID temp/rescale N Tstart Tstop window fraction
+#N = perform rescaling every N steps
+#Tstart,Tstop = desired temperature at start/end of run (temperature units)
+#window = only rescale if temperature is outside this window (temperature units)
+#fraction = rescale to target temperature by this fraction
+fix		2 flow temp/rescale 200 1.0 1.0 0.02 1.0
+#对fixid为2的体系计算mobile定义的温度
+fix_modify	2 temp mobile
+</code></pre></div></div>
+
+<h4 id="velocity"><code class="language-plaintext highlighter-rouge">velocity</code></h4>
+<p>设置或更改一组原子的速度 <a href="https://lammps.sandia.gov/doc/velocity.html">velocity</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>velocity group-ID style args keyword value ...
+</code></pre></div></div>
+<p>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#设置boundary组上的速度值为vx=0,vy=0,vz=0
+velocity	boundary set 0.0 0.0 0.0
+</code></pre></div></div>
+
+<h3 id="运行和输出">运行和输出</h3>
+<h4 id="timestep"><code class="language-plaintext highlighter-rouge">timestep</code></h4>
+<p>后续md的时间步长, 单位由<code class="language-plaintext highlighter-rouge">units</code>决定. <strong>不同单位的默认值不同</strong></p>
+
+<h4 id="thermo-n"><code class="language-plaintext highlighter-rouge">thermo N</code></h4>
+<p>每N步输出热动力学信息,N=10时,如</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Step Temp E_pair E_mol TotEng Press Volume
+       0    1.0027471            0            0   0.68849216   0.46317653    1143.0857
+      10     1.091169            0            0   0.74920316   0.50401927    1143.0857
+      20    1.3047062 -0.057652912            0   0.83816619   0.67076018    1143.0631
+      30    1.2108687 -0.014991048            0   0.81639861    1.9009106    1143.0112
+      40    1.1789723 -0.087469689            0   0.72201977    2.6110714    1143.1194
+...
+</code></pre></div></div>
+
+<h4 id="thermo_style"><code class="language-plaintext highlighter-rouge">thermo_style</code></h4>
+<p>设置用于将热力学数据打印到屏幕和日志文件的样式和内容。</p>
+
+<h4 id="thermo_modify"><code class="language-plaintext highlighter-rouge">thermo_modify</code></h4>
+<p>修改/设置<code class="language-plaintext highlighter-rouge">thermo_style</code>的结果, <a href="https://lammps.sandia.gov/doc/thermo_modify.html">thermo_modify</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>thermo_modify keyword value ...
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#按照计算mobile输出温度信息
+thermo_modify	temp mobile
+</code></pre></div></div>
+
+<h4 id="dump"><code class="language-plaintext highlighter-rouge">dump</code></h4>
+<p>每N个时间步将原子信息(坐标、受力、原子速度等)的快照转储文件(文本、压缩、图片等)中,<a href="https://lammps.sandia.gov/doc/dump.html">dump</a>
+图片视频需要在编译的时候添加参数和库依赖</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dump ID group-ID style N file args
+</code></pre></div></div>
+<ul>
+  <li>ID：dump命令编号</li>
+  <li>group-ID：输出的原子组ID</li>
+  <li>
+    <p>style：输出类型.<br />
+style = atom or atom/gz or atom/zstd or *atom/mpiio or cfg or cfg/gz or cfg/zstd 
+or cfg/mpiio or custom or custom/gz or custom/zstd or custom/mpiio or dcd or h5md 
+or image or local or local/gz or local/zstd or molfile or movie or netcdf or netcdf/mpiio 
+or vtk or xtc or xyz or xyz/gz or xyz/zstd or xyz/mpiio</p>
+  </li>
+  <li>N：每隔N步输出一次文件</li>
+  <li>file：保存的文件名</li>
+  <li>args：参数</li>
+</ul>
+
+<h4 id="dump-atom"><code class="language-plaintext highlighter-rouge">dump atom</code></h4>
+<p>atom型输出,没有参数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#每10步保存all组的原子结构
+dump		1 all atom 10 dump.obstacle
+</code></pre></div></div>
+<p>输出文件</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ITEM: TIMESTEP
+0
+ITEM: NUMBER OF ATOMS
+769
+ITEM: BOX BOUNDS pp ss pp
+0.0000000000000000e+00 5.1374269009840255e+01
+-2.2245711031688635e-03 2.2247935602791809e+01
+-3.2108918131150160e-01 3.2108918131150160e-01
+ITEM: ATOMS id type xs ys zs
+1 2 0 9.998e-05 0.5
+3 2 0.025 9.998e-05 0.5
+5 2 0.05 9.998e-05 0.5
+7 2 0.075 9.998e-05 0.5
+9 2 0.1 9.998e-05 0.5
+......
+ITEM: TIMESTEP
+10
+ITEM: NUMBER OF ATOMS
+769
+ITEM: BOX BOUNDS pp ss pp
+0.0000000000000000e+00 5.1374269009840255e+01
+-2.2245711031688635e-03 2.2247935602791809e+01
+-3.2108918131150160e-01 3.2108918131150160e-01
+ITEM: ATOMS id type xs ys zs
+1 2 0 9.998e-05 0.5
+3 2 0.025 9.998e-05 0.5
+5 2 0.05 9.998e-05 0.5
+...
+</code></pre></div></div>
+
+<p>atom/gz保存压缩型原子构型,文件的拓展名必须是`.gz,不然会报错</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dump		1 all atom/gz 10 dump.obstacle.gz
+</code></pre></div></div>
+<p>解压后和atom型一致</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gzip -d dump.obstacle.gz
+</code></pre></div></div>
+<h4 id="dump-image"><code class="language-plaintext highlighter-rouge">dump image</code></h4>
+<p>image型输出,需要编译时添加jpeg库</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dump ID group-ID style N file color diameter keyword value ...
+</code></pre></div></div>
+
+<blockquote>
+  <p><a href="https://peachrl.github.io/2020/04/07/LAMMPS%E4%B8%ADdump%20image%20command%E5%92%8Cdump%20movie%20command/">LAMMPS中dump image command和dump movie command@peachRL</a></p>
+  <ul>
+    <li>style：image or movie</li>
+    <li>file：导出的文件名</li>
+    <li>color：由什么来区分粒子的颜色,<br />
+比如说type：
+      <ul>
+        <li>type 1 = red</li>
+        <li>type 2 = green</li>
+        <li>type 3 = blue</li>
+        <li>type 4 = yellow</li>
+        <li>type 5 = aqua</li>
+        <li>type 6 = cyan</li>
+        <li>更多颜色就要由dump_modify acolor command来实现了</li>
+      </ul>
+    </li>
+    <li>diameter：由什么来区分粒子的大小，比如type。默认所有type的粒子直径1.0，更多设置由dump_modify adiam command来实现</li>
+    <li>keyword：其他设置，有atom、adiam、bond、line、tri、body、fix、size、view、center、up、zoom、persp、box、axes、subbox、shiny、ssao
+      <ul>
+        <li>zoom缩放模拟框的大小</li>
+        <li>adiam重置直径数据</li>
+      </ul>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#每10步保存构型
+dump		2 all image 10 image.*.jpg type type &amp;
+		zoom 1.6 adiam 1.5
+</code></pre></div></div>
+<p>输出<code class="language-plaintext highlighter-rouge">image.0.jpg,image.10.jpg,...</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#设置dump id=2中的*号为五位整数
+dump_modify	2 pad 5
+</code></pre></div></div>
+<p>此时输出为<code class="language-plaintext highlighter-rouge">image.00000.jpg,image.00010.jpg,...</code>
+<img src="/uploads/2021/02/image.0.jpg" alt="" /></p>
+
+<h4 id="run-n"><code class="language-plaintext highlighter-rouge">run N</code></h4>
+<p>进行md计算,跑N步</p>
+
+<h4 id="log文件">log文件</h4>
+<p><code class="language-plaintext highlighter-rouge">log.lammps</code>中包含计算参数和屏幕输出的内容</p>
+
+<h4 id="耗时比例">耗时比例</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.0047696  | 0.0047696  | 0.0047696  |   0.0 | 27.22
+Neigh   | 0.0028307  | 0.0028307  | 0.0028307  |   0.0 | 16.15
+Comm    | 0.00031137 | 0.00031137 | 0.00031137 |   0.0 |  1.78
+Output  | 0.00034046 | 0.00034046 | 0.00034046 |   0.0 |  1.94
+Modify  | 0.0084453  | 0.0084453  | 0.0084453  |   0.0 | 48.19
+Other   |            | 0.0008266  |            |       |  4.72
+</code></pre></div></div>
+
+<h2 id="报错">报错</h2>
+<h3 id="unrecognized-atom-style-full-is-part-of-the-molecule-package">Unrecognized atom style ‘full’ is part of the MOLECULE package</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~/work/rpmd/LearnPIMD/pimd-tutorial/master/exercises/day-1/ex-1$ lmp_serial &lt; in.water
+LAMMPS (10 Feb 2021)
+ERROR: Unrecognized atom style 'full' is part of the MOLECULE package which is not enabled in this LAMMPS binary. (../atom.cpp:710)
+Last command: atom_style	full
+</code></pre></div></div>
+<p>通过<code class="language-plaintext highlighter-rouge">lmp_serial --help</code>查看支持的 Atom styles</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* Atom styles:
+
+atomic          body            charge          ellipsoid       hybrid
+line            sphere          tri
+</code></pre></div></div>
+<p>发现没有full<br />
+<strong>解决方案:重新编译,添加MOLECULE模块支持</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make yes-MOLECULE
+make serial -j10
+</code></pre></div></div>
+<p>再<code class="language-plaintext highlighter-rouge">lmp_serial --help</code>查看</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* Atom styles:
+
+angle           atomic          body            bond            charge
+ellipsoid       full            hybrid          line            molecular
+sphere          template        tri
+</code></pre></div></div>
+<p>可以了</p>
+
+<h4 id="同样的问题">同样的问题</h4>
+<ul>
+  <li>is part of the KSPACE package
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~/work/rpmd/LearnPIMD/pimd-tutorial/master/exercises/day-1/ex-1$ lmp_serial &lt; in.water
+LAMMPS (10 Feb 2021)
+ERROR: Unrecognized pair style 'lj/cut/tip4p/long' is part of the KSPACE package which is not enabled in this LAMMPS binary. (../force.cpp:288)
+Last command: pair_style      lj/cut/tip4p/long 1 2 1 1 0.278072379 17.007
+</code></pre></div>    </div>
+    <p>同上</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make yes-KSPACE
+make serial -j10
+</code></pre></div>    </div>
+  </li>
+  <li>is part of the CLASS2 package
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LAMMPS (10 Feb 2021)
+ERROR: Unrecognized bond style 'class2' is part of the CLASS2 package which is not enabled in this LAMMPS binary. (../force.cpp:399)
+Last command: bond_style      class2
+</code></pre></div>    </div>
+    <p>同上</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make yes-CLASS2
+make serial -j10
+</code></pre></div>    </div>
+  </li>
+  <li>is part of the USER-MISC package
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR: Unrecognized fix style 'ipi' is part of the USER-MISC package which is not enabled in this LAMMPS binary. (../modify.cpp:916)
+Last command: fix 1 all ipi 300K-G.0 32345 unix
+</code></pre></div>    </div>
+    <p>同上</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make yes-USER-MISC
+make serial -j10
+</code></pre></div>    </div>
+  </li>
+  <li>is part of the COMPRESS package
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR: Unrecognized dump style 'atom/gz' is part of the COMPRESS package which is not enabled in this LAMMPS binary. (../output.cpp:572)
+</code></pre></div>    </div>
+    <p>同上</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make yes-COMPRESS
+make serial -j10
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="not-included">not included</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR: Support for writing images in JPEG format not included
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#修改Makedile文件
+vi MAKE/OPTIONS/Makefile.g++_serial
+#添加JPEG参数
+LMP_INC =       -DLAMMPS_GZIP -DLAMMPS_JPEG
+#设置库位置,根据实际系统决定
+JPG_INC = -I/usr/include/
+JPG_PATH = -L/usr/lib/x86_64-linux-gnu/
+JPG_LIB = -ljpeg
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">make g++_serial</code>后继续报错</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>../image.cpp:31:10: fatal error: jpeglib.h: No such file or directory
+ #include &lt;jpeglib.h&gt;
+          ^~~~~~~~~~~
+compilation terminated.
+</code></pre></div></div>
+<p>因为系统缺少相应库<code class="language-plaintext highlighter-rouge">jpeglib.h: No such file or directory</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install libjpeg62-dev
+</code></pre></div></div>
+<p>再<code class="language-plaintext highlighter-rouge">make g++_serial</code>就可以了,获得可执行程序<code class="language-plaintext highlighter-rouge">lmp_g++_serial</code></p>
+
+<h3 id="参数报错">参数报错</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR: Dump atom/gz only writes compressed files (../dump_atom_gz.cpp:33)
+Last command: dump		1gz all atom/gz 10 dump.obstacle
+</code></pre></div></div>
+<p>保存<code class="language-plaintext highlighter-rouge">atom/gz</code>型数据要求参数中的文件名的拓展名必须为压缩格式</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#错误
+dump		1gz all atom/gz 10 dump.obstacle
+#正确
+dump		1gz all atom/gz 10 dump.obstacle.gz
+</code></pre></div></div>
+<h3 id="environment-or-make-variable-quip_root-must-be-set--stop">Environment or make variable QUIP_ROOT must be set..  Stop.</h3>
+<p>编译lammps时报错</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make[1]: Leaving directory '/home/NFS/code/lammps/src'
+Compiling LAMMPS for machine serial
+make[1]: Entering directory '/home/NFS/code/lammps/src/Obj_serial'
+../../lib/quip/Makefile.lammps:17: *** Environment or make variable QUIP_ROOT must be set..  Stop.
+make[1]: Leaving directory '/home/NFS/code/lammps/src/Obj_serial'
+make[1]: Entering directory '/home/NFS/code/lammps/src/Obj_serial'
+../../lib/quip/Makefile.lammps:17: *** Environment or make variable QUIP_ROOT must be set..  Stop.
+make[1]: Leaving directory '/home/NFS/code/lammps/src/Obj_serial'
+Makefile:195: recipe for target 'serial' failed
+make: *** [serial] Error 2
+</code></pre></div></div>
+<p>之前<code class="language-plaintext highlighter-rouge">make yes-all</code>时, 编译了很多package, <strong>QUIP 的package没有编译好/需要额外的设置,暂时不需要,卸载即可</strong><br />
+通过<code class="language-plaintext highlighter-rouge">make package</code>查看到名字为<code class="language-plaintext highlighter-rouge">user-quip</code>,执行卸载</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make no-user-quip
+</code></pre></div></div>
+<p>再编译</p>
+
+<h2 id="案例学习">案例学习</h2>
+<h3 id="参考">参考</h3>
+<p><a href="https://lammps.sandia.gov/workshops.html">workshop</a><br />
+<a href="https://lammps.sandia.gov/tutorials.html">tutorials</a>,这个教程中ppt提到的各种计算案例在lammps的源码目录的example目录下面都<br />
+<strong>推荐</strong>
+<a href="http://www.52souji.net/lammps123.html">我爱搜集网@Michael Duan</a></p>
+
+<h3 id="demo">demo</h3>
+<h4 id="live-demo-1-running-a-test-example">Live demo #1: running a test example</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lammps/examples/obstacle
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2021/01/11/intel-oneAPI/">Intel® oneAPI Toolkits(Intel Parallel Studio XE的代替品)安装使用</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2021/03/30/cpp-learn/">C++ 学习笔记</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Quantumult-X操作手册</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2023/12/09/QuantumultX/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Quantumult-X操作手册</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2023-12-09
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#clash" title="Tag: clash" rel="tag">clash</a-->
+        <a href="/tag/#clash" title="Tag: clash" rel="tag">clash</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#逻辑" id="markdown-toc-逻辑">逻辑</a>    <ul>
+      <li><a href="#使用示例" id="markdown-toc-使用示例">使用示例</a>        <ul>
+          <li><a href="#根据网络环境手动选择节点方案" id="markdown-toc-根据网络环境手动选择节点方案">根据网络环境手动选择节点方案</a></li>
+          <li><a href="#挑选gpt节点配合分流" id="markdown-toc-挑选gpt节点配合分流">挑选GPT节点配合分流</a></li>
+          <li><a href="#挑选特定新加坡节点适合看特定国家的内容" id="markdown-toc-挑选特定新加坡节点适合看特定国家的内容">挑选特定新加坡节点适合看特定国家的内容</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#配置文件" id="markdown-toc-配置文件">配置文件</a>    <ul>
+      <li><a href="#分流规则" id="markdown-toc-分流规则">分流规则</a></li>
+    </ul>
+  </li>
+  <li><a href="#个人规则备份" id="markdown-toc-个人规则备份">个人规则备份</a>    <ul>
+      <li><a href="#分流规则-1" id="markdown-toc-分流规则-1">分流规则</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="逻辑">逻辑</h2>
+<p>规则和clash相似</p>
+<ul>
+  <li><strong>策略是用于分类节点</strong>的,比如把特定国家(正则)的节点筛选出来,选定的节点(PROXY),直连(DIRECT),拒绝(REJECT),也可以把其他策略选进来<br />
+<strong>策略需要配合分流使用</strong>,例如<strong>分流筛选出港台视频的网址</strong>选择<strong>筛选了港台节点的策略</strong><br />
+在配置策略时可以选择多种节点、策略、PROXY和DIRECT,我们可以快速图形化切换</li>
+  <li><strong>分流是用于分类网站的</strong>,把特定网站挑选出来,配上合适的<strong>策略</strong>,让这些网站走这些策略里的节点<br />
+筛选出广告的网址,然后reject</li>
+  <li><strong>重写是替换访问的网址的</strong>,比如把移动端网址替换成网页端,把vip认证的url换成其他url(这些url的返回值让APP通过vip判断)完成vip认证,也能实现广告拦截(把广告网址替换成无法访问、),以及解锁地区限制</li>
+</ul>
+
+<h3 id="使用示例">使用示例</h3>
+<h4 id="根据网络环境手动选择节点方案">根据网络环境手动选择节点方案</h4>
+<ul>
+  <li>策略1: 分为直连和代理</li>
+  <li>分流: 苹果相关的网页选择策略1</li>
+  <li>当前网络能正常访问苹果服务时,策略1选择直连,否则策略1选择代理</li>
+</ul>
+
+<p>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[policy]
+static=🍎 苹果服务, direct, proxy, img-url= https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Apple.png
+#规则分流远程订阅
+[filter_remote]
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Quantumult/Filter/Extra/Apple/Apple.list, tag= Apple服务, force-policy=🍎 苹果服务,enabled=true
+</code></pre></div></div>
+<p><img src="/uploads/2023/12/apple.jpeg" alt="" /></p>
+
+<h4 id="挑选gpt节点配合分流">挑选GPT节点配合分流</h4>
+<p><img src="/uploads/2023/12/gpt.png" alt="" /></p>
+
+<h4 id="挑选特定新加坡节点适合看特定国家的内容">挑选特定新加坡节点适合看特定国家的内容</h4>
+<p><img src="/uploads/2023/12/xinjiapo.jpeg" alt="" /></p>
+
+<h2 id="配置文件">配置文件</h2>
+<p>配置文件修改方案</p>
+<ul>
+  <li>一个总配置文件,直接修改(首页左下角/右下角都能进入修改入口)</li>
+  <li>顶部的节点、规则, 单击查看详情, <br />
+长按展开具体配置,也可以在这里图形化添加修改配置,否启用某些节点/分流/重写配置</li>
+  <li>长按打开配置页面后,单击每一个配置是进行修改</li>
+  <li>修改入口太多,不做详细介绍,查语法添加规则,图形化点点点也可以</li>
+  <li>直接下载别人的配置文件,可以读一下,比如有作者注释了<code class="language-plaintext highlighter-rouge">#以下重写请自行添加，本重写引用不含...</code>,就要自己添加规则</li>
+  <li>以前的配置文件可能不行了,要找新的,取消勾选之前的配置,添加新的</li>
+  <li>下载的配置文件可能包含了同样的网址,手动排序调整优先级</li>
+  <li>配置的优先级虽然是先出现的优先级更好,但是当开启<strong>其他设置&gt;分流优化</strong>时,会以精度优先,即下面的配置会使用全球加速的方式访问GPT,而不是自己配置的GPT策略,导致无法访问成功
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>host-keyword, openai.com, GPT
+host-suffix, openai.com, 全球加速
+</code></pre></div>    </div>
+    <p>其他</p>
+  </li>
+  <li>有的tiktok的重写规则一开反而无法访问tiktok,可能不兼容了.<br />
+最后是下载修改版的tiktok,只做分流策略实现</li>
+  <li>一些破解vip规则,适合老版本APP,新版本APP无法使用不是自己配置的问题,使用i4或者其他途径下载低版本APP即可</li>
+</ul>
+
+<h3 id="分流规则">分流规则</h3>
+<p><img src="/uploads/2023/12/filter.png" alt="" /></p>
+
+<ul>
+  <li>(上图左),可以在配置文件中添加,在配置文件右上角可以直接跳转到<code class="language-plaintext highlighter-rouge">filter_</code>条目进行更改,示例</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#规则分流远程订阅
+[filter_remote]
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Quantumult/Filter/Extra/Apple/Apple.list, tag= Apple服务, force-policy=🍎 苹果服务,enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Quantumult/Filter/Extra/ChinaIP.list, tag=🇨🇳️ 国内IP池, enabled=true
+#本地分流规则(对于完全相同的某条规则，本地的将优先生效)
+[filter_local]
+#我写的特定网站(自定义的被墙网站)走proxy
+host-keyword, raw.githubusercontent.com, proxy
+host-suffix, limbopro.xyz, proxy 
+</code></pre></div></div>
+
+<ul>
+  <li>(上图中),也可以<strong>长按分流规则</strong>,添加<code class="language-plaintext highlighter-rouge">filter_remote</code>和额外的配置文件<br />
+<strong>如果直接下载/倒入别人的配置文件覆盖了本地的配置文件,会让配置文件中的节点,策略,分流规则都失效</strong>,但是本会删除自己的配置文件,万一重置后可以在<code class="language-plaintext highlighter-rouge">filter_remote</code>中重新添加自己写过的配置文件
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[filter_remote]
+2A41DE9F46F0.snippet, tag=cndaqiang local, update-interval=172800, opt-parser=false, inserted-resource=true, enabled=true
+</code></pre></div>    </div>
+  </li>
+  <li>(上图右),<strong>点击分流规则</strong>查看分流信息</li>
+</ul>
+
+<h2 id="个人规则备份">个人规则备份</h2>
+<h3 id="分流规则-1">分流规则</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#下载github配置
+host-keyword, raw.githubusercontent.com, 全球加速
+#chatgpt
+host-suffix, openai.com, GPT
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2023/11/10/MobileAuto/">Android/IOS移动平台自动化脚本(基于AirTest)</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2024/01/23/openwrt-rax3000m-nand/">OpenWRT编译配置:以CMCC RAX3000M为例</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

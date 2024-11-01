@@ -1,0 +1,2812 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cndaqiang</title>
+    <description></description>
+    <link>https://cndaqiang.github.io/</link>
+    <atom:link href="https://cndaqiang.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 01 Nov 2024 22:34:25 +0800</pubDate>
+    <lastBuildDate>Fri, 01 Nov 2024 22:34:25 +0800</lastBuildDate>
+    <generator>Jekyll v3.10.0</generator>
+    
+      <item>
+        <title>绿联nas配置</title>
+        <description>
+</description>
+        <pubDate>Sun, 27 Oct 2024 16:03:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2024/10/27/dxp4800/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2024/10/27/dxp4800/</guid>
+        
+        <category>openwrt</category>
+        
+        
+        <category>Nas</category>
+        
+      </item>
+    
+      <item>
+        <title>安装OP/HiNas至U盘以及配置</title>
+        <description>
+始终无法解决刷机后，系统变为read-only或者无法启动的问题。怀疑是mmc有问题。最终的解决方案是刷到U盘中。
+
+</description>
+        <pubDate>Mon, 21 Oct 2024 17:23:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2024/10/21/hinas2/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2024/10/21/hinas2/</guid>
+        
+        <category>HiNas</category>
+        
+        <category>openwrt</category>
+        
+        <category>arm</category>
+        
+        <category>mv100</category>
+        
+        
+        <category>HiNas</category>
+        
+      </item>
+    
+      <item>
+        <title>海纳思刷机总结</title>
+        <description>
+刷机之后，第一次可以进入HiNAS的系统，但是系统变成了read-only, 无法设置。或者本来能用，但是重启/断电之后，系统变成read-only。
+不知道是硬件的问题，还是软件的问题，遂对HiNAS的刷机包进行了分析和更改。
+&lt;strong&gt;最后实际使用的系统为immortalwrt-21.02&lt;/strong&gt;
+
+</description>
+        <pubDate>Sun, 20 Oct 2024 15:13:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2024/10/20/hinas/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2024/10/20/hinas/</guid>
+        
+        <category>HiNas</category>
+        
+        <category>openwrt</category>
+        
+        <category>arm</category>
+        
+        <category>mv100</category>
+        
+        
+        <category>HiNas</category>
+        
+      </item>
+    
+      <item>
+        <title>群晖的MediaWiki崩溃后的救援记录</title>
+        <description>
+</description>
+        <pubDate>Sun, 22 Sep 2024 20:20:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2024/09/22/mediawiki/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2024/09/22/mediawiki/</guid>
+        
+        <category>MediaWiki</category>
+        
+        
+        <category>MediaWiki</category>
+        
+      </item>
+    
+      <item>
+        <title>无线宝云路由器AX1800 JD-Cloud RE-CP-02 的OpenWRT配置</title>
+        <description>
+</description>
+        <pubDate>Thu, 12 Sep 2024 12:06:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2024/09/12/openwrt-LuBan/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2024/09/12/openwrt-LuBan/</guid>
+        
+        <category>OpenWRT</category>
+        
+        
+        <category>OpenWRT</category>
+        
+      </item>
+    
+      <item>
+        <title>OpenWRT个人服务器:以E20C为例</title>
+        <description>
+</description>
+        <pubDate>Mon, 08 Jul 2024 09:53:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2024/07/08/openwrt-server/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2024/07/08/openwrt-server/</guid>
+        
+        <category>OpenWRT</category>
+        
+        
+        <category>OpenWRT</category>
+        
+      </item>
+    
+      <item>
+        <title>单GPU节点配置计算环境</title>
+        <description>
+</description>
+        <pubDate>Wed, 01 May 2024 20:51:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2024/05/01/ubuntu22.04-gpu/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2024/05/01/ubuntu22.04-gpu/</guid>
+        
+        <category>gnu</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>macOS配置开发环境 </title>
+        <description>初版博客&lt;a href=&quot;/2019/06/08/mac-code/&quot;&gt;macOS配置科学计算环境&lt;/a&gt;
+本文历史更新地址&lt;a href=&quot;https://github.com/cndaqiang/dell-14-7460-hackintosh/issues/10#&quot;&gt;mac配置开发环境&lt;/a&gt;
+
+</description>
+        <pubDate>Thu, 08 Feb 2024 17:43:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2024/02/08/mac-dev/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2024/02/08/mac-dev/</guid>
+        
+        <category>oneapi</category>
+        
+        <category>gnu</category>
+        
+        
+        <category>macOS</category>
+        
+      </item>
+    
+      <item>
+        <title>MacOS/FreeBSD 搭建nfs服务器</title>
+        <description>
+</description>
+        <pubDate>Thu, 25 Jan 2024 20:33:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2024/01/25/mac-nfsd/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2024/01/25/mac-nfsd/</guid>
+        
+        <category>macOS</category>
+        
+        <category>nfs</category>
+        
+        
+        <category>macOS</category>
+        
+      </item>
+    
+      <item>
+        <title>OpenWRT编译配置:以CMCC RAX3000M为例</title>
+        <description>
+</description>
+        <pubDate>Tue, 23 Jan 2024 12:06:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2024/01/23/openwrt-rax3000m-nand/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2024/01/23/openwrt-rax3000m-nand/</guid>
+        
+        <category>OpenWRT</category>
+        
+        
+        <category>OpenWRT</category>
+        
+      </item>
+    
+      <item>
+        <title>Quantumult-X操作手册</title>
+        <description>
+</description>
+        <pubDate>Sat, 09 Dec 2023 17:25:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2023/12/09/QuantumultX/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2023/12/09/QuantumultX/</guid>
+        
+        <category>clash</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Android/IOS移动平台自动化脚本(基于AirTest)</title>
+        <description>
+</description>
+        <pubDate>Fri, 10 Nov 2023 23:47:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2023/11/10/MobileAuto/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2023/11/10/MobileAuto/</guid>
+        
+        <category>AirTest</category>
+        
+        
+        <category>AirTest</category>
+        
+        <category>Android</category>
+        
+        <category>IOS</category>
+        
+      </item>
+    
+      <item>
+        <title>QEMU虚拟机学习(草稿、很乱)</title>
+        <description>
+</description>
+        <pubDate>Sat, 09 Sep 2023 18:29:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2023/09/09/qemu/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2023/09/09/qemu/</guid>
+        
+        <category>qemu</category>
+        
+        
+        <category>QEMU</category>
+        
+      </item>
+    
+      <item>
+        <title>Windows powershell/CMD 等命令学习</title>
+        <description>
+我也不清楚哪些命令是常用的，我需要哪些命令后就回来总结，先记录自己常用的，这不是本字典，命令现用现查
+
+</description>
+        <pubDate>Mon, 28 Aug 2023 16:03:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2023/08/28/windows-ps/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2023/08/28/windows-ps/</guid>
+        
+        <category>Windows</category>
+        
+        <category>Powershell</category>
+        
+        
+        <category>Windows</category>
+        
+      </item>
+    
+      <item>
+        <title>SSLAB服务器上编译基于lammps引擎的SSAGES</title>
+        <description>
+编译yambo
+
+</description>
+        <pubDate>Tue, 21 Mar 2023 11:38:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2023/03/21/make-SSAGES/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2023/03/21/make-SSAGES/</guid>
+        
+        <category>ssages</category>
+        
+        <category>lammps</category>
+        
+        
+        <category>MD</category>
+        
+      </item>
+    
+      <item>
+        <title>OpenMP学习(Fortran)</title>
+        <description>
+OpenMP+Fortran&lt;br /&gt;
+不讲原理，只写代码，边用边补充
+
+</description>
+        <pubDate>Thu, 22 Dec 2022 19:17:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2022/12/22/openmp-fortran/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2022/12/22/openmp-fortran/</guid>
+        
+        <category>Fortran</category>
+        
+        <category>OpenMP</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>Intel MPI编译yambo</title>
+        <description>
+编译yambo
+
+</description>
+        <pubDate>Sun, 23 Oct 2022 17:25:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2022/10/23/intel-yambo/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2022/10/23/intel-yambo/</guid>
+        
+        <category>vasp</category>
+        
+        <category>centos</category>
+        
+        <category>Intel</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>Intel MPI编译BerkeleyGW</title>
+        <description>
+编译BerkeleyGW
+
+</description>
+        <pubDate>Fri, 21 Oct 2022 11:51:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2022/10/21/intel-BerkeleyGW/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2022/10/21/intel-BerkeleyGW/</guid>
+        
+        <category>vasp</category>
+        
+        <category>centos</category>
+        
+        <category>Intel</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>Linux使用v2ray</title>
+        <description>
+</description>
+        <pubDate>Thu, 13 Oct 2022 20:42:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2022/10/13/v2ray/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2022/10/13/v2ray/</guid>
+        
+        <category>v2ray</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Intel编译WannierTools</title>
+        <description>
+</description>
+        <pubDate>Wed, 14 Sep 2022 20:44:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2022/09/14/wanniertool/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2022/09/14/wanniertool/</guid>
+        
+        <category>gnu</category>
+        
+        <category>WannierTools</category>
+        
+        
+        <category>WannierTools</category>
+        
+      </item>
+    
+      <item>
+        <title>ONCVPSP安装使用</title>
+        <description>
+</description>
+        <pubDate>Wed, 13 Apr 2022 19:58:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2022/04/13/oncvpsp/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2022/04/13/oncvpsp/</guid>
+        
+        <category>QE</category>
+        
+        <category>DFT</category>
+        
+        <category>Fortran</category>
+        
+        <category>ONCVPSP</category>
+        
+        
+        <category>Quantum-Espresso</category>
+        
+      </item>
+    
+      <item>
+        <title>Nginx学习</title>
+        <description>
+Nginx学习，个人学习记录，只记录主要框架和用到的参数, 更详细的用法查manual即可。&lt;br /&gt;
+
+</description>
+        <pubDate>Sat, 02 Apr 2022 19:41:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2022/04/02/nginx/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2022/04/02/nginx/</guid>
+        
+        <category>web</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>[草稿]使用autotools创建configure,Makefile</title>
+        <description>
+编译程序时,常遇到使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./configure&lt;/code&gt;生成Makefile的方式,使用autotool可以创建&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;configure&lt;/code&gt;&lt;br /&gt;
+边用边补充
+
+</description>
+        <pubDate>Sun, 29 Aug 2021 20:04:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2021/08/29/autotools/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2021/08/29/autotools/</guid>
+        
+        <category>Fortran</category>
+        
+        <category>mpi</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>oneplus6刷windows 11 arm等</title>
+        <description>
+oneplus6刷机过程中还遇到了其他的问题, 记录一下
+
+</description>
+        <pubDate>Fri, 09 Jul 2021 11:34:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2021/07/09/oneplus6/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2021/07/09/oneplus6/</guid>
+        
+        <category>Linux</category>
+        
+        <category>oneplus</category>
+        
+        <category>arm</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Abacus编译&amp;快速上手</title>
+        <description>
+本文为自学笔记, 仅供参考, 正确的安装和使用方法请参考&lt;a href=&quot;https://abacus.ustc.edu.cn/&quot;&gt;ABACUS的官方网站&lt;/a&gt;.
+
+</description>
+        <pubDate>Tue, 20 Apr 2021 22:21:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2021/04/20/abacus/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2021/04/20/abacus/</guid>
+        
+        <category>Abacus</category>
+        
+        <category>CPP</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>C++ 学习笔记</title>
+        <description>
+虽然整理成博客，很浪费时间，不过，每次忘记后，再捡起来，还要好久，还是继续把笔记整理成文章&lt;br /&gt;
+该文不完全，遇到其他的语法再添进来&lt;br /&gt;
+
+</description>
+        <pubDate>Tue, 30 Mar 2021 11:18:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2021/03/30/cpp-learn/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2021/03/30/cpp-learn/</guid>
+        
+        <category>Cpp</category>
+        
+        
+        <category>Cpp</category>
+        
+      </item>
+    
+      <item>
+        <title>lammps编译&amp;快速上手</title>
+        <description>
+本文为自学笔记, 仅供参考, 如有理解不正确的地方欢迎指正.
+
+</description>
+        <pubDate>Sat, 20 Feb 2021 13:37:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2021/02/20/lammps/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2021/02/20/lammps/</guid>
+        
+        <category>PIMD</category>
+        
+        <category>RPMD</category>
+        
+        
+        <category>PIMD</category>
+        
+      </item>
+    
+      <item>
+        <title>Intel® oneAPI Toolkits(Intel Parallel Studio XE的代替品)安装使用</title>
+        <description>
+Intel® oneAPI Toolkits(Intel Parallel Studio XE的代替品)安装使用&lt;br /&gt;
+以后个人PC再也不用下载那么大的Intel Parallel Studio XE和定期申请激活码了
+
+</description>
+        <pubDate>Mon, 11 Jan 2021 19:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2021/01/11/intel-oneAPI/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2021/01/11/intel-oneAPI/</guid>
+        
+        <category>Intel</category>
+        
+        <category>oneAPI</category>
+        
+        <category>MPI</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Python并行处理数据</title>
+        <description>
+仅记录使用到的，后续使用再补充
+
+</description>
+        <pubDate>Wed, 23 Dec 2020 20:31:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/12/23/py-mul/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/12/23/py-mul/</guid>
+        
+        <category>Python</category>
+        
+        <category>multiprocessing</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>[草稿]Makefile学习</title>
+        <description>
+</description>
+        <pubDate>Wed, 02 Dec 2020 08:20:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/12/02/makefile/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/12/02/makefile/</guid>
+        
+        <category>Makefile</category>
+        
+        
+        <category>Makefile</category>
+        
+      </item>
+    
+      <item>
+        <title>[草稿]git常用命令</title>
+        <description>
+</description>
+        <pubDate>Tue, 01 Dec 2020 08:20:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/12/01/git/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/12/01/git/</guid>
+        
+        <category>git</category>
+        
+        
+        <category>Git</category>
+        
+      </item>
+    
+      <item>
+        <title>镜像分布函数rdf计算方法和程序</title>
+        <description>
+</description>
+        <pubDate>Sun, 29 Nov 2020 14:49:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/11/29/rdf/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/11/29/rdf/</guid>
+        
+        <category>PHY</category>
+        
+        <category>rdf</category>
+        
+        
+        <category>PHY</category>
+        
+        <category>MD</category>
+        
+      </item>
+    
+      <item>
+        <title>玩客云刷armbian记录</title>
+        <description>
+</description>
+        <pubDate>Thu, 19 Nov 2020 23:30:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/11/19/wanke/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/11/19/wanke/</guid>
+        
+        <category>Linux</category>
+        
+        <category>玩客云</category>
+        
+        <category>arm</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Centos7集群上搭建slurm作业管理系统</title>
+        <description>
+</description>
+        <pubDate>Fri, 06 Nov 2020 22:10:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/11/06/slurm-Centos7/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/11/06/slurm-Centos7/</guid>
+        
+        <category>Slurm</category>
+        
+        
+        <category>Linux</category>
+        
+        <category>Slurm</category>
+        
+        <category>Centos</category>
+        
+      </item>
+    
+      <item>
+        <title>Environment Modules安装配置使用</title>
+        <description>
+</description>
+        <pubDate>Fri, 30 Oct 2020 08:24:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/10/30/module/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/10/30/module/</guid>
+        
+        <category>gnu</category>
+        
+        
+        <category>module</category>
+        
+      </item>
+    
+      <item>
+        <title>两台S9200WK服务器组Centos集群</title>
+        <description>
+</description>
+        <pubDate>Wed, 28 Oct 2020 22:32:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/10/28/Centos7/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/10/28/Centos7/</guid>
+        
+        <category>gnu</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Centos 配置IB网络</title>
+        <description>
+</description>
+        <pubDate>Tue, 27 Oct 2020 23:11:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/10/27/IB/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/10/27/IB/</guid>
+        
+        <category>gnu</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>怀柔计算中心/SSLAB/新SSLAB编译/MacOS octopus记录及Intel编译报错</title>
+        <description>
+</description>
+        <pubDate>Mon, 19 Oct 2020 21:48:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/10/19/huairou-octopus/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/10/19/huairou-octopus/</guid>
+        
+        <category>gnu</category>
+        
+        <category>octopus</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>ASE快速上手</title>
+        <description>
+</description>
+        <pubDate>Thu, 03 Sep 2020 10:17:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/09/03/aseuse/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/09/03/aseuse/</guid>
+        
+        <category>GPAW</category>
+        
+        <category>ASE</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>GPAW快速上手</title>
+        <description>
+</description>
+        <pubDate>Thu, 03 Sep 2020 10:04:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/09/03/gpawuse/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/09/03/gpawuse/</guid>
+        
+        <category>GPAW</category>
+        
+        <category>ASE</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>GPAW安装</title>
+        <description>
+</description>
+        <pubDate>Wed, 02 Sep 2020 21:29:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/09/02/gpaw/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/09/02/gpaw/</guid>
+        
+        <category>GPAW</category>
+        
+        <category>Ubuntu</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>Linux使用clash</title>
+        <description>
+</description>
+        <pubDate>Fri, 17 Jul 2020 20:42:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/07/17/clash/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/07/17/clash/</guid>
+        
+        <category>clash</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>JavaScript学习</title>
+        <description>
+</description>
+        <pubDate>Wed, 01 Jul 2020 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/07/01/js/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/07/01/js/</guid>
+        
+        <category>web</category>
+        
+        <category>JavaScript</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>使用cloudflare加速博客访问/免费搭建谷歌镜像</title>
+        <description>
+</description>
+        <pubDate>Sat, 02 May 2020 08:39:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/05/02/cloudflare/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/05/02/cloudflare/</guid>
+        
+        <category>cdn</category>
+        
+        <category>web</category>
+        
+        <category>Google</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>使用Bunlder搭建Jekyll(Github-pages)服务</title>
+        <description>
+</description>
+        <pubDate>Sat, 18 Apr 2020 11:39:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/04/18/ruby/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/04/18/ruby/</guid>
+        
+        <category>Ruby</category>
+        
+        <category>Gems</category>
+        
+        <category>bundler</category>
+        
+        
+        <category>Ruby</category>
+        
+        <category>Gems</category>
+        
+        <category>bundler</category>
+        
+      </item>
+    
+      <item>
+        <title>Mint 使用蓝牙鼠标问题</title>
+        <description>
+&lt;img src=&quot;/uploads/2020/04/desk.jpg&quot; alt=&quot;&quot; /&gt;
+
+</description>
+        <pubDate>Tue, 14 Apr 2020 17:44:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/04/14/bluetooth/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/04/14/bluetooth/</guid>
+        
+        <category>Linux</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Learn QE2 原子结构相关：结构优化,MD,NEB,声子谱</title>
+        <description>
+本学习教程内容主要来自互联网，个人学习记录，仅供参考。&lt;br /&gt;
+代码仓库&lt;a href=&quot;https://github.com/cndaqiang/LearnQE&quot;&gt;LearnQE@cndaqiang&lt;/a&gt;
+
+</description>
+        <pubDate>Sat, 07 Mar 2020 23:31:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/03/07/learnqe2/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/03/07/learnqe2/</guid>
+        
+        <category>QE</category>
+        
+        <category>DFT</category>
+        
+        
+        <category>Quantum-Espresso</category>
+        
+      </item>
+    
+      <item>
+        <title>Learn QE1 电子结构计算</title>
+        <description>
+本学习教程内容主要来自互联网，个人学习记录，仅供参考。&lt;br /&gt;
+代码仓库&lt;a href=&quot;https://github.com/cndaqiang/LearnQE&quot;&gt;LearnQE@cndaqiang&lt;/a&gt;
+
+</description>
+        <pubDate>Fri, 06 Mar 2020 13:42:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/03/06/learnqe/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/03/06/learnqe/</guid>
+        
+        <category>QE</category>
+        
+        <category>DFT</category>
+        
+        
+        <category>Quantum-Espresso</category>
+        
+      </item>
+    
+      <item>
+        <title>[挖坑]python画图学习</title>
+        <description>
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Wed, 04 Mar 2020 20:57:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/03/04/matplotlib/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/03/04/matplotlib/</guid>
+        
+        <category>Python</category>
+        
+        <category>matplotlib</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>挖坑 CUDA编程(Fortran)</title>
+        <description>
+</description>
+        <pubDate>Sat, 29 Feb 2020 20:57:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/02/29/pgi/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/02/29/pgi/</guid>
+        
+        <category>CUDA</category>
+        
+        <category>PGI</category>
+        
+        <category>Fortran</category>
+        
+        
+        <category>Linux</category>
+        
+        <category>CUDA</category>
+        
+        <category>PGI</category>
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu 18.04/Mint 19 单机安装Slurm</title>
+        <description>
+</description>
+        <pubDate>Mon, 24 Feb 2020 22:13:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/02/24/slurm/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/02/24/slurm/</guid>
+        
+        <category>Slurm</category>
+        
+        
+        <category>Linux</category>
+        
+        <category>Slurm</category>
+        
+        <category>Ubuntu</category>
+        
+      </item>
+    
+      <item>
+        <title>Docker 学习笔记</title>
+        <description>
+[root@girl:/home/cndaqiang# docker run -d -p 20022:22 –name centos-ssh2 issh /usr/sbin/sshd -D 
+73ece08750f87c84f5c5d8bbf9b0ffb35f55354d5c1bfff687e1f579dc6c4c7b
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;连接
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+cndaqiang@girl:~$ ssh root@127.0.0.1 -p 20022
+The authenticity of host ‘[127.0.0.1]:20022 ([127.0.0.1]:20022)’ can’t be established.
+</description>
+        <pubDate>Fri, 24 Jan 2020 22:13:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2020/01/24/docker/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2020/01/24/docker/</guid>
+        
+        <category>Docker</category>
+        
+        
+        <category>Linux</category>
+        
+        <category>Docker</category>
+        
+      </item>
+    
+      <item>
+        <title>[挖坑]Numpy，Pandas</title>
+        <description>
+</description>
+        <pubDate>Thu, 21 Nov 2019 15:55:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/11/21/numpy/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/11/21/numpy/</guid>
+        
+        <category>Python</category>
+        
+        <category>Numpy</category>
+        
+        <category>Pandas</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>利用Lapack和ScaLapack进行带状矩阵计算</title>
+        <description>
+</description>
+        <pubDate>Mon, 28 Oct 2019 19:15:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/10/28/bandmatrix/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/10/28/bandmatrix/</guid>
+        
+        <category>Fortran</category>
+        
+        <category>Lapack</category>
+        
+        <category>ScaLapack</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>Frp内网穿透</title>
+        <description>
+</description>
+        <pubDate>Mon, 28 Oct 2019 16:32:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/10/28/Frp/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/10/28/Frp/</guid>
+        
+        <category>Linux</category>
+        
+        <category>frp</category>
+        
+        <category>frpc</category>
+        
+        <category>frps</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>[挖坑]程序编译运行报错</title>
+        <description>
+写程序编译报的错误
+
+</description>
+        <pubDate>Mon, 28 Oct 2019 15:45:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/10/28/makeerror/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/10/28/makeerror/</guid>
+        
+        <category>gnu</category>
+        
+        <category>Fortran</category>
+        
+        <category>mpif90</category>
+        
+        <category>gfortran</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>从0搭建Centos7 计算集群</title>
+        <description>
+基于pbs作业系统的集群，支持NIS，NFS服务。&lt;br /&gt;
+本文最初发在&lt;a href=&quot;https://github.com/cndaqiang/E5-PC-daily/issues/6&quot;&gt;Centos 7 集群搭建&lt;/a&gt;&lt;br /&gt;
+&lt;strong&gt;在本文的基础上继续搭建slurm作业系统&lt;a href=&quot;/2020/11/06/slurm-Centos7/&quot;&gt;Centos7集群上搭建slurm作业管理系统&lt;/a&gt;&lt;/strong&gt;
+
+</description>
+        <pubDate>Thu, 19 Sep 2019 13:20:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/09/19/Centos7-CC19/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/09/19/Centos7-CC19/</guid>
+        
+        <category>Centos</category>
+        
+        <category>pbs</category>
+        
+        
+        <category>Centos</category>
+        
+      </item>
+    
+      <item>
+        <title>普通用户yum安装软件包,rpm包</title>
+        <description>
+</description>
+        <pubDate>Fri, 06 Sep 2019 13:54:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/09/06/yumlocal/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/09/06/yumlocal/</guid>
+        
+        <category>yum</category>
+        
+        
+        <category>Linux</category>
+        
+        <category>Centos</category>
+        
+      </item>
+    
+      <item>
+        <title>Segmentation Fault when running commands</title>
+        <description>
+</description>
+        <pubDate>Thu, 05 Sep 2019 22:11:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/09/05/glibc/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/09/05/glibc/</guid>
+        
+        <category>segmentation</category>
+        
+        <category>fault</category>
+        
+        
+        <category>Linux</category>
+        
+        <category>Centos</category>
+        
+      </item>
+    
+      <item>
+        <title>[挖坑]BLAS, Lapack, Scalapack &amp; Fortran 快速上手</title>
+        <description>
+不知啥时候能填完
+
+</description>
+        <pubDate>Wed, 07 Aug 2019 10:58:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/08/07/scalapack/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/08/07/scalapack/</guid>
+        
+        <category>Fortran,</category>
+        
+        <category>BLAS,</category>
+        
+        <category>Lapack,ScaLapack</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>Fortran使用Scalapack求解HC=SCE</title>
+        <description>
+</description>
+        <pubDate>Sun, 04 Aug 2019 19:39:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/08/04/HC_SCE/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/08/04/HC_SCE/</guid>
+        
+        <category>Fortran</category>
+        
+        <category>Scalapack</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>OpenWrt (Chaos Calmer)下搭建ss服务器</title>
+        <description>
+</description>
+        <pubDate>Fri, 02 Aug 2019 14:53:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/08/02/ss/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/08/02/ss/</guid>
+        
+        <category>OpenWrt</category>
+        
+        <category>ss</category>
+        
+        <category>Shadowsocks</category>
+        
+        
+        <category>OpenWrt</category>
+        
+      </item>
+    
+      <item>
+        <title>QE 快速上手</title>
+        <description>
+QE 快速上手记录&lt;br /&gt;
+仅是一个快速上手了。。。。。&lt;br /&gt;
+后续学习笔记&lt;a href=&quot;/2020/03/06/learnqe/&quot;&gt;Learn QE1 电子结构计算&lt;/a&gt;,&lt;a href=&quot;/2020/03/07/learnqe2/&quot;&gt;Learn QE2 原子结构相关：结构优化,MD,NEB&lt;/a&gt;
+
+</description>
+        <pubDate>Thu, 25 Jul 2019 13:40:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/07/25/QE/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/07/25/QE/</guid>
+        
+        <category>QE</category>
+        
+        <category>DFT</category>
+        
+        
+        <category>Quantum-Espresso</category>
+        
+      </item>
+    
+      <item>
+        <title>通过ssh远程连接Win 10</title>
+        <description>
+远程连win10，调用win10的bash进行计算
+
+</description>
+        <pubDate>Thu, 27 Jun 2019 18:02:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/06/27/win10-openssh/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/06/27/win10-openssh/</guid>
+        
+        <category>windows10</category>
+        
+        <category>WSL</category>
+        
+        
+        <category>服务器</category>
+        
+      </item>
+    
+      <item>
+        <title>S2600CP2J主板更新BIOS，控制风扇转速 </title>
+        <description>
+终于终于控制注风扇的转速了，可以变成一台办公机器了。&lt;br /&gt;
+S2600CP2J是Intel的服务器主板，之前看过的视频教程里面，只要系统的一个风扇出现故障，则全部风扇以最高速度运行(飞机起飞的声音)&lt;br /&gt;
+我的板子买回来到现在，一开机CPU的风扇堪比国产大飞机，周围根本没法站人。&lt;br /&gt;
+在风扇上加上变速线(电阻)后才好一些，但是也不能放到办公室里呀，还是吵。&lt;br /&gt;
+前两天看帖子，终于想到，我的噪音风扇，可能是因为我只插了CPU的风扇插头，其他的风扇插头没有插，系统检测到异常，所以CPU的风扇根本停不下来。&lt;br /&gt;
+
+</description>
+        <pubDate>Sat, 22 Jun 2019 01:25:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/06/22/s2600cpj2/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/06/22/s2600cpj2/</guid>
+        
+        <category>BIOS</category>
+        
+        
+        <category>服务器</category>
+        
+      </item>
+    
+      <item>
+        <title>macOS配置科学计算环境 </title>
+        <description>本文后续更新地址&lt;a href=&quot;/2024/02/08/mac-dev/&quot;&gt;mac配置开发环境&lt;/a&gt;
+
+</description>
+        <pubDate>Sat, 08 Jun 2019 11:52:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/06/08/mac-code/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/06/08/mac-code/</guid>
+        
+        <category>siesta</category>
+        
+        <category>gnu</category>
+        
+        
+        <category>macOS</category>
+        
+      </item>
+    
+      <item>
+        <title>dell燃7000 I代 黑苹果记录</title>
+        <description>
+之前装过黑苹果，但由于是装在机械，比较慢，没有继续使用。&lt;br /&gt;
+昨天换了固态，又重新进行了一次安装，同时找到了一个合适的EFI，所有记录来自&lt;a href=&quot;https://github.com/cndaqiang/dell-14-7460-hackintosh&quot;&gt;cndaqiang/dell-14-7460-hackintosh&lt;/a&gt;&lt;br /&gt;
+本文来自此项目的README，转到博客里容易被谷歌收录，本文不进行更新，后续更新见&lt;a href=&quot;https://github.com/cndaqiang/dell-14-7460-hackintosh&quot;&gt;cndaqiang/dell-14-7460-hackintosh&lt;/a&gt;
+
+</description>
+        <pubDate>Fri, 07 Jun 2019 19:18:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/06/07/dell-mac/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/06/07/dell-mac/</guid>
+        
+        <category>MAC</category>
+        
+        
+        <category>MAC</category>
+        
+      </item>
+    
+      <item>
+        <title>Gcc OPENMPI Centos 编译octopus-9 遇到的问题和解决方案</title>
+        <description>
+</description>
+        <pubDate>Tue, 04 Jun 2019 20:57:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/06/04/gcc-octopus9/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/06/04/gcc-octopus9/</guid>
+        
+        <category>DFT</category>
+        
+        <category>Linux</category>
+        
+        <category>octopus</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>python报错</title>
+        <description>
+放一些杂七杂八的用法
+
+</description>
+        <pubDate>Mon, 13 May 2019 14:01:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/05/13/python-new/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/05/13/python-new/</guid>
+        
+        <category>python</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>Python和R中使用ggplot画图</title>
+        <description>
+在R和Python中都可以用ggplot画图，那就统一用这一个软件包吧，节约些时间
+
+</description>
+        <pubDate>Thu, 09 May 2019 14:18:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/05/09/ggplot/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/05/09/ggplot/</guid>
+        
+        <category>R</category>
+        
+        <category>Python</category>
+        
+        <category>ggplot</category>
+        
+        
+        <category>R</category>
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>R语言快速上手</title>
+        <description>
+R语言快速上手&lt;br /&gt;
+
+</description>
+        <pubDate>Thu, 09 May 2019 14:18:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/05/09/R/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/05/09/R/</guid>
+        
+        <category>R</category>
+        
+        
+        <category>R</category>
+        
+      </item>
+    
+      <item>
+        <title>[linux]Anaconda安装</title>
+        <description>
+</description>
+        <pubDate>Fri, 03 May 2019 17:18:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/05/03/anaconda/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/05/03/anaconda/</guid>
+        
+        <category>Python</category>
+        
+        
+        <category>Anaconda</category>
+        
+        <category>Python</category>
+        
+        <category>jupyter</category>
+        
+      </item>
+    
+      <item>
+        <title>[乱糟糟的博客结尾]本地gitbook写书</title>
+        <description>
+工具都差不多了，博客准备停更，开始搞学习了&lt;br /&gt;
+总记得以前在哪里写过gitbook的上手教程，找不到了，重拾gitbook记录&lt;br /&gt;
+gitbook网速慢，在线的markdown写书私有仓库太贵，本地搭建&lt;br /&gt;
+有些资料适合写成书籍/目录的形式&lt;br /&gt;
+&lt;strong&gt;可以在wsl中直接输入&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cmd.exe&lt;/code&gt;进入windows环境，目前从这里调用npm还有问题，待解决&lt;/strong&gt;
+
+</description>
+        <pubDate>Thu, 11 Apr 2019 21:43:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/04/11/gitbook/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/04/11/gitbook/</guid>
+        
+        <category>gitbook</category>
+        
+        
+        <category>pdf</category>
+        
+      </item>
+    
+      <item>
+        <title>octopus 快速上手</title>
+        <description>
+octopus-8.4快速上手记录&lt;br /&gt;
+短期内应该不会用octopus了，记录免忘记&lt;br /&gt;
+不得不说octopus官方的教程写的真是太好了
+
+</description>
+        <pubDate>Thu, 11 Apr 2019 12:46:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/04/11/octopus/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/04/11/octopus/</guid>
+        
+        <category>octopus</category>
+        
+        
+        <category>DFT</category>
+        
+        <category>TDDFT</category>
+        
+      </item>
+    
+      <item>
+        <title>Fortran 科学计算</title>
+        <description>
+该文不完全，边学边总结&lt;br /&gt;
+
+</description>
+        <pubDate>Sat, 06 Apr 2019 15:03:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/04/06/Fortran-math/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/04/06/Fortran-math/</guid>
+        
+        <category>Fortran</category>
+        
+        <category>ScaLapack</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>Intel Parallel Studio XE &amp; Cuda 10 编译GPU版本VASP-5.4.4 </title>
+        <description>
+很多内容不解释了，前提工作同&lt;a href=&quot;/2018/01/15/intel-mpi-vasp/&quot;&gt;Intel Parallel Studio XE 编译VASP&lt;/a&gt;&lt;br /&gt;
+按照&lt;a href=&quot;/2018/01/15/intel-mpi-vasp/&quot;&gt;Intel Parallel Studio XE 编译VASP&lt;/a&gt;安装编译器&lt;br /&gt;
+按照&lt;a href=&quot;/2019/03/31/cuda/&quot;&gt;Centos 7 安装Cuda10 过程记录&lt;/a&gt;安装Cuda
+
+</description>
+        <pubDate>Mon, 01 Apr 2019 21:44:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/04/01/intel-cuda-vasp/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/04/01/intel-cuda-vasp/</guid>
+        
+        <category>vasp</category>
+        
+        <category>centos</category>
+        
+        <category>Intel</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>Centos 7 安装Cuda10 过程记录</title>
+        <description>
+在阿里云的GPU服务器上安装cuda没有什么问题，在自己的服务器上安装遇到一些问题，记录如下&lt;br /&gt;
+
+</description>
+        <pubDate>Sun, 31 Mar 2019 14:57:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/03/31/cuda/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/03/31/cuda/</guid>
+        
+        <category>cuda</category>
+        
+        
+        <category>cuda</category>
+        
+      </item>
+    
+      <item>
+        <title>matlab 命令简单记录</title>
+        <description>
+为了水学分，选了一个matlab的课，把常用的命令记录下来，方便做作业&lt;br /&gt;
+
+</description>
+        <pubDate>Wed, 06 Mar 2019 20:32:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/03/06/matlab/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/03/06/matlab/</guid>
+        
+        <category>matlab</category>
+        
+        
+        <category>matlab</category>
+        
+      </item>
+    
+      <item>
+        <title>gcc 编译 ATOM</title>
+        <description>
+gcc编译赝势产生程序atom&lt;br /&gt;
+
+</description>
+        <pubDate>Tue, 05 Mar 2019 15:51:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/03/05/atm/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/03/05/atm/</guid>
+        
+        <category>gnu</category>
+        
+        <category>atom</category>
+        
+        <category>siesta</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>MPI编程入门(Fortran)</title>
+        <description>
+MPI(openmpi)+Fortran(mpif90)&lt;br /&gt;
+不讲原理，只写代码，边用边补充
+
+</description>
+        <pubDate>Wed, 27 Feb 2019 08:51:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/02/27/mpi-fortran/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/02/27/mpi-fortran/</guid>
+        
+        <category>Fortran</category>
+        
+        <category>mpi</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>Fortran/C函数库的使用</title>
+        <description>
+shell+gfortran
+
+</description>
+        <pubDate>Fri, 01 Feb 2019 12:09:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/02/01/Fortran-lib/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/02/01/Fortran-lib/</guid>
+        
+        <category>Fortran</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>Fortran 的gdb命令行调试</title>
+        <description>
+shell+gfortran
+
+</description>
+        <pubDate>Fri, 01 Feb 2019 12:09:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/02/01/Fortran-debug/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/02/01/Fortran-debug/</guid>
+        
+        <category>Fortran</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>Fortran 学习笔记</title>
+        <description>
+虽然整理成博客，很浪费时间，不过，每次忘记后，再捡起来，还要好久，还是继续把笔记整理成文章&lt;br /&gt;
+该文不完全，看siesta代码中遇到其他的语法再添进来&lt;br /&gt;
+
+</description>
+        <pubDate>Wed, 30 Jan 2019 12:12:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2019/01/30/Fortran-learn/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2019/01/30/Fortran-learn/</guid>
+        
+        <category>Fortran</category>
+        
+        
+        <category>Fortran</category>
+        
+      </item>
+    
+      <item>
+        <title>Gcc OPENMPI 编译octopus-8 遇到的问题和解决方案</title>
+        <description>
+</description>
+        <pubDate>Fri, 21 Dec 2018 20:48:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/12/21/gcc-octopus8/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/12/21/gcc-octopus8/</guid>
+        
+        <category>DFT</category>
+        
+        <category>Linux</category>
+        
+        <category>octopus</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>编译程序回顾：以VASP-5.4.1，OCTOPUS-7.1为例</title>
+        <description>
+回顾以前的编译坑
+
+</description>
+        <pubDate>Sat, 15 Dec 2018 13:43:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/12/15/bianyi/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/12/15/bianyi/</guid>
+        
+        <category>DFT</category>
+        
+        <category>Linux</category>
+        
+        <category>octopus</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>vasp+VTST进行NEB过渡态计算</title>
+        <description>
+</description>
+        <pubDate>Fri, 07 Dec 2018 20:48:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/12/07/NEB/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/12/07/NEB/</guid>
+        
+        <category>vasp</category>
+        
+        <category>过渡态</category>
+        
+        <category>NEB</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>编译vasp5.4.1+VTST</title>
+        <description>
+</description>
+        <pubDate>Fri, 07 Dec 2018 20:28:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/12/07/NEB-compile/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/12/07/NEB-compile/</guid>
+        
+        <category>vasp</category>
+        
+        <category>过渡态</category>
+        
+        <category>NEB</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>vasp 第一性原理分子动力学计算</title>
+        <description>
+本文所有内容来自互联网，本人使用vasp时间有限，仅供参考，如有不适，感谢留言
+
+</description>
+        <pubDate>Fri, 07 Dec 2018 15:20:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/12/07/MD/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/12/07/MD/</guid>
+        
+        <category>vasp</category>
+        
+        <category>DFT</category>
+        
+        <category>MD</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu 16.04 使用vsftpd搭建ftp服务器</title>
+        <description>
+本文默认配置允许匿名只读访问一些目录，linux用户访问某些目录并隔离
+
+</description>
+        <pubDate>Sat, 17 Nov 2018 23:20:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/11/17/ubuntu-vsftp2/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/11/17/ubuntu-vsftp2/</guid>
+        
+        <category>ubuntu</category>
+        
+        <category>vsftpd</category>
+        
+        <category>ftp</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>ubuntu 16.04/18.04 编译 可跳过散列检测的 transmission-2.92</title>
+        <description>
+路由器的usb2.0挂pt太慢了，为充分利用千兆网，换了千兆小主机挂pt了
+
+</description>
+        <pubDate>Sat, 17 Nov 2018 12:53:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/11/17/transmision_skip/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/11/17/transmision_skip/</guid>
+        
+        <category>openwrt</category>
+        
+        <category>ubuntu</category>
+        
+        <category>nas</category>
+        
+        
+        <category>OpenWrt</category>
+        
+      </item>
+    
+      <item>
+        <title>文件处理: grep sed awk sort echo printf tail cut paste</title>
+        <description>
+原文&lt;a href=&quot;https://legacy.gitbook.com/book/cndaqiang/shell-scrip/details&quot;&gt;正则表达式 文件格式处理 shell脚本&lt;/a&gt;&lt;br /&gt;
+gitbook访问太慢了，重置文章到此处
+
+</description>
+        <pubDate>Wed, 17 Oct 2018 16:58:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/10/17/deal-file/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/10/17/deal-file/</guid>
+        
+        <category>Linux</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Fortran预处理引入/usr/include/stdc-predef.h报错Unclassifiable statement</title>
+        <description>
+Error: Invalid character in name at (1)&lt;br /&gt;
+/usr/include/stdc-predef.h:2.3:&lt;br /&gt;
+	Included at c_pointer.F90:1:&lt;br /&gt;
+	   This file is part of the GNU C Library.&lt;br /&gt;
+   1&lt;br /&gt;
+
+</description>
+        <pubDate>Tue, 18 Sep 2018 21:12:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/09/18/centos7-octopus-4.1.2/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/09/18/centos7-octopus-4.1.2/</guid>
+        
+        <category>gnu</category>
+        
+        <category>octopus</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>centos6.5 Gcc Openmpi 编译octopus-7.1 </title>
+        <description>
+软件版本主要参考，算盘上的Makefile&lt;br /&gt;
+环境centos6.5，软件版本gcc-4.4.7,libXC-3.0.0,gsl-2.0,openmpi-1.10.3,fftw-3.3.3 scalapack-2,octopus-7.1&lt;br /&gt;
+gcc使用系统默认的gcc-4.4.7,其他软件分别编译
+
+</description>
+        <pubDate>Sat, 15 Sep 2018 21:23:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/09/15/gun-openmpi-octopus-7.1/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/09/15/gun-openmpi-octopus-7.1/</guid>
+        
+        <category>gnu</category>
+        
+        <category>octopus</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>centos6.5 gcc Openmpi 编译octopus-4.1.2 </title>
+        <description>
+编译方法主要参考&lt;a href=&quot;https://www.zybuluo.com/sculxb/note/987446#octopus%E5%AE%89%E8%A3%85-%E7%AE%97%E7%9B%98&quot;&gt;@sculxb&lt;/a&gt;&lt;br /&gt;
+环境centos6.5，软件版本gcc-4.4.7,libXC-2.0.0,gsl-1.14,openmpi-1.10.3,fftw-3.3.3 scalapack-2,octopus-4.1.2&lt;br /&gt;
+gcc使用系统默认的gcc-4.4.7,其他软件分别编译
+
+</description>
+        <pubDate>Sat, 15 Sep 2018 12:05:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/09/15/gun-openmpi-octopus-4.1.2/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/09/15/gun-openmpi-octopus-4.1.2/</guid>
+        
+        <category>gnu</category>
+        
+        <category>octopus</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>[水文一篇]第一次组装电脑</title>
+        <description>
+一直想组一台自己的服务器，八月份开始搜集资料，还未开学就买配件，在宿舍组装完成。感谢国科大的单人间，不用担心噪声扰民。&lt;br /&gt;
+本人小白一个，以下内容为自己搜集的资料和我个人的猜想，&lt;strong&gt;切勿当真!!!&lt;/strong&gt;,随便写一写，具体科普可看B站贴吧大佬发布的内容。&lt;br /&gt;
+有了笔记真的越来越懒得写了博客了
+
+</description>
+        <pubDate>Wed, 12 Sep 2018 20:46:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/09/12/my-PC/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/09/12/my-PC/</guid>
+        
+        
+        <category>日记</category>
+        
+      </item>
+    
+      <item>
+        <title>gcc Openmpi 编译siesta </title>
+        <description>
+编译方法主要参考Peiwei师兄的组会ppt&lt;br /&gt;
+环境centos7，软件版本gcc-4.8.4,openmpi-1.10.3,scalapack-2,siesta-4.1-b1&lt;br /&gt;
+分别编译上述软件&lt;br /&gt;
+Update: 2019-10-28 siesta-4.2-trunk
+
+</description>
+        <pubDate>Wed, 12 Sep 2018 19:14:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/09/12/gun-openmpi-siesta/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/09/12/gun-openmpi-siesta/</guid>
+        
+        <category>siesta</category>
+        
+        <category>gnu</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>Intel Parallel Studio XE 编译siesta </title>
+        <description>
+编译vasp方法类似,编译环境的安装参考&lt;a href=&quot;/2018/01/15/intel-mpi-vasp/&quot;&gt;Intel Parallel Studio XE 编译VASP&lt;/a&gt;,只需要安装Intel Parallel Studio XE即可,安装运行遇到的其他问题和本文相关命令的解释见&lt;a href=&quot;/2018/01/15/intel-mpi-vasp/&quot;&gt;Intel Parallel Studio XE 编译VASP&lt;/a&gt;
+
+</description>
+        <pubDate>Tue, 13 Mar 2018 21:15:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/03/13/intel-mpi-siesta/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/03/13/intel-mpi-siesta/</guid>
+        
+        <category>siesta</category>
+        
+        <category>Intel</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>vim配置和使用</title>
+        <description>此文记录我对vim的配置和使用的一些插件
+&lt;br /&gt;基于vim插件管理程序&lt;a href=&quot;/2018/02/11/vim-plugin/&quot;&gt;vim插件管理Vundle&lt;/a&gt;
+
+</description>
+        <pubDate>Mon, 12 Feb 2018 12:06:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/02/12/vim-plugins/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/02/12/vim-plugins/</guid>
+        
+        <category>vim</category>
+        
+        <category>YouCompleteMe</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>vim插件管理Vundle</title>
+        <description>Vundle 是 Vim bundle 的简称,是一个 Vim 插件管理器.
+
+</description>
+        <pubDate>Sun, 11 Feb 2018 20:36:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/02/11/vim-plugin/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/02/11/vim-plugin/</guid>
+        
+        <category>vim</category>
+        
+        <category>Vundle</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>vasp计算流程-非自洽计算</title>
+        <description>
+VASP主要计算流程:结构优化、静态自洽、非自洽计算
+
+</description>
+        <pubDate>Wed, 31 Jan 2018 21:39:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/31/vasp-step3/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/31/vasp-step3/</guid>
+        
+        <category>vasp</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>PC端笔记方案_VeraCrypt+Zim+同步云盘</title>
+        <description>主要为了解决我的密码保存问题,之前密码都是保存在onenote,加个密码,每次解密后快速搜索,而且手机也支持,昨天onenote居然卡顿了,而且onenote在linux平台一直不能很顺利的使用,也是我笔记本基本不用linux的最大原因.
+
+</description>
+        <pubDate>Thu, 25 Jan 2018 17:16:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/25/bye-onenote/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/25/bye-onenote/</guid>
+        
+        <category>全平台</category>
+        
+        <category>tool</category>
+        
+        <category>笔记</category>
+        
+        
+        <category>生活</category>
+        
+      </item>
+    
+      <item>
+        <title>vasp计算流程-静态自洽</title>
+        <description>
+VASP主要计算流程:结构优化、静态自洽、非自洽计算
+&lt;br /&gt;别忘记&lt;strong&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cp CONTCAR POSCAR&lt;/code&gt;&lt;/strong&gt;
+
+</description>
+        <pubDate>Wed, 24 Jan 2018 12:53:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/24/vasp-step2/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/24/vasp-step2/</guid>
+        
+        <category>vasp</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>vasp计算流程-结构优化</title>
+        <description>
+VASP主要计算流程:结构优化、静态自洽、非自洽计算
+&lt;br /&gt;&lt;strong&gt;结构优化后，记得&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cp CONTCAR POSCAR&lt;/code&gt;&lt;/strong&gt;
+
+</description>
+        <pubDate>Tue, 23 Jan 2018 22:30:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/23/vasp-step1/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/23/vasp-step1/</guid>
+        
+        <category>vasp</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>win10 Bash 图形化运行程序</title>
+        <description>
+</description>
+        <pubDate>Sun, 21 Jan 2018 20:17:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/21/bash-x11/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/21/bash-x11/</guid>
+        
+        <category>vasp</category>
+        
+        <category>p4vasp</category>
+        
+        <category>bash</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>VASP输出文件总结</title>
+        <description>整理备查
+vasp的&lt;a href=&quot;http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html&quot;&gt;manual&lt;/a&gt;值得一读
+
+</description>
+        <pubDate>Sun, 21 Jan 2018 18:23:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/21/vasp-output/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/21/vasp-output/</guid>
+        
+        <category>vasp</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>VASP输入文件总结</title>
+        <description>整理备查
+vasp的&lt;a href=&quot;http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html&quot;&gt;manual&lt;/a&gt;值得一读&lt;br /&gt;
+看资料遇到陌生的参数,查manual就好了&lt;br /&gt;
+INCAR输入参数推荐苏长荣老师的vasp安装和使用说明(后面有索引可以直接查)和&lt;a href=&quot;http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html&quot;&gt;官方manual&lt;/a&gt;
+
+</description>
+        <pubDate>Sun, 21 Jan 2018 17:29:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/21/vasp-input/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/21/vasp-input/</guid>
+        
+        <category>vasp</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>利用python提取文献中的单词</title>
+        <description>希望将文献,计算软件的在线manual等英文资料中的单词先提取出来，寒假的时候背一下，下学期读文献时可以尽量减少自己的生词数
+
+</description>
+        <pubDate>Thu, 18 Jan 2018 12:33:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/18/txt2dic/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/18/txt2dic/</guid>
+        
+        <category>python</category>
+        
+        <category>English</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>Intel Parallel Studio XE 编译VASP </title>
+        <description>
+之前尝试编译VASP&lt;a href=&quot;/2018/01/09/ubuntu-install-vasp/&quot;&gt;Ubuntu VASP安装和运行&lt;/a&gt;，但是在centos上进行重复时，各种报错，现在尝试了安装几次感觉自己的理解更多了，总结如下。这篇文章省略了很多命令,有看不懂的地方参考&lt;a href=&quot;/2018/01/09/ubuntu-install-vasp/&quot;&gt;Ubuntu VASP安装和运行&lt;/a&gt;.
+
+最新的Intel® oneAPI Toolkits也可以安装,和本文的差别仅是intel编译器的安装和环境变量的设置不同, 详见&lt;a href=&quot;/2021/01/11/intel-oneAPI/&quot;&gt;Intel® oneAPI Toolkits(Intel Parallel Studio XE的代替品)安装使用&lt;/a&gt;
+
+</description>
+        <pubDate>Mon, 15 Jan 2018 11:57:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/15/intel-mpi-vasp/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/15/intel-mpi-vasp/</guid>
+        
+        <category>vasp</category>
+        
+        <category>centos</category>
+        
+        <category>Intel</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>单机centos编译安装使用PBS torque</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#推荐看此文从0搭建centos7-计算集群&quot; id=&quot;markdown-toc-推荐看此文从0搭建centos7-计算集群&quot;&gt;推荐看此文从0搭建Centos7 计算集群&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;推荐看此文从0搭建centos7-计算集群&quot;&gt;推荐看此文&lt;a href=&quot;/2019/09/19/Centos7-CC19/&quot;&gt;从0搭建Centos7 计算集群&lt;/a&gt;&lt;/h1&gt;
+2019-09-19:以后遇到的问题我也仅会更新到此文&lt;a href=&quot;/2019/09/19/Centos7-CC19/&quot;&gt;从0搭建Centos7 计算集群&lt;/a&gt;&lt;br /&gt;
+本文不再更新&lt;br /&gt;
+————————————————-&lt;br /&gt;
+本文主要在ubuntu编译失败的基础上复制过来，在centos上进行安装尝试。&lt;br /&gt;
+本文最初的目的是我希望搭建一个环境熟悉torque的命令的，所以搭建的并不适合从事集群计算
+&lt;br /&gt;搭建计算的集群可以参考&lt;a href=&quot;/doc/2018/01/xiada-ssh-mpich2-torque.pdf&quot;&gt;集群架设
+&lt;/a&gt;和&lt;a href=&quot;http://blog.csdn.net/dream_angel_z/article/details/44225669&quot;&gt;CentOS下torque集群配置（一）-torque安装与配置&lt;/a&gt;
+
+</description>
+        <pubDate>Thu, 11 Jan 2018 20:31:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/11/torque-install-centos/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/11/torque-install-centos/</guid>
+        
+        <category>pbs</category>
+        
+        <category>集群</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>[已放弃]&lt;s&gt;单机ubuntu编译安装PBS torque&lt;/s&gt;</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#2020-02-24-ubuntu建议安装slurm作业系统---ubuntu-1804mint-19-单机安装slurm&quot; id=&quot;markdown-toc-2020-02-24-ubuntu建议安装slurm作业系统---ubuntu-1804mint-19-单机安装slurm&quot;&gt;2020-02-24: Ubuntu建议安装Slurm作业系统 &lt;br /&gt; -&amp;gt;Ubuntu 18.04/Mint 19 单机安装Slurm&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;2020-02-24-ubuntu建议安装slurm作业系统---ubuntu-1804mint-19-单机安装slurm&quot;&gt;2020-02-24: Ubuntu建议安装Slurm作业系统 &lt;br /&gt; -&amp;gt;&lt;a href=&quot;/2020/01/24/slurm/&quot;&gt;Ubuntu 18.04/Mint 19 单机安装Slurm&lt;/a&gt;&lt;/h1&gt;
+尝试在组里的服务器运行vasp，需要使用提交任务脚本，不允许在登陆节点直接运算，师兄给了一个pbs的脚本。&lt;br /&gt;
+还是现在自己服务器上安装pbs看看&lt;br /&gt;
+&lt;strong&gt;建议ubuntu还是使用apt安装吧&lt;/strong&gt;，放弃编译，直接编译后，很多运行脚本的语法都是为RedHat/Centos编写的。&lt;br /&gt;
+想到组里的服务器是RedHat，把我的服务器由ubuntu重装为centos&lt;br /&gt;
+
+</description>
+        <pubDate>Thu, 11 Jan 2018 10:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/11/torque-install-ubuntu/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/11/torque-install-ubuntu/</guid>
+        
+        <category>pbs</category>
+        
+        <category>集群</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu VASP安装和运行 </title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#建议看此文intel-parallel-studio-xe-编译vasp更具有普遍性&quot; id=&quot;markdown-toc-建议看此文intel-parallel-studio-xe-编译vasp更具有普遍性&quot;&gt;建议看此文Intel Parallel Studio XE 编译VASP更具有普遍性&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;建议看此文intel-parallel-studio-xe-编译vasp更具有普遍性&quot;&gt;建议看此文&lt;a href=&quot;/2018/01/15/intel-mpi-vasp/&quot;&gt;Intel Parallel Studio XE 编译VASP&lt;/a&gt;更具有普遍性&lt;/h1&gt;
+
+</description>
+        <pubDate>Tue, 09 Jan 2018 21:15:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2018/01/09/ubuntu-install-vasp/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2018/01/09/ubuntu-install-vasp/</guid>
+        
+        <category>vasp</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>Mysql命令行操作</title>
+        <description>
+</description>
+        <pubDate>Sun, 26 Nov 2017 13:15:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/11/26/mysql/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/11/26/mysql/</guid>
+        
+        <category>Mysql</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>ThinkPHP3.2 文件结构</title>
+        <description>
+</description>
+        <pubDate>Sun, 26 Nov 2017 09:56:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/11/26/thinkphp/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/11/26/thinkphp/</guid>
+        
+        <category>thinkphp</category>
+        
+        <category>php</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>Materials Studio学习</title>
+        <description>此文根据山东大学魏巍老师的课堂讲课总结记录而成。
+
+</description>
+        <pubDate>Fri, 24 Nov 2017 09:43:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/11/24/ms1/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/11/24/ms1/</guid>
+        
+        <category>Materials-Studio</category>
+        
+        <category>量子化学</category>
+        
+        
+        <category>DFT</category>
+        
+      </item>
+    
+      <item>
+        <title>App 软件下载测试</title>
+        <description>
+</description>
+        <pubDate>Thu, 23 Nov 2017 00:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/11/23/appstore/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/11/23/appstore/</guid>
+        
+        <category>ios</category>
+        
+        <category>AppStore</category>
+        
+        
+        <category>IOS</category>
+        
+      </item>
+    
+      <item>
+        <title>Windows重装系统后的操作</title>
+        <description>
+</description>
+        <pubDate>Mon, 06 Nov 2017 23:58:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/11/06/windows-reinstall/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/11/06/windows-reinstall/</guid>
+        
+        <category>windows</category>
+        
+        
+        <category>windows</category>
+        
+      </item>
+    
+      <item>
+        <title>jekyll写作注意</title>
+        <description>
+</description>
+        <pubDate>Thu, 02 Nov 2017 22:41:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/11/02/jekyll-mkdown/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/11/02/jekyll-mkdown/</guid>
+        
+        <category>markdown</category>
+        
+        <category>html</category>
+        
+        <category>jekyll</category>
+        
+        
+        <category>jekyll</category>
+        
+      </item>
+    
+      <item>
+        <title>discuz更换域名</title>
+        <description>
+网站进行了搬家，想试试更换域名，目前更换后，没发现什么问题，但是还有个疑问
+
+</description>
+        <pubDate>Thu, 12 Oct 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/10/12/discuz-change-domain/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/10/12/discuz-change-domain/</guid>
+        
+        <category>web</category>
+        
+        <category>discuz</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu16.04搭建LAMP(php5)</title>
+        <description>
+之前记录了Ubuntu16.10搭建LAMP，由于之前的论坛采用php5，最近要迁移站点，担心php7与论坛不兼容，安装老版本php5测试，如果可行，继续升级discuz
+经测试，目前该方法迁移的论坛还未出现故障
+
+</description>
+        <pubDate>Wed, 11 Oct 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/10/11/ubutnu1604-lamp5/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/10/11/ubutnu1604-lamp5/</guid>
+        
+        <category>web</category>
+        
+        <category>ubuntu</category>
+        
+        <category>LAMP</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu16.04挂载新硬盘并格式化硬盘</title>
+        <description>
+</description>
+        <pubDate>Wed, 11 Oct 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/10/11/ubuntu-disk/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/10/11/ubuntu-disk/</guid>
+        
+        <category>Linux</category>
+        
+        <category>ubuntu</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>phpMyAdmin导入文件大小限制</title>
+        <description>
+</description>
+        <pubDate>Wed, 11 Oct 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/10/11/phpmyadmin-import/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/10/11/phpmyadmin-import/</guid>
+        
+        <category>web</category>
+        
+        <category>Mysql</category>
+        
+        <category>phpMyAdmin</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>discuz站点迁移记录</title>
+        <description>论坛所在服务器版本为ubuntu14.04，准备更换硬盘，并装系统16.04，记录如下
+
+</description>
+        <pubDate>Wed, 11 Oct 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/10/11/discuz-move/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/10/11/discuz-move/</guid>
+        
+        <category>web</category>
+        
+        <category>discuz</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>python: 格式化输入输出、文件操作</title>
+        <description>
+</description>
+        <pubDate>Sun, 01 Oct 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/10/01/python-buchong-shurushuchu/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/10/01/python-buchong-shurushuchu/</guid>
+        
+        <category>python</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>python(补充2)数据结构</title>
+        <description>
+主要针对python对象类型中的字符串str，列表list，元组tup，集合set，字典dir
+补充的不全，有机会回来增加
+
+</description>
+        <pubDate>Sun, 01 Oct 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/10/01/python-buchong-shujujiegou/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/10/01/python-buchong-shujujiegou/</guid>
+        
+        <category>python</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>python(三)对象</title>
+        <description>
+</description>
+        <pubDate>Fri, 29 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/29/python-3duixiang/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/29/python-3duixiang/</guid>
+        
+        <category>python</category>
+        
+        <category>对象</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>python(二)包模块</title>
+        <description>
+做完python(一)基本语法的笔记，对python有了一些基础的了解，可以深入的看&lt;a href=&quot;https://bop.molun.net/&quot;&gt;简明python教程&lt;/a&gt;等书籍，进行更多的学习
+昨天使用了python版的ssr让我对python的好感又增加了不少
+
+</description>
+        <pubDate>Fri, 29 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/29/python-2/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/29/python-2/</guid>
+        
+        <category>python</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu 16.04 安装python版ssr</title>
+        <description>
+</description>
+        <pubDate>Thu, 28 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/28/ubuntu1604-ssr/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/28/ubuntu1604-ssr/</guid>
+        
+        <category>ubuntu</category>
+        
+        <category>ssr</category>
+        
+        <category>python</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu创建sudo用户</title>
+        <description>
+</description>
+        <pubDate>Thu, 28 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/28/ubuntu-sudo-user/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/28/ubuntu-sudo-user/</guid>
+        
+        <category>Linux</category>
+        
+        <category>ubuntu</category>
+        
+        <category>sudo</category>
+        
+        <category>user</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>python(一)基本语法</title>
+        <description>2019-05-13重构文章
+
+</description>
+        <pubDate>Thu, 28 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/28/python-1/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/28/python-1/</guid>
+        
+        <category>python</category>
+        
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>openvz增加swap分区</title>
+        <description>
+</description>
+        <pubDate>Thu, 28 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/28/openvz-swap/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/28/openvz-swap/</guid>
+        
+        <category>openvz</category>
+        
+        <category>swap</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu16.04搭建openvpn服务器</title>
+        <description>
+</description>
+        <pubDate>Wed, 27 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/27/ubuntu1604-openvpn/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/27/ubuntu1604-openvpn/</guid>
+        
+        <category>Linux</category>
+        
+        <category>ubuntu</category>
+        
+        <category>openvpn</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu16.10搭建LAMP</title>
+        <description>
+</description>
+        <pubDate>Wed, 27 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/27/ubuntu1604-lamp/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/27/ubuntu1604-lamp/</guid>
+        
+        <category>web</category>
+        
+        <category>ubuntu</category>
+        
+        <category>LAMP</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu使用vsftpd搭建ftp服务器</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#这篇文章写的太乱了不想更新了如果仅想用的话看ubuntu-1604-使用vsftpd搭建ftp服务器&quot; id=&quot;markdown-toc-这篇文章写的太乱了不想更新了如果仅想用的话看ubuntu-1604-使用vsftpd搭建ftp服务器&quot;&gt;这篇文章写的太乱了，不想更新了，如果仅想用的话，看Ubuntu 16.04 使用vsftpd搭建ftp服务器&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;这篇文章写的太乱了不想更新了如果仅想用的话看ubuntu-1604-使用vsftpd搭建ftp服务器&quot;&gt;这篇文章写的太乱了，不想更新了，如果仅想用的话，看&lt;a href=&quot;/2018/11/17/ubuntu-vsftp2/&quot;&gt;Ubuntu 16.04 使用vsftpd搭建ftp服务器&lt;/a&gt;&lt;/h2&gt;
+
+</description>
+        <pubDate>Wed, 27 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/27/ubuntu-vsftps/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/27/ubuntu-vsftps/</guid>
+        
+        <category>ubuntu</category>
+        
+        <category>vsftpd</category>
+        
+        <category>ftp</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu下搭建ss服务器</title>
+        <description>
+</description>
+        <pubDate>Wed, 27 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/27/ubuntu-ss/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/27/ubuntu-ss/</guid>
+        
+        <category>ubuntu</category>
+        
+        <category>ss</category>
+        
+        <category>Shadowsocks</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>OpenWrt搭建ocserv服务器</title>
+        <description>
+</description>
+        <pubDate>Wed, 27 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/27/openwrt-ocserv/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/27/openwrt-ocserv/</guid>
+        
+        <category>OpenWrt</category>
+        
+        <category>ocserv</category>
+        
+        
+        <category>OpenWrt</category>
+        
+      </item>
+    
+      <item>
+        <title>OpenWrt简书部分文章</title>
+        <description>之前关于openwrt的内容写在&lt;a href=&quot;http://www.jianshu.com/p/6b1007451e1b&quot;&gt;我的简书-openwrt经验分享前言和目录&lt;/a&gt;懒得转载了
+
+</description>
+        <pubDate>Wed, 27 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/27/openwrt-jianshu/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/27/openwrt-jianshu/</guid>
+        
+        <category>OpenWrt</category>
+        
+        
+        <category>OpenWrt</category>
+        
+      </item>
+    
+      <item>
+        <title>Mysql&amp;phpMyAdmin简单学习</title>
+        <description>
+</description>
+        <pubDate>Wed, 27 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/27/mysql/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/27/mysql/</guid>
+        
+        <category>web</category>
+        
+        <category>Mysql</category>
+        
+        <category>phpMyAdmin</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>Apache学习</title>
+        <description>
+</description>
+        <pubDate>Wed, 27 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/27/apache/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/27/apache/</guid>
+        
+        <category>ubuntu</category>
+        
+        <category>Apache</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>Apache 反向代理</title>
+        <description>
+</description>
+        <pubDate>Wed, 27 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/27/apache-proxy/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/27/apache-proxy/</guid>
+        
+        <category>web</category>
+        
+        <category>ubuntu</category>
+        
+        <category>反向代理</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>Apache配置实例</title>
+        <description>
+</description>
+        <pubDate>Wed, 27 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/27/apache-conf/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/27/apache-conf/</guid>
+        
+        <category>web</category>
+        
+        <category>Apache</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>OpenWrt使用transmission下载挂pt</title>
+        <description>
+</description>
+        <pubDate>Tue, 12 Sep 2017 21:39:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/12/openwrt-tr/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/12/openwrt-tr/</guid>
+        
+        <category>OpenWrt</category>
+        
+        <category>transmission</category>
+        
+        
+        <category>OpenWrt</category>
+        
+      </item>
+    
+      <item>
+        <title>Linux常用命令学习</title>
+        <description>
+我也不清楚哪些命令是常用的，我需要哪些命令后就回来总结，先记录自己常用的，这不是本字典，命令现用现查
+
+</description>
+        <pubDate>Sun, 10 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/10/linux-command/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/10/linux-command/</guid>
+        
+        <category>Linux</category>
+        
+        <category>ubuntu</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>HTML学习(二)常用标签，属性</title>
+        <description>
+</description>
+        <pubDate>Thu, 07 Sep 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/09/07/html2/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/09/07/html2/</guid>
+        
+        <category>web</category>
+        
+        <category>html</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>PHP(二)服务器与客户端间的交互</title>
+        <description>
+</description>
+        <pubDate>Tue, 22 Aug 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/08/22/php-2/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/08/22/php-2/</guid>
+        
+        <category>web</category>
+        
+        <category>php</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>OpenVZ 通过tb-tun 使用HE IPv6 tunnel</title>
+        <description>利用HE IPv6使openvz支持ipv6
+
+</description>
+        <pubDate>Sat, 19 Aug 2017 20:39:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/08/19/heipv6/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/08/19/heipv6/</guid>
+        
+        <category>vps</category>
+        
+        <category>openvz</category>
+        
+        <category>IPv6</category>
+        
+        <category>HE</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>PHP(一)基础语法</title>
+        <description>
+</description>
+        <pubDate>Sun, 13 Aug 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/08/13/php-1/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/08/13/php-1/</guid>
+        
+        <category>web</category>
+        
+        <category>php</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>HTML学习(一)语法结构</title>
+        <description>
+</description>
+        <pubDate>Wed, 09 Aug 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/08/09/html1/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/08/09/html1/</guid>
+        
+        <category>web</category>
+        
+        <category>html</category>
+        
+        
+        <category>web</category>
+        
+      </item>
+    
+      <item>
+        <title>bash学习(一)基本语法</title>
+        <description>这篇文章之前写在简书上的，简书和这个博客的md语法有些差异，调节起来太麻烦了，以后复习bash时再重新整理
+
+</description>
+        <pubDate>Mon, 07 Aug 2017 21:56:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/08/07/bash1/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/08/07/bash1/</guid>
+        
+        <category>Linux</category>
+        
+        <category>bash</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu上安装ocserv</title>
+        <description>
+</description>
+        <pubDate>Thu, 03 Aug 2017 12:00:00 +0800</pubDate>
+        <link>https://cndaqiang.github.io/2017/08/03/ubuntu-ocserv/</link>
+        <guid isPermaLink="true">https://cndaqiang.github.io/2017/08/03/ubuntu-ocserv/</guid>
+        
+        <category>Linux</category>
+        
+        <category>ubuntu</category>
+        
+        <category>ocserv</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+  </channel>
+</rss>

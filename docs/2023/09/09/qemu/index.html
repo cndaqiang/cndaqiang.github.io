@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>QEMU虚拟机学习(草稿、很乱)</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2023/09/09/qemu/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>QEMU虚拟机学习(草稿、很乱)</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2023-09-09
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#QEMU" title="Category: QEMU" rel="category">QEMU</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#qemu" title="Tag: qemu" rel="tag">qemu</a-->
+        <a href="/tag/#qemu" title="Tag: qemu" rel="tag">qemu</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#为什么学习qemu" id="markdown-toc-为什么学习qemu">为什么学习qemu</a></li>
+  <li><a href="#创建安卓虚拟机" id="markdown-toc-创建安卓虚拟机">创建安卓虚拟机</a>    <ul>
+      <li><a href="#参数学习" id="markdown-toc-参数学习">参数学习</a></li>
+      <li><a href="#实践" id="markdown-toc-实践">实践</a></li>
+      <li><a href="#尝试加速" id="markdown-toc-尝试加速">尝试加速</a></li>
+      <li><a href="#其他" id="markdown-toc-其他">其他</a></li>
+    </ul>
+  </li>
+  <li><a href="#redroid解析" id="markdown-toc-redroid解析">redroid解析</a>    <ul>
+      <li><a href="#redroid安装" id="markdown-toc-redroid安装">redroid安装</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="为什么学习qemu">为什么学习qemu</h2>
+<ul>
+  <li>virtual box等虚拟机软件不支持arm处理器的服务器,安卓也有类似的开发版Limbo,IOS平台也有UTM</li>
+  <li>qemu支持模拟多种架构x86,arm,mpis,….</li>
+</ul>
+
+<h2 id="创建安卓虚拟机">创建安卓虚拟机</h2>
+<h3 id="参数学习">参数学习</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qemu-system-x86_64 -boot d -cdrom ./android-x86_64-9.0-r2.iso -m 2048 -vnc :1 -k en-us
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">:1</code>表示端口<code class="language-plaintext highlighter-rouge">5900+1</code>即vnc连接<code class="language-plaintext highlighter-rouge">127.0.0.1:5901</code></li>
+  <li>如果是本地,不设置<code class="language-plaintext highlighter-rouge">-vnc:1</code>,则会直接弹出图形化窗口</li>
+  <li>如果开机后黑屏,换个iso镜像</li>
+  <li>vnc如果键盘没用,等一会，鼠标多点几次就好了</li>
+  <li>boot d 表示启动时虚拟机会尝试从光盘设备（CD/DVD）引导。这通常用于安装操作系统，因为在安装过程中需要从光盘引导。
+如果你想从虚拟光驱加载一个 ISO 光盘映像（例如，安装操作系统），你可以使用 -cdrom 参数来指定 ISO 文件路径，并配合 -boot d 一起使用。</li>
+  <li>boot c 表示启动时虚拟机会尝试从主硬盘设备（通常是虚拟硬盘镜像文件）引导。这用于在已安装操作系统的虚拟机中正常启动。
+当你想从已安装的操作系统启动虚拟机，而不是引导光盘时，通常会使用 -boot c。</li>
+  <li>预运行,寻找合适的iso<code class="language-plaintext highlighter-rouge">qemu-system-i386  -boot c  -m 4096 -smp 4 -k en-us -cdrom android-x86-9.0-rc2.iso</code>
+    <h3 id="实践">实践</h3>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#创建虚拟磁盘
+(base) cndaqiang@macmini android$ qemu-img create -f qcow2 android_virtual_disk.qcow2 20G
+Formatting 'android_virtual_disk.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=21474836480 lazy_refcounts=off refcount_bits=16
+#创建虚拟机并挂载磁盘
+(base) cndaqiang@macmini android$ qemu-system-i386  -boot d -cdrom /Volumes/KPStoarge/ChromeDownload/cm-x86-13.0-r1.iso  -m 4096 -smp 4 -vnc :1 -k en-us -hda android_virtual_disk.qcow2
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>为了稳定，安装过程分区没有采用GPT的格式,
+启动</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(base) cndaqiang@macmini android$ qemu-system-i386  -boot c -cdrom /Volumes/KPStoarge/ChromeDownload/cm-x86-13.0-r1.iso  -m 4096 -smp 4 -vnc :1 -k en-us -hda android_virtual_disk.qcow2
+qemu-system-i386  -boot c  -m 4096 -smp 4 -vnc :1 -k en-us -hda android_virtual_disk.qcow2
+</code></pre></div></div>
+
+<h3 id="尝试加速">尝试加速</h3>
+<p>加速方案tcg</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qemu-system-i386  -boot c -cdrom cm-x86-13.0-r1.iso -m 4096 -smp 4 -vnc :1 -k en-us -hda android_virtual_disk.qcow2 -accel tcg
+</code></pre></div></div>
+<p>多线程,cpu全部跑满</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qemu-system-i386  -boot c -cdrom cm-x86-13.0-r1.iso -m 4096 -smp 4 -vnc :1 -k en-us -hda android_virtual_disk.qcow2 -accel tcg,thread=multi
+</code></pre></div></div>
+
+<p>GPT:</p>
+
+<p>如果你的系统不支持 KVM 或者 KVM 加速不可用，QEMU 仍然提供了其他加速方案以提高虚拟机性能。以下是一些主要的 QEMU 加速方案：</p>
+
+<p>TCG（Tiny Code Generator）：TCG 是 QEMU 的默认加速器，它是一种基于软件的虚拟化技术。即使没有硬件虚拟化支持，QEMU 也可以使用 TCG 加速来模拟 CPU 指令。但相对于硬件虚拟化，TCG 的性能通常较差。</p>
+
+<p>HAXM（Intel Hardware Accelerated Execution Manager）：HAXM 是针对 Intel x86 架构的加速器。它通过利用 Intel VT-x 技术来提供硬件加速，通常用于在 Intel 处理器上运行 x86 虚拟机。</p>
+
+<p>HV（Hypervisor.framework，macOS 上）：QEMU 在 macOS 上可以利用 Hypervisor.framework 进行加速。这种加速器可用于在 macOS 主机上运行虚拟机。</p>
+
+<p>WHPX（Windows Hypervisor Platform，Windows 上）：WHPX 是 Windows 上的虚拟化加速器，QEMU 可以使用它来提高 Windows 主机上的虚拟机性能。</p>
+
+<p>KVM/PR/AVIC（x86 上的其他硬件加速）：除了 KVM，x86 架构还有其他一些硬件加速技术，如 AMD 的 Process-Scoped Virtualization (PR) 和 Advanced Virtual Interrupt Controller (AVIC)。QEMU 可以利用这些技术来提高虚拟机性能。</p>
+
+<p>用户模式网络堆栈加速（user-mode networking stack acceleration）：QEMU 也可以通过用户模式网络堆栈来提高网络性能，尤其是在模拟网络环境时。</p>
+
+<h3 id="其他">其他</h3>
+<p>Bliss给的参考</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qemu-img create -f qcow2 Bliss14.qcow2 20G
+
+#!/bin/bash
+qemu-system-x86_64 \
+-enable-kvm \
+-M q35 \
+-m 4096 -smp 4 -cpu host \
+-bios /usr/share/ovmf/x64/OVMF.fd \
+-drive file=disks/bliss14-k54-gapps.qcow2,if=virtio \
+-cdrom images/Bliss14-k54-gapps.iso \
+-usb \
+-device virtio-tablet \
+-device virtio-keyboard \
+-device qemu-xhci,id=xhci \
+-machine vmport=off \
+-device virtio-vga-gl -display sdl,gl=on \
+-audiodev pa,id=snd0 -device AC97,audiodev=snd0 \
+-net nic,model=virtio-net-pci -net user,hostfwd=tcp::4444-:5555
+
+</code></pre></div></div>
+
+<p>mac运行 Bliss, 选择VM模式, VM模式中的硬件加速模式(KVM)会报错</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(base) cndaqiang@macmini ChromeDownload$ qemu-system-x86_64  -boot d -cdrom Bliss-v15.8.6-x86_64-OFFICIAL-foss-20230703.iso -m 4096 -smp 4 -accel hvf
+your cpu does not support sse4.2 instructions
+</code></pre></div></div>
+<p>` sse4.2`貌似就是kvm，bliss监测到不知吃kvm了，
+然后无法启动,
+使用vm中的非硬件加速模式,虽然也报这个错,但是可以启动</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>qemu-img create -f qcow2 android_virtual_disk.qcow2 20G
+qemu-system-x86_64  -boot d -cdrom /Volumes/KPStoarge/ChromeDownload/Bliss-v15.8.6-x86_64-OFFICIAL-foss-20230703.iso -m 4096 -smp 4 -hda android_virtual_disk.qcow2 -accel hvf
+qemu-system-x86_64  -boot c -m 4096 -smp 4 -hda android_virtual_disk.qcow2 -accel hvf -net nic -net user
+#root后开启5555端口映射adb, 也可以用别的端口XXXX-:5555. 之后就可以在主机用127.0.0.1:5555调试
+qemu-system-x86_64  -boot c -m 4096 -smp 4 -hda android_virtual_disk.qcow2 -accel hvf  -netdev user,id=mynet0,hostfwd=tcp::5555-:5555 -device e1000,netdev=mynet0 -vnc :1 -k en-us
+
+</code></pre></div></div>
+<p>kernelSU授权给termux</p>
+
+<p>挂载<code class="language-plaintext highlighter-rouge">/dev/block/sda</code>到<code class="language-plaintext highlighter-rouge">/mnt</code>,可以看到里面有grub，有menu.list之类的，就可以修改默认启动项为VM(without HW)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#parallel desktop安装bliss
+#bliss 开始adb
+#kernelSu 授予termux root权限
+#termux 执行(因为bliss无法识别wifi，把网络识别成了有线网卡，不能利用安卓本文的无线调试，所以只能这样)
+su
+setprop service.adb.tcp.port 5555
+stop adbd
+start adbd
+#就可以用局域网调试了
+wm size 960x540
+√ 120
+#上面这样设置完成后,重启也能保存,不用重新输入命令
+(base) cndaqiang@macmini ChromeDownload$ adb shell
+Parallels Virtual Platform:/ $ wm size
+Physical size: 1024x768
+Override size: 960x540
+#重启后需要断开pc的adb重新连接
+adb kill-server
+adb connect 10.211.55.19:5555
+#安装游戏
+adb install 10040714_com.tencent.tmgp.sgame_a2680838_8.4.1.6_fL2tC9.apk
+</code></pre></div></div>
+
+<h2 id="redroid解析">redroid解析</h2>
+
+<p>docker里面是linux镜像，oracle上安装的13
+进入docker后是aarch64的debian
+使用top后，发现跑的是QEMU
+错误检查8</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@oracle:~$ curl -fsSL https://raw.githubusercontent.com/remote-android/redroid-doc/master/debug.sh | bash -s 6d6fed43afdf
+USAGE: bash [container]
+</code></pre></div></div>
+
+<h3 id="redroid安装">redroid安装</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>modprobe binder_linux devices="binder,hwbinder,vndbinder"
+modprobe ashmem_linux
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -itd \
+  --memory-swappiness=0 \
+  --privileged --pull always \
+  -v /home/cndaqiang/builddocker/redroid/8arm:/data \
+  -p 5555:5555 \
+  redroid/redroid:8.1.0-arm64 \
+  androidboot.hardware=mt6891 ro.secure=0 ro.boot.hwc=GLOBAL    ro.ril.oem.imei=861503068361145 ro.ril.oem.imei1=861503068361145 ro.ril.oem.imei2=861503068361148 ro.ril.miui.imei0=861503068361148 ro.product.manufacturer=Xiaomi ro.build.product=chopin \
+  androidboot.redroid_width=960 \
+  androidboot.redroid_height=540 \
+  androidboot.redroid_dpi=160 \
+  androidboot.redroid_fps=5 \
+  redroid.gpu.mode=guest
+</code></pre></div></div>
+
+<p>For x86 ubuntu OK, MINT ERROR</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WARNING: The requested image's platform (linux/arm64) does not match the detected host platform (linux/amd64/v3) and no specific platform was requested
+786793c9434cdcb54f6aa058ab6cd3319421bed70473f5b401e4c67253f6b052
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -itd \
+  --memory-swappiness=0 \
+  --privileged --pull always \
+  -v /Users/cndaqiang/data:/data \
+  -p 5555:5555 \
+  redroid/redroid:8.1.0-amd64 \
+  androidboot.hardware=mt6891 ro.secure=0 ro.boot.hwc=GLOBAL    ro.ril.oem.imei=861503068361145 ro.ril.oem.imei1=861503068361145 ro.ril.oem.imei2=861503068361148 ro.ril.miui.imei0=861503068361148 ro.product.manufacturer=Xiaomi ro.build.product=chopin \
+  androidboot.redroid_width=960 \
+  androidboot.redroid_height=540 \
+  androidboot.redroid_dpi=160 \
+  androidboot.redroid_fps=5 \
+  redroid.gpu.mode=guest
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2023/08/28/windows-ps/">Windows powershell/CMD 等命令学习</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2023/11/10/MobileAuto/">Android/IOS移动平台自动化脚本(基于AirTest)</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

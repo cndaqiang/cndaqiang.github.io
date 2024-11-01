@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>OpenMP学习(Fortran)</title>
+    <meta name="description" content="OpenMP+Fortran不讲原理，只写代码，边用边补充">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2022/12/22/openmp-fortran/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>OpenMP学习(Fortran)</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2022-12-22
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Fortran" title="Category: Fortran" rel="category">Fortran</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>&nbsp;
+    
+        <!--a href="/tag/#OpenMP" title="Tag: OpenMP" rel="tag">OpenMP</a-->
+        <a href="/tag/#OpenMP" title="Tag: OpenMP" rel="tag">OpenMP</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+  <li><a href="#示例" id="markdown-toc-示例">示例</a>    <ul>
+      <li><a href="#编译参数" id="markdown-toc-编译参数">编译参数</a></li>
+      <li><a href="#运行参数" id="markdown-toc-运行参数">运行参数</a></li>
+      <li><a href="#代码" id="markdown-toc-代码">代码</a></li>
+    </ul>
+  </li>
+  <li><a href="#制导语句" id="markdown-toc-制导语句">制导语句</a>    <ul>
+      <li><a href="#语法" id="markdown-toc-语法">语法</a></li>
+      <li><a href="#制导标识符" id="markdown-toc-制导标识符">制导标识符</a></li>
+      <li><a href="#制导指令名称" id="markdown-toc-制导指令名称">制导指令(名称)</a>        <ul>
+          <li><a href="#综合示例" id="markdown-toc-综合示例">综合示例</a></li>
+          <li><a href="#parallelx" id="markdown-toc-parallelx">PARALLEL+X</a></li>
+          <li><a href="#criticalatomic示例" id="markdown-toc-criticalatomic示例">critical、ATOMIC示例</a></li>
+          <li><a href="#ordered示例" id="markdown-toc-ordered示例">ordered示例</a></li>
+          <li><a href="#flush示例" id="markdown-toc-flush示例">flush示例</a></li>
+        </ul>
+      </li>
+      <li><a href="#子句" id="markdown-toc-子句">子句</a>        <ul>
+          <li><a href="#变量类型示例" id="markdown-toc-变量类型示例">变量类型示例</a></li>
+          <li><a href="#privatefirstprivatelastprivatethreadprivate对比" id="markdown-toc-privatefirstprivatelastprivatethreadprivate对比">private/firstprivate/lastprivate/threadprivate对比</a></li>
+          <li><a href="#doschedule" id="markdown-toc-doschedule">DO+schedule</a>            <ul>
+              <li><a href="#static" id="markdown-toc-static">static</a></li>
+              <li><a href="#dynamic" id="markdown-toc-dynamic">dynamic</a></li>
+              <li><a href="#guided" id="markdown-toc-guided">guided</a></li>
+            </ul>
+          </li>
+          <li><a href="#do--collapse-示例" id="markdown-toc-do--collapse-示例">DO + COLLAPSE 示例</a></li>
+          <li><a href="#reduction详解" id="markdown-toc-reduction详解">reduction详解</a></li>
+          <li><a href="#if-示例" id="markdown-toc-if-示例">IF 示例</a></li>
+        </ul>
+      </li>
+      <li><a href="#子句和制导指令的组合使用" id="markdown-toc-子句和制导指令的组合使用">子句和制导指令的组合使用</a></li>
+      <li><a href="#指令绑定规则" id="markdown-toc-指令绑定规则">指令绑定规则</a></li>
+      <li><a href="#指令嵌套" id="markdown-toc-指令嵌套">指令嵌套</a>        <ul>
+          <li><a href="#指令嵌套示例" id="markdown-toc-指令嵌套示例">指令嵌套示例</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#库函数" id="markdown-toc-库函数">库函数</a>    <ul>
+      <li><a href="#基础库函数" id="markdown-toc-基础库函数">基础库函数</a></li>
+      <li><a href="#openmp-31-新增库函数" id="markdown-toc-openmp-31-新增库函数">OpenMP 3.1 新增库函数</a></li>
+      <li><a href="#获取线程信息示例" id="markdown-toc-获取线程信息示例">获取线程信息示例</a></li>
+      <li><a href="#lock例程" id="markdown-toc-lock例程">LOCK例程</a></li>
+    </ul>
+  </li>
+  <li><a href="#环境变量" id="markdown-toc-环境变量">环境变量</a></li>
+  <li><a href="#mpi混编openmp" id="markdown-toc-mpi混编openmp">MPI混编OpenMP</a></li>
+  <li><a href="#报错警告" id="markdown-toc-报错警告">报错警告</a>    <ul>
+      <li><a href="#a-specification-statement-cannot-appear-in-the-executable-section" id="markdown-toc-a-specification-statement-cannot-appear-in-the-executable-section"><code class="language-plaintext highlighter-rouge">A specification statement cannot appear in the executable section</code></a></li>
+      <li><a href="#a-variable-that-appears-in-a-threadprivate-directive-and-is-not-declared-in-the-scope-of-a-module-must-have-the-save-attribute" id="markdown-toc-a-variable-that-appears-in-a-threadprivate-directive-and-is-not-declared-in-the-scope-of-a-module-must-have-the-save-attribute"><code class="language-plaintext highlighter-rouge">A variable that appears in a THREADPRIVATE directive and is not declared in the scope of a module must have the SAVE attribute</code></a></li>
+      <li><a href="#syntax-error-found-lastprivate-when-expecting-one-of-private-allocate-firstprivate-reduction-default-shared-copyin-proc_bind-num_threads" id="markdown-toc-syntax-error-found-lastprivate-when-expecting-one-of-private-allocate-firstprivate-reduction-default-shared-copyin-proc_bind-num_threads"><code class="language-plaintext highlighter-rouge">Syntax error, found 'LASTPRIVATE' when expecting one of: PRIVATE ALLOCATE FIRSTPRIVATE REDUCTION DEFAULT SHARED COPYIN PROC_BIND NUM_THREADS</code></a></li>
+      <li><a href="#omp-info-269-omp_nested-variable-deprecated-please-use-omp_max_active_levels-instead" id="markdown-toc-omp-info-269-omp_nested-variable-deprecated-please-use-omp_max_active_levels-instead"><code class="language-plaintext highlighter-rouge">OMP: Info #269: OMP_NESTED variable deprecated, please use OMP_MAX_ACTIVE_LEVELS instead.</code></a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>OpenMP+Fortran<br />
+不讲原理，只写代码，边用边补充</p>
+
+<h2 id="参考">参考</h2>
+<ul>
+  <li><a href="https://www.cnblogs.com/jiangleads/p/11664235.html">OpenMP fortran 学习</a></li>
+  <li><a href="https://scc.ustc.edu.cn/zlsc/cxyy/200910/W020121113517997951933.pdf">OpenMP并行编程</a></li>
+  <li><a href="https://blog.csdn.net/gengshenghong/article/details/6985431">OpenMP中数据属性相关子句详解（1）：private/firstprivate/lastprivate/threadprivate之间的比较</a></li>
+  <li><a href="https://blog.csdn.net/qq_43331089/article/details/124469616">【OpenMP】OpenMP: 多线程文件操作</a></li>
+  <li><a href="https://learn.microsoft.com/zh-cn/cpp/parallel/openmp/openmp-in-visual-cpp?view=msvc-170">Visual C++ 中的 OpenMP</a></li>
+</ul>
+
+<h2 id="备注">备注</h2>
+<ul>
+  <li>OpenMP是基于线程的并行编程模型。</li>
+  <li>OpenMP采用Fork-Join并行执行方式：<br />
+ OpenMP程序开始于一个单独的主线程（Master Thread），然后主线程一直串行执行，直到遇见第一个并行域(Parallel Region)，然后开始并行执行并行区域。其过程如下：</li>
+  <li>
+    <ul>
+      <li>Fork:主线程创建一个并行线程队列，然后，并行域中的代码在不同的线程上并行执行；</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>Join:当并行域执行完之后，它们或被同步或被中断，最后只有主线程在执行。</li>
+    </ul>
+  </li>
+  <li>每个分线程可以继续创建新的并行区域,之前的分线程在新的并行区域就是主线程.详见下面的嵌套指令</li>
+  <li>Fortran语法不区分大小写</li>
+  <li>不加编译参数<code class="language-plaintext highlighter-rouge">-qopenmp</code>或者删除标志符<code class="language-plaintext highlighter-rouge">!$OMP</code>,编译出的就是串行版本,也能执行,但是可以用于debug,但若有规约等依赖并行的操作,结果可能不对</li>
+  <li>线程数、并行方案等很多控制参数可以通过环境变量设置,也可以通过库函数设置，亦可以通过子句设置,<br />如设置线程数: <code class="language-plaintext highlighter-rouge">export OMP_NUM_THREADS=8</code>,<code class="language-plaintext highlighter-rouge">CALL omp_set_num_threads(8)</code>,子句(优先级最高)<code class="language-plaintext highlighter-rouge">!$OMP PARALLEL num_threads(8)</code></li>
+</ul>
+
+<h2 id="示例">示例</h2>
+<h3 id="编译参数">编译参数</h3>
+
+<ul>
+  <li>intel: <code class="language-plaintext highlighter-rouge">ifort -qopenmp main.f90</code><br /><code class="language-plaintext highlighter-rouge">icc -qopenmp 1.c</code></li>
+  <li>pgi:   <code class="language-plaintext highlighter-rouge">pgfortran -mp main.f90</code></li>
+  <li>gnu:   <code class="language-plaintext highlighter-rouge">gfortran -fopenmp main.f90</code><br /><code class="language-plaintext highlighter-rouge">gcc -fopenmp  1.c</code></li>
+</ul>
+
+<p>对于<code class="language-plaintext highlighter-rouge">f95</code>格式,ifort的指令为</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ifort -qopenmp -Tf   main.f95 -free
+#-free必须放在最后,不然报错compilation aborted for -free (code 1)
+#暂时不去找原因了
+</code></pre></div></div>
+
+<h3 id="运行参数">运行参数</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#设置最大线程数
+export OMP_NUM_THREADS=4
+./a.out
+</code></pre></div></div>
+
+<h3 id="代码">代码</h3>
+<p>main.f90</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program main
+write(*,*) "hello: main"
+!$OMP PARALLEL
+write(*,*) "hello: parallel"
+!$OMP END PARALLEL
+end program
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@macmini openmp1$ ifort -qopenmp main.f90
+cndaqiang@macmini openmp1$ export OMP_NUM_THREADS=4
+cndaqiang@macmini openmp1$ ./a.out
+ hello: main
+ hello: parallel
+ hello: parallel
+ hello: parallel
+ hello: parallel
+</code></pre></div></div>
+
+<h2 id="制导语句">制导语句</h2>
+
+<h3 id="语法">语法</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>制导标识符(!$OMP, #pragma omp)  制导指令(parallel,DO/for,..) [子句(private,shared,...)]
+</code></pre></div></div>
+<ul>
+  <li>在并行域结尾有一个隐式同步(barrier),即并行都结束后才进入串行区域</li>
+  <li>子句可省略,不同的制导指令有特定的字句[详细组合见下]<br />在Fortran语言中，子句间用逗号或空格分隔；<br />C/C++子句间用空格分开</li>
+  <li>可以有多层并行域语句进行嵌套</li>
+  <li>Fortran的每个制导语句(<code class="language-plaintext highlighter-rouge">!$OMP 制导指令</code>)跟一个结束的制导语句(<code class="language-plaintext highlighter-rouge">!$OMP END 制导指令</code>)配套使用确定并行域大小. <br />C没有结束的制导语句,并行域仅是制导语句紧跟的第一个代码段/行</li>
+  <li>语法可以写多行, 每行开头都是指导标识符, Fortran的续航符用<code class="language-plaintext highlighter-rouge">&amp;</code>,如
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!$OMP PARALLEL &amp;
+!$OMP num_threads(5)
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="制导标识符">制导标识符</h3>
+<p>就是语言的注释开头,每个制导语句必须以制导标识符开头</p>
+<ul>
+  <li>C:<code class="language-plaintext highlighter-rouge">#pragma omp</code>,</li>
+  <li>Fortran: <code class="language-plaintext highlighter-rouge">!$OMP</code>,如果是固定格式用<code class="language-plaintext highlighter-rouge">!</code>,<code class="language-plaintext highlighter-rouge">*</code>,即<code class="language-plaintext highlighter-rouge">C$OMP</code>,<code class="language-plaintext highlighter-rouge">*$OMP</code></li>
+</ul>
+
+<h3 id="制导指令名称">制导指令(名称)</h3>
+<p><strong>并行域指令</strong>:划定[新的]并行区域,产生[新的]多个线程,并行区域内代码被多个线程并行执行负责</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">parallel</code> 用在一个代码段之前，表示这段代码将被多个线程并行执行<br />
+可以在串行区域添加,也可以在并行区域创建新的并行区域</li>
+</ul>
+
+<p><strong>工作共享指令</strong>,只负责任务划分，并分发给各个线程。<br />
+工作共享指令必须位于并行域中才能起到并行执行任务的作用，原因是工作共享指令不能产生新的线程，因此如果位于串行域中的话，任务只能被一个线程执行。<br />
+<strong>每个工作分享结构结束处会隐含障碍同步(子任务个数小于线程个数时多余的线程,或者提前执行完的线程,将在工作共享结束语法<code class="language-plaintext highlighter-rouge">END DO, END SECTIONS, END SINGLE</code>处等待),除非显式指明NOWAIT</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">for/do</code> 自动划分循环任务<br />用于for循环(C)或者do循环(Fortran)之前，将循环任务按照<code class="language-plaintext highlighter-rouge">schedule</code>分配到多个线程中并行执行<br /><strong>一定要注意变量的私有性,不能出现有冲突的共享变量,不要出现不同循环之间有依赖</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">sections</code> 手动划分任务. <br />人为设置一段段代码，每段代码section是一个子任务,被一个线程执行<br />子任务个数大于线程个数时，任务分配由编译器指定，尽量负载平衡</li>
+  <li><code class="language-plaintext highlighter-rouge">single</code> 并行域中的串行任务<br />第一个遇到 SINGLE 指令的线程执行相应的代码</li>
+  <li><code class="language-plaintext highlighter-rouge">workshare</code> 主要负责 Fortran 95 中本身可并行执行的语句<br />
+结构块中只能包括以下语句
+<br />矩阵赋值（包括作用在矩阵上的函数，如 SUM， MATMUL 等）
+<br />标量赋值（只有一个线程负责执行，其它线程等待）
+<br />FORALL 语句， FORALL 结构
+<br />WHERE 语句， WHERE 结构
+<br />ATOMIC 结构， CRITICAL 结构， PARALLEL 结构</li>
+  <li>简化代码可以把并行域指令<code class="language-plaintext highlighter-rouge">parallel</code>和工作共享指令组合
+<br /> <code class="language-plaintext highlighter-rouge">parallel for/do</code> parallel 和 for语句的结合
+<br /> <code class="language-plaintext highlighter-rouge">parallel sections</code> parallel和sections两个语句的结合
+<br /> <code class="language-plaintext highlighter-rouge">parallel workshare</code> parallel和workshare两个语句的结合</li>
+</ul>
+
+<p><strong>同步指令</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">barrier</code>，用于并行区内代码的线程同步<br />
+在所有的线程到达之前，没有线程可以提前通过一个barrier<br />
+在工作共享指令(DO/FOR,SECTIONS,SINGLE,WORKSHARE)结束后，有一个隐式barrier存在；使用<code class="language-plaintext highlighter-rouge">nowait</code>子句可以去除循环<br />
+如果有一个线程没有执行barrier命令,则所有线程会被卡死</li>
+  <li><code class="language-plaintext highlighter-rouge">Master</code> 结构体代码<strong>仅由主线程执行</strong>；其它线程<em>跳过</em>并继续执行；通常用于I/O；<br /><code class="language-plaintext highlighter-rouge">single</code> 则是由第一个遇到的线程执行,并有隐含<code class="language-plaintext highlighter-rouge">barrier</code></li>
+  <li><code class="language-plaintext highlighter-rouge">critical[(名字)]</code> 同一时间内仅有一个线程执行下面的<em>代码段</em>,所有线程将依次执行 CRITICAL 块<br />主要用于共享变量的更新，写文件等，避免数据竞争,<br />例如可以用于求各个线程中某局域变量的和或者最大值并保存到共享变量<br />并行域中可以包含多个 CRITICAL 块,所有没有名字的 CRITICAL 块被看作是一个整体,建议给每个 CRITICAL 块起名字,名字用小括号扩起来<br />同名的临界区被看作是一个整体：同一时间，同名块中只能有一个线程<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">Atomic</code> 同一时间内仅有一个线程执行紧随的<em>赋值命令</em>,所有线程将依次执行下面的赋值命令<br />
+和<code class="language-plaintext highlighter-rouge">critical</code>类似,但是<code class="language-plaintext highlighter-rouge">critical</code>是单线程执行一段代码(串行更新变量,不仅能赋值),<br />
+<strong><code class="language-plaintext highlighter-rouge">atomic</code>如果赋值的区域不同,可以(并行)更新共享变量</strong><br />
+紧随的<em>赋值命令</em>只能是下面的格式:<code class="language-plaintext highlighter-rouge">x=x operator expr</code>,<code class="language-plaintext highlighter-rouge">x=intrinsic(x,expr)</code>,<code class="language-plaintext highlighter-rouge">x</code> 是共享标量， <code class="language-plaintext highlighter-rouge">expr</code> 中不含 <code class="language-plaintext highlighter-rouge">x</code>(详细规则见下)<br />
+<strong>原子改写的含义是指：读取该存储地址<code class="language-plaintext highlighter-rouge">x</code>的内容、做所需运算、然后把新值写回该存储地址<code class="language-plaintext highlighter-rouge">x</code>这一连串操作不会被其它线程间断，它保证所有操作要么全部完成，要么保持原封不动</strong><br />
+无论何时，当需要在更新共享存储单元的语句中避免数据竞争，应该先使用<code class="language-plaintext highlighter-rouge">atomic</code>，然后再使用临界段</li>
+  <li><code class="language-plaintext highlighter-rouge">ordered</code> 一般在循环体内部使用,<br />一个do循环内部只能用一次ordered指令<br />同一时刻只允许一个线程执行ordered内部结构<br />执行顺序是循环顺序<br />需要在制导指令<code class="language-plaintext highlighter-rouge">DO</code>后面设置子句<code class="language-plaintext highlighter-rouge">ordered</code></li>
+  <li><code class="language-plaintext highlighter-rouge">flush[(变量列表)]</code>,FLUSH语句是用来确保执行中存储器中的数据一致的同步点。保证一个变量从内存中的读取结果相同</li>
+</ul>
+
+<p><strong>数据环境指令</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">threadprivate(变量列表)</code> 指定变量或公共数据块是线程私有的，且在同一个线程内是全局的(在所有的并行空间每个线程始终保留各自变量的内存空间)<br />仅能在声明/定义代码附近写threadprivate指令<br />fortran定义这些变量时要加上SAVE属性<br />见下示例</li>
+</ul>
+
+<h4 id="综合示例">综合示例</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!并行域指令
+!$OMP PARALLEL private(i_p,i)
+i_p=omp_get_thread_num()
+!并行执行DO循环
+!$OMP DO
+DO i=1,4
+write(*,*) "I'm",i_p,"set i_s",i
+ENDDO
+!$OMP END DO
+!并行执行几个section
+!$OMP SECTIONS
+!$OMP SECTION
+    write(*,*) "I'm",i_p,"SECTION1"
+!$OMP SECTION
+    write(*,*) "I'm",i_p,"SECTION2"
+!$OMP SECTION
+    write(*,*) "I'm",i_p,"SECTION3"
+!$OMP END SECTIONS
+CALL sleep(i_p+1)
+!$OMP SINGLE
+!结构体代码仅由一个线程执行；并由首先执行到该代码的线程执行；其它线程等待直至该结构块被执行完
+i_s(:)=1
+write(*,*) "I'm",i_p,"SINGLE"
+!$OMP END SINGLE
+!$OMP END PARALLEL
+</code></pre></div></div>
+<p>结果</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> I'm           0 set i_s           1
+ I'm           3 set i_s           4
+ I'm           2 set i_s           3
+ I'm           1 set i_s           2
+ I'm           0 SECTION1
+ I'm           2 SECTION3
+ I'm           1 SECTION2
+ I'm           0 SINGLE
+</code></pre></div></div>
+
+<h4 id="parallelx">PARALLEL+X</h4>
+<ul>
+  <li>如果PARALLEL并行域内紧跟X(DO/SECTIONS),可以合并为同一个</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!$OMP PARALLEL
+i_p=omp_get_thread_num()
+!$OMP DO PRIVATE(i)
+DO i=1,4
+    write(*,*) "I'm",i_p,"i=",i
+ENDDO
+!$OMP END  DO
+!$OMP END PARALLEL
+</code></pre></div></div>
+<p>或者</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!$OMP PARALLEL DO PRIVATE(i)
+DO i=1,4
+    i_p=omp_get_thread_num()
+    write(*,*) "I'm",i_p,"i=",i
+ENDDO
+!$OMP END PARALLEL DO
+</code></pre></div></div>
+<p>结果,两个线程分别执行特定的DO循环体</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> I'm           0 i=           1
+ I'm           0 i=           2
+ I'm           1 i=           3
+ I'm           1 i=           4
+</code></pre></div></div>
+<p>如果<code class="language-plaintext highlighter-rouge">!$OMP DO</code>后面没有紧跟<code class="language-plaintext highlighter-rouge">DO</code>循环命令,则会编译报错<code class="language-plaintext highlighter-rouge">error #7644: The statement or directive following this OpenMP* directive is incorrect.</code></p>
+
+<h4 id="criticalatomic示例">critical、ATOMIC示例</h4>
+<p><strong>ATOMIC紧跟的原子改写规则</strong></p>
+<ul>
+  <li>Fortran:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!$OMP ATOMIC
+statement
+</code></pre></div>    </div>
+  </li>
+  <li>C/C++：
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#pragma omp atomic
+statement
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>在fortran中， statement必须是下列形式之一：<code class="language-plaintext highlighter-rouge">x=x op expr、 x=expr op x 、 x=intr(x, expr)或x=intr(expr， x)</code>。</p>
+<ul>
+  <li>其中： op是<code class="language-plaintext highlighter-rouge">+、 - 、 * 、 / 、 .and. 、 .or. 、 .eqv. 、或.neqv. </code>之一；</li>
+  <li>intr是<code class="language-plaintext highlighter-rouge">MAX 、 min 、 IAND 、 IOR或IEOR</code>之一。</li>
+</ul>
+
+<p>在C/C++中， statement必须是下列形式之一：<code class="language-plaintext highlighter-rouge">x binop=expr、x++ 、 x-- 、 ++x 、 或--xx</code>。</p>
+<ul>
+  <li>其中： <code class="language-plaintext highlighter-rouge">binop</code>是二元操作符： <code class="language-plaintext highlighter-rouge">+、 - 、 * 、 / 、 &amp; 、 ^ 、 &lt;&lt;或 &gt;&gt;</code>之一</li>
+</ul>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="w">
+</span><span class="c1">!$OMP BARRIER</span><span class="w">
+</span><span class="c1">!直接求最大值,由于各线程读存的顺序不同,结果是随机的</span><span class="w">
+</span><span class="n">j</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i_p</span><span class="p">)</span><span class="w">
+</span><span class="c1">!$OMP BARRIER</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i_p</span><span class="w"> </span><span class="ow">.EQ.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"j="</span><span class="p">,</span><span class="n">j</span><span class="w">
+</span><span class="c1">!$OMP BARRIER</span><span class="w">
+</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="w">
+</span><span class="c1">!$OMP BARRIER</span><span class="w">
+</span><span class="c1">!CRITICAL同一时间只有一个线程操作内存区域,最终能保存最大值</span><span class="w">
+</span><span class="c1">!CRITICAL [(name)] 的name可以省略,也可以自定义</span><span class="w">
+</span><span class="c1">!$OMP CRITICAL (name)</span><span class="w">
+</span><span class="n">j</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i_p</span><span class="p">)</span><span class="w">
+</span><span class="c1">!$OMP END CRITICAL (name)</span><span class="w">
+</span><span class="c1">!$OMP BARRIER</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i_p</span><span class="w"> </span><span class="ow">.EQ.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"j="</span><span class="p">,</span><span class="n">j</span><span class="w">
+</span><span class="c1">!$OMP BARRIER</span><span class="w">
+
+</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="w">
+</span><span class="c1">!$OMP BARRIER</span><span class="w">
+</span><span class="c1">!ATOMIC也可以实现单线程操作内存区域</span><span class="w">
+</span><span class="c1">!$OMP ATOMIC</span><span class="w">
+</span><span class="n">j</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i_p</span><span class="p">)</span><span class="w">
+</span><span class="c1">!$OMP BARRIER</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i_p</span><span class="w"> </span><span class="ow">.EQ.</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"j="</span><span class="p">,</span><span class="n">j</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="ordered示例">ordered示例</h4>
+<p>如果不是ordered下面大概率会先执行i=3时的write命令,而用上ordered后,在ordered内会按照i=1,2,3,4顺序执行</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!$OMP DO ordered</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="o">-</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span><span class="c1">!$OMP ordered</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"I'm"</span><span class="p">,</span><span class="n">i_p</span><span class="p">,</span><span class="s2">"set i_s"</span><span class="p">,</span><span class="n">i</span><span class="w">
+</span><span class="c1">!$OMP end ordered</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="c1">!$OMP END DO</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="flush示例">flush示例</h4>
+<p>一般在使用OpenMP的时候也很少遇到flush语句,因为flush在下面几种情况下会隐含运行（nowait子句除外）：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP BARRIER</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP CRITICAL 和 !$OMP END CRITICAL</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP END DO</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP END SECTIONS</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP END SINGLE</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP END WORKSHARE</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP ORDERED</code> 和 <code class="language-plaintext highlighter-rouge">!$OMP END ORDERED</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP PARALLEL DO</code> 和 <code class="language-plaintext highlighter-rouge">!$OMP END PARALLEL DO</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP PARALLEL SECTIONS</code> 和 <code class="language-plaintext highlighter-rouge">!$OMP END PARALLEL SECTIONS</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP PARALLEL WORKSHARE</code> 和 <code class="language-plaintext highlighter-rouge">!$OMP END PARALLEL WORKSHARE</code></li>
+</ul>
+
+<p>下列指令不隐含数据同步</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP DO</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP MASTER</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP END MASTER</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP SECTIONS</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP SINGLE</code></li>
+  <li><code class="language-plaintext highlighter-rouge">!$OMP WORKSHARE</code></li>
+</ul>
+
+<p>示例,还没找到flush起重要作用的算法</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//http://www.openmp.org/wp-content/uploads/openmp-examples-4.0.2.pdf</span>
+<span class="c1">//Example mem_model.2c, from Chapter 2 (The OpenMP Memory Model)</span>
+<span class="cp">#include</span><span class="cpf">&lt;omp.h&gt;</span><span class="cp">
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="kt">int</span> <span class="n">data</span><span class="p">,</span> <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+   <span class="cp">#pragma omp parallel num_threads(2)
+</span>   <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+         <span class="cm">/* Write to the data buffer that will be read by thread */</span>
+         <span class="n">data</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+         <span class="cm">/* Flush data to thread 1 and strictly order the write to data
+            relative to the write to the flag */</span>
+         <span class="cp">#pragma omp flush(flag, data)
+</span>         <span class="cm">/* Set flag to release thread 1 */</span>
+         <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+         <span class="cm">/* Flush flag to ensure that thread 1 sees S-21 the change */</span>
+         <span class="cp">#pragma omp flush(flag)
+</span>      <span class="p">}</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+         <span class="cm">/* Values of flag and data are undefined */</span>
+         <span class="n">printf</span><span class="p">(</span><span class="s">"flag=%d data=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+         <span class="cm">/* Loop until we see the update to the flag */</span>
+         <span class="k">while</span> <span class="p">(</span><span class="n">flag</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="cp">#pragma omp flush(flag, data)
+</span>         <span class="p">}</span>
+         <span class="cm">/* Values data will be 42 */</span>
+         <span class="n">printf</span><span class="p">(</span><span class="s">"flag=%d data=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="子句">子句</h3>
+<p><strong>常规属性</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">IF(逻辑表达式)</code>指定循环是应并行执行还是串行执行</li>
+  <li><code class="language-plaintext highlighter-rouge">num_threads(N)</code>，指定线程的个数</li>
+  <li><code class="language-plaintext highlighter-rouge">collapse(循环层数)</code> 把几层for/do循环进行并行执行,默认只有最外层循环分给各个线程,<code class="language-plaintext highlighter-rouge">COLLAPSE(2)</code>把两层循环分给各个线程</li>
+  <li><code class="language-plaintext highlighter-rouge">ordered</code>，用来指定for循环的执行要按顺序执行<br />是<code class="language-plaintext highlighter-rouge">for/do</code>循环的子句<br />说明for循环内有ordered制导语句</li>
+  <li><code class="language-plaintext highlighter-rouge">schedule</code>，指定如何调度do/for循环迭代,<code class="language-plaintext highlighter-rouge">SCHEDULE（ kind[, int chunksize]）</code><br />
+<code class="language-plaintext highlighter-rouge">kind</code>为<code class="language-plaintext highlighter-rouge">STATIC,DYNAMIC,GUIDED,RUNTIME</code>,用法见下<br />
+<code class="language-plaintext highlighter-rouge">chunksize</code>对于<code class="language-plaintext highlighter-rouge">STATIC,DYNAMIC</code>:把总循环任务数按照每<code class="language-plaintext highlighter-rouge">chunksize</code>(默认1)个循环作为一个任务,然后把任务按照静态/动态策略进行分配<br />
+<code class="language-plaintext highlighter-rouge">chunksize</code>对于<code class="language-plaintext highlighter-rouge">GUIDED</code>:把总任务按照每<code class="language-plaintext highlighter-rouge">&gt;=chunksize</code>个循环作为一个任务,每个任务的长度不固定(开始长后面短),然后把任务进行分配<br />
+<code class="language-plaintext highlighter-rouge">RUNTIME</code>表示根据执行程序时环境变量决定<code class="language-plaintext highlighter-rouge">export OMP_SCHEDULE="static,4"</code>,chunksize也有环境变量读入,不能在代码中写chunksize<br />
+<strong>静态调度开销最小，能用静态调度的话尽量用静态调度</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">nowait</code>，忽略指定中暗含的等待<br />
+在工作共享指令(DO/FOR,SECTIONS,SINGLE,WORKSHARE)结束后，有一个隐式barrier存在；使用<code class="language-plaintext highlighter-rouge">nowait</code>子句可以去除循环<br />
+示例<code class="language-plaintext highlighter-rouge">!$OMP DO ... !$OMP END DO NOWAIT</code>,<code class="language-plaintext highlighter-rouge">#pragma omp for nowait</code></li>
+</ul>
+
+<p><strong>数据共享属性</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">default</code>，用来指定并行处理区域内的变量的使用方式<code class="language-plaintext highlighter-rouge">DEFAULT(SHARED|PRIVATE|NONE)</code>，缺省是shared<br />
+c/c++: <code class="language-plaintext highlighter-rouge">default(shared | none)</code>,fortran<code class="language-plaintext highlighter-rouge">default(private | firstprivate | shared | none)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">shared(变量列表)</code>，指定一个或多个变量为多个线程间的共享变量</li>
+  <li><code class="language-plaintext highlighter-rouge">private(变量列表)</code>, 指定每个线程都有它自己的<strong>变量私有副本</strong><br />即创建新的内存空间(<em>没有初值</em>)<br />和并行区域外的变量没有任何关联</li>
+  <li><code class="language-plaintext highlighter-rouge">firstprivate(变量列表)</code>，指定每个线程都有它自己的变量私有副本，并且变量要被<em>继承主线程中的初值</em></li>
+  <li><code class="language-plaintext highlighter-rouge">lastprivate(变量列表)</code>，主要是用来指定将线程中的私有变量的值在并行处理结束后复制回主线程中的对应变量。<br />
+是语法上的最后值赋值给主线程,不是最后执行完的的线程的值<br />
+如，对于for而言，就是最后一个循环迭代所在线程的副本值，用于对共享变量赋值<br />
+如果是section构造，那么是最后一个section语句中的值赋给对应的共享变量</li>
+  <li><code class="language-plaintext highlighter-rouge">reduction</code>，用来指定一个或多个变量是<strong>私有的</strong>(与private功能相同),并(按照归约的类型)给初值，<br />并且在并行处理结束后处理这些<strong>变量私有副本</strong>和<strong>并行区域之外的同名变量</strong>,执行归约运算,<br />如<code class="language-plaintext highlighter-rouge">+, -, *, .and., .or., .eqv.,.neqv. , max, min, iand, ior, ieor</code>,<br />结果保存到并行区域之外的同名变量<br />
+示例<code class="language-plaintext highlighter-rouge">!$OMP PARALLEL reduction(max:ip) reduction(min:ip1)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">copyprivate</code>，用于<code class="language-plaintext highlighter-rouge">single</code>制导中的指定变量广播到并行区中其它线程<br />如用single读取数据后广播给其他变量<br />对于Fortran在<code class="language-plaintext highlighter-rouge">END SINGLE</code>结束语句处使用, <code class="language-plaintext highlighter-rouge">!$OMP END SINGLE COPYPRIVATE(变量列表)</code><br />变量列表是各种pricate变量,包括THREADPRIVATE</li>
+  <li><code class="language-plaintext highlighter-rouge">copyin(threadprivate变量列表)</code>，将主线程的threadprivate变量广播给其它线程的threadprivate变量</li>
+</ul>
+
+<h4 id="变量类型示例">变量类型示例</h4>
+<ul>
+  <li>shared的变量执行完并行区域后,里面的值的更改会保留</li>
+  <li>private的变量更改仅在并行区域有效,即额外创建了一份私有内存空间,不会改变原来变量区域
+    <div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">integer</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">i_s</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="n">i_p</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="mi">100</span><span class="w">
+</span><span class="c1">!$OMP PARALLEL shared(i_s,i),default(private)</span><span class="w">
+</span><span class="n">i_p</span><span class="o">=</span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="mi">+1</span><span class="w">
+</span><span class="n">i_s</span><span class="p">(</span><span class="n">i_p</span><span class="p">)</span><span class="o">=</span><span class="n">i_p</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"i_p"</span><span class="p">,</span><span class="n">i_p</span><span class="p">,</span><span class="s2">"i_s"</span><span class="p">,</span><span class="n">i_s</span><span class="w">
+</span></code></pre></div>    </div>
+    <p>结果</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> i_p          10 i_s           1           2
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="privatefirstprivatelastprivatethreadprivate对比">private/firstprivate/lastprivate/threadprivate对比</h4>
+<ul>
+  <li>private/firstprivate/lastprivate是子句,仅在负责的并行区域有效</li>
+  <li>threadprivate是制导指令(指令),在所有的并行区域都有效</li>
+  <li>private在并行区域开辟新的空间,不同线程互补干扰,与并行区域外的变量无关. 没有赋初值</li>
+  <li>firstprivate同private,但是初值来自并行区域外</li>
+  <li>lastprivate结束并行区域后,把语法上执行的最后一次的值赋值给并行区域外</li>
+  <li>变量可以同时是firstprivate+lastprivate. 但是不能是private+firstprivate/lastprivate</li>
+  <li><code class="language-plaintext highlighter-rouge">copyin(threadprivate_i)</code>可以把主线程的threadprivate变量同步到各个线程</li>
+</ul>
+
+<p>示例</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">program</span><span class="w"> </span><span class="n">main</span><span class="w">
+</span><span class="k">USE</span><span class="w"> </span><span class="n">OMP_LIB</span><span class="w">
+</span><span class="k">implicit</span><span class="w"> </span><span class="k">NONE</span><span class="w">
+</span><span class="kt">integer</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">private_i</span><span class="p">,</span><span class="n">firstprivate_i</span><span class="p">,</span><span class="n">lastprivate_i</span><span class="w">
+</span><span class="c1">!仅能在声明/定义处使用THREADPRIVATE</span><span class="w">
+</span><span class="kt">integer</span><span class="p">,</span><span class="k">SAVE</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">threadprivate_i</span><span class="w"> </span><span class="c1">!THREADPRIVATE的变量要有SAVE属性</span><span class="w">
+</span><span class="c1">!$OMP THREADPRIVATE(threadprivate_i)</span><span class="w">
+</span><span class="kt">integer</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">i</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"hello: main"</span><span class="w">
+</span><span class="n">i</span><span class="o">=</span><span class="mi">100</span><span class="w">
+</span><span class="n">threadprivate_i</span><span class="o">=</span><span class="mi">1</span><span class="w">
+</span><span class="n">private_i</span><span class="o">=</span><span class="mi">2</span><span class="w">
+</span><span class="n">firstprivate_i</span><span class="o">=</span><span class="mi">3</span><span class="w">
+</span><span class="n">lastprivate_i</span><span class="o">=</span><span class="mi">4</span><span class="w">
+</span><span class="c1">!$OMP PARALLEL private(private_i) &amp;</span><span class="w">
+</span><span class="c1">!$OMP          firstprivate(firstprivate_i)</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="w"> </span><span class="ow">.EQ.</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"parallel: private_i"</span><span class="p">,</span><span class="n">private_i</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="w"> </span><span class="ow">.EQ.</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"parallel: firstprivate_i"</span><span class="p">,</span><span class="n">firstprivate_i</span><span class="w">
+</span><span class="c1">!lastprivate_i为i=5的循环结果</span><span class="w">
+</span><span class="c1">!$OMP DO private(i) lastprivate(lastprivate_i)</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="w">
+</span><span class="k">call</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">6</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="w">
+</span><span class="n">lastprivate_i</span><span class="o">=</span><span class="n">i</span><span class="w">
+</span><span class="n">threadprivate_i</span><span class="o">=</span><span class="n">i</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="c1">!$OMP END DO</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"ROOT: lastprivate_i"</span><span class="p">,</span><span class="n">lastprivate_i</span><span class="w">
+</span><span class="c1">!主线程即0线程的结果</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"ROOT: threadprivate_i"</span><span class="p">,</span><span class="n">threadprivate_i</span><span class="w">
+</span><span class="c1">!$OMP PARALLEL</span><span class="w">
+</span><span class="c1">!所有线程保留各自的值</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"ID"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">(),</span><span class="w"> </span><span class="s2">"parallel: threadprivate_i"</span><span class="p">,</span><span class="n">threadprivate_i</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+
+</span><span class="k">end</span><span class="w"> </span><span class="k">program</span><span class="w">
+</span></code></pre></div></div>
+<p>两个线程的执行结果</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> parallel: private_i           0
+ parallel: firstprivate_i           3
+ ROOT: lastprivate_i           5
+ ROOT: threadprivate_i           3
+ ID           0 parallel: threadprivate_i           3
+ ID           1 parallel: threadprivate_i           5
+</code></pre></div></div>
+
+<h4 id="doschedule">DO+schedule</h4>
+
+<p>这里使用<code class="language-plaintext highlighter-rouge">runtime</code>举例</p>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span><span class="o">=</span><span class="mi">20</span><span class="w">
+</span><span class="c1">!$OMP PARALLEL  PRIVATE(ip,ip2) SHARED(C)</span><span class="w">
+</span><span class="c1">!$OMP DO schedule(runtime)</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="w">
+</span><span class="n">C</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+</span><span class="c1">!$OMP END DO</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+
+</span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">"(A4)"</span><span class="p">,</span><span class="n">advance</span><span class="o">=</span><span class="s2">"no"</span><span class="p">)</span><span class="w"> </span><span class="s2">"DO:"</span><span class="w">
+</span><span class="k">FLUSH</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="w">
+</span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">"(I4)"</span><span class="p">,</span><span class="n">advance</span><span class="o">=</span><span class="s2">"no"</span><span class="p">)</span><span class="w"> </span><span class="n">i</span><span class="w">
+</span><span class="k">FLUSH</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">"(A4)"</span><span class="p">,</span><span class="n">advance</span><span class="o">=</span><span class="s2">"no"</span><span class="p">)</span><span class="w"> </span><span class="s2">"IP:"</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="w">
+</span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s2">"(I4)"</span><span class="p">,</span><span class="n">advance</span><span class="o">=</span><span class="s2">"no"</span><span class="p">)</span><span class="w"> </span><span class="n">C</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w">
+</span><span class="k">FLUSH</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="k">WRITE</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span></code></pre></div></div>
+
+<h5 id="static">static</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export OMP_SCHEDULE="static,4"
+#或者在代码中
+!$OMP DO schedule(static,4)
+</code></pre></div></div>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">chunksize=4</code>每4个循环作为一个基础任务</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">static</code>就是依次分配给每个线程</strong></li>
+</ul>
+
+<p>结果</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> DO:   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+ IP:   0   0   0   0   1   1   1   1   0   0   0   0   1   1   1   1   0   0   0   0
+</code></pre></div></div>
+
+<h5 id="dynamic">dynamic</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export OMP_SCHEDULE="dynamic,4"
+#或者在代码中
+!$OMP DO schedule(dynamic,4)
+</code></pre></div></div>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">chunksize=4</code>每4个循环作为一个基础任务</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">dynamic</code>谁先执行到此任务,谁执行</strong>,<br />如下面0线程执行的最快,先执行了三个任务<code class="language-plaintext highlighter-rouge">[1-4][5-8][9-12]</code>,1线程执行了<code class="language-plaintext highlighter-rouge">[13-16]</code>,0线程又执行<code class="language-plaintext highlighter-rouge">[17-20]</code></li>
+</ul>
+
+<p>结果</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> DO:   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+ IP:   0   0   0   0   0   0   0   0   0   0   0   0   1   1   1   1   0   0   0   0
+</code></pre></div></div>
+
+<h5 id="guided">guided</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export OMP_SCHEDULE="guided,4"
+#或者在代码中
+!$OMP DO schedule(guided,4)
+</code></pre></div></div>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">chunksize=4</code>每<code class="language-plaintext highlighter-rouge">&gt;=4</code>个循环作为一个基础任务</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">dynamic</code> 动态设置每个任务的循环长度,先长后短</strong></li>
+</ul>
+
+<p>结果</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> DO:   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+ IP:   0   0   0   0   0   1   1   1   1   1   1   1   1   0   0   0   0   1   1   1
+</code></pre></div></div>
+
+<h4 id="do--collapse-示例">DO + COLLAPSE 示例</h4>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!$OMP PARALLEL DO ORDERED PRIVATE(i,j)</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="w">
+</span><span class="c1">!$OMP ORDERED</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"ID"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">(),</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="w">
+</span><span class="c1">!$OMP END ORDERED</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL DO</span><span class="w">
+</span><span class="c1">!$OMP PARALLEL DO COLLAPSE(2) ORDERED PRIVATE(i,j)</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="w">
+</span><span class="c1">!$OMP ORDERED</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"ID"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">(),</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="w">
+</span><span class="c1">!$OMP END ORDERED</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL DO</span><span class="w">
+</span></code></pre></div></div>
+<p>结果,默认情况只有两个线程执行循环,使用collapse后可以用更多的线程参与</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ID           0           1           1
+ ID           0           1           2
+ ID           1           2           1
+ ID           1           2           2
+ ID           0           1           1
+ ID           1           1           2
+ ID           2           2           1
+ ID           3           2           2
+</code></pre></div></div>
+
+<h4 id="reduction详解">reduction详解</h4>
+<ul>
+  <li>指定一个或多个变量是私有的，并且在并行处理结束后对这些变量+并行区域外的同名变量执行指定的归约操作（如求和），然后将结果返回给主线程中的同名变量</li>
+  <li>语法:<code class="language-plaintext highlighter-rouge">reduction(op:var1) reduction(op:var2) reduction(op:var3) </code></li>
+</ul>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!$OMP PARALLEL reduction(max:ip) reduction(min:ip1)</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">omp_get_thread_num</span><span class="p">(),</span><span class="n">ip</span><span class="p">,</span><span class="n">ip1</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+</span></code></pre></div></div>
+
+<p>对于Fortran</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>规约函数</th>
+      <th>初值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">+</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">*</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.and.</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.true.</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.or.</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.false.</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.eqv.</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.true</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.neqv</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.false.</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">max</code></td>
+      <td>最小数</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">min</code></td>
+      <td>最大数</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">iand</code> (位运算)</td>
+      <td>all bits on</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ior </code> (位运算)</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ieor</code> (位运算)</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="if-示例">IF 示例</h4>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ip</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="c1">!对于Fortran判断语句可以时 ip &gt; 0, 或者ip .GT. 0, 用.TRUE.等都可以</span><span class="w">
+</span><span class="c1">!$OMP PARALLEL IF(ip .GT. 0)</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">".GT."</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+</span><span class="c1">!$OMP PARALLEL IF(ip .LE. 0)</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">".LE."</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+</span></code></pre></div></div>
+<p>结果</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> .GT.           0
+ .GT.           1
+ .LE.           0
+</code></pre></div></div>
+
+<h3 id="子句和制导指令的组合使用">子句和制导指令的组合使用</h3>
+<p>只有并行域指令和工作共享指令才常和子句搭配使用,图源<a href="https://math.ecnu.edu.cn/~jypan/">并行计算@潘建瑜</a>:
+<img src="/uploads/2022/12/omp_zhiling_ziju.png" alt="" /></p>
+
+<h3 id="指令绑定规则">指令绑定规则</h3>
+<ul>
+  <li>DO, SECTIONS, SINGLE, MASTER 和 BARRIER 指令绑定到动态的封装 PARALLEL 中，如果没有并行域执行，这些语句是无效的。</li>
+  <li>ORDERED 指令绑定到包围它的动态 DO 中。</li>
+  <li>ATOMIC 指令迫使所有线程做互斥访问，而不仅是当前组里的线程。</li>
+  <li>CRITICAL 指令迫使所有的线程做互斥访问，而不仅是当前组里的线程。</li>
+  <li>指令总是绑定到包围它的最内层 PARALLEL 中</li>
+</ul>
+
+<h3 id="指令嵌套">指令嵌套</h3>
+<ul>
+  <li>动态的位于另一个 PARALLEL 指令中的 PARALLEL 指令逻辑上建立一个新的组，如果不允许嵌套并行(默认<code class="language-plaintext highlighter-rouge">export OMP_NESTED=FALSE</code>)，则这个新组仅由当前线程执行。
+<br />使用嵌套时需要设置<code class="language-plaintext highlighter-rouge">export OMP_NESTED=TRUE</code>或者<code class="language-plaintext highlighter-rouge">CALL omp_set_nested(.TRUE.)</code>(优先级更高)
+<br />新版OpenMP的嵌套命令使用<code class="language-plaintext highlighter-rouge">export OMP_MAX_ACTIVE_LEVELS=2</code>指定嵌套层数</li>
+  <li>受同一PARALLEL指令控制的 DO， SECTIONS， SINGLE 指令不允许彼此嵌套。<br />即PARALLEL中的DO不能直接套DO等任务分配,需要重新PARALLEL创建新的并行区域<br />如PARALLEL中可以有DO, DO中可以套PARALLEL再套DO循环下去,<br />
+如果只是简单的双层DO嵌套,用<code class="language-plaintext highlighter-rouge">collapse</code>子句更简单</li>
+  <li>DO， SECTIONS 和 SINGLE 指令不允许出现在 CRITICAL 和MASTER 的动态区域中。</li>
+  <li>BARRIER 指令不允许出现在 DO， SECTIONS， SINGLE， MASTER和 CRITICAL 指令的动态区域中。</li>
+  <li>MASTER 指令不允许出现在 CRITICAL 区的动态区域中。</li>
+  <li>ORDERED 区不允许出现在 CRITICAL 区的动态区域中。</li>
+  <li>可以在并行域的动态区域中出现的指令，也可在并行域的动态区域外出现，但它仅由主线程执行</li>
+</ul>
+
+<h4 id="指令嵌套示例">指令嵌套示例</h4>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">!$OMP PARALLEL  PRIVATE(ip,ip2)</span><span class="w">
+</span><span class="c1">!$OMP DO</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="w">
+    </span><span class="n">ip</span><span class="o">=</span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="w">
+    </span><span class="c1">!$OMP PARALLEL  firstprivate(i,ip)</span><span class="w">
+    </span><span class="c1">!$OMP DO</span><span class="w">
+    </span><span class="k">DO</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="w">
+        </span><span class="k">CALL</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="w">
+        </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"P1"</span><span class="p">,</span><span class="n">ip</span><span class="mi">+1</span><span class="p">,</span><span class="s2">"P2"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="mi">+1</span><span class="p">,</span><span class="s2">"i"</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s2">"j"</span><span class="p">,</span><span class="n">j</span><span class="w">
+        </span><span class="k">CALL</span><span class="w"> </span><span class="n">cal</span><span class="p">()</span><span class="w">
+    </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+    </span><span class="c1">!$OMP END DO</span><span class="w">
+    </span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+</span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+</span><span class="c1">!$OMP END DO</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+</span></code></pre></div></div>
+<p>当开启嵌套时(<code class="language-plaintext highlighter-rouge">export OMP_NESTED=TRUE</code>),开始的两个线程，每个线程作为主线程又创建了4个线程</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> P1           1 P2           1 i           1 j           1
+ P1           1 P2           2 i           1 j           2
+ P1           1 P2           3 i           1 j           3
+ P1           1 P2           4 i           1 j           4
+ P1           2 P2           1 i           2 j           1
+ P1           2 P2           2 i           2 j           2
+ P1           2 P2           3 i           2 j           3
+ P1           2 P2           4 i           2 j           4
+</code></pre></div></div>
+<p>而若关闭嵌套(<code class="language-plaintext highlighter-rouge">export OMP_NESTED=FALSE</code>),开始的两个线程需要执行j的循环</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> P1           1 P2           1 i           1 j           1
+ P1           2 P2           1 i           2 j           1
+ P1           1 P2           1 i           1 j           2
+ P1           1 P2           1 i           1 j           3
+ P1           2 P2           1 i           2 j           2
+ P1           1 P2           1 i           1 j           4
+ P1           2 P2           1 i           2 j           3
+ P1           2 P2           1 i           2 j           4
+</code></pre></div></div>
+
+<h2 id="库函数">库函数</h2>
+<p>使用这些库函数需要Fortran <code class="language-plaintext highlighter-rouge">USE OMP_LIB</code>,C<code class="language-plaintext highlighter-rouge">#include&lt;omp.h&gt;</code></p>
+
+<h3 id="基础库函数">基础库函数</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">omp_set_num_threads(int N)</code>, 设置并行执行代码的线程个数,<strong>必须在并行区域之外执行才有效</strong>,是subroutine</li>
+  <li><code class="language-plaintext highlighter-rouge">omp_get_num_threads()</code>, 返回当前并行区域中的活动线程个数。<code class="language-plaintext highlighter-rouge">export OMP_NUM_THREADS=8</code>或者<code class="language-plaintext highlighter-rouge">CALL omp_set_num_threads(4)</code>指定,或者子句的方式指定<code class="language-plaintext highlighter-rouge">!$OMP PARALLEL num_threads(5)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">OMP_GET_MAX_THREADS()</code> 返回并行域中可用的最大线程个数</li>
+  <li><code class="language-plaintext highlighter-rouge">omp_get_thread_num()</code>, 返回线程号,<code class="language-plaintext highlighter-rouge">0,1,2,...,omp_get_num_threads()-1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">omp_get_num_procs()</code>, 返回运行本线程的多处理机的处理器个数。如果开了超线程,就是总逻辑处理器</li>
+  <li><code class="language-plaintext highlighter-rouge">OMP_IN_PARALLEL()</code> 判断是否在并行域中</li>
+  <li><code class="language-plaintext highlighter-rouge">OMP_SET_DYNAMIC(LOG_EXPR)</code> 启用或关闭线程数目的动态改变</li>
+  <li><code class="language-plaintext highlighter-rouge">OMP_GET_DYNAMIC()</code> 判断系统是否支持动态改变线程数目</li>
+  <li><code class="language-plaintext highlighter-rouge">OMP_SET_NESTED(LOG_EXPR)</code> 启用或关闭并行域嵌套</li>
+  <li><code class="language-plaintext highlighter-rouge">OMP_GET_NESTED()</code> 判断系统是否支持并行域的嵌套</li>
+  <li><code class="language-plaintext highlighter-rouge">omp_init_lock(OMP_LOCK_KIND)</code>, 初始化一个简单锁. <em>LOCK详见下面</em></li>
+  <li><code class="language-plaintext highlighter-rouge">omp_set_lock(OMP_LOCK_KIND)</code>， 上锁操作</li>
+  <li><code class="language-plaintext highlighter-rouge">omp_unset_lock(OMP_LOCK_KIND)</code>， 解锁操作，要和omp_set_lock函数配对使用。</li>
+  <li><code class="language-plaintext highlighter-rouge">omp_destroy_lock(OMP_LOCK_KIND)</code>， <code class="language-plaintext highlighter-rouge">omp_init_lock</code>函数的配对操作函数，关闭一个锁</li>
+  <li><code class="language-plaintext highlighter-rouge">omp_test_lock(OMP_LOCK_KIND)</code> 试图获得互斥器，如果获得成功则返回true，否则返回false<br />该函数可以看作是omp_set_lock的非阻塞版本。</li>
+  <li><code class="language-plaintext highlighter-rouge">omp_get_wtime()</code>. 获取 wall time，以秒为单位，双精度型的实数,就是带小数的时间戳</li>
+  <li><code class="language-plaintext highlighter-rouge">omp_get_wtick()</code>. 获取每个时钟周期的秒数，即 omp_get_wtime 的精度(如omp_get_wtime精度是小数点后6位,就返回1e-6)</li>
+</ul>
+
+<h3 id="openmp-31-新增库函数">OpenMP 3.1 新增库函数</h3>
+<p>查表吧</p>
+<ul>
+  <li>omp_set_schedule</li>
+  <li>omp_get_schedule</li>
+  <li>omp_get_thread_limit</li>
+  <li>…</li>
+</ul>
+
+<h3 id="获取线程信息示例">获取线程信息示例</h3>
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">USE</span><span class="w"> </span><span class="n">OMP_LIB</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">omp_set_num_threads</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span><span class="c1">!$OMP PARALLEL</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"omp_get_num_procs"</span><span class="p">,</span><span class="w">   </span><span class="n">omp_get_num_procs</span><span class="p">()</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"omp_get_num_threads"</span><span class="p">,</span><span class="w">   </span><span class="n">omp_get_num_threads</span><span class="p">()</span><span class="w">
+</span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"omp_get_thread_num"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">()</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="lock例程">LOCK例程</h3>
+<p>设定锁和解除锁之间的区域,同一时间只能有一个线程执行,而别的线程仅能在设定锁的线程解除锁(执行完锁定区域代码)后才能设定锁(执行锁定区域代码).</p>
+
+<p>Fortran: <code class="language-plaintext highlighter-rouge">USE OMP_LIB;integer(OMP_LOCK_KIND) :: var</code></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Subroutine OMP_INIT_LOCK(VAR)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Subroutine OMP_SET_LOCK(VAR)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">LOGICAL FUNCTION OMP_TEST_LOCK(VAR)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Subroutine OMP_UNSET_LOCK(VAR)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Subroutine OMP_DESTROY_LOCK(VAR)</code></li>
+</ul>
+
+<p>C/C++：<code class="language-plaintext highlighter-rouge">#include&lt;OMP.h&gt;</code>,<code class="language-plaintext highlighter-rouge">omp_lock_t * lock;</code></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">void omp_init_lock(omp_lock_t *lock);</code></li>
+  <li><code class="language-plaintext highlighter-rouge">void omp_set_lock(omp_lock_t *lock);</code></li>
+  <li><code class="language-plaintext highlighter-rouge">int omp_test_lock(omp_lock_t *lock);</code></li>
+  <li><code class="language-plaintext highlighter-rouge">void omp_unset_lock(omp_lock_t *lock);</code></li>
+  <li><code class="language-plaintext highlighter-rouge">void omp_destroy_lock(omp_lock_t *lock);</code></li>
+</ul>
+
+<p>示例:<br /></p>
+<ul>
+  <li>如果不设置<code class="language-plaintext highlighter-rouge">LOCK</code>,输出到屏幕的顺序是多个循环同时输出的<br />
+而设置<code class="language-plaintext highlighter-rouge">LOCK</code>后,则由先执行到LOCK的线程先执行锁定区间的内容</li>
+  <li><code class="language-plaintext highlighter-rouge">OMP_set_LOCK</code>和<code class="language-plaintext highlighter-rouge">OMP_TEST_LOCK</code>是相同的级别,不能同时使用
+    <div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">integer</span><span class="p">(</span><span class="n">OMP_LOCK_KIND</span><span class="p">)</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">var</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">OMP_init_LOCK</span><span class="p">(</span><span class="n">ilock</span><span class="p">)</span><span class="w"> </span><span class="c1">!必须先初始化,才能执行其他的命令,如OMP_TEST_LOCK</span><span class="w">
+</span><span class="c1">!若不初始化,直接执行其他LOCK命令,会卡死</span><span class="w">
+</span><span class="c1">!$OMP PARALLEL SHARED(ilock)</span><span class="w">
+</span><span class="c1">!$OMP DO private(i) </span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="w">
+  </span><span class="c1">!只能有一个线程执行下面的锁定内容,其他线程被锁定(阻塞)</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">OMP_set_LOCK</span><span class="p">(</span><span class="n">ilock</span><span class="p">)</span><span class="w">
+  </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"ID"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">(),</span><span class="n">i</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="w">
+  </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"ID"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">(),</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">OMP_unset_LOCK</span><span class="p">(</span><span class="n">ilock</span><span class="p">)</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="c1">!$OMP END DO</span><span class="w">
+</span><span class="c1">!$OMP DO private(i) </span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="w">
+  </span><span class="c1">!尝试获得lock,若没获得也可以执行其他的命令,可视为omp_set_lock的非阻塞版本</span><span class="w">
+  </span><span class="k">DO</span><span class="w"> </span><span class="k">WHILE</span><span class="p">(</span><span class="w"> </span><span class="ow">.not.</span><span class="w"> </span><span class="n">OMP_TEST_LOCK</span><span class="p">(</span><span class="n">ilock</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+      </span><span class="c1">!do someting else</span><span class="w">
+      </span><span class="k">call</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">
+      </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"ID"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">(),</span><span class="s2">"sleep"</span><span class="w">
+  </span><span class="k">END</span><span class="w"> </span><span class="k">DO</span><span class="w">
+  </span><span class="c1">!只能有一个线程执行下面的锁定内容</span><span class="w">
+  </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"ID"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">(),</span><span class="n">i</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="w">
+  </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"ID"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">(),</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="w">
+  </span><span class="k">CALL</span><span class="w"> </span><span class="n">OMP_unset_LOCK</span><span class="p">(</span><span class="n">ilock</span><span class="p">)</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="c1">!$OMP END DO</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">OMP_DESTROY_LOCK</span><span class="p">(</span><span class="n">ilock</span><span class="p">)</span><span class="w">
+</span></code></pre></div>    </div>
+    <p>结果</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ID           1           2
+ ID           1          20
+ ID           0           1
+ ID           0          10
+ ID           0           1
+ ID           1 sleep
+ ID           0          10
+ ID           1 sleep
+ ID           1           2
+ ID           1          20
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="环境变量">环境变量</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>变量</th>
+      <th>含义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OMP_NUM_THREADS</code></td>
+      <td>设置线程个数<br />示例<code class="language-plaintext highlighter-rouge">export OMP_NUM_THREADS=4</code><br />亦可<code class="language-plaintext highlighter-rouge">CALL omp_set_num_threads(4)</code>指定<br />子句的方式指定<code class="language-plaintext highlighter-rouge">!$OMP PARALLEL num_threads(4)</code><br />num_threads子句的优先权高于库例程omp_set_num_threads和环境变量OMP_NUM_THREADS</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OMP_SCHEDULE</code></td>
+      <td>设置循环任务的调度模式 <br />示例<code class="language-plaintext highlighter-rouge">export OMP_SCHEDULE="DYNAMIC, 4"</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OMP_DYNAMIC</code></td>
+      <td>设置线程数的动态变化<br />是否动态设定并行域执行的线程数</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OMP_NESTED</code></td>
+      <td>设置并行域的嵌套<br /><code class="language-plaintext highlighter-rouge">export  OMP_NESTED=TRUE</code>,新版是<code class="language-plaintext highlighter-rouge">export OMP_MAX_ACTIVE_LEVELS=N</code><br />亦可<code class="language-plaintext highlighter-rouge">CALL omp_set_nested(.TRUE.)</code>/<code class="language-plaintext highlighter-rouge">CALL omp_set_max_active_levels(N)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OMP_STACKSIZE</code></td>
+      <td>线程的堆栈的大小，缺省单位是 K</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">OMP_THREAD_LIMIT</code></td>
+      <td>整个 OpenMP 程序的线程的最大个数</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="mpi混编openmp">MPI混编OpenMP</h2>
+
+<div class="language-fortran highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">program</span><span class="w"> </span><span class="n">main</span><span class="w">
+</span><span class="k">USE</span><span class="w"> </span><span class="n">OMP_LIB</span><span class="w">
+</span><span class="k">USE</span><span class="w"> </span><span class="n">MPI</span><span class="w">
+</span><span class="k">implicit</span><span class="w"> </span><span class="k">NONE</span><span class="w">
+</span><span class="kt">integer</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">ierr</span><span class="p">,</span><span class="n">ip</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">np</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">MPI_INIT</span><span class="p">(</span><span class="n">ierr</span><span class="p">)</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">MPI_COMM_RANK</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="n">ip</span><span class="p">,</span><span class="n">ierr</span><span class="p">)</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">MPI_COMM_SIZE</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="n">np</span><span class="p">,</span><span class="n">ierr</span><span class="p">)</span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">SLEEP</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="w">
+</span><span class="c1">!$OMP PARALLEL PRIVATE(i)</span><span class="w">
+</span><span class="c1">!$OMP DO</span><span class="w">
+</span><span class="k">DO</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">ip</span><span class="mi">+1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="n">np</span><span class="w">
+    </span><span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="s2">"MPI:"</span><span class="p">,</span><span class="n">ip</span><span class="p">,</span><span class="s2">"OpenMP"</span><span class="p">,</span><span class="n">omp_get_thread_num</span><span class="p">(),</span><span class="s2">"I"</span><span class="p">,</span><span class="n">i</span><span class="w">
+    </span><span class="k">CALL</span><span class="w"> </span><span class="n">cal</span><span class="p">()</span><span class="w">
+</span><span class="k">ENDDO</span><span class="w">
+</span><span class="c1">!$OMP END DO</span><span class="w">
+</span><span class="c1">!$OMP END PARALLEL </span><span class="w">
+</span><span class="k">CALL</span><span class="w"> </span><span class="n">MPI_FINALIZE</span><span class="p">(</span><span class="n">ierr</span><span class="p">)</span><span class="w">
+</span><span class="k">CONTAINS</span><span class="w">
+</span><span class="k">subroutine</span><span class="w"> </span><span class="n">cal</span><span class="p">()</span><span class="w">
+</span><span class="kt">integer</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="w">
+    </span><span class="k">DO</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kc">.TRUE.</span><span class="w"> </span><span class="p">)</span><span class="w">
+    </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="w">
+    </span><span class="n">j</span><span class="o">=</span><span class="mi">10</span><span class="w">
+    </span><span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="n">j</span><span class="o">+</span><span class="n">j</span><span class="o">*</span><span class="n">j</span><span class="w">
+    </span><span class="k">ENDDO</span><span class="w">
+</span><span class="k">end</span><span class="w"> </span><span class="k">subroutine</span><span class="w"> </span><span class="n">cal</span><span class="w">
+</span><span class="k">end</span><span class="w"> </span><span class="k">program</span><span class="w">
+</span></code></pre></div></div>
+<p>运行,使用<code class="language-plaintext highlighter-rouge">top</code>查看共两个PID程序(mpi),每个PID程序占用CPU400%(4个OpenMP线程)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mpiifort  -qopenmp   -O0 main.f90
+mpirun -np 2 ./a.out
+ MPI:           0 OpenMP           3 I           9
+ MPI:           0 OpenMP           2 I           7
+ MPI:           0 OpenMP           1 I           5
+ MPI:           0 OpenMP           0 I           1
+ MPI:           1 OpenMP           0 I           2
+ MPI:           1 OpenMP           2 I           8
+ MPI:           1 OpenMP           3 I          10
+ MPI:           1 OpenMP           1 I           6
+#top
+PID    COMMAND      %CPU  TIME     #TH    #WQ  #PORTS MEM    PURG   CMPRS  PGRP  PPID  STATE    BOOSTS
+78969  a.out        395.1 08:09.01 6/4    0    17     4088K  0B     0B     78969 78968 running  *0[1]
+78970  a.out        395.0 08:05.04 6/4    0    16     4212K  0B     0B     78970 78968 running  *0[1]
+</code></pre></div></div>
+
+<h2 id="报错警告">报错警告</h2>
+<h3 id="a-specification-statement-cannot-appear-in-the-executable-section"><code class="language-plaintext highlighter-rouge">A specification statement cannot appear in the executable section</code></h3>
+<p>详情</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main.f90(8): error #6236: A specification statement cannot appear in the executable section.
+!$OMP THREADPRIVATE(threadprivate_i)
+</code></pre></div></div>
+<p>由于<code class="language-plaintext highlighter-rouge">!$OMP THREADPRIVATE(threadprivate_i)</code>只能在声明处执行,移到变量定义附近即可</p>
+
+<h3 id="a-variable-that-appears-in-a-threadprivate-directive-and-is-not-declared-in-the-scope-of-a-module-must-have-the-save-attribute"><code class="language-plaintext highlighter-rouge">A variable that appears in a THREADPRIVATE directive and is not declared in the scope of a module must have the SAVE attribute</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main.f90(5): error #7909: A variable that appears in a THREADPRIVATE directive and is not declared in the scope of a module must have the SAVE attribute.   [THREADPRIVATE_I]
+integer :: threadprivate_i
+</code></pre></div></div>
+<p>因为定义了<code class="language-plaintext highlighter-rouge">!$OMP THREADPRIVATE(threadprivate_i)</code>,<code class="language-plaintext highlighter-rouge">threadprivate_i</code>对于不同线程是独立的,全局的,因此需要定义时添加SAVE属性,即<code class="language-plaintext highlighter-rouge">integer,SAVE :: threadprivate_i</code></p>
+
+<h3 id="syntax-error-found-lastprivate-when-expecting-one-of-private-allocate-firstprivate-reduction-default-shared-copyin-proc_bind-num_threads"><code class="language-plaintext highlighter-rouge">Syntax error, found 'LASTPRIVATE' when expecting one of: PRIVATE ALLOCATE FIRSTPRIVATE REDUCTION DEFAULT SHARED COPYIN PROC_BIND NUM_THREADS</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main.f90(14): error #5082: Syntax error, found 'LASTPRIVATE' when expecting one of: PRIVATE ALLOCATE FIRSTPRIVATE REDUCTION DEFAULT SHARED COPYIN PROC_BIND NUM_THREADS ...
+!$OMP PARALLEL private(private_i) lastprivate(lastprivate_i) &amp;
+----------------------------------^
+</code></pre></div></div>
+<p>说明<code class="language-plaintext highlighter-rouge">PARALLEL</code>不支持<code class="language-plaintext highlighter-rouge">LASTPRIVATE</code>的子句,语法不对.应该把<code class="language-plaintext highlighter-rouge">LASTPRIVATE</code>子句移到DO指令行</p>
+
+<h3 id="omp-info-269-omp_nested-variable-deprecated-please-use-omp_max_active_levels-instead"><code class="language-plaintext highlighter-rouge">OMP: Info #269: OMP_NESTED variable deprecated, please use OMP_MAX_ACTIVE_LEVELS instead.</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OMP: Info #269: OMP_NESTED variable deprecated, please use OMP_MAX_ACTIVE_LEVELS instead.
+</code></pre></div></div>
+<p>使用<code class="language-plaintext highlighter-rouge">OMP_MAX_ACTIVE_LEVELS</code>变量</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unset OMP_NESTED
+export OMP_MAX_ACTIVE_LEVELS=2
+</code></pre></div></div>
+<p>类似的</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OMP: Info #277: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+</code></pre></div></div>
+<p>使用<code class="language-plaintext highlighter-rouge">CALL omp_set_max_active_levels(2)</code>替代<code class="language-plaintext highlighter-rouge">CALL omp_set_nested(.TRUE.)</code></p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2022/10/23/intel-yambo/">Intel MPI编译yambo</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2023/03/21/make-SSAGES/">SSLAB服务器上编译基于lammps引擎的SSAGES</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

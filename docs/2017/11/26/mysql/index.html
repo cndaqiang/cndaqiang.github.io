@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Mysql命令行操作</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2017/11/26/mysql/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Mysql命令行操作</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-26
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#web" title="Category: web" rel="category">web</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Mysql" title="Tag: Mysql" rel="tag">Mysql</a-->
+        <a href="/tag/#Mysql" title="Tag: Mysql" rel="tag">Mysql</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#注" id="markdown-toc-注">注</a></li>
+  <li><a href="#先复习下数据库的结构" id="markdown-toc-先复习下数据库的结构">先复习下数据库的结构</a></li>
+  <li><a href="#备份与导入数据库" id="markdown-toc-备份与导入数据库">备份与导入数据库</a>    <ul>
+      <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+      <li><a href="#直接导出所有数据库" id="markdown-toc-直接导出所有数据库">直接导出所有数据库</a></li>
+      <li><a href="#导出某个数据库" id="markdown-toc-导出某个数据库">导出某个数据库</a></li>
+      <li><a href="#bash脚本" id="markdown-toc-bash脚本">bash脚本</a></li>
+      <li><a href="#遇到的问题" id="markdown-toc-遇到的问题">遇到的问题</a>        <ul>
+          <li><a href="#1使用mysqldump备份时提示errno-24-when-using-lock-tables" id="markdown-toc-1使用mysqldump备份时提示errno-24-when-using-lock-tables">1.使用mysqldump备份时提示<code class="language-plaintext highlighter-rouge">(errno: 24) when using LOCK TABLES</code></a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#mysql常用命令" id="markdown-toc-mysql常用命令">Mysql常用命令</a>    <ul>
+      <li><a href="#登陆" id="markdown-toc-登陆">登陆</a></li>
+      <li><a href="#查看" id="markdown-toc-查看">查看</a></li>
+      <li><a href="#mysql用户管理" id="markdown-toc-mysql用户管理">Mysql用户管理</a>        <ul>
+          <li><a href="#参考-1" id="markdown-toc-参考-1">参考</a></li>
+          <li><a href="#mysql数据表说明" id="markdown-toc-mysql数据表说明">mysql数据表说明</a></li>
+          <li><a href="#添加用户" id="markdown-toc-添加用户">添加用户</a></li>
+          <li><a href="#给用户权限" id="markdown-toc-给用户权限">给用户权限</a>            <ul>
+              <li><a href="#例添加库表的权限" id="markdown-toc-例添加库表的权限">例：添加<code class="language-plaintext highlighter-rouge">库.表</code>的权限</a></li>
+              <li><a href="#例添加库的权限" id="markdown-toc-例添加库的权限">例：添加<code class="language-plaintext highlighter-rouge">库</code>的权限</a></li>
+              <li><a href="#例添加全局权限" id="markdown-toc-例添加全局权限">例：添加全局权限</a></li>
+              <li><a href="#创建root级别账户全局权限授权权限" id="markdown-toc-创建root级别账户全局权限授权权限">创建root级别账户(全局权限+授权权限)</a></li>
+            </ul>
+          </li>
+          <li><a href="#取消修改权限" id="markdown-toc-取消修改权限">取消/修改权限</a></li>
+          <li><a href="#修改用户密码" id="markdown-toc-修改用户密码">修改用户密码</a></li>
+          <li><a href="#删除用户" id="markdown-toc-删除用户">删除用户</a></li>
+          <li><a href="#mysql-找回root密码" id="markdown-toc-mysql-找回root密码">mysql 找回root密码</a>            <ul>
+              <li><a href="#环境" id="markdown-toc-环境">环境</a>                <ul>
+                  <li><a href="#操作" id="markdown-toc-操作">操作</a>                    <ul>
+                      <li><a href="#1首先确认服务器出于安全的状态" id="markdown-toc-1首先确认服务器出于安全的状态">1.首先确认服务器出于安全的状态</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#2修改mysql登陆设置" id="markdown-toc-2修改mysql登陆设置">2.修改mysql登陆设置</a></li>
+                  <li><a href="#3重新启动mysqld" id="markdown-toc-3重新启动mysqld">3．重新启动mysqld</a></li>
+                  <li><a href="#4-登陆并修改mysql-root-密码" id="markdown-toc-4-登陆并修改mysql-root-密码">4. 登陆并修改Mysql root 密码</a></li>
+                  <li><a href="#5-修改etcmysqlmysqlconfdmysqldcnf文件为默认内容重启mysql" id="markdown-toc-5-修改etcmysqlmysqlconfdmysqldcnf文件为默认内容重启mysql">5. 修改<code class="language-plaintext highlighter-rouge">/etc/mysql/mysql.conf.d/mysqld.cnf</code>文件为默认内容，重启Mysql</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li><a href="#问题" id="markdown-toc-问题">问题</a>            <ul>
+              <li><a href="#1新建用户时遇到密码不合适" id="markdown-toc-1新建用户时遇到密码不合适">1.新建用户时遇到密码不合适</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#数据库管理" id="markdown-toc-数据库管理">数据库管理</a>        <ul>
+          <li><a href="#创建数据库" id="markdown-toc-创建数据库">创建数据库</a>            <ul>
+              <li><a href="#mysql视图中创建" id="markdown-toc-mysql视图中创建">mysql视图中创建</a></li>
+              <li><a href="#mysqladmin创建" id="markdown-toc-mysqladmin创建">mysqladmin创建</a></li>
+              <li><a href="#php脚本创建" id="markdown-toc-php脚本创建">php脚本创建</a></li>
+            </ul>
+          </li>
+          <li><a href="#删除数据库" id="markdown-toc-删除数据库">删除数据库</a>            <ul>
+              <li><a href="#mysql命令行中删除" id="markdown-toc-mysql命令行中删除">mysql命令行中删除</a></li>
+              <li><a href="#mysqladmin删除" id="markdown-toc-mysqladmin删除">mysqladmin删除</a></li>
+              <li><a href="#php脚本删除" id="markdown-toc-php脚本删除">php脚本删除</a></li>
+            </ul>
+          </li>
+          <li><a href="#选择数据库" id="markdown-toc-选择数据库">选择数据库</a>            <ul>
+              <li><a href="#mysql命令" id="markdown-toc-mysql命令">mysql命令</a></li>
+              <li><a href="#php脚本" id="markdown-toc-php脚本">php脚本</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#数据表管理" id="markdown-toc-数据表管理">数据表管理</a>        <ul>
+          <li><a href="#创建数据表" id="markdown-toc-创建数据表">创建数据表</a>            <ul>
+              <li><a href="#mysql视图" id="markdown-toc-mysql视图">mysql视图</a></li>
+              <li><a href="#php脚本及下面内容的php脚本先略" id="markdown-toc-php脚本及下面内容的php脚本先略">php脚本，及下面内容的php脚本，先略</a></li>
+            </ul>
+          </li>
+          <li><a href="#删除数据表" id="markdown-toc-删除数据表">删除数据表</a></li>
+          <li><a href="#修改数据表名" id="markdown-toc-修改数据表名">修改数据表名</a></li>
+        </ul>
+      </li>
+      <li><a href="#字段管理" id="markdown-toc-字段管理">字段管理</a>        <ul>
+          <li><a href="#添加字段" id="markdown-toc-添加字段">添加字段</a></li>
+          <li><a href="#删除字段" id="markdown-toc-删除字段">删除字段</a></li>
+          <li><a href="#修改字段" id="markdown-toc-修改字段">修改字段</a></li>
+        </ul>
+      </li>
+      <li><a href="#记录数据管理" id="markdown-toc-记录数据管理">记录/数据管理</a>        <ul>
+          <li><a href="#添加记录" id="markdown-toc-添加记录">添加记录</a></li>
+          <li><a href="#查询记录数据" id="markdown-toc-查询记录数据">查询记录/数据</a></li>
+          <li><a href="#删除记录数据" id="markdown-toc-删除记录数据">删除记录/数据</a></li>
+          <li><a href="#更新修改记录" id="markdown-toc-更新修改记录">更新/修改记录</a>            <ul>
+              <li><a href="#批量替换" id="markdown-toc-批量替换">批量替换</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#命令总结" id="markdown-toc-命令总结">命令总结</a>        <ul>
+          <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+          <li><a href="#create" id="markdown-toc-create"><code class="language-plaintext highlighter-rouge">create</code></a></li>
+          <li><a href="#drop" id="markdown-toc-drop"><code class="language-plaintext highlighter-rouge">drop</code></a></li>
+          <li><a href="#use" id="markdown-toc-use"><code class="language-plaintext highlighter-rouge">use</code></a></li>
+          <li><a href="#alter" id="markdown-toc-alter"><code class="language-plaintext highlighter-rouge">alter</code></a></li>
+          <li><a href="#where" id="markdown-toc-where"><code class="language-plaintext highlighter-rouge">where</code></a></li>
+          <li><a href="#update" id="markdown-toc-update"><code class="language-plaintext highlighter-rouge">update</code></a></li>
+          <li><a href="#delete" id="markdown-toc-delete"><code class="language-plaintext highlighter-rouge">delete</code></a></li>
+          <li><a href="#insert" id="markdown-toc-insert"><code class="language-plaintext highlighter-rouge">insert</code></a></li>
+          <li><a href="#select" id="markdown-toc-select"><code class="language-plaintext highlighter-rouge">select</code></a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>phpMyAdmin经常出问题，所以不得不学习一些命令行的操作</p>
+
+<h1 id="注">注</h1>
+<ol>
+  <li>数据库版本不同，命令有差异，以下环境(Server version: 5.7.19-0ubuntu0.16.04.1 (Ubuntu))</li>
+  <li>很多时候是命令输错了</li>
+  <li>命令不区分大小</li>
+  <li><code class="language-plaintext highlighter-rouge">mysql&gt; </code>内命令以<code class="language-plaintext highlighter-rouge">;</code>结尾，不要漏了,命令写一半，可以换行书写</li>
+  <li>建议配合phpMyAdmin一块学习</li>
+  <li>sql语句中 如果字段/数据库名/数据表名含有空格，mysql中使用重音符括起来，一般推荐不含空格也用重音符括起来</li>
+</ol>
+
+<h1 id="先复习下数据库的结构">先复习下数据库的结构</h1>
+<p><img src="/uploads/2017/11/db.png" alt="" /></p>
+<h1 id="备份与导入数据库">备份与导入数据库</h1>
+<h2 id="参考">参考</h2>
+<p><a href="https://www.gubo.org/script-dump-all-mysql-databases/">MySQL备份所有数据库脚本</a><br />
+<a href="http://blog.csdn.net/q3dxdx/article/details/51034343">MySQL备份之mysqldump工具–lock-all-tables、–single-transaction以及–lock-tables参数</a><br />
+<a href="http://cnberg.div.io/archive/mysqldump-error/">备份MySQL出现Can’t open file when using LOCK TABLES错误</a><br /></p>
+
+<h2 id="直接导出所有数据库">直接导出所有数据库</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#备份数据库
+$ mysqldump -u用户名 -p密码 --lock-all-tables --all-databases &gt; all.sql
+#导入数据库
+$ mysql -u用户名 -p密码 &lt; all.sql
+</code></pre></div></div>
+
+<p><strong>注意<code class="language-plaintext highlighter-rouge">-p</code>后面直接跟密码，不能有空格或者不写密码，回车后输入(推荐)<br /> <code class="language-plaintext highlighter-rouge">-u</code>可直接跟用户名，也可空格后跟用户名</strong><br /></p>
+
+<blockquote>
+  <p>这个是直接使用mysqldump命令导出MySQL所有数据库的命令，包括MySQL本身的一些库，例如<code class="language-plaintext highlighter-rouge">数据库mysql</code>(里面包含,mysql的每个用户的密码账户权限等信息,参见后面的用户管理会更清晰的理解这里)
+<br />优点：备份完整，用户名和密码也一并备份
+<br />缺点：导入之后可能会改动原有的数据库用户信息(覆盖/重复/修改密码)</p>
+</blockquote>
+
+<p><strong><code class="language-plaintext highlighter-rouge">--lock-all-tables</code>参数</strong><br />
+指定<code class="language-plaintext highlighter-rouge">--lock-all-tables</code>参数，那么从一开始就对整个mysql实例加global read lock锁。<br />
+这整个全局读锁会一直持续到导出结束。<br />
+所以在这个过程中，数据库实际严格处于read only状态。<br />
+所以导出的数据库在数据一致性上是被严格保证的，也就是数据是一致性的。</p>
+<h2 id="导出某个数据库">导出某个数据库</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mysqldump -u用户名  -p --databases 数据库名 &gt; name.sql
+</code></pre></div></div>
+<h2 id="bash脚本">bash脚本</h2>
+<p>涉及bash的知识可以参考<a href="http://www.jianshu.com/p/2438d563de06">20170805bash学习</a>
+<br />该脚本来自<a href="https://stackoverflow.com/questions/4749448/mysql-dump-all-databases-and-create-or-recreate-them-on-import">MySQL Dump All Databases and Create (or Recreate) them on Import?
+</a>
+可以依次导出所有数据库</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#!/bin/bash
+USER="用户名"
+PASSWORD="密码"
+databases=`mysql -u$USER -p$PASSWORD -e "SHOW DATABASES;" | tr -d "| " | grep -v Database`
+for db in $databases; do
+    if [[ "$db" != "information_schema" ]] &amp;&amp; [[ "$db" != "performance_schema" ]] &amp;&amp; [[ "$db" != "mysql" ]] &amp;&amp; [[ "$db" != _* ]] ; then
+        echo "Dumping database: $db"
+        mysqldump -u$USER -p$PASSWORD --databases $db &gt; `date +%Y%m%d`.$db.sql
+       # gzip $OUTPUT/`date +%Y%m%d`.$db.sql
+    fi
+done
+</code></pre></div></div>
+<blockquote>
+  <p>优点：因为未导出<code class="language-plaintext highlighter-rouge">数据库mysql</code>不影响MySQL本身的信息，不会改动原有数据库的用户名和密码
+<br />缺点：导入之后需要手动建立用户名并赋予权限，需重新修改网站配置文件</p>
+</blockquote>
+
+<h2 id="遇到的问题">遇到的问题</h2>
+<h3 id="1使用mysqldump备份时提示errno-24-when-using-lock-tables">1.使用mysqldump备份时提示<code class="language-plaintext highlighter-rouge">(errno: 24) when using LOCK TABLES</code></h3>
+<p>添加<code class="language-plaintext highlighter-rouge">--lock-tables=false</code>解决，如<br /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysqldump -u root  -p  --lock-tables=false --databases baotuquan &gt; baotuquan.sql
+</code></pre></div></div>
+
+<h1 id="mysql常用命令">Mysql常用命令</h1>
+<h2 id="登陆">登陆</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql -u 用户名 -p
+</code></pre></div></div>
+<p>之后就进入了mysql命令界面</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; 
+</code></pre></div></div>
+<h2 id="查看">查看</h2>
+<p>查看数据库</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; show databases;
+</code></pre></div></div>
+<p>查看数据表</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; use 数据库名 ;
+mysql&gt; show tables;
+</code></pre></div></div>
+<p>查看字段</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>show columns from `数据库名`.`数据表名`;
+</code></pre></div></div>
+<p>查看记录，更多关于记录的操作，后面会介绍</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; select `字段1`,`字段2`,`更多字段` from `数据库名`.`数据表名`  [ where 条件] [LIMIT n] [OFFSET M] ;
+</code></pre></div></div>
+
+<h2 id="mysql用户管理">Mysql用户管理</h2>
+<h3 id="参考-1">参考</h3>
+<p><a href="http://www.jianshu.com/p/8a8139708e26">Ubuntu 重置MySQL Root密码</a><br />
+<a href="http://blog.51cto.com/lxsym/477027">在Linux环境下mysql的root密码忘记解决方法</a><br />
+<a href="http://blog.51cto.com/kuiba/777457">mysql命令flush privileges</a><br />
+<a href="http://blog.csdn.net/justdb/article/details/7964319">MySQL命令行创建用户与授权</a><br />
+<a href="http://www.cnblogs.com/chanshuyi/p/mysql_user_mng.html">MySQL用户管理：添加用户、授权、删除用户</a><br />
+<a href="http://blog.csdn.net/zjstudio1990/article/details/8296899">Oracle中5个核心Sql语句的基本构造：Select、Insert、Update、Delete和Merge</a><br />
+<a href="http://www.cnblogs.com/jevo/p/3257228.html">MySQL用户管理</a><br /></p>
+
+<h3 id="mysql数据表说明">mysql数据表说明</h3>
+<p>Mysql的每个用户存储在<code class="language-plaintext highlighter-rouge">mysql</code>数据库中的<code class="language-plaintext highlighter-rouge">user</code>数据表中，也就是我们可以从这里快速更改用户名和权限，host，用户密码是以<code class="language-plaintext highlighter-rouge">passwd()</code>加密之后的所以不能直接更改<br />
+<strong>因此对用户的管理，基本上就是对<code class="language-plaintext highlighter-rouge">数据库mysql</code>的修改</strong></p>
+<blockquote>
+  <p>以下内容引用自<a href="http://www.cnblogs.com/jevo/p/3257228.html">MySQL用户管理</a><br /> MySQL授权系统主要通过五个表（<code class="language-plaintext highlighter-rouge">user、db、host、tables_priv</code>和<code class="language-plaintext highlighter-rouge">columns_priv</code>）来实现，其中用于访问数据库的各种用户信息都保存在<code class="language-plaintext highlighter-rouge">mysql库</code>的<code class="language-plaintext highlighter-rouge">user表</code>中。账户权限信息被存储在<code class="language-plaintext highlighter-rouge">mysql数据库</code>的<code class="language-plaintext highlighter-rouge">user、db、host、tables_priv、columns_priv</code>和<code class="language-plaintext highlighter-rouge">procs_priv</code>表中。</p>
+  <ul>
+    <li>user表存储用户的全局权限，如<code class="language-plaintext highlighter-rouge">登陆地址,用户名,全局不同权限，密码</code>等数据分别对应<code class="language-plaintext highlighter-rouge">Hosts,User,权限.priv,authentication_string</code>等字段</li>
+    <li>db表存储用户对某数据库的权限，如<code class="language-plaintext highlighter-rouge">登陆地址,数据库名,用户名,各个权限</code>等数据分别对应<code class="language-plaintext highlighter-rouge">Hosts,Db,User,权限.priv</code>。包含在db表中的权限适用于这个表标识的数据库。</li>
+    <li>host表——当您想在db表的范围之内扩展一个条目时，就会用到这个表。举例来说，如果某个db允许通过多个主机访问的话，那么超级用户就可以让db表内将host列为空，然后用必要的主机名填充host表。</li>
+    <li>tables_priv表——该表与db表相似，不同之处是它存储用户对某表的权限。</li>
+    <li>columns_priv——该表作用几乎与db和tables_priv表一样，存储的是针对某些表特定列的权限。</li>
+  </ul>
+
+  <p>权限表的存取过程是：<br />
+1)  先从user表中的<code class="language-plaintext highlighter-rouge">host、 user、 password</code>这3个字段中判断连接的IP、用户名、密码是否存在表中，存在则通过身份验证；<br />
+2)   通过权限验证，进行权限分配时，按照<code class="language-plaintext highlighter-rouge">user、db、tables_priv、columns_priv</code>的顺序进行分配。即先检查全局权限表<code class="language-plaintext highlighter-rouge"> user</code>，如果<code class="language-plaintext highlighter-rouge">user</code>中对应的权限为<code class="language-plaintext highlighter-rouge">Y</code>，则此用户对所有数据库的权限都为<code class="language-plaintext highlighter-rouge">Y</code>，将不再检查<code class="language-plaintext highlighter-rouge">db,tables_priv,columns_priv</code>；如果为<code class="language-plaintext highlighter-rouge">N</code>，则到<code class="language-plaintext highlighter-rouge">db</code>表中检查此用户对应的具体数据库，并得到<code class="language-plaintext highlighter-rouge">db</code>中为<code class="language-plaintext highlighter-rouge">Y</code>的权限；如果<code class="language-plaintext highlighter-rouge">db</code>中为<code class="language-plaintext highlighter-rouge">N</code>，则检 查<code class="language-plaintext highlighter-rouge">tables_priv</code>中此数据库对应的具体表，取得表中的权限<code class="language-plaintext highlighter-rouge">Y</code>，以此类推。</p>
+</blockquote>
+
+<h3 id="添加用户">添加用户</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; create user 用户名@'host地址'  identified by '密码';
+</code></pre></div></div>
+<p>此时可以通过phpMyAdmin或者<code class="language-plaintext highlighter-rouge">mysql&gt; select Host,User from mysql.user;</code>可查看到以添加的用户<br />
+<code class="language-plaintext highlighter-rouge">@'host地址'</code>缺省为<code class="language-plaintext highlighter-rouge">@'%'</code>所有地址，<code class="language-plaintext highlighter-rouge">localhost</code>代表本地地址即<code class="language-plaintext highlighter-rouge">127.0.0.1</code>,具体每个<code class="language-plaintext highlighter-rouge">数据库.数据表</code>的权限由以下决定</p>
+<h3 id="给用户权限">给用户权限</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; grant 权限 on 数据库.数据表 to 用户名@'host地址' identified by '密码';
+mysql&gt; flush privileges
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">flush privileges</code>刷新MySQL的系统权限相关表
+权限(不分大小写)</p>
+<ul>
+  <li>SELECT 提取/查看</li>
+  <li>INSERT 插入</li>
+  <li>UPDATE 更新/改变</li>
+  <li>等</li>
+  <li>ALL 表示所有权限</li>
+</ul>
+
+<p>数据库/数据表不存在会报错，可以<code class="language-plaintext highlighter-rouge">数据库.*</code>表示整个数据库<br />
+用户地址密码</p>
+<ul>
+  <li>如果不存在该用户，则自动创建用户</li>
+  <li><code class="language-plaintext highlighter-rouge">@'host地址'</code>缺省为<code class="language-plaintext highlighter-rouge">@'%'</code>所有地址</li>
+  <li>一个用户支持不同的访问地址(一个host地址只有一个密码，如果已存在密码不用输入，输入则覆盖)，每执行一次命令就在<code class="language-plaintext highlighter-rouge">mysql.user</code>内添加相应Hsot,User,各种权限priv,密码`等字段</li>
+</ul>
+
+<h4 id="例添加库表的权限">例：添加<code class="language-plaintext highlighter-rouge">库.表</code>的权限</h4>
+<p>添加<code class="language-plaintext highlighter-rouge">netstu1.jia_netq</code>表<code class="language-plaintext highlighter-rouge">select</code>权限为已有用户<code class="language-plaintext highlighter-rouge">chen</code>，地址为<code class="language-plaintext highlighter-rouge">%</code>,密码为<code class="language-plaintext highlighter-rouge">chen</code>默认密码</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; grant select on netstu1.jia_netq to chen;
+</code></pre></div></div>
+<p>可用phpMyAdmin在<code class="language-plaintext highlighter-rouge">mysql.tables_priv</code>里查看，或命令查看，(以后统一命令查看，不再提及phpMyAdmin，两种方法通用)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; select Host,Db,User,Table_name from mysql.tables_priv where User = 'chen';
+</code></pre></div></div>
+
+<h4 id="例添加库的权限">例：添加<code class="language-plaintext highlighter-rouge">库</code>的权限</h4>
+<p>添加<code class="language-plaintext highlighter-rouge">netstu1.jia_netq</code>库权限为已有用户<code class="language-plaintext highlighter-rouge">chen</code>，地址为<code class="language-plaintext highlighter-rouge">%</code>,密码为<code class="language-plaintext highlighter-rouge">chen</code>默认密码</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; grant select on netstu1.*  to chen;
+</code></pre></div></div>
+<p>查看<code class="language-plaintext highlighter-rouge">mysql.db</code>表中</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; select Host,Db,User from mysql.db where User = 'chen';
+</code></pre></div></div>
+
+<h4 id="例添加全局权限">例：添加全局权限</h4>
+<p>添加所有数据库的<code class="language-plaintext highlighter-rouge">select</code>权限为已有用户<code class="language-plaintext highlighter-rouge">chen</code>，地址为<code class="language-plaintext highlighter-rouge">%</code>,密码为<code class="language-plaintext highlighter-rouge">chen</code>默认密码</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; grant select on *.*  to chen;
+</code></pre></div></div>
+<p>查看<code class="language-plaintext highlighter-rouge">mysql.user</code>表中</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; select Host,User,Select_priv from mysql.user where User = 'chen';
+</code></pre></div></div>
+<h4 id="创建root级别账户全局权限授权权限">创建root级别账户(全局权限+授权权限)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; grant all on *.*  to 用户名@'localhost' identified by '密码';
+</code></pre></div></div>
+<p>之后发现，创建的用户除了给其他用户授权外有所有的权限<br />
+又</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; update `mysql`.`user` set `Grant_priv`='Y' where `mysql`.`user`.`Host`='localhost' AND `mysql`.`user`.`User`='用户名';
+</code></pre></div></div>
+<p>更新权限</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush privileges;
+</code></pre></div></div>
+<h3 id="取消修改权限">取消/修改权限</h3>
+<p>可参考<a href="/2017/11/26/mysql/#修改字段">修改字段</a>,修改/删除<code class="language-plaintext highlighter-rouge">mysql.相关数据表</code>中的值</p>
+<h3 id="修改用户密码">修改用户密码</h3>
+<p>就是更新<code class="language-plaintext highlighter-rouge">mysql.user</code>,修改命令参考下面的<a href="/2017/11/26/mysql/#修改字段">修改字段</a>,具体命令</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#使用PASSWD()函数生成密码的密文并更新到mysql数据库的密码字段
+#MySQL 5.7 以前版本密码字段为Password
+mysql&gt; update mysql.user set password = password('密码') where user = '用户名' and host = 'host地址';
+#MySQL 5.7 以后版本（Password字段改为了authentication_string）
+mysql&gt; update mysql.user set authentication_string=PASSWORD('密码') where user='用户名' and host = 'host地址';
+</code></pre></div></div>
+<p>更新权限</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; flush privileges;
+</code></pre></div></div>
+
+<h3 id="删除用户">删除用户</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>drop user zhangsan@'host地址';
+</code></pre></div></div>
+<blockquote>
+  <p>drop user命令会删除用户以及对应的权限，执行命令后你会发现<code class="language-plaintext highlighter-rouge">mysql.user</code>表和<code class="language-plaintext highlighter-rouge">mysql.db</code>等表的相应记录都消失了。</p>
+</blockquote>
+
+<h3 id="mysql-找回root密码">mysql 找回root密码</h3>
+
+<h4 id="环境">环境</h4>
+<p>ubuntu 16.04 Mysql 5.7.19</p>
+<h5 id="操作">操作</h5>
+<h6 id="1首先确认服务器出于安全的状态">1.首先确认服务器出于安全的状态</h6>
+<p>也就是没有人能够任意地连接MySQL数据库。 因为在重新设置MySQL的root密码的期间，MySQL数据库完全出于没有密码保护的 状态下，其他的用户也可以任意地登录和修改MySQL的信息。<br /></p>
+<h5 id="2修改mysql登陆设置">2.修改mysql登陆设置</h5>
+<p>修改配置文件，我服务器(ubuntu16.04 Mysql 5.7.19)文件在<code class="language-plaintext highlighter-rouge">/etc/mysql/mysql.conf.d/mysqld.cnf</code>，其他教程都说在<code class="language-plaintext highlighter-rouge">/etc/mysql/my.cnf</code> <br /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+</code></pre></div></div>
+<p>在<code class="language-plaintext highlighter-rouge">[mysqld]</code>下面添加<code class="language-plaintext highlighter-rouge">skip-grant-tables</code><br />
+使得：任何的帐号用任何的密码(当然也包括空)都可以登录到mysql数据库</p>
+<h5 id="3重新启动mysqld">3．重新启动mysqld</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo /etc/init.d/mysql restart
+</code></pre></div></div>
+<h5 id="4-登陆并修改mysql-root-密码">4. 登陆并修改Mysql root 密码</h5>
+<p>就是替换<code class="language-plaintext highlighter-rouge">mysql.user</code>中root用户对应的密码字段<br />
+按照<a href="/#登陆">登陆</a>，<a href="/#修改用户密码">修改用户密码</a>修改root密码<br />
+如</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#登陆
+mysql -u root
+#使用mysql数据表
+mysql&gt; use mysql;
+#使用PASSWD()函数生成密码的密文并更新到mysql数据库的密码字段
+#MySQL 5.7 以前版本密码字段为Password
+mysql&gt; update user set Password=PASSWORD('new_password') where user='root';
+#MySQL 5.7 以后版本（Password字段改为了authentication_string）
+mysql&gt; update user set authentication_string=PASSWORD('new_password') where user='root';
+</code></pre></div></div>
+<p>刷新MySQL的系统权限相关表</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; flush privileges;
+</code></pre></div></div>
+<p>退出</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; exit;
+</code></pre></div></div>
+<h5 id="5-修改etcmysqlmysqlconfdmysqldcnf文件为默认内容重启mysql">5. 修改<code class="language-plaintext highlighter-rouge">/etc/mysql/mysql.conf.d/mysqld.cnf</code>文件为默认内容，重启Mysql</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo /etc/init.d/mysql restart
+</code></pre></div></div>
+
+<h3 id="问题">问题</h3>
+<h4 id="1新建用户时遇到密码不合适">1.新建用户时遇到密码不合适</h4>
+<p>参考<a href="http://blog.csdn.net/maxsky/article/details/51171474">解决 MySQL 5.7 中 Your password does not satisfy the current policy requirements. 问题</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR 1819 (HY000): Your password does not satisfy the current policy requirements
+</code></pre></div></div>
+<p>将安全级别降低</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set global validate_password_policy=0;  
+</code></pre></div></div>
+<p>还可以设置长度</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set global validate_password_length=4; 
+</code></pre></div></div>
+
+<h2 id="数据库管理">数据库管理</h2>
+<p><a href="http://www.runoob.com/mysql/mysql-tutorial.html">MySQL 教程</a><br />
+<a href="http://www.runoob.com/mysql/mysql-create-database.html">MySQL 创建数据库</a><br />
+<a href="http://www.weste.net/2013/3-26/89895.html">重命名mysql数据库的五个方法</a><br /></p>
+<h3 id="创建数据库">创建数据库</h3>
+<h4 id="mysql视图中创建">mysql视图中创建</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; create database 数据库名;
+</code></pre></div></div>
+<h4 id="mysqladmin创建">mysqladmin创建</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$mysqladmin -u root -p create 数据库名
+Enter password:
+</code></pre></div></div>
+<h4 id="php脚本创建">php脚本创建</h4>
+<p>语法</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysqli_query(connection,query,resultmode);
+</code></pre></div></div>
+<p>其中</p>
+<ul>
+  <li>connectio 为建立的mysql连接</li>
+  <li>query 查询字符串(即mysql命令，创建为<code class="language-plaintext highlighter-rouge">create database 数据库名</code>)</li>
+  <li>resultmode可选，默认为MYSQLI_STORE_RESULT，如果需要检索大量数据，使用MYSQLI_USE_RESULT</li>
+</ul>
+
+<p>php脚本</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dbhost = 'localhost:3306';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('连接错误: ' . mysqli_error($conn));
+}
+echo '连接成功&lt;br /&gt;';
+$sql = 'CREATE DATABASE 数据库名';
+$retval = mysqli_query($conn,$sql );
+if(! $retval )
+{
+    die('创建数据库失败: ' . mysqli_error($conn));
+}
+echo "数据库 数据库名 创建成功\n";
+mysqli_close($conn);
+?&gt;
+</code></pre></div></div>
+<h3 id="删除数据库">删除数据库</h3>
+<h4 id="mysql命令行中删除">mysql命令行中删除</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; drop database 数据库名;
+</code></pre></div></div>
+<h4 id="mysqladmin删除">mysqladmin删除</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$mysqladmin -u root -p drop 数据库名
+Enter password:
+</code></pre></div></div>
+<h4 id="php脚本删除">php脚本删除</h4>
+<p>语法</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysqli_query(connection,query,resultmode);
+</code></pre></div></div>
+<p>其中</p>
+<ul>
+  <li>connectio 为建立的mysql连接</li>
+  <li>query 查询字符串(即mysql命令，删除为<code class="language-plaintext highlighter-rouge">drop database 数据库名</code>)</li>
+  <li>resultmode可选，默认为MYSQLI_STORE_RESULT，如果需要检索大量数据，使用MYSQLI_USE_RESULT</li>
+</ul>
+
+<p>php脚本</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dbhost = 'localhost:3306';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('连接错误: ' . mysqli_error($conn));
+}
+echo '连接成功&lt;br /&gt;';
+$sql = 'DROP DATABASE 数据库名';
+$retval = mysqli_query($conn,$sql );
+if(! $retval )
+{
+    die('删除数据库失败: ' . mysqli_error($conn));
+}
+echo "数据库 数据库名 删除成功\n";
+mysqli_close($conn);
+?&gt;
+</code></pre></div></div>
+
+<h3 id="选择数据库">选择数据库</h3>
+<h4 id="mysql命令">mysql命令</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; use 数据库名;
+</code></pre></div></div>
+<h4 id="php脚本">php脚本</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysqli_select_db(connection,dbname);
+</code></pre></div></div>
+<ul>
+  <li>connectio 为建立的mysql连接</li>
+  <li>dbname 为数据库名</li>
+</ul>
+
+<p>脚本</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php
+$dbhost = 'localhost:3306';  // mysql服务器主机地址
+$dbuser = 'root';            // mysql用户名
+$dbpass = '123456';          // mysql用户名密码
+$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+    die('连接失败: ' . mysqli_error($conn));
+}
+echo '连接成功';
+mysqli_select_db($conn, '数据库名' );
+mysqli_close($conn);
+?&gt;
+</code></pre></div></div>
+
+<h2 id="数据表管理">数据表管理</h2>
+<p>复习数据库的结构<br />
+<img src="/uploads/2017/11/db.png" alt="" /><br />
+创建数据表时，要指明数据表中的各个字段，和不同字段的相关属性</p>
+<h3 id="创建数据表">创建数据表</h3>
+<h4 id="mysql视图">mysql视图</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; use 数据库名 ;
+Database changed
+mysql&gt; create table 数据表名(字段1 字段1的相关属性,字段2 字段2的相关属性,字段3 字段3的相关属性,更多字段和属性);
+</code></pre></div></div>
+<p>或者</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; create table 数据库名.数据表名(字段1 字段1的相关属性,字段2 字段2的相关属性,字段3 字段3的相关属性,更多字段和属性);
+</code></pre></div></div>
+<p><strong>如果字段/数据库名/数据表名含有空格，使用重音符括起来</strong>即</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create table `数据库名`.`数据表名`(`字段1` 字段1的相关属性,`字段2` 字段2的相关属性,`字段3` 字段3的相关属性,更多字段和属性);
+</code></pre></div></div>
+<p><strong>推荐以重音符括起来数据库名和数据表名方式创建</strong><br />
+以下所有涉及数据库名和数据表名的命令，都可以加重音符<br />
+例1</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; use cndaqiangdb ;
+Database changed
+mysql&gt; create table cn_table(字段1 INT);
+</code></pre></div></div>
+<p>例2</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>字段名</th>
+      <th>数字类型</th>
+      <th>数据宽度</th>
+      <th>是否为空</th>
+      <th>是否主键</th>
+      <th>自动增加</th>
+      <th>默认值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>int</td>
+      <td>4</td>
+      <td>否</td>
+      <td>primary key</td>
+      <td>auto_increment</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>name</td>
+      <td>char</td>
+      <td>20</td>
+      <td>否</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>sex</td>
+      <td>int</td>
+      <td>4</td>
+      <td>否</td>
+      <td> </td>
+      <td> </td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>degree</td>
+      <td>double</td>
+      <td>16</td>
+      <td>是</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; create table MyClass(
+    &gt; id int(4) not null primary key auto_increment,
+    &gt; name char(20) not null,
+    &gt; sex int(4) not null default '0',
+    &gt; degree double(16,2));
+</code></pre></div></div>
+<h4 id="php脚本及下面内容的php脚本先略">php脚本，及下面内容的php脚本，先略</h4>
+<h3 id="删除数据表">删除数据表</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; drop table 数据库名.数据表名;
+</code></pre></div></div>
+<p>或</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; use 数据库名;
+mysql&gt; drop table 数据表名;
+</code></pre></div></div>
+<h3 id="修改数据表名">修改数据表名</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; alter table `数据库名`.`数据表名` rename to `数据库名`.`数据表名`
+</code></pre></div></div>
+<h2 id="字段管理">字段管理</h2>
+<h3 id="添加字段">添加字段</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alter  table `数据库名`.`数据表名` add (`字段3` 属性,`字段4` 属性);
+</code></pre></div></div>
+
+<h3 id="删除字段">删除字段</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alter  table `数据库名`.`数据表名` drop `字段名`;
+</code></pre></div></div>
+<h3 id="修改字段">修改字段</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alter  table `数据库名`.`数据表名` change `旧段名` `新字段名` 修改属性;
+</code></pre></div></div>
+<h2 id="记录数据管理">记录/数据管理</h2>
+<h3 id="添加记录">添加记录</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; insert into `数据库名`.`数据表名` (`字段1`,`字段2`,`字段3`,`更多字段`) value (值1,值2,值3,更多值);
+</code></pre></div></div>
+<blockquote>
+  <p><strong>如果数据是字符型，必须使用单引号或者双引号，如：”value”。</strong></p>
+</blockquote>
+
+<h3 id="查询记录数据">查询记录/数据</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; select `字段1`,`字段2`,`更多字段` from `数据库名`.`数据表名`  [ where 条件] [LIMIT n] [OFFSET M] ;
+</code></pre></div></div>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">字段1</code>,<code class="language-plaintext highlighter-rouge">字段2</code>为显示的字段</li>
+  <li><code class="language-plaintext highlighter-rouge">[ where 条件]</code> 可选，展示符合条件的字段，如<code class="language-plaintext highlighter-rouge">where `字段1`=`值`</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[LIMIT n] </code>和<code class="language-plaintext highlighter-rouge">[OFFSET M]</code>配合使用，<code class="language-plaintext highlighter-rouge">LIMIT</code>确定最多显示的记录数，<code class="language-plaintext highlighter-rouge">OFFSET</code>决定从查询到的记录数偏移几个开始显示，默认0，不偏移，从第一个显示</li>
+</ul>
+
+<p>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt;  select `字段1`,`字段2` from `cndaqiangdb`.`table1` where `字段1`=1 limit 2 offset 1;
++-------+-------+
+| 字段1 | 字段2 |
++-------+-------+
+|   1   |   2   |
+|   1   |   2   |
++-------+-------+
+2 rows in set (0.00 sec)
+</code></pre></div></div>
+
+<h3 id="删除记录数据">删除记录/数据</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt;  delete from `数据库名`.`数据表名` [where 条件];
+</code></pre></div></div>
+<p>[where 条件]如果不写，则删除数据表内的所有记录/数据</p>
+
+<h3 id="更新修改记录">更新/修改记录</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; update `数据库名`.`数据表名` set `字段1`=值1,`字段2`=值2 [where 条件];
+</code></pre></div></div>
+<p>[where 条件]如果不写，则替换所有记录的相应字段</p>
+
+<h4 id="批量替换">批量替换</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; update `数据库名`.`数据表名` set `字段`=replace(`字段`,旧值,新值);
+</code></pre></div></div>
+<p>可以替换，数字，字符串等，替换字符串时，注意加引号</p>
+
+<p>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt;  select `1`,`2`,`3`,`4` from `cndaqiangdb`.`table1`;
++-----+-----+-----+-----+
+| 1   | 2   | 3   | 4   |
++-----+-----+-----+-----+
+| 222 | 222 | 333 | 444 |
+| 222 | 222 |   3 | 444 |
++-----+-----+-----+-----+
+2 rows in set (0.00 sec)
+
+mysql&gt; update `cndaqiangdb`.`table1` set `1`=replace(`1`,2,222);
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql&gt;  select `1`,`2`,`3`,`4` from `cndaqiangdb`.`table1`;
++-----------+-----+-----+-----+
+| 1         | 2   | 3   | 4   |
++-----------+-----+-----+-----+
+| 222222222 | 222 | 333 | 444 |
+| 222222222 | 222 |   3 | 444 |
++-----------+-----+-----+-----+
+2 rows in set (0.00 sec)
+</code></pre></div></div>
+
+<h2 id="命令总结">命令总结</h2>
+<h3 id="备注">备注</h3>
+<p>所有在<code class="language-plaintext highlighter-rouge">mysql&gt; </code>后面输入的命令，都可以在phpMyAdmin的SQL选项卡中输入</p>
+<h3 id="create"><code class="language-plaintext highlighter-rouge">create</code></h3>
+
+<p>创建用户</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; create user 用户名@'host地址'  identifide by '密码';
+</code></pre></div></div>
+
+<p>创建数据库</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; create database `数据库名`;
+</code></pre></div></div>
+
+<p>创建数据表</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; create table `数据库名`.`数据表名` ( `字段1` 属性,`字段2` 属性);
+</code></pre></div></div>
+<h3 id="drop"><code class="language-plaintext highlighter-rouge">drop</code></h3>
+<p>删除数据库，数据表</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; drop database `数据库名`;
+mysql&gt; drop table `数据库名`.`数据表名`;
+</code></pre></div></div>
+
+<h3 id="use"><code class="language-plaintext highlighter-rouge">use</code></h3>
+<p>进入数据库视图，之后本数据库名可以不输入</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>use `数据库名` ;
+</code></pre></div></div>
+<h3 id="alter"><code class="language-plaintext highlighter-rouge">alter</code></h3>
+<p>数据表重命名</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; alter table `数据库名`.`数据表名` rename to `数据库名`.`数据表名`;
+</code></pre></div></div>
+<p>添加字段</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alter  table `数据库名`.`数据表名` add (`字段3` 属性,`字段4` 属性);
+</code></pre></div></div>
+<p>删除字段</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alter  table `数据库名`.`数据表名` drop `字段名`;
+</code></pre></div></div>
+<p>修改字段</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alter  table `数据库名`.`数据表名` change `旧段名` `新字段名` 修改属性;
+</code></pre></div></div>
+<h3 id="where"><code class="language-plaintext highlighter-rouge">where</code></h3>
+<p>之前很多操作都有<code class="language-plaintext highlighter-rouge">where 条件</code><br />
+语法</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>where 条件1 and/or 条件2
+</code></pre></div></div>
+<p>条件子句语法<br /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>字段 操作符 数据
+</code></pre></div></div>
+<p>操作符有:<br /></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">=</code>等于</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;&gt;,!=</code>不等于</li>
+  <li><code class="language-plaintext highlighter-rouge">&gt;</code> <code class="language-plaintext highlighter-rouge">&lt;</code> <code class="language-plaintext highlighter-rouge">&gt;=</code> <code class="language-plaintext highlighter-rouge">&lt;=</code> 大小关系</li>
+</ul>
+
+<h3 id="update"><code class="language-plaintext highlighter-rouge">update</code></h3>
+<p>修改数据</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; update `数据库名`.`数据表名` set `字段1`=值1,`字段2`=值2 [where 条件];
+</code></pre></div></div>
+<h3 id="delete"><code class="language-plaintext highlighter-rouge">delete</code></h3>
+<p>删除数据</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt;  delete from `数据库名`.`数据表名` [where 条件];
+</code></pre></div></div>
+<h3 id="insert"><code class="language-plaintext highlighter-rouge">insert</code></h3>
+<p>添加数据</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; insert into `数据库名`.`数据表名` (`字段1`,`字段2`,`字段3`,`更多字段`) value (值1,值2,值3,更多值);
+</code></pre></div></div>
+<h3 id="select"><code class="language-plaintext highlighter-rouge">select</code></h3>
+<p>查询/展示数据</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; select `字段1`,`字段2`,`更多字段` from `数据库名`.`数据表名`  [ where 条件] [LIMIT n] [OFFSET M] ;
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/11/26/thinkphp/">ThinkPHP3.2 文件结构</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/01/09/ubuntu-install-vasp/">Ubuntu VASP安装和运行 </a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>[挖坑]python画图学习</title>
+    <meta name="description" content="import numpy as npimport pandas as pdimport matplotlib.pyplot as plt">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2020/03/04/matplotlib/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>[挖坑]python画图学习</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-03-04
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Python" title="Category: Python" rel="category">Python</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Python" title="Tag: Python" rel="tag">Python</a-->
+        <a href="/tag/#Python" title="Tag: Python" rel="tag">Python</a>&nbsp;
+    
+        <!--a href="/tag/#matplotlib" title="Tag: matplotlib" rel="tag">matplotlib</a-->
+        <a href="/tag/#matplotlib" title="Tag: matplotlib" rel="tag">matplotlib</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#注意" id="markdown-toc-注意">注意</a></li>
+  <li><a href="#绘图" id="markdown-toc-绘图">绘图</a>    <ul>
+      <li><a href="#二维图形绘制" id="markdown-toc-二维图形绘制">二维图形绘制</a>        <ul>
+          <li><a href="#多个画板" id="markdown-toc-多个画板">多个画板</a></li>
+          <li><a href="#填充图" id="markdown-toc-填充图">填充图</a></li>
+        </ul>
+      </li>
+      <li><a href="#性质" id="markdown-toc-性质">性质</a>        <ul>
+          <li><a href="#y轴显示为科学计数法" id="markdown-toc-y轴显示为科学计数法">y轴显示为科学计数法</a></li>
+          <li><a href="#颜色color-简写为-c" id="markdown-toc-颜色color-简写为-c">颜色（color 简写为 c）：</a></li>
+          <li><a href="#线型linestyle-简写为-ls" id="markdown-toc-线型linestyle-简写为-ls">线型（linestyle 简写为 ls）：</a></li>
+          <li><a href="#点型标记marker" id="markdown-toc-点型标记marker">点型（标记marker）：</a></li>
+        </ul>
+      </li>
+      <li><a href="#文本" id="markdown-toc-文本">文本</a>        <ul>
+          <li><a href="#latex展示" id="markdown-toc-latex展示">latex展示</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#常用代码段" id="markdown-toc-常用代码段">常用代码段</a>    <ul>
+      <li><a href="#画峰值出x坐标" id="markdown-toc-画峰值出x坐标">画峰值出x坐标</a></li>
+      <li><a href="#周期逐增画上x的位置" id="markdown-toc-周期逐增画上x的位置">周期逐增画上x的位置</a></li>
+      <li><a href="#清空" id="markdown-toc-清空">清空</a></li>
+      <li><a href="#axis--上下左右线即坐标轴" id="markdown-toc-axis--上下左右线即坐标轴">Axis  上下左右线，即坐标轴</a></li>
+      <li><a href="#ticks-上下左右线上的小刻度" id="markdown-toc-ticks-上下左右线上的小刻度">ticks 上下左右线上的小刻度</a></li>
+      <li><a href="#对数坐标" id="markdown-toc-对数坐标">对数坐标</a></li>
+      <li><a href="#其他" id="markdown-toc-其他">其他</a>        <ul>
+          <li><a href="#水平线" id="markdown-toc-水平线">水平线</a></li>
+          <li><a href="#垂直线" id="markdown-toc-垂直线">垂直线</a></li>
+          <li><a href="#透明背景" id="markdown-toc-透明背景">透明背景</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#扇形图" id="markdown-toc-扇形图">扇形图</a></li>
+  <li><a href="#差值拟合" id="markdown-toc-差值拟合">差值拟合</a>    <ul>
+      <li><a href="#高斯滤波器" id="markdown-toc-高斯滤波器">高斯滤波器</a></li>
+      <li><a href="#插值" id="markdown-toc-插值">插值</a></li>
+      <li><a href="#scatter画的图层比plot要低" id="markdown-toc-scatter画的图层比plot要低">scatter画的图层比plot要低</a></li>
+    </ul>
+  </li>
+  <li><a href="#最新理解" id="markdown-toc-最新理解">最新理解</a>    <ul>
+      <li><a href="#一些有助于学习的命令" id="markdown-toc-一些有助于学习的命令">一些有助于学习的命令</a></li>
+      <li><a href="#pltfigureaxesaxis的关系" id="markdown-toc-pltfigureaxesaxis的关系">plt,figure,axes,axis的关系</a></li>
+      <li><a href="#修改对象的性质" id="markdown-toc-修改对象的性质">修改对象的性质</a>        <ul>
+          <li><a href="#getp可以查看的性质修改" id="markdown-toc-getp可以查看的性质修改">getp可以查看的性质修改</a></li>
+          <li><a href="#dir直接查看有哪些方法可以调用进行修改" id="markdown-toc-dir直接查看有哪些方法可以调用进行修改">dir()直接查看有哪些方法可以调用进行修改</a></li>
+          <li><a href="#搜索引擎" id="markdown-toc-搜索引擎">搜索引擎…</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#默认画图参数设置" id="markdown-toc-默认画图参数设置">默认画图参数设置</a>    <ul>
+      <li><a href="#参数设置" id="markdown-toc-参数设置">参数设置</a></li>
+      <li><a href="#文件设置" id="markdown-toc-文件设置">文件设置</a></li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+</code></pre></div></div>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://www.runoob.com/w3cnote/matplotlib-tutorial.html">Matplotlib 教程</a><br />
+<a href="https://legacy.gitbook.com/book/wizardforcel/matplotlib-intro-tut/details">wizardforcel Matplotlib 入门教程</a>
+<a href="https://blog.csdn.net/qq_34940959/article/details/78488208">Python中画图时候的线类型</a></p>
+
+<h2 id="注意">注意</h2>
+<ul>
+  <li><strong>plt.show()之后会清空画板，所有绘图数据删除，保存前不要执行</strong></li>
+  <li>在没有图形化界面的环境下，要执行<code class="language-plaintext highlighter-rouge">plt.switch_backend('agg')</code></li>
+  <li><strong>官方的案例最好了<a href="https://matplotlib.org/gallery/index.html">Examples</a></strong></li>
+  <li>无图形化的终端画图
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import matplotlib as mpl
+mpl.use('Agg')
+import matplotlib.pyplot as plt
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="绘图">绘图</h2>
+<h3 id="二维图形绘制">二维图形绘制</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x=np.linspace(0, 2*np.pi, num=100, endpoint=True)
+ysin=np.sin(x)
+ycos=np.cos(x)
+#创建画板,内含1x1
+fig, ax = plt.subplots(1,1,sharex=True,sharey=False,figsize=(8,6))
+ax.plot(x,ysin,label="sin")
+ax.plot(x,ycos,label="cos")
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_title("sin and cos")
+ax.legend() #上图例，plt里面的label
+</code></pre></div></div>
+<p>显示<code class="language-plaintext highlighter-rouge">plt.show()</code>,<strong>plt.show()之后会清空画板，所有绘图数据删除，保存前不要执行</strong>
+<img src="/uploads/2020/03/pltshowq.png" alt="" />
+保存图形命令</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>figfile="sincos.png" #支持png,pdf等多种格式
+plt.savefig(figfile,dpi=60)
+</code></pre></div></div>
+<h4 id="多个画板">多个画板</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fig, [ax1,ax2] = plt.subplots(1,2,sharex=True,sharey=False,figsize=(8,6))
+ax1.plot(x,ysin,label="sin")
+ax2.plot(x,ycos,label="cos")
+ax1.set_title("sin")
+ax2.set_title("cos")
+ax1.legend() #上图例，plt里面的label
+ax2.legend() #上图例，plt里面的label
+figfile="sincos.png" #支持png,pdf等多种格式
+plt.savefig(figfile,dpi=100)
+</code></pre></div></div>
+<p>也可以</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fig, ax = plt.subplots(1,2,sharex=True,sharey=False,figsize=(8,6))
+ax[0].plot(x,ysin,label="sin")
+ax[1].plot(x,ycos,label="cos")
+</code></pre></div></div>
+<p><img src="/uploads/2020/03/sincos2.png" alt="" /></p>
+
+<h4 id="填充图">填充图</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ysin=np.sin(x)
+ycos=np.cos(x)-0.5
+fig, ax = plt.subplots(1,1,sharex=True,sharey=False,figsize=(8,6))
+ax.fill_between(x, 0, ysin,alpha=0.5) #,, facecolor='blue', alpha=0.5)
+ax.fill_between(x, 0, ycos,alpha=0.5) #,, facecolor='red', alpha=0.5)
+</code></pre></div></div>
+<p><img src="/uploads/2020/03/fill.png" alt="" /></p>
+
+<h3 id="性质">性质</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>axs.set(xlim=xlim, ylim=ylim, title=title, ylabel=ylabel, xlabel=xlabel) 
+</code></pre></div></div>
+<h4 id="y轴显示为科学计数法">y轴显示为科学计数法</h4>
+<p><a href="https://blog.csdn.net/HackerTom/article/details/112102637">matplotlib刻度值使用科学记数法</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>axs.ticklabel_format(style='sci', scilimits=(-1,2), axis='y')
+</code></pre></div></div>
+<ul>
+  <li>style=’sci’ 指明用科学记数法；</li>
+  <li>scilimits=(-1,2) 表示对 (10^-1,10^2) 范围之外的值换科学记数法，范围内的数不换；</li>
+  <li>axis=’y’ 指明对 y 轴用，亦可以是 x、both。</li>
+</ul>
+
+<p>或者这样</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import matplotlib.ticker as mtick
+axs.yaxis.set_major_formatter(mtick.FormatStrFormatter('%1.1e'))
+</code></pre></div></div>
+
+<h4 id="颜色color-简写为-c">颜色（color 简写为 c）：</h4>
+
+<p><img src="/uploads/2021/05/color.png" alt="" /></p>
+
+<ul>
+  <li>蓝色： ‘b’ (blue)</li>
+  <li>绿色： ‘g’ (green)</li>
+  <li>红色： ‘r’ (red)</li>
+  <li>蓝绿色(墨绿色)： ‘c’ (cyan)</li>
+  <li>红紫色(洋红)： ‘m’ (magenta)</li>
+  <li>黄色： ‘y’ (yellow)</li>
+  <li>黑色： ‘k’ (black)</li>
+  <li>白色： ‘w’ (white)</li>
+  <li>灰度表示： e.g. 0.75 ([0,1]内任意浮点数)</li>
+  <li>RGB表示法： e.g. ‘#2F4F4F’ 或 (0.18, 0.31, 0.31)</li>
+  <li>任意合法的html中的颜色表示： e.g. ‘red’, ‘darkslategray’</li>
+</ul>
+
+<p><strong>得到n个颜色</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s">"viridis"</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="c1">#循环取颜色
+</span><span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<p>更多颜色序列
+<img src="/uploads/2021/10/colororder.png" alt="" /></p>
+
+<p>反向颜色序列加<code class="language-plaintext highlighter-rouge">_r</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> supported values are 'Accent', 'Accent_r', 'Blues', 'Blues_r', 
+ 'BrBG', 'BrBG_r', 'BuGn', 'BuGn_r', 'BuPu', 'BuPu_r', 'CMRmap', 
+ 'CMRmap_r', 'Dark2', 'Dark2_r', 'GnBu', 'GnBu_r', 'Greens', 
+ 'Greens_r', 'Greys', 'Greys_r', 'OrRd', 'OrRd_r', 'Oranges', 
+ 'Oranges_r', 'PRGn', 'PRGn_r', 'Paired', 'Paired_r', 'Pastel1', 
+ 'Pastel1_r', 'Pastel2', 'Pastel2_r', 'PiYG', 'PiYG_r', 'PuBu', 
+ 'PuBuGn', 'PuBuGn_r', 'PuBu_r', 'PuOr', 'PuOr_r', 'PuRd', 'PuRd_r', 
+ 'Purples', 'Purples_r', 'RdBu', 'RdBu_r', 'RdGy', 'RdGy_r', 'RdPu', 
+ 'RdPu_r', 'RdYlBu', 'RdYlBu_r', 'RdYlGn', 'RdYlGn_r', 'Reds', 
+ 'Reds_r', 'Set1', 'Set1_r', 'Set2', 'Set2_r', 'Set3', 'Set3_r', 
+ 'Spectral', 'Spectral_r', 'Wistia', 'Wistia_r', 'YlGn', 'YlGnBu', 
+ 'YlGnBu_r', 'YlGn_r', 'YlOrBr', 'YlOrBr_r', 'YlOrRd', 'YlOrRd_r', 
+ 'afmhot', 'afmhot_r', 'autumn', 'autumn_r', 'binary', 'binary_r', 
+ 'bone', 'bone_r', 'brg', 'brg_r', 'bwr', 'bwr_r', 'cividis', 
+ 'cividis_r', 'cool', 'cool_r', 'coolwarm', 'coolwarm_r', 'copper', 
+ 'copper_r', 'cubehelix', 'cubehelix_r', 'flag', 'flag_r', 
+ 'gist_earth', 'gist_earth_r', 'gist_gray', 'gist_gray_r', 
+ 'gist_heat', 'gist_heat_r', 'gist_ncar', 'gist_ncar_r', 
+ 'gist_rainbow', 'gist_rainbow_r', 'gist_stern', 'gist_stern_r', 
+ 'gist_yarg', 'gist_yarg_r', 'gnuplot', 'gnuplot2', 'gnuplot2_r', 
+ 'gnuplot_r', 'gray', 'gray_r', 'hot', 'hot_r', 'hsv', 'hsv_r', 
+ 'inferno', 'inferno_r', 'jet', 'jet_r', 'magma', 'magma_r', 
+ 'nipy_spectral', 'nipy_spectral_r', 'ocean', 'ocean_r', 'pink', 
+ 'pink_r', 'plasma', 'plasma_r', 'prism', 'prism_r', 'rainbow', 
+ 'rainbow_r', 'seismic', 'seismic_r', 'spring', 'spring_r', 'summer', 
+ 'summer_r', 'tab10', 'tab10_r', 'tab20', 'tab20_r', 'tab20b', 
+ 'tab20b_r', 'tab20c', 'tab20c_r', 'terrain', 'terrain_r', 'turbo', 
+ 'turbo_r', 'twilight', 'twilight_r', 'twilight_shifted', 
+ 'twilight_shifted_r', 'viridis', 'viridis_r', 'winter', 'winter_r'
+</code></pre></div></div>
+
+<h4 id="线型linestyle-简写为-ls">线型（linestyle 简写为 ls）：</h4>
+
+<ul>
+  <li>实线： ‘-‘</li>
+  <li>虚线： ‘–’</li>
+  <li>虚点线： ‘-.’</li>
+  <li>点线： ‘:’</li>
+  <li>点： ‘.’ </li>
+</ul>
+
+<h4 id="点型标记marker">点型（标记marker）：</h4>
+
+<ul>
+  <li>像素： ‘,’</li>
+  <li>圆形： ‘o’</li>
+  <li>上三角： ‘^’</li>
+  <li>下三角： ‘v’</li>
+  <li>左三角： ‘&lt;’</li>
+  <li>右三角： ‘&gt;’</li>
+  <li>方形： ‘s’</li>
+  <li>加号： ‘+’ </li>
+  <li>叉形： ‘x’</li>
+  <li>棱形： ‘D’</li>
+  <li>细棱形： ‘d’</li>
+  <li>三脚架朝下： ‘1’（就是丫）</li>
+  <li>三脚架朝上： ‘2’</li>
+  <li>三脚架朝左： ‘3’</li>
+  <li>三脚架朝右： ‘4’</li>
+  <li>六角形： ‘h’</li>
+  <li>旋转六角形： ‘H’</li>
+  <li>五角形： ‘p’</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>垂直线： ‘</td>
+          <td>’</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>水平线： ‘_’</li>
+  <li>gnuplot 中的steps： ‘steps’ （只能用于kwarg中）</li>
+</ul>
+
+<p>标记大小（markersize 简写为 ms）： 
+markersize： 实数
+ 
+标记边缘宽度（markeredgewidth 简写为 mew）：
+markeredgewidth：实数</p>
+
+<p>标记边缘颜色（markeredgecolor 简写为 mec）：
+markeredgecolor：颜色选项中的任意值</p>
+
+<p>标记表面颜色（markerfacecolor 简写为 mfc）：
+markerfacecolor：颜色选项中的任意值</p>
+
+<p>透明度（alpha）：
+alpha： [0,1]之间的浮点数</p>
+
+<p>线宽（linewidth）：
+linewidth： 实数</p>
+
+<h3 id="文本">文本</h3>
+<h4 id="latex展示">latex展示</h4>
+<p>使用<code class="language-plaintext highlighter-rouge">r"$Latex语法$"</code></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xyz</span><span class="o">=</span><span class="p">[</span><span class="sa">r</span><span class="s">"$\alpha_{xx}$"</span><span class="p">,</span><span class="s">"yy"</span><span class="p">,</span><span class="s">"zz"</span><span class="p">,</span><span class="s">"average"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="常用代码段">常用代码段</h2>
+<h3 id="画峰值出x坐标">画峰值出x坐标</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">peaklabel</span><span class="p">(</span><span class="n">plt</span><span class="p">,</span><span class="n">xdata</span><span class="p">,</span><span class="n">ydata</span><span class="p">):</span>
+    <span class="n">scale</span><span class="o">=</span><span class="mf">1.1</span>
+    <span class="n">left</span><span class="o">=</span><span class="n">ydata</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">ydata</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">*</span><span class="n">scale</span><span class="o">&gt;</span><span class="mi">0</span><span class="c1">#我在左面时大
+</span>    <span class="n">right</span><span class="o">=</span><span class="n">ydata</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">ydata</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="o">&gt;</span><span class="mi">0</span><span class="c1">#我在右面时大
+</span>    <span class="n">left</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">choose</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">left</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">left</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">&amp;</span> <span class="n">right</span><span class="p">[:]</span> <span class="p">)</span>
+    <span class="c1">#choose=choose &amp; ( ydata &gt; np.average(ydata) )
+</span>    <span class="c1">#choose=choose &amp; ( ydata &gt; np.max(ydata)/5.0 )
+</span>    <span class="n">x</span><span class="o">=</span><span class="n">xdata</span><span class="p">[</span><span class="n">choose</span><span class="p">]</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">ydata</span><span class="p">[</span><span class="n">choose</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">xy</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">annotate</span><span class="p">(</span><span class="s">"%2.3f"</span> <span class="o">%</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xy</span><span class="o">=</span><span class="n">xy</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s">'offset points'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="周期逐增画上x的位置">周期逐增画上x的位置</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">deltaeV</span><span class="o">=</span><span class="mf">1.0</span> <span class="c1">#画图标签间隔,可以理解为带间距
+</span><span class="n">N_each_deltaeV</span><span class="o">=</span><span class="mi">20</span> <span class="c1">#deltaeV内Y方向最多有多少个标签，若超过取余从0计数
+</span><span class="n">mine</span><span class="o">=-</span><span class="mf">1E15</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">gap</span><span class="p">.</span><span class="n">size</span><span class="p">):</span>
+   <span class="c1">#垂直线
+</span>   <span class="n">plt</span><span class="p">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">gap</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ylimit</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ylimit</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">colors</span> <span class="o">=</span> <span class="s">"g"</span><span class="p">,</span> <span class="n">linestyles</span> <span class="o">=</span> <span class="s">"dashed"</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+   <span class="c1">#plt.annotate(str(round(gap[i],2)),
+</span>   <span class="c1">#            xytext=(gap[i], 1.0*(ylimit[1]-ylimit[0])/gap.size*(i+1) ), 
+</span>   <span class="c1">#            textcoords='offset points',color=colors[i])
+</span>   <span class="n">x</span><span class="o">=</span><span class="n">gap</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+   <span class="k">if</span> <span class="bp">False</span><span class="p">:</span>
+      <span class="n">left</span><span class="o">=</span><span class="n">gap</span><span class="p">.</span><span class="n">size</span> <span class="o">-</span> <span class="n">gapnum</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">left</span><span class="p">:</span>
+         <span class="n">y</span><span class="o">=</span><span class="p">(</span><span class="n">ylimit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">ylimit</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">left</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="n">ylimit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="n">y</span><span class="o">=</span><span class="p">(</span><span class="n">ylimit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">ylimit</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">gapnum</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">ylimit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+   <span class="k">else</span><span class="p">:</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">gap</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">mine</span> <span class="o">&gt;</span> <span class="n">deltaeV</span> <span class="p">):</span>
+         <span class="n">mine</span> <span class="o">=</span> <span class="n">gap</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+         <span class="n">position</span><span class="o">=</span><span class="mi">1</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="n">position</span><span class="o">=</span><span class="n">position</span><span class="o">+</span><span class="mi">1</span>
+         <span class="n">position</span><span class="o">=</span><span class="n">position</span><span class="o">%</span><span class="n">N_each_deltaeV</span>
+      <span class="n">y</span><span class="o">=</span><span class="p">(</span><span class="n">ylimit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">ylimit</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">*</span><span class="n">position</span><span class="o">/</span><span class="n">N_each_deltaeV</span><span class="p">)</span><span class="c1">#在deltaeV内等间距插入N_each_deltaeV个点
+</span>   <span class="k">if</span> <span class="p">(</span> <span class="n">xlimit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">xlimit</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span> <span class="n">xlimit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">xlimit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">):</span>
+      <span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">gap</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="mi">2</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+               <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+               <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s">'square,pad=0.1'</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s">"white"</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
+               <span class="n">verticalalignment</span><span class="o">=</span><span class="s">"center"</span><span class="p">,</span><span class="n">horizontalalignment</span><span class="o">=</span><span class="s">"center"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="清空">清空</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plt.cla()
+</code></pre></div></div>
+<h3 id="axis--上下左右线即坐标轴">Axis  上下左右线，即坐标轴</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    #设置x轴标签及其字号
+    plt.xlabel(xlabel,fontsize=Fontsize)
+    #设置y轴标签及其字号
+    plt.ylabel(ylabel,fontsize=Fontsize)
+    #宽度
+    axs.spines["bottom"].set_linewidth(axisw)
+    axs.spines["top"].set_linewidth(axisw)
+    axs.spines["left"].set_linewidth(axisw)
+    axs.spines["right"].set_linewidth(axisw)
+</code></pre></div></div>
+<h3 id="ticks-上下左右线上的小刻度">ticks 上下左右线上的小刻度</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#ticks位置
+axs.set_xticks(ticks)
+#ticks标签
+axs.set_xticklabels(tickslabel)
+#等价于
+axs.set(xticks=ticks, xticklabels=tickslabel)
+
+# 设置xtick和ytick的方向：in、out、inout
+plt.rcParams['xtick.direction'] = 'in'
+plt.rcParams['ytick.direction'] = 'in'
+</code></pre></div></div>
+
+<h3 id="对数坐标">对数坐标</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">axs</span><span class="p">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s">"log"</span><span class="p">)</span>
+<span class="c1">#要在设置xlim,ylim之前设置,不然在前面的设置的xlim等信息会无效
+</span><span class="n">axs</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="n">xlim</span><span class="p">,</span><span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="其他">其他</h3>
+<h4 id="水平线">水平线</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>matplotlib.pyplot.axhline(y=0, xmin=0, xmax=1, hold=None, **kwargs)
+import matplotlib.pyplot as plt
+plt.axhline(y=0, xmin=0, xmax=1, hold=None, **kwargs)
+#
+plt.hlines(y, xmin, xmax)
+plt.hlines(0, 0, 0.5, colors = "r", linestyles = "dashed")
+</code></pre></div></div>
+<h4 id="垂直线">垂直线</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>matplotlib.pyplot.axvline(x=0, ymin=0, ymax=1, hold=None, **kwargs)
+vlines(x, ymin, ymax)
+</code></pre></div></div>
+
+<h4 id="透明背景">透明背景</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      plt.savefig(filename,dpi=200,transparent=True)
+</code></pre></div></div>
+
+<h2 id="扇形图">扇形图</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plt.pie([1.0/2,1.0/3,1.0/6],labels=[1,2,3],colors = ['tomato', 'lightskyblue', 'goldenrod'])
+</code></pre></div></div>
+
+<p><img src="/uploads/2021/10/pie123.png" alt="" /></p>
+
+<h2 id="差值拟合">差值拟合</h2>
+<h3 id="高斯滤波器">高斯滤波器</h3>
+<p>致谢<a href="https://github.com/GliderHX">@GliderHX</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#原始画图方法
+</span><span class="n">axs</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">DBgrid</span><span class="p">,</span><span class="n">avTDB</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">DBlable</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="c1">#滤波后画图
+</span><span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">gaussian_filter1d</span>
+<span class="n">avTDB</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">gaussian_filter1d</span><span class="p">(</span><span class="n">avTDB</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span> <span class="c1">#参数解释(原始数据,sigma,)
+</span><span class="n">axs</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">DBgrid</span><span class="p">,</span><span class="n">avTDB</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">DBlable</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</code></pre></div></div>
+<p><img src="/uploads/2020/12/gauss.png" alt="" /></p>
+
+<h3 id="插值">插值</h3>
+<p>致谢<a href="https://github.com/GliderHX">@GliderHX</a><br />
+<a href="http://liao.cpython.org/scipytutorial10/">10. Scipy Tutorial-插值interp1d</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+<span class="c1">#获得插值函数的参数
+</span><span class="n">f</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s">'cubic'</span><span class="p">)</span><span class="c1">#参数(原始数据x,y,插值算法)
+#计算插值数据
+</span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+</code></pre></div></div>
+<p>插值算法有<code class="language-plaintext highlighter-rouge">'linear', 'nearest', 'zero', 'slinear', 'quadratic', 'cubic'</code></p>
+<ul>
+  <li>linear 线性</li>
+  <li>cubic 三次</li>
+</ul>
+
+<p>高斯滤波后再插值效果更好
+<img src="/uploads/2020/12/spec.png" alt="" /></p>
+
+<h3 id="scatter画的图层比plot要低">scatter画的图层比plot要低</h3>
+<p>即使先用<code class="language-plaintext highlighter-rouge">plot</code>画图,再画<code class="language-plaintext highlighter-rouge">scatter</code>,散点图也会在plot的图下面,通过<code class="language-plaintext highlighter-rouge">zorder</code>指定图层顺序,把散点图整上去</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">axs</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xpoint</span><span class="p">,</span><span class="n">EIG</span><span class="p">[:,</span><span class="n">ispin</span><span class="p">,</span><span class="n">ibnd</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">icolor</span><span class="p">],</span><span class="n">linewidth</span><span class="o">=</span><span class="n">bandw</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="n">ibnd</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xpoint</span><span class="p">,</span> <span class="n">EIG</span><span class="p">[:,</span><span class="n">ispin</span><span class="p">,</span><span class="n">ibnd</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="n">add</span>  <span class="p">[:,</span><span class="n">ispin</span><span class="p">,</span><span class="n">ibnd</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span> <span class="s">"red"</span> <span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="n">ibnd</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>  
+</code></pre></div></div>
+
+<h2 id="最新理解">最新理解</h2>
+<p>matplot皆是基于对象画图.</p>
+<ul>
+  <li>每一个图,每一条线都是一个对象,可以进行设置</li>
+  <li>注意<code class="language-plaintext highlighter-rouge">subplots</code>和<code class="language-plaintext highlighter-rouge">subplot</code>含义不同</li>
+</ul>
+
+<h3 id="一些有助于学习的命令">一些有助于学习的命令</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">dir(plt)</code> 查看该对象的子属性和方法</li>
+  <li><code class="language-plaintext highlighter-rouge">plt.getp(plt)</code> 查看该对象可以设置的图形属性,如背景色,字体等</li>
+  <li><code class="language-plaintext highlighter-rouge">plt.setp(plt,key="value")</code> 设置该对象(或者群组)的图形属性,同上</li>
+  <li>查看源代码
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="k">print</span><span class="p">(</span><span class="n">inspect</span><span class="p">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">))</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="pltfigureaxesaxis的关系">plt,figure,axes,axis的关系</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">plt</code>只有一个,用于生成和调控各种对象
+    <ul>
+      <li>Artist对象包括简单类型(e.g. 图形,文字),<strong>容器类型(Figure,Axes,Axis)</strong></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">figure</code>和Matlab中的Figure类似,<strong>每一个figure就是一个画图窗口,不同figure之间是独立的</strong>
+    <ul>
+      <li>创建figure <code class="language-plaintext highlighter-rouge">plt.figure()</code>(一个大图),<code class="language-plaintext highlighter-rouge">plt.subplots()</code>(带子图)</li>
+      <li><code class="language-plaintext highlighter-rouge">figure</code>的编号从<code class="language-plaintext highlighter-rouge">1</code>开始<br />
+ 查看有几个figure: <code class="language-plaintext highlighter-rouge">plt.get_fignums()</code><br />
+ 切换活动figure<code class="language-plaintext highlighter-rouge">plt.figure(i)</code>,i=1,2,…,N in <code class="language-plaintext highlighter-rouge">plt.get_fignums()</code></li>
+      <li>,<code class="language-plaintext highlighter-rouge">plt.savefig("test.png")</code>只能保存当前的活动figure</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">plt.gcf()</code>获得当前的figure对象</strong></li>
+      <li>重新调整大小<code class="language-plaintext highlighter-rouge">plt.gcf().set_size_inches(1, 3)</code></li>
+    </ul>
+  </li>
+  <li>axes,子图,<strong>绘图子区域</strong>
+    <ul>
+      <li>axes是figure的下层对象,<code class="language-plaintext highlighter-rouge">plt.gcf().axes[0-N]</code>是figure上包含的一些列的子图区域</li>
+      <li>每个figure中可以创建多个子图,即划分成多个绘图区域</li>
+      <li>创建子图的方法<br />
+<code class="language-plaintext highlighter-rouge">plt.subplots(2,2)</code>在创建figure时创建<br />
+<code class="language-plaintext highlighter-rouge">plt.subplot(231)</code> 在当前的figure中添加一个<br />
+<code class="language-plaintext highlighter-rouge">plt.subplot2grid()</code> 更加的随意,给初始点和尺寸创建</li>
+      <li>子图的作用: 画多幅图,把colorbar画到别的子图上,实现colorbar随意位置</li>
+      <li><strong><code class="language-plaintext highlighter-rouge">plt.gca()</code>获得当前的axes</strong></li>
+      <li>可以在一个figure上不断添加绘图区域,如果新增的区域和之前的区域重合,则旧区域会被删除,如
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#先按照2x2创建了4个子图
+</span><span class="n">fig</span><span class="p">,</span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">#创建了4个子图,gca()默认指向第一个子图,axs是所有子图的集合
+</span><span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">patch</span><span class="p">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s">"green"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">].</span><span class="n">patch</span><span class="p">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s">"blue"</span><span class="p">)</span>
+<span class="c1">#修改axis对象
+</span><span class="n">axis</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">].</span><span class="n">xaxis</span>
+<span class="n">axis</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="p">[])</span>
+<span class="c1">#
+#又按照2x3的规则,在2x3的第一个区创建了一个子图,原来的第一个子图就会被覆盖掉
+</span><span class="n">axs231</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">231</span><span class="p">)</span>
+<span class="c1">#只创建了一个新子图,等号左边赋值,则后面直接可以用axs231操纵这个区域
+</span><span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">patch</span><span class="p">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s">"red"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<span class="c1">#
+#又按照把figure分成4x4份,以行3列1为起点,选取行1列2的区域,最初2x2的左下角会被覆盖掉
+</span><span class="n">plt</span><span class="p">.</span><span class="n">subplot2grid</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">rowspan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">colspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">#只创建了一个新子图
+</span><span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">patch</span><span class="p">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s">"yellow"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="c1">#
+#所有的子图都存在列表plt.gcf().axes里,新增的子图顺序在前面
+</span><span class="n">plt</span><span class="p">.</span><span class="n">gcf</span><span class="p">().</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gcf</span><span class="p">().</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gcf</span><span class="p">().</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gcf</span><span class="p">().</span><span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="mi">30</span><span class="p">)</span>
+<span class="c1">#
+</span><span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">"test.png"</span><span class="p">)</span>
+</code></pre></div>        </div>
+        <p><img src="/uploads/2022/04/subpot.png" alt="" /></p>
+      </li>
+    </ul>
+  </li>
+  <li><strong>axis,图的元素,刻度线,坐标轴,标题等</strong>
+    <ul>
+      <li>axis是axes的下层对象,<code class="language-plaintext highlighter-rouge">plt.gca().xaxis</code>是axes上的x轴</li>
+      <li>axes提供了一些创建axis的方法,通过<code class="language-plaintext highlighter-rouge">dir(plt.gca())</code>发现<code class="language-plaintext highlighter-rouge">plt.gca().set_xlabel("xlabel")</code></li>
+      <li>plt也提供了一些,如<code class="language-plaintext highlighter-rouge">plt.xlabel("XXlabel")</code></li>
+      <li>获得x轴并修改,结果如上图
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#修改axis对象
+</span><span class="n">axis</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">].</span><span class="n">xaxis</span>
+<span class="n">axis</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="p">[])</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="修改对象的性质">修改对象的性质</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">plt.getp</code>查看,然后使用<code class="language-plaintext highlighter-rouge">plt.setp</code>,<code class="language-plaintext highlighter-rouge">.set_**</code>的方式修改
+    <ul>
+      <li>问题是,查看到的性质,并不能全部套用<code class="language-plaintext highlighter-rouge">plt.setp</code>,<code class="language-plaintext highlighter-rouge">.set_**</code>的方式去修改</li>
+    </ul>
+  </li>
+  <li>不同层级的对象可能体统实现相同功能的方法,如<br />
+<code class="language-plaintext highlighter-rouge">plt.xlabel("XXlabel")</code>和<code class="language-plaintext highlighter-rouge">plt.gca().set_xlabel("xlabel")</code></li>
+</ul>
+
+<h4 id="getp可以查看的性质修改">getp可以查看的性质修改</h4>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">getp</code>,查看对象的性质
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">plt.getp(fig)</code>,<code class="language-plaintext highlighter-rouge">plt.getp(axes)</code>,<code class="language-plaintext highlighter-rouge">plt.getp(axis)</code></li>
+      <li>示例<code class="language-plaintext highlighter-rouge">plt.getp(plt.gca().xaxis)</code>
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ticks_direction = ['in' 'in' 'in' 'in']
+ticks_position = bottom
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">getp</code>查看到的性质,都可以用<code class="language-plaintext highlighter-rouge">setp</code>修改, 示例<br />
+<code class="language-plaintext highlighter-rouge">plt.setp(plt.gca().xaxis,ticks_position = "top")</code><br />
+<code class="language-plaintext highlighter-rouge">setp</code>的好处是可以同时设置一组对象,如<code class="language-plaintext highlighter-rouge">plt.setp(plt.gcf().axes,xlabel="xlabel")</code><br />
+然而问题是,我们不查手册,不好设置输入,如<code class="language-plaintext highlighter-rouge">plt.setp(plt.gca().xaxis,ticks_direction = ['in' 'in' 'in' 'in'] )</code> 这样设置就会报错</li>
+  <li>和setp等价的方式,每个对象的<code class="language-plaintext highlighter-rouge">a.set_性质()</code>
+<code class="language-plaintext highlighter-rouge">plt.gca().xaxis.set_ticks_position("bottom")</code><br />
+同样的问题,不存在<code class="language-plaintext highlighter-rouge">plt.gca().xaxis.set_ticks_direction(['in' 'in' 'in' 'in'])</code></li>
+</ul>
+
+<h4 id="dir直接查看有哪些方法可以调用进行修改">dir()直接查看有哪些方法可以调用进行修改</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dir(plt)
+[
+#...
+ 'xscale',
+ 'xticks',
+ 'ylabel',
+ 'ylim',
+ 'yscale',
+ 'yticks']
+ ]
+</code></pre></div></div>
+
+<h4 id="搜索引擎">搜索引擎…</h4>
+
+<h2 id="默认画图参数设置">默认画图参数设置</h2>
+<h3 id="参数设置">参数设置</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#设置默认字体大小
+</span><span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'font.size'</span><span class="p">]</span><span class="o">=</span><span class="n">fontsize</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'axes.labelsize'</span><span class="p">]</span><span class="o">=</span><span class="n">fontsize</span><span class="o">+</span><span class="mi">2</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'xtick.major.width'</span><span class="p">]</span><span class="o">=</span><span class="n">majorticksw</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'ytick.major.width'</span><span class="p">]</span><span class="o">=</span><span class="n">majorticksw</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'xtick.minor.width'</span><span class="p">]</span><span class="o">=</span><span class="n">minorticksw</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'ytick.minor.width'</span><span class="p">]</span><span class="o">=</span><span class="n">minorticksw</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'xtick.direction'</span><span class="p">]</span><span class="o">=</span><span class="s">"in"</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'ytick.direction'</span><span class="p">]</span><span class="o">=</span><span class="s">"in"</span>
+</code></pre></div></div>
+<h3 id="文件设置">文件设置</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import matplotlib as mpl
+mpl.get_configdir()
+</code></pre></div></div>
+<p>修改返回目录<code class="language-plaintext highlighter-rouge">'/home/cndaqiang/.config/matplotlib'</code>的<code class="language-plaintext highlighter-rouge">matplotlibrc</code>文件,或者运行目录的<code class="language-plaintext highlighter-rouge">matplotlibrc</code>文件,</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#按照字典的方式写好
+font.size           : 100.0
+</code></pre></div></div>
+<p>可以参考<code class="language-plaintext highlighter-rouge">~/anaconda3/./lib/python3.7/site-packages/matplotlib/mpl-data/matplotlibrc</code>文件</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/02/29/pgi/">挖坑 CUDA编程(Fortran)</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/03/06/learnqe/">Learn QE1 电子结构计算</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

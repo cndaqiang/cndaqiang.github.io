@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>python: 格式化输入输出、文件操作</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2017/10/01/python-buchong-shurushuchu/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>python: 格式化输入输出、文件操作</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-10-01
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Python" title="Category: Python" rel="category">Python</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#python" title="Tag: python" rel="tag">python</a-->
+        <a href="/tag/#python" title="Tag: python" rel="tag">python</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#一些函数" id="markdown-toc-一些函数">一些函数</a>    <ul>
+      <li><a href="#print" id="markdown-toc-print">print</a>        <ul>
+          <li><a href="#输出字符串列表等" id="markdown-toc-输出字符串列表等">输出字符串，列表等</a></li>
+          <li><a href="#格式化输出" id="markdown-toc-格式化输出">格式化输出</a></li>
+        </ul>
+      </li>
+      <li><a href="#format" id="markdown-toc-format">format</a></li>
+    </ul>
+  </li>
+  <li><a href="#文件操作" id="markdown-toc-文件操作">文件操作</a>    <ul>
+      <li><a href="#文件读写" id="markdown-toc-文件读写">文件读写</a>        <ul>
+          <li><a href="#打开文件" id="markdown-toc-打开文件">打开文件</a></li>
+          <li><a href="#关闭文件" id="markdown-toc-关闭文件">关闭文件</a></li>
+          <li><a href="#写入数据" id="markdown-toc-写入数据">写入数据</a></li>
+          <li><a href="#读取数据" id="markdown-toc-读取数据">读取数据</a></li>
+          <li><a href="#读写位置" id="markdown-toc-读写位置">读写位置</a></li>
+          <li><a href="#示例" id="markdown-toc-示例">示例</a></li>
+          <li><a href="#判断文件是否读至结尾" id="markdown-toc-判断文件是否读至结尾">判断文件是否读至结尾</a></li>
+          <li><a href="#加速文件读取速度" id="markdown-toc-加速文件读取速度">加速文件读取速度</a></li>
+        </ul>
+      </li>
+      <li><a href="#os模块" id="markdown-toc-os模块">os模块</a>        <ul>
+          <li><a href="#文件重命名删除" id="markdown-toc-文件重命名删除">文件重命名删除</a></li>
+          <li><a href="#执行系统命令" id="markdown-toc-执行系统命令">执行系统命令</a></li>
+          <li><a href="#获取进程pid" id="markdown-toc-获取进程pid">获取进程pid</a></li>
+        </ul>
+      </li>
+      <li><a href="#其他有趣" id="markdown-toc-其他有趣">其他有趣</a>        <ul>
+          <li><a href="#更新屏幕上的内容" id="markdown-toc-更新屏幕上的内容">更新屏幕上的内容</a></li>
+        </ul>
+      </li>
+      <li><a href="#报错" id="markdown-toc-报错">报错</a>        <ul>
+          <li><a href="#文件中有特殊的字符删除" id="markdown-toc-文件中有特殊的字符删除">文件中有特殊的字符,删除</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="一些函数">一些函数</h1>
+
+<h2 id="print">print</h2>
+<h3 id="输出字符串列表等">输出字符串，列表等</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'hello'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span><span class="n">str2</span><span class="p">,</span><span class="n">str3</span><span class="p">)</span>  <span class="c1">#连接输出，中间以空格隔开
+</span><span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+</code></pre></div></div>
+<p>print每执行一次，输出后最后默认加一个回车，可以print(str1,edn=’结束内容’)，指定输出后的内容</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">'a'</span><span class="p">);</span><span class="k">print</span><span class="p">(</span><span class="s">'b'</span><span class="p">)</span>
+<span class="n">a</span>
+<span class="n">b</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">'a'</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s">''</span><span class="p">);</span><span class="k">print</span><span class="p">(</span><span class="s">'b'</span><span class="p">)</span>
+<span class="n">ab</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">'a'</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s">' '</span><span class="p">);</span><span class="k">print</span><span class="p">(</span><span class="s">'b'</span><span class="p">)</span>
+<span class="n">a</span> <span class="n">b</span>
+</code></pre></div></div>
+<p>print输出不换行, 则指定<code class="language-plaintext highlighter-rouge">end=''</code></p>
+
+<h3 id="格式化输出">格式化输出</h3>
+<ul>
+  <li>%s — 字符串</li>
+  <li>%d — dec十进制</li>
+  <li>%x — hex 十六进制</li>
+  <li>%d — dec 十进制</li>
+  <li>%o — oct 八进制</li>
+  <li>%f — 浮点数</li>
+  <li>%m.nf — 整数部分m个，不够补空格，小数部分n个</li>
+  <li><code class="language-plaintext highlighter-rouge">str.zfill(n)</code>在前面补0凑够n位</li>
+</ul>
+
+<p><strong>更多格式先略</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">'%x'</span> <span class="o">%</span><span class="mi">23</span><span class="p">)</span>
+<span class="mi">17</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">str</span><span class="o">=</span><span class="s">'hello,%d,%x,%o'</span> <span class="o">%</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">45</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">hello</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">2</span><span class="n">d</span><span class="p">,</span><span class="mi">55</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">str</span><span class="p">(</span><span class="mf">2.2</span><span class="p">).</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="s">'02.2'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">str</span><span class="p">(</span><span class="s">'21'</span><span class="p">).</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="s">'0021'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">str</span><span class="p">(</span><span class="s">'ab'</span><span class="p">).</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="s">'00ab'</span>
+</code></pre></div></div>
+<h2 id="format">format</h2>
+<p>Python2.6 开始，新增了一种格式化字符串的函数 str.format()<br />
+基本语法是通过<code class="language-plaintext highlighter-rouge">{}</code>和<code class="language-plaintext highlighter-rouge">:</code>来代替以前的%<br />
+用于<code class="language-plaintext highlighter-rouge">print(str.format())</code>格式化输出很好
+<br />以下语法摘自参考<a href="http://www.runoob.com">菜鸟教程</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="s">"{} {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"hello"</span><span class="p">,</span> <span class="s">"world"</span><span class="p">)</span>    <span class="c1"># 不设置指定位置，按默认顺序
+</span><span class="s">'hello world'</span>
+ 
+<span class="o">&gt;&gt;&gt;</span> <span class="s">"{0} {1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"hello"</span><span class="p">,</span> <span class="s">"world"</span><span class="p">)</span>  <span class="c1"># 设置指定位置
+</span><span class="s">'hello world'</span>
+ 
+<span class="o">&gt;&gt;&gt;</span> <span class="s">"{1} {0} {1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"hello"</span><span class="p">,</span> <span class="s">"world"</span><span class="p">)</span>  <span class="c1"># 设置指定位置
+</span><span class="s">'world hello world'</span>
+</code></pre></div></div>
+
+<p>也可设置参数</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"网站名：{name}, 地址 {url}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"菜鸟教程"</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">"www.runoob.com"</span><span class="p">))</span>
+ 
+<span class="c1"># 通过字典设置参数
+</span><span class="n">site</span> <span class="o">=</span> <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"菜鸟教程"</span><span class="p">,</span> <span class="s">"url"</span><span class="p">:</span> <span class="s">"www.runoob.com"</span><span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"网站名：{name}, 地址 {url}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="o">**</span><span class="n">site</span><span class="p">))</span>
+ 
+<span class="c1"># 通过列表索引设置参数
+</span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">'菜鸟教程'</span><span class="p">,</span> <span class="s">'www.runoob.com'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"网站名：{0[0]}, 地址 {0[1]}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">my_list</span><span class="p">))</span>  <span class="c1"># "0" 是必须的
+</span></code></pre></div></div>
+
+<p>数字格式<br />
+<img src="/uploads/2018/02/pasted_image001.png" alt="" />
+进制<br />
+<img src="/uploads/2018/02/pasted_image002.png" alt="" /></p>
+
+<p><br /><br /><br /><br /></p>
+
+<h1 id="文件操作">文件操作</h1>
+<h2 id="文件读写">文件读写</h2>
+
+<p>推荐使用with打开,这样在遇到文件读写IOError时会自动调用f.close(),保证文件正常关闭</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">文件名</span><span class="p">,</span><span class="n">模式</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">())</span>
+</code></pre></div></div>
+<h3 id="打开文件">打开文件</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">open</span><span class="p">(</span><span class="n">文件名</span><span class="p">,</span><span class="n">模式</span><span class="p">)</span>
+<span class="c1">#如
+</span><span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">'../test.txt'</span><span class="p">,</span><span class="s">'w'</span><span class="p">)</span>
+</code></pre></div></div>
+<ul>
+  <li>文件名使用字符串，支持绝对路径相对路径</li>
+  <li>模式(引自传智播客)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">访问模式</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">r</td>
+<td style="text-align:left">以只读方式打开文件。文件的指针将会放在文件的开头。这是默认模式。</td>
+</tr>
+<tr>
+<td style="text-align:center">w</td>
+<td style="text-align:left">打开一个文件只用于写入。如果该文件已存在则将其<b>覆盖</b>。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td style="text-align:left">打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</td>
+</tr>
+<tr>
+<td style="text-align:center">---</td>
+<td style="text-align:left">-----------</td>
+</tr>
+<tr>
+<td style="text-align:center">rb</td>
+<td style="text-align:left">以二进制格式打开一个文件用于只读。文件指针将会放在文件的开头。这是默认模式。</td>
+</tr>
+<tr>
+<td style="text-align:center">wb</td>
+<td style="text-align:left">以二进制格式打开一个文件只用于写入。如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">ab</td>
+<td style="text-align:left">以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</td>
+</tr>
+<tr>
+<td style="text-align:center">---</td>
+<td style="text-align:left">-----------</td>
+</tr>
+<tr>
+<td style="text-align:center">r+</td>
+<td style="text-align:left">打开一个文件用于读写。文件指针将会放在文件的开头。</td>
+</tr>
+<tr>
+<td style="text-align:center">w+</td>
+<td style="text-align:left">打开一个文件用于读写。如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">a+</td>
+<td style="text-align:left">打开一个文件用于读写。如果该文件已存在，文件指针将会放在文件的结尾。文件打开时会是追加模式。如果该文件不存在，创建新文件用于读写。</td>
+</tr>
+<tr>
+<td style="text-align:center">---</td>
+<td style="text-align:left">-----------</td>
+</tr>
+<tr>
+<td style="text-align:center">rb+</td>
+<td style="text-align:left">以二进制格式打开一个文件用于读写。文件指针将会放在文件的开头。</td>
+</tr>
+<tr>
+<td style="text-align:center">wb+</td>
+<td style="text-align:left">以二进制格式打开一个文件用于读写。如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">ab+</td>
+<td style="text-align:left">以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写。</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="关闭文件">关闭文件</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f.close()
+</code></pre></div></div>
+<h3 id="写入数据">写入数据</h3>
+<p>写入后文件中的光标自动移位</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f = open('test.txt', 'w')
+f.write('hello world, i am here!')
+f.close()
+</code></pre></div></div>
+<h3 id="读取数据">读取数据</h3>
+<p>读取后文件中的光标自动移位</p>
+<ul>
+  <li>read(N) 读取N个字符，无N读取所有</li>
+  <li>readlines() <strong>一次性读取，每行为一个字符串组成list</strong></li>
+  <li>readline() 读取一行，返回字符串
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f = open('test.txt', 'r')
+con=f.read()
+f.close()
+</code></pre></div>    </div>
+    <p>大文件时，逐行读取然后复制写入</p>
+    <h3 id="读写位置">读写位置</h3>
+  </li>
+  <li>tell()</li>
+  <li>seek(offset,from)
+<br />seek偏移量
+<br />from:起始位置:0文件开头１当前位置２文件末尾
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#统计行数，并移至开头
+f=open(inputfile)
+rownum=len(f.readlines())
+ierror=f.seek(0,0)
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="示例">示例</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">inputfile</span><span class="p">,</span><span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span> <span class="n">f</span><span class="p">.</span><span class="n">readline</span><span class="p">()</span> <span class="c1">#跳过前4行
+</span>    <span class="c1">#读入剩下所有数据
+</span>    <span class="n">data</span><span class="o">=</span><span class="p">[</span> <span class="p">[</span> <span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">line</span><span class="p">.</span><span class="n">split</span><span class="p">()</span> <span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">.</span><span class="n">readlines</span><span class="p">()</span> <span class="p">]</span> 
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">spectrum</span><span class="o">=</span><span class="n">data</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]]</span> <span class="c1">#提取一些数据
+</span></code></pre></div></div>
+
+<h3 id="判断文件是否读至结尾">判断文件是否读至结尾</h3>
+<p><a href="https://www.cnblogs.com/summerkiki/p/4472043.html">python中判断readline读到文件末尾</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    line=f.readline()
+    if not line:      #等价于if line == "":
+        break
+</code></pre></div></div>
+
+<h3 id="加速文件读取速度">加速文件读取速度</h3>
+<p><del><strong>用readlines()比for循环readline快太多了</strong>,下面多次重复测试,readlines的速度都是9s左右,很快</del><br />
+读入后<code class="language-plaintext highlighter-rouge">split</code>再变成数字的numpy,还真是<code class="language-plaintext highlighter-rouge">readline()</code>最快,没找到加速方法….</p>
+
+<h2 id="os模块">os模块</h2>
+<h3 id="文件重命名删除">文件重命名删除</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="s">"old_name"</span><span class="p">,</span><span class="s">"new_name"</span><span class="p">)</span>
+<span class="n">os</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span>
+<span class="n">os</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">"目录名"</span><span class="p">)</span>
+<span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="c1">#获取当前路径
+</span><span class="n">os</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"路径"</span><span class="p">)</span>
+<span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">"路径"</span><span class="p">)</span><span class="err">　</span><span class="c1">#ls
+</span><span class="n">os</span><span class="p">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s">"目录名"</span><span class="p">)</span><span class="err">　</span><span class="c1">#rmdir
+</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="s">"文件/目录"</span><span class="p">)</span> <span class="c1">#检查文件/目录是否存在
+</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">"文件"</span><span class="p">)</span> <span class="c1">#检查文件是否存在
+</span></code></pre></div></div>
+<p>非空目录不能删除,使用下面删除</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import shutil
+shutil.rmtree(banddir, ignore_errors=True)
+</code></pre></div></div>
+<h3 id="执行系统命令">执行系统命令</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">system</span><span class="p">(</span><span class="s">"grep a_1 "</span><span class="o">+</span><span class="n">inputfile</span><span class="p">)</span>
+                    <span class="n">a_1</span>    <span class="mf">11.999994</span>   <span class="mf">0.000000</span>   <span class="mf">0.000000</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">popen</span><span class="p">(</span><span class="s">"grep a_1 "</span><span class="o">+</span><span class="n">inputfile</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="p">[</span><span class="s">'                    a_1    11.999994   0.000000   0.000000</span><span class="se">\n</span><span class="s">'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="获取进程pid">获取进程pid</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; os.getpid() #当前进程
+66021
+&gt;&gt;&gt; os.getppid() #父进程
+61928
+</code></pre></div></div>
+
+<h2 id="其他有趣">其他有趣</h2>
+<h3 id="更新屏幕上的内容">更新屏幕上的内容</h3>
+<p>不断刷新,如显示进度条</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"</span><span class="se">\r</span><span class="s">Readming wfc(%4.2f%%)"</span><span class="o">%</span><span class="p">(</span> <span class="p">(</span><span class="n">ik</span><span class="o">*</span><span class="n">nbnd</span><span class="o">+</span><span class="n">ibnd</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">nkstot</span><span class="o">*</span><span class="n">nbnd</span><span class="p">)</span><span class="o">*</span><span class="mf">100.0</span> <span class="p">)</span><span class="o">+</span><span class="n">end</span> <span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="报错">报错</h2>
+<h3 id="文件中有特殊的字符删除">文件中有特殊的字符,删除</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa6 in position 595: invalid start byte
+</code></pre></div></div>
+<p>特殊字符</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!¦¤t=t2?t1 for the calculation of Uk(t2,t1) in tddft, 1 a.u.=0.048378 fs
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/10/01/python-buchong-shujujiegou/">python(补充2)数据结构</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/10/11/discuz-move/">discuz站点迁移记录</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

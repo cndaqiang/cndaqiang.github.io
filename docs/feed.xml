@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cndaqiang</title>
+    <description></description>
+    <link>http://0.0.0.0:4000/</link>
+    <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 01 Nov 2024 22:34:25 +0800</pubDate>
+    <lastBuildDate>Fri, 01 Nov 2024 22:34:25 +0800</lastBuildDate>
+    <generator>Jekyll v3.10.0</generator>
+    
+      <item>
+        <title>绿联nas配置</title>
+        <description>
+</description>
+        <pubDate>Sun, 27 Oct 2024 16:03:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/2024/10/27/dxp4800/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2024/10/27/dxp4800/</guid>
+        
+        <category>openwrt</category>
+        
+        
+        <category>Nas</category>
+        
+      </item>
+    
+      <item>
+        <title>安装OP/HiNas至U盘以及配置</title>
+        <description>
+始终无法解决刷机后，系统变为read-only或者无法启动的问题。怀疑是mmc有问题。最终的解决方案是刷到U盘中。
+
+</description>
+        <pubDate>Mon, 21 Oct 2024 17:23:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/2024/10/21/hinas2/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2024/10/21/hinas2/</guid>
+        
+        <category>HiNas</category>
+        
+        <category>openwrt</category>
+        
+        <category>arm</category>
+        
+        <category>mv100</category>
+        
+        
+        <category>HiNas</category>
+        
+      </item>
+    
+      <item>
+        <title>海纳思刷机总结</title>
+        <description>
+刷机之后，第一次可以进入HiNAS的系统，但是系统变成了read-only, 无法设置。或者本来能用，但是重启/断电之后，系统变成read-only。
+不知道是硬件的问题，还是软件的问题，遂对HiNAS的刷机包进行了分析和更改。
+&lt;strong&gt;最后实际使用的系统为immortalwrt-21.02&lt;/strong&gt;
+
+</description>
+        <pubDate>Sun, 20 Oct 2024 15:13:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/2024/10/20/hinas/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2024/10/20/hinas/</guid>
+        
+        <category>HiNas</category>
+        
+        <category>openwrt</category>
+        
+        <category>arm</category>
+        
+        <category>mv100</category>
+        
+        
+        <category>HiNas</category>
+        
+      </item>
+    
+      <item>
+        <title>群晖的MediaWiki崩溃后的救援记录</title>
+        <description>
+</description>
+        <pubDate>Sun, 22 Sep 2024 20:20:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/2024/09/22/mediawiki/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2024/09/22/mediawiki/</guid>
+        
+        <category>MediaWiki</category>
+        
+        
+        <category>MediaWiki</category>
+        
+      </item>
+    
+      <item>
+        <title>无线宝云路由器AX1800 JD-Cloud RE-CP-02 的OpenWRT配置</title>
+        <description>
+</description>
+        <pubDate>Thu, 12 Sep 2024 12:06:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/2024/09/12/openwrt-LuBan/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2024/09/12/openwrt-LuBan/</guid>
+        
+        <category>OpenWRT</category>
+        
+        
+        <category>OpenWRT</category>
+        
+      </item>
+    
+      <item>
+        <title>OpenWRT个人服务器:以E20C为例</title>
+        <description>
+</description>
+        <pubDate>Mon, 08 Jul 2024 09:53:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/2024/07/08/openwrt-server/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2024/07/08/openwrt-server/</guid>
+        
+        <category>OpenWRT</category>
+        
+        
+        <category>OpenWRT</category>
+        
+      </item>
+    
+      <item>
+        <title>单GPU节点配置计算环境</title>
+        <description>
+</description>
+        <pubDate>Wed, 01 May 2024 20:51:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/2024/05/01/ubuntu22.04-gpu/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2024/05/01/ubuntu22.04-gpu/</guid>
+        
+        <category>gnu</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>macOS配置开发环境 </title>
+        <description>初版博客&lt;a href=&quot;/2019/06/08/mac-code/&quot;&gt;macOS配置科学计算环境&lt;/a&gt;
+本文历史更新地址&lt;a href=&quot;https://github.com/cndaqiang/dell-14-7460-hackintosh/issues/10#&quot;&gt;mac配置开发环境&lt;/a&gt;
+
+</description>
+        <pubDate>Thu, 08 Feb 2024 17:43:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/2024/02/08/mac-dev/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2024/02/08/mac-dev/</guid>
+        
+        <category>oneapi</category>
+        
+        <category>gnu</category>
+        
+        
+        <category>macOS</category>
+        
+      </item>
+    
+      <item>
+        <title>MacOS/FreeBSD 搭建nfs服务器</title>
+        <description>
+</description>
+        <pubDate>Thu, 25 Jan 2024 20:33:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/2024/01/25/mac-nfsd/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2024/01/25/mac-nfsd/</guid>
+        
+        <category>macOS</category>
+        
+        <category>nfs</category>
+        
+        
+        <category>macOS</category>
+        
+      </item>
+    
+      <item>
+        <title>OpenWRT编译配置:以CMCC RAX3000M为例</title>
+        <description>
+</description>
+        <pubDate>Tue, 23 Jan 2024 12:06:00 +0800</pubDate>
+        <link>http://0.0.0.0:4000/2024/01/23/openwrt-rax3000m-nand/</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2024/01/23/openwrt-rax3000m-nand/</guid>
+        
+        <category>OpenWRT</category>
+        
+        
+        <category>OpenWRT</category>
+        
+      </item>
+    
+  </channel>
+</rss>

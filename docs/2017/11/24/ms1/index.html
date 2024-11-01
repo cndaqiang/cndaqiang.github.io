@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Materials Studio学习</title>
+    <meta name="description" content="此文根据山东大学魏巍老师的课堂讲课总结记录而成。">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2017/11/24/ms1/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Materials Studio学习</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-11-24
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Materials-Studio" title="Tag: Materials-Studio" rel="tag">Materials-Studio</a-->
+        <a href="/tag/#Materials-Studio" title="Tag: Materials-Studio" rel="tag">Materials-Studio</a>&nbsp;
+    
+        <!--a href="/tag/#%E9%87%8F%E5%AD%90%E5%8C%96%E5%AD%A6" title="Tag: 量子化学" rel="tag">量子化学</a-->
+        <a href="/tag/#量子化学" title="Tag: 量子化学" rel="tag">量子化学</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#操作界面介绍" id="markdown-toc-操作界面介绍">操作界面介绍</a>    <ul>
+      <li><a href="#file" id="markdown-toc-file">File</a></li>
+      <li><a href="#edite" id="markdown-toc-edite">Edite</a></li>
+      <li><a href="#view" id="markdown-toc-view">View</a>        <ul>
+          <li><a href="#一些快捷工具view-toolbars" id="markdown-toc-一些快捷工具view-toolbars">一些快捷工具<code class="language-plaintext highlighter-rouge">View-&gt;Toolbars</code></a></li>
+          <li><a href="#一些窗口-view-explorers" id="markdown-toc-一些窗口-view-explorers">一些窗口 <code class="language-plaintext highlighter-rouge">VIew-&gt;Explorers</code></a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#20171124第1课" id="markdown-toc-20171124第1课">20171124第1课</a>    <ul>
+      <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+      <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+      <li><a href="#导入tio2-rutile" id="markdown-toc-导入tio2-rutile">导入TiO2-Rutile</a></li>
+      <li><a href="#修改" id="markdown-toc-修改">修改</a></li>
+      <li><a href="#建立超胞" id="markdown-toc-建立超胞">建立超胞</a></li>
+      <li><a href="#tio2-rutile表面" id="markdown-toc-tio2-rutile表面">TiO2-Rutile表面</a></li>
+    </ul>
+  </li>
+  <li><a href="#20171128第2课" id="markdown-toc-20171128第2课">20171128第2课</a>    <ul>
+      <li><a href="#h2o" id="markdown-toc-h2o">H2O</a></li>
+      <li><a href="#h2o-adsorption-on-tio2-rutile-110-surface" id="markdown-toc-h2o-adsorption-on-tio2-rutile-110-surface">H2O adsorption on TiO2-Rutile-(110) surface</a></li>
+      <li><a href="#ruo2-rutile" id="markdown-toc-ruo2-rutile">RuO2-Rutile</a></li>
+      <li><a href="#ruo2-tio2-rutile-110-interface" id="markdown-toc-ruo2-tio2-rutile-110-interface">RuO2-TiO2-Rutile (110) interface</a></li>
+    </ul>
+  </li>
+  <li><a href="#20171201第3课" id="markdown-toc-20171201第3课">20171201第3课</a>    <ul>
+      <li><a href="#石墨烯" id="markdown-toc-石墨烯">石墨烯</a>        <ul>
+          <li><a href="#方法一" id="markdown-toc-方法一">方法一</a></li>
+          <li><a href="#方法二" id="markdown-toc-方法二">方法二</a></li>
+          <li><a href="#上课还有一些操作我无法重复出来了下节课得找老师问问" id="markdown-toc-上课还有一些操作我无法重复出来了下节课得找老师问问">上课还有一些操作我无法重复出来了，下节课得找老师问问</a></li>
+          <li><a href="#问题解决" id="markdown-toc-问题解决">问题解决</a></li>
+        </ul>
+      </li>
+      <li><a href="#mos2-ws2-mose2-wse2-tmds-primitive-cell" id="markdown-toc-mos2-ws2-mose2-wse2-tmds-primitive-cell">MoS2 (WS2, MoSe2, WSe2…) —TMDs, primitive cell</a>        <ul>
+          <li><a href="#创建结构" id="markdown-toc-创建结构">创建结构</a></li>
+          <li><a href="#添加原子" id="markdown-toc-添加原子">添加原子</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#20171205" id="markdown-toc-20171205">20171205</a></li>
+  <li><a href="#20171208" id="markdown-toc-20171208">20171208</a>    <ul>
+      <li><a href="#计算石墨烯的能带" id="markdown-toc-计算石墨烯的能带">计算石墨烯的能带</a>        <ul>
+          <li><a href="#导入" id="markdown-toc-导入">导入</a></li>
+          <li><a href="#计算" id="markdown-toc-计算">计算</a></li>
+          <li><a href="#查看结果" id="markdown-toc-查看结果">查看结果</a></li>
+        </ul>
+      </li>
+      <li><a href="#查看cell文件" id="markdown-toc-查看cell文件">查看cell文件</a></li>
+    </ul>
+  </li>
+  <li><a href="#结束" id="markdown-toc-结束">结束</a></li>
+</ul>
+<p>此文根据山东大学魏巍老师的课堂讲课总结记录而成。</p>
+
+<h1 id="操作界面介绍">操作界面介绍</h1>
+<p>主要参考<a href="/doc/2017/Materials-Studio建模操作详细步骤(本人原创).pdf">Materials-Studio建模操作详细步骤(本人原创).pdf</a><br /></p>
+<ul>
+  <li>右键按住是旋转</li>
+  <li>多选，删除，复制，剪切，粘贴支持windows快捷键操作</li>
+  <li>选中后，同时按住shift+alt键可以快速对分子进行移动</li>
+  <li>绘制过程中，按住shift+左键单击变成选择</li>
+  <li>shift+右键长按，对选中单元进行旋转</li>
+</ul>
+
+<h2 id="file">File</h2>
+<p>新建导出另存为打印之类的操作</p>
+<h2 id="edite">Edite</h2>
+<p>对图形中的剪切，粘贴，复制类操作<br />
+其中有一个<code class="language-plaintext highlighter-rouge">Edit-&gt;Atom Selection</code>，可以全图批量选中某种原子，或从选中的原子中批量选出某原子<br />
+从选中的原子中筛选出某元素的设置为</p>
+<ul>
+  <li><img src="/uploads/2017/11/ms7.PNG" alt="" /></li>
+</ul>
+
+<h2 id="view">View</h2>
+<p>控制软件界面上显示的快捷功能，工具条,窗口，<br />
+你的MS和别人的显示界面不一样，可以尝试在这里开启不同的功能<br />
+例如，<code class="language-plaintext highlighter-rouge">View-&gt;Explorers-&gt;Properties Explorer</code>可以添加属性窗口</p>
+<h3 id="一些快捷工具view-toolbars">一些快捷工具<code class="language-plaintext highlighter-rouge">View-&gt;Toolbars</code></h3>
+<ul>
+  <li><img src="/uploads/2017/11/ms5.PNG" alt="" /> 左键是其自身功能(选择，旋转，放大/移动)</li>
+  <li><img src="/uploads/2017/11/ms8.PNG" alt="" /></li>
+  <li><img src="/uploads/2017/11/ms4.png" alt="" />
+<br />左单击是新建(单个原子，环，链)，
+<br />左单击后，按ESC可实现添加原子
+<br />左键点住已有原子，可以拖动原子位置
+<br />单击已有原子/刚添加一个原子 后 左键长按可以添加一个新原子并和之前的原子成键</li>
+  <li><img src="/uploads/2017/11/ms6.PNG" alt="" />
+<br />对图形的修改，测量距离角度，拟合，自动调整键的角度,补H,替换原子类型，改变键的类型，杂化类型</li>
+  <li>其他的一些工具条
+<img src="/uploads/2017/11/ms9.PNG" alt="" /></li>
+</ul>
+
+<h3 id="一些窗口-view-explorers">一些窗口 <code class="language-plaintext highlighter-rouge">VIew-&gt;Explorers</code></h3>
+<ul>
+  <li>Job Explorer：显示己完成的、正在运行的程序</li>
+  <li>Project Explorer：显示运行的 job，各种输入与输出文件，近
+端远程的状态都可以显示，可以查看结果、修改输出输入的相关设定。</li>
+  <li>Properties Explorer：材料的原子及电子结构 3D 模型等物性数
+据，例如晶体晶胞边长、原子元素种类等等。均可通过双击加以修改
+<br />三种窗格如图
+<img src="/uploads/2017/11/ms10.PNG" alt="" /></li>
+</ul>
+
+<h1 id="20171124第1课">20171124第1课</h1>
+<h2 id="参考">参考</h2>
+<p><a href="http://muchong.com/html/201102/2868706.html">【求助】用MS怎么构建超胞啊？</a>
+<br /><a href="http://muchong.com/html/201004/1932432.html">【已解决】Materials Studio无法选择原子和旋转图形</a>
+<br /><a href="http://www.v-suan.com/archives/747.html">用Material Studio构建稍微复杂的表面模型：一个根号3×2的pt（111）表面</a></p>
+
+<h2 id="备注">备注</h2>
+<p>我的集显貌似无法进行图形旋转，建议开启独显</p>
+
+<h2 id="导入tio2-rutile">导入TiO2-Rutile</h2>
+<ul>
+  <li>新建项目 <code class="language-plaintext highlighter-rouge">File-&gt;New Project</code>
+ <br />保存目录不要有中文</li>
+  <li>导入TiO2-Rutile，如图,导入<code class="language-plaintext highlighter-rouge">C:\Program Files (x86)\Accelrys\Materials Studio 8.0\share\Structures\metal-oxides\TiO2-rutile.msi</code>
+<br /> <img src="/uploads/2017/11/ms1.PNG" alt="" /></li>
+  <li>导入后可能看不到原子
+ <br />在图型上<code class="language-plaintext highlighter-rouge">右键-&gt;Dispaly Style-&gt;Atom-&gt;CPK</code>
+ <br />通过调节CPK的值可以改变原子显示大小</li>
+</ul>
+
+<h2 id="修改">修改</h2>
+<ul>
+  <li>选中原子
+ <br /> 左键单击 单选
+ <br /> 鼠标拉动选中
+ <br /> <code class="language-plaintext highlighter-rouge">shift/ctrl + 单击</code> 多选</li>
+  <li>如果结构是对称的，修改完也是对称修改</li>
+  <li>删除原子/制造空位
+ <br />鼠标单击选中原子，delet键删除</li>
+  <li>替换原子/掺杂
+ <br />鼠标单击选中原子，点右上角元素周期表样图标，选中合适元素进行替换，如图
+ <br />
+ <img src="/uploads/2017/11/ms2.PNG" alt="" /></li>
+</ul>
+
+<h2 id="建立超胞">建立超胞</h2>
+<p>导入TiO2-Rutile后
+<br /> <code class="language-plaintext highlighter-rouge">Build-&gt;Symmetry-&gt;Supercell</code>调出超胞参数，可以调节ABC三个方向的重复数，例如设为A4B4C4，并适当旋转后如图</p>
+
+<p><img src="/uploads/2017/11/TiO2-rutile444.bmp" alt="" /></p>
+
+<h2 id="tio2-rutile表面">TiO2-Rutile表面</h2>
+<ul>
+  <li>1 导入TiO2-Rutile</li>
+  <li>2 <code class="language-plaintext highlighter-rouge">Build-&gt;Surfaces-&gt;Cleave Surface</code>
+<br />主要参数
+<br /> Cleave(hkl)设为需要的 1 1 0
+<br /> Top 切割的表面位置(TiO2有三个位置，可以调节此参数发现)
+<br /> Thinkness 材料厚度(例,6)</li>
+  <li>3 点击Cleave生成</li>
+  <li>4 调节合适的参数后Recleave</li>
+  <li>
+    <p>5 添加真空层
+ <code class="language-plaintext highlighter-rouge">Build-&gt;Crystals-&gt;Build Vaccum Slab...</code>
+ <br />主要调节Vaccum thinkness参数
+ <br />听魏巍老师的解释后我的理解(听听就好，不要信我写的，去请教魏老师):
+ <br /> Vaccum thinkness参数值与第一性原理的一个周期计算单元有关(<strong>第一性原理计算必须是周期性结构</strong>)，数值越大，除去原子后的空白就大，两个周期计算单元之间的原子就不会有干扰如图（实际情况，表面就一层，没有其他层来干扰，而周期性计算会重复出现表面层，空白大可以降低层层间的影响）<br />另一方面thinkness参数值太大对计算机性能有要求，所以适度吧
+ <img src="/uploads/2017/11/TiO2-rutilethinkness.bmp" alt="" /></p>
+  </li>
+  <li>6 超胞
+上述生成的结构还很小，按照超胞的操作进行拓展，结果如图
+<br /> <img src="/uploads/2017/11/TiO2-rutilethinkness441.bmp" alt="" /></li>
+</ul>
+
+<h1 id="20171128第2课">20171128第2课</h1>
+
+<h2 id="h2o">H2O</h2>
+<ul>
+  <li>新建<code class="language-plaintext highlighter-rouge">3D Atomistic .xsd</code></li>
+  <li>添加O原子<img src="/uploads/2017/11/ms11.PNG" alt="" />,添加后如果找不到了，使用<img src="/uploads/2017/11/ms12.PNG" alt="" />来调整显示的位置</li>
+  <li>使用自动加H<img src="/uploads/2017/11/ms13.PNG" alt="" />补全H原子，或者使用<img src="/uploads/2017/11/ms14.PNG" alt="" />进行添加原子</li>
+</ul>
+
+<h2 id="h2o-adsorption-on-tio2-rutile-110-surface">H2O adsorption on TiO2-Rutile-(110) surface</h2>
+<p>按照<a href="/2017/11/24/ms1/#tio2-rutile表面">TiO2-Rutile表面</a>的方法生成TiO2的110表面，将<a href="/2017/11/24/ms1/#h2o">H2O</a>步骤建立的水复制到<code class="language-plaintext highlighter-rouge">TiO2-Rutile</code>表面的图形中，使用<img src="/uploads/2017/11/ms15.PNG" alt="" />移动水分子至其表面</p>
+<h2 id="ruo2-rutile">RuO2-Rutile</h2>
+<p>导入TiO2-Rutile，使用<a href="/2017/11/24/ms1/#修改">修改</a>的方法，替换其中一个Ti原子为Ru，由对称性，其他Ti原子会自动被替换</p>
+<h2 id="ruo2-tio2-rutile-110-interface">RuO2-TiO2-Rutile (110) interface</h2>
+<p>建立<a href="/2017/11/24/ms1/#tio2-rutile表面">TiO2-Rutile表面</a>，用鼠标选中右侧所有原子，使用<a href="/2017/11/24/ms1/#edite">Edite</a>中的方法批量选中部分Ti原子，然后进行替换
+如图<img src="/uploads/2017/11/ms16.PNG" alt="" /></p>
+
+<h1 id="20171201第3课">20171201第3课</h1>
+<h2 id="石墨烯">石墨烯</h2>
+<h3 id="方法一">方法一</h3>
+<p>导入 <code class="language-plaintext highlighter-rouge">C:\Program Files (x86)\Accelrys\Materials Studio 8.0\share\Structures\ceramics\graphite.msi</code>石墨结构<br />
+<code class="language-plaintext highlighter-rouge">Build-&gt;Symmtery-&gt;Make P1</code>去除结构的对称性<br />
+选中一层石墨，删除,就得到了<br />
+<img src="/uploads/2017/12/ms1.bmp" alt="" />
+<br />调整真空层的厚度，即该材料c方向的长度
+<code class="language-plaintext highlighter-rouge">右键-&gt;Lattice Parameter</code>或者<code class="language-plaintext highlighter-rouge">Build-Crystals-&gt;Rebuild Crystal...</code>,将<code class="language-plaintext highlighter-rouge">Parameter</code>选择项卡中的c设置为15或更大值<br />
+就得到了单层石墨烯</p>
+<blockquote>
+  <p>我觉得再加一点操作:<br />
+<code class="language-plaintext highlighter-rouge">Build-Symmetry-Find Symmetry...</code>然后选择<code class="language-plaintext highlighter-rouge">Find Symmetry</code>可以找回<code class="language-plaintext highlighter-rouge">P6/MMM</code>对称性，</p>
+</blockquote>
+
+<h3 id="方法二">方法二</h3>
+<p>按照之前建立表面的方法，导入后，切出(001)表面，切时厚度设置的薄一点就可以做出单层石墨，然后加上合适厚度的真空层</p>
+
+<h3 id="上课还有一些操作我无法重复出来了下节课得找老师问问">上课还有一些操作我无法重复出来了，下节课得找老师问问</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>问题1:
+导入石墨-&gt;切-&gt;加真空层
+结果:两个半层石墨，
+如何下移一层，然后删掉另一层，保留一层(rebuild)
+问题2:
+导入石墨-&gt;make p1-&gt;删除
+结果:图片和ppt上不同，如何调整原胞的显示方式
+问题3:
+这样形成的模型 Lattice 3D中没有P6/MMM对称性，找回对称性又遇到问题1类似的问题
+</code></pre></div></div>
+
+<h3 id="问题解决">问题解决</h3>
+
+<p>移出一层后可通过,<code class="language-plaintext highlighter-rouge">Build-Crystals-Rebuild</code>,重新构建</p>
+
+<h2 id="mos2-ws2-mose2-wse2-tmds-primitive-cell">MoS2 (WS2, MoSe2, WSe2…) —TMDs, primitive cell</h2>
+<h3 id="创建结构">创建结构</h3>
+<p><code class="language-plaintext highlighter-rouge">Build-Crystals-Build-Crystal</code><br />
+空间群保持P1默认，<code class="language-plaintext highlighter-rouge">Lattice Parameter</code>按照所给参数填入，最后<code class="language-plaintext highlighter-rouge">Build</code></p>
+<h3 id="添加原子">添加原子</h3>
+<p>使用<img src="/uploads/2017/12/ms3.PNG" alt="" />添加原子，选对原子类型和位置，依次添加即可，注意ppt上提供的是分数坐标，<code class="language-plaintext highlighter-rouge">Add Atoms</code> 里面<code class="language-plaintext highlighter-rouge">Options-&gt;Coodinate system</code>选择<code class="language-plaintext highlighter-rouge">Fractional</code>分数坐标系</p>
+
+<h1 id="20171205">20171205</h1>
+<p>今天好像没讲什么重要东西</p>
+
+<h1 id="20171208">20171208</h1>
+<h2 id="计算石墨烯的能带">计算石墨烯的能带</h2>
+<h3 id="导入">导入</h3>
+<p>按照<code class="language-plaintext highlighter-rouge">导入石墨-&gt;make p1-&gt;删除一层原子-&gt;Find Symmetry</code>得到的石墨烯<br /></p>
+<h3 id="计算">计算</h3>
+<p>使用<code class="language-plaintext highlighter-rouge">CASTEP-&gt;Calculation</code>功能如图<br />
+<img src="/uploads/2017/12/ms4.PNG" alt="" /><br />
+参数设置:<br /></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Steup-&gt;Task-&gt;energy</code></li>
+  <li>勾选<code class="language-plaintext highlighter-rouge">Propeties-&gt;Band structure</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Properties-&gt;More-&gt;Path-&gt;Creat</code>然后修改下列点为<br />
+<img src="/uploads/2017/12/ms5.PNG" alt="" /><br />
+注：该步好像为选择布里渊区，不同的结构该步骤显示的点不同，上图针对使用<code class="language-plaintext highlighter-rouge">导入石墨-&gt;make p1-&gt;删除一层原子-&gt;Find Symmetry</code>得到的石墨烯</li>
+  <li>Run进行计算</li>
+</ul>
+
+<h3 id="查看结果">查看结果</h3>
+<p>计算后会生成一个类似<code class="language-plaintext highlighter-rouge">xxxx CASTEP Energy</code>的文件夹<br />
+选择下面的<code class="language-plaintext highlighter-rouge">xxx.xsd</code>文件，然后<code class="language-plaintext highlighter-rouge">CASTEP-&gt;Analysis</code>选中<code class="language-plaintext highlighter-rouge">Band structure</code>再点下面的<code class="language-plaintext highlighter-rouge">View</code>查看能带</p>
+
+<h2 id="查看cell文件">查看cell文件</h2>
+<p>上步骤计算得到石墨烯能带结构后，<code class="language-plaintext highlighter-rouge">File-&gt;Save Project</code>保存计算结果<br />
+在计算得到的文件夹上右键<code class="language-plaintext highlighter-rouge">Open Containing Folder</code>可以打开计算机中的存储位置<br />
+在计算机中进入该文件夹后，查看隐藏文件，里面有个拓展名为cell的文件，里面包含晶格结构等信息</p>
+
+<h1 id="结束">结束</h1>
+<p>魏老师好像没有继续讲的想法了，感觉上课学的还不如自己看教程来的实在，有点浪费时间<br />
+推荐自己搜索教程学习<br />
+如果以后自己继续学习DFT相关软件，会在<a href="https://cndaqiang.github.io/category/#DFT">DFT</a>这里更新</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/11/23/appstore/">App 软件下载测试</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/11/26/thinkphp/">ThinkPHP3.2 文件结构</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

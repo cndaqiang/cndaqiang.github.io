@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>海纳思刷机总结</title>
+    <meta name="description" content="刷机之后，第一次可以进入HiNAS的系统，但是系统变成了read-only, 无法设置。或者本来能用，但是重启/断电之后，系统变成read-only。不知道是硬件的问题，还是软件的问题，遂对HiNAS的刷机包进行了分析和更改。最后实际使用的系统为immortalwrt-21.02">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2024/10/20/hinas/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>海纳思刷机总结</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2024-10-20
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#HiNas" title="Category: HiNas" rel="category">HiNas</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#HiNas" title="Tag: HiNas" rel="tag">HiNas</a-->
+        <a href="/tag/#HiNas" title="Tag: HiNas" rel="tag">HiNas</a>&nbsp;
+    
+        <!--a href="/tag/#openwrt" title="Tag: openwrt" rel="tag">openwrt</a-->
+        <a href="/tag/#openwrt" title="Tag: openwrt" rel="tag">openwrt</a>&nbsp;
+    
+        <!--a href="/tag/#arm" title="Tag: arm" rel="tag">arm</a-->
+        <a href="/tag/#arm" title="Tag: arm" rel="tag">arm</a>&nbsp;
+    
+        <!--a href="/tag/#mv100" title="Tag: mv100" rel="tag">mv100</a-->
+        <a href="/tag/#mv100" title="Tag: mv100" rel="tag">mv100</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#写在前面" id="markdown-toc-写在前面">写在前面</a></li>
+  <li><a href="#设备" id="markdown-toc-设备">设备</a></li>
+  <li><a href="#官方的usb刷机流程" id="markdown-toc-官方的usb刷机流程">官方的USB刷机流程</a></li>
+  <li><a href="#对于没有遇到异常的用户上面的流程走完就结束了" id="markdown-toc-对于没有遇到异常的用户上面的流程走完就结束了">对于没有遇到异常的用户，上面的流程走完就结束了。</a></li>
+  <li><a href="#一些有用的说明" id="markdown-toc-一些有用的说明">一些有用的说明</a></li>
+  <li><a href="#写在最前面调试阶段建议把emmc的fastboot给删除" id="markdown-toc-写在最前面调试阶段建议把emmc的fastboot给删除">[写在最前面]调试阶段建议把emmc的fastboot给删除</a></li>
+  <li><a href="#修改hinas的恢复分区" id="markdown-toc-修改hinas的恢复分区">修改HiNas的恢复分区</a></li>
+  <li><a href="#在7分区的系统下向9分区刷hinas系统" id="markdown-toc-在7分区的系统下向9分区刷hinas系统">在7分区的系统下向9分区刷HiNas系统</a>    <ul>
+      <li><a href="#dd的方式刷入" id="markdown-toc-dd的方式刷入">dd的方式刷入</a></li>
+      <li><a href="#cp的方式刷入" id="markdown-toc-cp的方式刷入">cp的方式刷入</a></li>
+    </ul>
+  </li>
+  <li><a href="#刷op系统" id="markdown-toc-刷op系统">刷op系统</a>    <ul>
+      <li><a href="#hi-op的刷法" id="markdown-toc-hi-op的刷法">hi-op的刷法</a></li>
+      <li><a href="#openwrtimmortalwrt" id="markdown-toc-openwrtimmortalwrt">openwrt/immortalwrt</a></li>
+    </ul>
+  </li>
+  <li><a href="#支持材料-工具方法文件" id="markdown-toc-支持材料-工具方法文件">支持材料: 工具、方法、文件</a>    <ul>
+      <li><a href="#ext4刷机文件simg与dd的文件img之间的格式转换" id="markdown-toc-ext4刷机文件simg与dd的文件img之间的格式转换">ext4刷机文件simg与dd的文件img之间的格式转换</a></li>
+      <li><a href="#制作bootargs分区" id="markdown-toc-制作bootargs分区">制作bootargs分区</a></li>
+    </ul>
+  </li>
+  <li><a href="#read-only的解决方案" id="markdown-toc-read-only的解决方案">read-only的解决方案</a>    <ul>
+      <li><a href="#开机变成readonly的一种解决办法双op救援" id="markdown-toc-开机变成readonly的一种解决办法双op救援">开机变成readonly的一种解决办法:双op救援</a></li>
+      <li><a href="#op中查看uuid" id="markdown-toc-op中查看uuid">op中查看UUID</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>刷机之后，第一次可以进入HiNAS的系统，但是系统变成了read-only, 无法设置。或者本来能用，但是重启/断电之后，系统变成read-only。
+不知道是硬件的问题，还是软件的问题，遂对HiNAS的刷机包进行了分析和更改。
+<strong>最后实际使用的系统为immortalwrt-21.02</strong></p>
+
+<h2 id="写在前面">写在前面</h2>
+<ul>
+  <li><strong>感谢神雕大佬的开发:<a href="https://histb.com/">HiNas</a></strong></li>
+  <li><strong>刷机有风险，别无脑复制下面的内容</strong></li>
+</ul>
+
+<h2 id="设备">设备</h2>
+<ul>
+  <li>咪咕盒子MG101</li>
+  <li>芯片类型 hi3798mv100</li>
+  <li>刷机包类型 mv100-mdmo1a-usb-flash.zip. 版本Hinas-20240201</li>
+  <li>openwrt刷机包<a href="https://downloads.immortalwrt.org/releases/21.02.7/targets/armvirt/32/immortalwrt-21.02.7-armvirt-32-rootfs-ext4.img.gz">immortalwrt-21.02.7@armvirt/32</a></li>
+  <li>对我的设备来说,靠近电源的是优先的fastbot的U盘</li>
+  <li>
+    <ul>
+      <li>所以可以用一个小U盘插在电源上旁边的口作为引导</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>但是开机后谁是sda/sdb并不一定。</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="官方的usb刷机流程">官方的USB刷机流程</h2>
+<ul>
+  <li>短接/清空原始emmc的fastboot分区</li>
+  <li>插入U盘，重插电源</li>
+  <li>从U盘的<code class="language-plaintext highlighter-rouge">fastboot.bin</code>启动</li>
+  <li>执行U盘中<code class="language-plaintext highlighter-rouge">bootargs.bin</code>的启动命令</li>
+  <li>
+    <ul>
+      <li>默认的<code class="language-plaintext highlighter-rouge">bootargs.bin</code>是执行刷机命令</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>可以用<code class="language-plaintext highlighter-rouge">cat</code>或者记事本查看这个文件的内容,包含flash各个分区</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>注: 我们可以替换这个<code class="language-plaintext highlighter-rouge">bootargs.bin</code>来实现启动到特定的系统分区</li>
+    </ul>
+  </li>
+  <li>默认的<code class="language-plaintext highlighter-rouge">bootargs.bin</code>会把U盘内<code class="language-plaintext highlighter-rouge">mv100</code>文件夹内的文件刷到各个分区</li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">/dev/mmcblk0p1</code> <code class="language-plaintext highlighter-rouge">mv100/fastboot.bin</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">/dev/mmcblk0p2</code> <code class="language-plaintext highlighter-rouge">mv100/bootargs.bin</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">/dev/mmcblk0p3</code> <code class="language-plaintext highlighter-rouge">mv100/baseparam.img</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">/dev/mmcblk0p4</code> <code class="language-plaintext highlighter-rouge">mv100/pq_param.bin</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">/dev/mmcblk0p5</code> <code class="language-plaintext highlighter-rouge">mv100/logo.img</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">/dev/mmcblk0p6</code> <code class="language-plaintext highlighter-rouge">mv100/hi_kernel.bin</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">/dev/mmcblk0p7</code> <code class="language-plaintext highlighter-rouge">mv100/recoverybox32.ext4</code>, 这是一个精简的op系统</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">/dev/mmcblk0p8</code> <code class="language-plaintext highlighter-rouge">mv100/www_ecoo_top.ext4</code>, hinas的系统包,里面存放着backup-32/64.gz,如果使用HiNas的方式刷机，替换这个分区中的gz即可</li>
+    </ul>
+  </li>
+  <li>刷入完成后，重启，此时emmc中已经刷入了<code class="language-plaintext highlighter-rouge">fastboot.bin</code>,<code class="language-plaintext highlighter-rouge">bootargs.bin</code>,<code class="language-plaintext highlighter-rouge">logo.img</code></li>
+  <li>启动页面变为了<code class="language-plaintext highlighter-rouge">mv100/logo.img</code>,即启动图片变为<code class="language-plaintext highlighter-rouge">正在刷入激动人心的系统...</code></li>
+  <li>根据<code class="language-plaintext highlighter-rouge">mmc0p2(mv100/bootargs.bin)</code>中的参数启动</li>
+  <li>
+    <ul>
+      <li>默认启动到<code class="language-plaintext highlighter-rouge">emmc0p7</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>我们也可以替换U盘的<code class="language-plaintext highlighter-rouge">mv100/bootargs.bin</code>,实现刷机后启动到何分区。</li>
+    </ul>
+  </li>
+  <li>重启进入<code class="language-plaintext highlighter-rouge">mmc0p7</code>分区的系统后，会依次执行<code class="language-plaintext highlighter-rouge">/etc/rc.local</code>和<code class="language-plaintext highlighter-rouge">/etc/recovery.sh</code></li>
+  <li>在<code class="language-plaintext highlighter-rouge">/etc/recovery.sh</code>中，会执行</li>
+  <li>
+    <ul>
+      <li>挂载8分区</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">mount -t ext4 /dev/mmcblk0p8 /backup</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>把8分区存储的HiNAS系统刷入9分区</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">gunzip -c /backup/$backup_file | dd of=/dev/mmcblk0p9 bs=1024</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>刷入启动到9分区的bootargs</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">dd of=/dev/mmcblk0p2 if=/etc/bootargs/bootargs9-${arch}.bin bs=1024 count=1024</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>刷入新启动页面的logo</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">dd of=/dev/mmcblk0p5 if=/etc/bootargs/logo.img bs=1024 count=4096</code></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>重启</li>
+    </ul>
+  </li>
+  <li>重启进入<code class="language-plaintext highlighter-rouge">mmc0p9</code>分区的系统后，刷机结束，开始HiNAS系统的初始化</li>
+  <li>
+    <ul>
+      <li>启动页面变为了<code class="language-plaintext highlighter-rouge">mv100/logo.img</code>,即启动图片变为<code class="language-plaintext highlighter-rouge">HiNAS作者二维码</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="对于没有遇到异常的用户上面的流程走完就结束了">对于没有遇到异常的用户，上面的流程走完就结束了。</h2>
+<ul>
+  <li>但是我买的盒子emmc有问题</li>
+  <li>刷完要么进系统是readonly，无法初始化</li>
+  <li>要么连系统都进不去</li>
+  <li>进入系统后，各种文件错误，突然变成只读</li>
+  <li>对HiNAS的刷机包进行了一番研究后,有下面的总结</li>
+</ul>
+
+<h2 id="一些有用的说明">一些有用的说明</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mv100</code>中的ext4文件、dd备份的分区以及img、iso等文件，可以直接用7zip打开的</li>
+  <li>安装系统不用非得<code class="language-plaintext highlighter-rouge">dd</code>,可以格式化一个ext4的分区，把系统文件解压复制进去。这样系统空间不受dd的大小限制</li>
+  <li><code class="language-plaintext highlighter-rouge">mv100</code>中的ext4是<code class="language-plaintext highlighter-rouge">Android sparse image</code>格式,无法直接dd</li>
+  <li>
+    <ul>
+      <li>如果要用dd的命令刷入HiNas作者提供的刷机包，需要提前将dd的img格式转为<code class="language-plaintext highlighter-rouge">Android sparse image</code>格式</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/uploads/2024/10/20241017211912.png" alt="分区表" /></p>
+
+<h2 id="写在最前面调试阶段建议把emmc的fastboot给删除">[写在最前面]调试阶段建议把emmc的fastboot给删除</h2>
+<ul>
+  <li>手动刷系统时，务必把emmc的fastboot给删除，免得刷了系统没法开机还得刷机</li>
+  <li><code class="language-plaintext highlighter-rouge">dd if=/dev/zero of=/dev/mmcblk0p1 bs=1024  count=1024</code></li>
+  <li>此时复制<code class="language-plaintext highlighter-rouge">mv100-mdmo1a-usb-flash.zip</code>中的<code class="language-plaintext highlighter-rouge">fastboot.bin</code>和自己生成的<code class="language-plaintext highlighter-rouge">bootargs.bin</code>到U盘</li>
+  <li>通过复制不同的<code class="language-plaintext highlighter-rouge">bootargs.bin</code>到U盘中，决定开机后启动到哪个分区</li>
+</ul>
+
+<h2 id="修改hinas的恢复分区">修改HiNas的恢复分区</h2>
+<ul>
+  <li>在第一次能进入到9分区的HiNAS系统后</li>
+  <li>HiNAS的作者在7分区放置了一个精简的OP用于安装系统</li>
+  <li><strong>我们可以修改7分区的recovery系统为自己所用，方便我们手动不断尝试将新的系统flash到9分区上面去</strong></li>
+</ul>
+
+<p><strong>配置7分区的网络为DHCP</strong></p>
+<ul>
+  <li>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /tmp
+mkdir 7
+mount /dev/mmcblk0p7 7
+#配置dhcp启动
+vi /tmp/7/etc/config/network
+#设置lan口为dhcp,屏蔽下面的内容
+option proto 'dhcp'
+#option gateway 
+#option ipaddr '
+#option dns
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Hinas作者设置的密码不知道，替换为我们自己的密码</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">cp /etc/shadow /tmp/7/etc/shadow</code></li>
+</ul>
+
+<p><strong>去除7分区的自动装系统命令</strong></p>
+<ul>
+  <li>注释掉<code class="language-plaintext highlighter-rouge">/tmp/7/etc/rc.local</code>中的命令</li>
+</ul>
+
+<p><strong>删除掉mmc分区的fastboot</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">dd if=/dev/zero of=/dev/mmcblk0p1 bs=1024  count=1024</code></li>
+</ul>
+
+<p><strong>在U盘中放上<code class="language-plaintext highlighter-rouge">fastboot.bin</code>和启动到7分区的<code class="language-plaintext highlighter-rouge">bootargs.bin</code></strong></p>
+<ul>
+  <li>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir -p /tmp/mymount/a
+mount /dev/sda1 /tmp/mymount/
+cd /tmp/mymount/a
+mv bootargs.bin bootargs.flash.bin
+cp mv100/bootargs.bin .
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>插上U盘开机得到一个纯净的op环境</strong></p>
+<ul>
+  <li>进入路由器查看ip后，就可以<code class="language-plaintext highlighter-rouge">http://ip/cgi-bin/luci</code>了</li>
+  <li>也可以ssh到这个op上, 安装系统</li>
+</ul>
+
+<p><strong>在其他系统下可以备份一下7分区</strong></p>
+<ul>
+  <li>7分区目前的默认大小是<code class="language-plaintext highlighter-rouge">16384=1024*64M</code></li>
+  <li><code class="language-plaintext highlighter-rouge">dd if=/dev/mmcblk0p7 of=op.base.64.bin bs=1024 count=16384 conv=fsync</code></li>
+</ul>
+
+<h2 id="在7分区的系统下向9分区刷hinas系统">在7分区的系统下向9分区刷HiNas系统</h2>
+<h3 id="dd的方式刷入">dd的方式刷入</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount /dev/mmcblk0p8 /tmp/8
+gunzip -c /tmp/8/backup-32.gz  | dd of=/dev/mmcblk0p9 bs=1024
+</code></pre></div></div>
+
+<h3 id="cp的方式刷入">cp的方式刷入</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gunzip -c /tmp/mymount/8/backup-32.gz &gt; /tmp/mymount/a/Ubuntu-20.04.5-armhf-20240201-0d93d.img
+mkdir ubuntu
+mount -o loop  /tmp/mymount/a/Ubuntu-20.04.5-armhf-20240201-0d93d.img /tmp/mymount/ubuntu
+mkfs.ext4 /dev/mmcblk0p9 
+mkdir 9
+mount /dev/mmcblk0p9 9
+cp -a /tmp/mymount/ubuntu/*  /tmp/mymount/9/
+</code></pre></div></div>
+<p>此时显示的<code class="language-plaintext highlighter-rouge">/dev/root</code>更真实，而不是之前dd显示的<code class="language-plaintext highlighter-rouge">3.6G</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@localhost:~# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       3.0G  1.1G  1.8G  39% /
+devtmpfs        337M     0  337M   0% /dev
+tmpfs           338M     0  338M   0% /dev/shm
+tmpfs            68M  808K   67M   2% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           338M     0  338M   0% /sys/fs/cgroup
+tmpfs           338M     0  338M   0% /tmp
+</code></pre></div></div>
+
+<h2 id="刷op系统">刷op系统</h2>
+<h3 id="hi-op的刷法">hi-op的刷法</h3>
+<ul>
+  <li>使用神雕大佬的包<a href="https://github.com/teasiu/hi-op">hi-op</a></li>
+  <li>不要使用dd,空间会很小，而是直接复制文件到大分区</li>
+  <li>本次安装op到8分区,将9分区留着</li>
+  <li>备份op系统，就把整个系统tar个包就行</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gunzip -c /tmp/mymount/b/backup/openwrt-armvirt-32-root.ext4.gz &gt; /tmp/mymount/b/backup/openwrt-armvirt-32-root.bin
+mkdir /tmp/mymount/op
+mount -o loop  /tmp/mymount/b/backup/openwrt-armvirt-32-root.bin /tmp/mymount/op
+mkfs.ext4 /dev/mmcblk0p8 
+mkdir /tmp/mymount/8
+mount /dev/mmcblk0p8 /tmp/mymount/8
+cp -a /tmp/mymount/op/* /tmp/mymount/8/
+</code></pre></div></div>
+
+<p>如果短期不刷机了，可以让系统默认从8分区启动</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dd if=fastboot.bin of=/dev/mmcblk0p1 bs=1024 count=1024
+dd if=bootargs8.bin of=/dev/mmcblk0p2 bs=1024 count=1024
+</code></pre></div></div>
+
+<p>op开机后的配置</p>
+<ul>
+  <li>关闭lan的桥接，就直接用eth0就行
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkfs.ext4 /dev/mmcblk0p9
+opkg install openssh-sftp-server htop
+#下载mihomo. https://github.com/MetaCubeX/mihomo/releases/download/v1.18.9/mihomo-linux-armv7-v1.18.9.gz
+gunzip mihomo-linux-armv7-v1.18.9.gz
+mv mihomo-linux-armv7-v1.18.9 mihomo
+#
+mkdir -p /etc/cndaqiang/openclash/
+mv mihomo /etc/cndaqiang/openclash/
+/etc/cndaqiang/openclash/mihomo -d /etc/cndaqiang/openclash/
+#添加开机启动
+(sleep 60; /etc/cndaqiang/openclash/mihomo -d /etc/cndaqiang/openclash/ &amp;)
+#下载yacd解压到www,https://github.com/haishanh/yacd
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="openwrtimmortalwrt">openwrt/immortalwrt</h3>
+<ul>
+  <li>因为hi-op更新软件不方便</li>
+  <li>自己重新编译了hi-op,发现op版本19.07太老了，很多软件不支持</li>
+  <li>通过查找openwrt/immortalwrt的仓库中target为<code class="language-plaintext highlighter-rouge">armvirt/32</code>的设备，找到两个</li>
+  <li>
+    <ul>
+      <li>刷法同上面https://downloads.openwrt.org/releases/22.03.7//targets/armvirt/32/openwrt-22.03.7-armvirt-32-rootfs-ext4.img.gz</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li>刷法同上面https://downloads.immortalwrt.org/releases/21.02.7/targets/armvirt/32/immortalwrt-21.02.7-armvirt-32-rootfs-ext4.img.gz</li>
+    </ul>
+  </li>
+</ul>
+
+<p>再记录一遍刷immortalwrt的过程</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /tmp
+mkdir a
+mount /dev/sda1 a
+cd a/
+#这次使用tar.gz的包
+wget "http://mirrors.jlu.edu.cn/immortalwrt/releases/21.02.7/targets/armvirt/32/immortalwrt-21.02.7-armvirt-32-default-rootfs.tar.gz"
+mkfs.ext4 /dev/mmcblk0p8 
+mkdir 8
+mount /dev/mmcblk0p8 8
+tar -xzvf immortalwrt-21.02.7-armvirt-32-default-rootfs.tar.gz -C 8
+sync
+</code></pre></div></div>
+<p>开机进入8的系统, 等系统初始化之后，（此时盒子是主路由模式）</p>
+<ul>
+  <li>要么连交换机配置盒子</li>
+  <li>要么重启进其他系统，修改<code class="language-plaintext highlighter-rouge">/tmp/a/8/etc/config/network</code>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config interface 'lan'
+      option device 'br-lan'
+      option proto 'dhcp'
+      #option proto 'static'
+      #option ipaddr '192.168.1.1'
+      #option netmask '255.255.255.0'
+      #option ip6assign '60'
+</code></pre></div>    </div>
+  </li>
+  <li>再重启就能用了</li>
+  <li>额外可选，取消lan口的桥接，而是采用eth0</li>
+  <li>以后备份系统就整个系统tar个包</li>
+  <li>此外务必设置<strong>双op救援</strong>,方法见下面的参考材料</li>
+  <li>后续使用同<a href="/2024/01/23/openwrt-rax3000m-nand/">OpenWRT编译配置:以CMCC RAX3000M为例</a>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src/gz immortalwrt_core https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/targets/armvirt/32/packages
+src/gz immortalwrt_base https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/packages/arm_cortex-a15_neon-vfpv4/base
+src/gz immortalwrt_luci https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/packages/arm_cortex-a15_neon-vfpv4/luci
+src/gz immortalwrt_packages https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/packages/arm_cortex-a15_neon-vfpv4/packages
+src/gz immortalwrt_routing https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/packages/arm_cortex-a15_neon-vfpv4/routing
+src/gz immortalwrt_telephony https://mirrors.cernet.edu.cn/immortalwrt/releases/21.02.7/packages/arm_cortex-a15_neon-vfpv4/telephony
+#
+opkg update
+opkg install luci-app-samba4 luci-app-qbittorrent luci-app-zerotier luci-theme-argon  openssh-sftp-server htop
+#https://github.com/vernesong/OpenClash/releases
+# opkg install luci-app-openclash_0.46.033-beta_all.ipk 
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="支持材料-工具方法文件">支持材料: 工具、方法、文件</h2>
+
+<h3 id="ext4刷机文件simg与dd的文件img之间的格式转换">ext4刷机文件simg与dd的文件img之间的格式转换</h3>
+<p><code class="language-plaintext highlighter-rouge">mv100/xxx.ext4</code>的文件是稀疏镜像(sparse image)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cnche@HP MINGW64 /d/GreenSoft/HiNAS/mv100-mdmo1a-usb-flash/mv100
+$ file.exe recoverybox32.ext4
+recoverybox32.ext4: Android sparse image, version: 1.0, Total of 16384 4096-byte output blocks in 959 input chunks.
+
+cnche@HP MINGW64 /d/GreenSoft/HiNAS/mv100-mdmo1a-usb-flash/mv100
+$ file.exe www_ecoo_top.ext4
+www_ecoo_top.ext4: Android sparse image, version: 1.0, Total of 131072 4096-byte output blocks in 25 input chunks.
+</code></pre></div></div>
+<p>dd能直接输入输出的是这样的文件系统</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ file.exe backup-32
+backup-32: Linux rev 1.0 ext4 filesystem data, UUID=9ff69023-ba06-40dc-8be1-fa511ade1973 (extents) (64bit) (large files) (huge files)
+</code></pre></div></div>
+
+<p><strong>两种文件格式之间的互相转换</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(base) cndaqiang@vmnode:~/work/img2img$  sudo apt install android-sdk-libsparse-utils
+(base) cndaqiang@vmnode:~/work/img2img$ file recoverybox32.ext4 
+recoverybox32.ext4: Android sparse image, version: 1.0, Total of 16384 4096-byte output blocks in 959 input chunks.
+(base) cndaqiang@vmnode:~/work/img2img$ simg2img recoverybox32.ext4 recoverybox32.ext4.img 
+(base) cndaqiang@vmnode:~/work/img2img$ file recoverybox32.ext4.img 
+recoverybox32.ext4.img: Linux rev 1.0 ext4 filesystem data, UUID=57f8f4bc-abf4-655f-bf67-946fc0f9f25b (extents) (large files)
+</code></pre></div></div>
+
+<p>转换之后就可以挂载了</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@hi3798m:/tmp/mymount/a/backup# dd if=www_ecoo_top.ext4.img of=/dev/mmcblk0p8 
+root@hi3798m:/tmp# mount /dev/mmcblk0p8 8
+root@hi3798m:/tmp# ls 8
+backup-32.gz  lost+found
+</code></pre></div></div>
+
+<h3 id="制作bootargs分区">制作bootargs分区</h3>
+<ul>
+  <li><strong>根据<code class="language-plaintext highlighter-rouge">/etc/bootargs_input.txt</code>修改<code class="language-plaintext highlighter-rouge">root=/dev/mmcblk0p8</code>，然后使用<code class="language-plaintext highlighter-rouge">mkbootargs</code>生成</strong></li>
+  <li>参考<a href="https://histb.com/docs/nas-skill/chgmac/">更改MAC网卡地址</a></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "baudrate=115200
+ethaddr=00:11:22:33:44:55
+ipaddr=192.168.1.10
+netmask=255.255.255.0
+gatewayip=192.168.1.1
+serverip=192.168.1.1
+bootcmd=mmc read 0 0x1FFFFC0 0x7000 0xA000;bootm 0x1FFFFC0
+bootargs_512M=mem=512M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_1G=mem=1G mmz=ddr,0,0,48M vmalloc=500M
+bootargs_2G=mem=2G mmz=ddr,0,0,48M vmalloc=500M
+bootargs_768M=mem=768M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_1536M=mem=1536M mmz=ddr,0,0,48M vmalloc=500M
+bootargs_3840M=mem=3840M mmz=ddr,0,0,48M vmalloc=500M
+bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p8 rootfstype=ext4 rootwait blkdevparts=mmcblk0:1M(boot),1M(bootargs),4M(baseparam),4M(pqparam),4M(logo),20M(kernel),64M(busybox),512M(backup),-(ubuntu)
+bootdelay=0
+stdin=serial
+stdout=serial
+stderr=serial" &gt; /tmp/bootargs_input.txt
+</code></pre></div></div>
+
+<p><strong>制作</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkbootargs -s 64 -r /tmp/bootargs_input.txt -o bootargs.bin
+#dd if=bootargs.bin of=/dev/mmcblk0p2 bs=1024 count=1024
+</code></pre></div></div>
+
+<h2 id="read-only的解决方案">read-only的解决方案</h2>
+<ul>
+  <li>其实是硬件问题，mmc是坏的，换了<a href="/2024/10/21/hinas2/">U盘启动</a>就没有这些问题了。</li>
+  <li>下面是之前尝试的记录</li>
+</ul>
+
+<p>触发read-only的事件</p>
+<ul>
+  <li>重启</li>
+  <li>开机之前插入了某个U盘，开机供电不足导致短暂io错误也有概率触发</li>
+  <li>执行一个命令后，突然系统就变成read-only</li>
+</ul>
+
+<h3 id="开机变成readonly的一种解决办法双op救援">开机变成readonly的一种解决办法:双op救援</h3>
+<ul>
+  <li>救援之后luci-提示rpc错误，则<code class="language-plaintext highlighter-rouge">/etc/init.d/rpcd restart</code></li>
+  <li>虽然下面的可以启动了，但是时不时还有各种异常，比如luci等软件打不开了，系统使用过程中突然就read-only了，文件无法删除创建</li>
+  <li>在8分区的op出问题后利用7分区的op进行救援</li>
+</ul>
+
+<p><strong>7系统的<code class="language-plaintext highlighter-rouge">/etc/rc.local</code></strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/sbin/fsck.ext4 -y /dev/mmcblk0p8
+/usr/sbin/fsck.ext4 -y /dev/mmcblk0p9
+#其他分区无法启动时，会创建这个文件
+if [ -f /reboot ]
+then
+dd if=/etc/bootargs/bootargs8.bin of=/dev/mmcblk0p2  bs=1024 count=1024;sync
+rm -rf /reboot
+touch /tmp/rebootTommc0p8
+reboot 
+fi
+exit 0
+</code></pre></div></div>
+
+<p><strong>8系统的<code class="language-plaintext highlighter-rouge">/etc/rc.local</code></strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>touch /test.read.only.pass
+if [ $? -ne 0 ];then
+echo 只读系统
+mkdir /tmp/7
+mount /dev/mmcblk0p7 /tmp/7
+dd if=/tmp/7/etc/bootargs/bootargs7.bin of=/dev/mmcblk0p2  bs=1024 count=1024;sync
+touch /tmp/7/reboot
+sync
+umount /tmp/7
+touch /tmp/read.only
+reboot
+fi
+rm -rf /test.read.only.pass
+#有时候需要执行
+/etc/init.d/rpcd restart
+</code></pre></div></div>
+
+<p><strong>8系统增加一个提示,<code class="language-plaintext highlighter-rouge">/etc/profile</code></strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if [ -f /tmp/read.only ]
+then
+echo read-only, you need reboot.
+fi
+</code></pre></div></div>
+
+<p><strong>上面形成了自动修复循环.可以使用mmc启动</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dd if=/etc/bootargs/fastboot.bin of=/dev/mmcblk0p1 bs=1024 count=1024
+dd if=/etc/bootargs/bootargs7.bin of=/dev/mmcblk0p2 bs=1024 count=1024
+</code></pre></div></div>
+
+<h3 id="op中查看uuid">op中查看UUID</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@mv100:~# block info
+/dev/mmcblk0p7: UUID="57f8f4bc-abf4-655f-bf67-946fc0f9f25b" VERSION="1.0" TYPE="ext4"
+/dev/mmcblk0p8: UUID="1dfa27bf-e971-43bf-ac3a-92f4fbee7e93" VERSION="1.0" MOUNT="/" TYPE="ext4"
+/dev/mmcblk0p9: UUID="3d258aa0-f51a-4f6a-ae0c-fe385ad0f653" VERSION="1.0" TYPE="ext4"
+/dev/sda1: UUID="0000-0000" LABEL="SANDISK" VERSION="FAT32" TYPE="vfat"
+/dev/sdb1: UUID="4E21-0000" LABEL="ToolBox" TYPE="exfat"
+/dev/sdb2: UUID="223C-F3F8" LABEL="VTOYEFI" VERSION="FAT16" TYPE="vfat"
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/10/27/dxp4800/">绿联nas配置
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/10/21/hinas2/">安装OP/HiNas至U盘以及配置
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2024/09/22/mediawiki/">群晖的MediaWiki崩溃后的救援记录</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2024/10/21/hinas2/">安装OP/HiNas至U盘以及配置</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

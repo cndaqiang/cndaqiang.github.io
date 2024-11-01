@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Docker 学习笔记</title>
+    <meta name="description" content="[root@girl:/home/cndaqiang# docker run -d -p 20022:22 –name centos-ssh2 issh /usr/sbin/sshd -D 73ece08750f87c84f5c5d8bbf9b0ffb35f55354d5c1bfff687e1f579dc6c4c...">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2020/01/24/docker/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Docker 学习笔记</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-01-24
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>&nbsp;
+    
+        <a href="/category/#Docker" title="Category: Docker" rel="category">Docker</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Docker" title="Tag: Docker" rel="tag">Docker</a-->
+        <a href="/tag/#Docker" title="Tag: Docker" rel="tag">Docker</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#概念" id="markdown-toc-概念">概念</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+  <li><a href="#镜像操作" id="markdown-toc-镜像操作">镜像操作</a>    <ul>
+      <li><a href="#拉取镜像" id="markdown-toc-拉取镜像">拉取镜像</a></li>
+      <li><a href="#查看镜像docker-image-ls" id="markdown-toc-查看镜像docker-image-ls">查看镜像<code class="language-plaintext highlighter-rouge">docker image ls</code></a></li>
+      <li><a href="#删除镜像docker-image-rm-image-id" id="markdown-toc-删除镜像docker-image-rm-image-id">删除镜像<code class="language-plaintext highlighter-rouge">docker image rm IMAGE ID</code></a></li>
+      <li><a href="#由容器创建镜像-docker-commit--m-提交注释-容器名id-镜像名" id="markdown-toc-由容器创建镜像-docker-commit--m-提交注释-容器名id-镜像名">由容器创建镜像 <code class="language-plaintext highlighter-rouge">docker commit -m "提交注释" 容器名/ID 镜像名</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#容器" id="markdown-toc-容器">容器</a>    <ul>
+      <li><a href="#创建容器" id="markdown-toc-创建容器">创建容器</a></li>
+      <li><a href="#查看容器docker-ps--a" id="markdown-toc-查看容器docker-ps--a">查看容器<code class="language-plaintext highlighter-rouge">docker ps [-a]</code></a></li>
+      <li><a href="#启动已有容器" id="markdown-toc-启动已有容器">启动已有容器</a></li>
+      <li><a href="#在已启动的容器中在打开其他程序增加接口" id="markdown-toc-在已启动的容器中在打开其他程序增加接口">在已启动的容器中在打开其他程序/增加接口</a></li>
+      <li><a href="#关闭容器-docker-container-stop-容器名containerid" id="markdown-toc-关闭容器-docker-container-stop-容器名containerid">关闭容器 <code class="language-plaintext highlighter-rouge">docker container stop 容器名/ContainerID</code></a></li>
+      <li><a href="#删除容器-docker-rm--容器名containerid" id="markdown-toc-删除容器-docker-rm--容器名containerid">删除容器 <code class="language-plaintext highlighter-rouge">docker rm  容器名/ContainerID</code></a></li>
+      <li><a href="#更多参数" id="markdown-toc-更多参数">更多参数</a></li>
+    </ul>
+  </li>
+  <li><a href="#示例" id="markdown-toc-示例">示例</a>    <ul>
+      <li><a href="#创建支持ssh服务的容器" id="markdown-toc-创建支持ssh服务的容器">创建支持ssh服务的容器</a></li>
+      <li><a href="#ubuntu-vnc-docker" id="markdown-toc-ubuntu-vnc-docker">ubuntu-vnc Docker</a></li>
+      <li><a href="#gitlab" id="markdown-toc-gitlab">gitLAB</a>        <ul>
+          <li><a href="#安装-1" id="markdown-toc-安装-1">安装</a></li>
+          <li><a href="#配置" id="markdown-toc-配置">配置</a>            <ul>
+              <li><a href="#恢复其他gitlab" id="markdown-toc-恢复其他gitlab"><strong>恢复其他gitlab</strong></a></li>
+              <li><a href="#新建gitlab" id="markdown-toc-新建gitlab"><strong>新建gitlab</strong></a></li>
+            </ul>
+          </li>
+          <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+          <li><a href="#管理员配置" id="markdown-toc-管理员配置">管理员配置</a></li>
+          <li><a href="#使用" id="markdown-toc-使用">使用</a></li>
+        </ul>
+      </li>
+      <li><a href="#docker-panfilerunariangaria2实现离线下载及在线播放" id="markdown-toc-docker-panfilerunariangaria2实现离线下载及在线播放">Docker-Pan：Filerun+AriaNg+Aria2实现离线下载及在线播放</a></li>
+      <li><a href="#clouddrive挂载阿里云盘" id="markdown-toc-clouddrive挂载阿里云盘">clouddrive挂载阿里云盘</a></li>
+      <li><a href="#overlear" id="markdown-toc-overlear">overlear</a></li>
+      <li><a href="#局域网文件共享snapdrop" id="markdown-toc-局域网文件共享snapdrop">局域网文件共享snapdrop</a></li>
+    </ul>
+  </li>
+  <li><a href="#其他" id="markdown-toc-其他">其他</a>    <ul>
+      <li><a href="#启动docker后自动运行容器" id="markdown-toc-启动docker后自动运行容器">启动docker后自动运行容器</a></li>
+      <li><a href="#修改已配置好的docker参数" id="markdown-toc-修改已配置好的docker参数">修改已配置好的docker参数</a></li>
+    </ul>
+  </li>
+  <li><a href="#dockerfile" id="markdown-toc-dockerfile">Dockerfile</a>    <ul>
+      <li><a href="#利用dockerfile构建镜像" id="markdown-toc-利用dockerfile构建镜像">利用Dockerfile构建镜像</a></li>
+    </ul>
+  </li>
+  <li><a href="#报错" id="markdown-toc-报错">报错</a>    <ul>
+      <li><a href="#wait-until-the-container-is-running" id="markdown-toc-wait-until-the-container-is-running"><code class="language-plaintext highlighter-rouge">wait until the container is running</code></a></li>
+      <li><a href="#查看日志docker-logs-容器名" id="markdown-toc-查看日志docker-logs-容器名">查看日志<code class="language-plaintext highlighter-rouge">docker logs 容器名</code></a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="概念">概念</h2>
+<p><strong>镜像</strong>模板<br />
+<strong>容器</strong></p>
+
+<h2 id="安装">安装</h2>
+<p><strong>ubuntu</strong> <br />
+参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/">Docker Community Edition 镜像使用帮助</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get remove docker docker-engine docker.io
+sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+$ sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+#注，当在mint上安装时，lsb_release -cs返回的时mint的版本名，要替换成对应版本的ubuntu的版本名，如mint19应该改为
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   bionic \
+   stable"
+sudo apt-get update
+sudo apt-get install docker-ce
+</code></pre></div></div>
+<p>查看版本</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~$ docker -v
+Docker version 19.03.5, build 633a0ea838
+</code></pre></div></div>
+<p><strong>Windows&amp;Mac</strong><br />
+直接下载安装包即可<a href="https://mirrors.tuna.tsinghua.edu.cn/docker-ce/">Docker CE</a></p>
+
+<h2 id="镜像操作">镜像操作</h2>
+<h3 id="拉取镜像">拉取镜像</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull centos
+</code></pre></div></div>
+<p>具体版本/Tag<code class="language-plaintext highlighter-rouge">：Tag</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull centos:7
+</code></pre></div></div>
+<p>更多版本/Tag<a href="https://hub.docker.com/_/centos?tab=tags">Centos Docker Official Images</a></p>
+
+<h3 id="查看镜像docker-image-ls">查看镜像<code class="language-plaintext highlighter-rouge">docker image ls</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos              latest              470671670cac        7 days ago          237MB
+centos              7                   5e35e350aded        2 months ago        203MB
+</code></pre></div></div>
+<h3 id="删除镜像docker-image-rm-image-id">删除镜像<code class="language-plaintext highlighter-rouge">docker image rm IMAGE ID</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker image rm 470671670cac
+</code></pre></div></div>
+<p>也可以</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#强制删除
+docker rmi -f  ID
+#强制删除所有 
+docker rmi -f $(docker images -q)
+</code></pre></div></div>
+<h3 id="由容器创建镜像-docker-commit--m-提交注释-容器名id-镜像名">由容器创建镜像 <code class="language-plaintext highlighter-rouge">docker commit -m "提交注释" 容器名/ID 镜像名</code></h3>
+<p>示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker commit -m "ssh" centos-ssh issh
+sha256:321056ae417c60c48eb19fc3ea813be76d62ff71d48d5837cdba79b2f7c19a99
+root@girl:/home/cndaqiang# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+issh                latest              321056ae417c        5 seconds ago       306MB
+centos              7                   5e35e350aded        2 months ago        203MB
+</code></pre></div></div>
+
+<h2 id="容器">容器</h2>
+<h3 id="创建容器">创建容器</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run 各种参数 --name 容器名 镜像名[:Tag] docker启动后执行的程序
+</code></pre></div></div>
+<p>如</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker run -i -t --name centosInit centos:7 bash
+[root@d8cfb1467e4b /]# 
+[root@d8cfb1467e4b /]# exit #退出容器
+exit
+</code></pre></div></div>
+
+<h3 id="查看容器docker-ps--a">查看容器<code class="language-plaintext highlighter-rouge">docker ps [-a]</code></h3>
+<p><code class="language-plaintext highlighter-rouge">-a</code>显示所有容器，不<code class="language-plaintext highlighter-rouge">-a</code>仅显示在运行的容器</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+d8cfb1467e4b        centos:7            "bash"              2 minutes ago       Exited (1) 56 seconds ago                       centosInit
+</code></pre></div></div>
+
+<h3 id="启动已有容器">启动已有容器</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker start -i centosInit
+[root@d8cfb1467e4b /]# 
+</code></pre></div></div>
+<h3 id="在已启动的容器中在打开其他程序增加接口">在已启动的容器中在打开其他程序/增加接口</h3>
+<p>可用于调试</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker exec  -it centosInit bash
+[root@d8cfb1467e4b /]# 
+</code></pre></div></div>
+
+<h3 id="关闭容器-docker-container-stop-容器名containerid">关闭容器 <code class="language-plaintext highlighter-rouge">docker container stop 容器名/ContainerID</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker container stop centosInit
+docker container stop d8cfb1467e4b
+</code></pre></div></div>
+
+<h3 id="删除容器-docker-rm--容器名containerid">删除容器 <code class="language-plaintext highlighter-rouge">docker rm  容器名/ContainerID</code></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                       PORTS               NAMES
+d8cfb1467e4b        centos:7            "bash"              13 minutes ago      Exited (137) 4 minutes ago                       centosInit
+root@girl:/home/cndaqiang# docker rm centosInit
+centosInit
+root@girl:/home/cndaqiang# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</code></pre></div></div>
+
+<h3 id="更多参数">更多参数</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>参数</th>
+      <th>含义</th>
+      <th>示例</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-i     </code></td>
+      <td>可以输入进行交互</td>
+      <td>` -i`</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-t     </code></td>
+      <td>终端交互</td>
+      <td><code class="language-plaintext highlighter-rouge">-t</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-d     </code></td>
+      <td>容器启动后在后台运行</td>
+      <td><code class="language-plaintext highlighter-rouge">-d</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-p  主机端口:容器端口   </code></td>
+      <td>映射主机端口到容器端口</td>
+      <td><code class="language-plaintext highlighter-rouge">-p 26122:22</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-v  主机目录:容器目录</code></td>
+      <td>映射本地文件夹到容器目录</td>
+      <td><code class="language-plaintext highlighter-rouge">-v /Users/cndaqiang:/home/data </code>, <code class="language-plaintext highlighter-rouge">-v /f/docker/tdpwGo/home:/home/data</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-h</code></td>
+      <td>容器内部的hostname</td>
+      <td>` -h “tdpwGo” `</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-e</code></td>
+      <td>环境变量</td>
+      <td><code class="language-plaintext highlighter-rouge">-e HELLO=NO</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--restart always</code></td>
+      <td>docker启动后自动启动</td>
+      <td><code class="language-plaintext highlighter-rouge">--restart always</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">-m </code></td>
+      <td>限制可用内存</td>
+      <td><code class="language-plaintext highlighter-rouge">-m 50g</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--cpus</code></td>
+      <td>限制使用的核数</td>
+      <td><code class="language-plaintext highlighter-rouge">--cpus 40</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">–-name  </code></td>
+      <td>指定容器名称</td>
+      <td><code class="language-plaintext highlighter-rouge">--name centosInit</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">镜像名 </code></td>
+      <td>指定使用镜像</td>
+      <td><code class="language-plaintext highlighter-rouge">centos:7</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">可执行应用/命令 </code></td>
+      <td>指定容器启动使用的应用</td>
+      <td><code class="language-plaintext highlighter-rouge">bash</code>， <code class="language-plaintext highlighter-rouge">/usr/sbin/sshd -D</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">-e</code>环境变量示例</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker run -ti -e HELLO=NO --name envtest centos:7 bash
+[root@cf308377b45c /]# echo $HELLO
+NO
+[root@cf308377b45c /]# exit
+exit
+</code></pre></div></div>
+
+<h2 id="示例">示例</h2>
+<h3 id="创建支持ssh服务的容器">创建支持ssh服务的容器</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -ti --name centos-ssh centos:7 bash
+yum install openssh-server -y
+ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
+ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
+ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
+ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key
+#修改配置
+vi /etc/ssh/sshd_config
+#取消注释
+38 PermitRootLogin yes
+63 PasswordAuthentication yes
+
+#设置免密登陆
+ssh-keygen
+#填入用户id_rsa.pub
+vi ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+</code></pre></div></div>
+<p>把容器转为镜像</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@girl:/home/cndaqiang# docker commit -m "ssh" centos-ssh issh
+sha256:321056ae417c60c48eb19fc3ea813be76d62ff71d48d5837cdba79b2f7c19a99
+root@girl:/home/cndaqiang# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+issh                latest              321056ae417c        5 seconds ago       306MB
+centos              7                   5e35e350aded        2 months ago        203MB
+</code></pre></div></div>
+<p>用镜像重新创造容器，并默认后台启动sshd,做好端口映射</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@girl:/home/cndaqiang# docker run -d -p 20022:22 --name centos-ssh2 issh /usr/sbin/sshd -D 
+73ece08750f87c84f5c5d8bbf9b0ffb35f55354d5c1bfff687e1f579dc6c4c7b
+</code></pre></div></div>
+<p>连接</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@girl:~$ ssh root@127.0.0.1 -p 20022
+The authenticity of host '[127.0.0.1]:20022 ([127.0.0.1]:20022)' can't be established.
+ECDSA key fingerprint is SHA256:nOPDU94OeHYRT4tT1JKLNHanbMaSrpqg49WBb+p+p1I.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '[127.0.0.1]:20022' (ECDSA) to the list of known hosts.
+[root@73ece08750f8 ~]# 
+</code></pre></div></div>
+
+<h3 id="ubuntu-vnc-docker">ubuntu-vnc Docker</h3>
+<p>项目地址：https://hub.docker.com/r/dorowu/ubuntu-desktop-lxde-vnc</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull dorowu/ubuntu-desktop-lxde-vnc
+</code></pre></div></div>
+<p>启动</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -dti --name ubuntu-vnc \
+        -p 10080:80 -e HTTP_PASSWORD=password \
+        -p 15900:5900       \
+        -v /dev/shm:/dev/shm \
+        -v /Users/cndaqiang:/home/data \
+        dorowu/ubuntu-desktop-lxde-vnc
+</code></pre></div></div>
+<p>网页账户root，密码password</p>
+
+<h3 id="gitlab">gitLAB</h3>
+<p>参考
+<a href="https://blog.csdn.net/felix_yujing/article/details/52139070">使用docker运行gitlab服务</a><br />
+<a href="https://blog.csdn.net/oGuangCai/article/details/106275705">docker gitlab 重置 root 密码</a></p>
+
+<h4 id="安装-1">安装</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo docker pull gitlab/gitlab-ce
+</code></pre></div></div>
+<p>启动</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dir=$PWD/gitlab
+mkdir $dir
+mkdir $dir/config
+mkdir $dir/config2
+mkdir $dir/data
+mkdir $dir/log
+
+docker run -d --name gitlab \
+    --restart always \
+    -p 622:22 -p 680:680 -p 688:80 \
+    -v $dir/config:/etc/gitlab    \
+    -v $dir/config2:/opt/gitlab/embedded/service/gitlab-rails/config/
+    -v $dir/data:/var/opt/gitlab  \
+    -v $dir/log:/var/log/gitlab   \
+    gitlab/gitlab-ce
+</code></pre></div></div>
+<p>访问<code class="language-plaintext highlighter-rouge">http://ip:688</code> (<strong>第一次启动速度有点慢,多等</strong>)
+<img src="/uploads/2020/01/gitlab1.png" alt="image" />
+2023-12-11:新版本直接就是登录界面,用root,密码下面方式获取</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@mommint:/opt/docker# docker ps
+CONTAINER ID   IMAGE              COMMAND             CREATED         STATUS                            PORTS                                                                                                                      NAMES
+1cb7290d6eb6   gitlab/gitlab-ce   "/assets/wrapper"   2 minutes ago   Up 2 minutes (health: starting)   443/tcp, 0.0.0.0:680-&gt;680/tcp, :::680-&gt;680/tcp, 0.0.0.0:622-&gt;22/tcp, :::622-&gt;22/tcp, 0.0.0.0:688-&gt;80/tcp, :::688-&gt;80/tcp   gitlab
+root@mommint:/opt/docker# docker exec -it 1cb7290d6eb6 bash
+root@1cb7290d6eb6:/# cat /etc/gitlab/initial_root_password
+# WARNING: This value is valid only in the following conditions
+#          1. If provided manually (either via `GITLAB_ROOT_PASSWORD` environment variable or via `gitlab_rails['initial_root_password']` setting in `gitlab.rb`, it was provided before database was seeded for the first time (usually, the first reconfigure run).
+#          2. Password hasn't been changed manually, either via UI or via command line.
+#
+#          If the password shown here doesn't work, you must reset the admin password following https://docs.gitlab.com/ee/security/reset_user_password.html#reset-your-root-password.
+
+Password: cEWxXSKxE1MGWGRRV72NAl88YKX+MNiYH/WzHXXDj1E=
+
+# NOTE: This file will be automatically deleted in the first reconfigure run after 24 hours.
+</code></pre></div></div>
+
+<p>若无法设置root密码,可以重置</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@5ae2530380d1:/# gitlab-rails console
+--------------------------------------------------------------------------------
+ Ruby:         ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64-linux]
+ GitLab:       14.0.2 (bac4ee4a9e2) FOSS
+ GitLab Shell: 13.19.0
+ PostgreSQL:   12.6
+--------------------------------------------------------------------------------
+Loading production environment (Rails 6.1.3.2)
+irb(main):001:0&gt; user = User.where(id:1).first
+=&gt; #&lt;User id:1 @root&gt;
+irb(main):002:0&gt; user.password="cndaqiang"
+=&gt; "cndaqiang"
+irb(main):003:0&gt; user.save!
+Enqueued ActionMailer::MailDeliveryJob (Job ID: 3ca6fe83-4b30-4c9d-b615-920ded1c874c) to Sidekiq(mailers) with arguments: "DeviseMailer", "password_change", "deliver_now", {:args=&gt;[#&lt;GlobalID:0x00007f281cf93378 @uri=#&lt;URI::GID gid://gitlab/User/1&gt;&gt;]}
+=&gt; true
+</code></pre></div></div>
+<p>然后就可以用账户<code class="language-plaintext highlighter-rouge">root</code>,密码<code class="language-plaintext highlighter-rouge">cndaqiang</code>进行初始化配置了</p>
+
+<h4 id="配置">配置</h4>
+<p><strong>等待正常启动后</strong>然后关闭容器</p>
+
+<h5 id="恢复其他gitlab"><strong>恢复其他gitlab</strong></h5>
+
+<p>此时可以选择删除当前gitlab数据，把之前gitlab的数据覆盖到相应路径，则恢复了之前的gitlab</p>
+
+<h5 id="新建gitlab"><strong>新建gitlab</strong></h5>
+
+<p>修改配置文件</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config/gitlab.rb
+</code></pre></div></div>
+<p>取消注释/修改</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#external_url 'http://10.127.6.47:680'
+external_url 'http://girl:680'
+#external_url决定网页上显示的路径，图片等的网址前缀，并不影响访问
+#域名先不填了
+gitlab_rails['gitlab_ssh_host'] = 'girl'
+#这个影响的是网页上显示ssh的ip,不影响访问，这里只能填域名/ip，不能代端口，若不填就会如图
+#访问的端口，可选  80-&gt; 680
+nginx['listen_port'] = 680
+</code></pre></div></div>
+<p><img src="/uploads/2020/01/gitlab2.png" alt="image" /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gitlab_rails['gitlab_email_from'] = 'gitcndaqiang@sina.com'
+gitlab_rails['gitlab_email_display_name'] = 'GitLAB-cndaqiang'
+gitlab_rails['gitlab_shell_ssh_port'] = 622
+gitlab_rails['smtp_enable'] = true
+gitlab_rails['smtp_address'] = "smtp.sina.com"
+gitlab_rails['smtp_port'] = 25
+gitlab_rails['smtp_user_name'] = "gitcndaqiang"
+gitlab_rails['smtp_password'] = "2608ddwpasswd2ab"
+gitlab_rails['smtp_domain'] = "sina.com"
+gitlab_rails['smtp_authentication'] = "login"
+gitlab_rails['smtp_enable_starttls_auto'] = true
+</code></pre></div></div>
+<p>启动容器即可
+<strong>以后只要容器相同，把数据拷贝过去就行了</strong></p>
+
+<p>2023-12-11 docker配置</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dir=$PWD/gitlab
+mkdir $dir
+mkdir $dir/config
+mkdir $dir/data
+mkdir $dir/log
+
+docker run -d --name gitlab \
+    --restart always \
+    -p 682:22 -p 680:680 -p 688:80 \
+    -v $dir/config:/etc/gitlab    \
+    -v $dir/data:/var/opt/gitlab  \
+    -v $dir/log:/var/log/gitlab   \
+    gitlab/gitlab-ce
+
+#只修改了下面两个配置
+root@mommint:/opt/docker/gitlab# grep 680 config/gitlab.rb
+external_url 'http://10.127.1.27:680'
+root@mommint:/opt/docker/gitlab# grep 682 config/gitlab.rb
+gitlab_rails['gitlab_shell_ssh_port'] = 682
+</code></pre></div></div>
+<p>仪表盘<code class="language-plaintext highlighter-rouge">http://10.127.1.27:680/admin</code></p>
+
+<h4 id="备注">备注</h4>
+
+<p>找回密码可以验证邮箱设置是否合适
+<img src="/uploads/2020/01/gitlab3.png" alt="image" />
+<strong>config文件夹下面的文件的权限不要改动</strong>，尤其是ssh的，只有设置为<code class="language-plaintext highlighter-rouge">600/400</code>才能正常的clone和push</p>
+
+<p><strong>注意删除镜像后记得一并删除<code class="language-plaintext highlighter-rouge">$dir/config</code></strong></p>
+
+<p>gitlab的wiki上传附件报错<code class="language-plaintext highlighter-rouge">Server responded with 0 code.</code>,域名端口等配置错误，修正后解决</p>
+<h4 id="管理员配置">管理员配置</h4>
+<p>root网页登陆，在setting里面禁止Sign-up restrictions（注册功能）</p>
+<h4 id="使用">使用</h4>
+<p>在网页上新建Group，新建Project</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd existing_folder
+git init
+git remote add origin ssh://git@10.127.6.47:622/mycode/tdqe.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+</code></pre></div></div>
+<p>由于我已经有其他仓库了，实际执行为</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add girl ssh://git@girl:622/mycode/tdqe.git
+#gir解析向10.127.6.47
+git push -u girl master
+</code></pre></div></div>
+<p>再做个内网映射就可以了</p>
+
+<p>配置git/设置默认仓库</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config -e
+</code></pre></div></div>
+
+<h3 id="docker-panfilerunariangaria2实现离线下载及在线播放">Docker-Pan：Filerun+AriaNg+Aria2实现离线下载及在线播放</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull jaegerdocker/pan
+</code></pre></div></div>
+<p>启动</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run  -dti --name=cnqpan \
+            -p 690:80 -p 698:6800 \
+             -v /home/data/public/pandir/www:/var/www/html/system/data/default_home_folder \
+             -v /data/public/pandir/data:/home/data \
+             jaegerdocker/pan
+</code></pre></div></div>
+<p>设置权限777，不然不能读写，迷？？？</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod 777 /data/public/pandir/data
+chmod 777 /home/data/public/pandir/www
+</code></pre></div></div>
+
+<p>访问</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#Filerun
+http://192.168.1.125:690
+#ariaNg
+http://192.168.1.125:690/dweb
+</code></pre></div></div>
+<p>修改aira的端口为刚才映射的698端口
+<img src="/uploads/2020/01/gitlab4.png" alt="image" /></p>
+
+<h3 id="clouddrive挂载阿里云盘">clouddrive挂载阿里云盘</h3>
+<p>项目地址<a href="https://hub.docker.com/r/cloudnas/clouddrive">clouddrive</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dir=$PWD/clouddrive
+mkdir $dir
+mkdir $dir/config
+
+docker run -d \
+      --name clouddrive \
+      --restart unless-stopped \
+      -v /home/clouddriver_share:/CloudNAS:shared \
+      -v $dir/config:/Config \
+      --network host \
+      --pid host\
+     --privileged \
+     --device /dev/fuse:/dev/fuse \
+     cloudnas/clouddrive
+</code></pre></div></div>
+
+<p>网页访问<code class="language-plaintext highlighter-rouge">ip:9798</code>即可. 默认会挂载网盘路径<code class="language-plaintext highlighter-rouge">/</code>(所有网盘入口)到本地的<code class="language-plaintext highlighter-rouge">/home/NFS/clouddriver_share/CloudDrive</code>. 也可以自定义挂载到指定路径, 用户ID可选,这里我选择cndaqiang的PID</p>
+
+<p><img src="/uploads/2020/01/CloudDrive.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:/home/NFS/clouddriver_share$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+CloudFS         6.6T  2.3T  4.4T  35% /home/clouddriver_share/aliyun
+</code></pre></div></div>
+
+<p>快速比较云端和本地的文件是否一致</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@mommint:/home# diff &lt;(tree -ni --noreport /home/clouddriver_share/aliyun/互联网文件/电子书/计算机技术-PDF书籍) &lt;(tree -ni --noreport /home/D1/NFSD1/download/计算机技术-PDF书籍)
+1c1
+&lt; /home/clouddriver_share/aliyun/互联网文件/电子书/计算机技术-PDF书籍
+---
+&gt; /home/D1/NFSD1/download/计算机技术-PDF书籍
+</code></pre></div></div>
+
+<h3 id="overlear">overlear</h3>
+<p>参考<a href="https://junbin.gitbook.io/studynotes/overleaf-da-jian">Overleaf搭建</a><br />
+目前还仅支持x86架构</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@macmini ~$ docker pull sharelatex/sharelatex
+cndaqiang@macmini ~$ cd /Volumes/Data/Docker/
+cndaqiang@macmini Docker$ cat build.sh
+ROOT=$PWD
+mkdir $ROOT/sharelatex/ $ROOT/sharelatex/sharelatex_data/ $ROOT/sharelatex/mongo_data/ $ROOT/sharelatex/redis_data/
+echo $ROOT/sharelatex/
+curl -O https://raw.githubusercontent.com/sharelatex/sharelatex/master/docker-compose.yml
+</code></pre></div></div>
+<p>修改<code class="language-plaintext highlighter-rouge">docker-compose.yml</code>,端口和储存数据的地址</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        ports:
+            - 5080:80
+        volumes:
+            - /Volumes/Data/Docker/sharelatex_data:/var/lib/sharelatex
+        volumes:
+            - /Volumes/Data/Docker/mongo_data:/data/db
+        volumes:
+            - /Volumes/Data/Docker/redis_data:/data
+</code></pre></div></div>
+
+<p>补全功能</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker exec sharelatex tlmgr install scheme-full
+</code></pre></div></div>
+
+<h3 id="局域网文件共享snapdrop">局域网文件共享snapdrop</h3>
+<p><a href="https://github.com/RobinLinus/snapdrop">snapdrop</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    git clone https://github.com/RobinLinus/snapdrop.git
+    cd snapdrop
+    #修改端口
+    docker-compose up -d
+</code></pre></div></div>
+
+<h2 id="其他">其他</h2>
+<h3 id="启动docker后自动运行容器">启动docker后自动运行容器</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker update --restart=no  CONTAINER ID
+docker update --restart=always  CONTAINER ID
+</code></pre></div></div>
+
+<h3 id="修改已配置好的docker参数">修改已配置好的docker参数</h3>
+<p>关闭docker</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker stop  d0d53d61a217
+systemctl stop docker
+</code></pre></div></div>
+<p>修改<code class="language-plaintext highlighter-rouge">config.v2.json</code>,<code class="language-plaintext highlighter-rouge">hostconfig.json</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@mommint:/var/lib/docker/containers/d0d53d61a2173b651e5b625bc65120301438237eb926d136c48d7afac94cba22# cd /var/lib/docker/containers/d0d53d61a2173b651e5b625bc65120301438237eb926d136c48d7afac94cba22
+root@mommint:/var/lib/docker/containers/d0d53d61a2173b651e5b625bc65120301438237eb926d136c48d7afac94cba22# ls
+checkpoints  config.v2.json  d0d53d61a2173b651e5b625bc65120301438237eb926d136c48d7afac94cba22-json.log  hostconfig.json  hostname  hosts  mounts  resolv.conf
+</code></pre></div></div>
+<p>启动docker</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl start docker
+docker start d0d53d61a2173b651e5b625b
+</code></pre></div></div>
+
+<h2 id="dockerfile">Dockerfile</h2>
+<h3 id="利用dockerfile构建镜像">利用Dockerfile构建镜像</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@oracle:~/builddocker/base$ ls
+Dockerfile
+cndaqiang@oracle:~/builddocker/base$ docker build .
+</code></pre></div></div>
+
+<h2 id="报错">报错</h2>
+<h3 id="wait-until-the-container-is-running"><code class="language-plaintext highlighter-rouge">wait until the container is running</code></h3>
+<p>容器不断重启,估计有错误</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@oracle:~/zerotier-planet# docker exec  -it ztncui bash
+Error response from daemon: Container 44d5b440ac270fe10e9053e4636125c27a931a91ee24ead61f27fa15103ab403 is restarting, wait until the container is running
+</code></pre></div></div>
+<h3 id="查看日志docker-logs-容器名">查看日志<code class="language-plaintext highlighter-rouge">docker logs 容器名</code></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@oracle:~/zerotier-planet# docker logs ztncui
+standard_init_linux.go:219: exec user process caused: exec format error
+</code></pre></div></div>
+<p>原来是在arm64架构上安装了x86的容器(?为什么不在安装的时候报错….)</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/11/21/numpy/">[挖坑]Numpy，Pandas</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/02/24/slurm/">Ubuntu 18.04/Mint 19 单机安装Slurm</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

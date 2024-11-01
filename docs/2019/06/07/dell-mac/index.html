@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>dell燃7000 I代 黑苹果记录</title>
+    <meta name="description" content="之前装过黑苹果，但由于是装在机械，比较慢，没有继续使用。昨天换了固态，又重新进行了一次安装，同时找到了一个合适的EFI，所有记录来自cndaqiang/dell-14-7460-hackintosh本文来自此项目的README，转到博客里容易被谷歌收录，本文不进行更新，后续更新见cndaqiang/dell-14...">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2019/06/07/dell-mac/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>dell燃7000 I代 黑苹果记录</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-06-07
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#MAC" title="Category: MAC" rel="category">MAC</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#MAC" title="Tag: MAC" rel="tag">MAC</a-->
+        <a href="/tag/#MAC" title="Tag: MAC" rel="tag">MAC</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#2021-07-15-更新" id="markdown-toc-2021-07-15-更新">2021-07-15 更新</a></li>
+  <li><a href="#dell-14-7460-hackintosh" id="markdown-toc-dell-14-7460-hackintosh">dell-14-7460-hackintosh</a>    <ul>
+      <li><a href="#致谢" id="markdown-toc-致谢">致谢</a></li>
+      <li><a href="#用途" id="markdown-toc-用途">用途</a></li>
+      <li><a href="#安装" id="markdown-toc-安装">安装</a>        <ul>
+          <li><a href="#需要" id="markdown-toc-需要">需要</a>            <ul>
+              <li><a href="#efi-引导clover" id="markdown-toc-efi-引导clover">EFI 引导（CLOVER）:<br /></a></li>
+              <li><a href="#安装镜像" id="markdown-toc-安装镜像">安装镜像</a></li>
+            </ul>
+          </li>
+          <li><a href="#安装过程" id="markdown-toc-安装过程">安装过程</a>            <ul>
+              <li><a href="#1-利用工具将镜像写入存储介质u盘硬盘分区" id="markdown-toc-1-利用工具将镜像写入存储介质u盘硬盘分区">1. 利用工具将镜像写入存储介质(U盘/硬盘分区)</a></li>
+              <li><a href="#2-配置efi" id="markdown-toc-2-配置efi">2. 配置EFI</a></li>
+              <li><a href="#3-bios设置" id="markdown-toc-3-bios设置">3. BIOS设置</a></li>
+              <li><a href="#4-重启选择开机启动项为刚才设置的efi即可" id="markdown-toc-4-重启选择开机启动项为刚才设置的efi即可">4. 重启选择开机启动项为刚才设置的EFI即可</a></li>
+              <li><a href="#5-其他" id="markdown-toc-5-其他">5. 其他</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#安装之后" id="markdown-toc-安装之后">安装之后</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>之前装过黑苹果，但由于是装在机械，比较慢，没有继续使用。<br />
+昨天换了固态，又重新进行了一次安装，同时找到了一个合适的EFI，所有记录来自<a href="https://github.com/cndaqiang/dell-14-7460-hackintosh">cndaqiang/dell-14-7460-hackintosh</a><br />
+本文来自此项目的README，转到博客里容易被谷歌收录，本文不进行更新，后续更新见<a href="https://github.com/cndaqiang/dell-14-7460-hackintosh">cndaqiang/dell-14-7460-hackintosh</a></p>
+
+<h1 id="2021-07-15-更新">2021-07-15 更新</h1>
+<ul>
+  <li>感谢<a href="https://github.com/HowieHye">HowieHye</a>,<a href="https://github.com/LinBiaoGe">LinBiaoGe</a>提供的OC的引导</li>
+  <li><strong>直接下载<a href="https://github.com/cndaqiang/Dell-7560-Hackintosh-OC/tree/e72aaacf7ffa648e490d62b97c247d0d927a7742">e72aaac</a>,用OC替换下面步骤中的CLOVER即可</strong></li>
+  <li><strong>全新安装Mac需使用 1ef8665 以前的 Commit,最终我采用<a href="https://github.com/cndaqiang/Dell-7560-Hackintosh-OC/tree/e72aaacf7ffa648e490d62b97c247d0d927a7742">e72aaac</a>进行安装, 安装后直接从偏好设置里面升级11.4Big Sur, 重启好多次, 顺利升级.</strong></li>
+  <li>使用<a href="https://github.com/cndaqiang/Dell-7560-Hackintosh-OC/tree/e72aaacf7ffa648e490d62b97c247d0d927a7742">e72aaac</a>直接安装macOS Big Sur 11.4 20F71历时很长时间最后也安装成功了</li>
+  <li>HowieHye也写了详细的安装教程:<a href="https://howiehye.top/post/9ff9620/">黑苹果安装指北手册 (持续更新)</a></li>
+  <li>因为我之前网卡换成了BCM94350ZAE 1820A,安装时发现直接可以驱动</li>
+</ul>
+
+<h1 id="dell-14-7460-hackintosh">dell-14-7460-hackintosh</h1>
+<p>dell燃7000 I代 黑苹果记录</p>
+
+<h2 id="致谢">致谢</h2>
+<p>本项目是在<a href="https://github.com/xzhih/dell-7460-7560-hackintosh">zhih-dell-7460-7560-hackintosh</a>的基础上修改的
+感谢大佬，大佬的博客<a href="https://zhih.me">底噪</a></p>
+
+<h2 id="用途">用途</h2>
+<p>我将在这个仓库中以Issues的形式记录:<br />
+安装使用过程中遇到的问题<br />
+对其他教程的“术语”进行解释<br />
+同时记录如何把mac系统变得适合自己使用</p>
+
+<h2 id="安装">安装</h2>
+<h3 id="需要">需要</h3>
+<h4 id="efi-引导clover">EFI 引导（CLOVER）:<br /></h4>
+<p>CLOVER就是一个引导管理器，开机若使用CLOVER引导，则CLOVER会自动检索各个硬盘分区(或U盘)里面存在的系统(或安装镜像)<br />
+然后将他们整理到同一个界面供用户选择<br />
+他的特点是：</p>
+<ul>
+  <li>开机时自动检测，不用手动配置各个系统的EFI选项</li>
+  <li>同时可以提供黑苹果系统所需要的驱动程序和相关配置</li>
+</ul>
+
+<p>综合上述，使用安装U盘中的CLOVER，或是使用硬盘ESP分区里的CLOVER，还是你额外准备一个SD/U盘等存储介质在里面的ESP分区中放入含有CLOVER的EFI都可以引导<br /></p>
+
+<p>在windows下可以：
+先复制带拷贝的CLOVER文件，如仓库中的10.14 EFI/EFI<br />
+用DiskGenius打开任意一块GUID存储设备的ESP分区，点击左边的浏览文件，然后<code class="language-plaintext highlighter-rouge">Ctrl+v</code>就可以了
+<img src="https://user-images.githubusercontent.com/26620270/59099779-bea22180-8956-11e9-84f4-204c99ad9174.png" alt="image" />
+mac下可以用<a href="https://mackie100projects.altervista.org/download-clover-configurator/">Clover Configurator</a>进行修改</p>
+
+<p>不用使用一些教程里面的把镜像写入到U盘，又修改U盘里面的ESP分区里的EFI/CLOVER<br />
+感谢<a href="https://zhih.me">底噪</a>提供的EFI文件，此EFI文件在安装和使用过程中都没有任何问题，同时大佬还提供了相关机型的EFI<a href="https://zhih.me/hackintosh/#/">底噪|黑苹果合集</a></p>
+
+<h4 id="安装镜像">安装镜像</h4>
+<p>将黑果小兵提供的安装镜像使用写盘工具写入到一个U盘，或者硬盘的某一个分区都可以(显然写入分区会比写入U盘安装过程中省下大量时间)<br />
+因此U盘在安装过程也不是必须的，而且U盘比硬盘的速度慢<br />
+写入镜像的方法：</p>
+<ul>
+  <li>transmac 很久以前常用的方式</li>
+  <li><a href="https://www.balena.io/etcher/">Etcher</a> 好现代化，免费使用,适用于写入Flash介质(U盘)</li>
+  <li>如果已经有(黑/白)苹果系统了，也可以在mac完成写盘操作</li>
+</ul>
+
+<h3 id="安装过程">安装过程</h3>
+<p>下面的1，2不分先后，可以先写镜像（这个过程慢），在这过程中配置EFI</p>
+<h4 id="1-利用工具将镜像写入存储介质u盘硬盘分区">1. 利用工具将镜像写入存储介质(U盘/硬盘分区)</h4>
+<p>镜像下载<a href="https://blog.daliansky.net/categories/%E4%B8%8B%E8%BD%BD/%E9%95%9C%E5%83%8F/">黑果小兵的部落阁</a><br />
+写入</p>
+
+<h4 id="2-配置efi">2. 配置EFI</h4>
+<p>使用DiskGenius或者其他(Win/MAC)软件修改引导硬盘(电脑里的硬盘，SD卡，或者写完了镜像的U盘)的ESP分区<br />
+注ESP分区要调到大于200M</p>
+
+<h4 id="3-bios设置">3. BIOS设置</h4>
+<p>设置硬盘 AHCI、关闭安全启动，保存退出</p>
+
+<h4 id="4-重启选择开机启动项为刚才设置的efi即可">4. 重启选择开机启动项为刚才设置的EFI即可</h4>
+<p>在CLOVER界面选择安装镜像所在的分区启动，安装即可<br />
+<strong>如果刚开始安装就是失败,换个USB口</strong></p>
+
+<h4 id="5-其他">5. 其他</h4>
+<p>我的安装过程就结束了，之后使用无需在进行其他操作<br />
+其他教程中的装完系统再配置EFI,CLOVER，是因为使用了U盘的EFI引导，我直接使用硬盘中的EFI引导和安装，故无后续</p>
+
+<h2 id="安装之后">安装之后</h2>
+<p>遇到的问题，和优化，我放到<a href="https://github.com/cndaqiang/dell-14-7460-hackintosh/issues">Issues</a>里了</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/06/04/gcc-octopus9/">Gcc OPENMPI Centos 编译octopus-9 遇到的问题和解决方案</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/06/08/mac-code/">macOS配置科学计算环境 </a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

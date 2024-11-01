@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Segmentation Fault when running commands</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2019/09/05/glibc/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Segmentation Fault when running commands</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2019-09-05
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>&nbsp;
+    
+        <a href="/category/#Centos" title="Category: Centos" rel="category">Centos</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#segmentation" title="Tag: segmentation" rel="tag">segmentation</a-->
+        <a href="/tag/#segmentation" title="Tag: segmentation" rel="tag">segmentation</a>&nbsp;
+    
+        <!--a href="/tag/#fault" title="Tag: fault" rel="tag">fault</a-->
+        <a href="/tag/#fault" title="Tag: fault" rel="tag">fault</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#问题" id="markdown-toc-问题">问题</a></li>
+  <li><a href="#原因" id="markdown-toc-原因">原因</a></li>
+  <li><a href="#解决方案" id="markdown-toc-解决方案">解决方案</a></li>
+  <li><a href="#附录" id="markdown-toc-附录">附录</a>    <ul>
+      <li><a href="#centos进入单用户模式" id="markdown-toc-centos进入单用户模式">Centos进入单用户模式</a></li>
+      <li><a href="#centos7-进入rescue模式" id="markdown-toc-centos7-进入rescue模式">Centos7 进入rescue模式</a>        <ul>
+          <li><a href="#此时mntsysimage是检测到的本地已经安装的centos系统根目录" id="markdown-toc-此时mntsysimage是检测到的本地已经安装的centos系统根目录">此时<code class="language-plaintext highlighter-rouge">/mnt/sysimage</code>是检测到的本地已经安装的Centos系统根目录<br /></a></li>
+          <li><a href="#mntinstallrepopackages是安装光盘中的rpm仓库目录可以用来安装缺失损坏的程序" id="markdown-toc-mntinstallrepopackages是安装光盘中的rpm仓库目录可以用来安装缺失损坏的程序"><code class="language-plaintext highlighter-rouge">/mnt/install/repo/Packages</code>是安装光盘中的rpm仓库目录，可以用来安装缺失损坏的程序</a></li>
+        </ul>
+      </li>
+      <li><a href="#rescue模式下rpm安装包的方法" id="markdown-toc-rescue模式下rpm安装包的方法">rescue模式下rpm安装包的方法</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://access.redhat.com/solutions/483273">Segmentation Fault when running commands</a><br />
+<a href="https://www.cnblogs.com/caya-yuan/p/10554422.html">Centos7 – glibc 升级失败、意外删除、故意删除后的处理方法</a><br />
+<a href="https://access.redhat.com/solutions/163073">How to re-install a package in rescue mode, when chroot fails?</a><br /></p>
+
+<h2 id="问题">问题</h2>
+<p>yum安装完curl后,输出常用命令如<code class="language-plaintext highlighter-rouge">top, yum, ping</code>等常用命令，后提示</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Segmentation fault
+</code></pre></div></div>
+<p>此时已经无法远程ssh登陆<br />
+重启后，各种服务无法启动，如<code class="language-plaintext highlighter-rouge">Failed to start Login Service </code>(这直接导致开机后，输入用户名，回车后，不会进入正常的输入密码，又跳到了输用户名的界面)，MongDB等进程也无法启动 <br />
+重启进入单用户模式后，<code class="language-plaintext highlighter-rouge">top, yum, ping</code>等这些常用命令依然提示<code class="language-plaintext highlighter-rouge">Segmentation fault</code></p>
+
+<h2 id="原因">原因</h2>
+<p><code class="language-plaintext highlighter-rouge">glibc</code>出了问题,很多基本命命令依赖<code class="language-plaintext highlighter-rouge">glibc</code></p>
+
+<h2 id="解决方案">解决方案</h2>
+<p>插入刻录了centos7 DVD的U盘，最好是Everything的，因为我们之后要本地安装glibc，Everything的镜像里面含有所有的rpm安装包<br />
+按照附录的方式进入rescue模式<br />
+按照附录的rescue模式下rpm安装包的方法, 使用rpm安装所需的libgc的包<br />
+<img src="/uploads/2019/09/glibc2.png" alt="" />
+安装顺序</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>glibc-headers
+glibc
+glibc-devel
+</code></pre></div></div>
+<p>我安装完这三个就ok了，如果其他的也损坏了，也安装上吧
+<code class="language-plaintext highlighter-rouge">exit</code>退出救援模式系统自动重启</p>
+
+<h2 id="附录">附录</h2>
+<h3 id="centos进入单用户模式">Centos进入单用户模式</h3>
+<p>grub引导界面，按e
+<img src="/uploads/2019/09/d1.png" alt="" />
+修改fi结束后的下一行中的<code class="language-plaintext highlighter-rouge">ro</code>为<code class="language-plaintext highlighter-rouge">rw init=/sysroot/bin/bash</code>，其他教程里的<code class="language-plaintext highlighter-rouge">init=/sysroot/bin/sh</code>一样可行
+<img src="/uploads/2019/09/d2.png" alt="" />
+<img src="/uploads/2019/09/d3.png" alt="" />
+<code class="language-plaintext highlighter-rouge">ctrl+x</code>进入系统<br />
+<code class="language-plaintext highlighter-rouge">chroot /sysroot</code>就进去了之前系统的操作环境<br />
+有些命令执行前还需要<code class="language-plaintext highlighter-rouge">mount proc /proc -t proc</code>
+<img src="/uploads/2019/09/d4.png" alt="" /></p>
+
+<h3 id="centos7-进入rescue模式">Centos7 进入rescue模式</h3>
+<p>U盘启动，选择<code class="language-plaintext highlighter-rouge">Troubleshooting</code>-&gt;<code class="language-plaintext highlighter-rouge">Rescue a CentOS system</code>-&gt;然后按<code class="language-plaintext highlighter-rouge">1</code>进入<code class="language-plaintext highlighter-rouge">continue</code><br />
+这篇文章<a href="https://www.tecmint.com/recover-or-rescue-corrupted-grub-boot-loader-in-centos-7/">How to Recover or Rescue Corrupted Grub Boot Loader in CentOS 7</a>的截图就很好了,直接转发了过来
+<img src="/uploads/2019/09/c1.png" alt="" />
+<img src="/uploads/2019/09/c2.png" alt="" />
+<img src="/uploads/2019/09/c3.png" alt="" />
+<img src="/uploads/2019/09/c4.png" alt="" /></p>
+
+<h4 id="此时mntsysimage是检测到的本地已经安装的centos系统根目录">此时<code class="language-plaintext highlighter-rouge">/mnt/sysimage</code>是检测到的本地已经安装的Centos系统根目录<br /></h4>
+<p>之后如果<code class="language-plaintext highlighter-rouge">chroot /mnt/sysimage</code> 则“进入原来的系统环境”，使用的命令都是原来系统的命令<br />
+用<code class="language-plaintext highlighter-rouge">exit</code>  可以退出原来系统的环境，回到救援模式环境<br />
+<strong>原来的系统如果出现命令都不能用问题，就不要<code class="language-plaintext highlighter-rouge">chroot /mnt/sysimage</code>了</strong></p>
+
+<h4 id="mntinstallrepopackages是安装光盘中的rpm仓库目录可以用来安装缺失损坏的程序"><code class="language-plaintext highlighter-rouge">/mnt/install/repo/Packages</code>是安装光盘中的rpm仓库目录，可以用来安装缺失损坏的程序</h4>
+<p>如<code class="language-plaintext highlighter-rouge">glibc</code>
+<img src="/uploads/2019/09/repo.jpg" alt="" /></p>
+
+<h3 id="rescue模式下rpm安装包的方法">rescue模式下rpm安装包的方法</h3>
+<p>测试安装abc.rpm是否缺少其他依赖，如果缺少，要先安装依赖</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /mnt/install/repo/Packages
+rpm -ivh --test --force --noscripts --root=/mnt/sysimage abc.rpm
+</code></pre></div></div>
+<p>去掉<code class="language-plaintext highlighter-rouge">--test</code>则可以安装<br /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /mnt/install/repo/Packages
+rpm -ivh --force --noscripts --root=/mnt/sysimage abc.rpm
+</code></pre></div></div>
+<p>删除glibc后系统命令失效，重新安装示例：
+<img src="/uploads/2019/09/glibc.png" alt="" /></p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2019/08/07/scalapack/">[挖坑]BLAS, Lapack, Scalapack & Fortran 快速上手</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2019/09/06/yumlocal/">普通用户yum安装软件包,rpm包</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Abacus编译&amp;快速上手</title>
+    <meta name="description" content="本文为自学笔记, 仅供参考, 正确的安装和使用方法请参考ABACUS的官方网站.">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2021/04/20/abacus/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Abacus编译&快速上手</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2021-04-20
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Abacus" title="Tag: Abacus" rel="tag">Abacus</a-->
+        <a href="/tag/#Abacus" title="Tag: Abacus" rel="tag">Abacus</a>&nbsp;
+    
+        <!--a href="/tag/#CPP" title="Tag: CPP" rel="tag">CPP</a-->
+        <a href="/tag/#CPP" title="Tag: CPP" rel="tag">CPP</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#abacus" id="markdown-toc-abacus">ABACUS</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
+      <li><a href="#安装编译器" id="markdown-toc-安装编译器">安装编译器</a></li>
+      <li><a href="#注意" id="markdown-toc-注意"><strong>注意</strong></a></li>
+      <li><a href="#安装依赖" id="markdown-toc-安装依赖">安装依赖</a>        <ul>
+          <li><a href="#安装-1" id="markdown-toc-安装-1">安装</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+  <li><a href="#备注" id="markdown-toc-备注">备注</a>    <ul>
+      <li><a href="#intel-oneapi以及intel-compiler-2019u3编译elpa-201605004报错解决" id="markdown-toc-intel-oneapi以及intel-compiler-2019u3编译elpa-201605004报错解决"><code class="language-plaintext highlighter-rouge">Intel® oneAPI</code>以及<code class="language-plaintext highlighter-rouge">intel-compiler-2019u3</code>编译<code class="language-plaintext highlighter-rouge">elpa-2016.05.004</code>报错解决</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>本文为自学笔记, 仅供参考, 正确的安装和使用方法请参考<a href="https://abacus.ustc.edu.cn/">ABACUS的官方网站</a>.</p>
+
+<h2 id="abacus">ABACUS</h2>
+
+<p><a href="https://abacus.ustc.edu.cn/"><img src="https://abacus.ustc.edu.cn/images/logo.jpg" alt="" /></a></p>
+
+<h2 id="安装">安装</h2>
+<h3 id="安装编译器">安装编译器</h3>
+<p>同
+<a href="/2021/01/11/intel-oneAPI/">Intel® oneAPI Toolkits(Intel Parallel Studio XE的代替品)安装使用</a></p>
+
+<p>SSLAB上加载编译参数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module load mpi/intelmpi/2017.4.239
+module load compiler/intel/intel-compiler-2017.5.239
+</code></pre></div></div>
+<h3 id="注意"><strong>注意</strong></h3>
+<p>ABACUS使用下面elpa的这些函数,而这些函数在<code class="language-plaintext highlighter-rouge">elpa-2016.05.004</code>编译的库中还有,<br />
+而在<code class="language-plaintext highlighter-rouge">elpa-2020.11.001</code>中这些库已经没有或者调用方式发生了变化,如图<br />
+因此我们需要使用<code class="language-plaintext highlighter-rouge">elpa-2016.05.004</code><br />
+<code class="language-plaintext highlighter-rouge">Intel® oneAPI</code>以及<code class="language-plaintext highlighter-rouge">intel-compiler-2019u3</code>编译<code class="language-plaintext highlighter-rouge">elpa-2016.05.004</code>会报错(本文最后给出错误解决方案),<code class="language-plaintext highlighter-rouge">intel-compiler-2017.5.239</code>可以编译通过<code class="language-plaintext highlighter-rouge">elpa-2016.05.004</code></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">elpa_cholesky_complex</code></li>
+  <li><code class="language-plaintext highlighter-rouge">elpa_cholesky_real</code></li>
+  <li><code class="language-plaintext highlighter-rouge">elpa_get_communicators</code></li>
+  <li><code class="language-plaintext highlighter-rouge">elpa_invert_trm_complex</code></li>
+  <li><code class="language-plaintext highlighter-rouge">elpa_invert_trm_real</code></li>
+  <li><code class="language-plaintext highlighter-rouge">elpa_solve_evp_complex_1stage</code></li>
+  <li><code class="language-plaintext highlighter-rouge">elpa_solve_evp_complex_2stage</code></li>
+  <li><code class="language-plaintext highlighter-rouge">elpa_solve_evp_real_1stage</code></li>
+  <li><code class="language-plaintext highlighter-rouge">elpa_solve_evp_real_2stage</code></li>
+  <li><code class="language-plaintext highlighter-rouge">get_elpa_communicators</code>
+<img src="/uploads/2021/04/abacus_elpa.png" alt="" /></li>
+</ul>
+
+<h3 id="安装依赖">安装依赖</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ~/code/intel
+<span class="nb">cd</span> ~/code/intel
+<span class="nv">ROOT</span><span class="o">=</span><span class="nv">$PWD</span>
+<span class="nb">mkdir</span> <span class="nv">$ROOT</span>/source
+
+<span class="c">###fftw3</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/fftw/fftw-3.3.4.tar.gz
+<span class="nb">tar </span>xzvf fftw-3.3.4.tar.gz
+<span class="nb">cd </span>fftw-3.3.4
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.4 <span class="nv">CC</span><span class="o">=</span>icc  <span class="nv">MPICC</span><span class="o">=</span>mpiicc <span class="nt">--enable-mpi</span>
+make  <span class="nb">install</span> <span class="nt">-j20</span>
+
+<span class="c">###boost</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/boost/boost_1_66_0.tar.bz2
+<span class="nb">tar</span> <span class="nt">--bzip2</span> <span class="nt">-xf</span> boost_1_66_0.tar.bz2
+<span class="nb">cd </span>boost_1_66_0/
+./bootstrap.sh <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/boost_1_66_0 <span class="nt">--with-toolset</span><span class="o">=</span>intel-linux
+./b2 <span class="nb">install</span> <span class="nt">-j20</span>
+
+
+<span class="c">###elpa</span>
+<span class="nv">TAG</span><span class="o">=</span>2016.05.004
+<span class="nv">ROOT</span><span class="o">=</span>~/code/intel
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-f</span> elpa-<span class="nv">$TAG</span>.tar.gz <span class="o">]</span>
+<span class="k">then
+</span>wget https://elpa.mpcdf.mpg.de/software/tarball-archive/Releases/<span class="nv">$TAG</span>/elpa-<span class="nv">$TAG</span>.tar.gz
+<span class="k">fi
+</span><span class="nb">rm</span> <span class="nt">-rf</span> elpa-<span class="nv">$TAG</span>
+<span class="nb">rm</span> <span class="nt">-rf</span> <span class="nv">$ROOT</span>/elpa-<span class="nv">$TAG</span>
+<span class="nb">tar </span>xzvf elpa-<span class="nv">$TAG</span>.tar.gz
+<span class="nb">cd </span>elpa-<span class="nv">$TAG</span>
+<span class="nv">MKL_HOME</span><span class="o">=</span><span class="nv">$MKLROOT</span>
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-f</span> configure <span class="o">]</span>
+<span class="k">then</span>
+./autogen.sh
+<span class="k">fi
+
+</span><span class="nb">rm</span> <span class="nt">-rf</span> build 
+<span class="nb">mkdir </span>build
+<span class="nb">cd </span>build
+
+../configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/elpa-<span class="nv">$TAG</span>  <span class="nv">CC</span><span class="o">=</span>mpiicc <span class="nv">CXX</span><span class="o">=</span>mpiicpc <span class="nv">FC</span><span class="o">=</span>mpiifort   <span class="nv">FCFLAGS</span><span class="o">=</span><span class="s2">"-mkl=cluster"</span> 
+<span class="c">#使用 FCFLAGS="-mkl=cluster" 或者下面的方式定义SCALAPACK都是可以的</span>
+<span class="c">#  SCALAPACK_LDFLAGS="-L$MKL_HOME/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread -lm -Wl,-rpath,$MKL_HOME/lib/intel64" \</span>
+<span class="c">#  SCALAPACK_FCFLAGS="-L$MKL_HOME/lib/intel64 -lmkl_scalapack_lp64 -lmkl_intel_lp64 -lmkl_sequential  -lmkl_core -lmkl_blacs_intelmpi_lp64 -lpthread -lm -I$MKL_HOME/include/intel64/lp64" \</span>
+<span class="c">#--enable-openmp</span>
+make <span class="nb">install</span> <span class="nt">-j20</span>
+
+</code></pre></div></div>
+
+<h4 id="安装-1">安装</h4>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#cd ~/code/abacus/ABACUS_v2.1.0/source/</span>
+
+<span class="nb">cd</span> <span class="nv">$ROOT</span>
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-f</span> ABACUS_v2.1.0.tar.gz <span class="o">]</span>
+<span class="k">then
+</span>wget https://abacus.ustc.edu.cn/uploadfile/ABACUS_v2.1.0.tar.gz
+<span class="k">fi
+</span><span class="nb">rm</span> <span class="nt">-rf</span> ABACUS_v2.1.0
+<span class="nb">tar </span>xzvf ABACUS_v2.1.0.tar.gz
+<span class="nb">cd </span>ABACUS/source
+
+<span class="nb">cat</span> <span class="o">&gt;</span> Makefile.vars <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh">
+CPLUSPLUS      = icpc
+# C++ compiler
+CPLUSPLUS_MPI  = mpiicpc
+# intel mpi or mpich
+FORTRAN       = ifort
+# Fortran compiler
+LAPACK_DIR = </span><span class="nv">$MKLROOT</span><span class="sh">
+# intel mkl
+FFTW_DIR       = </span><span class="nv">$ROOT</span><span class="sh">/fftw-3.3.4
+# lib fftw
+BOOST_DIR      = </span><span class="nv">$ROOT</span><span class="sh">/boost_1_66_0
+# lib boost
+ELPA_DIR = </span><span class="nv">$ROOT</span><span class="sh">/elpa-</span><span class="nv">$TAG</span><span class="sh">
+# lib elpa
+</span><span class="no">EOF
+</span>make
+</code></pre></div></div>
+<p>#注意在上面的内容中,<code class="language-plaintext highlighter-rouge">FFTW_DIR       = $ROOT/fftw-3.3.4</code>等后面不能有任何空格,如错误的<code class="language-plaintext highlighter-rouge">FFTW_DIR       = $ROOT/fftw-3.3.4[空格]</code></p>
+
+<h2 id="运行">运行</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~/work/abacus/learn-20210421$ cp -r ~/code/abacus/ABACUS_v2.1.0/examples/01a_Si_diamond_pw_scf .
+(python37) cndaqiang@mommint:~/work/abacus/learn-20210421$ cd 01a_Si_diamond_pw_scf
+(python37) cndaqiang@mommint:~/work/abacus/learn-20210421/01a_Si_diamond_pw_scf$ mpirun -np 10 ABACUS.mpi.2.1.0 | tee result
+ *********************************************************
+ *                                                       *
+ *                  WELCOME TO ABACUS                    *
+ *                                                       *
+ *            'Atomic-orbital Based Ab-initio            *
+ *                  Computation at UStc'                 *
+ *                                                       *
+ *          Website: http://abacus.ustc.edu.cn/          *
+ *                                                       *
+ *********************************************************
+ Wed Apr 21 20:49:47 2021
+ MAKE THE DIR         : OUT.ABACUS/
+ DONE(0.0328901  SEC) : SETUP UNITCELL
+ DONE(0.0689782  SEC) : SYMMETRY
+ DONE(0.069421   SEC) : INIT K-POINTS
+ ---------------------------------------------------------
+ This calculation is self-consistent
+ ---------------------------------------------------------
+ SPIN    KPOINTS         PROCESSORS
+ 1       8               10
+ ---------------------------------------------------------
+ Use plane wave basis
+ ---------------------------------------------------------
+ ELEMENT NATOM       XC
+ Si      2           PZ-LDA
+ ---------------------------------------------------------
+ Initial plane wave basis and FFT box
+ ---------------------------------------------------------
+ DONE(0.161176   SEC) : INIT PLANEWAVE
+ UNIFORM GRID DIM     : 36 * 36 * 36
+ UNIFORM GRID DIM(BIG): 36 * 36 * 36
+ MEMORY FOR PSI (MB)  : 0.0820312
+ DONE(0.162648   SEC) : LOCAL POTENTIAL
+ DONE(0.172807   SEC) : NON-LOCAL POTENTIAL
+ START POTENTIAL      : atomic
+ DONE(0.1748     SEC) : INIT POTENTIAL
+ DONE(0.22581    SEC) : INIT BASIS
+ -------------------------------------------
+ SELF-CONSISTENT :
+ -------------------------------------------
+ ITER   ETOT(eV)       EDIFF(eV)      DRHO2      CG_ITER    TIME(S)
+ CG1    -2.192279e+02  0.000000e+00   6.928e-02  3.000e+00  3.369e-02
+ CG2    -2.154958e+02  3.732172e+00   5.745e-03  2.750e+00  3.172e-02
+ CG3    -2.155043e+02  -8.536782e-03  2.622e-05  2.406e+00  2.994e-02
+ CG4    -2.155047e+02  -3.698259e-04  5.403e-07  3.875e+00  3.880e-02
+ CG5    -2.155047e+02  -1.855886e-06  1.931e-08  2.875e+00  3.231e-02
+ CG6    -2.155047e+02  -7.198559e-08  1.776e-10  2.969e+00  3.263e-02
+
+  |CLASS_NAME---------|NAME---------------|TIME(Sec)-----|CALLS----|AVG------|PER%-------
+ A DC_Driv             solve_eachf         0.28           1         0.28      63        %
+ B Run_Frag            frag_pw_line        0.28           1         0.28      63        %
+ X FFT                 FFT3D               0.15           1876      8.2e-05   35        %
+ H Hamilt_PW           h_psi               0.15           828       0.00018   34        %
+ C Ions                opt_ions_pw         0.21           1         0.21      49        %
+ D electrons           self_consistent     0.21           1         0.21      49        %
+ E electrons           c_bands             0.15           6         0.025     35        %
+ F Hamilt              diago               0.15           48        0.0031    34        %
+ G Diago_CG            diag                0.11           48        0.0023    25        %
+ ----------------------------------------------------------------------------------------
+
+ START  Time  : Wed Apr 21 20:49:47 2021
+ FINISH Time  : Wed Apr 21 20:49:47 2021
+ TOTAL  Time  : 0
+ SEE INFORMATION IN : OUT.ABACUS/
+</code></pre></div></div>
+<p>输入和输出</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) cndaqiang@mommint:~/work/abacus/learn-20210421/01a_Si_diamond_pw_scf$ tree
+.
+├── INPUT
+├── KPT
+├── OUT.ABACUS
+│   ├── INPUT
+│   ├── istate.info
+│   ├── running_scf.log
+│   ├── Si
+│   │   ├── Si.NONLOCAL
+│   │   ├── Si-P.ORBITAL
+│   │   ├── Si-S.ORBITAL
+│   │   └── v_loc_g.dat
+│   ├── STRU_READIN_ADJUST.cif
+│   └── warning.log
+├── README
+├── result
+├── Si.pz-vbc.UPF
+└── STRU
+</code></pre></div></div>
+
+<h2 id="备注">备注</h2>
+<h3 id="intel-oneapi以及intel-compiler-2019u3编译elpa-201605004报错解决"><code class="language-plaintext highlighter-rouge">Intel® oneAPI</code>以及<code class="language-plaintext highlighter-rouge">intel-compiler-2019u3</code>编译<code class="language-plaintext highlighter-rouge">elpa-2016.05.004</code>报错解决</h3>
+<p>这里是以<code class="language-plaintext highlighter-rouge">--enable-openmp</code>版本的报错解决,普通版本的解决方式一致. 这里记录解决问题的过程</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">TAG</span><span class="o">=</span>2016.05.004
+<span class="nv">ROOT</span><span class="o">=</span>~/code/intel
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-f</span> elpa-<span class="nv">$TAG</span>.tar.gz <span class="o">]</span>
+<span class="k">then
+</span>wget https://elpa.mpcdf.mpg.de/software/tarball-archive/Releases/<span class="nv">$TAG</span>/elpa-<span class="nv">$TAG</span>.tar.gz
+<span class="k">fi
+</span><span class="nb">rm</span> <span class="nt">-rf</span> elpa-<span class="nv">$TAG</span>
+<span class="nb">rm</span> <span class="nt">-rf</span> <span class="nv">$ROOT</span>/elpa-<span class="nv">$TAG</span>
+<span class="nb">tar </span>xzvf elpa-<span class="nv">$TAG</span>.tar.gz
+<span class="nb">cd </span>elpa-<span class="nv">$TAG</span>
+<span class="nv">MKL_HOME</span><span class="o">=</span><span class="nv">$MKLROOT</span>
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-f</span> configure <span class="o">]</span>
+<span class="k">then</span>
+./autogen.sh
+<span class="k">fi
+
+</span><span class="nb">rm</span> <span class="nt">-rf</span> build 
+<span class="nb">mkdir </span>build
+<span class="nb">cd </span>build
+
+../configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/elpa-<span class="nv">$TAG</span>  <span class="nv">CC</span><span class="o">=</span>mpiicc <span class="nv">CXX</span><span class="o">=</span>mpiicpc <span class="nv">FC</span><span class="o">=</span>mpiifort  <span class="nv">FCFLAGS</span><span class="o">=</span><span class="s2">"-mkl=cluster"</span> <span class="nt">--enable-openmp</span>
+
+make <span class="nb">install</span> <span class="nt">-j20</span>
+</code></pre></div></div>
+
+<p>出现报错,使用<code class="language-plaintext highlighter-rouge">make V=1</code>查看具体的报错地点
+<img src="/uploads/2021/04/elpa_error.png" alt="" />
+可以发现是Makefile的1869行报错</p>
+
+<p>通过修改Makefile文件,输出各个变量,找到报错在<code class="language-plaintext highlighter-rouge">elpa2_print_kernels_openmp_LINK</code>变量中
+<img src="/uploads/2021/04/makefiledebug.png" alt="" />
+同样的方式输出组成<code class="language-plaintext highlighter-rouge">elpa2_print_kernels_openmp_LINK</code>的各个变量(如下)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 468 elpa2_print_kernels_openmp_LINK = $(LIBTOOL) $(AM_V_lt) --tag=FC \
+ 469         $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(FCLD) \
+ 470         $(elpa2_print_kernels_openmp_FCFLAGS) $(FCFLAGS) \
+ 471         $(AM_LDFLAGS) $(LDFLAGS) -o $@
+</code></pre></div></div>
+<p>追踪到</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1330 elpa2_print_kernels_openmp_FCFLAGS = $(AM_FCFLAGS) -module ${ac_empty}private_modules -Iprivate_modules
+</code></pre></div></div>
+<p>找到源头了,是因为libtool把标签<code class="language-plaintext highlighter-rouge">-module</code>给忽略了,编译器不知道后面的<code class="language-plaintext highlighter-rouge">private_modules</code>是什么东西,因此报错<br />
+一种曲线的解决问题方式修改<code class="language-plaintext highlighter-rouge">${ac_empty}private_modules</code>, 修改</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1065 ac_empty =-I
+</code></pre></div></div>
+<p>然后</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make install -j20
+</code></pre></div></div>
+<p>看起来是libtool吃掉了连接module所在文件夹连接标志<code class="language-plaintext highlighter-rouge">-module</code>,根据configure</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for ac_flag in -J '-J ' -fmod= -moddir= +moddir= -qmoddir= '-mod ' \
+              '-module ' -M '-Am -M' '-e m -J '; do
+  FCFLAGS="$ac_fc_module_output_flag_FCFLAGS_save ${ac_flag}sub"
+  cat &gt; conftest.$ac_ext &lt;&lt;_ACEOF
+</code></pre></div></div>
+<p>连接标志有<code class="language-plaintext highlighter-rouge">-mod,-module</code>,因为<code class="language-plaintext highlighter-rouge">intel 17</code>识别的<code class="language-plaintext highlighter-rouge">ac_flag</code>是<code class="language-plaintext highlighter-rouge">-mod</code>,且支持,gnu识别的是<code class="language-plaintext highlighter-rouge">-J</code>,而<code class="language-plaintext highlighter-rouge">intel 19</code>是<code class="language-plaintext highlighter-rouge">-module</code>,libtool不知道为什么没能处理好<code class="language-plaintext highlighter-rouge">-module</code></p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2021/03/30/cpp-learn/">C++ 学习笔记</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2021/07/09/oneplus6/">oneplus6刷windows 11 arm等</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

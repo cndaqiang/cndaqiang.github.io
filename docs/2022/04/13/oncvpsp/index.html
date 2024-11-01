@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>ONCVPSP安装使用</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2022/04/13/oncvpsp/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>ONCVPSP安装使用</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2022-04-13
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Quantum-Espresso" title="Category: Quantum-Espresso" rel="category">Quantum-Espresso</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a-->
+        <a href="/tag/#QE" title="Tag: QE" rel="tag">QE</a>&nbsp;
+    
+        <!--a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a-->
+        <a href="/tag/#DFT" title="Tag: DFT" rel="tag">DFT</a>&nbsp;
+    
+        <!--a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a-->
+        <a href="/tag/#Fortran" title="Tag: Fortran" rel="tag">Fortran</a>&nbsp;
+    
+        <!--a href="/tag/#ONCVPSP" title="Tag: ONCVPSP" rel="tag">ONCVPSP</a-->
+        <a href="/tag/#ONCVPSP" title="Tag: ONCVPSP" rel="tag">ONCVPSP</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#官网" id="markdown-toc-官网">官网</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
+      <li><a href="#编译multi-projector-oncvpsp-401-beta-release" id="markdown-toc-编译multi-projector-oncvpsp-401-beta-release">编译Multi-projector ONCVPSP-4.0.1 (beta release)</a></li>
+    </ul>
+  </li>
+  <li><a href="#使用" id="markdown-toc-使用">使用</a>    <ul>
+      <li><a href="#其他" id="markdown-toc-其他">其他</a>        <ul>
+          <li><a href="#修改输入文件中的交换关联泛函" id="markdown-toc-修改输入文件中的交换关联泛函">修改输入文件中的交换关联泛函</a></li>
+          <li><a href="#新生成的一些赝势" id="markdown-toc-新生成的一些赝势">新生成的一些赝势</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="官网">官网</h2>
+<p><a href="http://www.mat-simresearch.com/">Mat-Sim Research</a></p>
+<h2 id="安装">安装</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ROOT=$PWD
+mkdir -p $ROOT/source
+cd $ROOT/source
+</code></pre></div></div>
+
+<p>libxc和lapack的安装方法,参考<a href="/2018/09/15/gun-openmpi-octopus-4.1.2/">centos6.5 gcc Openmpi 编译octopus-4.1.2</a>,<a href="/2020/10/19/huairou-octopus/">怀柔计算中心/SSLAB编译octopus记录</a>,不再重复写了.</p>
+
+<p><strong>注意目前仅测试libxc2.1.1版本可以,<code class="language-plaintext highlighter-rouge">2.0.0,4.3,5.1.2</code>存在各种问题</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#
+wget http://www.tddft.org/programs/libxc/down.php?file=2.1.1/libxc-2.1.1.tar.gz -O libxc-2.1.1.tar.gz
+tar xzvf libxc-2.1.1.tar.gz
+cd libxc-2.1.1
+./configure --prefix=$ROOT/libxc-2.1.1  CC=gcc CXX=g++ FC=gfortran
+make
+make install
+</code></pre></div></div>
+
+<p>编译好lapack和libxc后</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://www.mat-simresearch.com/oncvpsp-3.3.1.tar.gz
+tar xzvf oncvpsp-3.3.1tar.gz
+cd oncvpsp-3.3.1
+</code></pre></div></div>
+<p>修改<code class="language-plaintext highlighter-rouge">make.inc</code>中的库项为</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#LIBS = -L/usr/local/lapack/lib -llapack -lrefblas
+LIBS = -L/home/cndaqiang/code/math/lib -llapack -lrefblas
+
+#LIBS += -L/usr/local/libxc/lib -lxcf90 -lxc
+#FFLAGS += -I/usr/local/libxc/include
+LIBS += -L/home/cndaqiang/code/libxc-2.1.1/lib -lxc
+FFLAGS += -I/home/cndaqiang/code/libxc-2.1.1/include
+</code></pre></div></div>
+<p>编译时会自动和之前的计算结果进行对比</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make
+</code></pre></div></div>
+
+<h3 id="编译multi-projector-oncvpsp-401-beta-release">编译Multi-projector ONCVPSP-4.0.1 (beta release)</h3>
+<p>方法同上，但是源代码存在一个小issue. libxc在<code class="language-plaintext highlighter-rouge">3.0.0</code>版本后更新了<code class="language-plaintext highlighter-rouge">xc_f90_info_refs</code>等函数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mommint:~/code/source$ grep 'subroutine xc_f90_info_refs(' libxc-2.1.1/src/libxc.f90
+    subroutine xc_f90_info_refs(info, number, str, s)
+cndaqiang@mommint:~/code/source$ grep 'subroutine xc_f90_info_refs(' libxc-4.3.4/src/libxc.f90
+    subroutine xc_f90_info_refs(info, number, s)
+</code></pre></div></div>
+<p>oncvpsp-4.0.1在针对此更新的代码修改有些小问题,将<code class="language-plaintext highlighter-rouge">oncvpsp-4.0.1/src/functionals.F90</code>中的</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>257 #if LIBXC_VERSION&gt;=300
+258     type(xc_f90_pointer_t) :: str
+259 #endif
+</code></pre></div></div>
+<p>修改为</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>257 #if LIBXC_VERSION&gt;=300
+258 #else
+259     type(xc_f90_pointer_t) :: str
+260 #endif
+</code></pre></div></div>
+<p>其他编译过程同3.3.1</p>
+
+<h2 id="使用">使用</h2>
+<p>准备输入文件</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mommint:~/code/source/oncvpsp-3.3.1$ mkdir mydata
+cndaqiang@mommint:~/code/source/oncvpsp-3.3.1$ mkdir cndaqiang.data
+cndaqiang@mommint:~/code/source/oncvpsp-3.3.1$ cd cndaqiang.data
+cndaqiang@mommint:~/code/source/oncvpsp-3.3.1/cndaqiang.data$ cp ~/ONCVPSP/abinit/Si.in .
+</code></pre></div></div>
+<p>计算</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>../src/oncvpsp.x &lt; Si.in &gt; Si.out
+</code></pre></div></div>
+
+<p>提取结果(参考<code class="language-plaintext highlighter-rouge">../scripts/run.sh</code>)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>awk 'Begin{out=0};/END_PSP/{out=0}; {if(out == 1) {print}};\
+        /Begin PSP_UPF/{out=1}' Si.out &gt; Si.upf
+</code></pre></div></div>
+<p>对比结果</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@mommint:~/code/source/oncvpsp-3.3.1/cndaqiang.data$ ../scripts/fldiff.pl ~/ONCVPSP/abinit/Si_ONCV_PBE_sr.upf Si.upf
+6
+&lt;  scalar-relativistic version 3.3.0 08/16/2017 by D. R. Hamann
+&gt;  scalar-relativistic version 3.3.1 12/12/2017 by D. R. Hamann
+72
+&lt;        date="170818"
+&gt;        date="220413"
+Summary  : different lines= 3 , max abs_diff= 1.000e-01 (l.6), max rel_diff= 1.000e+00 (l.6)(python37)
+</code></pre></div></div>
+
+<h3 id="其他">其他</h3>
+<ul>
+  <li>自旋轨道耦合<code class="language-plaintext highlighter-rouge">oncvpspnr.x  &lt; Si.in &gt; Si.out</code></li>
+</ul>
+
+<h4 id="修改输入文件中的交换关联泛函">修改输入文件中的交换关联泛函</h4>
+<p>修改输入文件中的<code class="language-plaintext highlighter-rouge">iexc</code>为具体的值</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># atsym  z   nc   nv     iexc    psfile
+Si   14.00   3   2   4   upf
+</code></pre></div></div>
+<ul>
+  <li>1,2,3,4的值是确定的,如<code class="language-plaintext highlighter-rouge">src/vout.f90</code>,如<code class="language-plaintext highlighter-rouge">3,4</code>分别对应<code class="language-plaintext highlighter-rouge">XC_LDA_X&amp;XC_LDA_C_PZ,XC_GGA_X_PBE&amp;XC_GGA_C_PBE</code>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> if(iexc .eq. 1) then
+ call excwig(rhot,vxc,exca,mmax)
+ else if(iexc .eq. 2) then
+ call exchdl(rhot,vxc,exca,mmax)
+ else if(iexc .eq. 3) then
+ call excpzca(rhot,vxc,exca,mmax)
+ else if(iexc .eq. 4) then
+ call excggc(rhot,vxc,exca,rr,mmax)
+ else if (iexc &lt; 0) then
+ call exc_libxc(iexc,al,rhot,vxc,exca,rr,mmax)
+ else
+ write(6,'(/a,i4)') 'vout: ERROR bad input iexc =',iexc
+ stop
+ end if
+</code></pre></div>    </div>
+  </li>
+  <li>其他值为<code class="language-plaintext highlighter-rouge">-XXXCCC</code>,<code class="language-plaintext highlighter-rouge">-</code>是负号,<code class="language-plaintext highlighter-rouge">XXX</code>和<code class="language-plaintext highlighter-rouge">CCC</code>分别对应交换和关联的数字编号<br />
+具体数值见<code class="language-plaintext highlighter-rouge">./doc/libxc_use.txt</code>,如<code class="language-plaintext highlighter-rouge">-001009</code>即和<code class="language-plaintext highlighter-rouge">3</code>等价,为<code class="language-plaintext highlighter-rouge">XC_LDA_X&amp;XC_LDA_C_PZ</code></li>
+</ul>
+
+<h4 id="新生成的一些赝势">新生成的一些赝势</h4>
+<p>利用<a href="https://github.com/pipidog/ONCVPSP">pipidog/ONCVPSP</a>新计算的赝势</p>
+<ul>
+  <li><a href="https://github.com/cndaqiang/ONCVPSP_LDA">ONCVPSP_LDA</a>, 使用新生成的PZ和之前的PBE计算石墨烯的能带对比
+<img src="/uploads/2022/04/PZandPBE.png" alt="" /></li>
+</ul>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2022/04/02/nginx/">Nginx学习</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2022/09/14/wanniertool/">Intel编译WannierTools</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Android/IOS移动平台自动化脚本(基于AirTest)</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2023/11/10/MobileAuto/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Android/IOS移动平台自动化脚本(基于AirTest)</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2023-11-10
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#AirTest" title="Category: AirTest" rel="category">AirTest</a>&nbsp;
+    
+        <a href="/category/#Android" title="Category: Android" rel="category">Android</a>&nbsp;
+    
+        <a href="/category/#IOS" title="Category: IOS" rel="category">IOS</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#AirTest" title="Tag: AirTest" rel="tag">AirTest</a-->
+        <a href="/tag/#AirTest" title="Tag: AirTest" rel="tag">AirTest</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+  <li><a href="#控制端运行方式" id="markdown-toc-控制端运行方式">控制端运行方式</a>    <ul>
+      <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+      <li><a href="#代码修改" id="markdown-toc-代码修改">代码修改</a>        <ul>
+          <li><a href="#start_app-报错" id="markdown-toc-start_app-报错">start_app 报错</a></li>
+          <li><a href="#mac远程控制adb时有概率无法获得屏幕截图" id="markdown-toc-mac远程控制adb时有概率无法获得屏幕截图">mac远程控制adb时,有概率无法获得屏幕截图</a></li>
+        </ul>
+      </li>
+      <li><a href="#执行airtest脚本" id="markdown-toc-执行airtest脚本">执行AirTest脚本</a></li>
+    </ul>
+  </li>
+  <li><a href="#客户端" id="markdown-toc-客户端">客户端</a>    <ul>
+      <li><a href="#windows-bluestack" id="markdown-toc-windows-bluestack">Windows Bluestack</a></li>
+      <li><a href="#remote-android虚拟机linuxaarch64" id="markdown-toc-remote-android虚拟机linuxaarch64">remote-android虚拟机(Linux(aarch64))</a>        <ul>
+          <li><a href="#搭建" id="markdown-toc-搭建">搭建</a></li>
+        </ul>
+      </li>
+      <li><a href="#android" id="markdown-toc-android">Android</a>        <ul>
+          <li><a href="#备注-1" id="markdown-toc-备注-1">备注</a></li>
+          <li><a href="#开发者模式" id="markdown-toc-开发者模式">开发者模式</a></li>
+        </ul>
+      </li>
+      <li><a href="#ios" id="markdown-toc-ios">IOS</a>        <ul>
+          <li><a href="#备注-2" id="markdown-toc-备注-2">备注</a></li>
+          <li><a href="#使用xcode-安装webdriveragentwda" id="markdown-toc-使用xcode-安装webdriveragentwda">使用Xcode 安装WebDriverAgent(WDA)</a></li>
+          <li><a href="#没有xcode时-安装webdriveragentwda" id="markdown-toc-没有xcode时-安装webdriveragentwda">没有Xcode时 安装WebDriverAgent(WDA)</a></li>
+          <li><a href="#tidevice" id="markdown-toc-tidevice">tidevice</a>            <ul>
+              <li><a href="#tidevice安装app签名错误解释" id="markdown-toc-tidevice安装app签名错误解释">tidevice安装APP签名错误解释</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="备注">备注</h2>
+<ul>
+  <li>适配王者荣耀的脚本: 单人/组队模式/熟练度/金币/礼物/营地. 支持Android/Iphone<br /><a href="https://github.com/cndaqiang/AirTest_MobileAuto_WZRY">AirTest_MobileAuto_WZRY@cndaqiang</a></li>
+  <li>致谢大量参考了<a href="https://github.com/XRSec/WZRY_AirtestIDE">WZRY_AirtestIDE@XRSec</a>项目,是我学习AirTest脚本的主要参考.</li>
+</ul>
+
+<h2 id="控制端运行方式">控制端运行方式</h2>
+<p>测试稳定平台:Windows/MacOS/Linux(x86)/Linux(aarch64)</p>
+
+<h3 id="环境">环境</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip  <span class="nb">install</span> <span class="nt">-i</span> https://pypi.tuna.tsinghua.edu.cn/simple  airtest,pathos
+</code></pre></div></div>
+<p>Linux</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>libgl1-mesa-glx
+</code></pre></div></div>
+<p>Linux(ARM)</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@oracle:~/.local/lib/python3.10/site-packages/airtest/core/android/static/adb/linux<span class="nv">$ </span><span class="nb">mv </span>adb adb.bak
+cndaqiang@oracle:~/.local/lib/python3.10/site-packages/airtest/core/android/static/adb/linux<span class="nv">$ </span><span class="nb">ln</span> <span class="nt">-s</span> /usr/bin/adb <span class="nb">.</span>
+</code></pre></div></div>
+<p>Mac</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x /Users/cndaqiang/anaconda3/lib/python3.11/site-packages/airtest/core/android/static/adb/mac/adb
+</code></pre></div></div>
+
+<h3 id="代码修改">代码修改</h3>
+<h4 id="start_app-报错">start_app 报错</h4>
+<p>mac/linux/windows 都会报错 airtest使用monkey启动安卓app的命令<code class="language-plaintext highlighter-rouge">monkey -p com.tencent.tmgp.sgame -c android.intent.category.LAUNCHER 1</code>,#会报错</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>** SYS_KEYS has no physical keys but with factor 2.0%.
+airtest.core.error.AdbError: stdout[b'  bash arg: -p\n  bash arg: com.tencent.tmgp.sgame\n  bash arg: -c\n  bash arg: android.intent.category.LAUNCHER\n  bash arg: 1\n'] stderr[b'args: [-p, com.tencent.tmgp.sgame, -c, android.intent.category.LAUNCHER, 1]\n arg: "-p"\n arg: "com.tencent.tmgp.sgame"\n arg: "-c"\n arg: "android.intent.category.LAUNCHER"\n arg: "1"\ndata="com.tencent.tmgp.sgame"\ndata="android.intent.category.LAUNCHER"\n** SYS_KEYS has no physical keys but with factor 2.0%.\n']
+</code></pre></div></div>
+
+<ol>
+  <li>获得start_app的位置<code class="language-plaintext highlighter-rouge">airtest/core/android</code>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#windows
+(base) PS D:\SoftData\git\AirTest_MobileAuto_WZRY&gt; python
+Python 3.11.7 | packaged by Anaconda, Inc. | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import airtest.core.android, os; os.path.dirname(airtest.core.android.__file__)
+'C:\\Users\\cnche\\AppData\\Local\\anaconda3\\Lib\\site-packages\\airtest\\core\\android'
+#
+#linux
+cndaqiang@oracle:~/builddocker/redroid/8arm0$ python
+Python 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import airtest.core.android, os; os.path.dirname(airtest.core.android.__file__)
+'/home/cndaqiang/.local/lib/python3.10/site-packages/airtest/core/android
+</code></pre></div>    </div>
+  </li>
+  <li>修改<code class="language-plaintext highlighter-rouge">airtest/core/android/adb.py</code>中的<code class="language-plaintext highlighter-rouge">start_app()</code>函数,
+<strong>添加<code class="language-plaintext highlighter-rouge">--pct-syskeys 0</code></strong>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1387         if not activity:
+1388             self.shell(['monkey --pct-syskeys 0', '-p', package, '-c', 'android.intent.category.LAUNCHER', '1'])
+1389         else:
+1390             self.shell(['am', 'start', '-n', '%s/%s.%s' % (package, package, activity)])
+</code></pre></div>    </div>
+  </li>
+  <li>如果是AirTestIDE的图形化界面，修改后要重启AirTest</li>
+</ol>
+
+<h4 id="mac远程控制adb时有概率无法获得屏幕截图">mac远程控制adb时,有概率无法获得屏幕截图</h4>
+<ul>
+  <li>报错<code class="language-plaintext highlighter-rouge">[15:59:29][WARNING]&lt;airtest.core.api&gt; Screen is None, may be locked</code>,程序会退出,但是在多进程执行时，单进程报错只会卡住,不会全部停止</li>
+  <li>方案，尝试过修改<code class="language-plaintext highlighter-rouge">airtest,requests</code>的代码和设置<code class="language-plaintext highlighter-rouge">airtest.core.settings.Settings.FIND_TIMEOUT</code>, 最后干脆重写(套壳)了一层airtest的函数</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">=</span><span class="n">exists_o</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"cndaqiang: exists失败"</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">=</span><span class="bp">False</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></div>
+
+<h3 id="执行airtest脚本">执行AirTest脚本</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-u</span> object.py 2&gt;&amp;1 | <span class="nb">tee </span>result
+</code></pre></div></div>
+<p>n个进程模式</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-u</span> object.py <span class="nt">-n</span> 2&gt;&amp;1 | <span class="nb">tee </span>result
+</code></pre></div></div>
+
+<h2 id="客户端">客户端</h2>
+<p>模拟器</p>
+<ul>
+  <li>Windows Bluestack 多开adb都可以,还兼容hyper-v(Pie 64bit).  不兼容hyper-v的<strong>Nougat模式</strong>更省电，适合不用开wsl的笔记本,而且adb的端口也不会变</li>
+  <li>Linux使用<a href="https://github.com/remote-android/">remote-android</a>,支持arm服务器</li>
+  <li>Mac 未发现合适的</li>
+</ul>
+
+<p>移动设备</p>
+<ul>
+  <li>Android</li>
+  <li>IOS(测试通过 15.8,16.2)</li>
+</ul>
+
+<h3 id="windows-bluestack">Windows Bluestack</h3>
+<p>默认安装即可,从多开的平台进入
+<code class="language-plaintext highlighter-rouge">object.py</code>中有重启Bluestack的命令</p>
+
+<h3 id="remote-android虚拟机linuxaarch64">remote-android虚拟机(Linux(aarch64))</h3>
+<p>原则上x86/Arm的Docker都可以运行. 我仅在甲骨文的服务器上完成测试,环境:<code class="language-plaintext highlighter-rouge">Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-84-generic aarch64)</code>
+<code class="language-plaintext highlighter-rouge">object.py</code>中有重启容器的命令</p>
+
+<h4 id="搭建">搭建</h4>
+<p>服务器</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt <span class="nb">install </span>linux-modules-extra-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-r</span><span class="sb">`</span>
+<span class="c">#这两个命令，每次开机后都要输入一次，不然contain开机后，adb各种报错，如Binder driver could not be opened.  Terminating.</span>
+<span class="c">#添加到开机启动,服务器没有重启，那么不需要重新执行 </span>
+modprobe binder_linux <span class="nv">devices</span><span class="o">=</span><span class="s2">"binder,hwbinder,vndbinder"</span>
+modprobe ashmem_linux
+</code></pre></div></div>
+<p>创建环境,安装软件</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> /home/cndaqiang/builddocker/redroid/
+<span class="nb">cd</span> /home/cndaqiang/builddocker/redroid/
+docker run <span class="nt">-itd</span> <span class="se">\</span>
+  <span class="nt">--memory-swappiness</span><span class="o">=</span>0 <span class="se">\</span>
+  <span class="nt">--privileged</span> <span class="nt">--pull</span> always <span class="se">\</span>
+  <span class="nt">-v</span> /home/cndaqiang/builddocker/redroid/8arm:/data <span class="se">\</span>
+  <span class="nt">-p</span> 5555:5555 <span class="se">\</span>
+  redroid/redroid:8.1.0-arm64 <span class="se">\</span>
+  androidboot.hardware<span class="o">=</span>mt6891 ro.secure<span class="o">=</span>0 ro.boot.hwc<span class="o">=</span>GLOBAL    ro.ril.oem.imei<span class="o">=</span>861503068361145 ro.ril.oem.imei1<span class="o">=</span>861503068361145 ro.ril.oem.imei2<span class="o">=</span>861503068361148 ro.ril.miui.imei0<span class="o">=</span>861503068361148 ro.product.manufacturer<span class="o">=</span>Xiaomi ro.build.product<span class="o">=</span>chopin <span class="se">\</span>
+  androidboot.redroid_width<span class="o">=</span>960 <span class="se">\</span>
+  androidboot.redroid_height<span class="o">=</span>540 <span class="se">\</span>
+  androidboot.redroid_dpi<span class="o">=</span>160 <span class="se">\</span>
+  androidboot.redroid_fps<span class="o">=</span>5 <span class="se">\</span>
+  redroid.gpu.mode<span class="o">=</span>guest
+<span class="c">#安装一个简单的桌面,然后卸载所有不需要的软件,安装刷机软件入WZRY</span>
+root@oracle:/home/cndaqiang/builddocker/redroid# adb <span class="nb">install</span> /home/cndaqiang/jijianzhuomian.apk
+</code></pre></div></div>
+<p>多开,可以使用相同的软件数据,不同的缓存空间</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">N</span><span class="o">=</span>2
+<span class="nv">port</span><span class="o">=</span>5565
+<span class="nb">rm</span> <span class="nt">-rf</span> 8arm<span class="nv">$N</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> 8arm<span class="nv">$N</span>/data/com.tencent.tmgp.sgame/databases
+<span class="nb">chown</span> <span class="nt">-R</span> cndaqiang:cndaqiang  8arm<span class="nv">$N</span>
+<span class="nb">chmod</span> <span class="nt">-R</span> 771 8arm<span class="nv">$N</span>
+<span class="c">#data文件夹以上是cndaqiang,以下是tencent</span>
+<span class="nb">chmod</span> <span class="nt">-R</span> 700 8arm<span class="nv">$N</span>/data/com.tencent.tmgp.sgame
+<span class="nb">chmod </span>771 8arm<span class="nv">$N</span>/data/com.tencent.tmgp.sgame/databases
+<span class="c">#每个程序应该是不同的uid,根据王者目录显示uid确定</span>
+<span class="nb">chown</span> <span class="nt">-R</span> 10065:10065 8arm<span class="nv">$N</span>/data/com.tencent.tmgp.sgame
+<span class="c">#缺点是安卓容器，不能同时开机,这样并不怎么占用空间</span>
+<span class="c">#为了多开刷友情币足够了，如果有系统更新，应该不行</span>
+
+docker run <span class="nt">-itd</span> <span class="se">\</span>
+  <span class="nt">--memory-swappiness</span><span class="o">=</span>0 <span class="se">\</span>
+  <span class="nt">--privileged</span> <span class="nt">--pull</span> always <span class="se">\</span>
+  <span class="nt">--name</span> androidcontain<span class="nv">$N</span> <span class="se">\</span>
+  <span class="nt">-v</span> /home/cndaqiang/builddocker/redroid/8arm:/data <span class="se">\</span>
+  <span class="nt">-v</span> /home/cndaqiang/builddocker/redroid/8arm<span class="nv">$N</span>/data/com.tencent.tmgp.sgame/databases:/data/data/com.tencent.tmgp.sgame/databases <span class="se">\</span>
+  <span class="nt">-p</span> <span class="nv">$port</span>:5555 <span class="se">\</span>
+  redroid/redroid:8.1.0-arm64 <span class="se">\</span>
+  androidboot.hardware<span class="o">=</span>mt6891 ro.secure<span class="o">=</span>0 ro.boot.hwc<span class="o">=</span>GLOBAL    ro.ril.oem.imei<span class="o">=</span>861503068361145 ro.ril.oem.imei1<span class="o">=</span>861503068361145 ro.ril.oem.imei2<span class="o">=</span>861503068361148 ro.ril.miui.imei0<span class="o">=</span>861503068361148 ro.product.manufacturer<span class="o">=</span>Xiaomi ro.build.product<span class="o">=</span>chopin <span class="se">\</span>
+  androidboot.redroid_width<span class="o">=</span>960 <span class="se">\</span>
+  androidboot.redroid_height<span class="o">=</span>540 <span class="se">\</span>
+  androidboot.redroid_dpi<span class="o">=</span>160 <span class="se">\</span>
+  androidboot.redroid_fps<span class="o">=</span>5 <span class="se">\</span>
+  redroid.gpu.mode<span class="o">=</span>guest 
+</code></pre></div></div>
+
+<h3 id="android">Android</h3>
+<h4 id="备注-1">备注</h4>
+<ul>
+  <li>scrcpy 真好用
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>scrcpy
+brew <span class="nb">install </span>android-platform-tools
+adb connect <span class="nt">-s</span> 192.168.192.10:5565
+scrcpy <span class="nt">-s</span> 192.168.192.10:5565
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="开发者模式">开发者模式</h4>
+<p>开发者模式打开,开启无线ADB调试,老版本安卓可有线ADB后开无线ADB</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>base<span class="o">)</span> cndaqiang@macmini mac<span class="nv">$ </span><span class="nb">pwd</span>
+/Applications/AirtestIDE.app/Contents/Resources/plugins/firebase_plugin/tool/copy_app/airtest/core/android/static/adb/mac
+<span class="o">(</span>base<span class="o">)</span> cndaqiang@macmini mac<span class="nv">$ </span>./adb devices
+List of devices attached
+8553e6ac	device
+
+<span class="o">(</span>base<span class="o">)</span> cndaqiang@macmini mac<span class="nv">$ </span>./adb tcpip 5555
+adb server version <span class="o">(</span>40<span class="o">)</span> doesn<span class="s1">'t match this client (39); killing...
+* daemon started successfully *
+
+restarting in TCP mode port: 5555
+</span></code></pre></div></div>
+
+<h3 id="ios">IOS</h3>
+<h4 id="备注-2">备注</h4>
+<p>使用同一个WDA源码编译时</p>
+<ul>
+  <li>发现Ipad mini6(IOS15.6.1)和Iphone11(16.2) 可以不依赖Xcode就能从手机上打开，然后通过wifiIP控制</li>
+  <li>Iphone SE1(IOS14.2) 无法独立打开,需要xcode的Test模式,或者下面介绍的<code class="language-plaintext highlighter-rouge"> tidevice xctest -B com.cndaqiang.WebDriverAgentRunner.xctrunner</code></li>
+  <li>Iphone SE1(IOS15.2)升级到15.2后,虽然安装后,可以手机独立打开,但是无法通过wifiIP:8100访问. 还是只能插数据线后xcode/tidevice. 暂时放弃找原因了</li>
+  <li>由于系统版本低，在虚拟机中给ip11编译安装的</li>
+  <li>换设备编译时,建议先清空一下编译环境,不然会有各种奇怪问题</li>
+  <li>目前仅找到AirTest能够控制安装了WDA的IOS设备</li>
+</ul>
+
+<h4 id="使用xcode-安装webdriveragentwda">使用Xcode 安装WebDriverAgent(WDA)</h4>
+<ul>
+  <li>安装Xcode,注意Xcode有MacOS版本要求和IOS版本要求,下载复合自己的版本</li>
+  <li>注册个人免费版账户
+<img src="/uploads/2023/11/2418819-20231108221359822-189765304.png" alt="image" /></li>
+</ul>
+
+<p>下载WebDriverAgen代码. 注意,不同版本的代码对机器兼容不同,能编译安装不一定能远程控制. 这里备份了两个能用的版本, 直接 git clone</p>
+<ul>
+  <li><a href="https://github.com/cndaqiang/WebDriverAgent_ForIp11_Ipadmini6">ipad mini6, iphone11都是直接编译就通过了</a></li>
+  <li><a href="https://github.com/cndaqiang/iOS-Tagent_ForIpSE1">se的设置使用/iOS-Tagent可以正常启动控制,也支持ipad mini6,支持iphone8模拟器，不支持iphone11模拟器…</a></li>
+</ul>
+
+<p>用xcode打开</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>base<span class="o">)</span> cndaqiang@macmini git<span class="nv">$ </span>git clone git@github.com:cndaqiang/iOS-Tagent_ForIpSE1.git
+Cloning into <span class="s1">'iOS-Tagent_ForIpSE1'</span>...
+remote: Enumerating objects: 24556, <span class="k">done</span><span class="nb">.</span>
+remote: Counting objects: 100% <span class="o">(</span>1163/1163<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>82/82<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Total 24556 <span class="o">(</span>delta 1125<span class="o">)</span>, reused 1082 <span class="o">(</span>delta 1081<span class="o">)</span>, pack-reused 23393
+Receiving objects: 100% <span class="o">(</span>24556/24556<span class="o">)</span>, 34.09 MiB | 5.21 MiB/s, <span class="k">done</span><span class="nb">.</span>
+Resolving deltas: 100% <span class="o">(</span>11560/11560<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+<span class="o">(</span>base<span class="o">)</span> cndaqiang@macmini git<span class="nv">$ </span><span class="nb">cd </span>iOS-Tagent_ForIpSE1/
+<span class="o">(</span>base<span class="o">)</span> cndaqiang@macmini iOS-Tagent_ForIpSE1<span class="nv">$ </span>open <span class="nt">-a</span> xcode WebDriverAgent.xcodeproj
+</code></pre></div></div>
+<p><strong>就只用改下面这两个地方</strong>,别的教程里说的太多了,没必要
+设置个人开发者账户.</p>
+
+<p><img src="/uploads/2023/11/2418819-20231108222025551-1449346653.png" alt="image" />
+使用自己的包名，注意个人开发者每周使用的包名有限制的，测试时就一致用一个
+<img src="/uploads/2023/11/2418819-20231108222109368-1590133600.png" alt="image" />
+这里这样选择，设备可以用真机，也可以用模拟器
+<img src="/uploads/2023/11/2418819-20231108222214936-1417344298.png" alt="image" /></p>
+
+<p>Product&gt;Test
+<img src="/uploads/2023/11/2418819-20231108222610873-1680378447.png" alt="image" /></p>
+
+<p>提示这个没事，在手机上允许就可以了,再点击test
+<img src="/uploads/2023/11/2418819-20231108222539553-898794788.png" alt="image" /></p>
+
+<p>把xcode地步拉起，可以看到运行信息
+<img src="/uploads/2023/11/2418819-20231108222905035-1293652009.png" alt="image" /></p>
+
+<p><strong>打开提示的网址<code class="language-plaintext highlighter-rouge">http://169.254.235.186:8100</code>可以看到启动成功了</strong>
+也可以映射到本地<code class="language-plaintext highlighter-rouge">127.0.0.1:8123</code>，更多方法很多帖子里都有</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install usbmux
+iproxy 8123 8100
+</code></pre></div></div>
+
+<h4 id="没有xcode时-安装webdriveragentwda">没有Xcode时 安装WebDriverAgent(WDA)</h4>
+<p><strong>提前准备WDA.ipa</strong>,获取途径</p>
+<ul>
+  <li>越狱后用Filza提取ipa, 提取目录<code class="language-plaintext highlighter-rouge">/var/contain.../Bun.../App/appname</code></li>
+  <li>虚拟机Xcode, build&gt;找到build目录&gt;复制出来&gt;命名为Payload&gt;压缩&gt;改名为XXX.ipa
+<img src="/uploads/2023/11/1700204740958.jpg" alt="" />
+<img src="/uploads/2023/11/1700205066173.jpg" alt="" /></li>
+</ul>
+
+<p><strong>进行签名</strong></p>
+<ul>
+  <li>如果上一步的ipa是制定设备编译的,安装在该设备时,距离编译结束的7天内是可以的.</li>
+  <li>因为不想再重新编译和使用xcode. 这里认为上一步获得的ipa已经签名过期</li>
+  <li>使用i4助手的ipa签名功能,手机连接电脑，登录appleID进行签名
+<img src="/uploads/2023/11/1700205318354.jpg" alt="" /></li>
+</ul>
+
+<p><strong>安装签完名的APP</strong>,安装失败多是没有正确签名,使用sideload等自签名程序,安装后都打不开</p>
+<ul>
+  <li>i4的APP管理功能可以安装</li>
+  <li><code class="language-plaintext highlighter-rouge">tidevice</code>安装 <code class="language-plaintext highlighter-rouge">tidevice install /Users/cndaqiang/Downloads/i4ToolsDownloads/SignIpa/13.4.Framework_AnyIOS.WDA.ipa</code></li>
+</ul>
+
+<h4 id="tidevice">tidevice</h4>
+<p>不同IOS设备需要不同的Xcode编译,我的工作环境版本太低,在虚拟机中编译安装的WDA,在工作环境可以使用tidevice启动设备的WDA服务.</p>
+
+<p>高阶用法见:<a href="https://github.com/alibaba/taobao-iphone-device">taobao-iphone-device</a></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>tidevice
+</code></pre></div></div>
+
+<ul>
+  <li>就一条命令,他提示的<code class="language-plaintext highlighter-rouge">ServerURLHere-&gt;http://169.254.148.222:8100</code>和xcode一样,也不会变化,可以填到脚本中去</li>
+  <li>在AirTest可以使用<code class="language-plaintext highlighter-rouge">http://169.254.148.222:810</code>或<code class="language-plaintext highlighter-rouge">http+usbmux://***MyIphoneSEID_cndaqiang***</code>访问
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>base<span class="o">)</span> cndaqiang@macmini ~<span class="nv">$ </span>tidevice wdaproxy <span class="nt">-B</span>  com.cndaqiang.WebDriverAgentRunner.xctrunner
+<span class="o">[</span>I 231110 22:46:45 _wdaproxy:128] <span class="o">[</span><span class="k">***</span>MyIphoneSEID_cndaqiang<span class="k">***</span><span class="o">]</span> WDA check every 30.0 seconds
+<span class="o">[</span>D 231110 22:46:45 _wdaproxy:134] <span class="o">[</span><span class="k">***</span>MyIphoneSEID_cndaqiang<span class="k">***</span><span class="o">]</span> launch WDA
+<span class="o">[</span>D 231110 22:46:45 _wdaproxy:58] <span class="o">[</span><span class="k">***</span>MyIphoneSEID_cndaqiang<span class="k">***</span><span class="o">]</span> request error: <span class="o">(</span><span class="s1">'Connection aborted.'</span>, MuxReplyError<span class="o">(</span>&lt;UsbmuxReplyCode.ConnectionRefused: 3&gt;<span class="o">))</span>
+<span class="o">[</span>I 231110 22:46:45 _device:972] BundleID: com.cndaqiang.WebDriverAgentRunner.xctrunner
+<span class="o">[</span>I 231110 22:46:45 _device:999] ProductVersion: 15.8
+<span class="o">[</span>I 231110 22:46:45 _device:1000] UDID: <span class="k">***</span>MyIphoneSEID_cndaqiang<span class="k">***</span>
+<span class="o">[</span>D 231110 22:46:46 _wdaproxy:58] <span class="o">[</span><span class="k">***</span>MyIphoneSEID_cndaqiang<span class="k">***</span><span class="o">]</span> request error: <span class="o">(</span><span class="s1">'Connection aborted.'</span>, MuxReplyError<span class="o">(</span>&lt;UsbmuxReplyCode.ConnectionRefused: 3&gt;<span class="o">))</span>
+<span class="o">[</span>I 231110 22:46:46 _device:842] SignIdentity: <span class="s1">'Apple Development: chendq@aliyun.com (J74WNV5Q32)'</span>
+<span class="o">[</span>I 231110 22:46:46 _device:848] CFBundleExecutable: WebDriverAgentRunner-Runner
+<span class="o">[</span>I 231110 22:46:46 _device:916] Launch <span class="s1">'com.cndaqiang.WebDriverAgentRunner.xctrunner'</span> pid: 536
+<span class="o">[</span>D 231110 22:46:47 _wdaproxy:58] <span class="o">[</span><span class="k">***</span>MyIphoneSEID_cndaqiang<span class="k">***</span><span class="o">]</span> request error: <span class="o">(</span><span class="s1">'Connection aborted.'</span>, MuxReplyError<span class="o">(</span>&lt;UsbmuxReplyCode.ConnectionRefused: 3&gt;<span class="o">))</span>
+<span class="o">[</span>I 231110 22:46:47 _device:1048] Test runner ready detected
+<span class="o">[</span>I 231110 22:46:47 _device:1040] Start execute <span class="nb">test </span>plan with IDE version: 29
+<span class="o">[</span>D 231110 22:46:48 _wdaproxy:58] <span class="o">[</span><span class="k">***</span>MyIphoneSEID_cndaqiang<span class="k">***</span><span class="o">]</span> request error: <span class="o">(</span><span class="s1">'Connection aborted.'</span>, MuxReplyError<span class="o">(</span>&lt;UsbmuxReplyCode.ConnectionRefused: 3&gt;<span class="o">))</span>
+<span class="o">[</span>I 231110 22:46:49 _device:933] 2023-11-10 22:46:46.851840+0800 WebDriverAgentRunner-Runner[536:43854] ServerURLHere-&gt;http://169.254.148.222:8100&lt;<span class="nt">-ServerURLHere</span>
+<span class="o">[</span>I 231110 22:46:49 _device:934] WebDriverAgent start successfully
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h5 id="tidevice安装app签名错误解释">tidevice安装APP签名错误解释</h5>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[E 231117 14:02:49 _installation:55] Failed to verify code signature of /var/installd/Library/Caches/com.apple.mobile.installd.staging/temp.gurRaK/extracted/Payload/WebDriverAgentRunner-Runner.app : 0xe8008018 (The identity used to sign the executable is no longer valid.)
+</code></pre></div></div>
+<p>签名不再有效<strong>sign the executable is no longer valid</strong>, 安装时没有选择个人签名就build了.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[E 231117 14:11:56 _installation:55] Failed to verify code signature of /var/installd/Library/Caches/com.apple.mobile.installd.staging/temp.uok9qe/extracted/Payload/WebDriverAgentRunner-Runner.app : 0xe8008015 (A valid provisioning profile for this executable was not found.)
+</code></pre></div></div>
+<p><strong>A valid provisioning profile for this executable was not found</strong>
+因为该app的APPLE个人签名，不包含此设备</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2023/09/09/qemu/">QEMU虚拟机学习(草稿、很乱)</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2023/12/09/QuantumultX/">Quantumult-X操作手册</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

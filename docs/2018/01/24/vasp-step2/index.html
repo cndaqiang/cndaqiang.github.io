@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>vasp计算流程-静态自洽</title>
+    <meta name="description" content="VASP主要计算流程:结构优化、静态自洽、非自洽计算别忘记cp CONTCAR POSCAR">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2018/01/24/vasp-step2/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>vasp计算流程-静态自洽</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-01-24
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#vasp" title="Tag: vasp" rel="tag">vasp</a-->
+        <a href="/tag/#vasp" title="Tag: vasp" rel="tag">vasp</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#静态自洽" id="markdown-toc-静态自洽">静态自洽</a>    <ul>
+      <li><a href="#说明" id="markdown-toc-说明">说明</a></li>
+      <li><a href="#参数" id="markdown-toc-参数">参数：</a>        <ul>
+          <li><a href="#通用参数" id="markdown-toc-通用参数">通用参数</a></li>
+          <li><a href="#静态自洽参数" id="markdown-toc-静态自洽参数">静态自洽参数</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#案例" id="markdown-toc-案例">案例</a>    <ul>
+      <li><a href="#计算fcc结构的al的dos" id="markdown-toc-计算fcc结构的al的dos">计算fcc结构的Al的DOS</a></li>
+      <li><a href="#计算dos" id="markdown-toc-计算dos">计算DOS</a>        <ul>
+          <li><a href="#一步计算dos自洽服务器性能优秀" id="markdown-toc-一步计算dos自洽服务器性能优秀">一步计算DOS(自洽)(服务器性能优秀)</a></li>
+          <li><a href="#两步计算dos结构优化静态自恰非自恰dos" id="markdown-toc-两步计算dos结构优化静态自恰非自恰dos">两步计算DOS(结构优化+静态自恰+非自恰DOS)</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>VASP主要计算流程:结构优化、静态自洽、非自洽计算
+<br />别忘记<strong><code class="language-plaintext highlighter-rouge">cp CONTCAR POSCAR</code></strong></p>
+
+<h1 id="参考">参考</h1>
+<p><a href="http://blog.csdn.net/kyang_823/article/details/59110848">VASP 结构优化、静态自洽、非自洽计算</a>
+<br /><a href="http://blog.sciencenet.cn/blog-567091-675253.html">【整理自好友lpf文章】用VASP计算能量态密度（DOS）和能带</a></p>
+<h1 id="静态自洽">静态自洽</h1>
+<h2 id="说明">说明</h2>
+<p><strong>静态</strong>：原子位置保持不动，不再进行原子迟豫
+<br /><strong>自洽</strong>：电子再进行自洽计算；
+<br />因此，静态自洽计算是在结构优化的基础上，在体系能量达到较低,体系较稳定的情况下固定原子的位置坐标，再对体系中的电子进行调整，以达到体系的最低能量。
+<br /><br />静态自洽计算前先进行结构优化<code class="language-plaintext highlighter-rouge">cp CONTCAR POSCAR</code>,通过<strong>电子自洽计算完整地计算出体系基态下费米能级(E-fermi)、电子的波函数(WAVECAR)、电荷密度(CHG)等信息</strong>，可以直接分析原子间的键合作用，也可以在非自洽之后进一步分析晶体的电子结构和材料的相关性质。</p>
+
+<h2 id="参数">参数：</h2>
+<h3 id="通用参数">通用参数</h3>
+<ul>
+  <li>SYSTEM=注释</li>
+  <li>ISATART ICHARGE</li>
+  <li>ISMEAR SIGMA(与结构，K点有关)</li>
+  <li>ISPIN(与体系有关) MAGMOM(可选)</li>
+  <li>ENCUT 多个结构进行对比时,需要统一ENCUT</li>
+  <li>PREC 精度等</li>
+</ul>
+
+<p>可保持默认参数,需要高精度等情况时,参考<a href="https://cndaqiang.github.io/2018/01/21/vasp-input/#ibrion-nfree-nsw-isif">VASP输入文件总结</a>和官方<strong><a href="http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html">manual</a></strong>等各种资料</p>
+
+<h3 id="静态自洽参数">静态自洽参数</h3>
+<p><strong>下面参数保持默认</strong>,计算结果不合理需要改动时再更改</p>
+<ul>
+  <li>NSW=0 默认就是0 不再进行原子迟豫</li>
+  <li>NSW = 0,NSW=1,ISIF = 0,IBRION = -1这些都是等价的,只需设置一个NSW=0即可
+<br />NSW,ISIF,IBRION不写入INICAR,就默认是NSW=0,不优化</li>
+  <li>LWAVE=.TRUE 默认就是.TRUE 输出波函数(WAVECAR)</li>
+  <li>LCHARGE=.TRUE  默认就是.TRUE 输出电荷密度(CHG和CHGCAR)</li>
+  <li>EDIFF 电子收敛标准</li>
+  <li>NELM 电子优化(SCF)最大计算步数(默认60)</li>
+  <li>NELMIN 电子优化的最小步数。默认为2，一般不设置</li>
+</ul>
+
+<h1 id="案例">案例</h1>
+<p>结构优化-&gt;<code class="language-plaintext highlighter-rouge">cp CONTCAR POSCAR</code>-&gt;修改INCAR和其他输入文件-&gt;静态自洽计算</p>
+
+<h2 id="计算fcc结构的al的dos">计算fcc结构的Al的DOS</h2>
+<p>参考<a href="http://blog.sciencenet.cn/blog-567091-675253.html">【整理自好友lpf文章】用VASP计算能量态密度（DOS）和能带</a>
+计算fcc结构的Al的DOS主要分两步：一、静态自洽计算；二、非自洽计算<br />
+这里只记录静态自洽输入<br />
+INCAR</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SYSTEM=Al-fcc
+ISTART=0;
+ISMEAR=1;SIGMA=0.2
+PREC=Accurate
+IBRION=2#默认NSW=0，此处定义IBRION=2无意义
+EDIFF=1e-5
+ENCUT=250.0
+</code></pre></div></div>
+<p>KPOINTS<br />
+Auto,M,9x9x9,0 0 0</p>
+
+<h2 id="计算dos">计算DOS</h2>
+<p>参考<a href="http://www.bigbrosci.cn/newsitem/278032803">大师兄科研网-Learn VASP The Hard Way （Ex38）：DOS计算（二）</a><br /></p>
+<h3 id="一步计算dos自洽服务器性能优秀">一步计算DOS(自洽)(服务器性能优秀)</h3>
+<p>INCAR</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ISMEAR = -5
+LORBIT = 11
+</code></pre></div></div>
+<p>高密度的K点</p>
+<h3 id="两步计算dos结构优化静态自恰非自恰dos">两步计算DOS(结构优化+静态自恰+非自恰DOS)</h3>
+<p>若结构优化已产生波函数,以及第一步自恰产生了WAVECAR,应该ISTART=1(此时不设置就默认是1)节约时间</p>
+<ul>
+  <li>第一步(自洽)：
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ISMEAR = -5
+LCHARG = .TRUE.
+</code></pre></div>    </div>
+    <p>稍微低密度的K点</p>
+  </li>
+  <li>第二步(非自洽)：
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ISMEAR = -5
+ICHARGE = 11
+LORBIT = 11
+</code></pre></div>    </div>
+    <p>高密度的K点</p>
+  </li>
+</ul>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2018/01/23/vasp-step1/">vasp计算流程-结构优化</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/01/25/bye-onenote/">PC端笔记方案_VeraCrypt+Zim+同步云盘</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

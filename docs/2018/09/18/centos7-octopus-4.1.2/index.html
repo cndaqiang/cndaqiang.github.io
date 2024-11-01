@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Fortran预处理引入/usr/include/stdc-predef.h报错Unclassifiable statement</title>
+    <meta name="description" content="Error: Invalid character in name at (1)/usr/include/stdc-predef.h:2.3:	Included at c_pointer.F90:1:	   This file is part of the GNU C Library.   1">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2018/09/18/centos7-octopus-4.1.2/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Fortran预处理引入/usr/include/stdc-predef.h报错Unclassifiable statement</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-09-18
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a-->
+        <a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a>&nbsp;
+    
+        <!--a href="/tag/#octopus" title="Tag: octopus" rel="tag">octopus</a-->
+        <a href="/tag/#octopus" title="Tag: octopus" rel="tag">octopus</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#出现的情况" id="markdown-toc-出现的情况">出现的情况</a></li>
+  <li><a href="#2022-10-21-最新解决方案" id="markdown-toc-2022-10-21-最新解决方案">2022-10-21 最新解决方案</a></li>
+  <li><a href="#旧的解决方案保留万一将来不得已用上" id="markdown-toc-旧的解决方案保留万一将来不得已用上">旧的解决方案保留,万一将来不得已用上</a>    <ul>
+      <li><a href="#root管理员修改usrincludestdc-predefh" id="markdown-toc-root管理员修改usrincludestdc-predefh">ROOT管理员修改<code class="language-plaintext highlighter-rouge">/usr/include/stdc-predef.h</code></a></li>
+      <li><a href="#无管理员权限时2019-05-06更新" id="markdown-toc-无管理员权限时2019-05-06更新">无管理员权限时(2019-05-06更新)</a>        <ul>
+          <li><a href="#非管理员对于octopus-41-2同样的错误" id="markdown-toc-非管理员对于octopus-41-2同样的错误">[非管理员]对于octopus-4.1-2同样的错误</a></li>
+        </ul>
+      </li>
+      <li><a href="#berkeleygw直接修改makefile" id="markdown-toc-berkeleygw直接修改makefile">BerkeleyGW直接修改Makefile</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Error: Invalid character in name at (1)<br />
+/usr/include/stdc-predef.h:2.3:<br />
+	Included at c_pointer.F90:1:<br />
+	   This file is part of the GNU C Library.<br />
+   1<br /></p>
+
+<h2 id="出现的情况">出现的情况</h2>
+<ul>
+  <li>centos7 gnu 编译,在编译libxc-2.0.0 和octopus-4.1.2时</li>
+  <li>编译BerkeleyGW</li>
+</ul>
+
+<h2 id="2022-10-21-最新解决方案">2022-10-21 最新解决方案</h2>
+<p>指定编译参数,默认的参数<code class="language-plaintext highlighter-rouge">FCCPP="/lib/cpp -C -ansi"</code>会使用C的方式注释,产生的fpp文件里面有<code class="language-plaintext highlighter-rouge">/* */</code>等,导致Fortran编译失败</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FCCPP="/lib/cpp -ansi"
+</code></pre></div></div>
+<p>如libxc和octopus使用</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure --prefix=$ROOT/libxc-2.0.0  CC=gcc CXX=g++ FC=gfortran FCCPP="/lib/cpp -ansi"
+</code></pre></div></div>
+<p>而<code class="language-plaintext highlighter-rouge">BerkeleyGW</code>则直接修改<code class="language-plaintext highlighter-rouge">arch.mk</code>中的<code class="language-plaintext highlighter-rouge">FCCPP="/lib/cpp -ansi"</code></p>
+
+<h2 id="旧的解决方案保留万一将来不得已用上">旧的解决方案保留,万一将来不得已用上</h2>
+<ul>
+  <li>修改include的文件,去掉注释行</li>
+  <li>预处理结束后,修改生成的文件,删除注释</li>
+  <li>在Makefile的脚本中,添加自动删除命令,</li>
+</ul>
+
+<p>centos7编译octopus遇到的问题<br />
+与在centos6上，使用相同版本的gcc-4.8.4,libxc-2.0.3,gsl-1.14,openmpi-1.10.3,fftw-3.3.3,sclapack进行编译<br />
+octopus-4.1.2的configure命令没有报错，make时却报下面的错误</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* Copyright (C) 1991-2012 Free Software Foundation, Inc.
+ 1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:2.3:
+	Included at c_pointer.F90:1:
+
+   This file is part of the GNU C Library.
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:4.3:
+	Included at c_pointer.F90:1:
+
+   The GNU C Library is free software; you can redistribute it and/or
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:4.39:
+	Included at c_pointer.F90:1:
+
+   The GNU C Library is free software; you can redistribute it and/or
+									   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:5.3:
+	Included at c_pointer.F90:1:
+
+   modify it under the terms of the GNU Lesser General Public
+</code></pre></div></div>
+
+<h3 id="root管理员修改usrincludestdc-predefh">ROOT管理员修改<code class="language-plaintext highlighter-rouge">/usr/include/stdc-predef.h</code></h3>
+
+<p>根据<a href="http://www.yambo-code.org/forum/viewtopic.php?f=1&amp;t=842">Yambo Community Forum</a>的建议，应该是libxc的问题，无法识别<code class="language-plaintext highlighter-rouge">/usr/include/stdc-predef.h</code>中的注释部分
+<br /><br />备份<code class="language-plaintext highlighter-rouge">stdc-predef.h</code>后，删除其中的注释部分，也就是<code class="language-plaintext highlighter-rouge">/*注释。。。*/</code>里面的内容，再执行编译就可以了</p>
+
+<h3 id="无管理员权限时2019-05-06更新">无管理员权限时(2019-05-06更新)</h3>
+<p>在RedHat上编译libxc-2.0.0遇到，同样错误,也是<code class="language-plaintext highlighter-rouge">/usr/include/stdc-predef.h</code>的注释造成<br />
+在make后的目录中，搜索注释中的语句<code class="language-plaintext highlighter-rouge">IEC</code>，发现<code class="language-plaintext highlighter-rouge">/usr/include/stdc-predef.h</code>已经被引入<code class="language-plaintext highlighter-rouge">src/libxc.f90</code><br />
+只要删除<code class="language-plaintext highlighter-rouge">src/libxc.f90</code>中的<code class="language-plaintext highlighter-rouge">/* */</code>部分继续make就可以编译了<br /></p>
+
+<p><br /><br />发现错误和结局的过程如下</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   The GNU C Library is distributed in the hope that it will be useful,
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:10.3:
+    Included at ./libxc_master.F90:1:
+
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:10.29:
+    Included at ./libxc_master.F90:1:
+
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+                             1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:11.3:
+    Included at ./libxc_master.F90:1:
+
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:12.3:
+    Included at ./libxc_master.F90:1:
+
+   Lesser General Public License for more details.
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:14.3:
+    Included at ./libxc_master.F90:1:
+
+   You should have received a copy of the GNU Lesser General Public
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:15.3:
+    Included at ./libxc_master.F90:1:
+
+   License along with the GNU C Library; if not, see
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:15.41:
+    Included at ./libxc_master.F90:1:
+
+   License along with the GNU C Library; if not, see
+                                         1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:16.4:
+    Included at ./libxc_master.F90:1:
+
+   &lt;http://www.gnu.org/licenses/&gt;.  */
+    1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:21.1:
+    Included at ./libxc_master.F90:1:
+
+/* This header is separate from features.h so that the compiler can
+ 1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:22.3:
+    Included at ./libxc_master.F90:1:
+
+   include it implicitly at the start of every compilation.  It must
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:23.3:
+    Included at ./libxc_master.F90:1:
+
+   not itself include &lt;features.h&gt; or any other header that includes
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:24.4:
+    Included at ./libxc_master.F90:1:
+
+   &lt;features.h&gt; because the implicit include comes before any feature
+    1
+Error: Invalid character in name at (1)
+/usr/include/stdc-predef.h:25.3:
+    Included at ./libxc_master.F90:1:
+
+   test macros that may be defined in a source file before it first
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:26.3:
+    Included at ./libxc_master.F90:1:
+
+   explicitly includes a system header.  GCC knows the name of this
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:27.3:
+    Included at ./libxc_master.F90:1:
+
+   header in order to preinclude it.  */
+   1
+Error: Unclassifiable statement at (1)
+/usr/include/stdc-predef.h:29.1:
+    Included at ./libxc_master.F90:1:
+
+/* We do support the IEC 559 math functionality, real and complex.  */
+ 1
+Error: Invalid character in name at (1)
+Fatal Error: Error count reached limit of 25.
+make[3]: *** [libxc_la-libxc.lo] Error 1
+make[3]: Leaving directory `/public/home/cndaqiang/soft/gcc-openmpi/source/libxc-2.0.0/src'
+make[2]: *** [all] Error 2
+make[2]: Leaving directory `/public/home/cndaqiang/soft/gcc-openmpi/source/libxc-2.0.0/src'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/public/home/cndaqiang/soft/gcc-openmpi/source/libxc-2.0.0'
+make: *** [all] Error 2
+</code></pre></div></div>
+<p>在make后的目录中，搜索注释中的语句<code class="language-plaintext highlighter-rouge">IEC</code>，发现<code class="language-plaintext highlighter-rouge">/usr/include/stdc-predef.h</code>已经被引入<code class="language-plaintext highlighter-rouge">src/libxc.f90</code><br /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[cndaqiang@login3 libxc-2.0.0]$ fyou IEC
+src/libxc.f90:33:/* We do support the IEC 559 math functionality, real and complex.  */
+src/libxc.f90:37:/* wchar_t uses ISO/IEC 10646 (2nd ed., published 2011-03-15) /
+</code></pre></div></div>
+<p>只要删除<code class="language-plaintext highlighter-rouge">src/libxc.f90</code>中的<code class="language-plaintext highlighter-rouge">/* */</code>部分就可以编译了<br /></p>
+
+<h4 id="非管理员对于octopus-41-2同样的错误">[非管理员]对于octopus-4.1-2同样的错误</h4>
+<p>要改的信息更多，可以通过修改Makefile解决</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /public/home/cndaqiang/soft/gcc-MVAPICH/source/octopus-4.1.2/src/basic
+vi Makefile
+</code></pre></div></div>
+<p>做出如下更改</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>719 ########Add by cndaqiang
+720 ####### 2019-05-07
+721 .F90.o:
+722         /lib/cpp -C -ansi  $(AM_CPPFLAGS) -I. $&lt; &gt; $*_oct.f90
+723         $(top_srcdir)/build/preprocess.pl $*_oct.f90 \
+724           "" "yes" "yes"
+725         sed -i '5,41d' $*_oct.f90
+726         mpif90 -O3      -I /public/home/cndaqiang/soft/gcc-openmpi/libxc-2.0.0/include $(AM_FCFLAGS) -c  -o $@ $*_oct.    f90
+727 #       @rm -f $*_oct.f90
+728 
+
+729 ########END cndaqiang
+730 # This rule is basically to create a _oct.f90 file by hand for
+731 # debugging purposes. It is identical to the first part of
+732 # the .F90.o rule.
+733 ##########Add by cndaqiang
+734 ######### 2019-05-07
+735 .F90_oct.f90:
+736         /lib/cpp -C -ansi  $(AM_CPPFLAGS) -I. $&lt; &gt; $*_oct.f90
+737         $(top_srcdir)/build/preprocess.pl $*_oct.f90 \
+738           "" "yes" "yes"
+739         sed -i '5,41d' $*_oct.f90
+740 
+741 ########END cndaqiang
+</code></pre></div></div>
+<p>针对下面Makefile做同样修改</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi src/math/Makefile
+vi src/species/Makefile
+vi src/ions/Makefile
+vi src/grid/Makefile
+vi src/poisson/Makefile
+vi src/states/Makefile
+vi src/xc/Makefile
+vi src/hamiltonian/Makefile
+vi src/system/Makefile
+vi src/scf/Makefile
+vi src/td/Makefile
+vi src/opt_control/Makefile
+vi src/td/Makefile
+vi src/sternheimer/Makefile
+vi src/main/Makefile
+</code></pre></div></div>
+<p>或者使用下面的脚本</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+#!/bin/bash
+for i in basic  math   species   ions   grid   poisson   states   xc   hamiltonian   system   scf   td   opt_control   td   sternheimer   main
+do
+Makefile=src/${i}/Makefile
+#修改.F90.o
+hang=$(grep -n "^.F90.o:"  $Makefile | awk '{printf "%d\n",$1}' )
+hang=$(echo -e "$hang+4"|bc)
+sed -i "${hang}i CNQsed -i '5,41d' \$\*_oct.f90" $Makefile
+sed -i "${hang}s/CNQ/\t/g" $Makefile
+hang=$(echo -e "$hang-4"|bc)
+sed -i "${hang}i ##### Add by CNQ " $Makefile
+hang=$(echo -e "$hang+8"|bc)
+sed -i "${hang}i ##### END CNQ " $Makefile
+#修改.F90_oct.f90
+hang=$(grep -n .F90_oct.f90 $Makefile | awk '{printf "%d\n",$1}' )
+hang=$(echo -e "$hang+4"|bc)
+sed -i "${hang}i CNQsed -i '5,41d' \$\*_oct.f90" $Makefile
+sed -i "${hang}s/CNQ/\t/g" $Makefile
+hang=$(echo -e "$hang-4"|bc)
+sed -i "${hang}i ##### Add by CNQ " $Makefile
+hang=$(echo -e "$hang+6"|bc)
+sed -i "${hang}i ##### END CNQ " $Makefile
+
+done 
+</code></pre></div></div>
+
+<h3 id="berkeleygw直接修改makefile">BerkeleyGW直接修改Makefile</h3>
+<p>由于<code class="language-plaintext highlighter-rouge">arch.mk</code>里面的<code class="language-plaintext highlighter-rouge">FCPP    = /usr/bin/cpp -ansi -C</code>包含了C,所以生成的<code class="language-plaintext highlighter-rouge">Common/nrtype.p.f</code>也是带<code class="language-plaintext highlighter-rouge">/**/</code>注释的,<strong>简单的方式修改为<code class="language-plaintext highlighter-rouge">FCPP    = /usr/bin/cpp -ansi</code>就可以了</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/cpp -ansi -C -I./Common -DCPLX -DINTEL -DMPI -DOMP -DUSESCALAPACK -DUNPACKED -DUSEFFTW3  Common/nrtype.f90 &gt; Common/nrtype.p.f;
+mpiifort -free -qopenmp -I ./Common -I /opt/ohpc/pub/apps/intel2020/compilers_and_libraries_2020.2.254/linux/mkl/include/fftw/ -c -O3  -g Common/nrtype.p.f -o Common/nrtype.o -module Common/
+&lt;命令行&gt;(1): warning #5117: Bad # preprocessor line
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+-----------------------------------^
+/usr/include/stdc-predef.h(1): error #5082: Syntax error, found '/' when expecting one of: &lt;LABEL&gt; &lt;END-OF-STATEMENT&gt; ; &lt;IDENTIFIER&gt; TYPE MODULE ELEMENTAL IMPURE NON_RECURSIVE ...
+/* Copyright (C) 1991-2012 Free Software Foundation, Inc.
+^
+/usr/include/stdc-predef.h(16): error #5145: Invalid blank/tab
+   &lt;http://www.gnu.org/licenses/&gt;.  */
+----------------------------------^
+/usr/include/stdc-predef.h(22): error #5145: Invalid blank/tab
+   include it implicitly at the start of every compilation.  It must
+-----------------------------------------------------------^
+/usr/include/stdc-predef.h(33): error #5143: Missing mandatory separating blank
+/* wchar_t uses ISO/IEC 10646 (2nd ed., published 2011-03-15) /
+--------------------------------^
+/usr/include/stdc-predef.h(34): error #5145: Invalid blank/tab
+   Unicode 6.0.  */
+---------------^
+/usr/include/stdc-predef.h(37): error #5145: Invalid blank/tab
+/* We do not support C11 &lt;threads.h&gt;.  */
+-------------------------------------^
+/usr/include/stdc-predef.h(1): catastrophic error: Could not recover from previous syntax error
+compilation aborted for Common/nrtype.p.f (code 1)
+make: *** [Common/nrtype.o] 错误 1
+</code></pre></div></div>
+
+<p><strong>我们也可以通过修改Makefile解决<code class="language-plaintext highlighter-rouge">vi Common/common-rules.mk</code></strong><br />
+添加<code class="language-plaintext highlighter-rouge">/home/users/cndaqiang/soft/ifort-impi2020/BerkeleyGW-3.0.1/rmf90.sh</code>处理脚本</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#clang C-preprocessing treats files incorrectly if they have .F90 extension
+ifeq ($(findstring clang,$(FCPP)),clang)
+  f90_CPP = cp $(basename $&lt;).f90 $(basename $&lt;)_cp.F90; $(FCPP) $(INCLUDE) $(CPPOPT) $(basename $&lt;)_cp.F90 &gt; $(basename $&lt;).p.f; $(REMOVE) $(basename $&lt;)_cp.F90;
+else
+  f90_CPP = $(FCPP) $(INCLUDE) $(CPPOPT) $&lt; &gt; $(basename $&lt;).p.f;  /home/users/cndaqiang/soft/ifort-impi2020/BerkeleyGW-3.0.1/rmf90.sh $(basename $&lt;).p.f
+endif
+F90_CPP = $(FCPP) -P $(INCLUDE) $(CPPOPT) $&lt; &gt; $(basename $&lt;).p.f;/home/users/cndaqiang/soft/ifort-impi2020/BerkeleyGW-3.0.1/rmF90.sh $(basename $&lt;).p.f
+</code></pre></div></div>
+<p>因为这几个文件的的规则是差不多的,所以<code class="language-plaintext highlighter-rouge">rmf90</code>和<code class="language-plaintext highlighter-rouge">rmF90</code>分别为</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python37) [HUAIROU cndaqiang@login01 BerkeleyGW-3.0.1]$cat rmf90.sh
+echo "cndaqiang deal $1"
+sed -i '4,43d' $1
+exit
+
+if [ $1 == Common/nrtype.p.f ]
+then
+echo "sed -i '4,43d' $1"
+sed -i '4,43d' $1
+fi
+
+(python37) [HUAIROU cndaqiang@login01 BerkeleyGW-3.0.1]$cat rmF90.sh
+echo "cndaqiang deal  $1"
+sed -i '1,27d' $1
+exit
+
+if [ $1 == Common/nrtype.p.f ]
+then
+echo "sed -i '4,43d' $1"
+sed -i '4,43d' $1
+fi
+</code></pre></div></div>
+<p>此时再编译就没有问题了</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/cpp -ansi -I./Common -DCPLX -DINTEL -DMPI -DOMP -DUSESCALAPACK -DUNPACKED -DUSEFFTW3  Common/nrtype.f90 &gt; Common/nrtype.p.f
+mpiifort -free -qopenmp -I ./Common -I /opt/ohpc/pub/apps/intel2020/compilers_and_libraries_2020.2.254/linux/mkl/include/fftw/ -c -O3  -g Common/nrtype.p.f -o Common/nrtype.o -module Common/
+&lt;命令行&gt;(1): warning #5117: Bad # preprocessor line
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+-----------------------------------^
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/05/01/ubuntu22.04-gpu/">单GPU节点配置计算环境
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/02/08/mac-dev/">macOS配置开发环境 
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2018/09/15/gun-openmpi-octopus-7.1/">centos6.5 Gcc Openmpi 编译octopus-7.1 </a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/10/17/deal-file/">文件处理: grep sed awk sort echo printf tail cut paste</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

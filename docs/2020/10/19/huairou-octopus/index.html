@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>怀柔计算中心/SSLAB/新SSLAB编译/MacOS octopus记录及Intel编译报错</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2020/10/19/huairou-octopus/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>怀柔计算中心/SSLAB/新SSLAB编译/MacOS octopus记录及Intel编译报错</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-10-19
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a-->
+        <a href="/tag/#gnu" title="Tag: gnu" rel="tag">gnu</a>&nbsp;
+    
+        <!--a href="/tag/#octopus" title="Tag: octopus" rel="tag">octopus</a-->
+        <a href="/tag/#octopus" title="Tag: octopus" rel="tag">octopus</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#gnu怀柔计算中心安装octopus101412" id="markdown-toc-gnu怀柔计算中心安装octopus101412">[GNU]怀柔计算中心安装octopus10.1&amp;4.1.2</a></li>
+  <li><a href="#intel怀柔计算中心安装octopus104" id="markdown-toc-intel怀柔计算中心安装octopus104">[Intel]怀柔计算中心安装octopus10.4</a></li>
+  <li><a href="#intelsslab安装octopus104" id="markdown-toc-intelsslab安装octopus104">[Intel]SSLAB安装octopus10.4</a></li>
+  <li><a href="#oneapi-新sslab-安装octopus104" id="markdown-toc-oneapi-新sslab-安装octopus104">[oneapi] 新SSLAB 安装octopus10.4</a></li>
+  <li><a href="#oneapi-macos-monterey-安装octopus104" id="markdown-toc-oneapi-macos-monterey-安装octopus104">[oneapi] macOS Monterey 安装octopus10.4</a></li>
+  <li><a href="#备注" id="markdown-toc-备注">备注</a>    <ul>
+      <li><a href="#intel编译报错" id="markdown-toc-intel编译报错">Intel编译报错</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="gnu怀柔计算中心安装octopus101412">[GNU]怀柔计算中心安装octopus10.1&amp;4.1.2</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#-------------------------------------------------------------</span>
+<span class="c">#加载编译环境</span>
+module swap gnu4 gnu8/8.3.0
+module load gnu8/8.3.0
+module load openmpi3/3.1.4
+<span class="c">#创建编译目录</span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> ~/soft/gnu8-openmpi/
+<span class="nb">cd</span> ~/soft/gnu8-openmpi/
+<span class="nv">ROOT</span><span class="o">=</span><span class="nv">$PWD</span>
+<span class="nb">mkdir</span> <span class="nv">$ROOT</span>/source
+<span class="c">#创建编译脚本</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh"> &gt; ./make.sh
+#!/bin/bash
+#SBATCH -J make
+#SBATCH -p debug
+#SBATCH -N 1
+#SBATCH --ntasks-per-node=10
+#SBATCH -o make.out
+
+
+module load gnu8/8.3.0
+module load module load openmpi3/3.1.4
+if [ -e ./netlib.py ]
+then
+    ./setup.py --prefix=</span><span class="nv">$ROOT</span><span class="sh">/math --downall
+else
+    make -j10
+    make install
+fi
+</span><span class="no">EOF
+
+
+</span><span class="c">#编译scalapack</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/math/scalapack_installer_CNQ_WO_Net.tar.gz
+<span class="nb">tar </span>xzvf scalapack_installer_CNQ_WO_Net.tar.gz
+<span class="nb">cd </span>scalapack_installer
+qsub ../make.sh
+
+
+<span class="c">#libxc-4.3.4 for octopus-10.1</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/libxc/libxc-4.3.4.tar.gz
+<span class="nb">tar </span>xzvf libxc-4.3.4.tar.gz 
+<span class="nb">cd </span>libxc-4.3.4
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4  <span class="nv">CC</span><span class="o">=</span>gcc <span class="nv">CXX</span><span class="o">=</span>g++ <span class="nv">FC</span><span class="o">=</span>gfortran
+qsub ../make.sh
+
+<span class="c">#libxc-2.0.0 for octous-4.1.2</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/libxc/libxc-2.0.0.tar.gz
+<span class="nb">tar </span>xzvf libxc-2.0.0.tar.gz 
+<span class="nb">cd </span>libxc-2.0.0
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-2.0.0  <span class="nv">CC</span><span class="o">=</span>gcc <span class="nv">CXX</span><span class="o">=</span>g++ <span class="nv">FC</span><span class="o">=</span>gfortran
+qsub ../make.sh
+<span class="c">#解决libxc编译错误</span>
+<span class="c">#按照 http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/</span>
+<span class="c">#删除src/libxc.f90中的/* */以其之间的注释部分就可以编译了</span>
+vi src/libxc.f90
+qsub ../make.sh
+
+<span class="c">#gsl</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/gs/gsl-1.14.tar.gz
+<span class="nb">tar </span>xzvf gsl-1.14.tar.gz
+<span class="nb">cd </span>gsl-1.14
+<span class="nb">mkdir </span>build<span class="p">;</span> <span class="nb">cd </span>build
+../configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/gsl-1.14
+qsub ../../make.sh
+
+<span class="c">#fft</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/fftw/fftw-3.3.3.tar.gz
+<span class="nb">tar </span>xzvf fftw-3.3.3.tar.gz
+<span class="nb">cd </span>fftw-3.3.3/
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3 <span class="nt">--enable-mpi</span>
+qsub ../make.sh
+
+
+
+<span class="c">#------------ octopus-10.1 -------------------------------------------------</span>
+<span class="c">#环境展示</span>
+<span class="nb">echo</span> <span class="s2">"
+MATHDIR=</span><span class="nv">$ROOT</span><span class="s2">/math/lib
+export LD_LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/libxc-4.3.4/lib:</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH
+export PATH=</span><span class="nv">$ROOT</span><span class="s2">/gsl-1.14/bin:</span><span class="se">\$</span><span class="s2">PATH
+export LD_LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/gsl-1.14/lib:</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/fftw-3.3.3/lib:</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH
+export PATH=</span><span class="nv">$ROOT</span><span class="s2">/fftw-3.3.3/bin:</span><span class="se">\$</span><span class="s2">PATH
+"</span>
+<span class="c">#octopus-10.1</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/octopus/octopus-10.1.tar.gz
+<span class="nb">tar </span>xzvf octopus-10.1.tar.gz
+<span class="nb">cd </span>octopus-10.1
+
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/octopus-10.1 <span class="se">\</span>
+    <span class="nt">--with-blas</span><span class="o">=</span><span class="s2">"-L</span><span class="nv">$ROOT</span><span class="s2">/math/lib -lrefblas"</span> <span class="se">\</span>
+    <span class="nt">--with-lapack</span><span class="o">=</span><span class="s2">"-L</span><span class="nv">$ROOT</span><span class="s2">/math/lib -ltmg -lreflapack"</span>  <span class="se">\</span>
+    <span class="nt">--with-scalapack</span><span class="o">=</span><span class="s2">"-L</span><span class="nv">$ROOT</span><span class="s2">/math/lib -lscalapack"</span> <span class="se">\</span>
+    <span class="nt">--with-libxc-prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4    <span class="se">\</span>
+    <span class="nt">--with-gsl-prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/gsl-1.14  <span class="se">\</span>
+    <span class="nt">--with-fftw-prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3  <span class="se">\</span>
+    <span class="nt">--enable-mpi</span>
+
+qsub ../make.sh
+<span class="c">#---------- octopus 4 ---------------------------------------------------</span>
+<span class="c">#环境展示</span>
+<span class="nb">echo</span> <span class="s2">"
+MATHDIR=</span><span class="nv">$ROOT</span><span class="s2">/math/lib
+export LD_LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/libxc-2.0.0/lib:</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH
+export PATH=</span><span class="nv">$ROOT</span><span class="s2">/gsl-1.14/bin:</span><span class="se">\$</span><span class="s2">PATH
+export LD_LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/gsl-1.14/lib:</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=</span><span class="nv">$ROOT</span><span class="s2">/fftw-3.3.3/lib:</span><span class="se">\$</span><span class="s2">LD_LIBRARY_PATH
+export PATH=</span><span class="nv">$ROOT</span><span class="s2">/fftw-3.3.3/bin:</span><span class="se">\$</span><span class="s2">PATH
+"</span>
+
+<span class="c">#octopus-4.1</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/octopus/octopus-4.1.2.tar.gz
+<span class="nb">tar </span>xzvf octopus-4.1.2.tar.gz
+<span class="nb">cd </span>octopus-4.1.2
+
+
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/octopus-4.1.2 <span class="se">\</span>
+    <span class="nt">--with-blas</span><span class="o">=</span><span class="s2">"-L</span><span class="nv">$ROOT</span><span class="s2">/math/lib -lrefblas"</span> <span class="se">\</span>
+    <span class="nt">--with-lapack</span><span class="o">=</span><span class="s2">"-L</span><span class="nv">$ROOT</span><span class="s2">/math/lib -ltmg -lreflapack"</span>  <span class="se">\</span>
+    <span class="nt">--with-scalapack</span><span class="o">=</span><span class="s2">"-L</span><span class="nv">$ROOT</span><span class="s2">/math/lib -lscalapack"</span> <span class="se">\</span>
+    <span class="nt">--with-libxc-prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-2.0.0    <span class="se">\</span>
+    <span class="nt">--with-gsl-prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/gsl-1.14  <span class="se">\</span>
+    <span class="nt">--with-fft-lib</span><span class="o">=</span><span class="nv">$ROOT</span>/fftw-3.3.3/lib/libfftw3.a  <span class="se">\</span>
+    <span class="nt">--enable-mpi</span>
+
+qsub ../make.sh
+<span class="c">#提交作业报错终止后</span>
+<span class="c">#使用下面命令解决报错，参考来源 http://cndaqiang.gitee.io//2018/09/18/centos7-octopus-4.1.2/</span>
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">EOF</span><span class="sh"> &gt; ./cnq.sh
+#!/bin/bash
+for i in basic  math   species   ions   grid   poisson   states   xc   hamiltonian   system   scf   td   opt_control   td   sternheimer   main
+do
+Makefile=src/</span><span class="se">\$</span><span class="sh">{i}/Makefile
+#修改.F90.o
+hang=</span><span class="se">\$</span><span class="sh">(grep -n "^.F90.o:"  </span><span class="se">\$</span><span class="sh">Makefile | awk '{printf "%d</span><span class="se">\n</span><span class="sh">",</span><span class="se">\$</span><span class="sh">1}' )
+hang=</span><span class="se">\$</span><span class="sh">(echo -e "</span><span class="se">\$</span><span class="sh">hang+4"|bc)
+sed -i "</span><span class="se">\$</span><span class="sh">{hang}i CNQsed -i '5,41d' </span><span class="se">\\</span><span class="nv">$\</span><span class="sh">*_oct.f90" </span><span class="se">\$</span><span class="sh">Makefile
+sed -i "</span><span class="se">\$</span><span class="sh">{hang}s/CNQ/</span><span class="se">\t</span><span class="sh">/g" </span><span class="se">\$</span><span class="sh">Makefile
+hang=</span><span class="se">\$</span><span class="sh">(echo -e "</span><span class="se">\$</span><span class="sh">hang-4"|bc)
+sed -i "</span><span class="se">\$</span><span class="sh">{hang}i ##### Add by CNQ " </span><span class="se">\$</span><span class="sh">Makefile
+hang=</span><span class="se">\$</span><span class="sh">(echo -e "</span><span class="se">\$</span><span class="sh">hang+8"|bc)
+sed -i "</span><span class="se">\$</span><span class="sh">{hang}i ##### END CNQ " </span><span class="se">\$</span><span class="sh">Makefile
+#修改.F90_oct.f90
+hang=</span><span class="se">\$</span><span class="sh">(grep -n .F90_oct.f90 </span><span class="se">\$</span><span class="sh">Makefile | awk '{printf "%d</span><span class="se">\n</span><span class="sh">",</span><span class="se">\$</span><span class="sh">1}' )
+hang=</span><span class="se">\$</span><span class="sh">(echo -e "</span><span class="se">\$</span><span class="sh">hang+4"|bc)
+sed -i "</span><span class="se">\$</span><span class="sh">{hang}i CNQsed -i '5,41d' </span><span class="se">\\</span><span class="nv">$\</span><span class="sh">*_oct.f90" </span><span class="se">\$</span><span class="sh">Makefile
+sed -i "</span><span class="se">\$</span><span class="sh">{hang}s/CNQ/</span><span class="se">\t</span><span class="sh">/g" </span><span class="se">\$</span><span class="sh">Makefile
+hang=</span><span class="se">\$</span><span class="sh">(echo -e "</span><span class="se">\$</span><span class="sh">hang-4"|bc)
+sed -i "</span><span class="se">\$</span><span class="sh">{hang}i ##### Add by CNQ " </span><span class="se">\$</span><span class="sh">Makefile
+hang=</span><span class="se">\$</span><span class="sh">(echo -e "</span><span class="se">\$</span><span class="sh">hang+6"|bc)
+sed -i "</span><span class="se">\$</span><span class="sh">{hang}i ##### END CNQ " </span><span class="se">\$</span><span class="sh">Makefile
+done 
+</span><span class="no">EOF
+</span>bash cnq.sh
+<span class="c">#重新提交</span>
+qsub ../make.sh
+
+</code></pre></div></div>
+
+<h2 id="intel怀柔计算中心安装octopus104">[Intel]怀柔计算中心安装octopus10.4</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module unload openmpi3/3.1.4
+module load parallel_studio/2020.2.254
+module load intelmpi/2020.2.254
+
+cd $HOME/soft/ifort-impi2020
+ROOT=$PWD
+mkdir $ROOT/source
+
+</code></pre></div></div>
+<p>剩下的同<strong>[Intel]SSLAB安装octopus10.4</strong></p>
+
+<p>GNU/Intel编译10.4速度对比，差别不大</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>CalculationMode</th>
+      <th>GNU怀柔</th>
+      <th>Intel怀柔</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>gs</td>
+      <td>2.765s</td>
+      <td>2.870s</td>
+    </tr>
+    <tr>
+      <td>td</td>
+      <td>31.222s</td>
+      <td>32.15s</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="intelsslab安装octopus104">[Intel]SSLAB安装octopus10.4</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module load compiler/gcc/gcc_8.3.0
+module load compiler/intel/intel-compiler-2019u3
+module load mpi/intelmpi/2019u3
+
+<span class="nb">cd</span> <span class="nv">$HOME</span>/soft/intel2019u3
+<span class="nv">ROOT</span><span class="o">=</span><span class="nv">$PWD</span>
+<span class="nb">mkdir</span> <span class="nv">$ROOT</span>/source
+
+
+<span class="c">#libxc</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/libxc/libxc-4.3.4.tar.gz
+<span class="nb">tar </span>xzvf libxc-4.3.4.tar.gz 
+<span class="nb">cd </span>libxc-4.3.4
+./configure <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4  <span class="nv">CC</span><span class="o">=</span>icc <span class="nv">CXX</span><span class="o">=</span>icpc <span class="nv">FC</span><span class="o">=</span>ifort
+make <span class="nt">-j20</span>
+make <span class="nb">install</span>
+
+
+<span class="c">#gs</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/gs/gsl-1.14.tar.gz
+<span class="nb">tar </span>xzvf gsl-1.14.tar.gz
+<span class="nb">cd </span>gsl-1.14
+<span class="nb">mkdir </span>build<span class="p">;</span> <span class="nb">cd </span>build
+../configure <span class="nv">CC</span><span class="o">=</span>icc <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/gsl-1.14
+make <span class="nt">-j10</span>
+make <span class="nb">install</span>
+
+<span class="c">#octopus</span>
+<span class="nb">cd</span> <span class="nv">$ROOT</span>/source
+wget https://cndaqiang.gitee.io/packages//mirrors/octopus/octopus-10.4.tar.gz
+<span class="nb">tar </span>xzvf octopus-10.4.tar.gz
+<span class="nb">cd </span>octopus-10.4
+
+<span class="nv">MKL_DIR</span><span class="o">=</span><span class="si">$(</span><span class="nb">echo</span> <span class="nv">$MKLROOT</span> | <span class="nb">awk</span> <span class="nt">-F</span>: <span class="s1">'{ print $1 }'</span><span class="si">)</span>
+./configure <span class="nv">CC</span><span class="o">=</span>mpiicc <span class="nv">CXX</span><span class="o">=</span>mpiicpc <span class="nv">FC</span><span class="o">=</span>mpiifort <span class="se">\</span>
+    <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/octopus-10.4 <span class="se">\</span>
+    <span class="nt">--with-libxc-prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/libxc-4.3.4    <span class="se">\</span>
+    <span class="nv">FCFLAGS_FFTW</span><span class="o">=</span><span class="nt">-I</span><span class="nv">$MKL_DIR</span>/include/fftw  <span class="se">\</span>
+    <span class="nt">--with-blas</span><span class="o">=</span><span class="s2">"-L</span><span class="nv">$MKL_DIR</span><span class="s2">/lib/intel64 -Wl,--start-group -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -Wl,--end-group -lpthread -lmkl_blacs_intelmpi_lp64 -lmkl_scalapack_lp64 "</span> <span class="se">\</span>
+    <span class="nt">--with-gsl-prefix</span><span class="o">=</span><span class="nv">$ROOT</span>/gsl-1.14  <span class="se">\</span>
+    <span class="nt">--enable-mpi</span>
+make <span class="nt">-j20</span>
+make <span class="nb">install</span>
+
+
+</code></pre></div></div>
+<p>运行环境，把下面命令的执行结果进行复制，放在octopus运行脚本的前面</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "
+module load compiler/gcc/gcc_8.3.0
+module load compiler/intel/intel-compiler-2019u3
+module load mpi/intelmpi/2019u3
+export LD_LIBRARY_PATH=$ROOT/libxc-2.0.0/lib:\$LD_LIBRARY_PATH
+export PATH=$ROOT/gsl-1.14/bin:\$PATH
+export LD_LIBRARY_PATH=$ROOT/gsl-1.14/lib:\$LD_LIBRARY_PATH
+"
+</code></pre></div></div>
+
+<h2 id="oneapi-新sslab-安装octopus104">[oneapi] 新SSLAB 安装octopus10.4</h2>
+<p>下载一键安装脚本<a href="/web/file/2022/install.octopus.sslab2.oneapi.sh">install.octopus.sslab2.oneapi.sh</a>,执行安装命令</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash install.octopus.sslab2.oneapi.sh
+</code></pre></div></div>
+<p>或者在线安装</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://cndaqiang.github.io/web/file/2022/install.octopus.sslab2.oneapi.sh ; bash install.octopus.sslab2.oneapi.sh
+#or
+curl https://raw.githubusercontent.com/cndaqiang/cndaqiang.github.io/master/web/file/2022/install.octopus.sslab2.oneapi.sh | bash
+</code></pre></div></div>
+<p>然后同样添加环境变量</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source /share/apps/intel-oneAPI-2021/compiler/2022.0.2/env/vars.sh intel64
+source /share/apps/intel-oneAPI-2021/mkl/2022.0.2/env/vars.sh intel64
+source /share/apps/intel-oneAPI-2021/mpi/2021.5.1/env/vars.sh intel64
+module load /share/modulefile/gnu/10.2.0
+export LD_LIBRARY_PATH=/share/home/chendq/soft/oneapi21/libxc-2.0.0/lib:$LD_LIBRARY_PATH
+export PATH=/share/home/chendq/soft/oneapi21/gsl-1.14/bin:$PATH
+export LD_LIBRARY_PATH=/share/home/chendq/soft/oneapi21/gsl-1.14/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+
+<h2 id="oneapi-macos-monterey-安装octopus104">[oneapi] macOS Monterey 安装octopus10.4</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://raw.githubusercontent.com/cndaqiang/cndaqiang.github.io/master/web/file/2022/install.octopus.Monterey.oneapi.sh | bash
+</code></pre></div></div>
+
+<h2 id="备注">备注</h2>
+<h3 id="intel编译报错">Intel编译报错</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/lib/cpp -ansi -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -isystem /home/chendq/anaconda3/envs/python37/include -I../src/include -I../src/include -I../external_libs/spglib-1.9.9/src -I../liboct_parser -I/home/chendq/soft/intel20u4/gsl-1.14/include -I/usr/include -I/home/apps/intel20u4/compilers_and_libraries_2020.4.304/linux/mkl/include/fftw -DSHARE_DIR='"/home/chendq/soft/intel20u4/octopus-10.4/share/octopus"' -I../external_libs/metis-5.1/include/ -I. basic/messages.F90 | \
+  ../build/preprocess.pl - \
+  "" "yes" &gt; basic/messages_oct.f90
+mpiifort -O3 -fpp -I ../external_libs/bpdn -I ../external_libs/dftd3 -I ../external_libs/spglib-1.9.9/src/ -I /home/chendq/soft/intel20u4/libxc-4.3.4/include -I/home/apps/intel20u4/compilers_and_libraries_2020.4.304/linux/mkl/include/fftw  -c  -o basic/messages.o basic/messages_oct.f90
+</code></pre></div></div>
+<p><del>由于<code class="language-plaintext highlighter-rouge">/lib/cpp</code>预处理<code class="language-plaintext highlighter-rouge">basic/messages.F90</code>文件出错,指定Fortran的预处理即可</del>
+删除<code class="language-plaintext highlighter-rouge">.bashrc</code>中的环境,重新load编译器后没有报错</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/05/01/ubuntu22.04-gpu/">单GPU节点配置计算环境
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/02/08/mac-dev/">macOS配置开发环境 
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/09/03/aseuse/">ASE快速上手</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/10/27/IB/">Centos 配置IB网络</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

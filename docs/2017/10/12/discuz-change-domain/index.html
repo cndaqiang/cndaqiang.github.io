@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>discuz更换域名</title>
+    <meta name="description" content="网站进行了搬家，想试试更换域名，目前更换后，没发现什么问题，但是还有个疑问">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2017/10/12/discuz-change-domain/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>discuz更换域名</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-10-12
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#web" title="Category: web" rel="category">web</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#web" title="Tag: web" rel="tag">web</a-->
+        <a href="/tag/#web" title="Tag: web" rel="tag">web</a>&nbsp;
+    
+        <!--a href="/tag/#discuz" title="Tag: discuz" rel="tag">discuz</a-->
+        <a href="/tag/#discuz" title="Tag: discuz" rel="tag">discuz</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#操作" id="markdown-toc-操作">操作</a>    <ul>
+      <li><a href="#修改discuz配置文件" id="markdown-toc-修改discuz配置文件">修改discuz配置文件</a>        <ul>
+          <li><a href="#cookies后台sql" id="markdown-toc-cookies后台sql">cookies，后台sql</a></li>
+          <li><a href="#ucenter访问地址" id="markdown-toc-ucenter访问地址">ucenter访问地址</a></li>
+        </ul>
+      </li>
+      <li><a href="#数据库修改" id="markdown-toc-数据库修改">数据库修改</a>        <ul>
+          <li><a href="#搜索" id="markdown-toc-搜索">搜索</a></li>
+          <li><a href="#修改" id="markdown-toc-修改">修改</a></li>
+          <li><a href="#遇到的问题一次全替换不可以需要分部分替换更新缓存再替换再更新" id="markdown-toc-遇到的问题一次全替换不可以需要分部分替换更新缓存再替换再更新">遇到的问题，一次全替换不可以，需要分部分替换，更新缓存，再替换，再更新</a>            <ul>
+              <li><a href="#失败-下载数据库后编辑器搜索netstunet全部替换cndaqiangonline" id="markdown-toc-失败-下载数据库后编辑器搜索netstunet全部替换cndaqiangonline">[失败] 下载数据库后，编辑器搜索netstu.net全部替换cndaqiang.online</a></li>
+              <li><a href="#失败-sql中一次输入全部sql替换命令" id="markdown-toc-失败-sql中一次输入全部sql替换命令">[失败] sql中一次输入全部sql替换命令</a></li>
+              <li><a href="#目前正常-修改一部分sql更新缓存再修改部分sql更新缓存" id="markdown-toc-目前正常-修改一部分sql更新缓存再修改部分sql更新缓存">[目前正常] 修改一部分sql，更新缓存，再修改部分sql，更新缓存</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#不知道为什么要按照顺序执行sql" id="markdown-toc-不知道为什么要按照顺序执行sql">不知道为什么，要按照顺序执行sql？</a></li>
+    </ul>
+  </li>
+  <li><a href="#其他问题" id="markdown-toc-其他问题">其他问题</a></li>
+</ul>
+
+<p>网站进行了搬家，想试试更换域名，目前更换后，没发现什么问题，但是还有个疑问</p>
+
+<p>网站进行了搬家，想试试更换域名</p>
+
+<h2 id="环境">环境</h2>
+<p>discuz x3.1</p>
+<h2 id="参考">参考</h2>
+<p><a href="http://www.discuz.net/thread-3528253-1-1.html">discuz! X3 更改域名全程记录 （修改域名的方法）</a></p>
+<h2 id="操作">操作</h2>
+<h3 id="修改discuz配置文件">修改discuz配置文件</h3>
+<h4 id="cookies后台sql">cookies，后台sql</h4>
+<p>把<code class="language-plaintext highlighter-rouge">config/config_global.php</code>  和 <code class="language-plaintext highlighter-rouge">config_global_default.php</code> 中的内容相应都修改</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$_config['cookie']['cookiedomain'] = '.new.com';
+
+$_config['admincp']['runquery']                        = 1;                // 是否允许后台运行 SQL 语句 1=是 0=否[安全]
+</code></pre></div></div>
+<p>发现之前的论坛内容中<code class="language-plaintext highlighter-rouge">$_config['cookie']['cookiedomain'] =</code>值为空，所以没有更改</p>
+<h4 id="ucenter访问地址">ucenter访问地址</h4>
+<p>修改<code class="language-plaintext highlighter-rouge">config/config_ucenter.php</code>内域名为新域名
+使用<code class="language-plaintext highlighter-rouge">http://新域名/admin.php</code> 登录后台管理面板</p>
+<blockquote>
+  <p>以下内容和数据库有重复，可在最后更新</p>
+
+  <p>1.后台==&gt;全局==&gt;站点信息==&gt;网站url</p>
+
+  <p>2.后台==&gt;全局==&gt;域名设置==&gt;应用域名==&gt;论坛和根域名设置手机版访问设置：— 手机发帖来源自定义:</p>
+
+  <p>3.后台==&gt;界面==&gt;导航==&gt;链接里面使用了绝对地址需要修改为新域名</p>
+
+  <p>4.后台==&gt;运营==&gt;关联连接，没有设置就不用修改，在这里主要涉及优化  （站点宣传广告、友情链接）</p>
+
+  <p>5.后台==&gt;云平台==&gt;同步站点信息   后台—工具—去平台诊断工具 （可能要手动设置IP）</p>
+
+  <p>6.后台==&gt;站长==&gt;ucernter设置==&gt;ucenter访问地址[灰色无法修改，通过编辑<code class="language-plaintext highlighter-rouge">config/config_ucenter.php</code>修改]</p>
+
+  <p>7.ucenter==&gt;应用管理==&gt;应用的主urlBBS导航—顶部、底部  （版规网址要更新），论坛格子广告，贴间广告，列表广告全部要更新。</p>
+</blockquote>
+
+<h3 id="数据库修改">数据库修改</h3>
+<p>搜索数据库中涉及到的旧域名内容，使用sql命令替换</p>
+<h4 id="搜索">搜索</h4>
+<p>phpmyadmin登录后搜索<code class="language-plaintext highlighter-rouge">netstu.net</code>，找到对应的表，字段</p>
+<h4 id="修改">修改</h4>
+<p>修改方法一:在网站后台&gt;站长&gt;数据库&gt;升级&gt;执行sql替换命令</p>
+
+<p>修改方法二:phpmyadmin网页&gt;选中要修改数据库&gt;sql&gt;输入sql替换命令
+sql替换命令</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE 表名 SET 字段=REPLACE(字段,'旧内容','新内容');
+</code></pre></div></div>
+<p>然后更新缓存</p>
+<h4 id="遇到的问题一次全替换不可以需要分部分替换更新缓存再替换再更新">遇到的问题，一次全替换不可以，需要分部分替换，更新缓存，再替换，再更新</h4>
+
+<p><strong>必须执行完一段sql，更新，再执行另一端</strong></p>
+
+<hr />
+<p>下面是一次实际操作</p>
+<h5 id="失败-下载数据库后编辑器搜索netstunet全部替换cndaqiangonline">[失败] 下载数据库后，编辑器搜索netstu.net全部替换cndaqiang.online</h5>
+<p>不应该全部替换netstu.net后，更新缓存就解决了吗？
+可是这样，主页直接就残缺，显示不正常了，猜测是主页模板有问题</p>
+<h5 id="失败-sql中一次输入全部sql替换命令">[失败] sql中一次输入全部sql替换命令</h5>
+<p>主页同样残缺，显示不正常了</p>
+<h5 id="目前正常-修改一部分sql更新缓存再修改部分sql更新缓存">[目前正常] 修改一部分sql，更新缓存，再修改部分sql，更新缓存</h5>
+
+<hr />
+<p>无关紧要的先更新</p>
+
+<hr />
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE pre_common_pluginvar SET value=REPLACE(value,'old.com','new.com');
+
+UPDATE pre_common_member_field_home SET blockposition=REPLACE(blockposition,'old.com','new.com');
+
+UPDATE pre_ucenter_notelist SET postdata=REPLACE(postdata,'old.com','new.com');
+UPDATE pre_forum_post SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_common_nav SET url=REPLACE(url,'old.com','new.com');
+
+UPDATE pre_common_setting SET svalue=REPLACE(svalue,'old.com','new.com');
+
+UPDATE pre_ucenter_applications SET url=REPLACE(url,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_0 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_1 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_2 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_3 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_4 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_5 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_6 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_7 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_8 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_messages_9 SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_ucenter_pm_lists SET subject=REPLACE(subject,'old.com','new.com');
+</code></pre></div></div>
+<p>网站后台&gt;工具&gt;更新缓存</p>
+
+<hr />
+<p>2 模块更新
+这部分对应论坛首页，校区公共通知等模块</p>
+
+<hr />
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE pre_common_block SET summary=REPLACE(summary,'old.com','new.com');
+UPDATE pre_common_block SET param=REPLACE(param,'old.com','new.com');
+</code></pre></div></div>
+<hr />
+<p>网站后台&gt;工具&gt;更新缓存</p>
+
+<hr />
+<p>3 模块？
+该部分需在之前的sql命令执行后再执行，不然论坛主页就乱了，替换回来也无法修复</p>
+
+<hr />
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE pre_common_syscache SET data=REPLACE(data,'old.com','new.com');
+</code></pre></div></div>
+<hr />
+<p>网站后台&gt;工具&gt;更新缓存</p>
+
+<hr />
+<p>4 缓存</p>
+
+<hr />
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE pre_common_block_item SET fields=REPLACE(fields,'old.com','new.com');
+</code></pre></div></div>
+<hr />
+<p>网站后台&gt;工具&gt;更新缓存
+执行之后，论坛主页很多内容不显示了，等待10分钟，刷新出板块，60分刷出排行榜，应该属于刷新时间</p>
+
+<hr />
+
+<p><strong>等论坛正常后再进行之后的替换</strong></p>
+
+<p>5 之后，又搜索数据库进行的更新</p>
+
+<hr />
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATE pre_common_advertisement SET code=REPLACE(code,'old.com','new.com');
+
+UPDATE pre_common_member_field_forum SET sightml=REPLACE(sightml,'old.com','new.com');
+
+UPDATE pre_common_member_field_home SET spacecss=REPLACE(spacecss,'old.com','new.com');
+
+UPDATE pre_forum_optionvalue1 SET description=REPLACE(description,'old.com','new.com');
+
+UPDATE pre_common_advertisement SET parameters=REPLACE(parameters,'old.com','new.com');
+
+UPDATE pre_forum_optionvalue1 SET jjff=REPLACE(jjff,'old.com','new.com');
+
+UPDATE pre_forum_postcache SET comment=REPLACE(comment,'old.com','new.com');
+UPDATE pre_forum_typeoptionvar SET value=REPLACE(value,'old.com','new.com');
+
+UPDATE pre_home_blogfield SET message=REPLACE(message,'old.com','new.com');
+
+UPDATE pre_home_comment SET message=REPLACE(message,'old.com','new.com');
+</code></pre></div></div>
+<h3 id="不知道为什么要按照顺序执行sql">不知道为什么，要按照顺序执行sql？</h3>
+
+<h2 id="其他问题">其他问题</h2>
+<blockquote>
+  <p>其他人的问题
+后台登陆不了，被自动退出请把<code class="language-plaintext highlighter-rouge">config/config_global.php</code>中的<code class="language-plaintext highlighter-rouge">$_config['admincp']['checkip'] = 1;</code>修改为<code class="language-plaintext highlighter-rouge">$_config['admincp']['checkip'] = 0;</code></p>
+</blockquote>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/10/11/ubutnu1604-lamp5/">Ubuntu16.04搭建LAMP(php5)</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/11/02/jekyll-mkdown/">jekyll写作注意</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

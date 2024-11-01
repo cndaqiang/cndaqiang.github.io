@@ -1,0 +1,160 @@
+MODULE m_cuda
+CONTAINS
+attributes(global) SUBROUTINE cudaplus(x,y,z,n)
+IMPLICIT NONE
+INTEGER,value :: N
+REAL    :: x(N),y(N),z(N)
+!Local
+INTEGER :: bi,ti
+bi =    BlockIdx%x +        &
+        (BlockIdx%y - 1)*GridDim%x + &
+        (BlockIdx%z - 1)*GridDim%y*GridDim%x
+ti = (bi-1)*BlockDim%x*BlockDim%y*BlockDim%z + &
+        ThreadIdx%x +        &
+        (ThreadIdx%y - 1)*BlockDim%x + &
+        (ThreadIdx%z - 1)*BlockDim%y*BlockDim%x
+if(ti <= N) then
+    z(ti)=x(ti)+y(ti)+z(ti)
+endif
+END SUBROUTINE
+END MODULE
+
+SUBROUTINE cpuplus(x,y,z,n)
+IMPLICIT NONE
+INTEGER :: N,i
+REAL    :: x(N),y(N),z(N)
+z(1:N)=x(1:N)+y(1:N)+z(1:N)
+END SUBROUTINE
+
+PROGRAM fast
+use cudafor
+USE m_cuda
+IMPLICIT NONE
+INTEGER   :: N
+REAL,allocatable    :: x(:),y(:),z(:)
+REAL,allocatable,device ::  x_b(:),y_b(:),z_b(:)
+INTEGER :: i
+TYPE(dim3) grid,block
+INTEGER :: gx,gy,bs
+INTEGER :: starttime,endtime
+REAL    :: walltime
+
+
+
+DO N=1E5,1.1E8,1E8
+    WRITE(*,*) "-----------------------"
+    allocate(x(N),y(N),z(N))
+    allocate(x_b(N),y_b(N),z_b(N))
+    i=cudaDeviceSynchronize()
+    !CPU build
+    call SYSTEM_CLOCK(starttime)
+    x=1.0
+    y=1.0
+    z=1.0
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000.0
+    WRITE(*,666) "N",N,"CPU build, WALL",walltime,"ms"
+
+    !CPU计算
+    call SYSTEM_CLOCK(starttime)
+    call cpuplus(x,y,z,n)
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000.0
+    WRITE(*,666) "N",N,"CPU cal, WALL",walltime,"ms"
+
+
+    !GPU build
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(starttime)
+    !copy data
+    x_b=1.0
+    y_b=1.0
+    z_b=1.0
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000.0
+    WRITE(*,666) "N",N,"GPU build, WALL",walltime,"ms"
+
+
+    !GPU计算
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(starttime)
+    !set grid
+    bs=256
+    gx=CEILING(sqrt(N/bs+1.0))
+    gy=gx
+    grid=dim3(gx,gy,1)
+    block=dim3(bs,1,1) !1 dim block
+    call cudaplus<<<grid,block>>>(x_b,y_b,z_b,n)
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000.0
+    WRITE(*,666) "N",N,"GPU cal, WALL",walltime,"ms"
+
+
+    !计算CPU-GPU通信延迟
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(starttime)
+    !recal data
+    x=z_b
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000.0
+    WRITE(*,666) "N",N,"GPU->CPU, WALL",walltime,"ms"
+
+
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(starttime)
+    x_b=x
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000.0
+    WRITE(*,666) "N",N,"CPU->GPU, WALL",walltime,"ms"
+
+
+    call SYSTEM_CLOCK(starttime)
+    !recal data
+    x=y
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000.0
+    WRITE(*,666) "N",N,"CPUy->CPUx, WALL",walltime,"ms"
+
+    call SYSTEM_CLOCK(starttime)
+    !recal data
+    y=y
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000.0
+    WRITE(*,666) "N",N,"CPUy->CPUy, WALL",walltime,"ms"
+
+
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(starttime)
+    !recal data
+    x_b=y_b
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000.0
+    WRITE(*,666) "N",N,"GPUy->GPUz, WALL",walltime,"ms"
+
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(starttime)
+    !recal data
+    y_b=y_b
+    i=cudaDeviceSynchronize()
+    call SYSTEM_CLOCK(endtime)
+    walltime=(endtime-starttime)/1000.0
+    WRITE(*,666) "N",N,"GPUy->GPUy, WALL",walltime,"ms"
+
+
+    !计算误差
+    x(1:N)=z_b(1:N)
+    WRITE(*,667) "N",N,"Error",sum(x(1:N)-z(1:N))
+
+    i=cudaDeviceSynchronize()
+    deallocate(x,y,z,x_b,y_b,z_b)
+
+ENDDO
+
+666 format(A,' ', I10,' ',A20,' ',f15.5,' ',A)
+667 format(A,' ', I10,' ',A20,' ',f15.5)
+END PROGRAM

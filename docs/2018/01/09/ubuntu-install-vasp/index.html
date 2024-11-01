@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Ubuntu VASP安装和运行 </title>
+    <meta name="description" content="  建议看此文Intel Parallel Studio XE 编译VASP更具有普遍性建议看此文Intel Parallel Studio XE 编译VASP更具有普遍性">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2018/01/09/ubuntu-install-vasp/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Ubuntu VASP安装和运行 </h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-01-09
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DFT" title="Category: DFT" rel="category">DFT</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#vasp" title="Tag: vasp" rel="tag">vasp</a-->
+        <a href="/tag/#vasp" title="Tag: vasp" rel="tag">vasp</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#建议看此文intel-parallel-studio-xe-编译vasp更具有普遍性" id="markdown-toc-建议看此文intel-parallel-studio-xe-编译vasp更具有普遍性">建议看此文Intel Parallel Studio XE 编译VASP更具有普遍性</a></li>
+  <li><a href="#需要的软件" id="markdown-toc-需要的软件">需要的软件</a></li>
+  <li><a href="#总述" id="markdown-toc-总述">总述</a>    <ul>
+      <li><a href="#理解" id="markdown-toc-理解">理解</a></li>
+    </ul>
+  </li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a>    <ul>
+      <li><a href="#安装环境" id="markdown-toc-安装环境">安装环境</a></li>
+      <li><a href="#安装依赖" id="markdown-toc-安装依赖">安装依赖</a></li>
+      <li><a href="#intel编译器" id="markdown-toc-intel编译器">intel编译器</a>        <ul>
+          <li><a href="#安装-1" id="markdown-toc-安装-1">安装</a></li>
+          <li><a href="#添加环境变量" id="markdown-toc-添加环境变量">添加环境变量</a></li>
+        </ul>
+      </li>
+      <li><a href="#openmpi安装" id="markdown-toc-openmpi安装">openmpi安装</a>        <ul>
+          <li><a href="#编译安装" id="markdown-toc-编译安装">编译安装</a></li>
+          <li><a href="#添加环境变量-1" id="markdown-toc-添加环境变量-1">添加环境变量</a></li>
+        </ul>
+      </li>
+      <li><a href="#fftw安装" id="markdown-toc-fftw安装">fftw安装</a>        <ul>
+          <li><a href="#编译安装-1" id="markdown-toc-编译安装-1">编译安装</a></li>
+        </ul>
+      </li>
+      <li><a href="#编译vasp" id="markdown-toc-编译vasp">编译VASP</a></li>
+      <li><a href="#添加环境变量-2" id="markdown-toc-添加环境变量-2">添加环境变量</a></li>
+    </ul>
+  </li>
+  <li><a href="#简单运行vasp" id="markdown-toc-简单运行vasp">简单运行vasp</a>    <ul>
+      <li><a href="#运行" id="markdown-toc-运行">运行</a></li>
+      <li><a href="#输入输出文件" id="markdown-toc-输入输出文件">输入输出文件</a></li>
+      <li><a href="#后记" id="markdown-toc-后记">后记</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="建议看此文intel-parallel-studio-xe-编译vasp更具有普遍性">建议看此文<a href="/2018/01/15/intel-mpi-vasp/">Intel Parallel Studio XE 编译VASP</a>更具有普遍性</h1>
+
+<p><br /><br /><br /><br />
+这两天安装vasp可要被折腾死了，虽然组里服务器上有vasp，可是自己还没有进行计算的经验，在服务器上乱提交作业，被发现就不好了，还是在自己服务器上学习更放心大胆一些。
+<br />这几天尝试了,好多个版本的编译器，vasp编译过4.6,5.3都失败了，最后发现这个帖子<a href="http://bbs.keinsci.com/forum.php?mod=viewthread&amp;tid=4267&amp;highlight=vasp">[VASP] 教你从头编译vasp-5.4.1</a>提供的2011版的icc,ifort,icpc编译vasp5.4没有问题,成功在台式机,云服务器，windows10上bash编译完成.</p>
+
+<h1 id="需要的软件">需要的软件</h1>
+<p><a href="https://pan.baidu.com/s/1bqZFjkz">编译器,fftw,openmpi</a>,也可以去相应网站下载<br />
+<a href="/web/file/2018/makefile.include">makefile.include</a>,从<code class="language-plaintext highlighter-rouge">vasp.5.4.1/arch</code>中获得并修改<br />
+vasp.5.4,vasp.5.lib源码,百度可搜,请购买正版</p>
+<h1 id="总述">总述</h1>
+<p>安装VASP主要需要这几个部分</p>
+<ul>
+  <li>编译环境,编译器<br />
+这里使用linux+ifc(intel icc ifort)
+<br />intel的parallel_studio_xe编译器包含MKL,MPI,
+<br />网上和intel网站有parallel_studio_xe_2013和2015的安装成功记录，我没有成功，最后使用2011版的l_ccompxe_2011 l_fcompxe_2011 
+<br />使用其他编译器也可以，要选择合适的makefile文件并修改正确</li>
+  <li>并行计算mpi
+<br />intel编译器包含mpi，也可使用openmpi<br />
+最后使用openmpi<br /></li>
+  <li>数学库BLACS,LAPACK
+<br />有Intel的MKL,GotoBlas,ATLAS
+<br />这次使用Intel的MKL<br /></li>
+  <li>FFT
+<br />vasp自带fft，也使用额外的fftw
+<br />最后使用fftw</li>
+</ul>
+
+<h2 id="理解">理解</h2>
+<p>编译无需root操作，个人将所有软件安装在自己目录里也可以<br />
+编译vasp时，在makefile文件中设置编译器,MKL,MPI,FFT，
+<br />因此，可以在服务器上安装多个版本的编译器,MKL,MPI,FFT，选则合适的makefile，修改makefile中相应的目录即可<br />
+仅编译安装vasp并不需要很大的计算量，对材料的计算可能需要很大<br />
+在实验室台式机上编译intel_2011和vasp5.4正常，尝试在1核1G内存腾讯云服务器编译失败,查看后台内存占用接近峰值时编译失败，增加虚拟内存后，编译正常进行，如图。所以我之前用parallel_studio_xe_2013/2018和vasp5.4/5.3编译失败的原因很大可能是服务器内存不够了<br />
+<img src="/uploads/2018/01/vaspinstall.png" alt="" /></p>
+
+<h1 id="安装">安装</h1>
+<h2 id="安装环境">安装环境</h2>
+<p>实验室的台式机
+<br />ubuntu server 16.04.3 
+<br />Intel(R) Core(TM) i5-3450 CPU @ 3.10GHz
+<br /> 6G内存
+<br />这次是安装在单用户目录下面，而且过程都是编译，感觉与linux的哪个发行版关系不大
+<br />另外，1核1G内存2G交换分区腾讯云主机也成功安装
+<br />windows10上的bash 8G内存 Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz，也安装完成
+<br />windows10上的bash安装注意</p>
+<ul>
+  <li>建议关闭windows defender后安装</li>
+  <li>intel编译器安装过程较卡，耐心等待</li>
+  <li>最后编译vasp大约用时30分钟</li>
+</ul>
+
+<h2 id="安装依赖">安装依赖</h2>
+<p>直接安装<code class="language-plaintext highlighter-rouge">l_ccompxe_</code>时提示缺少依赖,安装下面包后解决(下面的包应该是安装多了)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update
+sudo apt-get install gfortran
+sudo apt-get install build-essential
+sudo apt-get install libstdc++5
+sudo apt-get install lib32stdc++6
+sudo apt-get install libc6-dev-i386
+sudo apt-get install g++-multilib
+</code></pre></div></div>
+<p><strong>另外，windows10的bash还需安装</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install flex
+sudo apt install texinfo
+</code></pre></div></div>
+
+<h2 id="intel编译器">intel编译器</h2>
+<h3 id="安装-1">安装</h3>
+<p>解压安装icc</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar xzvf l_ccompxe_2011.6.233
+cd l_ccompxe_2011.6.233/
+./install
+</code></pre></div></div>
+<p>安装时，选择单用户安装(root用户安装也可以，会安装到<code class="language-plaintext highlighter-rouge">/opt/intel</code>)，使用lic文件激活,其他保持默认<br />
+文件最终安装在<code class="language-plaintext highlighter-rouge">用户目录/intel</code>中，如<code class="language-plaintext highlighter-rouge">/home/cndaqiang/intel</code>，以后编译设置里面的<code class="language-plaintext highlighter-rouge">/home/cndaqiang/intel</code>替换为你对应的目录即可
+<br /><br />同理安装<code class="language-plaintext highlighter-rouge">l_fcompxe_2011.6.233</code></p>
+
+<h3 id="添加环境变量">添加环境变量</h3>
+<p>是为了输入<code class="language-plaintext highlighter-rouge">ifort</code>等命令直接运行，不添加环境变量则要在makefile里指明编译器的位置如<code class="language-plaintext highlighter-rouge">FCC=/目录.../ifort</code><br />
+编辑<code class="language-plaintext highlighter-rouge">~/.bashrc</code>,添加以下内容，注意替换相关目录</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source /home/cndaqiang/intel/composerxe/bin/compilervars.sh intel64
+export PATH=/home/cndaqiang/intel/composerxe/bin:$PATH
+export LD_LIBRARY_PATH=/home/cndaqiang/intel/composerxe/mkl/lib/intel64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/home/cndaqiang/intel/lib/intel64:$LD_LIBRARY_PATH
+</code></pre></div></div>
+<p>编译生效</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source ~/.bashrc 
+</code></pre></div></div>
+<p>环境变量配置成功，直接输入<code class="language-plaintext highlighter-rouge">which icc ifort icpc</code>会返回命令所在路径</p>
+<h2 id="openmpi安装">openmpi安装</h2>
+<h3 id="编译安装">编译安装</h3>
+<p>使用openmpi-1.6.5,可去其网站下载</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar xzvf openmpi-1.6.5.tar.gz
+cd openmpi-1.6.5
+</code></pre></div></div>
+<p>生成makefile文件</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./configure --prefix=安装目录 CC=icc CXX=icpc F77=ifort FC=ifort
+</code></pre></div></div>
+<ul>
+  <li>安装目录为编译后openmpi安装到的目录
+<br />我设置为<code class="language-plaintext highlighter-rouge">/home/cndaqiang/soft/openmpi</code>之后注意替换</li>
+  <li><code class="language-plaintext highlighter-rouge">CC=icc CXX=icpc F77=ifort FC=ifort</code>为使用哪种编译器编译openmpi</li>
+</ul>
+
+<p>没有报错后，编译安装</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make -j4
+#-j4为使用4核安装，我的电脑只有4核，尽量使用多的核编译会快
+make install
+</code></pre></div></div>
+<h3 id="添加环境变量-1">添加环境变量</h3>
+
+<p>编辑<code class="language-plaintext highlighter-rouge">~/.bashrc</code>,添加以下内容，注意替换相关目录</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=/home/cndaqiang/soft/openmpi/bin:$PATH
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/openmpi/lib:$LD_LIBRARY_PATH
+export MANPATH=/home/cndaqiang/soft/openmpi/share/man:$MANPATH
+</code></pre></div></div>
+<p>编译生效</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source ~/.bashrc 
+</code></pre></div></div>
+<p>环境变量配置成功，直接输入<code class="language-plaintext highlighter-rouge">which mpif90</code>会返回命令所在路径</p>
+<h2 id="fftw安装">fftw安装</h2>
+<h3 id="编译安装-1">编译安装</h3>
+<p>使用fftw-3.3.4，可去其网站下载<br />
+编译同openmpi</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar xzvf fftw-3.3.4.tar.gz 
+cd  fftw-3.3.4
+./configure --prefix=安装目录 --enable-mpi
+make -j4
+make install
+</code></pre></div></div>
+<ul>
+  <li>安装目录我设置为<code class="language-plaintext highlighter-rouge">/home/cndaqiang/soft/fftw</code>之后注意替换</li>
+  <li>
+    <blockquote>
+      <p>帖子中说一定要加<code class="language-plaintext highlighter-rouge">--enable-mpi</code>否则在安装好的lib文件夹内无法生成此次编译VASP所必须的<code class="language-plaintext highlighter-rouge">libfftw3_mpi.a</code>文件</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>编辑<code class="language-plaintext highlighter-rouge">~/.bashrc</code>,添加以下内容，注意替换相关目录</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=/home/cndaqiang/soft/fftw/bin:$PATH
+export LD_LIBRARY_PATH=/home/cndaqiang/soft/fftw/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+<p>编译生效</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source ~/.bashrc 
+</code></pre></div></div>
+<p><br />
+准备工作做完了，开始编译vasp</p>
+
+<h2 id="编译vasp">编译VASP</h2>
+<p><strong>与之前vasp版本编译的不同，不需进入vasp.5.lib进行编译</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp makefile.include vasp.5.4.1
+cd vasp.5.4.1
+vi makefile.include
+</code></pre></div></div>
+<p>修改makefile.include</p>
+
+<ul>
+  <li>28行设置MKL路径<code class="language-plaintext highlighter-rouge">MKLROOT    =/home/cndaqiang/intel/mkl</code></li>
+  <li>33行只使用openmpi <code class="language-plaintext highlighter-rouge">BLACS      =-L$(MKL_PATH) -lmkl_blacs_openmpi_lp64</code></li>
+  <li>38行设置fftw <code class="language-plaintext highlighter-rouge">OBJECTS    = fftmpiw.o fftmpi_map.o fftw3d.o fft3dlib.o /home/cndaqiang/soft/fftw/lib/libfftw3_mpi.a</code></li>
+  <li>39行设置fftw <code class="language-plaintext highlighter-rouge">INCS       =-I/home/cndaqiang/soft/fftw/include</code></li>
+</ul>
+
+<p>开始编译,不建议加<code class="language-plaintext highlighter-rouge">-jn</code>命令，容易出错</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make all
+</code></pre></div></div>
+<p>大概30分钟左右会完成编译，在bin文件夹中会生成三个可执行文件</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cndaqiang@ubuntu:~/VASP-5.4/vasp.5.4.1$ ls ./bin
+vasp_gam  vasp_ncl  vasp_std
+</code></pre></div></div>
+<ul>
+  <li>vasp_gam  /gamma版本的vasp</li>
+  <li>vasp_std  /标准版本的vasp</li>
+  <li>vasp_ncl  /非线性版本的vasp</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">vasp_gam  vasp_ncl  vasp_std</code>三个文件夹里面分别有一个可执行程序vasp</p>
+<h2 id="添加环境变量-2">添加环境变量</h2>
+<p>把VASP添加到PATH后，可以通过直接输入vasp运行<br />
+例如我,新建了一个文件夹，里面创建三个软连接，分别指向三个版本的vasp，再将该目录设置为PATH目录，通过<code class="language-plaintext highlighter-rouge">vasp_gam</code>,<code class="language-plaintext highlighter-rouge">vasp_ncl</code>,<code class="language-plaintext highlighter-rouge">vasp_std</code>分别运行三个版本的vasp</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/soft/vasp
+cd ~/soft/vasp
+ln -s /home/ubuntu/VAPS_install/vasp5.4/vasp.5.4.1/build/gam/vasp vasp_gam
+ln -s /home/ubuntu/VAPS_install/vasp5.4/vasp.5.4.1/build/ncl/vasp vasp_ncl
+ln -s /home/ubuntu/VAPS_install/vasp5.4/vasp.5.4.1/build/std/vasp vasp_std
+</code></pre></div></div>
+<p>在<code class="language-plaintext highlighter-rouge">~/.bashrc</code>中添加</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=/home/ubuntu/soft/vasp:$PATH
+</code></pre></div></div>
+<p>编译<code class="language-plaintext highlighter-rouge">~/.bashrc</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source ~/.bashrc
+</code></pre></div></div>
+<p>或使用完整路径，如<code class="language-plaintext highlighter-rouge">/home/ubuntu/VAPS_install/vasp5.4/vasp.5.4.1/build/gam/vasp</code>也可以<br /></p>
+
+<h1 id="简单运行vasp">简单运行vasp</h1>
+<blockquote>
+  <p>生成输入文件-&gt;vasp-&gt;输出文件</p>
+</blockquote>
+
+<h2 id="运行">运行</h2>
+<p>新建一个文件夹，里面放入输入文件(第一次可先搜索vasp实例得到下面的文件，之后再慢慢看每个文件的具体内容和编写方法),命名如下</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INCAR  KPOINTS  POSCAR  POTCAR
+</code></pre></div></div>
+<p>直接运行(这里的<code class="language-plaintext highlighter-rouge">vasp_std</code>是我之前添加的快捷命令,可以用<code class="language-plaintext highlighter-rouge">/home/ubuntu/VAPS_install/vasp5.4/vasp.5.4.1/build/std/vasp</code>替换)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vasp_std
+</code></pre></div></div>
+<p>生成输出文件,如</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ubuntu@VM-10-194-ubuntu:~/work/1_1_O_atom$ ls
+CHG     CONTCAR  EIGENVAL  KPOINTS  OUTCAR  POSCAR  REPORT       WAVECAR
+CHGCAR  DOSCAR   INCAR     OSZICAR  PCDAT   POTCAR  vasprun.xml  XDATCAR
+</code></pre></div></div>
+<p>可以将自己的运算结果和<a href="https://www.materialsproject.org">Materials Project</a>进行对比</p>
+<h2 id="输入输出文件">输入输出文件</h2>
+<p>输入输出文件的编写规则和vasp使用的相关教程资源就非常多了，不在这里整理了</p>
+
+<h2 id="后记">后记</h2>
+<p>参考的教程太多了，恕不把每个链接放上了，仅再此感谢小木虫csdn计算化学公社等优秀的网友<br />
+以后有时间，再整理一次makefile里面的参数对应哪些，串行，并行，其他mkl库，fftw等，先这样用着吧，先去学习vasp了</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/11/26/mysql/">Mysql命令行操作</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2018/01/11/torque-install-ubuntu/">[已放弃]<s>单机ubuntu编译安装PBS torque</s></a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

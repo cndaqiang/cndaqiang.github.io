@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Ubuntu使用vsftpd搭建ftp服务器</title>
+    <meta name="description" content="  这篇文章写的太乱了，不想更新了，如果仅想用的话，看Ubuntu 16.04 使用vsftpd搭建ftp服务器这篇文章写的太乱了，不想更新了，如果仅想用的话，看Ubuntu 16.04 使用vsftpd搭建ftp服务器">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2017/09/27/ubuntu-vsftps/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>Ubuntu使用vsftpd搭建ftp服务器</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-09-27
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#ubuntu" title="Tag: ubuntu" rel="tag">ubuntu</a-->
+        <a href="/tag/#ubuntu" title="Tag: ubuntu" rel="tag">ubuntu</a>&nbsp;
+    
+        <!--a href="/tag/#vsftpd" title="Tag: vsftpd" rel="tag">vsftpd</a-->
+        <a href="/tag/#vsftpd" title="Tag: vsftpd" rel="tag">vsftpd</a>&nbsp;
+    
+        <!--a href="/tag/#ftp" title="Tag: ftp" rel="tag">ftp</a-->
+        <a href="/tag/#ftp" title="Tag: ftp" rel="tag">ftp</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#这篇文章写的太乱了不想更新了如果仅想用的话看ubuntu-1604-使用vsftpd搭建ftp服务器" id="markdown-toc-这篇文章写的太乱了不想更新了如果仅想用的话看ubuntu-1604-使用vsftpd搭建ftp服务器">这篇文章写的太乱了，不想更新了，如果仅想用的话，看Ubuntu 16.04 使用vsftpd搭建ftp服务器</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#建议" id="markdown-toc-建议">建议</a></li>
+  <li><a href="#安装" id="markdown-toc-安装">安装</a></li>
+  <li><a href="#配置" id="markdown-toc-配置">配置</a>    <ul>
+      <li><a href="#配置文件" id="markdown-toc-配置文件">配置文件</a></li>
+      <li><a href="#配置文件语法" id="markdown-toc-配置文件语法">配置文件语法</a></li>
+      <li><a href="#主动模式和被动模式" id="markdown-toc-主动模式和被动模式">主动模式和被动模式</a></li>
+    </ul>
+  </li>
+  <li><a href="#案例" id="markdown-toc-案例">案例</a>    <ul>
+      <li><a href="#一个用户对某目录具有写权限特定端口" id="markdown-toc-一个用户对某目录具有写权限特定端口">一个用户对某目录具有写权限，特定端口</a>        <ul>
+          <li><a href="#主动模式" id="markdown-toc-主动模式">主动模式</a></li>
+          <li><a href="#被动模式" id="markdown-toc-被动模式">被动模式</a></li>
+          <li><a href="#创建目录" id="markdown-toc-创建目录">创建目录</a></li>
+          <li><a href="#创建用户与读写权限" id="markdown-toc-创建用户与读写权限">创建用户与读写权限</a></li>
+          <li><a href="#重启" id="markdown-toc-重启">重启</a></li>
+          <li><a href="#登陆遇到530错误" id="markdown-toc-登陆遇到530错误">登陆遇到530错误</a></li>
+          <li><a href="#其他问题" id="markdown-toc-其他问题">其他问题</a></li>
+        </ul>
+      </li>
+      <li><a href="#可访问所有目录的管理员" id="markdown-toc-可访问所有目录的管理员">可访问所有目录的管理员</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="这篇文章写的太乱了不想更新了如果仅想用的话看ubuntu-1604-使用vsftpd搭建ftp服务器">这篇文章写的太乱了，不想更新了，如果仅想用的话，看<a href="/2018/11/17/ubuntu-vsftp2/">Ubuntu 16.04 使用vsftpd搭建ftp服务器</a></h2>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://www.jianshu.com/p/9ea295f9e513">Ubuntu 14.04 配置vsftpd实现FTP服务器 - 通过FTP连接AWS</a></p>
+
+<p><a href="http://blog.csdn.net/zhouleiblog/article/details/9325913">linux 更改文件所属用户及用户组</a></p>
+
+<p><a href="http://blog.163.com/yanenshun@126/blog/static/128388169201203011157308/">linux修改文件的拥有者及组</a></p>
+
+<p><a href="https://zh.wikipedia.org/zh-hans/Chmod">chmod - 维基百科，自由的百科全书</a></p>
+<h2 id="环境">环境</h2>
+<p>Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-53-generic x86_64)</p>
+<h2 id="建议">建议</h2>
+<p>安装过程中发现连接不上，用FileZilla连接，看有没有什么异常消息，再搜索解决
+更改ftp目录后，建议关闭FileZilla软件后再打开重新连接ftp</p>
+<h2 id="安装">安装</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get update
+apt-get install vsftpd
+</code></pre></div></div>
+<h2 id="配置">配置</h2>
+<h3 id="配置文件">配置文件</h3>
+<p>配置文件在/etc/vsftpd.conf，参照下面的配置文件语法，配置ftp服务器，如果配置文件中没有语法里面的内容，直接添加即可</p>
+
+<h3 id="配置文件语法">配置文件语法</h3>
+
+<p>以下配置转载自<a href="http://www.jianshu.com/p/9ea295f9e513">作者：Stinson Ubuntu 14.04 配置vsftpd实现FTP服务器 - 通过FTP连接AWS</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>listen=&lt;YES/NO&gt; :设置为YES时vsftpd以独立运行方式启动，设置为NO时以xinetd方式启动（xinetd是管理守护进程的，将服务集中管理，可以减少大量服务的资源消耗）
+listen_port=&lt;port&gt; :设置控制连接的监听端口号，默认为21
+listen_address=&lt;ip address&gt; :将在绑定到指定IP地址运行，适合多网卡
+connect_from_port_20=&lt;YES/NO&gt; :若为YES，则强迫FTP－DATA的数据传送使用port 20，默认YES
+pasv_enable=&lt;YES/NO&gt; :是否使用被动模式的数据连接，如果客户机在防火墙后，请开启为YES
+pasv_min_port=&lt;n&gt;
+pasv_max_port=&lt;m&gt; :设置被动模式后的数据连接端口范围在n和m之间,建议为50000－60000端口
+pasv_address=你的访问IP（服务器外网IP）
+message_file=&lt;filename&gt; :设置使用者进入某个目录时显示的文件内容，默认为 .message
+dirmessage_enable=&lt;YES/NO&gt; :设置使用者进入某个目录时是否显示由message_file指定的文件内容
+ftpd_banner=&lt;message&gt; :设置用户连接服务器后的显示信息，就是欢迎信息
+banner_file=&lt;filename&gt; :设置用户连接服务器后的显示信息存放在指定的filename文件中
+connect_timeout=&lt;n&gt; :如果客户机连接服务器超过N秒，则强制断线，默认60
+accept_timeout=&lt;n&gt; :当使用者以被动模式进行数据传输时，服务器发出passive port指令等待客户机超过N秒，则强制断线，默认60
+accept_connection_timeout=&lt;n&gt; :设置空闲的数据连接在N秒后中断，默认120
+data_connection_timeout=&lt;n&gt; : 设置空闲的用户会话在N秒后中断，默认300
+max_clients=&lt;n&gt; : 在独立启动时限制服务器的连接数，0表示无限制
+max_per_ip=&lt;n&gt; :在独立启动时限制客户机每IP的连接数，0表示无限制（不知道是否跟多线程下载有没干系）
+local_enable=&lt;YES/NO&gt; :设置是否支持本地用户帐号访问
+guest_enable=&lt;YES/NO&gt; :设置是否支持虚拟用户帐号访问
+write_enable=&lt;YES/NO&gt; :是否开放本地用户的写权限
+local_umask=&lt;nnn&gt; :设置本地用户上传的文件的生成掩码，默认为077
+local_max_rate&lt;n&gt; :设置本地用户最大的传输速率，单位为bytes/sec，值为0表示不限制
+local_root=&lt;file&gt; :设置本地用户登陆后的目录，默认为本地用户的主目录
+chroot_local_user=&lt;YES/NO&gt; :当为YES时，所有本地用户可以执行chroot
+chroot_list_enable=&lt;YES/NO&gt; 
+chroot_list_file=&lt;filename&gt; :当chroot_local_user=NO 且 chroot_list_enable=YES时，只有filename文件指定的用户可以执行chroot
+anonymous_enable=&lt;YES/NO&gt; :设置是否支持匿名用户访问
+anon_max_rate=&lt;n&gt; :设置匿名用户的最大传输速率，单位为B/s，值为0表示不限制
+anon_world_readable_only=&lt;YES/NO&gt; 是否开放匿名用户的浏览权限
+anon_upload_enable=&lt;YES/NO&gt; 设置是否允许匿名用户上传
+anon_mkdir_write_enable=&lt;YES/NO&gt; :设置是否允许匿名用户创建目录
+anon_other_write_enable=&lt;YES/NO&gt; :设置是否允许匿名用户其他的写权限（注意，这个在安全上比较重要，一般不建议开，不过关闭会不支持续传）
+anon_umask=&lt;nnn&gt; :设置匿名用户上传的文件的生成掩码，默认为077
+</code></pre></div></div>
+<h3 id="主动模式和被动模式">主动模式和被动模式</h3>
+<blockquote>
+  <p>FTP是基于TCP的服务，使用2个端口，一个数据端口和一个命令端口（也可叫做控制端口）。通常来说这两个端口是21（命令端口）和20（数据端口）。但FTP工作方式的不同，数据端口并不总是20。这就是主动与被动FTP的最大不同之处。</p>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li>主动模式：数据连接上，服务端从20端口去连接客户端大于1024的端口
+命令连接：客户端 （&gt;1024端口） -&gt; 服务器 21端口 
+数据连接：客户端 （&gt;1024端口） &lt;- 服务器 20端口
+优势：主动FTP对FTP服务器的管理有利，但对客户端的管理不利。因为FTP服务器企图与客户端的高位随机端口建立连接，而这个端口很有可能被客户端的防火墙阻塞掉。</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li>被动模式：数据连接上，客户端从大于1024端口去连接服务端大于1024的端口
+命令连接：客户端 （&gt;1024端口） -&gt; 服务器 21端
+数据连接：客户端 （&gt;1024端口） -&gt; 服务器 （&gt;1024端口）
+优势：被动FTP对FTP客户端的管理有利，但对服务器端的管理不利。因为客户端要与服务器端建立两个连接，其中一个连到一个高位随机端口，而这个端口很有可能被服务器端的防火墙阻塞掉。</li>
+  </ul>
+</blockquote>
+
+<h2 id="案例">案例</h2>
+<p><strong>是修改vsftpd.conf</strong>文件，不是新建vsftps.conf</p>
+
+<p>填入下面内容</p>
+<h3 id="一个用户对某目录具有写权限特定端口">一个用户对某目录具有写权限，特定端口</h3>
+<h4 id="主动模式">主动模式</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 不支持匿名用户访问
+anonymous_enable=NO
+#监听端口1224
+listen_port=1224;
+#支持本地用户帐号访问
+local_enable=YES
+#是否开放本地用户的写权限
+write_enable=YES
+#本地用户登陆后的目录
+local_root=/home/ftp
+#[可选]限制用户只能访问ftp根目录，不然用户可以访问服务器根目录
+chroot_local_user=YES
+</code></pre></div></div>
+<h4 id="被动模式">被动模式</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 不支持匿名用户访问
+anonymous_enable=NO
+#监听端口1224
+listen_port=1224;
+#被动端口在1250-1260
+pasv_min_port=1250
+pasv_max_port=1260
+#服务器ip
+pasv_address=服务器ip
+#支持本地用户帐号访问
+local_enable=YES
+#是否开放本地用户的写权限
+write_enable=YES
+#本地用户登陆后的目录
+local_root=/home/ftp
+#[可选]限制用户只能访问ftp根目录，不然用户可以访问服务器根目录
+chroot_local_user=YES
+</code></pre></div></div>
+<p><strong>注:一些vps设置了安全组，还需要在控制面版里允许，监听端口和被动端口通过，类似在路由器下面没有公网的ftp服务器要设置防火墙端口转发</strong></p>
+<h4 id="创建目录">创建目录</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#创建ftp根目录
+mkdir /home/ftp
+#必须去掉根目录的可读权限，不然连接时报错500 OOPS: vsftpd: refusing to run with writable root inside chroot()==
+chmod a-w /home/ftp
+</code></pre></div></div>
+<h4 id="创建用户与读写权限">创建用户与读写权限</h4>
+<p>添加本地用户和设置密码</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> useradd -d 用户家目录  -M 用户名
+ passwd 用户名
+</code></pre></div></div>
+<p>例家目录为/home/ftp/ftptest，用户名为ftptest
+理解，这就是ubuntu本地用户的创建过程，家目录是什么并不影响ftp（只不过不创建家目录，无法登陆ftp，家目录属于谁却无所谓），连接ftp时会用本地账户登陆然后自动跳转到ftp根目录，家目录就是家目录而已，<strong>能够写入不仅需要ftp开启写入功能，还要看该linux用户是否拥有对该目录的写权限</strong>
+创建家目录</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir /home/ftp/ftptest
+</code></pre></div></div>
+
+<p>如果需要可将家目录拥有者设为ftptest
+修改文件(夹)用户组方法</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chown 用户名 文件(夹) //修改文件拥有者
+chgrp 用户组名 文件(夹) //修改拥有者组 
+chown 用户名:用户组名 文件(夹) // 使用 chown 一次性修改拥有者及组 
+</code></pre></div></div>
+<p>也可在需要的目录下新建文件夹，并将拥有者权限赋给ftptest，或通过chmod设置该目录不同用户的权限
+chomd语法</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod 数字1数字2数字3 文件(夹)
+</code></pre></div></div>
+<p>数字1数字2数字3 分别为拥有者用户，拥有者用户组其他成员，其他人员拥有的权限，数字值为下列需要权限代表的数字相加</p>
+<ul>
+  <li>r读 4</li>
+  <li>w写 2</li>
+  <li>x执行 1</li>
+  <li>- 0
+例<code class="language-plaintext highlighter-rouge">chmod 777 test </code>，所有人对test都可读可写可执行,其他方法，搜索chmod即可</li>
+</ul>
+
+<p><strong>一定要设置好权限，例如在discuz设置远程附件时
+<img src="http://upload-images.jianshu.io/upload_images/4575564-3770150f1e0505ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" />
+，所以附件目录一定要设置在ftp账户目录的家目录里面</strong></p>
+<h4 id="重启">重启</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service vsftpd restart
+</code></pre></div></div>
+<h4 id="登陆遇到530错误">登陆遇到530错误</h4>
+<p>530 login incorrect==错误，解决方式如下：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/pam.d/vsftpd
+</code></pre></div></div>
+<p>注释掉</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#auth    required pam_shells.so
+</code></pre></div></div>
+<p>重启</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service vsftpd restart
+</code></pre></div></div>
+<h4 id="其他问题">其他问题</h4>
+<ul>
+  <li>FileZilla可以访问，winscp访问报错无法列出根目录，windows10资源管理器访问也报错</li>
+  <li>刚开始被动模式还正常，后收到“服务器发回了不可路由的地址”，网上都让客户端改成主动模式，可是我希望的就是被动模式啊，防火墙全开了，安全组也全开了,还是不行，怀疑是vps服务商的某些限制</li>
+</ul>
+
+<h3 id="可访问所有目录的管理员">可访问所有目录的管理员</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#限制用户只能访问ftp根目录
+chroot_local_user=YES
+#开启不受限制的用户列表
+chroot_list_enable=YES
+#不受限制用户列表
+chroot_list_file=/etc/vsftpd.chroot_list
+</code></pre></div></div>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/09/27/ubuntu-ss/">Ubuntu下搭建ss服务器</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/09/27/ubuntu1604-lamp/">Ubuntu16.10搭建LAMP</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

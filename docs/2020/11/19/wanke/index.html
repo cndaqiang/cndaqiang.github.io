@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>玩客云刷armbian记录</title>
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2020/11/19/wanke/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>玩客云刷armbian记录</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2020-11-19
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Linux" title="Tag: Linux" rel="tag">Linux</a-->
+        <a href="/tag/#Linux" title="Tag: Linux" rel="tag">Linux</a>&nbsp;
+    
+        <!--a href="/tag/#%E7%8E%A9%E5%AE%A2%E4%BA%91" title="Tag: 玩客云" rel="tag">玩客云</a-->
+        <a href="/tag/#玩客云" title="Tag: 玩客云" rel="tag">玩客云</a>&nbsp;
+    
+        <!--a href="/tag/#arm" title="Tag: arm" rel="tag">arm</a-->
+        <a href="/tag/#arm" title="Tag: arm" rel="tag">arm</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#写在前面" id="markdown-toc-写在前面">写在前面</a></li>
+  <li><a href="#工具" id="markdown-toc-工具">工具</a></li>
+  <li><a href="#下载安装包" id="markdown-toc-下载安装包">下载安装包</a></li>
+  <li><a href="#拆机" id="markdown-toc-拆机">拆机</a></li>
+  <li><a href="#短接刷uboot" id="markdown-toc-短接刷uboot">短接刷uboot</a></li>
+  <li><a href="#设置uboot" id="markdown-toc-设置uboot">设置uboot</a>    <ul>
+      <li><a href="#刷写arm镜像" id="markdown-toc-刷写arm镜像">刷写arm镜像</a></li>
+      <li><a href="#ttl设置" id="markdown-toc-ttl设置">TTL设置</a></li>
+      <li><a href="#连接玩客云" id="markdown-toc-连接玩客云">连接玩客云</a></li>
+      <li><a href="#设置uboot-1" id="markdown-toc-设置uboot-1">设置uboot</a></li>
+    </ul>
+  </li>
+  <li><a href="#安装系统" id="markdown-toc-安装系统">安装系统</a>    <ul>
+      <li><a href="#插入u盘" id="markdown-toc-插入u盘">插入U盘</a></li>
+      <li><a href="#ttl或者键盘屏幕控制进行下面的设置" id="markdown-toc-ttl或者键盘屏幕控制进行下面的设置">ttl<strong>或者</strong>键盘屏幕控制,进行下面的设置</a></li>
+      <li><a href="#可选写入系统到玩客云内部存储" id="markdown-toc-可选写入系统到玩客云内部存储">[可选]写入系统到玩客云内部存储</a></li>
+    </ul>
+  </li>
+  <li><a href="#重启开机" id="markdown-toc-重启开机">重启开机</a></li>
+  <li><a href="#收尾" id="markdown-toc-收尾">收尾</a></li>
+</ul>
+
+<h2 id="参考">参考</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/144850658">玩客云内置 eMMC 存储刷入 armbian</a></p>
+
+<h2 id="写在前面">写在前面</h2>
+<p>主要参考了<a href="https://zhuanlan.zhihu.com/p/144850658">玩客云内置 eMMC 存储刷入 armbian</a>帖子,<br />
+本文的很多配图(水印:知乎@梨数码)也来自这个帖子,会额外补充一些注意事项。</p>
+
+<h2 id="工具">工具</h2>
+<ul>
+  <li>USB公对公 用于刷入带uboot的安卓系统. 后期使用这个uboot启动armbian</li>
+  <li>USB转TTL转换器 用于在uboot界面设置开机u盘启动. [可选]进入armbian系统后操作</li>
+  <li>刷机U盘</li>
+  <li>[可选]键盘&amp;屏幕 进入armbian系统后操作, 可以使用USB转TTL转换器替代</li>
+</ul>
+
+<h2 id="下载安装包">下载安装包</h2>
+<p>来自<a href="https://zhuanlan.zhihu.com/p/144850658">玩客云内置 eMMC 存储刷入 armbian</a></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>百度云盘链接：https://pan.baidu.com/s/1RNBZGNbM1ZubrRuSegZ4kQ 
+提取码：okts
+天翼云盘备份：https://cloud.189.cn/t/Z3a6jmYviYzu（访问码：aib8）
+备份百度云链接: https://pan.baidu.com/s/1URTrfJInQY8Gd_m6Jzjnxw 
+提取码: q7hu
+</code></pre></div></div>
+
+<h2 id="拆机">拆机</h2>
+<p>暴力揭开后盖,拧下螺丝,拿下盖板, 很费力的抽出主板<br />
+来自<a href="https://zhuanlan.zhihu.com/p/144850658">玩客云内置 eMMC 存储刷入 armbian</a>
+<img src="/uploads/2020/11/lishuma1.png" alt="" /></p>
+
+<h2 id="短接刷uboot">短接刷uboot</h2>
+<p><strong>刷入带uboot的安卓系统</strong><br /></p>
+<ul>
+  <li>安装晶晨刷机软件 USB Burning Tool</li>
+  <li>打开&gt;左上角点击 “文件”，然后选择导入烧录包，选择下载的 update.img 文件导入</li>
+  <li>然后确认右边配置里的擦除 flash 和擦除 bootloader 都是勾选上的，并且选择擦除所有</li>
+  <li>
+    <p>点击开始
+<img src="/uploads/2020/11/uboot.png" alt="" /></p>
+  </li>
+  <li>USB公对公接电脑和玩客云远离网口的USB口<br />
+<strong>并不需要现在就连接</strong></li>
+  <li>
+    <p>短接<br />
+新版主板上有VCC GNU TX RX的文字<br />
+新版
+<img src="/uploads/2020/11/lishuma2.png" alt="" />
+旧版
+<img src="/uploads/2020/11/lishuma3.png" alt="" /></p>
+  </li>
+  <li>
+    <p>短接后,通电,<strong>如果指示灯没亮就成功了</strong>,亮了就断电重试<br />
+<strong>通电指示灯不亮,等待5s后, 再用公对公连接也是可以的</strong></p>
+  </li>
+  <li>
+    <p>成功后,软件会自动开始烧录.可以断开短接</p>
+  </li>
+  <li>
+    <p><strong>烧录过程中USB接触不良,没有大碍,软件会自动重新刷,如上USB Burning Tool界面图, 不用重新开机短接</strong>,没有自动刷新,手动点刷新即可</p>
+  </li>
+  <li>
+    <p>输入成功后, 玩客云开机, hdmi接屏幕, 会先显示uboot界面,随后会进入安卓系统.就算刷机完成了.(ttl)
+<img src="/uploads/2020/11/uboot1.png" alt="" /></p>
+  </li>
+  <li><strong>刷了uboot基本上就不会死了,以后就像u盘装系统一样,在uboot里设置U盘自启动就好了</strong>,<strong>armbia弄坏了,也可以进入U盘重刷</strong></li>
+</ul>
+
+<h2 id="设置uboot">设置uboot</h2>
+
+<h3 id="刷写arm镜像">刷写arm镜像</h3>
+<p>使用Etcher把arm镜像(解压Lishuma-Final-Armbian_5.99_s805_Debian_buster_3.10.108_min.zip获得)刷写到U盘中，</p>
+
+<p>并把U盘插到玩客云上靠近网卡的USB口上</p>
+
+<p><strong>应该是为了在uboot上刷写网卡驱动</strong><br /></p>
+
+<h3 id="ttl设置">TTL设置</h3>
+<ul>
+  <li>
+    <p>电脑插上USB转TTL,设备管理器查看COM号,并如图设置
+<img src="/uploads/2020/11/lishuma4.png" alt="" /></p>
+  </li>
+  <li>打开 putty 软件，选择串口设置，把串口名称改成自己 TTL 模块对应的（比如我这是 COM4），然后波特率 115200，流量控制选择无</li>
+  <li>会话选项里连接类型选择串口，点击打开
+<img src="/uploads/2020/11/lishuma5.png" alt="" /></li>
+</ul>
+
+<h3 id="连接玩客云">连接玩客云</h3>
+<p><strong>不用担心接触不良的问题,信号可以中断</strong><br />
+<strong>用手按完全没问题,根本不需要焊接</strong>.<br />
+TTL转换器,还需要 VCC 切换到 3.3V 跳线, <strong>连接<code class="language-plaintext highlighter-rouge">TXD RXD GND</code>到玩客云的<code class="language-plaintext highlighter-rouge">RX TX GND</code></strong>,注意顺序<br />
+<strong>如果把玩客云的GNU和VCC接到了转换器上,转换器会被烧坏</strong>
+<img src="/uploads/2020/11/ttl1.png" alt="" />
+<img src="/uploads/2020/11/ttl2.png" alt="" /></p>
+
+<h3 id="设置uboot-1">设置uboot</h3>
+<p>打开putty,连接好ttl转换器和玩客云,玩客云通电后,迅速在putty界面回车,直到进入uboot设置界面<br />
+如果手速慢进入安卓了,可以断电重来或者输入<code class="language-plaintext highlighter-rouge">reboot</code>后接着回车</p>
+
+<p><strong>uboot界面的提示符是`m8b_m201C_512M#之类的东西,而且可以输入下面的命令不报错</strong></p>
+
+<p>输入下列命令,然后拔电重启<br />
+<strong>输入任何命令时信号接触不良没事,接触好了后输入一样,真“用手无需烙铁焊”</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usb start;fatload usb 0 12000000 u-boot.bin 
+
+store rom_write 12000000 0 60000 
+
+saveenv
+</code></pre></div></div>
+
+<p>再进入uboot模式设置默认U盘启动</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>setenv bootfromrecovery 0
+
+setenv bootfromnand 0
+
+setenv start_mmc_autoscript 'if fatload mmc 0 11000000 s805_autoscript; then autoscr 11000000; fi;'
+
+setenv start_usb_autoscript "if fatload usb 0 11000000 s805_autoscript; then autoscr 11000000; fi; if fatload usb 1 11000000 s805_autoscript; then autoscr 11000000; fi;"
+
+setenv start_autoscript 'if usb start; then run start_usb_autoscript; fi; if mmcinfo; then run start_mmc_autoscript; fi;'
+
+setenv bootcmd 'run start_autoscript; run storeboot'
+
+setenv firstboot 1
+
+saveenv
+</code></pre></div></div>
+
+<p><strong>以上操作做完就可以把工具都收了,玩客云装起来，后面的所有操作可以用键盘和外接hdmi屏幕解决,也可以继续用手按ttl线在putty里面查看和设置</strong></p>
+
+<h2 id="安装系统">安装系统</h2>
+<h3 id="插入u盘">插入U盘</h3>
+<p><strong>应该可以是支持该硬件的任何arm系统的安装U盘都可以</strong>,把U盘还插在网口旁边的位置.</p>
+
+<h3 id="ttl或者键盘屏幕控制进行下面的设置">ttl<strong>或者</strong>键盘屏幕控制,进行下面的设置</h3>
+<p><strong>ttl显示卡在<code class="language-plaintext highlighter-rouge">started journal service.</code>,用外接屏幕可以看到是在尝试filesystem resize，等十分多钟就好了</strong>
+<img src="/uploads/2020/11/hdmi.png" alt="" />
+进入系统后,可以在putty中操作,也可以用外接键盘和显示器操作,</p>
+
+<p>输入用户名<code class="language-plaintext highlighter-rouge">root</code>,密码<code class="language-plaintext highlighter-rouge">1234</code>,设置新密码.</p>
+
+<p>提示要新建个用户，直接 Ctrl+C 取消，建新用户速度太慢.</p>
+
+<p>连接网线,在ifconfig查看ip后,也可以使用ssh协议连接访问,怎么访问都可以</p>
+
+<p><strong>对系统的所有更改都会写到U盘中的系统去,所以可以把系统装在U盘中</strong></p>
+
+<h3 id="可选写入系统到玩客云内部存储">[可选]写入系统到玩客云内部存储</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod 755 /root/fstab
+chmod 755 /root/install.sh
+dpkg -i abootimg.deb
+/root/install.sh
+</code></pre></div></div>
+<p><img src="/uploads/2020/11/lishuma6.png" alt="" /></p>
+
+<h2 id="重启开机">重启开机</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reboot
+</code></pre></div></div>
+<p><img src="/uploads/2020/11/reboot.png" alt="" /></p>
+
+<p>后续安装新系统从安装系统步骤开始就可以了,也可以使用U盘的系统</p>
+
+<h2 id="收尾">收尾</h2>
+<p>断电组装玩客云,收起转接线</p>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <h2 id="similar_posts">类似文章</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/10/21/hinas2/">安装OP/HiNas至U盘以及配置
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2024/10/20/hinas/">海纳思刷机总结
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2020/11/06/slurm-Centos7/">Centos7集群上搭建slurm作业管理系统</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2020/11/29/rdf/">镜像分布函数rdf计算方法和程序</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">类似文章</a></li>
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

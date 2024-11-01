@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html style="filter:grayscale(0%);">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>OpenVZ 通过tb-tun 使用HE IPv6 tunnel</title>
+    <meta name="description" content="利用HE IPv6使openvz支持ipv6">
+
+    <link rel="shortcut icon" href="/favicon.jpg?" type="image/x-icon">
+    <link rel="icon" href="/favicon.jpg?" type="image/x-icon">
+    <!---2020-01-17 change font-awesome-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!--- 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    -->
+    <link rel="stylesheet" href="/css/cndaqiang.css"> 
+	<!---图标cdn icon，每次在iconfont中添加一个图标，这个链接就要更新--->
+   <link rel="stylesheet" href="https://at.alicdn.com/t/font_461356_ofctiykkk5.css">
+	 <link rel="stylesheet" href="/css/main.css ">
+   <link rel="canonical" href="http://0.0.0.0:4000/2017/08/19/heipv6/">
+   <link rel="alternate" type="application/rss+xml" title="cndaqiang" href="http://0.0.0.0:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8ba332e6517ae0ba8a13339285d97bb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+<!-- 谷歌统计 --><!-- 跨网域跟踪 -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?UA-109057291-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109057291-1');
+</script>
+
+
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="27e72116-bcc0-4a4d-82a5-485b4105820e"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!---   谷歌cse站内搜索-->
+<!--- <script async src="https://cse.google.com/cse.js?cx=011772597085732398296:uzswyrqhpft"></script>
+--->
+
+
+
+
+
+</head>
+
+
+  <body>
+
+    <!-- 备案不显示镜像-->
+
+
+<header id="top">
+    <div class="wrapper">
+      
+        <a href="/" class="brand">cndaqiang</a>
+        <small>Web Linux DFT</small> 
+        
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>专栏
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>工具
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>分类
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>标签
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <!---文章页面--->
+
+<div class="page clearfix" post>
+    <div class="left">
+        <h1>OpenVZ 通过tb-tun 使用HE IPv6 tunnel</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-08-19
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>cndaqiang
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#vps" title="Tag: vps" rel="tag">vps</a-->
+        <a href="/tag/#vps" title="Tag: vps" rel="tag">vps</a>&nbsp;
+    
+        <!--a href="/tag/#openvz" title="Tag: openvz" rel="tag">openvz</a-->
+        <a href="/tag/#openvz" title="Tag: openvz" rel="tag">openvz</a>&nbsp;
+    
+        <!--a href="/tag/#IPv6" title="Tag: IPv6" rel="tag">IPv6</a-->
+        <a href="/tag/#IPv6" title="Tag: IPv6" rel="tag">IPv6</a>&nbsp;
+    
+        <!--a href="/tag/#HE" title="Tag: HE" rel="tag">HE</a-->
+        <a href="/tag/#HE" title="Tag: HE" rel="tag">HE</a>
+    
+  
+
+</span>
+
+
+            </div>
+            <!--- 2020-01-17 RSS-->
+            <div class="label-card">
+                <a href="/feed.xml" title="RSS"><i class="fa fa-rss-square" aria-hidden="true"></i>RSS</a>
+            </div>
+
+            <div class="label-card">
+                <a href="https://github.com/cndaqiang/cndaqiang.github.io" title="RSS"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Star</a>
+            </div>
+            
+            <!--- github start , copy from https://github.com/mdo/github-buttons--->
+            <!---
+            <div>
+                <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
+            --->
+
+        </div>
+        
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#环境" id="markdown-toc-环境">环境</a></li>
+  <li><a href="#步骤" id="markdown-toc-步骤">步骤</a>    <ul>
+      <li><a href="#1-he-ipv6-tunnel" id="markdown-toc-1-he-ipv6-tunnel">1. HE IPv6 tunnel</a>        <ul>
+          <li><a href="#11-注册he-ipv6-tunnel" id="markdown-toc-11-注册he-ipv6-tunnel">1.1 注册HE IPv6 tunnel</a></li>
+          <li><a href="#12-create-regular-tunnel" id="markdown-toc-12-create-regular-tunnel">1.2 Create Regular Tunnel</a></li>
+          <li><a href="#13-查看ip地址" id="markdown-toc-13-查看ip地址">1.3 查看ip地址</a></li>
+        </ul>
+      </li>
+      <li><a href="#2022年方法直接修改系统网卡配置" id="markdown-toc-2022年方法直接修改系统网卡配置">[2022年方法]直接修改系统网卡配置</a></li>
+      <li><a href="#2017年方法使用tb-tun添加隧道" id="markdown-toc-2017年方法使用tb-tun添加隧道">[2017年方法]使用tb-tun添加隧道</a>        <ul>
+          <li><a href="#21-下载" id="markdown-toc-21-下载">2.1 下载</a></li>
+          <li><a href="#22-编译" id="markdown-toc-22-编译">2.2 编译</a></li>
+          <li><a href="#31-需要开启tuntap" id="markdown-toc-31-需要开启tuntap">3.1 需要开启tun/tap</a></li>
+          <li><a href="#32-设置tunnel" id="markdown-toc-32-设置tunnel">3.2 设置tunnel</a></li>
+          <li><a href="#33-ping6测试" id="markdown-toc-33-ping6测试">3.3 ping6测试</a></li>
+          <li><a href="#备注" id="markdown-toc-备注">备注</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<p>利用HE IPv6使openvz支持ipv6</p>
+
+<h2 id="参考">参考</h2>
+<p>https://github.com/acgrid/tb-tun</p>
+
+<p><a href="https://fishcn.win/?id=5">飞扬的喵窝-为OpenVZ VPS添加HE IPv6 tunnel</a></p>
+
+<p><a href="https://p3terx.com/archives/use-he-tunnel-broker-to-add-public-network-ipv6-support-to-ipv4-vps-for-free.html">使用 HE Tunnel Broker 给 IPv4 VPS 免费添加公网 IPv6 支持</a></p>
+
+<h2 id="环境">环境</h2>
+<p>OpenVZ Linux VPS Ubuntu 14.04 x86</p>
+
+<h2 id="步骤">步骤</h2>
+<h3 id="1-he-ipv6-tunnel">1. HE IPv6 tunnel</h3>
+<h4 id="11-注册he-ipv6-tunnel">1.1 注册HE IPv6 tunnel</h4>
+<p>登陆注册https://tunnelbroker.net</p>
+<h4 id="12-create-regular-tunnel">1.2 Create Regular Tunnel</h4>
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-fe62c6dbf3b7ba5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<ul>
+  <li>IPv4 Endpoint (Your side):填vps的ip</li>
+  <li>Available Tunnel Servers:在vps上ping试试看哪个延迟最低</li>
+  <li>Checking address…可以后，点下方Create Tunnel就好了</li>
+</ul>
+
+<h4 id="13-查看ip地址">1.3 查看ip地址</h4>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/4575564-2c50a052b157b50f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<h3 id="2022年方法直接修改系统网卡配置">[2022年方法]直接修改系统网卡配置</h3>
+<p><img src="/uploads/2022/03/he.png" alt="" /></p>
+
+<ul>
+  <li>复制配置到<code class="language-plaintext highlighter-rouge">/etc/network/interfaces.d/he-ipv6</code><br />
+<strong>对于Oracle的免费服务器,要把配置中的公网ip地址替换成<code class="language-plaintext highlighter-rouge">ip addr</code>看到的子网地址</strong><br />
+如果没有<code class="language-plaintext highlighter-rouge">interfaces.d</code>目录,<code class="language-plaintext highlighter-rouge">apt-get install ifupdown</code></li>
+  <li>启动网卡<code class="language-plaintext highlighter-rouge">ifup he-ipv6</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ip addr</code>就能查看到ipv6的网卡,也能ping通网站了</li>
+  <li>开机也会自启</li>
+</ul>
+
+<h3 id="2017年方法使用tb-tun添加隧道">[2017年方法]使用tb-tun添加隧道</h3>
+<p>许多教程里给的源码地址都已失效，我重新从GitHub上找了代码，如果我找的这个代码地址失效，可自行到GitHub上找
+源代码<strong><a href="https://github.com/acgrid/tb-tun">tb-tun</a></strong></p>
+<h4 id="21-下载">2.1 下载</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@GaseousOvercooked-VM:/# mkdir tb-tun-file
+root@GaseousOvercooked-VM:/# cd tb-tun-file/
+
+</code></pre></div></div>
+<p>我是浏览器下载https://codeload.github.com/acgrid/tb-tun/zip/master
+然后本地解压后用winscp上传到vps的/tb-tun-file目录
+wget 然后解压或者git 命令都行，源码就在那里，传到vps上就可以</p>
+<h4 id="22-编译">2.2 编译</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc tb_userspace.c -l pthread -o tb_userspace
+</code></pre></div></div>
+<p>如果缺少gcc,先安装gcc，例deb系</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install gcc
+</code></pre></div></div>
+
+<h4 id="31-需要开启tuntap">3.1 需要开启tun/tap</h4>
+<p>先检查tun/tap设备是否已经打开，可以通过命令cat /dev/net/tun检测，如果返回File descriptor in bad state，则说明tun/tap设备已经打开，否则需要到控制面板更改或给客服发ticket开启。</p>
+<h4 id="32-设置tunnel">3.2 设置tunnel</h4>
+<p>下述命令中
+he-ipv6为之后的tunnel名称，可自定义
+[server ipv4 addr] 
+[client ipv4 addr]
+[client ipv6 addr]
+为<strong>1.3 查看ip地址</strong>图中的几个ip地址</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@GaseousOvercooked-VM:/tb-tun-file# setsid ./tb_userspace he-ipv6 [server ipv4 addr] [client ipv4 addr] sit &gt; /dev/null
+root@GaseousOvercooked-VM:/tb-tun-file# ifconfig he-ipv6 inet6 add [client ipv6 addr]
+root@GaseousOvercooked-VM:/tb-tun-file# ifconfig he-ipv6 mtu 1480
+root@GaseousOvercooked-VM:/tb-tun-file# ifconfig he-ipv6 up
+root@GaseousOvercooked-VM:/tb-tun-file# route -A inet6 add ::/0 dev he-ipv6
+root@GaseousOvercooked-VM:/tb-tun-file# ip -6 route del default dev venet0
+</code></pre></div></div>
+<h4 id="33-ping6测试">3.3 ping6测试</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ping6 ipv6.google.com
+</code></pre></div></div>
+<p>测试是否正常</p>
+<h4 id="备注">备注</h4>
+<ul>
+  <li>
+    <ol>
+      <li>上述命令重启后会无效，需从<strong>3.2 设置tunnel</strong>继续输入，需要添加开机脚本可参考<a href="https://www.cybermilitia.net/2013/07/22/ipv6-tunnel-on-openvz/">IPv6 tunnel on OpenVZ</a></li>
+    </ol>
+  </li>
+</ul>
+
+<hr />
+<blockquote>
+  <p>本文首发于<a href="https://cndaqiang.github.io/">我的博客@cndaqiang</a>.<br />
+本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+</blockquote>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            
+        
+        
+        <!--- github follow and star -->
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&repo=cndaqiang.github.io&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="/html_script/github-btn.html?user=cndaqiang&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/08/13/php-1/">PHP(一)基础语法</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2017/08/22/php-2/">PHP(二)服务器与客户端间的交互</a></p>
+        
+    </div>
+</div>
+
+        
+            
+
+
+
+
+
+            <!--广告 _includes/adsenseAfterComments.html -->
+            
+
+        
+        
+
+        
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    目录
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                     <!-- 关闭评论功能 <li><a href="#comments">评论</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 ，添加br 使不粘连--><br>
+            <!-- adsens -->
+            <!--广告 _includes/adsense_side.html -->
+            
+
+            
+            
+                 
+                <div class="side">
+                   <div>
+                       <i class="fa fa-database"></i>
+                      访客数据
+                   </div>
+                   <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=537vyn60ia7&amp;m=0&amp;c=007eff&amp;cr1=ff0000&amp;sx=0" async="async"></script>
+                </div>
+                
+            
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+        
+
+
+        <!-- 
+        <p class="contact">
+            
+            联系方式: 
+             <a href="https://github.com/cndaqiang" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   
+              
+              
+              
+              
+              
+              
+              
+              
+            .
+        
+        -->
+         
+        </p>
+        <p>
+            
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，访客<span id="busuanzi_value_site_uv"></span>人次，本文阅读量<span id="busuanzi_value_page_pv"></span>次.
+            
+        <!-- 
+             <a href="https://us.umami.is/websites/27e72116-bcc0-4a4d-82a5-485b4105820e"> 实时访客数据</a>  
+        -->
+        </p>
+        <!-- 
+        <p class="power">
+            <span>
+                Site powered by <a href="https://cndaqiang.github.io/">cndaqiang</a>
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+        -->
+        <p class="description">
+            <!-- 
+                 
+            -->
+            &copy; 2024 cndaqiang. Archived since 11/01/2014.
+            </p>
+    
+    </div>
+</footer>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+ 
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>
