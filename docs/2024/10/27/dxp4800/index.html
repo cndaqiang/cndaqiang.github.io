@@ -342,15 +342,9 @@ root@74551da27914:/mnt/green# cp -r /usr/share/nginx/html/* ./html/
 </code></pre></div>    </div>
   </li>
   <li>再创建新的，然后映射这些目录</li>
-  <li><code class="language-plaintext highlighter-rouge">-v /home/nginx/conf/nginx.conf:/etc/nginx/nginx.conf	挂载nginx.conf配置文件</code></li>
-  <li><code class="language-plaintext highlighter-rouge">-v /home/nginx/conf/conf.d:/etc/nginx/conf.d	挂载nginx配置文件</code></li>
+  <li><code class="language-plaintext highlighter-rouge">-v /home/nginx/conf:/etc/nginx	挂载nginx配置文件</code></li>
   <li><code class="language-plaintext highlighter-rouge">-v /home/nginx/log:/var/log/nginx	挂载nginx日志文件</code></li>
   <li><code class="language-plaintext highlighter-rouge">-v /home/nginx/html:/usr/share/nginx/html	挂载nginx内容</code>
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-v /home/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
--v /home/nginx/conf/conf.d:/etc/nginx/conf.d
--v /home/nginx/log:/var/log/nginx
--v /home/nginx/html:/usr/share/nginx/html
-</code></pre></div>    </div>
   </li>
 </ul>
 
